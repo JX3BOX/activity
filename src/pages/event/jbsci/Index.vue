@@ -10,7 +10,7 @@
 
 <script>
 const KEY = "jbsci";
-import { getTopic } from "@/service/topic";
+import { getTopic } from "@/service/event/topic";
 import { groupBy, mapValues } from "lodash";
 import Mark from "./components/mark.vue";
 import Tabs from "./components/tabs.vue";

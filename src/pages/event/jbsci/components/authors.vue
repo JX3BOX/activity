@@ -44,7 +44,7 @@
 <script>
 import userAvatar from "@/components/event/avatar.vue";
 import { uniq } from "lodash";
-import { getUsers } from "@/service/topic";
+import { getUsers } from "@/service/event/topic";
 import { __Root } from "@jx3box/jx3box-common/data/jx3box.json";
 import { showDate } from "@jx3box/jx3box-common/js/moment";
 export default {

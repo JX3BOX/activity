@@ -155,7 +155,7 @@ let x = 0;
 const KEY = "blindboxID";
 const COMPLETE_STATUS = [2, 3];
 import User from "@jx3box/jx3box-common/js/user";
-import { getBreadcrumb } from "@/service/topic";
+import { getBreadcrumb } from "@/service/event/topic";
 import { getBlindBox, goodLucky, getMyLucky } from "@/service/pay";
 import { cloneDeep, throttle, zip } from "lodash";
 import History from "./History.vue";

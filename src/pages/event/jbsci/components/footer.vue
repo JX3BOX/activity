@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { getBreadcrumb } from "@/service/topic";
+import { getBreadcrumb } from "@/service/event/topic";
 export default {
     name: "sciFooter",
     props: ["data"],
@@ -50,7 +50,7 @@ export default {
             });
         },
         init() {
-            this.jbsci.forEach((item) => { 
+            this.jbsci.forEach((item) => {
                 this.loadData(item.key);
             });
         },

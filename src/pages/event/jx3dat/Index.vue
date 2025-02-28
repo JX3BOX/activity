@@ -153,7 +153,7 @@
 const KEY = "jx3dat";
 import BoxcoinTable from "./table/boxcoin-table.vue";
 import BaseTable from "./table/base-table.vue";
-import { getTopic, getUsers } from "@/service/topic";
+import { getTopic, getUsers } from "@/service/event/topic";
 import { uniq } from "lodash";
 import { authorLink } from "@jx3box/jx3box-common/js/utils";
 export default {

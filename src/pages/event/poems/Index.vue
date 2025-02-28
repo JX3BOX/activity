@@ -12,7 +12,7 @@
 
 <script>
 const KEY = "poems";
-import { getTopic } from "@/service/topic";
+import { getTopic } from "@/service/event/topic";
 export default {
     name: "Index",
     inject: ["__imgRoot"],
