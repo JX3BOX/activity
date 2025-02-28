@@ -1,0 +1,70 @@
+.p-event-midAutumn {
+    height: calc(100vh - 64px);
+    .mt(64px);
+    background-image: url("@{kv_midAutumn}bg-1.png"), url("@{kv_midAutumn}bg-2.png");
+    background-repeat: no-repeat;
+    background-position: right top, left top;
+    background-size: contain, contain;
+    .m-box {
+        .size(100%);
+        background-color: rgba(185, 136, 125, 0.6);
+        .flex;
+        .flex(o);
+        flex-direction: column;
+        .u-title-box {
+            .size(445px,324px);
+            .flex;
+            background-color: #fff;
+            .u-left {
+                .size(324px);
+                .fz(128px,142px);
+                color: #b9887d;
+                .flex;
+                align-items: center;
+                .x;
+            }
+            .u-right {
+                .size(121px,100%);
+                background-color: rgb(185, 136, 125);
+
+                .pr;
+                .u-date {
+                    .size(296px,107px);
+                    .fz(128px,192px);
+                    color: #fff;
+                    .pa;
+                    transform: rotate(90deg);
+                    transform-origin: center center;
+                    .lt(-89.5px,-20px);
+                    .flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+                // span {
+                //     transform: rotate(90deg);
+                // }
+            }
+        }
+        .u-tabs-box {
+            .mt(12px);
+            .size(445px,43px);
+            background-color: #fff;
+            .flex;
+            .flex(o);
+            .u-item {
+                cursor: pointer;
+                .size(calc(445px / 3),25px);
+                .x;
+                font-family: Microsoft YaHei UI;
+                .fz(20px,25.4px);
+                .bold(400);
+                color: #b9887d;
+                padding: 9px 0;
+                &.active {
+                    color: #fff;
+                    background-color: #b9887d;
+                }
+            }
+        }
+    }
+}

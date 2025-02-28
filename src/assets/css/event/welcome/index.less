@@ -1,0 +1,633 @@
+.m-index {
+    background: url("@{kv_welcome}bg.jpg") center top no-repeat;
+    background-size: 1920px auto;
+    .w(100%);
+    max-width: 1920px;
+    .auto(x);
+    .clip;
+}
+.m-screen {
+    position: relative;
+    max-width: 1920px;
+    .auto(x);
+    .pa {
+        .pa;
+        .z(1);
+    }
+    .u-title {
+        .flex;
+        .size(170px);
+        .lh(70px);
+        .fz(65px);
+        .pointer;
+        .ml(-85px);
+        .lt(50%,60px);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border: 4px solid #ffffff;
+        color: #fff;
+        transition: 0.3s ease;
+        .label {
+            .fz(35px);
+            b {
+                .bold;
+            }
+        }
+        .value {
+            .fz(50px);
+        }
+        .desc {
+            .none;
+            .fz(16px);
+            .nobreak;
+        }
+        .value-hover {
+            .none;
+        }
+        &:hover {
+            .ml(-500px);
+            .w(1000px);
+            background-color: rgba(0, 0, 0, 0.3);
+            .label,
+            .value {
+                .none;
+            }
+            .value-hover,
+            .desc {
+                .db;
+            }
+        }
+    }
+}
+// 第一屏 人物
+.m-first {
+    .logo {
+        .flex;
+        .size(500px,196px);
+        .lt(50%,30px);
+        .z(9);
+        .ml(-730px);
+        background: url("@{kv_welcome}logo.png") center top no-repeat;
+        a {
+            flex: 1;
+        }
+    }
+    .people {
+        .h(1490px);
+        background: url("@{kv_welcome}people.png") center top no-repeat;
+        background-size: 1920px 1563px;
+    }
+    .title {
+        .size(100%,495px);
+        .lt(0,524px);
+        .z(2);
+        background: url("@{kv_welcome}title.png") center top no-repeat;
+        background-size: 1275px, 495px;
+    }
+    .fish,
+    .fish-1 {
+        .size(100%,1662px);
+        .lt(0,357px);
+        background: url("@{kv_welcome}fish-1.png") center top no-repeat;
+        background-size: 1920px 1662px;
+    }
+    .fish {
+        .lt(-557px,337px);
+    }
+}
+
+// 第二屏 视频
+.m-two {
+    .h(1480px);
+    .u-title {
+        .lt(50%,0);
+        cursor: default;
+        &:hover {
+            .w(170px);
+            .ml(-85px);
+            background-color: transparent;
+        }
+    }
+    .video {
+        .lt(50%,320px);
+        .size(1000px,580px);
+        .ml(-500px);
+        padding: 20px;
+        box-sizing: border-box;
+        background: url("@{kv_welcome}video.png") #000 center top no-repeat;
+        .u-video {
+            .full;
+            iframe {
+                .full;
+            }
+        }
+    }
+    .lantern {
+        .lt(50%,204px);
+        .size(390px,813px);
+        .ml(115px);
+        background: url("@{kv_welcome}lantern.png") left top no-repeat;
+        background-size: 842px 813px;
+    }
+    .fish-2 {
+        .lt(0,710px);
+        .size(100%,1687px);
+        background: url("@{kv_welcome}fish-2.png") center top no-repeat;
+        background-size: 1920px 1687px;
+    }
+}
+// 第三屏 门派
+.m-three {
+    .h(1114px);
+    @mp: {
+        wh: 0;
+        qx: 1;
+        sl: 2;
+        tc: 3;
+        cy: 4;
+        cj: 5;
+        wd: 6;
+        tm: 7;
+        mj: 8;
+        gb: 9;
+        cyun: 10;
+        cg: 11;
+        bd: 12;
+        pl: 13;
+        lx: 14;
+        yt: 15;
+        yz: 16;
+        dz: 17;
+        wl: 18;
+    };
+    .m-content {
+        position: relative;
+        .size(1020px,370px);
+        .lt(50%,485px);
+        .ml(-510px);
+        padding: 10px;
+        box-sizing: border-box;
+        background: url("@{kv_welcome}school/school-bg.png") center top no-repeat;
+        .mark {
+            background-color: #000;
+            .full;
+            .r(50px);
+        }
+        each(@mp, {
+            .mark-@{key} {
+                background: url("@{kv_welcome}school/@{key}-bg.png") #000 center top no-repeat;
+            }
+            .people-@{key}{
+                .size(100%,528px);
+                .lb(10px);
+                background: url("@{kv_welcome}school/@{key}.png")left bottom no-repeat;
+            }
+            .text-@{key}{
+                .rb(10px);
+                .size(477px,350px);
+                .pt(56px);
+                box-sizing:border-box;
+                background: url("@{kv_welcome}school/txt-bg.png")left bottom no-repeat;
+                .m-button{
+                    .flex;
+                    .lb(0,30px);
+                    .size(100%,40px);
+                    .pl(50px);
+                    gap:20px;
+                    align-items: center;
+                    color:rgba(255, 220, 172, 0.8);
+                    .u-btn{
+                        .flex;
+                        .size(132px,29px);
+                        .fz(16px);
+                        align-items: center;
+                        justify-content: center;
+                        color:rgba(255, 220, 172, 0.8);
+                        background: url("@{kv_welcome}school/button.png")left bottom no-repeat;
+                    }
+                }
+            }
+        });
+        .macro {
+            .size(143px,32px);
+            .pointer;
+            .rt(60px,-60px);
+            background: url("@{kv_welcome}school/macro.png") center center no-repeat;
+        }
+        .img {
+            .ml(78px);
+        }
+        .txt {
+            .w(390px);
+            .fz(14px);
+            .mt(40px);
+            .auto(x);
+            color: rgba(255, 255, 255, 0.54);
+        }
+    }
+    .m-name {
+        .flex;
+        .size(1024px,64px);
+        .lt(50%,890px);
+        .ml(-512px);
+        gap: 8px;
+        justify-content: center;
+        padding: 12px 110px;
+        align-items: center;
+        box-sizing: border-box;
+        background: url("@{kv_welcome}school/school-button.png") center top no-repeat;
+        .u-name {
+            .size(35px);
+            flex-shrink: 0;
+            background-image: url("@{kv_welcome}school/name.png?");
+        }
+        each(@mp, {
+            .u-@{key} {
+                background-position: -@value*35px 0;
+                &.active,&:hover{ 
+                    .pointer;
+                    background-position:-@value*35px -35px;
+                }
+            }  
+        });
+    }
+}
+
+// 第四屏 pve玩法
+.m-four {
+    .h(1610px);
+    .pt(330px);
+    box-sizing: border-box;
+    @play: {
+        baizhan: 1014px 264px;
+        week: 854px 224px;
+        more: 514px 394px;
+        lang: 324px 189px;
+        shilian: 324px 189px;
+        fb: 1014px 354px;
+    };
+    .m-content {
+        .flex;
+        .size(100%,730px);
+        .clip;
+        padding: 50px 0;
+        background-color: rgba(0, 0, 0, 0.3);
+        box-sizing: border-box;
+        .m-item {
+            position: relative;
+            .size(100%,630px);
+            max-width: 874px;
+            padding: 0 0 0 10px;
+            box-sizing: border-box;
+            &:first-child {
+                padding: 0 10px 0 0;
+                max-width: 1034px;
+            }
+            each(@play, {
+                .@{key} {
+                    flex-shrink: 0;
+                    position: relative;
+                    background-image: url("@{kv_welcome}play/@{key}.png?");
+                    background-repeat: no-repeat;
+                    background-size: @value; 
+                    .clip;
+                    .mark{ 
+                        .none;
+                        .pointer;
+                        .w(100%);  
+                        margin: 12px 0;
+                        box-sizing:border-box;
+                        background-image: url("@{kv_welcome}play/@{key}-bg.png");
+                        background-repeat: no-repeat;
+                        background-color: rgba(0, 0, 0, 0.2); 
+                        .text{ 
+                            .flex;
+                            .h(100%);
+                            position: relative;
+                            color:#fff;
+                            padding: 20px;
+                            flex-direction: column;
+                            box-sizing:border-box;
+                            .label{
+                                .bold;
+                                .fz(16px,22px);
+                            }
+                            .title{
+                                .fz(40px,52px);
+                                .bold;
+                            }
+                            .desc{
+                                .mt(5px);
+                                .fz(14px,18px);
+                            }
+                            .info{
+                                .mt(13px);
+                                .fz(14px,18px);
+                                text-indent: 2em;
+                                p{
+                                    text-indent: 2em;
+                                }
+                            }
+                            .alink{
+                                .pa;
+                                .pointer;
+                                .size(90px,40px);
+                                .rb(100px,30px); 
+                                &.boss{
+                                    right: 200px; 
+                                }
+                            }
+                        }
+                    }
+                    &:hover{
+                        .mark{.db;} 
+                    }
+                }
+            });
+            .more {
+                .box {
+                    .flex;
+                    .w(280px);
+                    flex-wrap: wrap;
+                    gap: 20px;
+                    box-sizing: border-box;
+                    padding: 88px 20px 0 20px;
+                    .item {
+                        .flex;
+                        .size(72px);
+                        .r(4px);
+                        .fz(12px,2.4);
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                        border: 1px solid transparent;
+                        transition: all 0.1s ease-in;
+                        box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+                        background-color: #fafbfc;
+                        color: #777;
+                        &:hover {
+                            border: 1px solid #39d45d;
+                        }
+                        .icon {
+                            .size(32px);
+                        }
+                    }
+                }
+            }
+        }
+        .m-box {
+            .flex;
+            .mt(20px);
+            gap: 20px;
+            .left {
+                .flex;
+                flex-direction: column;
+                gap: 16px;
+            }
+        }
+    }
+}
+
+// 第五屏&第六屏 pvp & pvx
+.m-five,
+.m-six {
+    .pt(390px);
+    min-height: 1250px;
+    box-sizing: border-box;
+    @play: {
+        mjdh: 0;
+        zyzc: 1;
+        zygf: 0;
+        jjzc: 0;
+        hcqy: 0;
+        dtjh: 0;
+        hcxy: 0;
+        jljh: 0;
+    };
+    .m-content {
+        .flex;
+        .size(100%,640px);
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(255, 255, 255, 0.3);
+        background-position: center 20px;
+        background-repeat: no-repeat;
+    }
+    each(@play, {
+        .@{key} {
+            background-image: url("@{kv_welcome}play/@{key}.jpg");
+        }
+    });
+    .carousel {
+        .ml(-460px);
+        .size(480px,600px);
+        position: relative;
+        background-color: #fff;
+        .arr {
+            .size(60px,100%);
+            .pointer;
+            transition: 0.3s ease;
+            &.left {
+                .lt(0);
+            }
+            &.right {
+                .rt(0);
+            }
+            &:hover {
+                &.left {
+                    background: url("@{kv_welcome}left.png?") center top no-repeat;
+                }
+                &.right {
+                    background: url("@{kv_welcome}right.png?") center top no-repeat;
+                }
+            }
+        }
+        .content {
+            .full;
+            .none;
+            position: relative;
+            color: #983715;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            padding: 100px;
+            box-sizing: border-box;
+            &.active {
+                .flex;
+            }
+
+            .label {
+                .bold;
+                .fz(16px,22px);
+            }
+            .title {
+                .fz(40px,52px);
+                .bold;
+            }
+            .desc {
+                .fz(14px,18px);
+            }
+            .info {
+                .mt(20px);
+                .fz(14px,18px);
+                text-indent: 2em;
+            }
+            .m-button {
+                .flex;
+                .lb(50%,120px);
+                .ml(-130px);
+                width: 260px;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 20px;
+                .u-btn {
+                    .flex;
+                    .size(115px,40px);
+                    .x;
+                    .pointer;
+                    justify-content: center;
+                    align-items: center;
+                    color: #fff;
+                    background: url("@{kv_welcome}pvp-button.png") center top no-repeat;
+                }
+            }
+        }
+        .m-dot {
+            .flex;
+            .lb(0,70px);
+            .size(100%,20px);
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            .dot {
+                .pointer;
+                .size(10px);
+                transition: 0.3s ease;
+                background: url("@{kv_welcome}dot.png") center top no-repeat;
+                &.active {
+                    background: url("@{kv_welcome}dot-active.png") center top no-repeat;
+                }
+            }
+        }
+    }
+}
+.m-six {
+    min-height: 1330px;
+    .carousel {
+        .ml(460px);
+    }
+}
+
+// 第七屏 魔盒助力
+.m-seven {
+    .pt(60px);
+    min-height: 950px;
+    .m-content {
+        .flex;
+        .bold;
+        .size(100%,580px);
+        .color(#000);
+        padding: 52px 0;
+        gap: 15px;
+        box-sizing: border-box;
+        flex-direction: column;
+        align-items: center;
+        background: url("@{kv_welcome}box.jpg") center top no-repeat;
+        .title {
+            .fz(50px,66px);
+        }
+        .label {
+            .fz(20px,26px);
+        }
+        .m-box {
+            .flex;
+            justify-content: center;
+            gap: 30px;
+            .item {
+                .size(125px,360px);
+                .flex;
+                .clip;
+                justify-content: center;
+                align-items: center;
+                position: relative;
+                .item-bg {
+                    .pa;
+                    .full;
+                    .lt(0);
+                    filter: brightness(80%);
+                    transition: 0.3s ease;
+                    &:hover {
+                        transform: scale(1.15);
+                    }
+                }
+                .u-title {
+                    .pa;
+                    .z(2);
+                    .db;
+                    .x;
+                    .w(1em);
+                    .fz(20px,30px);
+                    color: #fff;
+                    word-wrap: break-word;
+                }
+            }
+            .run-item(@n, @i: 1) when (@i =< @n) {
+                .item-@{i} {
+                    background: url("@{kv_welcome}@{i}.png") center top no-repeat;
+                }
+                .run-item(@n, (@i + 1));
+            }
+
+            .run-item(5);
+        }
+    }
+    .code {
+        .mt(110px);
+        .size(100%,167px);
+        background: url("@{kv_welcome}box.png") center top no-repeat;
+    }
+}
+// 提示
+.m-tips {
+    .pf;
+    .flex;
+    .size(180px,80px);
+    .lt(50%);
+    .fz(20px);
+    .bold;
+    .r(5px);
+    margin: -30px 0 0 -60px;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+}
+@media screen and (max-width: 1080px) {
+    .m-first {
+        .logo {
+            .ml(-500px);
+        }
+    }
+    .m-four {
+        .m-content {
+            color: red;
+            zoom: 0.75 !important;
+        }
+    }
+
+    .m-seven {
+        .code {
+            background-size: contain;
+        }
+    }
+}
+
+@media screen and(min-width:1920px) {
+    .m-first {
+        .people,
+        .fish-1 {
+            transform: scale(1.01);
+        }
+    }
+}

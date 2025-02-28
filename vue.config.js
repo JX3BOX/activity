@@ -1,8 +1,9 @@
 const path = require("path");
 const pkg = require("./package.json");
 const { JX3BOX, SEO } = require("@jx3box/jx3box-common");
-const topics = require("./src/assets/data/topic/topic_map.json")
-let topicPages = {
+const topics = require("./src/assets/data/topic/topic_map.json");
+const events = require("./src/assets/data/event/event_map.json");
+const topicPages = {
 	topic: {
 		title: "JX3BOX - 魔盒专题导航",
 		entry: `src/pages/topic/main.js`,
@@ -18,6 +19,24 @@ topics.forEach((topic) => {
 		template: "public/pc.html",
 		filename: `topic/${topic.key}/index.html`,
 	};
+});
+
+const eventPages = {
+    event: {
+        title: "JX3BOX - 魔盒专题导航",
+        entry: `src/pages/event/main.js`,
+        template: "public/pc.html",
+        filename: `event/index.html`,
+    },
+}
+
+events.forEach((event) => {
+    eventPages[event.key] = {
+        title: event.title + ' » 魔盒（JX3BOX） - 一站式剑网3资源工具站',
+        entry: `src/pages/event/${event.key}/index.js`,
+        template: "public/pc.html",
+        filename: `event/${event.key}/index.html`,
+    };
 });
 
 module.exports = {
@@ -42,6 +61,7 @@ module.exports = {
             filename: "superstar/index.html",
         },
         ...topicPages,
+        ...eventPages,
     },
 
     outputDir: process.env["BUILD_MODE"] == "preview" ? path.resolve(__dirname, pkg.name) : "dist", // 指定构建输出的目录
@@ -99,6 +119,7 @@ module.exports = {
             path.resolve(__dirname, "./src/assets/css/var.less"),
             path.resolve(__dirname, "./src/assets/css/rank/var.less"),
             path.resolve(__dirname, "./src/assets/css/topic/var.less"),
+            path.resolve(__dirname, "./src/assets/css/event/var.less"),
         );
         function addStyleResource(rule) {
             rule.use("style-resource").loader("style-resources-loader").options({

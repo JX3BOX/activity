@@ -1,0 +1,231 @@
+body {
+    min-width: 1200px;
+    background-color: #fff;
+}
+.p-event-content {
+    .flex;
+    justify-content: center;
+    width: 100%;
+    min-height: 100vh;
+    gap: 40px;
+    .clip;
+}
+
+@font: #555090;
+.m-index {
+    .r(20px);
+    .clip;
+    flex-shrink: 0;
+    margin: 104px auto 40px auto;
+    width: 1200px;
+    min-height: 100vh;
+}
+.m-paper-box {
+    .pf;
+    .rt(0,50%);
+    .w(132px);
+    .z(9);
+    .flex;
+    border: 4px solid #fff;
+    border-right: 0;
+    gap: 10px;
+    align-items: center;
+    padding: 10px;
+    box-sizing: border-box;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    .u-previous {
+        .pa;
+        .rt(0,-118px);
+        .size(118px);
+        .pointer;
+    }
+    .u-title {
+        .fz(12px);
+        .w(1em);
+        color: #fff;
+        user-select: none;
+    }
+    .m-list {
+        .flex;
+        flex-direction: column;
+        gap: 10px;
+        .u-paper {
+            .flex;
+            .size(84px,28px);
+            .r(5px);
+            .bold;
+            .pointer;
+            justify-content: center;
+            align-items: center;
+            background-color: #fff;
+            color: @font;
+            &.active {
+                background-color: #ffe353;
+            }
+        }
+    }
+}
+.m-header {
+    .pr;
+    .h(500px);
+    .u-text {
+        .pa;
+        &-1 {
+            .w(750px);
+            .rt(-10px, 6px);
+        }
+        &-2 {
+            .lt(86px,248px);
+            .w(495px);
+        }
+        &.u-year {
+            .z(1);
+            .lt(400px,288px);
+            .w(136px);
+        }
+        &.u-logo {
+            .lt(60px);
+            .z(2);
+        }
+    }
+}
+
+.m-exam {
+    .flex;
+    .pb(60px);
+    flex-direction: column;
+    height: 100%;
+    background: url("@{kv_exam}grid.svg") top center;
+    .m-title {
+        .w(1040px);
+        .auto(x);
+        .flex;
+        .mb(60px);
+        justify-content: flex-end;
+        span {
+            .size(376px,100px);
+            .x;
+            .r(10px);
+            .lh(100px);
+            .bold;
+            .fz(48px);
+            user-select: none;
+            letter-spacing: 2px;
+            align-self: flex-end;
+            color: @font;
+            background-color: #fff;
+        }
+    }
+
+    .m-content {
+        .r(30px);
+        height: calc(100% - 700px);
+        padding: 30px;
+        box-sizing: border-box;
+        margin: 0 80px;
+        background-color: #fff;
+        min-height: 1000px;
+    }
+}
+
+.el-loading-mask {
+    .r(20px);
+    .z(8);
+    background-color: rgba(255, 255, 255, 0.5);
+}
+.m-change-paper {
+    .pf;
+    .w(200px);
+    .r(20px);
+    .lt(50%);
+    .z(3);
+    min-height: 180px;
+    margin: -120px 0 0 -120px;
+    padding: 20px 40px;
+    border: 4px solid #fff;
+    .m-title {
+        .x;
+        .bold;
+        .fz(18px);
+        .lh(38px);
+        color: #fff;
+        border-bottom: 1px solid #ddd;
+    }
+    .m-content {
+        .flex;
+        padding: 20px 0 30px 0;
+        gap: 20px;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        .u-year {
+            .r(10px);
+            .x;
+            .lh(38px);
+            .pointer;
+            .bold;
+            .size(80px,38px);
+            border: 1px solid #fff;
+        }
+    }
+    .u-close {
+        .pa; 
+        .rt(5px,5px); 
+        .size(20px); 
+        .pointer;
+
+        &:hover {
+            filter: brightness(110%);
+        }
+    }
+}
+.m-mark {
+    .pf;
+    .z(2);
+    .lt(0);
+    .rb(0);
+    .full;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+@media screen and(max-width:@ipad) {
+    body,
+    .m-index {
+        width: 100%;
+        min-width: 100%;
+    }
+}
+@media screen and(max-width:@phone) {
+    body,
+    .m-index {
+        width: 100%;
+        min-width: 100%;
+        .u-text {
+            left: 0;
+            width: 100%;
+            &.u-year {
+                left: 230px;
+            }
+            &.u-logo {
+                width: 90%;
+                left: 20px;
+            }
+        }
+    }
+    .m-exam {
+        .w(100%);
+        padding: 40px 20px;
+        box-sizing: border-box;
+        .m-title {
+            .w(100%);
+            margin: 50px 0;
+        }
+        .m-content {
+            margin: 0;
+            height: calc(100% - 700px);
+            .v-single-card {
+                margin: 0 0 40px 0;
+            }
+        }
+    }
+}

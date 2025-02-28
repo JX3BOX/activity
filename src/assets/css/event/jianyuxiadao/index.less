@@ -1,0 +1,232 @@
+//pc
+.m-page { 
+    .w(100%);
+    background: url("@{kv_jianyuxiadao}bg.jpg") top center  #000 no-repeat;
+}
+.wp {
+    .auto(x);
+    .flex;
+    flex-direction: column;
+    max-width: 1200px;
+}
+.m-index {
+    // background-color: #000000;
+    // user-select: none;
+    max-width: 1920px;
+    .auto(x);
+    .pt(64px);
+    .u-img {
+        cursor: pointer;
+    }
+    .m-p1 {
+        .pr;
+        .flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 1100px;
+        // background: url("@{kv_jianyuxiadao}bg.png") top center no-repeat,
+        //     url("@{kv_jianyuxiadao}p1-bg.png") bottom right no-repeat;
+        .m-title {
+            .u-ljcq {
+                .pr;
+                z-index: 2;
+                text-align: right;
+                top: -57px;
+                right: 0;
+                &:hover {
+                    margin-right: -20px;
+                }
+            }
+        }
+        .m-tips {
+            .x;
+            .fz(14px,17px);
+            .bold(400);
+            color: #fff;
+        }
+        .m-qrcode {
+            .pa;
+            .size(150px);
+            .rt(19px,620px);
+        }
+    }
+    .m-p2 {
+        .pr;
+        min-height: 650px;
+        background: url("@{kv_jianyuxiadao}p3-1.png") bottom right 109px no-repeat,
+            url("@{kv_jianyuxiadao}p2-bg.png") top center no-repeat;
+        .m-p2-content {
+            .pr;
+            .w(756px);
+            .lt(220px,174px);
+            .u-text {
+                .fz(18px,22px);
+                .bold(400);
+                .mt(52px);
+                .mb(40px);
+                color: #ffffff;
+            }
+        }
+    }
+    .m-p3 {
+        .pr;
+        min-height: 750px;
+        background: url("@{kv_jianyuxiadao}p2-1.png") bottom left 182px no-repeat,
+            url("@{kv_jianyuxiadao}p2-bg.png") top center no-repeat;
+        text-align: right;
+        .m-p3-content {
+            .pa;
+            .w(858px);
+            .rt(115px,166px);
+            .u-text {
+                .fz(18px,22px);
+                .bold(400);
+                .mt(52px);
+                .mb(40px);
+                color: #ffffff;
+            }
+        }
+    }
+    .m-p4 {
+        .pr;
+        min-height: 750px;
+        // background: url("@{kv_jianyuxiadao}p2-bg.png") top center no-repeat;
+        .m-p4-title {
+            padding-top: 211px;
+            .w(787px);
+            .auto(x);
+            text-align: center;
+            .u-btn {
+                .flex;
+                .flex(o);
+                cursor: pointer;
+            }
+            .u-text {
+                color: #edca57;
+                .ml(43px);
+                .fz(18px,22px);
+                .bold(400);
+                cursor: pointer;
+            }
+        }
+    }
+    // 新增文本
+    .m-txt {
+        // background: url("@{kv_jianyuxiadao}p2-bg.png") top center #000;
+        color: #fff;
+        padding: 60px 0;
+        box-sizing: border-box;
+        .wp {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 20px 20px 60px 20px;
+            .r(5px);
+        }
+        h2 {
+            .fz(38px,2);
+            .bold;
+            margin: 0 0 10px 0;
+            color: #fff;
+        }
+        .u-txt {
+            .fz(16px,1.5);
+        }
+        .u-txt + .u-txt {
+            .mt(10px);
+        }
+        .u-txt + h2 {
+            .mt(50px);
+        }
+        .u-img {
+            .mt(20px);
+        }
+        .m-box {
+            .flex;
+            align-items: flex-start;
+            gap: 20px;
+        }
+        .m-table {
+            .flex;
+            .mt(20px);
+            flex-wrap: wrap;
+            flex: 1;
+            .m-line {
+                .flex;
+                width: 100%;
+                span {
+                    .fz(16px,2);
+                    .x;
+                    width: 60px;
+                    margin-top: -1px;
+                    &.u-label {
+                        letter-spacing: 4px;
+                        box-sizing: border-box;
+                        border: 1px solid #ddd;
+                        color: #000;
+                    }
+                }
+            }
+            &.m-column {
+                .m-line {
+                    .w(auto);
+                    flex-direction: column;
+                    span {
+                        border: 1px solid #ddd;
+                        box-sizing: border-box;
+                        margin: -1px 0 0 -1px;
+                        color: #000;
+                        &.u-label {
+                            color: #fff;
+                        }
+                    }
+                }
+            }
+            &.m-number {
+                .m-line {
+                    .w(auto);
+                    span {
+                        border: 1px solid #666;
+                        box-sizing: border-box;
+                        margin: -1px 0 0 -1px;
+                        background-color: #fff;
+                        color: #000;
+                    }
+                }
+            }
+        }
+        .m-map {
+            .mt(20px);
+            .m-map-line {
+                .flex;
+                span {
+                    .size(130px,75px);
+                    .lh(75px);
+                    .x;
+                    margin: -1px 0 0 -1px;
+                    box-sizing: border-box;
+                    border: 1px solid #666;
+                    background-color: #fff;
+                    color: #000;
+                    &.u-blank {
+                        background-color: #000;
+                        border: 1px solid #000;
+                    }
+                }
+            }
+        }
+    }
+    .lidao {
+        background-color: #febf00 !important;
+    }
+    .tizhi {
+        background-color: #d8d8d8 !important;
+    }
+    .yuanqi {
+        background-color: #b09fc6 !important;
+    }
+    .gengu {
+        background-color: #91cf50 !important;
+    }
+    .shenfa {
+        background-color: #00afef !important;
+    }
+}

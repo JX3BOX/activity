@@ -1,0 +1,34 @@
+// IMG PATH
+@kv_jianyuxiadao: "https://img.jx3box.com/topic/jianyuxiadao/";
+@kv_welcome: "https://img.jx3box.com/topic/welcome/";
+@kv_yaoxiujie: "https://img.jx3box.com/topic/yaoxiujie/";
+@kv_exam: "https://img.jx3box.com/topic/exam/";
+@kv_namespace: "https://img.jx3box.com/topic/namespace/";
+@kv_blindbox: "https://img.jx3box.com/topic/blindbox/";
+@kv_poems: "https://img.jx3box.com/topic/poems/";
+@kv_jx3dat: "https://img.jx3box.com/topic/jx3dat/";
+@kv_midAutumn: "https://img.jx3box.com/topic/midAutumn/";
+@kv_bigbang: "https://img.jx3box.com/topic/bigbang/";
+@kv_jx3story: "https://img.jx3box.com/topic/jx3story/";
+@design_url: "https://cdn.jx3box.com/design/";
+.scrollbar(@w:2px,@color:#0003,@bgc:hsla(0, 0%, 87%, 0.2)) {
+    &::-webkit-scrollbar {
+        width: @w;
+        height: @w;
+    }
+    &::-webkit-scrollbar-track-piece {
+        background-color: @bgc;
+        border-radius: 6px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: @color;
+        border-radius: 6px;
+        transition: all 0.2s ease-in-out;
+    }
+    &::-webkit-scrollbar-button,
+    &::-webkit-scrollbar-corner,
+    &::-webkit-resizer {
+        display: none;
+    }
+}

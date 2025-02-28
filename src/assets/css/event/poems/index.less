@@ -1,0 +1,67 @@
+body {
+    background-color: #513149;
+}
+.p-event {
+    background: url("@{kv_poems}bg.jpg") center 64px no-repeat;
+    background-size: 1980px auto;
+}
+.p-event-content {
+    .flex;
+    .pt(400px);
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    .m-box {
+        .size(1000px,520px);
+        padding: 20px;
+        background: url("@{kv_poems}box.png") center center no-repeat;
+        background-size: 1040px 560px;
+    }
+    .m-carousel {
+        .clip;
+        .r(10px);
+        .size(1000px,520px);
+        .u-video {
+            .full;
+            iframe {
+                .full;
+            }
+        }
+    }
+    .el-carousel__indicators {
+        .none;
+    }
+}
+
+@media screen and(max-width:@ipad) {
+    .p-event {
+        background-size: 1280px auto;
+    }
+    .p-event-content {
+        .pt(380px);
+        align-items: flex-start;
+        .m-box,
+        .m-carousel {
+            .r(10px);
+            .size(760px,420px);
+        }
+    }
+}
+
+@media screen and(max-width:@phone) {
+    .p-event {
+        background-size: 720px auto;
+    }
+    .p-event-content {
+        .pt(240px);
+        .m-box {
+            padding: 10px;
+        }
+        .m-box,
+        .m-carousel {
+            .r(10px);
+            .size(100%,220px);
+        }
+    }
+}

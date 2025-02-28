@@ -1,0 +1,142 @@
+{
+    "list": [
+        {
+            "name": "JBSCI期刊",
+            "link": "/event/jbsci",
+            "img": "https://img.jx3box.com/topic/event/img/7.jpg"
+        },
+        {
+            "name": "数据大师赛",
+            "link": "/event/jx3dat",
+            "img": "https://img.jx3box.com/topic/event/img/6.png"
+        },
+        {
+            "name": "2023剑三高考",
+            "link": "/event/gaokao",
+            "img": "https://img.jx3box.com/topic/event/img/4.jpg"
+        },
+        {
+            "name": "2023妖秀节",
+            "link": "/event/2023yaoxiu",
+            "img": "https://img.jx3box.com/topic/event/img/3.svg"
+        },
+        {
+            "name": "剑三欢迎你",
+            "link": "/event/welcome",
+            "img": "https://img.jx3box.com/topic/event/img/2.svg"
+        },
+        {
+            "name": "剑与侠道",
+            "link": "/event/jianyuxiadao",
+            "img": "https://img.jx3box.com/topic/event/img/1.svg"
+        }
+    ],
+    "vertical": [
+        {
+            "name": "剑与侠道",
+            "link": "/event/jianyuxiadao",
+            "img": "https://cdn.jx3box.com/design/cover/cover_event/jyxd0_ce.jpg"
+        },
+        {
+            "name": "剑三欢迎你",
+            "link": "/event/welcome",
+            "img": "https://cdn.jx3box.com/design/cover/cover_event/jx3hyn_ce.jpg"
+        },
+        {
+            "name": "JBSCI期刊",
+            "link": "/event/jbsci",
+            "month": "1",
+            "img": "https://cdn.jx3box.com/design/cover/cover_event/jbsci0_ce.jpg"
+        },
+        {
+            "name": "年度大事件",
+            "link": "/event/bigbang",
+            "month": "1",
+            "img": "https://cdn.jx3box.com/design/cover/cover_event/bigbang.png"
+        },
+        {
+            "name": "剑三练习生",
+            "link": "/notice/94435",
+            "month": "2",
+            "img": "https://cdn.jx3box.com/design/cover/cover_event/lianxisheng.jpg"
+        },
+        {
+            "name": "积分抽奖",
+            "link": "/vip/lottery",
+            "month": "2",
+            "img": "https://cdn.jx3box.com/design/cover/cover_event/xinnianchoujiang_ce.png"
+        },
+        {
+            "name": "妖秀节",
+            "link": "/event/2023yaoxiu",
+            "month": "3",
+            "img": "https://cdn.jx3box.com/design/cover/cover_event/yxj_ce.jpg"
+        },
+        {
+            "name": "百强榜",
+            "link": "/rank/",
+            "month": "5",
+            "img": "https://cdn.jx3box.com/design/cover/cover_event/jdt0_ce.png"
+        },
+        {
+            "name": "剑三萌宠节",
+            "link": "",
+            "month": "6",
+            "img": "https://cdn.jx3box.com/design/cover/cover_event/mengchongjie_ce.jpg"
+        },
+        {
+            "name": "剑三高考",
+            "link": "/event/gaokao",
+            "month": "6",
+            "img": "https://cdn.jx3box.com/design/cover/cover_event/gaokaoji_ce.jpg"
+        },
+        {
+            "name": "门派天团",
+            "link": "/rank/",
+            "month": "7",
+            "img": "https://cdn.jx3box.com/design/cover/cover_event/superstar.png"
+        },
+        {
+            "name": "情缘杯",
+            "link": "/lover",
+            "month": "8",
+            "img": "https://cdn.jx3box.com/design/cover/cover_event/qyb0_ce.jpg"
+        },
+        {
+            "name": "中秋诗词大会",
+            "link": "/event/mid_autumn/",
+            "month": "9",
+            "img": "https://cdn.jx3box.com/design/cover/cover_event/zhongqiushici3.1_ce.png"
+        },
+        {
+            "name": "数据大师赛",
+            "link": "/event/jx3dat",
+            "month": "10",
+            "img": "https://cdn.jx3box.com/upload/post/2023/12/15/4011_9750855.png"
+        },
+        {
+            "name": "百强榜",
+            "link": "/rank/",
+            "month": "11",
+            "img": "https://cdn.jx3box.com/design/cover/cover_event/jdt0_ce.png"
+        },
+        {
+            "name": "茶馆风月录",
+            "link": "/event/jx3story",
+            "month": "12",
+            "img": "https://cdn.jx3box.com/upload/post/2023/12/21/49682_7354896.jpg"
+        },
+        {
+            "name": "年终总结",
+            "link": "https://www.jx3box.com/community/4277",
+            "month": "12",
+            "img": "https://cdn.jx3box.com/design/cover/cover_event/nianzhong_ce.jpg"
+        },
+        {
+            "name": "周年庆",
+            "link": "/event/birthday",
+            "month": "12",
+            "img": "https://cdn.jx3box.com/design/cover/cover_event/2024mohe_ce.png"
+        }
+    ]
+}

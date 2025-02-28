@@ -1,0 +1,152 @@
+{
+    "exams": {
+        "2022": {
+            "1": {
+                "key": "75",
+                "name": "理科卷"
+            },
+            "2": {
+                "key": "74",
+                "name": "文科卷"
+            },
+            "3": {
+                "key": "70",
+                "name": "PVE卷"
+            },
+            "4": {
+                "key": "68",
+                "name": "PVP卷"
+            },
+            "5": {
+                "key": "73",
+                "name": "缘起文科"
+            },
+            "6": {
+                "key": "72",
+                "name": "缘起理科"
+            },
+            "7": {
+                "key": "90",
+                "name": "五仙年卷"
+            }
+        },
+        "2023": {
+            "1": {
+                "key": "115",
+                "name": "理综卷"
+            },
+            "2": {
+                "key": "113",
+                "name": "文综卷"
+            },
+            "3": {
+                "key": "99",
+                "name": "PVE卷"
+            },
+            "4": {
+                "key": "101",
+                "name": "PVP卷"
+            },
+            "5": {
+                "key": "102",
+                "name": "PVX卷"
+            },
+            "6": {
+                "key": "108",
+                "name": "PVP通识"
+            },
+            "7": {
+                "key": "100",
+                "name": "缘起综合"
+            }
+        },
+        "2024": {
+            "1": {
+                "key": "130",
+                "name": "PVE卷"
+            },
+            "2": {
+                "key": "129",
+                "name": "PVX卷"
+            },
+            "3": {
+                "key": "131",
+                "name": "PVP卷"
+            }
+        }
+    },
+    "papers": {
+        "1": {
+            "color": "#555090",
+            "font": "#555090",
+            "background": "#FFE353",
+            "filter": "invert(86%) sepia(100%) saturate(472%) hue-rotate(325deg) brightness(104%) contrast(101%)",
+            "filterYear": "invert(33%) sepia(7%) saturate(4418%) hue-rotate(205deg) brightness(90%) contrast(82%)"
+        },
+        "2": {
+            "color": "#264E70",
+            "font": "#264E70",
+            "background": "#BBD4CE",
+            "filter": "invert(91%) sepia(17%) saturate(205%) hue-rotate(115deg) brightness(91%) contrast(85%)",
+            "filterYear": "invert(26%) sepia(90%) saturate(322%) hue-rotate(164deg) brightness(88%) contrast(97%)"
+        },
+        "3": {
+            "color": "#AE7897",
+            "font": "#fff",
+            "background": "#F9C397",
+            "filter": "invert(90%) sepia(8%) saturate(6615%) hue-rotate(305deg) brightness(123%) contrast(95%)",
+            "filterYear": "invert(58%) sepia(11%) saturate(614%) hue-rotate(314deg) brightness(105%) contrast(102%)"
+        },
+        "4": {
+            "color": "#27104E",
+            "font": "#fff",
+            "background": "#AE7897",
+            "filter": "invert(54%) sepia(15%) saturate(807%) hue-rotate(273deg) brightness(94%) contrast(88%)",
+            "filterYear": "invert(7%) sepia(91%) saturate(4615%) hue-rotate(263deg) brightness(62%) contrast(96%)"
+        },
+        "5": {
+            "color": "#264E70",
+            "font": "#fff",
+            "background": "#F9B4AB",
+            "filter": "invert(70%) sepia(6%) saturate(2068%) hue-rotate(317deg) brightness(111%) contrast(95%)",
+            "filterYear": "invert(25%) sepia(11%) saturate(3269%) hue-rotate(166deg) brightness(92%) contrast(83%)"
+        },
+        "6": {
+            "color": "#6B2A27",
+            "font": "#fff",
+            "background": "#F9B4AB",
+            "filter": "invert(70%) sepia(6%) saturate(2068%) hue-rotate(317deg) brightness(111%) contrast(95%)",
+            "filterYear": "invert(16%) sepia(17%) saturate(6239%) hue-rotate(337deg) brightness(87%) contrast(83%)"
+        },
+        "7": {
+            "color": "#543C52",
+            "font": "#fff",
+            "background": "#F55951",
+            "filter": "invert(88%) sepia(15%) saturate(322%) hue-rotate(324deg) brightness(100%) contrast(87%)",
+            "filterYear": "invert(25%) sepia(14%) saturate(996%) hue-rotate(255deg) brightness(93%) contrast(92%)"
+        }
+    },
+    "tags": [
+        "全部",
+        "PVE",
+        "PVP",
+        "PVX",
+        "PVBB",
+        "语文",
+        "数学",
+        "外语",
+        "信息",
+        "物理",
+        "化学",
+        "生物",
+        "政治",
+        "历史",
+        "地理",
+        "美术",
+        "音乐",
+        "体育",
+        "劳动",
+        "理综",
+        "文综"
+    ]
+}

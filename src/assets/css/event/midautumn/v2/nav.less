@@ -1,0 +1,82 @@
+.c-midAutumn-nav {  
+    color: #fff;
+    min-width: 163px;
+    .bold(400);
+    .m-midAutumn-nav-1 {
+        opacity: 0;
+    }
+    .m-midAutumn-nav-2 {
+        .pf;
+        .lt(20px,100px);
+    }
+    .u-title {
+        // .mt(35px);
+        .w(103px);
+    }
+    .u-date {
+        .flex;
+        justify-content: space-between;
+        align-items: center;
+        .mt(12px);
+        .fz(14px);
+        .bold(400);
+        .size(103px,21px);
+        background: rgba(255, 255, 255, 0.2);
+        padding: 0 10px;
+        box-sizing: border-box;
+    }
+    .u-nav-box {
+        .fz(24px,27px);
+        .u-nav-item {
+            .mt(20px);
+            cursor: pointer;
+            // &:hover {
+            //     animation: growText 1s infinite;
+            // }
+            // &.active {
+            //     .fz(36px,40px);
+            //     &:hover {
+            //         animation: none;
+            //     }
+            // }
+            .flex;
+            align-items: center;
+            gap: 4px;
+            padding-left: 8px;
+            &.active {
+                padding-left: 0;
+                &::before {
+                    .db;
+                    content: "";
+                    .size(4px,14px);
+                    background-color: #fff;
+                }
+            }
+        }
+        .u-select-poem {
+            font-family: "Microsoft YaHei", Arial, sans-serif;
+            .mt(18px);
+            .fz(16px,18px);
+            .flex;
+            align-items: center;
+            gap: 8px;
+            &::before {
+                .db;
+                content: "";
+                .size(4px);
+                border-radius: 4px;
+                background-color: #fff;
+            }
+        }
+    }
+}
+@keyframes growText {
+    from {
+        font-size: 24px;
+        line-height: 27px;
+    }
+    to {
+        font-size: 32px;
+        line-height: 40px;
+    }
+}

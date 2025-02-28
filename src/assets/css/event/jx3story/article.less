@@ -1,0 +1,84 @@
+.jx3story-article-content {
+    min-height: 100vh;
+    .lantern-group {
+        .pa;
+        top: -2px;
+    }
+    .mini-slogan {
+        .pa;
+        .db;
+        .lt(-66px,0);
+    }
+    .m-main {
+        .flex;
+        .size(1600px, 700px);
+        padding: 120px 184px 150px 174px;
+        box-sizing: border-box;
+        margin: 100px auto 0;
+        background-image: url("@{kv_jx3story}/article/scroll.png?12");
+        background-repeat: no-repeat;
+        background-position: center top;
+        background-size: contain;
+        .m-stamp {
+            .flex;
+            width: 160px;
+            flex-shrink: 0;
+            padding: 0 0 20px 20px;
+            align-items: flex-end;
+            justify-content: flex-end;
+            .u-code {
+                .size(120px);
+            }
+            span {
+                .x;
+                .bold;
+                writing-mode: vertical-rl;
+                letter-spacing: 3px;
+            }
+        }
+        .m-post-content {
+            .scrollbar(6px);
+            width: 100%;
+            box-sizing: border-box;
+            margin: 20px 50px;
+            overflow-x: auto;
+        }
+        .m-post-list {
+            .full;
+            padding: 0 50px;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+            .u-item {
+                .flex;
+                height: 86%;
+                flex-shrink: 0;
+                gap: 5px;
+                color: #333;
+                span {
+                    .fz(18px);
+                    .h(100%);
+                    .db;
+                    .x;
+                    .bold;
+                    .break(1);
+                    writing-mode: vertical-rl;
+                    letter-spacing: 3px;
+                    user-select: none;
+                }
+                .u-title {
+                    align-self: flex-start;
+                }
+                .u-name {
+                    align-self: flex-end;
+                }
+                &:hover {
+                    .pointer;
+                    color: #ff5733;
+                }
+            }
+        }
+    }
+}

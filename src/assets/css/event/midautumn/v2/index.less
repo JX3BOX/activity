@@ -1,0 +1,81 @@
+.p-event {
+    .pt(64px);
+    background-color: #17243a;
+}
+.p-event-midAutumn {
+    .pointer;
+
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-color: #17243a;
+
+    .m-box {
+        box-sizing: border-box;
+        .size(100%);
+        .clip;
+        .u-title {
+            .pa;
+            .lt(10vw,4vh);
+            height: 85vh;
+            cursor: pointer;
+        }
+        .u-video {
+            width: 100%;
+            min-width: 1440px;
+        }
+    }
+}
+.p-midautumn-detail {
+    height: 100%;
+    background-image: url("@{kv_midAutumn}1.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-color: #17243a;
+
+    .u-bg {
+        .flex;
+        .full;
+        .clip;
+        min-height: calc(100vh - 64px);
+        box-sizing: border-box;
+        background-color: rgba(23, 36, 58, 0.95);
+        transition: all 1s ease;
+        padding: 36px 0 0 20px;
+    }
+    .u-main-box {
+        .scrollbar;
+        flex: 1;
+        height: 50%;
+        max-width: 100%;
+        overflow: auto;
+        box-sizing: border-box;
+        padding: 124px 240px 40px 124px;
+    }
+}
+@media screen and(max-width:@ipad) {
+    .p-event-midAutumn {
+        .m-box {
+            .flex;
+            justify-content: center;
+            .u-title {
+                .w(420px);
+                height: auto;
+            }
+        }
+    }
+    .p-midautumn-detail {
+        .u-main-box {
+            padding: 20px 40px 40px 20px;
+        }
+    }
+}
+@media screen and (max-width: @phone) {
+    .p-midautumn-detail {
+        .u-main-box {
+            .pr(20px);
+        }
+    }
+}

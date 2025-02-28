@@ -1,0 +1,263 @@
+// 变量定义
+@td1-width: 86px;
+@td3-width: 140px;
+
+/* ====== 1. 页面容器 ====== */
+.events-page {
+    padding-top: @header-height;
+    max-width: 1920px;
+    min-width: 1150px;
+    margin: 0 auto;
+    padding-bottom: 150px;
+    background-image: url("@{kv_bigbang}/bg.png");
+    background-color: #121d2d;
+    background-repeat: no-repeat;
+    background-position: center top;
+}
+
+/* ====== 2. 页面头部 ====== */
+.events-page__header {
+    padding-top: 226px;
+}
+
+.events-page__header-title {
+    width: 1328px;
+    height: 791px;
+    margin: 0 auto;
+    display: block;
+}
+
+.events-page__header-year {
+    width: 296px;
+    height: 87px;
+    margin: -150px auto 0 auto;
+    display: block;
+}
+
+/* ====== 3. 内容区域 ====== */
+.events-page__content {
+    position: relative;
+    z-index: 100;
+}
+
+// 提示区域
+.events-page__tip {
+    position: relative;
+    width: 840px;
+    height: 245px;
+    margin: 0 auto;
+    background: url("@{kv_bigbang}bg__content.png") no-repeat center top;
+    font-size: 20px;
+    line-height: 28px;
+    color: rgba(96, 56, 19, 1);
+    padding-left: 170px;
+    padding-top: 100px;
+    padding-right: 70px;
+    box-sizing: border-box;
+}
+
+/* ====== 4. 卷轴列表区域 ====== */
+.events-page__scroll {
+    width: 1150px;
+    margin: 40px auto 0;
+}
+
+.scroll__top {
+    display: block;
+}
+
+// 表格样式
+.m-table {
+    background-image: url("@{kv_bigbang}/bg__repeat.png");
+    background-repeat: repeat-y;
+    background-position: center top;
+    padding: 0 100px 20px 100px;
+}
+
+.m-table__header {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    display: flex;
+    align-items: center;
+    color: #f2dcc7;
+    font-size: 20px;
+    height: 40px;
+    background: #6d4f25;
+}
+
+.m-table__body {
+    border: 1px solid #6d4f25;
+}
+
+// 表格列样式
+.u-index {
+    width: @td1-width;
+    .x;
+    position: relative;
+}
+
+.u-event {
+    flex: 1;
+    text-align: center;
+    position: relative;
+}
+
+.u-vote {
+    width: @td3-width;
+    .x;
+}
+
+.u-index::after,
+.u-event::after {
+    content: "";
+    display: inline-block;
+    width: 2px;
+    height: 20px;
+    background: #f2dcc7;
+    .pa;
+    right: 0;
+    top: 4px;
+}
+
+// 列表项样式
+.scroll__item {
+    display: flex;
+    padding: 20px 0;
+
+    &:nth-child(2n) {
+        background-color: #decebd;
+    }
+
+    &:nth-child(2n + 1) {
+        background-color: #efe6d9;
+    }
+}
+
+.item__rank {
+    width: @td1-width;
+    font-size: 24px;
+    font-weight: bold;
+    color: #000000ff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.item__content {
+    flex: 1;
+}
+
+.item__title {
+    font-size: 20px;
+    line-height: 28px;
+    color: #6d4f25;
+    font-weight: bold;
+    .nobreak;
+}
+
+.title {
+    margin-right: 10px;
+}
+
+.u-tag {
+    display: inline-block;
+    vertical-align: 2px;
+    padding: 0 5px;
+    height: 22px;
+    line-height: 22px;
+    margin-right: 10px;
+    background: #4e869b;
+    border: 1px solid #957543;
+    color: #fff;
+    border-radius: 3px;
+    font-size: 16px;
+    &:nth-child(odd) {
+        background: #603813;
+    }
+}
+
+.item__desc {
+    color: #0000007f;
+    .fz(14px,1.6);
+    margin: 0;
+    padding: 2px 10px;
+    border-left: 2px solid #9a7d52;
+    margin-top: 5px;
+    .break(5);
+}
+
+.item__stats {
+    width: @td3-width;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+// 按钮样式
+.u-btn {
+    .size(100px,36px);
+    .fz(14px,36px);
+    .bold;
+    margin: 0 auto;
+    .x;
+    .r(12px);
+}
+
+.u-btn--vote {
+    background-color: #f7deb7;
+    border: 1px solid #957543;
+    color: #964220;
+}
+
+.u-btn--voted {
+    background-color: #d4cdc3;
+    border: 1px solid #d4cdc3;
+    color: #616161;
+    cursor: not-allowed;
+}
+
+.u-count {
+    color: #6d4f25;
+    .bold;
+    .fz(14px);
+    .x;
+    margin-top: 5px;
+}
+
+/* ====== 5. 装饰元素 ====== */
+// 右下角吉祥物
+.events-page__character {
+    position: fixed;
+    z-index: 10;
+    display: none;
+    opacity: 0;
+    transition: 0.35s ease-in-out;
+    transition-behavior: allow-discrete;
+    .rb(0,0);
+
+    &.visible {
+        display: block;
+        opacity: 1;
+    }
+}
+
+// 左下角标语
+.events-page__slogan {
+    position: fixed;
+    z-index: 10;
+    display: none;
+    opacity: 0;
+    transition: 0.35s ease-in-out;
+    transition-behavior: allow-discrete;
+    .lb(0,0);
+
+    &.visible {
+        display: block;
+        opacity: 1;
+    }
+}
+
+.bigbang-title {
+    .w(280px);
+}
