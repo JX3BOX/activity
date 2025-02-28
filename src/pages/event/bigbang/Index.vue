@@ -24,32 +24,33 @@
                     </div>
                     <div class="m-table__body">
                         <div v-if="loading" class="loading-state">加载中...</div>
-                        <a
-                            v-else
-                            v-for="(item, index) in eventList"
-                            :key="index"
-                            class="scroll__item"
-                            target="_blank"
-                            :href="postLink(item.link_user_id)"
-                        >
-                            <div class="item__rank">{{ index + 1 }}</div>
-                            <div class="item__content">
-                                <div class="item__title">
-                                    <span class="title">{{ item.title }}</span>
-                                    <template v-if="item.sub_title">
-                                        <span class="u-tag" v-for="tag in item.sub_title.split('|')" :key="tag">
-                                            {{ tag }}
-                                        </span>
-                                    </template>
+                        <template v-else>
+                            <a
+                                v-for="(item, index) in eventList"
+                                :key="index"
+                                class="scroll__item"
+                                target="_blank"
+                                :href="postLink(item.link_user_id)"
+                            >
+                                <div class="item__rank">{{ index + 1 }}</div>
+                                <div class="item__content">
+                                    <div class="item__title">
+                                        <span class="title">{{ item.title }}</span>
+                                        <template v-if="item.sub_title">
+                                            <span class="u-tag" v-for="tag in item.sub_title.split('|')" :key="tag">
+                                                {{ tag }}
+                                            </span>
+                                        </template>
+                                    </div>
+                                    <p class="item__desc">{{ item.content }}</p>
                                 </div>
-                                <p class="item__desc">{{ item.content }}</p>
-                            </div>
-                            <div class="item__stats">
-                                <div class="u-btn u-btn--voted" v-if="item.disabled" @click.stop.prevent>已投票</div>
-                                <div class="u-btn u-btn--vote" @click="(e) => vote(item, e)" v-else>喜欢！吃瓜！</div>
-                                <div class="u-count">人气: {{ item.amount }}</div>
-                            </div>
-                        </a>
+                                <div class="item__stats">
+                                    <div class="u-btn u-btn--voted" v-if="item.disabled" @click.stop.prevent>已投票</div>
+                                    <div class="u-btn u-btn--vote" @click="(e) => vote(item, e)" v-else>喜欢！吃瓜！</div>
+                                    <div class="u-count">人气: {{ item.amount }}</div>
+                                </div>
+                            </a>
+                        </template>
                     </div>
                 </div>
                 <img :src="getImgUrl('bg__bottom.png')" class="scroll__bottom" alt="卷轴下端" />

@@ -40,6 +40,8 @@ events.forEach((event) => {
 });
 
 module.exports = {
+    // map
+    productionSourceMap: false,
     //❤️ Multiple pages ~
     pages: {
         rank: {
