@@ -1,0 +1,277 @@
+body {
+    background-color: #0e0a0d;
+}
+.animations(@s:1s) {
+    -webkit-animation-duration: @s;
+    animation-duration: @s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+.m-index {
+    .flex;
+    .clip;
+    .auto(x);
+    max-width: 1920px;
+    align-items: center;
+    flex-direction: column;
+    background: url("@{kv_wuduxianshi}bg.jpg") center 1050px no-repeat;
+}
+
+// 头部
+.m-top {
+    .pr;
+    .size(1920px,1050px);
+    user-select: none;
+    background: url("@{kv_wuduxianshi}top.jpg") top center no-repeat;
+    * {
+        .pa;
+        .animations;
+    }
+    .u-logo {
+        .size(244px,118px);
+        .lt(897px,460px);
+        .animations(1.5s);
+        background: url("@{kv_wuduxianshi}logo.png") no-repeat;
+        .z(2);
+    }
+    .u-mohe {
+        .size(38px,197px);
+        .lt(1360px,634px);
+        .animations(2s);
+        background: url("@{kv_wuduxianshi}mohe.png") no-repeat;
+    }
+    .u-slogan {
+        .size(1173px,1072px);
+        .lt(516px,38px);
+        background: url("@{kv_wuduxianshi}slogan.png") no-repeat;
+    }
+}
+
+// 第一部分
+.m-one {
+    .pr;
+    .pt(460px);
+    .h(844px);
+    * {
+        .auto(x);
+    }
+    .u-bg {
+        .fl;
+        .animations(0.5s);
+        .size(1004px,844px);
+        background: url("@{kv_wuduxianshi}one_bg.png") top center no-repeat;
+    }
+    .u-txt {
+        .mt(214px);
+        .animations(1.5s);
+        .size(647px,354px);
+        background: url("@{kv_wuduxianshi}one_txt.png") no-repeat;
+    }
+    .u-logo {
+        .db;
+        .mt(76px);
+        .animations(1.8s);
+        .size(231px,71px);
+        background: url("@{kv_wuduxianshi}one_logo.png") no-repeat;
+    }
+}
+// 第二部分
+.m-two {
+    .pr;
+    .pt(500px);
+    .size(100%,1338px);
+    .u-bg {
+        .pa;
+        .animations(0.5s);
+        .full;
+        background: url("@{kv_wuduxianshi}two_bg.png") top center no-repeat;
+    }
+    .u-box {
+        .pa;
+        .z(1);
+        .full;
+        .pt(162px);
+        .size(100%,1338px);
+        box-sizing: border-box;
+        .u-btn {
+            .pr;
+            .size(100%,610px);
+            a {
+                .pa;
+                .db;
+                .size(187px,45px);
+                .lt(50%,354px);
+                overflow: hidden;
+                background-repeat: no-repeat;
+                transition: 0.5s;
+                .animations;
+                &:after {
+                    content: "";
+                    .pa;
+                    .lt(0,0);
+                    .size(500px,70px);
+                    background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.3)) no-repeat;
+                    transform: translate(0, -100px);
+                }
+                &:hover::after {
+                    transition: 1s;
+                    transform: translate(0, 100px);
+                }
+            }
+            .u-dihua {
+                .size(607px,609px);
+                .lt(50%,0);
+                .ml(-303px);
+                &:after {
+                    .none;
+                }
+                transition: 0.2s ease;
+                &:hover {
+                    transform: scale(1.01);
+                }
+            }
+            .u-fuben {
+                .ml(-490px);
+            }
+            .u-team {
+                .ml(-410px);
+                .mt(68px);
+                .animations(1.5s);
+            }
+            .u-mijing {
+                .ml(-344px);
+                .mt(142px);
+                .animations(2s);
+            }
+            .u-baiqiang {
+                .ml(300px);
+            }
+            .u-data {
+                .ml(240px);
+                .mt(68px);
+                .animations(1.5s);
+            }
+            .u-battle {
+                .ml(172px);
+                .mt(142px);
+                .animations(2s);
+            }
+        }
+        .u-txt {
+            .auto(x);
+            .mt(52px);
+            .animations(2.5s);
+            .size(1004px,486px);
+            background: url("@{kv_wuduxianshi}two_txt.png") no-repeat;
+        }
+    }
+}
+// 第三部分
+.m-three {
+    .pt(400px);
+    .u-box {
+        .pr;
+        .auto(x);
+        .size(1280px,1275px);
+        * {
+            .pa;
+            .lt(0,0);
+        }
+        .u-bg {
+            .animations(0.5s);
+            .full;
+            background: url("@{kv_wuduxianshi}three_bg.png") right top no-repeat;
+        }
+        .u-man {
+            .animations(1.2s);
+            .size(800px,847px);
+            .lt(83px,116px);
+            background: url("@{kv_wuduxianshi}three_man.png") no-repeat;
+        }
+        .u-woman {
+            .animations(1.5s);
+            .lt(35px,138px);
+            .size(1257px,1137px);
+            background: url("@{kv_wuduxianshi}three_woman.png") no-repeat;
+        }
+        .u-mark {
+            .animations;
+            .size(1758px,1722px);
+            .lt(-320px,-200px);
+            .z(1);
+            background: url("@{kv_wuduxianshi}three_mark.png") no-repeat;
+        }
+        .u-txt {
+            .animations(1.8s);
+            .size(967px,296px);
+            .z(2);
+            .lt(130px,554px);
+            background: url("@{kv_wuduxianshi}three_txt.png") no-repeat;
+        }
+    }
+}
+// 第四部分
+.m-four {
+    .pr;
+    .pt(570px);
+    .size(1045px,1316px);
+    .auto(x);
+    .u-bg {
+        .pa;
+        .animations(0.5);
+        .full;
+        .ml(-40px);
+        background: url("@{kv_wuduxianshi}four_bg.png") no-repeat;
+    }
+    .u-box {
+        .pr;
+        .size(880px,870px);
+        * {
+            .animations;
+            .pa;
+            .size(266px,268px);
+            background-repeat: no-repeat;
+            transition: 0.2s ease;
+            &:hover {
+                transform: scale(1.03);
+            }
+        }
+        .u-more {
+            .size(70px,360px);
+            .lt(50%,-40px);
+            background: url("@{kv_wuduxianshi}four_more.png") no-repeat;
+            &:hover {
+                transform: scale(1);
+            }
+        }
+        .u-xianzonglin {
+            .size(607px,609px);
+            .lt(50%,380px);
+            .ml(-268px);
+        }
+        .u-chengwu {
+            .lt(46px,232px);
+        }
+        .u-fushi {
+            .lt(646px,232px);
+        }
+        .u-paimai {
+            .lt(46px,846px);
+        }
+        .u-guixu {
+            .lt(646px,846px);
+        }
+    }
+}
+
+// 底部 logo
+.m-bottom {
+    padding: 500px 0;
+    .size(100%,600px);
+    .u-logo {
+        .full;
+        .animations(1.5s);
+        background: url("@{kv_wuduxianshi}bottom.png") top center no-repeat;
+    }
+}

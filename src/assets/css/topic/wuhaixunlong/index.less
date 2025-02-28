@@ -1,0 +1,282 @@
+.m-index {
+    .pr;
+    .w(100%);
+    .auto(x);
+    width: 1908px;
+
+    img {
+        .db();
+        user-select: none;
+    }
+}
+
+/* 控制整个滚动条 */
+::-webkit-scrollbar {
+    .size(12px);
+}
+
+/* 控制滚动条轨道 */
+::-webkit-scrollbar-track {
+    background: #f1f1f1; /* 颜色和样式 */
+}
+
+/* 控制滚动条滑块 */
+::-webkit-scrollbar-thumb {
+    background: #888; /* 滑块颜色 */
+}
+
+/* 控制滚动条滑块hover效果 */
+::-webkit-scrollbar-thumb:hover {
+    background: #555; /* 滑块hover颜色 */
+}
+
+.m-top {
+    .pr();
+    .pb(105.75px);
+    .u-video {
+        .w(100%);
+    }
+    .m-top__ent {
+        .pa();
+        .rb(0,-15.75px);
+        .lb(0,-15.75px);
+        .u-text {
+            .w(642.75px);
+            .pa();
+            .lt(50%,50%);
+            transform: translateX(-50%) translateY(-50%);
+            .z(3);
+        }
+        .u-person {
+            .pa();
+            .w(300px);
+            .lb(61%,160px);
+            .z(3);
+            transform: translateX(-50%);
+            transform-origin: right center;
+            opacity: 0.6;
+        }
+        .u-video__play {
+            .pa();
+            .w(26px);
+            .lb(65%,360px);
+            .z(4);
+            transform: translateX(-50%);
+            transform-origin: right center;
+            cursor: pointer;
+            animation: glint 2s infinite;
+            @keyframes glint {
+                0% {
+                    opacity: 1;
+                }
+                50% {
+                    opacity: 0;
+                }
+                100% {
+                    opacity: 1;
+                }
+            }
+        }
+        .u-cloud {
+            .w(981.75px);
+            .auto(x);
+            .mb(-48px);
+        }
+        .u-bg {
+            .pa();
+            .lb(0);
+            .w(100%);
+            .z(2);
+        }
+    }
+}
+.m-main {
+    background-image: url("@{kv_wuhaixunlong}common/page_bg.jpg");
+    background-position: center top;
+    .pr();
+    z-index: 3;
+    .u-main__title {
+        .auto(x);
+        zoom: 0.5;
+    }
+    .u-title {
+        .w(894px);
+        .auto(x);
+    }
+    .m-one {
+        .u-title {
+            .mt(200px);
+        }
+        .u-text {
+            .w(634px);
+            .auto(x);
+            .mt(40px);
+        }
+        .m-video {
+            .w(895px);
+            .auto(x);
+            .mt(40px);
+            .pr();
+            .u-iframe {
+                .pa();
+                .lt(21px);
+                .rb(21px);
+                .size(calc(100% - 42px));
+            }
+        }
+    }
+    .m-two {
+        .u-title {
+            .mt(337px);
+        }
+        .m-level {
+            .flex();
+            .flex(x);
+            .mt(100px);
+            .u-level {
+                .w(170px);
+                .r(10px);
+                .pointer();
+                transition: 0.2s all ease-in-out;
+                &:not(:first-child) {
+                    .ml(11.94px);
+                }
+                &:hover {
+                    transform: scale(1.05);
+                }
+            }
+        }
+        .u-kv {
+            .db();
+            .size(1080px,580px);
+            .auto(x);
+            .mt(40px);
+            img {
+                transition: 0.2s all ease-in-out;
+                .r(10px);
+                &:hover {
+                    transform: scale(1.05);
+                }
+            }
+        }
+    }
+    .m-three {
+        .u-title {
+            .mt(453px);
+        }
+        .m-tool {
+            .flex();
+            .flex(x);
+            .mt(100px);
+            .m-tool__item {
+                .db();
+                background-image: url("@{kv_wuhaixunlong}p3/item_bg.png");
+                background-size: 100% 100%;
+                padding: 55px 53.5px;
+                .x();
+                .pointer();
+                transition: 0.2s all ease-in-out;
+                .u-icon {
+                    .w(104px);
+                    filter: invert(1);
+                }
+                .u-label {
+                    .fz(24px);
+                    .bold();
+                    .color(white);
+                }
+                &:not(:first-child) {
+                    .ml(10px);
+                }
+                &:hover {
+                    transform: scale(1.1);
+                }
+            }
+        }
+    }
+    .m-four {
+        // .pb(1185px);
+        .pb(200px);
+        .u-title {
+            .mt(432px);
+        }
+        .u-kv {
+            .db();
+            .auto(x);
+            .mt(40px);
+            .w(1000px);
+            .pointer();
+            transition: 0.2s all ease-in-out;
+            &:hover {
+                transform: scale(1.1);
+            }
+        }
+    }
+}
+
+.m-diaLog-kv {
+    background-color: transparent;
+    box-shadow: none;
+    .w(900px);
+    .u-diaLog__video {
+        .size(100%,520px);
+        background-color: black;
+    }
+    .el-dialog__close {
+        .fz(32px);
+        .color(white);
+    }
+}
+
+.m-secret-mask {
+    background-color: transparent;
+    .w(max-content);
+    box-shadow: none;
+    .el-dialog__header {
+        .none();
+    }
+    .el-dialog__body {
+        padding: 0;
+        .flex();
+        align-items: flex-start;
+        .m-secret-mask__left {
+            .pr();
+            .mr(14px);
+            .m-secret-main {
+                .pa();
+                .lt(32px);
+                .color(#a14d81);
+                .u-sub__title {
+                    .fz(16px);
+                    .po();
+                }
+                .u-title {
+                    .po();
+                    .fz(24px);
+                }
+                .m-content__list {
+                    .w(450px);
+                    .fz(16px,21px);
+                }
+            }
+        }
+        .u-close {
+            .pointer();
+        }
+    }
+    transition: 1s all ease-in-out;
+}
+
+@media screen and (max-width: 1024px) {
+    .m-index {
+        zoom: 0.5;
+    }
+
+    .m-top {
+        .m-top__ent {
+            .u-person {
+                right: 21%;
+            }
+        }
+    }
+}

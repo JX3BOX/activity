@@ -1,28 +1,47 @@
 const path = require("path");
 const pkg = require("./package.json");
 const { JX3BOX, SEO } = require("@jx3box/jx3box-common");
+const topics = require("./src/assets/data/topic/topic_map.json")
+let topicPages = {
+	topic: {
+		title: "JX3BOX - 魔盒专题导航",
+		entry: `src/pages/topic/main.js`,
+		template: "public/pc.html",
+		filename: `topic/index.html`,
+	},
+};
+
+topics.forEach((topic) => {
+	topicPages[topic.key] = {
+		title: topic.title + ' » 魔盒（JX3BOX） - 一站式剑网3资源工具站',
+		entry: `src/pages/topic/${topic.key}/index.js`,
+		template: "public/pc.html",
+		filename: `topic/${topic.key}/index.html`,
+	};
+});
 
 module.exports = {
     //❤️ Multiple pages ~
     pages: {
         rank: {
             title: "剑三秘境百强榜 - JX3BOX",
-            entry: "src/pages/rank/rank.js",
+            entry: "src/pages/rank/rank/index.js",
             template: "public/rank.html",
             filename: "rank/index.html",
         },
         lover: {
             title: "剑三情缘杯 - JX3BOX",
-            entry: "src/pages/lover/lover.js",
+            entry: "src/pages/rank/lover/index.js",
             template: "public/lover.html",
             filename: "lover/index.html",
         },
         superstar: {
             title: "剑三门派天团 - JX3BOX",
-            entry: "src/pages/superstar/superstar.js",
+            entry: "src/pages/rank/superstar/index.js",
             template: "public/superstar.html",
             filename: "superstar/index.html",
         },
+        ...topicPages,
     },
 
     outputDir: process.env["BUILD_MODE"] == "preview" ? path.resolve(__dirname, pkg.name) : "dist", // 指定构建输出的目录
@@ -79,6 +98,7 @@ module.exports = {
             path.resolve(__dirname, "./node_modules/@jx3box/jx3box-common/css/var.less"),
             path.resolve(__dirname, "./src/assets/css/var.less"),
             path.resolve(__dirname, "./src/assets/css/rank/var.less"),
+            path.resolve(__dirname, "./src/assets/css/topic/var.less"),
         );
         function addStyleResource(rule) {
             rule.use("style-resource").loader("style-resources-loader").options({

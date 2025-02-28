@@ -1,0 +1,351 @@
+.m-index {
+	.pr;
+	.flex;
+	.clip;
+	.auto(x);
+	max-width: 1920px;
+	background-image: url("@{kv_shengdianyunqi}bg.jpg");
+	background-repeat: no-repeat;
+	background-position: 0 1583px;
+	align-items: center;
+	flex-direction: column;
+}
+
+// 头部
+.m-top-png {
+	.pa;
+	.lt(0,0);
+	.size(1920px,1583px);
+	user-select: none;
+	background: url("@{kv_shengdianyunqi}top.jpg") top center no-repeat;
+}
+.m-top {
+	.flex;
+	.pr;
+	.w(100%);
+	.pt(690px);
+	.pb(130px);
+	align-items: center;
+	flex-direction: column;
+	.u-title {
+		.size(1332px, 274px);
+		background-image: url("@{kv_shengdianyunqi}title.png");
+	}
+	.u-logo {
+		.pa;
+		.lt(370px,120px);
+		.size(228px, 169px);
+		background-image: url("@{kv_shengdianyunqi}logo.png");
+	}
+	.u-mohe {
+		.size(434px, 104px);
+		background-image: url("@{kv_shengdianyunqi}mohe.png");
+	}
+}
+.m-module {
+	.flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+// 视频
+.m-video {
+	.u-box {
+		.pr;
+		.size(950px, 542px);
+		box-sizing: border-box;
+		padding: 21px 25px;
+		.auto(x);
+		background-color: rgba(179, 99, 39, 0.7);
+
+		.u-txtr {
+			.pa;
+			.size(91px, 310px);
+			.rt(-190px, 110px);
+			background-image: url("@{kv_shengdianyunqi}txtr.png");
+		}
+
+		.u-video {
+			background-color: #fff;
+			padding: 3px;
+			.size(900px, 500px);
+			box-sizing: border-box;
+
+			iframe,
+			video {
+				.size(100%);
+			}
+		}
+	}
+
+	.u-text {
+		.mt(30px);
+		.size(1269px, 402px);
+		background-image: url("@{kv_shengdianyunqi}shengdian.png");
+	}
+
+	.u-btn {
+		.flex;
+		justify-content: space-between;
+		.pt(50px);
+		.size(100%, 250px);
+		.auto(x);
+		.flex;
+		justify-content: center;
+
+		* {
+			.size(53px, 250px);
+			margin: 0 10px;
+		}
+
+		.u-btn1 {
+			background-image: url("@{kv_shengdianyunqi}btn1.png");
+		}
+		.u-btn2 {
+			background-image: url("@{kv_shengdianyunqi}btn2.png");
+		}
+		.u-btn3 {
+			background-image: url("@{kv_shengdianyunqi}btn3.png");
+		}
+		.u-btn4 {
+			background-image: url("@{kv_shengdianyunqi}btn4.png");
+		}
+		.u-btn5 {
+			background-image: url("@{kv_shengdianyunqi}btn5.png");
+		}
+		.u-btn6 {
+			background-image: url("@{kv_shengdianyunqi}btn6.png");
+		}
+
+		a:hover {
+			filter: saturate(150%);
+		}
+	}
+}
+
+// 副本
+.m-one {
+	.pt(157px);
+
+	.u-title {
+		.size(1100px, 192px);
+		.mb(60px);
+		background-image: url("@{kv_shengdianyunqi}title1.png");
+	}
+
+	.u-box {
+		.auto(x);
+		.size(1294px, 580px);
+		padding: 70px;
+		box-sizing: border-box;
+		background-image: url("@{kv_shengdianyunqi}bgScroll.png");
+	}
+
+	.u-tab {
+		.w(100%);
+		.auto(x);
+		.flex;
+		justify-content: center;
+
+		span {
+			.pointer;
+			opacity: 0.5;
+			margin: 0 30px;
+			&.active {
+				opacity: 1;
+			}
+		}
+		.u-tab1 {
+			.size(365px, 46px);
+			background-image: url("@{kv_shengdianyunqi}tab1.png");
+		}
+
+		.u-tab2 {
+			.size(325px, 44px);
+			background-image: url("@{kv_shengdianyunqi}tab2.png");
+		}
+	}
+
+	.u-tab-block {
+		.full;
+		.pt(35px);
+		.flex;
+		box-sizing: border-box;
+		justify-content: space-between;
+
+		.u-img {
+			.pr;
+			.size(550px, 340px);
+			box-shadow: 0 8px 10px rgba(0, 0, 0, 0.3);
+
+			img {
+				.full;
+			}
+
+			.u-more {
+				.pointer;
+				.pa;
+				.z(3);
+				.lb(16px, 22px);
+				.size(175px, 45px);
+				background-image: url("@{kv_cangjianshanzhuang}boss.png");
+			}
+		}
+
+		.u-news {
+			background: #fff;
+			.size(280px, 340px);
+			margin: 0 10px;
+			box-shadow: 0 8px 10px rgba(0, 0, 0, 0.4);
+			padding: 10px 14px;
+			box-sizing: border-box;
+
+			.u-line {
+				.db;
+				.fz(14px);
+				.flex;
+				.lh(34px);
+				justify-content: space-between;
+				border-bottom: 2px solid #f0f0f0;
+
+				span {
+					.db;
+					.nobreak;
+
+					&.u-name {
+						max-width: 200px;
+						.color(@color, #f35244);
+
+						i {
+							font-style: normal;
+							color: rgb(73, 105, 115);
+						}
+					}
+
+					&.u-author {
+						max-width: 60px;
+						.color(#999);
+						.fz(12px);
+						.pr(5px);
+					}
+				}
+
+				&:last-child {
+					border: 0;
+				}
+			}
+		}
+
+		.u-btnbox {
+			.flex;
+			.size(290px, 340px);
+			justify-content: space-between;
+
+			* {
+				.size(65px, 340px);
+				box-shadow: 0 8px 10px rgba(0, 0, 0, 0.4);
+			}
+
+			transition: 0.2s ease-in-out;
+
+			a:hover {
+				filter: brightness(105%);
+			}
+
+			.u-btn1 {
+				background-image: url("@{kv_shengdianyunqi}btn_1.png");
+			}
+
+			.u-btn2 {
+				background-image: url("@{kv_shengdianyunqi}btn_2.png");
+			}
+
+			.u-btn3 {
+				background-image: url("@{kv_shengdianyunqi}btn_3.png");
+			}
+
+			.u-btn4 {
+				background-image: url("@{kv_shengdianyunqi}btn_4.png");
+			}
+		}
+	}
+}
+
+// 秘境
+.m-two {
+	.w(1920px);
+	.pt(190px);
+
+	.u-title {
+		.size(1100px, 197px);
+		background-image: url("@{kv_shengdianyunqi}title2.png");
+	}
+	.u-box {
+		.pt(1040px);
+		.u-slogan {
+			.size(1068px, 195px);
+			background-image: url("@{kv_shengdianyunqi}jingjian.png");
+		}
+	}
+}
+
+// 阵营
+.m-three {
+	.pt(135px);
+	.u-title {
+		.size(1100px, 194px);
+		background-image: url("@{kv_shengdianyunqi}title3.png");
+		.mb(60px);
+	}
+	.u-box {
+		.flex;
+		.w(1260px);
+		flex-wrap: wrap;
+		justify-content: space-between;
+		.u-img {
+			.size(585px,580px);
+			.mb(80px);
+			background-repeat: no-repeat;
+		}
+		.u-img1 {
+			background-image: url("@{kv_shengdianyunqi}zhenying1.png");
+		}
+		.u-img2 {
+			background-image: url("@{kv_shengdianyunqi}zhenying2.png");
+		}
+		.u-img3 {
+			background-image: url("@{kv_shengdianyunqi}zhenying3.png");
+		}
+		.u-img4 {
+			background-image: url("@{kv_shengdianyunqi}zhenying4.png");
+		}
+	}
+}
+// 其它
+.m-four {
+	.pt(110px);
+	.pb(300px);
+	.u-title {
+		.size(1100px, 194px);
+		background-image: url("@{kv_shengdianyunqi}title4.png");
+		.mb(60px);
+	}
+
+	.u-box {
+		.flex;
+		justify-content: center;
+		align-items: center;
+		.size(1294px, 580px);
+		.auto(x);
+		box-sizing: border-box;
+		padding: 70px;
+		background-image: url("@{kv_shengdianyunqi}bgScroll.png");
+	}
+
+	.u-swiper {
+		.full;
+		img {
+			.full;
+		}
+	}
+}

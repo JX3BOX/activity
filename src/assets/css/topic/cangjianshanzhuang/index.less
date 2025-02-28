@@ -1,0 +1,313 @@
+@import "./set.less";
+@import '../common/animation.less';
+
+.v-index {
+    background-color: rgb(16, 40, 50);
+}
+
+.m-index {
+    box-shadow: 0 0 10px rgba(0, 0, 0, .5);
+}
+
+// 头部
+.m-top {
+    .pt(680px);
+
+    .u-title {
+        .size(1374px, 282px);
+        background-image: url('@{kv_cangjianshanzhuang}title.png');
+    }
+
+    .u-mohe {
+        .size(434px, 104px);
+        background-image: url('@{kv_cangjianshanzhuang}mohe.png');
+    }
+}
+
+// 视频
+.m-video {
+    .u-box {
+        .pr;
+        .size(950px, 542px);
+        box-sizing: border-box;
+        padding: 21px 25px;
+        .auto(x);
+        background-color: rgba(255, 222, 126, 0.7);
+
+        .u-txtr {
+            .pa;
+            .size(91px, 605px);
+            .rt(-180px, -82px);
+            background-image: url('@{kv_cangjianshanzhuang}txtr.png');
+        }
+
+        .u-video {
+            background-color: #fff;
+            padding: 3px;
+            .size(900px, 500px);
+            box-sizing: border-box;
+
+            iframe,
+            video {
+                .size(100%);
+            }
+        }
+    }
+
+    .u-text {
+        .mt(30px);
+        .size(1088px, 332px);
+        background-image: url('@{kv_cangjianshanzhuang}cangjian.png');
+    }
+
+    .u-btn {
+        .pt(50px);
+        .size(257px, 250px);
+        .auto(x);
+        .flex;
+        justify-content: space-between;
+
+        * {
+            .size(53px, 250px);
+        }
+
+        .u-btn1 {
+            background-image: url('@{kv_cangjianshanzhuang}btn1.png');
+        }
+
+        .u-btn2 {
+            background-image: url('@{kv_cangjianshanzhuang}btn2.png');
+        }
+
+        .u-btn3 {
+            background-image: url('@{kv_cangjianshanzhuang}btn3.png');
+        }
+
+        .u-btn4 {
+            background-image: url('@{kv_cangjianshanzhuang}btn4.png');
+        }
+
+        a:hover {
+            filter: saturate(150%);
+        }
+    }
+}
+
+// 副本
+.m-pve {
+    .pt(157px);
+
+    .u-title {
+
+        .size(1100px, 192px);
+        .pb(60px);
+        background-image: url('@{kv_cangjianshanzhuang}title1.png');
+    }
+
+    .u-box {
+        .auto(x);
+        .size(1294px, 580px);
+        padding: 70px;
+        background-image: url('@{kv_cangjianshanzhuang}bgScroll.png');
+    }
+
+    .u-tab {
+        .size(500px, 44px);
+        .auto(x);
+        .flex;
+        justify-content: space-between;
+
+        .u-tab1 {
+            .pointer;
+            .size(275px, 44px);
+            background-image: url('@{kv_cangjianshanzhuang}tab3.png');
+
+            &.active {
+                background-image: url('@{kv_cangjianshanzhuang}tab1.png');
+            }
+        }
+
+        .u-tab2 {
+            .pointer;
+            .size(92px, 44px);
+            background-image: url('@{kv_cangjianshanzhuang}tab4.png');
+
+            &.active {
+                background-image: url('@{kv_cangjianshanzhuang}tab2.png');
+            }
+        }
+    }
+
+    .u-tab-block {
+        .full;
+        .pt(35px);
+        .flex;
+        box-sizing: border-box;
+        justify-content: space-between;
+
+        .u-img {
+            .pr;
+            .size(550px, 340px);
+            box-shadow: 0 8px 10px rgba(0, 0, 0, .3);
+
+            img {
+                .full;
+            }
+
+            .u-more {
+                .pointer;
+                .pa;
+                .z(3);
+                .lb(16px, 22px);
+                .size(175px, 45px);
+                background-image: url('@{kv_cangjianshanzhuang}boss.png');
+            }
+        }
+
+        .u-news {
+            background: #fff;
+            .size(280px, 340px);
+            margin: 0 10px;
+            box-shadow: 0 8px 10px rgba(0, 0, 0, .4);
+
+            padding: 10px 14px;
+            box-sizing: border-box;
+
+            .u-line {
+                .db;
+                .fz(14px);
+                .flex;
+                .lh(34px);
+                justify-content: space-between;
+                border-bottom: 2px solid #f0f0f0;
+
+                span {
+                    .db;
+                    .nobreak;
+
+                    &.u-name {
+                        max-width: 200px;
+                        .color(@color, #b39d51);
+
+                        i {
+                            font-style: normal;
+                            color: rgb(73, 105, 115);
+                        }
+                    }
+
+                    &.u-author {
+                        max-width: 60px;
+                        .color(#999);
+                        .fz(12px);
+                        .pr(5px);
+                    }
+                }
+
+                &:last-child {
+                    border: 0;
+                }
+            }
+        }
+
+        .u-btnbox {
+            .flex;
+            .size(290px, 340px);
+            justify-content: space-between;
+
+            * {
+                .size(65px, 340px);
+                box-shadow: 0 8px 10px rgba(0, 0, 0, .4);
+            }
+
+            transition: 0.2s ease-in-out;
+
+            a:hover {
+                filter: brightness(105%);
+            }
+
+            .u-btn1 {
+                background-image: url('@{kv_cangjianshanzhuang}btn5.png');
+            }
+
+            .u-btn2 {
+                background-image: url('@{kv_cangjianshanzhuang}btn6.png');
+            }
+
+            .u-btn3 {
+                background-image: url('@{kv_cangjianshanzhuang}btn7.png');
+            }
+
+            .u-btn4 {
+                background-image: url('@{kv_cangjianshanzhuang}btn8.png');
+            }
+        }
+    }
+}
+
+// pvp
+.m-pvp {
+    .pt(100px);
+
+    .u-title {
+        .size(1100px, 197px);
+        background-image: url('@{kv_cangjianshanzhuang}title2.png');
+    }
+
+    .u-box {
+        .pt(720px);
+        .auto(x);
+        .size(600px);
+
+        .u-slogan {
+            .size(660px, 308px);
+            background-image: url('@{kv_cangjianshanzhuang}slogan.png');
+
+        }
+
+        .u-pvp {
+            .mt(20px);
+            .size(603px, 136px);
+            background-image: url('@{kv_cangjianshanzhuang}pvp.png');
+        }
+    }
+}
+
+// 其它
+.m-other {
+    .pt(110px);
+
+    .u-title {
+        .size(1100px, 194px);
+        background-image: url('@{kv_cangjianshanzhuang}title3.png');
+        .pb(60px);
+    }
+
+    .u-box {
+        .flex;
+        justify-content: center;
+        align-items: center;
+        .size(1294px, 580px);
+        .auto(x);
+        padding: 70px;
+        background-image: url('@{kv_cangjianshanzhuang}bgScroll.png');
+
+        .u-more {
+            .size(280px, 104px);
+            background-image: url('@{kv_cangjianshanzhuang}more.png');
+        }
+    }
+
+    .u-swiper {
+        .full;
+
+        img {
+            .full;
+        }
+    }
+
+    .u-logo {
+        .mt(200px);
+        .size(360px, 214px);
+        background-image: url('@{kv_cangjianshanzhuang}logo.png');
+    }
+}

@@ -1,0 +1,505 @@
+@base: 1px;
+
+body {
+    background-color: #fff;
+}
+
+.m-index {
+    .flex;
+    .clip;
+    .auto(x);
+    .pr;
+    user-select: none;
+    max-width: 1920px;
+    align-items: center;
+    flex-direction: column;
+    background: url("@{kv_qunxiawanbian}kv/kv-bg7.png") center 10294px no-repeat,
+    url("@{kv_qunxiawanbian}kv/kv-bg6.png") center 8400px no-repeat,
+    url("@{kv_qunxiawanbian}kv/kv-bg5.png") center 5980px no-repeat,
+    url("@{kv_qunxiawanbian}kv/kv-bg4.png") center 3535px no-repeat,
+    url("@{kv_qunxiawanbian}kv/kv-bg3.png") center 3080px no-repeat,
+    url("@{kv_qunxiawanbian}kv/kv-bg2.png") center 990px no-repeat,
+    url("@{kv_qunxiawanbian}kv/kv-bg.png") center top no-repeat;
+}
+
+// 顶部
+.m-top {
+    .mt(64px);
+    .pr;
+    .size(100%, 980px);
+    user-select: none;
+
+    .u-logo {
+        .size(1137px, 432px);
+        .auto(x);
+        background: url("@{kv_qunxiawanbian}kv/kv-logo.png")no-repeat;
+        .mt(452px);
+    }
+}
+
+// p1技改
+.m-one {
+    .size(100%, 805px);
+    background: url("@{kv_qunxiawanbian}p1/p1-logo.png")no-repeat;
+    .pr;
+
+    .m-link {
+        .size(497px, 43px);
+        .db;
+        .pa;
+        .pointer;
+        .lt(964px, 438px);
+        background: url("@{kv_qunxiawanbian}p1/p1-link.png")no-repeat;
+        -webkit-transition: 0.5s;
+        transition: 0.5s;
+
+        &:hover {
+            left: 994px;
+        }
+
+        .u-play {
+            .size(10px, 16px);
+            background: url("@{kv_qunxiawanbian}p1/p1-play.png")no-repeat;
+            .pa;
+            right: 49px;
+            top: 14px;
+        }
+    }
+}
+
+// p2副本
+.m-two {
+    .size(100%, 1343px);
+
+    .u-title {
+        .size(655px, 181px);
+        .auto(x);
+        background: url("@{kv_qunxiawanbian}p2/p2-title.png")no-repeat;
+        .mt(367px);
+        .mb(20px);
+    }
+
+    .m-group {
+        .size(100%, 374px);
+        .pr;
+
+        .u-boss {
+            .pa;
+            bottom: 0px;
+        }
+
+        .u-sf-on {
+            .size(752px, 345px);
+            left: 568px;
+            background: url("@{kv_qunxiawanbian}p2/p2-sf-on.png")no-repeat;
+            z-index: 99;
+        }
+
+        .u-sf-off {
+            .size(492px, 345px);
+            left: 578px;
+            background: url("@{kv_qunxiawanbian}p2/p2-sf-off.png")no-repeat;
+            z-index: 6;
+        }
+
+        .u-ylc-on {
+            .size(354px, 338px);
+            left: 917px;
+            background: url("@{kv_qunxiawanbian}p2/p2-ylc-on.png")no-repeat;
+            z-index: 99;
+        }
+
+        .u-ylc-off {
+            .size(318px, 338px);
+            left: 924px;
+            background: url("@{kv_qunxiawanbian}p2/p2-ylc-off.png")no-repeat;
+            z-index: 3;
+        }
+
+        .u-nb-on {
+            .size(874px, 365px);
+            left: 176px;
+            background: url("@{kv_qunxiawanbian}p2/p2-nb-on.png")no-repeat;
+            z-index: 99;
+        }
+
+        .u-nb-off {
+            .size(821px, 365px);
+            left: 176px;
+            background: url("@{kv_qunxiawanbian}p2/p2-nb-off.png")no-repeat;
+            z-index: 4;
+        }
+
+        .u-hz-on {
+            .size(470px, 373px);
+            left: 528px;
+            background: url("@{kv_qunxiawanbian}p2/p2-hz-on.png")no-repeat;
+            z-index: 99;
+        }
+
+        .u-hz-off {
+            .size(445px, 373px);
+            left: 528px;
+            background: url("@{kv_qunxiawanbian}p2/p2-hz-off.png")no-repeat;
+            z-index: 5;
+        }
+
+        .u-hz-on {
+            .size(470px, 373px);
+            left: 528px;
+            background: url("@{kv_qunxiawanbian}p2/p2-hz-on.png")no-repeat;
+            z-index: 99;
+        }
+
+        .u-hz-off {
+            .size(445px, 373px);
+            left: 528px;
+            background: url("@{kv_qunxiawanbian}p2/p2-hz-off.png")no-repeat;
+        }
+
+        .u-wyq-on {
+            .size(553px, 373px);
+            left: 876px;
+            background: url("@{kv_qunxiawanbian}p2/p2-wyq-on.png")no-repeat;
+            z-index: 99;
+        }
+
+        .u-wyq-off {
+            .size(553px, 373px);
+            left: 876px;
+            background: url("@{kv_qunxiawanbian}p2/p2-wyq-off.png")no-repeat;
+            z-index: 2;
+        }
+
+        .u-xlz-on {
+            .size(375px, 373px);
+            left: 1073px;
+            background: url("@{kv_qunxiawanbian}p2/p2-xlz-on.png")no-repeat;
+            z-index: 99;
+        }
+
+        .u-xlz-off {
+            .size(375px, 373px);
+            left: 1073px;
+            background: url("@{kv_qunxiawanbian}/p2/p2-xlz-off.png")no-repeat;
+            z-index: 1;
+        }
+
+        .u-wyz-on {
+            .size(894px, 373px);
+            left: 417px;
+            background: url("@{kv_qunxiawanbian}/p2/p2-wyz-on.png")no-repeat;
+            z-index: 99;
+        }
+
+        .u-wyz-off {
+            .size(695px, 373px);
+            left: 482px;
+            background: url("@{kv_qunxiawanbian}/p2/p2-wyz-off.png")no-repeat;
+            z-index: 4;
+        }
+
+        .u-profile {
+            .size(100%, 109px);
+            .pa;
+            z-index: 100;
+            bottom: 0;
+        }
+
+        .u-profile-sf {
+            background: url("@{kv_qunxiawanbian}/p2/p2-profile-sf.png")center top no-repeat;
+        }
+    }
+
+    .u-text {
+        .size(1000px, 189px);
+        .auto(x);
+    }
+
+    .u-text-sf {
+        background: url("@{kv_qunxiawanbian}p2/p2-text-sf.png?123")center 4px no-repeat;
+    }
+
+    .u-subtitle {
+        .size(181px, 26px);
+        margin: 20px;
+        .auto(x);
+        background: url("@{kv_qunxiawanbian}p2/p2-subtitle.png")center 4px no-repeat;
+    }
+
+    .m-links {
+        .size(100%, 66px);
+        background: url("@{kv_qunxiawanbian}p2/p2-line.png")left center no-repeat,
+        url("@{kv_qunxiawanbian}p2/p2-line.png")right center no-repeat;
+
+        .m-btnGroup {
+            .size(630px, 100%);
+            .auto(x);
+            .flex;
+            justify-content: space-between;
+
+            .u-button {
+                .pointer;
+                -webkit-transition: 0.5s;
+                transition: 0.5s;
+
+                &:hover {
+                    scale: 1.05;
+                }
+            }
+
+            .u-btn1 {
+                .size(120px, 66px);
+                background: url("@{kv_qunxiawanbian}p2/p2-btn1.png")no-repeat,
+            }
+
+            .u-btn2 {
+                .size(120px, 66px);
+                background: url("@{kv_qunxiawanbian}p2/p2-btn2.png")no-repeat,
+            }
+
+            .u-btn3 {
+                .size(160px, 66px);
+                background: url("@{kv_qunxiawanbian}p2/p2-btn3.png")no-repeat,
+            }
+
+            .u-btn4 {
+                .size(160px, 66px);
+                background: url("@{kv_qunxiawanbian}p2/p2-btn4.png")no-repeat,
+            }
+        }
+    }
+
+
+}
+
+// p3百强
+.m-three {
+    .size(100%, 461px);
+    .pr;
+    background: url("@{kv_qunxiawanbian}p3/p3-yt.png")center left no-repeat,
+    url("@{kv_qunxiawanbian}p3/p3-wd.png")center right no-repeat,
+    url("@{kv_qunxiawanbian}p3/p3-bg2.png")center top no-repeat;
+
+    .u-logo {
+        .size(746px, 360px);
+        .auto(x);
+        background: url("@{kv_qunxiawanbian}p3/p3-logo.png")center top no-repeat;
+    }
+
+    .u-button {
+        .db;
+        .size(322px, 57px);
+        .auto(x);
+        .pointer;
+        background: url("@{kv_qunxiawanbian}p3/p3-button.png")no-repeat;
+        -webkit-transition: 0.2s;
+        transition: 0.2s;
+
+        &:hover {
+            box-shadow: 0px 0px 10px 0px #fff;
+        }
+    }
+}
+
+//p4体型
+.m-four {
+    .size(865px, 830px);
+    .auto(x);
+    .mt(508px);
+
+    .u-logo {
+        .size(865px, 231px);
+        background:url("@{kv_qunxiawanbian}p4/p4-logo.png")no-repeat;
+    }
+
+    .m-panel {
+        .size(865px, 419px);
+        background:url("@{kv_qunxiawanbian}p4/p4-bg.png")no-repeat;
+        .pr;
+
+        .u-button {
+            .size(170px, 38px);
+            .pa;
+            top: 32px;
+            right: 33px;
+            background:url("@{kv_qunxiawanbian}p4/p4-button.png")no-repeat;
+            .pointer;
+            -webkit-transition: 0.3s;
+            transition: 0.3s;
+
+            &:hover {
+                scale: 1.05;
+            }
+        }
+    }
+
+    .m-detail {
+        .size(865px, 159px);
+        background:url("@{kv_qunxiawanbian}p4/p4-detail.png")no-repeat;
+        .mt(20px);
+    }
+}
+
+//p5吃鸡
+.m-five {
+    .size(858px, 899px);
+    .auto(x);
+    .mt(779px);
+    .pr;
+
+    .u-logo {
+        .size(858px, 218px);
+        background:url("@{kv_qunxiawanbian}p5/p5-logo.png")no-repeat;
+    }
+
+    .m-panel {
+        .size(846px, 681px);
+        .pr;
+        z-index: 0;
+
+
+        .u-pic {
+            .size(834px, 447px);
+            .auto(x);
+        }
+
+        .u-bg1 {
+            background:url("@{kv_qunxiawanbian}p5/p5-bg1.png")center no-repeat;
+        }
+
+        .u-bg2 {
+            background:url("@{kv_qunxiawanbian}p5/p5-bg2.png")center no-repeat;
+        }
+
+        .u-bg3 {
+            background:url("@{kv_qunxiawanbian}p5/p5-bg3.png")center no-repeat;
+        }
+
+        .u-bg4 {
+            background:url("@{kv_qunxiawanbian}p5/p5-bg4.png")center no-repeat;
+        }
+
+        .m-textBox {
+            .size(846px, 220px);
+            background:url("@{kv_qunxiawanbian}p5/p5-textBg.png")center no-repeat;
+            .mt(14px);
+            box-sizing: border-box;
+            padding: 21px 15px 9px 23px;
+
+            .u-text {
+                min-height: 18px;
+                color: #fff;
+                .bold;
+                .fz(16px, 18px);
+                .auto(x);
+            }
+        }
+    }
+
+    .m-btnGroup {
+        .size(100%, 20px);
+        .pa;
+        .flex;
+        justify-content: center;
+        top: 610px;
+        z-index: 1;
+        opacity: 0.8;
+
+        .u-button {
+            .size(20px);
+            background:url("@{kv_qunxiawanbian}p5/p5-button.png") center no-repeat;
+            background-size: 100%;
+            .pointer;
+            margin: 0 5px;
+
+            .u-act {
+                .db;
+                .size(100%);
+                background:url("@{kv_qunxiawanbian}p5/p5-act.png") center no-repeat;
+                background-size: 50%;
+            }
+        }
+    }
+}
+
+///p6侠客
+.m-six {
+    .size(856px, 707px);
+    .auto(x);
+    .mt(481px);
+    .pr;
+
+    .u-logo {
+        .size(852px, 219px);
+        background:url("@{kv_qunxiawanbian}p6/p6-title.png")no-repeat;
+    }
+
+    .m-panel {
+        .size(856px, 488px);
+        background:url("@{kv_qunxiawanbian}p6/p6-bg1.png")left center no-repeat,
+        url("@{kv_qunxiawanbian}p6/p6-bg2.png")right top no-repeat,
+        url("@{kv_qunxiawanbian}p6/p6-bg3.png")right bottom no-repeat;
+    }
+}
+
+///p7帮会宣战
+.m-seven {
+    .size(835px, 1103px);
+    .auto(x);
+    .mt(170px);
+    .pr;
+
+    .u-logo {
+        .size(642px, 232px);
+        .auto(x);
+        background:url("@{kv_qunxiawanbian}p7/p7-title.png")no-repeat;
+    }
+
+    .m-panel {
+        .size(835px, 640px);
+        background:url("@{kv_qunxiawanbian}p7/p7-bg1.png")center center no-repeat;
+        .pointer;
+        -webkit-transition: 0.5s;
+        transition: 0.5s;
+
+
+        &:hover {
+            background:url("@{kv_qunxiawanbian}p7/p7-bg2.png")center center no-repeat;
+        }
+    }
+
+    .m-text {
+        .size(835px, 222px);
+        .auto(x);
+        .mt(29px);
+        background:url("@{kv_qunxiawanbian}p7/p7-text.png")no-repeat;
+    }
+}
+
+///p8世界首领
+.m-eight {
+    .size(874px, 1516px);
+    .auto(x);
+    .mt(659px);
+    .pr;
+
+    .u-logo {
+        .size(509px, 181px);
+        .auto(x);
+        background:url("@{kv_qunxiawanbian}p8/p8-title.png")no-repeat;
+    }
+
+    .m-panel {
+        .mt(31px);
+        .size(874px, 1304px);
+        background:url("@{kv_qunxiawanbian}p8/p8-detail.png")center 10px no-repeat,
+        url("@{kv_qunxiawanbian}p8/p8-shadow.png")top center no-repeat;
+    }
+}
+
+///p9底部
+.m-nine {
+    .size(100%, 1419px);
+    .pr;
+}

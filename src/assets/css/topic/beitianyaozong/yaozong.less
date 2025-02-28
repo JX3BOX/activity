@@ -1,0 +1,518 @@
+@import "./var.less";
+
+.p-topic.v-yaozong {
+    background-color: @bgcolor;
+    min-width: 1280px;
+    overflow-x: auto;
+}
+
+.p-topic-yaozong-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: @header-height;
+
+    overflow: hidden;
+    background-color: @bgcolor;
+    min-height: 1080px;
+}
+
+.wp {
+    max-width: 1920px;
+    min-width: 1280px;
+}
+
+.p-yaozong {
+    flex: 1;
+    .h(1080px);
+    .w(100%);
+    .pr;
+
+    background-position: top center;
+    // background-size: cover;
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    transition: 0.3s ease-in-out;
+}
+
+.p-yaozong-container {
+    .pr;
+    .z(100);
+    .h(100%);
+}
+
+.m-yaozong-box {
+    overflow: hidden;
+}
+
+@keyframes showBg {
+    from {
+        .tm(0);
+    }
+
+    to {
+        .tm(1);
+    }
+}
+
+.m-yaozong-bg {
+    .pa;
+    .lt(50%, 0);
+    transform: translate(-50%, 0);
+    .none;
+    // img {
+    // .tm(0);
+    // }
+    // .active{
+    //     .db;
+    //     animation: showBg 0.3s ease-in-out forwards;
+    // }
+}
+
+.m-yaozong-landscape {
+    .pa;
+    .lt(0);
+    .size(100%);
+
+    * {
+        .pa;
+        .z(100);
+        pointer-events: none;
+    }
+
+    pointer-events: none;
+
+    .lb {
+        .lb(-10px, 0);
+    }
+
+    .rt {
+        .rt(-226px, 20px);
+        .z(8);
+    }
+
+    .rb {
+        .rb(0);
+    }
+}
+
+// 切换箭头
+.u-prev,
+.u-next {
+    .pa;
+    .db;
+    .size(47px, 100px);
+    .pointer;
+    .z(2);
+}
+
+.u-next {
+    .rt(0, 480px);
+    .mr(50px);
+    background-image: url("@{kv_beitianyaozong}sect/right.png");
+}
+
+.u-prev {
+    .lt(0, 480px);
+    .ml(40px);
+    background-image: url("@{kv_beitianyaozong}sect/left.png");
+}
+
+.m-yaozong-box {
+    display: flex;
+    .h(100%);
+}
+
+.m-yaozong-menu {
+    .pr;
+    .size(164px, 100%);
+    .z(9);
+    padding: 80px 0 0 0;
+    margin-left: 225px;
+
+    .u-menubg {
+        .full;
+        .pa;
+        .lt(0, 0);
+        .z(-1);
+        background: url("@{kv_beitianyaozong}sect/menubg.png");
+        pointer-events: none;
+    }
+
+    span {
+        .db;
+        .size(152px, 42px);
+        transition: 0.3 ease-in-out;
+        background-image: url("@{kv_beitianyaozong}sect/menu.png");
+        background-position: 0 0;
+        background-repeat: no-repeat;
+    }
+
+    .u-menubox {
+        .pointer;
+        .size(152px, 129px);
+        padding: 42px 0 43px 0;
+        box-sizing: border-box;
+    }
+
+    .active {
+        background-image: url("@{kv_beitianyaozong}sect/menuhover.png");
+    }
+
+    .u-menu2 {
+        background-position: 0 -42px;
+    }
+
+    .u-menu3 {
+        background-position: 0 -84px;
+    }
+
+    .u-menu4 {
+        background-position: 0 -126px;
+    }
+
+    .u-menu5 {
+        background-position: 0 -168px;
+    }
+
+    .u-menu6 {
+        background-position: 0 -210px;
+    }
+}
+
+.m-yaozong-content {
+    .pr;
+    flex-grow: 1;
+
+    .u-logo {
+        .pa;
+        .lt(50%, -338px);
+        .ml(-186px);
+        .size(332px, 538px);
+        pointer-events: none;
+    }
+}
+
+.m-yaozong-story {
+    .pr;
+    .x;
+    padding: 0 50px;
+
+    .u-item {
+        .pt(50px);
+
+        img {
+            .db;
+            .auto(x);
+        }
+    }
+}
+
+.m-yaozong-mount {
+    .pt(406px);
+
+    .u-item {
+        .pr;
+        .x;
+        .auto(x);
+
+        .u-btn {
+            .pa;
+            .pointer;
+            .size(117px, 39px);
+            .lt(50%, 500px);
+            .ml(-58px);
+            .z(2);
+            background-image: url("@{kv_beitianyaozong}sect/btn3.png");
+        }
+
+        .u-wufang {
+            .lt(50%, 160px);
+            .ml(-157px);
+            background-image: url("@{kv_beitianyaozong}sect/btn1.png");
+        }
+
+        .u-lingsu {
+            .lt(50%, 160px);
+            .ml(40px);
+            background-image: url("@{kv_beitianyaozong}sect/btn2.png");
+        }
+
+        .u-icon {
+            .pa;
+            .lt(50%, 50%);
+            .mt(-102px);
+            .ml(-82px);
+        }
+
+        .u-text {
+            .mt(40px);
+        }
+    }
+}
+
+.m-yaozong-skill {
+    .pt(426px);
+
+    .u-tab {
+        .pr;
+        .z(2);
+        .flex;
+        .h(27px);
+        justify-content: center;
+        .pb(30px);
+
+        span {
+            .db;
+            .pointer;
+            .size(116px, 27px);
+            margin: 0 17px;
+            background-image: url("@{kv_beitianyaozong}sect/zhaoshitext.png");
+        }
+
+        .lingsu.active {
+            background-position: 0 -81px;
+        }
+
+        .tongyong {
+            background-position: 0 -27px;
+
+            &.active {
+                background-position: 0 -108px;
+            }
+        }
+
+        .wufang {
+            background-position: 0 -54px;
+
+            &.active {
+                background-position: 0 -135px;
+            }
+        }
+    }
+
+    .u-cont {
+        .pr;
+        .auto(x);
+        .size(753px, 422px);
+        padding: 0 100px;
+
+        img {
+            .size(753px, 422px);
+            user-select: none;
+        }
+
+        .u-prev,
+        .u-next {
+            top: 50%;
+            margin-top: -70px;
+        }
+
+        .u-prev {
+            left: -30px;
+        }
+
+        .u-next {
+            right: -30px;
+        }
+    }
+}
+
+.m-yaozong-weapon {
+    .pr;
+    .w(1000px);
+
+    .u-showImg {
+        .pa;
+        .lt(0, 50%);
+        .z(2);
+        .size(1765px, 1080px);
+
+        img {
+            .full;
+        }
+    }
+
+    .u-cont {
+        .flex;
+        .x;
+        .pt(328px);
+        .pl(370px);
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .u-title {
+        .size(555px, 63px);
+    }
+
+    .u-text {
+        .size(625px, 342px);
+        .mt(100px);
+        pointer-events: none;
+    }
+
+    .u-btn {
+        .pa;
+        .pointer;
+        .ml(4px);
+        .size(213px, 42px);
+        bottom: 101px;
+    }
+
+    .u-close {
+        .pa;
+        .pointer;
+        .size(227px, 56px);
+        background-image: url("@{kv_beitianyaozong}sect/close.png");
+    }
+
+    .wuqi1 {
+        .lt(-272px, 50%);
+        .mt(-456px);
+
+        .u-close {
+            .lt(712px, 716px);
+        }
+    }
+
+    .wuqi2 {
+        .lt(-220px, 50%);
+        .mt(-434px);
+
+        .u-close {
+            .lt(660px, 694px);
+        }
+    }
+
+    .wuqi3 {
+        .lt(-288px, 50%);
+        .mt(-446px);
+
+        .u-close {
+            .lt(728px, 706px);
+        }
+    }
+
+    .wuqi4 {
+        .lt(-192px, 50%);
+        .mt(-432px);
+
+        .u-close {
+            .lt(632px, 692px);
+        }
+    }
+}
+
+.m-yaozong-equip {
+    .w(800px);
+
+    img {
+        .pa;
+        left: 50%;
+    }
+
+    .img1 {
+        .size(671px, 964px);
+        .ml(-640px);
+    }
+
+    .img2 {
+        .size(886px, 1025px);
+        .ml(-734px);
+    }
+
+    .img3 {
+        .size(818px, 1045px);
+        .ml(-734px);
+    }
+
+    .img4 {
+        .size(829px, 1030px);
+        .ml(-829px);
+    }
+}
+
+.m-yaozong-scenery {
+    .w(800px);
+}
+
+@media screen and (min-width: 1980px) and (max-width: 3840px) {
+    .p-topic-yaozong-wrapper {
+        height: calc(100vh - 78px - @header-height);
+    }
+}
+
+@media screen and(max-width:1280px) {
+    .m-yaozong-equip {
+        .w(600px);
+
+        img {
+            left: 0;
+            margin-left: 0 !important;
+        }
+    }
+
+    .m-yaozong-skill {
+        .u-prev,
+        .u-next {
+            .r(3px);
+            margin: 0;
+            background-color: rgba(32, 39, 53, 0.6);
+            background-position: 20px 20px;
+            background-repeat: no-repeat;
+            padding: 20px;
+        }
+
+        .u-prev {
+            left: 110px !important;
+        }
+
+        .u-next {
+            right: 110px !important;
+        }
+    }
+}
+
+@media screen and(min-width:1280px) and (max-width: 1400px) {
+    .m-yaozong-weapon {
+        .w(800px);
+
+        .u-cont {
+            .pt(308px);
+            .pl(140px);
+        }
+    }
+
+    .m-yaozong-skill {
+        .u-prev {
+            left: 80px;
+        }
+
+        .u-next {
+            right: 80px;
+        }
+    }
+}
+
+@media screen and(min-width:1440px) and (max-width: 1580px) {
+    .m-yaozong-weapon {
+        .w(1000px);
+
+        .u-cont {
+            .pt(308px);
+            .pl(240px);
+        }
+    }
+}
+
+@media screen and(min-width:1700px) and (max-width: 3840px) {
+    .m-yaozong-weapon {
+        .w(1200px);
+
+        .u-cont {
+            .pt(308px);
+            .pl(440px);
+        }
+    }
+}

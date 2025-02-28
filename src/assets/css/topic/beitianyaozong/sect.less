@@ -1,0 +1,283 @@
+/**新闻**/
+.m-topic-newlist {
+    .size(520px, 335px);
+}
+
+.m-topic-list {
+    .u-title {
+        display: flex;
+        .x;
+        .bold;
+
+        span {
+            .lh(46px);
+            background-color: rgba(40, 114, 103, 0.38);
+            color: #287267;
+            user-select: none;
+            cursor: pointer;
+
+
+            &.active {
+                background-color: #287267;
+                color: #fff;
+            }
+
+            &.u-line {
+                border-right: 2px solid #fff;
+                &:last-child{
+                    border-right: 0;
+                }
+            }
+        }
+    }
+
+    .u-list {
+        background-color: rgba(255, 255, 255, 0.62);
+        color: #24292E;
+        padding-top: 10px;
+        .clip;
+
+        .u-item {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 0 10px;
+            border-bottom: 1px solid #DADADA;
+            .lh(43px);
+            .fz(16px);
+
+            span,
+            a {
+                .db;
+                color: #24292E;
+            }
+
+            a {
+                max-width: 370px;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+
+                &:hover {
+                    color: #287267;
+                }
+            }
+
+
+
+            span:last-child {
+                color: rgba(0, 0, 0, 0.5);
+            }
+
+            &:last-child {
+                border-bottom: 0
+            }
+        }
+    }
+}
+
+/**技能**/
+.m-topic-infotab {
+    .size(810px, 335px);
+
+    .u-title {
+        .pr;
+        .size(810px, 80px);
+        background: url(../../img/topic/title01.png) no-repeat left top;
+        display: flex;
+        justify-content: flex-end;
+        padding-bottom: 24px;
+
+
+
+        .u-icon1 {
+            background-image: url(../../img/topic/icon1.png);
+
+            &.active {
+                background-image: url(../../img/topic/icon5.png);
+            }
+        }
+
+        .u-icon2 {
+            background-image: url(../../img/topic/icon2.png);
+
+            &.active {
+                background-image: url(../../img/topic/icon6.png);
+            }
+        }
+
+        .u-icon3 {
+            background-image: url(../../img/topic/icon3.png);
+
+            &.active {
+                background-image: url(../../img/topic/icon7.png);
+            }
+        }
+
+        .u-icon4 {
+            background-image: url(../../img/topic/icon4.png);
+
+            &.active {
+                background-image: url(../../img/topic/icon8.png);
+            }
+        }
+
+        span {
+            .db;
+            .size(80px);
+            cursor: pointer;
+            background-size: 80px 80px;
+        }
+
+        .u-info-enName {
+            .size(157px, 27px);
+            .pa;
+            .lt(0, -27px);
+        }
+    }
+
+    .u-info {
+        .pr;
+        .size(810px, 144px);
+        border-top: 2px solid #237064;
+        background-color: rgba(255, 255, 255, 0.62);
+
+        .u-arr {
+            .pa;
+            .lt(505px, -26px);
+            .size(50px, 26px);
+            background: url(../../img/topic/arr.png) no-repeat center;
+        }
+
+        .u-arr2 {
+            .lt(585px, -26px);
+        }
+
+        .u-arr3 {
+            .lt(665px, -26px);
+        }
+
+        .u-arr4 {
+            .lt(745px, -26px);
+        }
+    }
+
+    .u-btn {
+        padding-top: 24px;
+        display: flex;
+        justify-content: space-between;
+
+        a {
+            .db;
+            .x;
+            .size(180px, 60px);
+            .lh(60px);
+            color: #fff;
+            .bold;
+            .fz(20px);
+            background: linear-gradient(315deg, #287267 0%, #143934 100%);
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.16);
+            border-radius: 8px;
+        }
+    }
+
+    .u-text {
+        padding: 20px 80px;
+
+
+        span {
+            .db;
+            .fz(28px);
+            line-height: (40px);
+            color: #595959;
+
+            b {
+                color: #287267
+            }
+        }
+
+        p {
+            color: #24292E;
+            .bold;
+            .fz(20px);
+            line-height: 26px;
+            padding: 0;
+            margin: 0;
+        }
+    }
+
+}
+
+/**壁纸**/
+.m-topic-sectmap {
+    height: 284px;
+    padding-bottom: 90px;
+
+    .u-title {
+        .pr;
+        .lh(40px);
+        padding: 0 0 20px 263px;
+        background: url(../../img/topic/title02.png) no-repeat left top;
+        display: flex;
+
+        span {
+            .bold;
+            margin-right: 36px;
+            user-select: none;
+            cursor: pointer;
+            color: #24292E;
+
+            &.active {
+                color: #237064;
+                box-shadow: 0px -4px 0px #237064 inset
+            }
+        }
+
+        .u-more {
+            .pa;
+            .rt(0, 0);
+            opacity: 0.62;
+            .bold;
+            color: #24292E;
+        }
+    }
+
+    .u-cont {
+        .size(100%, 224px);
+        .clip;
+        .pr;
+
+        .u-imgbox {
+
+            a {
+                .dbi;
+                .size(400px, 224px);
+                margin-right: 20px;
+
+                img {
+                    .full;
+                }
+            }
+        }
+
+        .u-arr {
+            .pa;
+            .fz(60px);
+            color: #237064;
+            .r(50%);
+            user-select: none;
+            cursor: pointer;
+            line-height: 60px;
+            background-color: rgba(255, 255, 255, 0.62);
+        }
+
+        .u-left {
+            .lt(10px, 82px);
+        }
+
+        .u-right {
+            .rt(10px, 82px);
+        }
+
+    }
+
+}

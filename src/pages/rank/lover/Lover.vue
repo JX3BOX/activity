@@ -24,7 +24,7 @@
 
 <script>
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
-import store from "@/pages/lover/store";
+import store from "@/pages/rank/lover/store";
 export default {
     name: "Lover",
     data: function () {

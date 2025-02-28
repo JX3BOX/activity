@@ -1,0 +1,477 @@
+// TODO:仅本地测试使用！！！
+// @kv_silufengyu: "/tmp";
+// body {
+//     min-height: 3000px;
+// }
+
+@import "../../../../../node_modules/csslab/reset.less";
+@import "./module.less";
+
+// 整体
+// ====================
+.container {
+    padding-top: @header-height;
+    width: 1920px;
+    margin: 0 auto;
+    font-family: "Microsoft YaHei", sans-serif;
+}
+
+// 主KV
+.banner {
+    background-image: url("@{kv_silufengyu}/bg/banner__bg.jpg");
+    background-repeat: no-repeat;
+    background-position: center top;
+    height: 1200px;
+}
+
+.banner__logo {
+    display: block;
+    margin: 0 auto;
+    padding-top: 560px;
+}
+
+/* 剧情推进模块 */
+// --------------------
+.story-progress {
+    height: 300px;
+    background-image: url("@{kv_silufengyu}/bg/story-progress__bg.jpg");
+    background-position: center top;
+    background-repeat: no-repeat;
+}
+
+.story-progress__content {
+    background: url("@{kv_silufengyu}/bg/story-progress__img.png") no-repeat center top;
+    background-origin: content-box;
+    width: 1039px;
+    height: 218px;
+    margin: 0 auto;
+    padding-top: 46px;
+}
+
+/* 叠加在图片上的文本 */
+.story-progress__text {
+    padding-left: 30px;
+    padding-top: 30px;
+    color: #7a1f17;
+    width: 380px;
+
+    .u-title {
+        font-size: 24px;
+        font-weight: 700;
+    }
+
+    .u-desc {
+        margin-top: 20px;
+        font-size: 16px;
+    }
+}
+
+// p1
+// -------------------
+.rsc-overview {
+    padding-top: 70px;
+    background-image: url("@{kv_silufengyu}/bg/pr1__bg.jpg");
+    background-repeat: no-repeat;
+    // background-size: cover; /* 让背景图片覆盖整个区域 */
+    width: 1920px;
+    height: 568px;
+    // background-position: 100% auto;
+    padding-bottom: 96px;
+    background-color: #f5e5c9;
+}
+
+.expansion-overview__list {
+    margin-top: 60px;
+
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+
+    // text-align: center;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-30%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.expansion-overview__image {
+    .size(189px,310px);
+    animation: fadeIn 0.5s ease-in-out forwards;
+    opacity: 0;
+}
+
+.expansion-overview__item {
+    transition: all 0.3s ease-in-out !important;
+    &:hover {
+        transform: scale(1.05) !important;
+    }
+
+    &:nth-child(1) .expansion-overview__image {
+        animation-delay: 0.1s;
+    }
+    &:nth-child(2) .expansion-overview__image {
+        animation-delay: 0.2s;
+    }
+    &:nth-child(3) .expansion-overview__image {
+        animation-delay: 0.3s;
+    }
+    &:nth-child(4) .expansion-overview__image {
+        animation-delay: 0.4s;
+    }
+    &:nth-child(5) .expansion-overview__image {
+        animation-delay: 0.5s;
+    }
+}
+
+// p2
+.new-map {
+    background-image: url("@{kv_silufengyu}/002/pr2-frame1.jpg");
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-color: #f2e0c3;
+    height: 900px;
+    padding-top: 125px;
+    box-sizing: border-box;
+}
+
+.new-map__title {
+}
+
+.new-map__pics {
+    margin-top: 64px;
+}
+
+.new-map__mainpic {
+    display: inline-block;
+    position: relative;
+    top: -630px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.new-map__textbg {
+    position: relative;
+    top: -655px;
+    left: -280px;
+}
+.new-map__text {
+    display: inline-block;
+    position: relative;
+    left: -710px;
+    top: -680px;
+    color: #7a1f17;
+    width: 380px;
+
+    .u-title {
+        font-size: 24px;
+        font-weight: 700;
+        text-align: center;
+    }
+
+    .u-desc {
+        margin-top: 20px;
+        font-size: 16px;
+        text-align: center;
+    }
+}
+
+// p3
+.new-sec {
+    padding-top: 230px;
+    height: 1100px;
+    background-image: url("@{kv_silufengyu}/bg/new-sec__bg.jpg");
+    background-color: #f4e6cd;
+    background-repeat: no-repeat;
+    background-position: center top;
+}
+
+.new-sec_content {
+    background-image: url("@{kv_silufengyu}/003/new-sec__mainpic.png");
+    background-repeat: no-repeat;
+    background-position: center top;
+    height: 887px;
+    padding-top: 50px;
+
+    position: relative;
+}
+
+.new-sec__text {
+    width: 420px;
+    position: absolute;
+    left: 50%;
+    margin-left: 210px;
+    top: 0;
+    margin-top: 250px;
+    color: #7a1f17;
+
+    .u-title {
+        font-size: 64px;
+        font-weight: 900;
+        line-height: 84px;
+    }
+
+    .u-desc {
+        color: #b37f72;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 18px;
+        margin-top: 20px;
+
+        span {
+            display: block;
+        }
+    }
+    .new-sec__textP {
+        width: 421px;
+        height: 234px;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 18.48px;
+        text-align: left;
+        .u-desc1 {
+            margin-top: 20px;
+        }
+        .u-desc2 {
+            margin-top: 20px;
+        }
+        .u-desc3 {
+            margin-top: 20px;
+        }
+    }
+}
+
+// p4
+.duanshi {
+    background-image: url("@{kv_silufengyu}/bg/pr45__bg.jpg");
+    background-repeat: no-repeat;
+    background-position: center top;
+    padding-top: 140px;
+    height: 1200px;
+    background-color: #f1e6cf;
+}
+.duanshi__content {
+    background-image: url("@{kv_silufengyu}/004/duanshi-frame.jpg");
+    background-repeat: no-repeat;
+    background-position: center top;
+    height: 800px;
+    margin-top: 60px;
+    overflow: hidden;
+}
+
+/* 导航菜单样式 */
+.duanshi__nav {
+    .size(1024px,100px);
+    margin: 37px auto 0 auto;
+
+    .clearfix;
+    .u-tab {
+        cursor: pointer;
+        float: left;
+    }
+
+    .u-img {
+        display: block;
+        padding: 0;
+        margin: 0;
+        width: 170px;
+        height: 100px;
+    }
+}
+
+/* 内容样式 */
+.duanshi__primary {
+    width: 1024px;
+    margin: 0 auto;
+
+    .u-content {
+        display: none;
+
+        &.active {
+            display: block;
+        }
+    }
+}
+
+/* 武学部分图片展示 */
+.hero-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.full-skill-image {
+    width: 80%; /* 调整大小以适应布局 */
+    max-width: 1200px;
+}
+
+// p5
+.new-instance {
+    background-image: url("@{kv_silufengyu}/bg/pr45__bg.jpg");
+    background-repeat: no-repeat;
+    background-position: center top;
+    padding-top: 30px;
+    // height: 1200px;
+    padding-bottom: 128px;
+}
+
+.new-instance__text {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 18px;
+    text-align: center;
+    color: #7a1f17;
+    margin-top: 48px;
+}
+
+.new-instance__content {
+    background-image: url("@{kv_silufengyu}/005/pr5bg.jpg");
+    background-repeat: no-repeat;
+    background-position: center top;
+    height: 600px;
+    margin-top: 45px;
+
+    display: flex;
+    justify-content: center;
+}
+
+/*pr6*/
+
+.ranking-list {
+    background-image: url("@{kv_silufengyu}/bg/pr6__bg.jpg");
+    background-repeat: no-repeat;
+    background-position: center top;
+    height: 730px;
+    position: relative;
+}
+.ranking-list__content {
+    position: relative;
+    width: 1020px;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.ranking-list__number-image {
+    margin-top: 30px;
+    margin-left: 20px;
+}
+
+.ranking-list__title-image {
+    margin-top: 120px;
+    margin-left: 80px;
+}
+
+.ranking-list__btn {
+    margin-top: 120px;
+    float: right;
+    margin-right: 200px;
+    padding: 20px;
+}
+
+/*p7*/
+.new-season {
+    background-image: url("@{kv_silufengyu}/bg/pr7__bg.jpg");
+    background-repeat: no-repeat;
+    background-position: center top;
+    height: 800px;
+    padding: 130px 0 0 0;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.new-season__main {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.new-season__title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #f3d9a3;
+    margin-bottom: 80px;
+    text-align: center;
+}
+
+.new-season__list {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 每行放5个图标 */
+    gap: 40px; /* 图标之间的间距 */
+    justify-items: center; /* 每个图标居中 */
+}
+
+.new-season__item{
+    a{
+        display: block;
+    }
+
+    .u-icon {
+        background-image: url("@{kv_silufengyu}/007/icon__bg.png");
+        background-size: contain;
+        background-repeat: no-repeat;
+        width: 122px;
+        height: 122px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        img {
+            width: 60px;
+            height: 60px;
+        }
+    }
+
+    .u-label {
+        background-image: url("@{kv_silufengyu}/007/namebar.png");
+        background-size: contain;
+        background-repeat: no-repeat;
+        height: 35px;
+        width: 130px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 5px;
+        font-size: 14px;
+        color: #f3d9a3;
+    }
+}
+
+
+/*p8*/
+.visual-enhancement {
+    background-image: url("@{kv_silufengyu}/bg/pr89__bg.jpg");
+    background-repeat: no-repeat;
+    background-position: center top;
+    padding: 50px 0;
+    text-align: center;
+}
+
+.visual-enhancement__content {
+    margin-top:38px;
+    background-image: url("@{kv_silufengyu}/008/canvas.png");
+    background-repeat: no-repeat;
+    background-position: center top;
+    height: 500px;
+    text-align: center;
+}
+
+/*p9*/
+.engine-update {
+    background-image: url("@{kv_silufengyu}/bg/pr89__bg.jpg");
+    background-repeat: repeat-y;
+    background-position: center top;
+    background-color: #f2e0c3;
+    height: 800px;
+    padding-top: 125px;
+}
+
+.engine-update__content{
+    margin-top:40px;
+}
+

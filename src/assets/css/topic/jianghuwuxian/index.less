@@ -1,0 +1,328 @@
+.m-index {
+    .flex;
+    .clip;
+    .auto(x);
+    max-width: 1920px;
+    background-image: url("@{kv_jianghuwuxian}bg.jpg");
+    background-repeat: no-repeat;
+    background-position: center 1000px;
+    align-items: center;
+    flex-direction: column;
+}
+
+// 头部
+.m-top {
+    .pr;
+    .size(1920px,1000px);
+    user-select: none;
+    background: url("@{kv_jianghuwuxian}top.jpg") top center no-repeat;
+    .u-title {
+        .pa;
+        .lt(838px,87px);
+        .size(622px, 270px);
+        background: url("@{kv_jianghuwuxian}title.png") no-repeat;
+    }
+    .u-mohe {
+        .pa;
+        .lt(930px,372px);
+        .size(4515px, 64px);
+        background: url("@{kv_jianghuwuxian}mohe.png") no-repeat;
+    }
+}
+.m-module {
+    .flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+// 视频
+.m-video {
+    .pt(200px);
+    .u-box {
+        .pr;
+        .size(950px, 542px);
+        box-sizing: border-box;
+        padding: 21px 25px;
+        .auto(x);
+        background-color: rgba(140, 162, 164, 0.7);
+
+        .u-txtr {
+            .pa;
+            .size(91px, 560px);
+            .rt(-170px, -110px);
+            background-image: url("@{kv_jianghuwuxian}txtr.png");
+        }
+
+        .u-video {
+            background-color: #fff;
+            padding: 3px;
+            .size(900px, 500px);
+            box-sizing: border-box;
+
+            iframe,
+            video {
+                .size(100%);
+            }
+        }
+    }
+
+    .u-text {
+        .mt(30px);
+        .size(1208px, 400px);
+        background-image: url("@{kv_jianghuwuxian}wuxian.png");
+    }
+
+    .u-btn {
+        .flex;
+        justify-content: space-between;
+        .pt(50px);
+        .size(100%, 250px);
+        .auto(x);
+        .flex;
+        justify-content: center;
+
+        * {
+            .size(53px, 250px);
+            margin: 0 10px;
+        }
+
+        .u-btn1 {
+            background-image: url("@{kv_jianghuwuxian}btn1.png");
+        }
+        .u-btn2 {
+            background-image: url("@{kv_jianghuwuxian}btn2.png");
+        }
+        .u-btn3 {
+            background-image: url("@{kv_jianghuwuxian}btn3.png");
+        }
+        .u-btn4 {
+            background-image: url("@{kv_jianghuwuxian}btn4.png");
+        }
+        .u-btn5 {
+            background-image: url("@{kv_jianghuwuxian}btn5.png");
+        }
+        .u-btn6 {
+            background-image: url("@{kv_jianghuwuxian}btn6.png");
+        }
+
+        a:hover {
+            filter: brightness(120%) saturate(150%);
+        }
+    }
+}
+
+// 副本
+.m-one {
+    .pt(160px);
+
+    .u-title {
+        .size(1100px, 194px);
+        .mb(60px);
+        background-image: url("@{kv_jianghuwuxian}title1.png");
+    }
+
+    .u-box {
+        .auto(x);
+        .size(1294px, 580px);
+        padding: 70px;
+        box-sizing: border-box;
+        background-image: url("@{kv_jianghuwuxian}bgScroll.png");
+    }
+
+    .u-tab {
+        .size(1077px,43px); 
+        background-image: url("@{kv_jianghuwuxian}tab.png");
+    }
+
+    .u-tab-block {
+        .full;
+        .pt(35px);
+        .flex;
+        box-sizing: border-box;
+        justify-content: space-between;
+
+        .u-img {
+            .pr;
+            .size(550px, 340px);
+            box-shadow: 0 8px 10px rgba(0, 0, 0, 0.3);
+
+            img {
+                .full;
+            }
+
+            .u-more {
+                .pointer;
+                .pa;
+                .z(3);
+                .lb(16px, 22px);
+                .size(175px, 45px);
+                background-image: url("@{kv_common}more.png");
+                &:hover {
+                    filter: brightness(110%);
+                }
+            }
+        }
+
+        .u-news {
+            background: #fff;
+            .size(280px, 340px);
+            margin: 0 10px;
+            box-shadow: 0 8px 10px rgba(0, 0, 0, 0.4);
+            padding: 10px 14px;
+            box-sizing: border-box;
+
+            .u-line {
+                .db;
+                .fz(14px);
+                .flex;
+                .lh(34px);
+                .pointer;
+                justify-content: space-between;
+                border-bottom: 2px solid #f0f0f0;
+
+                span {
+                    .db;
+                    .nobreak;
+
+                    &.u-name {
+                        max-width: 200px;
+                        .color(@color, #547479);
+
+                        i {
+                            font-style: normal;
+                            color: rgb(73, 105, 115);
+                        }
+                    }
+
+                    &.u-author {
+                        max-width: 60px;
+                        .color(#999);
+                        .fz(12px);
+                        .pr(5px);
+                    }
+                }
+
+                &:last-child {
+                    border: 0;
+                }
+            }
+        }
+
+        .u-btnbox {
+            .flex;
+            .size(290px, 340px);
+            justify-content: space-between;
+
+            * {
+                .size(65px, 340px);
+                box-shadow: 0 8px 10px rgba(0, 0, 0, 0.4);
+            }
+
+            transition: 0.2s ease-in-out;
+
+            a:hover {
+                filter: brightness(105%);
+            }
+
+            .u-btn1 {
+                background-image: url("@{kv_common}btn_1.png");
+            }
+
+            .u-btn2 {
+                background-image: url("@{kv_common}btn_2.png");
+            }
+
+            .u-btn3 {
+                background-image: url("@{kv_common}btn_3.png");
+            }
+
+            .u-btn4 {
+                background-image: url("@{kv_common}btn_4.png");
+            }
+        }
+    }
+}
+
+// 代币
+.m-two {
+    .w(1920px);
+    .pt(157px);
+    .h(1612px);
+    .u-title {
+        .size(1100px, 199px);
+        background-image: url("@{kv_jianghuwuxian}title2.png");
+    }
+}
+
+// 玩法
+.m-three {
+    .u-title {
+        .size(1100px, 194px);
+        background-image: url("@{kv_jianghuwuxian}title3.png");
+        .mb(60px);
+    }
+    .u-box {
+        .flex;
+        .w(1260px);
+        flex-wrap: wrap;
+        justify-content: space-between;
+        .u-img {
+            .size(585px,580px);
+            .mb(80px);
+            background-repeat: no-repeat;
+        }
+        .u-img1 {
+            background-image: url("@{kv_jianghuwuxian}img1.png");
+        }
+        .u-img2 {
+            background-image: url("@{kv_jianghuwuxian}img2.png");
+        }
+        .u-img3 {
+            background-image: url("@{kv_jianghuwuxian}img3.png");
+        }
+        .u-img4 {
+            background-image: url("@{kv_jianghuwuxian}img4.png");
+        }
+    }
+}
+// 其它
+.m-four {
+    .pt(110px);
+    .pb(300px);
+    .u-title {
+        .size(1100px, 194px);
+        background-image: url("@{kv_jianghuwuxian}title4.png");
+        .mb(60px);
+    }
+
+    .u-box {
+        .flex;
+        justify-content: center;
+        align-items: center;
+        .size(1294px, 580px);
+        .auto(x);
+        box-sizing: border-box;
+        padding: 70px;
+        background-image: url("@{kv_jianghuwuxian}bgScroll.png");
+    }
+
+    .u-swiper {
+        .full;
+        img {
+            .full;
+        }
+    }
+}
+// 底部
+.m-bottom {
+    .pr;
+    .size(100%,940px);
+    .u-logo {
+        .pa;
+        .lt(0,300px);
+        .size(100%,537px);
+        background-image: url("@{kv_jianghuwuxian}logo.png");
+        background-repeat: no-repeat;
+        background-position: center center;
+    }
+}
