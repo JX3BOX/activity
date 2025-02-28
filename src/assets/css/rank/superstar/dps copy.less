@@ -1,0 +1,390 @@
+.m-superstar-dps-null {
+    .x;
+    .mt(15vh);
+    color: #252328;
+    min-height: 30vh;
+}
+.m-superstar-box {
+    padding: 60px 0;
+    .w(1200px);
+    // .mt(40px);
+    .u-boss {
+        background-color: #454447 !important;
+        &.active {
+            color: #252328;
+            background-color: #fef2da !important;
+            &:hover {
+                color: #252328;
+            }
+        }
+        &:hover {
+            color: #fff;
+        }
+        .u-boss-name {
+            .fz(15px);
+        }
+    }
+}
+.m-superstar-dps {
+    .u-center {
+        background-image: url("@{superstar}center.jpg");
+        background-size: 100%;
+        background-repeat: repeat-y;
+        padding: 0 50px 10px 50px;
+    }
+    .u-top {
+        .h(114px);
+        .pr;
+        .u-title {
+            .pa;
+            z-index: 2;
+            .lt(556.7px,30px);
+        }
+    }
+    .m-rank-content {
+        .mt(40px);
+    }
+
+    .m-rank-dps-xf {
+        ul {
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        li {
+            list-style: none;
+            .mr(8px);
+            .mb(10px);
+            border: 1px solid transparent;
+
+            &.on {
+                // border-color: #0cf;
+                background-color: #fef2da;
+                color: #fff;
+                &:hover {
+                    background-color: #fef2da;
+                    color: #703100;
+                }
+            }
+        }
+        .u-mount {
+            padding: 5px 10px;
+            background-color: #454447;
+            img {
+                .size(22px);
+                .y;
+                // .mr(5px);
+            }
+            color: #eee;
+            .fz(14px);
+            .pointer;
+
+            &:hover {
+                background-color: #454447;
+                color: #ffedc6;
+            }
+        }
+    }
+
+    .m-rank-dps-list {
+        .mt(20px);
+        .u-item {
+            .x;
+            .fz(13px, 40px);
+
+            .mb(10px);
+            .h(40px);
+            .r(2px);
+
+            background-color: #454447;
+            &:nth-child(2n) {
+                // background: #111;
+            }
+
+            color: #eee;
+            a {
+                color: #eee;
+            }
+            a:hover {
+                color: #0cf;
+            }
+
+            display: flex;
+            align-items: center;
+        }
+
+        .u-server,
+        .u-mount {
+            .el-dropdown-link {
+                cursor: pointer;
+            }
+        }
+
+        .u-ranking {
+            .lh(40px);
+            .x;
+        }
+
+        .u-mount {
+            img {
+                .size(24px);
+                .mr(2px);
+                .y;
+            }
+            .nobreak;
+        }
+
+        .u-team {
+            img {
+                .size(24px);
+                .y;
+                .mr(5px);
+            }
+            .nobreak;
+            text-align: left;
+            padding-left: 10px;
+        }
+
+        .u-role {
+            img {
+                .size(24px);
+                .y;
+                .mr(5px);
+            }
+            a {
+                text-decoration: underline;
+                color: #0cf;
+                &:hover {
+                    color: lighten(#0cf, 10%);
+                }
+            }
+            .nobreak;
+        }
+
+        .u-total {
+            .fz(12px);
+            line-height: 1.5;
+            span {
+                color: #999;
+            }
+            b {
+                // color: #0cf;
+                color: #fff;
+                margin: 0 5px;
+            }
+        }
+
+        .u-bar {
+            .h(20px);
+            .r(20px);
+            .lh(20px);
+            font-weight: normal;
+            .w(200px);
+            white-space: nowrap;
+        }
+        .u-dps {
+            color: #fff;
+            // .bold;
+            text-align: left;
+            text-indent: 20px;
+        }
+
+        .u-head {
+            background-color: #ffedc6;
+            * {
+                color: #1e374d !important;
+                font-weight: bold;
+                .fz(12px);
+            }
+            color: #aaa !important;
+            font-weight: normal;
+            .fz(12px);
+            .x;
+        }
+
+        .u-more {
+            .pointer;
+            color: #fff;
+            &:hover {
+                color: #0cf;
+            }
+        }
+
+        .u-misc {
+            color: #999;
+            .u-misc-div {
+                margin: 0 10px;
+                color: #555;
+            }
+        }
+        .u-log {
+            color: #999;
+        }
+    }
+
+    .u-server-pop {
+        .active {
+            background-color: #e6f0fb;
+            color: #3585de;
+        }
+    }
+}
+
+.u-dps-rank-pop {
+    .m-rank-top100-item {
+        .pr;
+        margin-bottom: 0;
+        background: linear-gradient(90deg, #454447 0%, #262429 50%);
+        box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.23);
+        border-left: 4px solid #ffedc6;
+        border-bottom-right-radius: 20px;
+        @padding: 40px;
+        @logosize: 88px;
+        @leftspace: 40px + @logosize + 20px;
+        @logopadding: 5px;
+        padding: @padding;
+        padding-bottom: @padding - 10px;
+        .pl(100px + @logosize + @logopadding*2);
+
+        &:hover {
+            background: linear-gradient(90deg, #262429 0%, #454447 50%);
+        }
+
+        .u-logo {
+            .db;
+
+            .el-image {
+                .db;
+                .size(120px);
+                img {
+                    .full;
+                    .db;
+                }
+            }
+
+            .pa;
+            .lt(38px, 80px);
+        }
+
+        .u-title {
+            .db;
+            i {
+                color: #eee;
+                .mr(5px);
+            }
+            .mb(6px);
+        }
+
+        .u-teamname {
+            .nobreak;
+            .mr(5px);
+            color: #ffedc6;
+            .fz(24px, 24px);
+            .bold;
+
+            &:hover {
+                // color: #f39;
+                // i {
+                //     color: #f39;
+                // }
+            }
+
+            &.u-teamname-null {
+                color: #aaa;
+                &:hover {
+                    color: #aaa;
+                }
+            }
+        }
+
+        .u-server {
+            &:before {
+                content: "@";
+            }
+            color: #fff;
+            font-weight: bold;
+            .fz(12px);
+        }
+
+        .u-verified,
+        .u-not-verified {
+            .fz(16px, 40px);
+            .ml(5px);
+            .mr(3px);
+            .fz(14px);
+        }
+        .u-verified {
+            color: #7ecb83;
+        }
+        .u-not-verified {
+            color: #d04949;
+        }
+
+        .u-time {
+            .pa;
+            .rt(40px);
+            font-size: 12px;
+            cursor: default;
+
+            .u-time-finish {
+                color: rgba(255, 255, 255, 0.5);
+                display: block;
+            }
+            .u-time-fight {
+                color: white;
+            }
+        }
+
+        .u-time-fight {
+            .x(right);
+            b {
+                color: #ffedc6;
+                .fz(20px);
+            }
+        }
+
+        .u-teammates {
+            .clearfix;
+            .mt(10px);
+        }
+
+        .u-leader {
+            .bold;
+            .fz(14px, 24px);
+            color: #fff;
+            .u-username {
+                .y(top);
+                white-space: visible;
+                .w(auto);
+            }
+        }
+        .u-mount {
+            .size(24px);
+            .y(top);
+            .mr(2px);
+        }
+
+        .u-member {
+            .fz(12px);
+            .mb(5px);
+
+            &-content {
+                .flex;
+                align-items: center;
+            }
+        }
+
+        .u-username {
+            .nobreak;
+            color: #fff;
+            width: 97px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+    }
+    &.el-popover {
+        padding: 0;
+        max-width: 660px;
+    }
+}

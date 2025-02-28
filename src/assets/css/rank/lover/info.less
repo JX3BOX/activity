@@ -1,0 +1,93 @@
+.m-lover-info {
+    .m-lover-box {
+        min-height: 450px;
+    }
+    .m-info-box {
+        .fz(16px,1.5);
+        color: #fff;
+        background: url("@{lover}info.jpg") no-repeat center center; 
+    }
+    .m-lover-box {
+        border-top-left-radius: 30px;
+        border-bottom-right-radius: 30px;
+    }
+    .m-lover-process {
+        .flex;
+        justify-content: space-around;
+        .m-step {
+            .flex;
+            .pr;
+            .w(150px);
+            .x;
+            .fz(14px);
+            flex-direction: column;
+            align-items: center;
+            color: #fcf1e8;
+            &::before,
+            &::after {
+                content: "";
+                .db;
+                .pa;
+                .size(100%,0px);
+                top: 79px;
+                border: 3px solid #fcf1e8;
+            }
+            &::before {
+                left: -75px;
+            }
+            &::after {
+                left: 75px;
+            }
+        }
+        .m-step:first-child::before {
+            left: 0;
+            border: 3px dashed #fcf1e8;
+            transform: scaleX(2.4);
+            width: 24%;
+        }
+        .m-step:last-child {
+            .u-dot i {
+                .size(18px);
+            }
+            &::after {
+                .none;
+            }
+        }
+        @totalSteps: 5;
+        .u-icon {
+            .size(60px);
+            .flex;
+            .pb(8px);
+            justify-content: center;
+            align-items: flex-end;
+            .loop(@totalSteps);
+        }
+        .loop (@i, @size: 27px) when (@i > 0) {
+            @stepIndex: @totalSteps - @i + 1;
+            .u-icon:nth-child(@{stepIndex}) .u-img {
+                .size(@size);
+            }
+            .loop(@i - 1, @size + 3px);
+        }
+        .u-dot {
+            .flex;
+            .size(100%,28px);
+            align-items: center;
+            justify-content: center;
+            i {
+                .db;
+                .size(12px);
+                .r(50%);
+                background-color: #fcf1e8;
+            }
+        }
+        .u-name {
+            .bold;
+            .fz(20px,1.8);
+        }
+        .u-time {
+            .bold;
+            .fz(12px,1.5);
+        }
+    }
+}

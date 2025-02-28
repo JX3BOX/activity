@@ -1,0 +1,131 @@
+@import './app.less';
+
+.m-rank-header{
+    padding-top:30px;
+    padding-bottom:30px;
+    .u-logo{
+        .w(480px);
+        .pa;top:40px;.z(1);
+        left:50%;transform: translateX(-50%);
+    }
+    .clip;
+    min-height:220px;
+}
+
+.m-rank-content{
+    max-width:1080px;
+    box-sizing: border-box;
+    .auto(x);
+    .pr;.z(2);
+    .mt(60px);
+
+    background-color:#fff;
+    padding:20px 20px 60px 20px;
+    border: 5px solid #073141;
+    border-radius: 10px;
+
+    a{.underline(@color-link);}
+
+    .u-tip,.u-footer{
+        // .x;
+        .fz(14px);
+        .mt(20px);
+    }
+    .u-footer{
+        .x;
+    }
+}
+
+.m-join-notice{
+    border: 1px dashed #e1e4e8;
+    border-radius: 4px;
+    padding: 10px;
+    background-color: #fafbfc;
+    font-size: 14px;
+    line-height: 2;
+    margin: 10px 0;
+    white-space: pre-wrap;
+}
+.m-rank-null{
+    .x;
+}
+
+.m-join-title{
+    .x;
+    font-weight:300;
+}
+
+.m-join-team{
+    .u-warning{
+        .fz(12px,2);
+        .mb(10px);
+        .el-icon-warning{
+            .pr;
+            top:2px;
+        }
+    }
+}
+.m-join-form{
+    .el-select{
+        .db;
+    }
+    .el-input{
+        .w(100%);
+    }
+    .u-btns{
+        .x;
+        .mt(20px);
+        .u-btn{
+            .w(280px);
+        }
+    }
+    .u-warning{
+        .x;
+        color:#c00;
+    }
+}
+.m-join-team-item{
+    .u-team-name{
+        color:@color-link;
+    }
+    .u-team-id{
+        .ml(5px);
+        color:#999;
+        .fz(12px);
+    }
+    .u-team-server{
+        .ml(5px);
+        color:#999;
+        .fz(12px);
+        &::before{
+            content:'<';
+        }
+        &::after{
+            content:'>';
+        }
+    }
+}
+
+.c-footer{
+    max-width:1080px;
+    .mt(40px) !important;
+}
+
+.m-join-done{
+    .x;
+
+    strong{
+        color:#49c10f;
+    }
+    .u-title{
+        &.u-orange{
+            color: #f37b1d ;
+        }
+        &.u-refuse{
+            color: red;
+        }
+    }
+}
+.m-join-null{
+    .x;
+}

@@ -1,0 +1,33 @@
+.m-race-tab {
+    .x;
+    .mt(20px);
+    // .clearfix;
+    // .mr(-15px);
+    .u-item {
+        .dbi;
+        .y(top);
+        // .fl;
+        margin: 0 6px;
+        .x;
+
+        background: url("@{img}common/tab_v1_default.png?") no-repeat 0 0;
+        .size(167px,63px);
+        .fz(22px,63px);
+        color: #fff;
+        letter-spacing: 0.5px;
+        // font-family: '楷体';
+
+        transition: 0.1s ease-in-out;
+        &:hover {
+            background-image: url("@{img}common/tab_v1_active.png?");
+            color: white;
+        }
+        &.active {
+            .bold;
+            background-image: url("@{img}common/tab_v1_hover.png?");
+            color: #703100;
+        }
+
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    }
+}

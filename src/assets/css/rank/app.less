@@ -1,0 +1,66 @@
+html {
+    min-width: 1280px;
+}
+body {
+    background: linear-gradient(180deg, rgba(32, 51, 69, 1) 62%, rgba(84, 102, 120, 1) 100%);
+}
+
+body {
+    height: 100vh;
+}
+.m-rank-container,
+#m-rank-star {
+    height: calc(100vh);
+    overflow: auto;
+    .scrollbar(transparent, #feecc5);
+}
+
+#m-rank-star {
+    .pa;
+    .lt(0);
+    .w(100%);
+    z-index: -1;
+}
+
+.c-header,
+.c-jx3box {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.m-rank-bg {
+    .w(100vw);
+    .pa;
+    .lt(0);
+    // .pa;top:0;left:50%;transform: translateX(-50%);
+    .z(1);
+    min-height: 100vh;
+    img {
+        .db;
+        .auto(x);
+    }
+}
+.m-rank-primary {
+    .mt(@header-height);
+    width: @box_width;
+    .auto(x);
+    .pr;
+    .z(1);
+}
+
+.c-footer {
+    margin: 20px auto 0 auto !important;
+    width: @box_width;
+    .auto(x);
+    padding: 20px 0;
+}
+
+.m-rank-pop-wechat {
+    border: none;
+    height: 400px;
+    margin: 0 auto;
+    display: block;
+}
+.m-rank-pop-wechat-tips {
+    .x;
+    color: #ff7600;
+}

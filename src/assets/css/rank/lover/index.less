@@ -1,0 +1,104 @@
+body {
+    background-color: #522c29;
+}
+.p-lover {
+    .w(100%);
+    .auto(x);
+    max-width: 1920px;
+    min-height: 100vh;
+    min-width: 1400px;
+    background: url("@{lover}bg.jpg") center 1050px no-repeat #522c29;
+    .wp {
+        .auto(x);
+        .w(1380px);
+    }
+    .m-lover-page {
+        .flex;
+        flex-direction: column;
+        gap: 60px;
+        padding: 30px 0;
+    }
+    .u-page-title {
+        .flex;
+        justify-content: center;
+        align-items: center;
+        .u-img {
+            height: 110px;
+            user-select: none;
+        }
+    }
+}
+.m-lover-kv {
+    .flex;
+    .h(1050px);
+    justify-content: space-between;
+    align-items: flex-end;
+    background: url("@{lover}kv.png") center top no-repeat;
+    background-size: cover;
+    .m-menus {
+        .flex;
+        .pb(34px);
+        justify-content: space-between;
+
+        .m-menu {
+            .flex;
+            gap: 20px;
+        }
+        .u-menu {
+            .size(190px,100px);
+            .x;
+            .fz(32px,100px);
+            .bold(700);
+            transition: 0.3s ease-in;
+            color: #666;
+            background: url("@{lover}button.png") center center no-repeat;
+            background-size: cover;
+            &:hover {
+                color: #454545;
+                filter: brightness(120%);
+            }
+            &.active {
+                color: #f3c768;
+                background: url("@{lover}button-active.png") center center no-repeat;
+                background-size: cover;
+                &:hover {
+                    color: #f3c768;
+                    filter: brightness(100%);
+                }
+            }
+        }
+    }
+}
+
+.m-lover-box {
+    .clip;
+    .w(100%);
+    border: 5px solid #fda990;
+    box-sizing: border-box;
+    padding: 30px;
+    background: linear-gradient(97.37deg, #f3dcc7 0%, #fdf5ee 100%);
+    h2 {
+        .fz(24px,1.2);
+        margin: 0;
+        padding: 0;
+    }
+    h3 {
+        .fz(24px,1.5);
+        margin: 0;
+        padding: 0;
+        color: #ff6f6f;
+    }
+}
+
+.m-line-box {
+    .pr;
+    padding: 5px;
+    box-sizing: border-box;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    .m-box {
+        .full;
+        background: rgba(72, 36, 36, 0.7);
+        padding: 5px 10px;
+        box-sizing: border-box;
+    }
+}

@@ -1,0 +1,84 @@
+// 富文本样式调整
+.m-superstar-introduce-info {
+    padding: 20px;
+    color: #f5cba4;
+    box-sizing: border-box;
+
+    h2 {
+        color: #fff;
+        font-weight: 600;
+        .fz(24px,40px);
+        .mt(20px);
+    }
+    .fz(16px,2.2);
+
+    p {
+        margin: 0;
+    }
+
+    b {
+        color: #f00;
+    }
+    strong {
+        color: #ffedc6;
+    }
+    div {
+        padding: 0 5px;
+    }
+    a {
+        color: #8bffff;
+        text-decoration: underline;
+        // box-shadow: 0 1px 0 #2f82ee;
+        &:hover {
+            color: #8bffff;
+        }
+    }
+
+    h3 {
+        .fz(15px,40px);
+        border-bottom: 1px solid #999;
+    }
+    h5 {
+        border-bottom: 1px dashed #999;
+    }
+    h6 {
+        border-bottom: 1px dotted #999;
+    }
+
+    table {
+        .w(100%) !important;
+        border-collapse: collapse;
+
+        td,
+        th {
+            border: 1px solid #009ba9;
+            padding: 0 10px;
+        }
+        .fz(14px,2.5);
+    }
+    thead {
+        .x;
+        th:first {
+            .x(left);
+        }
+    }
+    tbody {
+        th {
+            .x(left);
+        }
+        td {
+            .x;
+        }
+    }
+    small {
+        .fz(12px);
+        color: #888;
+    }
+    .u-all {
+        .mt(10px);
+    }
+    iframe {
+        .w(100%);
+        .h(800px);
+    }
+}

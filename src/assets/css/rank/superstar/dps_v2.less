@@ -1,0 +1,441 @@
+.m-superstar-dps-null {
+    .x;
+    .mt(15vh);
+    color: #252328;
+    min-height: 30vh;
+}
+.fade-enter-active,
+.fade-leave-active {
+    transition: all 1s;
+}
+.fade-enter,
+.fade-leave-to {
+    opacity: 0;
+    transform: translateX(30px);
+}
+
+.m-superstar-box {
+    .pr;
+    // 侧栏浏览器定位boss切换
+    .m-superstar-boss-fixed {
+        .w(90px);
+        .pa;
+        left: -130px;
+        top: 20px;
+        background: #252328;
+        box-shadow: 0px 0px 10px 0px #252328;
+        .flex;
+        flex-direction: column;
+        .x;
+        padding: 10px;
+        box-sizing: border-box;
+        .u-boss-item {
+            .mb(10px);
+            .w(70px);
+            padding: 10px;
+            box-sizing: border-box;
+
+            img {
+                .w(50px);
+            }
+            &:last-child {
+                .mb(0);
+            }
+            &.on {
+                background: #f5cba433;
+
+                border: 2px dashed #f5cba4cc;
+                // border-dasharray: 5px 10px;
+            }
+        }
+    }
+    padding: 60px 0;
+    .m-superstar-boss {
+        .w(1200px);
+        .flex;
+        justify-content: space-between;
+        .u-boss-item {
+            .size(220px);
+            padding: 10px;
+            box-sizing: border-box;
+            background-image: url("@{superstar}dps/buttom.png");
+            background-repeat: no-repeat;
+            background-size: 200px;
+            background-position: center;
+            .x;
+            cursor: pointer;
+            &.on,
+            &:hover {
+                padding: 0;
+                background-image: url("@{superstar}dps/buttom-active.png");
+                background-size: 100%;
+                .u-boss-name {
+                    color: #f5cba4;
+                }
+                .u-boss-icon {
+                    .mt(39px);
+                }
+            }
+            .u-boss-icon {
+                border-radius: 50%;
+                .mt(29px);
+            }
+            .u-boss-name {
+                color: #f6f6f6;
+                .mt(14px);
+            }
+        }
+    }
+    .m-superstar-title {
+        background: #252328;
+        box-shadow: 0px 0px 10px 0px #252328;
+        .h(42px);
+        padding: 8px 20px 8px 20px;
+        border-radius: 8px;
+        font-family: Microsoft YaHei;
+        .fz(20px,26.4px);
+        .bold(700);
+        color: #f5cba4;
+        .flex;
+        align-items: center;
+        justify-content: center;
+        margin: 50px 0;
+    }
+    // 切换选项
+    .m-superstar-options {
+        .flex;
+        gap: 30px;
+        .mb(50px);
+        .u-options-item {
+            .size(257.5px,42px);
+            padding: 8px 20px 8px 20px;
+            border-radius: 8px;
+            .fz(20px,26.5px);
+            .bold(700);
+            color: rgba(37, 35, 40);
+            border: 2px solid #252328;
+            .flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            &.active {
+                background: #252328;
+                color: rgba(245, 203, 164, 0.8);
+            }
+            &:hover {
+                box-shadow: 0px 0px 10px 0px #252328;
+            }
+        }
+    }
+    //死亡数据
+    .m-superstar-die {
+        .mt(50px);
+        .u-data-box {
+            .flex;
+            justify-content: space-between;
+            padding: 0 50px;
+            box-sizing: border-box;
+            .u-data-left,
+            .u-date-right {
+                .size(500px);
+                background-repeat: no-repeat;
+                background-size: 100%;
+                .flex;
+                justify-content: center;
+                align-items: center;
+            }
+            .u-data-left {
+                background-image: url("@{superstar}dps/2.png");
+                .u-die-pie {
+                    .size(355px);
+                    // background: #d9d9d9;
+                    border-radius: 50%;
+                    .echarts {
+                        width: 100% !important;
+                        height: 100% !important;
+                    }
+                }
+            }
+            .u-date-right {
+                background-image: url("@{superstar}dps/3.png");
+
+                .u-die-box {
+                    .size(400px,320px);
+                    .flex;
+                    flex-wrap: wrap;
+                    gap: 20px;
+                    padding-left: 20px;
+                    // justify-content: center;
+                    .u-die-item {
+                        .size(80px,130px);
+                        .u-die-log {
+                            .size(80px);
+                            background-color: #252328;
+                            color: #fff;
+                            img {
+                                .size(100%);
+                                object-fit: cover;
+                            }
+                        }
+                        .u-die-number {
+                            .mt(20px);
+                            .size(80px,34px);
+                            background: #252328;
+                            padding: 4px 16px;
+                            box-sizing: border-box;
+                            .fz(20px, 26.4px);
+                            .bold(700);
+                            color: #f5cba4;
+                            .x;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    //左右反转
+    .m-site-right {
+        .u-team-box_item {
+            flex-direction: row-reverse;
+            justify-content: space-between;
+        }
+        .u-superstar-green,
+        .u-superstar-white {
+            .u-top-green,
+            .u-bottom-green,
+            .u-top-white,
+            .u-bottom-white {
+                .flex;
+                justify-content: right;
+            }
+        }
+    }
+    //绿色背景
+    .u-superstar-green,
+    .u-superstar-white {
+        .u-top-green,
+        .u-bottom-green,
+        .u-center-green,
+        .u-top-white,
+        .u-bottom-white,
+        .u-center-white {
+            padding: 0 65px;
+            .u-team-info_bg {
+                .w(250px);
+                .h(100%);
+                background: #25232880;
+            }
+        }
+        .u-center-green,
+        .u-center-white {
+            .h(430px);
+            .u-team-info_bg {
+                .h(100%);
+            }
+        }
+        .u-top-green,
+        .u-bottom-green,
+        .u-bottom-white,
+        .u-top-white {
+            .h(60px);
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
+        .u-top-green {
+            background-image: url("@{superstar}dps/green1.png");
+        }
+        .u-top-white {
+            background-image: url("@{superstar}dps/white1.png");
+        }
+        .u-bottom-green {
+            background-image: url("@{superstar}dps/green2.png");
+        }
+        .u-bottom-white {
+            background-image: url("@{superstar}dps/white2.png");
+        }
+        .u-center-green {
+            background-image: url("@{superstar}dps/green3.png");
+            background-repeat: repeat-y;
+            background-size: 100%;
+        }
+        .u-center-white {
+            background-image: url("@{superstar}dps/white3.png");
+            background-repeat: repeat-y;
+            background-size: 100%;
+        }
+    }
+    .m-team-box {
+        .u-xf {
+            .u-team-rank_left {
+                .w(100%);
+                overflow-y: scroll !important;
+            }
+        }
+        .u-team-box_item {
+            .flex;
+            .u-team-info {
+                .flex;
+                flex-direction: column;
+                .x;
+                .u-team-logo {
+                    .size(160px);
+                    margin: 59px auto 0 auto;
+                    &.xf {
+                        // background: #d9d9d9;
+                        .flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                }
+                .u-team-member {
+                    padding: 0 20px;
+                    .u-player-name {
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        .w(100%);
+                    }
+                    .u-team-info_item {
+                        .flex;
+                        align-items: center;
+                        justify-content: center;
+                        .fz(14px, 18.5px);
+                        .bold(700);
+                        color: #fff;
+                        .mt(13px);
+                    }
+                }
+                .u-team-member,
+                .u-team-name {
+                    .mt(20px);
+                    .fz(20px,26.4px);
+                    .bold(700);
+                    color: #f5cba4;
+                }
+                .u-team-server {
+                    .bold(400);
+                    .fz(12px,16px);
+                    color: rgba(255, 255, 255, 0.5);
+                    padding: 10px 0;
+                }
+                .u-team-time {
+                    .fz(14px,18px);
+                    .bold(700);
+                    color: #fff;
+                    span {
+                        .fz(20px,26.4px);
+                        .bold(700);
+                        color: #f5cba4;
+                    }
+                }
+                .u-team-btn {
+                    .db;
+                    .x;
+                    padding: 20px;
+                    &.two {
+                        .flex;
+                        justify-content: space-between;
+                    }
+                    .u-jcl-battle-link {
+                        .dbi;
+                        .w(100px);
+                    }
+                }
+            }
+            .u-team-rank_left {
+                .ml(45px);
+                max-height: 420px;
+                overflow: hidden;
+            }
+            .u-team-rank_right {
+                .mr(45px);
+            }
+            .u-team-rank_left,
+            .u-team-rank_right {
+                &.scroll {
+                    max-height: 420px;
+                    overflow-y: scroll;
+                    padding-right: 20px;
+                }
+                .u-team-rank_item {
+                    &:hover,
+                    &.active {
+                        &::after {
+                            content: "";
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            right: 0;
+                            bottom: 0;
+                            background: rgba(0, 0, 0, 0.2);
+                            .w(775px);
+                        }
+                    }
+                }
+                .u-team-rank_itemNo,
+                .u-team-rank_item {
+                    cursor: pointer;
+                    .flex;
+                    align-items: center;
+                    .pr;
+
+                    .u-sort {
+                        .size(40px);
+                        .fz(14px,18px);
+                        .bold(400);
+                        .mr(10px);
+                        .flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                    .u-logo {
+                        .size(40px);
+                    }
+                    .u-line {
+                        .h(50px);
+                        border: 1px solid #fff;
+                        margin: 0 10px;
+                    }
+                    .u-name {
+                        background: #d9d9d9;
+                        .h(40px);
+                        .flex;
+                        align-items: center;
+                        padding: 0 4px;
+                        .w(521px);
+                        min-width: 198px;
+                        span {
+                            .fz(14px);
+                        }
+                    }
+                    .u-number {
+                        .ml(6px);
+                    }
+                }
+            }
+        }
+    }
+}
+/* 整体滚动条 */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* 滚动条轨道 */
+::-webkit-scrollbar-track {
+    background-color: #ffffff;
+    border-radius: 6px;
+}
+
+/* 滚动条滑块 */
+::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 6px;
+    border: 2px solid #f1f1f1;
+}
+
+/* 滚动条滑块 - 悬停 */
+::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+}

@@ -1,0 +1,236 @@
+.m-rank-content {
+    .mt(40px);
+}
+
+.m-rank-dps-xf {
+    // .mt(10px);
+    ul {
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    li {
+        list-style: none;
+        .mr(10px);
+        .mb(10px);
+        border: 1px solid transparent;
+
+        &.on {
+            // border-color: #0cf;
+            background-color: #ffedc6;
+            color: #703100;
+            &:hover {
+                background-color: #ffedc6;
+                color: #703100;
+            }
+        }
+    }
+    .u-mount {
+        padding: 5px 10px;
+        background-color: #3e576d;
+        img {
+            .size(24px);
+            .y;
+            // .mr(5px);
+        }
+        color: #eee;
+        .fz(14px);
+        .pointer;
+
+        &:hover {
+            background-color: #5a7c99;
+            color: #ffedc6;
+        }
+    }
+}
+
+.m-rank-dps-list {
+    .mt(20px);
+    padding: 0 10px;
+
+    .u-item {
+        .x;
+        .fz(13px, 40px);
+
+        .mb(10px);
+        .h(40px);
+        .r(2px);
+
+        background-color: #3e576d;
+        &:nth-child(2n) {
+            // background: #111;
+        }
+
+        color: #eee;
+        a {
+            color: #eee;
+        }
+        a:hover {
+            color: #0cf;
+        }
+
+        display: flex;
+        align-items: center;
+
+        // .u-dps-0 {
+        //     .u-bar {
+        //         width: 180px;
+        //     }
+        // }
+
+        // each(range(10), {
+        //     .u-dps-@{value} {
+        //         .u-bar {
+        //             width: (((1000 - @value * 35) / 1000) * 180px);
+        //         }
+        //     }
+        // });
+    }
+
+    .u-server,
+    .u-mount {
+        .el-dropdown-link {
+            cursor: pointer;
+        }
+    }
+
+    .u-ranking {
+        .lh(40px);
+        .x;
+    }
+
+    .u-mount {
+        img {
+            .size(24px);
+            .mr(2px);
+            .y;
+        }
+        .nobreak;
+    }
+
+    .u-team {
+        img {
+            .size(24px);
+            .y;
+            .mr(5px);
+        }
+        .nobreak;
+        text-align: left;
+        padding-left: 10px;
+    }
+
+    .u-role {
+        img {
+            .size(24px);
+            .y;
+            .mr(5px);
+        }
+        a {
+            text-decoration: underline;
+            color: #0cf;
+            &:hover {
+                color: lighten(#0cf, 10%);
+            }
+        }
+        .nobreak;
+    }
+
+    .u-total {
+        .fz(12px);
+        line-height: 1.5;
+        span {
+            color: #999;
+        }
+        b {
+            // color: #0cf;
+            color: #fff;
+            margin: 0 5px;
+        }
+    }
+
+    .u-bar {
+        .h(20px);
+        .r(20px);
+        .lh(20px);
+        font-weight: normal;
+        .w(200px);
+        white-space: nowrap;
+    }
+    .u-dps {
+        color: #fff;
+        // .bold;
+        text-align: left;
+        text-indent: 20px;
+    }
+
+    .u-head {
+        background-color: #ffedc6;
+        * {
+            color: #1e374d !important;
+            font-weight: bold;
+            .fz(12px);
+        }
+        color: #aaa !important;
+        font-weight: normal;
+        .fz(12px);
+        .x;
+    }
+
+    .u-more {
+        .pointer;
+        color: #fff;
+        &:hover {
+            color: #0cf;
+        }
+    }
+
+    .u-misc {
+        color: #999;
+        .u-misc-div {
+            margin: 0 10px;
+            color: #555;
+        }
+    }
+    .u-log {
+        color: #999;
+    }
+}
+
+.u-server-pop {
+    .active {
+        background-color: #e6f0fb;
+        color: #3585de;
+    }
+}
+
+.u-dps-rank-pop {
+    .m-rank-top100-item {
+        margin-bottom: 0;
+        padding-left: 40px;
+        .u-logo {
+            .none;
+        }
+        .r(4px);
+    }
+
+    &.el-popover {
+        padding: 0;
+        max-width: 660px;
+    }
+}
+.u-more-dropdown {
+    .ml(4px);
+}
+.u-more-dropdown-item {
+    .h(auto);
+    a {
+        color: #000;
+    }
+}
+.u-btn-more {
+    color: #fff;
+    &:hover {
+        color: #0cf;
+    }
+}

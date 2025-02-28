@@ -1,0 +1,107 @@
+.m-lover-join {
+    @min-height: 360px;
+    .u-submit {
+        .pointer;
+        .size(286px,80px);
+        .auto(x);
+        .mt(20px);
+        &:hover {
+            filter: brightness(105%);
+        }
+        &.disabled {
+            cursor: not-allowed;
+            filter: grayscale(1);
+        }
+    }
+    .m-success {
+        .flex;
+        .bold;
+        .fz(24px,30px);
+        color: #fff;
+        flex-direction: column;
+        align-items: center;
+        gap:20px;
+    }
+    .no-login {
+        .flex;
+        .pt(60px);
+        box-sizing: border-box;
+        flex-direction: column;
+        min-height: @min-height;
+        gap: 20px;
+        h3 {
+            .x;
+            letter-spacing: 3px;
+        }
+    }
+    .u-button {
+        .x;
+        .bold;
+        .pointer;
+        .auto(x);
+        .r(5px);
+        .fz(16px,40px);
+        .size(160px,40px);
+        letter-spacing: 3px;
+        background-color: #f66f6a;
+        color: #fff;
+        border: 0;
+        box-sizing: content-box;
+        border: 2px solid #f66f6a;
+        transition: 0.3s ease-out;
+        &:hover {
+            color: #f66f6a;
+            background-color: #fdf5ee;
+        }
+    }
+    .m-lover-list {
+        .flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 20px;
+        .m-lover-box {
+            .flex;
+            .pointer;
+            gap: 20px;
+            width: calc(50% - 20px);
+            transition: 0.3s all;
+            &:hover {
+                filter: brightness(105%);
+            }
+            .u-user {
+                .flex;
+                gap: 10px;
+                align-items: center;
+                color: #232323;
+            }
+        }
+    }
+    .m-lover-enroll {
+        .c-upload-banner .el-alert {
+            .none;
+        }
+    }
+    .m-lover-form {
+        .mt(20px);
+        &.disabled {
+            .el-upload--picture-card:hover,
+            .el-upload:focus {
+                cursor: not-allowed;
+                border-color: #c0ccda;
+                color: #8c939d;
+            }
+        }
+    }
+    .m-lover-certificate {
+        .flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 300px;
+        .no-certificate {
+            .bold;
+            .fz(30px);
+            letter-spacing: 5px;
+            color: #ff7272;
+        }
+    }
+}

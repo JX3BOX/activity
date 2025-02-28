@@ -1,0 +1,73 @@
+// @superstar    background: url("@{superstar}bg.jpg") center 1050px no-repeat #522c29;
+.p-superstar {
+    background-color: #252328;
+    width: 100%;
+    max-width: 1920px;
+    min-width: 1440px;
+    margin: 0 auto;
+}
+.m-superstar-info {
+    margin-top: 63px;
+    width: 100%;
+    max-width: 1920px;
+    min-width: 1440px;
+    // min-height: 3152px;
+    margin: 63px auto 0 auto;
+    box-sizing: border-box;
+    // background-image: url("@{superstar}kv/kv-top.jpg"), url("@{superstar}kv/bg-1.jpg"), url("@{superstar}kv/bg-2.jpg");
+    //     background-position: center top, center center, center bottom;
+    // background-size: 100%, 100%, 100%;
+    // background-repeat: no-repeat, repeat-y, repeat-y;
+    background-image: url("@{superstar}kv/kv-top.jpg"), url("@{superstar}kv/bg-1.jpg");
+    background-position: center top, center center;
+    background-size: 100%, 100%;
+    background-repeat: no-repeat, repeat-y;
+    .pr;
+    .m-superstar-kv-title {
+        .pa;
+        .dbi;
+        .rt(50px);
+        img {
+            .size(225.5px,668.5px);
+        }
+    }
+    .m-superstar-main {
+        .w(1200px);
+        padding-top: 800px;
+        margin: 0 auto;
+        .u-menu {
+            .flex;
+            justify-content: space-between;
+            .u-menu-item {
+                .size(224px,120px);
+                cursor: pointer;
+                &.actived,
+                &:hover {
+                    box-shadow: 0 0 10px 0px #252328;
+                }
+
+                &.no-enable {
+                    cursor: no-drop;
+                    img {
+                        // filter: brightness(1) invert(0.3);
+                        filter: opacity(0.7);
+                    }
+                    &:hover {
+                        box-shadow: none;
+                    }
+                }
+            }
+        }
+    }
+    .fade-enter-active {
+        transition: all 0.4s ease;
+    }
+    .fade-leave-active {
+        transition: all 0.4s cubic-bezier(1, 0.5, 0.8, 1);
+    }
+    .fade-enter,
+    .fade-leave-to {
+        transform: translateX(10px);
+        opacity: 0;
+    }
+}

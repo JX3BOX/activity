@@ -1,0 +1,49 @@
+.p-superstar-nav {
+    background-image: url("@{superstar}baoming/bm-bg.jpg");
+    background-size: 100%;
+    min-height: calc(100vh - 123px);
+    max-width: 1920px;
+    min-width: 1440px;
+    margin: 63px auto 0 auto;
+    .flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    .m-list {
+        padding-top: 30px;
+        box-sizing: border-box;
+        .size(1000px,auto);
+        .flex;
+        flex-wrap: wrap;
+        .u-item {
+            .size(300px,250px);
+            .x;
+            background-image: url("@{superstar}nav/bg-1.jpg");
+            background-repeat: no-repeat;
+            background-size: 100%;
+            .mb(20px);
+
+            margin-right: 50px;
+            a {
+                .size(100%);
+                .u-nav-img {
+                    .h(158px);
+                    padding: 26px 16px 0 16px;
+                    // box-sizing: border-box;
+                }
+                // .flex;
+                // flex-direction: column;
+                // align-items: center;
+                // justify-content: center;
+            }
+
+            .u-btn {
+                box-sizing: border-box;
+                padding: 11px 5px 5px 5px;
+            }
+        }
+        .u-item:nth-child(3n + 3) {
+            margin-right: 0;
+        }
+    }
+}

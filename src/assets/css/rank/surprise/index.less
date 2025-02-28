@@ -1,0 +1,74 @@
+#m-rank-star {
+    display: none;
+}
+body {
+    background: none;
+}
+.m-surprise {
+    background-image: url('@{cdn}/rank/surprise/kv.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top center;
+    .m-weal {
+        .w(1280px);
+        margin: 0 auto;
+        padding-top: 164px;
+        padding-bottom: 40px;
+        box-sizing: border-box;
+        .u-img-bottom {
+            .h(4px);
+            .mb(30px);
+            background: linear-gradient(to right, #ffffff, rgba(255, 255, 255, 0));
+        }
+        .u-content {
+            .flex;
+            // justify-content: space-between;
+            gap: 64px;
+            flex-wrap: wrap;
+        }
+        .u-item {
+            .mt(10px);
+            .size(384px,286px);
+            padding: 12px 12px 24px 12px;
+            box-sizing: border-box;
+            // background: linear-gradient(180deg, rgba(61, 81, 98, 0.75) 15.44%, rgba(26, 34, 41, 0.75) 100%);
+            background: linear-gradient(180deg, rgba(104, 125, 143, 1) 0%, rgba(31, 55, 74, 1) 100%);
+            border-top: 4px solid #ffedc6;
+            cursor: pointer;
+            border-bottom-left-radius: 10px;
+            &:hover {
+                background: linear-gradient(180deg, rgba(31, 55, 74, 1) 0%, rgba(104, 125, 143, 1) 100%);
+                border-right: 1px solid #ffedc6;
+                border-left: 1px solid #ffedc6;
+                border-bottom: 1px solid #ffedc6;
+                padding: 12px 11px 23px 11px;
+            }
+            .u-info {
+                .u-title {
+                    .mt(6px);
+                    color: #f7e6c2;
+                    .fz(15px,20px);
+                    .bold(700);
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+                .u-time {
+                    color: #fff;
+                    .fz(12px);
+                    padding: 8px 0;
+                }
+                .u-desc {
+                    .fz(12px,18px);
+                    color: rgba(255, 255, 255, 0.5);
+                    display: -webkit-box;
+                    -webkit-line-clamp: 4;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: normal;
+                }
+            }
+        }
+    }
+}

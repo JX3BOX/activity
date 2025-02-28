@@ -1,0 +1,104 @@
+.twinkle-border(@time:0.6s,@border:2px,@color:#fff,@child){
+    @keyframes twinkle-borderdraw-borderLR {
+        from {}
+        to {height:100%;}
+    }
+    @keyframes twinkle-borderdraw-borderTB {
+        from {}
+        to {width:100%;}
+    }
+    position:relative;
+    .@{child}{display:block;width:100%;height:100%;}
+    &:before,&:after,.@{child}:before,.@{child}:after{content:'';display:block;background-color:@color;position: absolute;}
+    &:before,&:after{width:@border;height:0;}
+    .@{child}:before,.@{child}:after{width:0;height:@border;}
+    &:before{left:0;bottom:0;}
+    &:after{right:0;top:0;}
+    .@{child}:before{top:0;left:0;}
+    .@{child}:after{right:0;bottom:0;}
+    &:hover{
+        &:before,&:after{animation:twinkle-borderdraw-borderLR @time forwards;}
+        .@{child}:before,.@{child}:after{animation:twinkle-borderdraw-borderTB @time forwards;}
+    }
+}
+
+.m-race-header{
+    .pr;
+    .u-vision{
+        min-height:620px;
+        // .tm(0.1);
+    }
+    .u-boss{
+        .pa;
+        .z(1);
+        left:50%;transform: translateX(-50%);
+    }
+    .u-logo{
+        .pa;top:0;.z(2);
+        left:50%;transform: translateX(-50%);
+    }
+    .u-version{
+        .pa;top:420px;.z(3);
+        left:50%;transform: translateX(-50%);
+    }
+    .u-logos{
+        .mt(10px);
+        .x;
+        color:#FFECC4;
+        .fz(12px);
+        .pr;
+        .z(10);
+
+        ul{
+            list-style: none;
+            padding:0;
+            margin:0;
+            .clearfix;
+            .dbi;
+            .y;
+        }
+        li{
+            .db;
+            .fl;
+            .mr(15px);
+            .twinkle-border(0.6s,2px,#FFEDC6,logo);
+        }
+        a{
+            .db;
+            img{
+                .h(40px);
+                // border:1px solid #75869c;
+            }
+            transition:background 0.2s ease-in-out;
+            &:hover{
+                background:rgba(0,0,0,.5);
+            }
+        }
+    }
+
+    .u-sponsors-label{
+        .db;
+        .mb(10px);
+    }
+    .u-sponsors-list{
+        li{
+            .mb(10px);
+        }
+    }
+
+    .u-wechat-qrcode{
+        .pa;.rb(0,120px);
+        .w(280px);
+        height: 280px;
+        background-image: url('@{cdn}/rank/rank/boxqrcode.png');
+        background-size: 100% 100%;
+        .z(10);
+    }
+
+    .u-qrcode {
+        right: -101px;
+        bottom: -124px;
+        .pr;
+    }
+}
+

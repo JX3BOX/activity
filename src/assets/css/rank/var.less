@@ -1,0 +1,25 @@
+@img: "https://img.jx3box.com/image/rank/";
+@lover: "https://img.jx3box.com/image/lover/";
+@superstar: "https://img.jx3box.com/topic/menpaitiantuan/";
+@cdn: "https://cdn.jx3box.com/design";
+@box_width: 1260px;
+
+.scrollbar(@bg: #fafafa, @thumb: #eee) {
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+    &::-webkit-scrollbar-track,
+    &::-webkit-scrollbar-track-piece {
+        background-color: @bg;
+        border-radius: 6px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: @thumb;
+        border-radius: 6px;
+    }
+    &::-webkit-scrollbar-button,
+    &::-webkit-scrollbar-corner,
+    &::-webkit-resizer {
+        display: none;
+    }
+}
