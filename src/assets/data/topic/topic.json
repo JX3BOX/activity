@@ -31,7 +31,7 @@
             "year": "2024",
             "date": "09-05",
             "time": "2024.09.05",
-            "link": "./cangxuelongcheng"
+            "link": "/topic/cangxuelongcheng"
         },
         {
             "name": "血战天策",
@@ -39,7 +39,7 @@
             "year": "2024",
             "date": "03-21",
             "time": "2024.03.21",
-            "link": "./xuezhantiance"
+            "link": "/topic/xuezhantiance"
         },
         {
             "name": "安史之乱",
@@ -47,7 +47,7 @@
             "year": "2023",
             "date": "09-14",
             "time": "2023.09.14",
-            "link": "./anshizhiluan"
+            "link": "/topic/anshizhiluan"
         },
         {
             "name": "日月明尊",
@@ -55,7 +55,7 @@
             "year": "2023",
             "date": "03-30",
             "time": "2023.03.30",
-            "link": "./riyuemingzun"
+            "link": "/topic/riyuemingzun"
         },
         {
             "name": "剑湖神宫",
@@ -63,7 +63,7 @@
             "year": "2022",
             "date": "11-24",
             "time": "2022.11.24",
-            "link": "./jianhushengong"
+            "link": "/topic/jianhushengong"
         },
         {
             "name": "巴蜀风云",
@@ -71,7 +71,7 @@
             "year": "2022",
             "date": "07-28",
             "time": "2022.07.28",
-            "link": "./bashufengyun"
+            "link": "/topic/bashufengyun"
         },
         {
             "name": "五毒现世",
@@ -79,7 +79,7 @@
             "year": "2022",
             "date": "05-13",
             "time": "2022.05.13",
-            "link": "./wuduxianshi"
+            "link": "/topic/wuduxianshi"
         },
         {
             "name": "圣殿云起",
@@ -87,7 +87,7 @@
             "year": "2022",
             "date": "03-31",
             "time": "2022.03.31",
-            "link": "./shengdianyunqi"
+            "link": "/topic/shengdianyunqi"
         },
         {
             "name": "藏剑山庄",
@@ -95,7 +95,7 @@
             "year": "2021",
             "date": "11-19",
             "time": "2021.11.19",
-            "link": "./cangjianshanzhuang"
+            "link": "/topic/cangjianshanzhuang"
         },
         {
             "year": 2020,
@@ -110,7 +110,7 @@
             "year": "2024",
             "date": "10-31",
             "time": "2024.10.31",
-            "link": "./silufengyu"
+            "link": "/topic/silufengyu"
         },
         {
             "name": "无界",
@@ -118,7 +118,7 @@
             "year": "2024",
             "date": "06-13",
             "time": "2024.06.13",
-            "link": "./wujie"
+            "link": "/topic/wujie"
         },
         {
             "name": "雾海寻龙",
@@ -126,7 +126,7 @@
             "year": "2024",
             "date": "4-25",
             "time": "2024.4.25",
-            "link": "./wuhaixunlong"
+            "link": "/topic/wuhaixunlong"
         },
         {
             "name": "万灵当歌",
@@ -134,7 +134,7 @@
             "year": "2023",
             "date": "10-25",
             "time": "2023.10.25",
-            "link": "./wanlingdangge"
+            "link": "/topic/wanlingdangge"
         },
         {
             "name": "群侠万变",
@@ -142,7 +142,7 @@
             "year": "2023",
             "date": "04-27",
             "time": "2023.04.27",
-            "link": "./qunxiawanbian"
+            "link": "/topic/qunxiawanbian"
         },
         {
             "name": "横刀断浪",
@@ -150,7 +150,7 @@
             "year": "2022",
             "date": "10-27",
             "time": "2022.10.27",
-            "link": "./hengdaoduanlang"
+            "link": "/topic/hengdaoduanlang"
         },
         {
             "name": "江湖无限",
@@ -158,7 +158,7 @@
             "year": "2022",
             "date": "04-28",
             "time": "2022.04.28",
-            "link": "./jianghuwuxian"
+            "link": "/topic/jianghuwuxian"
         },
         {
             "name": "北天药宗",
@@ -166,7 +166,7 @@
             "year": "2021",
             "date": "10-28",
             "time": "2021.10.28",
-            "link": "./beitianyaozong"
+            "link": "/topic/beitianyaozong"
         },
         {
             "name": "白帝风云",
