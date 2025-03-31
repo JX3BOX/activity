@@ -54,7 +54,7 @@
                 <img class="boss-name" :src="imgurl + '2/jm-3.png'" alt="" />
                 <div class="content">GUIXUZHILI</div>
                 <img class="content-image" :src="imgurl + '2/jm-4.png'" alt="" />
-                <img class="link-image" :src="imgurl + '2/anniu2.png'" alt="" />
+                <img class="link-image" :src="imgurl + '2/anniu2.png'" alt="" @click="goto('https://origin.jx3box.com/fb/')"/>
             </div>
         </div>
         <!-- 全新秘境 -->
@@ -83,16 +83,25 @@
             <div class="boss">
                 <img class="boss-image p-animation" :src="imgurl + '3/mj-2.png'" alt="" v-animate="'fadeInUp'" />
                 <div class="detail-contianer">
-                    <div
-                        :class="{ detail: true, isActive: active_boss === index, isCancle: cancle_boss === index }"
-                        v-for="index in 5"
-                        :key="index"
-                        :style="`display:${active_boss === index ? 'block' : 'none'}`"
-                    >
-                        <img class="boss-name" :src="imgurl + `3/bs${index}-1.png`" alt="" />
-                        <img class="boss-image" :src="imgurl + `3/bs${index}.png`" alt="" />
+                    <div v-animate="'active'">
+                        <div
+                            :class="{ detail: true, isActive: active_boss === index, isCancle: cancle_boss === index }"
+                            v-for="index in 5"
+                            :key="index"
+                            :style="`display:${
+                                active_boss === index || (index === 1 && active_boss === null) ? 'block' : 'none'
+                            }`"
+                        >
+                            <img class="boss-name" :src="imgurl + `3/bs${index}-1.png`" alt="" />
+                            <img class="boss-image" :src="imgurl + `3/bs${index}.png`" alt="" />
+                        </div>
                     </div>
-                    <div :class="`boss-avatar item-${index}`" v-for="index in 5" :key="index+'boss'" @click="bossclick(index)">
+                    <div
+                        :class="`boss-avatar item-${index}`"
+                        v-for="index in 5"
+                        :key="index + 'boss'"
+                        @click="bossclick(index)"
+                    >
                         <img class="boss-avatar-circle" :src="imgurl + `3/boss0.png`" alt="" />
                         <img class="boss-avatar-image" :src="imgurl + `3/boss${index}.png`" alt="" />
                     </div>
@@ -116,7 +125,7 @@
                 <img class="divide" :src="imgurl + '4/fenge2.svg'" />
             </div>
             <img class="body-image" :src="imgurl + '4/tixing1.png'" alt="" v-animate="'body-image-active'" />
-            <img class="link-image" :src="imgurl + '4/anniu3.png'" alt="" />
+            <img class="link-image" :src="imgurl + '4/anniu3.png'" alt="" @click="goto('https://weibo.com/7572025559/5145877669218702')"/>
         </div>
         <!-- 全新系统 -->
         <div class="m-new-systeam">
@@ -130,32 +139,31 @@
                 </div>
             </div>
             <div class="assisdent">
-                <img
-                    class="hongchenxiaying p-animation"
-                    :src="imgurl + '5/hongchenxiaying.png'"
-                    alt=""
-                    v-animate="'fadeInLeft'"
-                />
-                <img class="wenzi1 p-animation" :src="imgurl + '5/wenzi1.png?1'" alt="" v-animate="'fadeInLeft'" />
+                <div class="p-animation" v-animate="'fadeInLeft'">
+                    <img class="hongchenxiaying p-animation" :src="imgurl + '5/hongchenxiaying.png'" alt="" />
+                    <img class="wenzi1" :src="imgurl + '5/wenzi1.png?1'" alt="" />
+                </div>
                 <div class="detail-contianer">
-                    <div
-                        :class="{
-                            detail: true,
-                            isActive: active_assistant === index,
-                            isCancle: cancle_assistant === index,
-                            'p-animation': true,
-                        }"
-                        v-for="index in 6"
-                        :key="index+'assisdent'"
-                        v-animate="'fadeInRight'"
-                    >
-                        <img class="assistant-image" :src="imgurl + `5/xk${index}.png`" alt="" />
+                    <div class="p-animation" v-animate="'fadeInRight'">
+                        <div
+                            :class="{
+                                detail: true,
+                                isActive: active_assistant === index,
+                                isCancle: cancle_assistant === index,
+                            }"
+                            v-for="index in 6"
+                            :key="index + 'assisdent'"
+                            :style="`display:${active_assistant === index ? 'block' : 'none'}`"
+                        >
+                            <img class="assistant-image" :src="imgurl + `5/xk${index}.png`" alt="" />
+                        </div>
                     </div>
+
                     <div
                         :class="`assistant-avatar item-${index}`"
                         v-for="index in 6"
                         :key="index"
-                        @click="active_assistant = index"
+                        @click="assistantClick(index)"
                         v-animate="'active'"
                     >
                         <img class="assistant-avatar-circle" :src="imgurl + `5/xk00.png`" alt="" />
@@ -176,8 +184,8 @@
                 </div>
             </div>
             <div class="u-footer">
-                <div class="waitu"  v-animate="'active'">等你探索</div>
-                <img :src="imgurl + '6/logo2.png'" class="logo"/>
+                <div class="waitu" v-animate="'active'">等你探索</div>
+                <img :src="imgurl + '6/logo2.png'" class="logo" />
             </div>
         </div>
     </div>
@@ -192,7 +200,7 @@ export default {
     data: function () {
         return {
             imgurl: "https://cdn.jx3box.com/design/topic/fenghuoliaoyuan/",
-            active_boss: 1,
+            active_boss: null,
             cancle_boss: null,
             active_assistant: 1,
             cancle_assistant: null,
@@ -235,11 +243,23 @@ export default {
             }
         },
         bossclick(index) {
-            this.cancle_boss = this.active_boss;
+            if (this.active_boss === index || (this.active_boss === null && index === 1)) return;
+            this.cancle_boss = this.active_boss || 1;
             setTimeout(() => {
                 this.active_boss = index;
-                this.cancle_bossq = null;
-            }, 1100);
+                this.cancle_boss = null;
+            }, 500);
+        },
+        assistantClick(index) {
+            if (this.active_assistant === index) return;
+            this.cancle_assistant = this.active_assistant;
+            setTimeout(() => {
+                this.active_assistant = index;
+                this.cancle_assistant = null;
+            }, 500);
+        },
+        goto(url) {
+            window.open(url);
         },
     },
 };
