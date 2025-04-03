@@ -2,20 +2,20 @@
     <div class="m-index">
         <!-- logo -->
         <div class="m-logo p-animation" v-animate="'fadeInLeft'">
-            <img :src="imgurl + '0/logo1.png'" width="100%" />
+            <img loading="lazy" :src="imgurl + '0/logo1.png'" width="100%" />
         </div>
         <div class="m-top-banner p-animation" v-animate="'fadeInDown'">
-            <img :src="imgurl + '0/FHLY.png'" width="100%" />
+            <img loading="lazy" :src="imgurl + '0/FHLY.png'" width="100%" />
         </div>
         <!-- 新地图 -->
         <div class="m-map">
             <div class="u-title">
                 <div class="icon" v-animate="'flow'">
-                    <img :src="imgurl + '1/no1.png'" />
+                    <img loading="lazy" :src="imgurl + '1/no1.png'" />
                 </div>
                 <div class="content">
-                    <img class="bg p-animation" :src="imgurl + '0/biaotilan.png'" v-animate="'fadeInLeft'" />
-                    <img class="text text1 p-animation" :src="imgurl + '1/bt1.png'" v-animate="'fadeInRight'" />
+                    <img loading="lazy" class="bg p-animation" :src="imgurl + '0/biaotilan.png'" v-animate="'fadeInLeft'" />
+                    <img loading="lazy" class="text text1 p-animation" :src="imgurl + '1/bt1.png'" v-animate="'fadeInRight'" />
                 </div>
             </div>
             <div class="m-two">
@@ -32,7 +32,7 @@
                         ref="carousel"
                     >
                         <el-carousel-item v-for="item in 3" :key="item" class="u-item">
-                            <img :src="`${imgurl}1/ty${item}.png`" />
+                            <img loading="lazy" :src="`${imgurl}1/ty${item}.png`" />
                         </el-carousel-item>
                     </el-carousel>
                 </div>
@@ -42,33 +42,33 @@
         <div class="m-new-boss">
             <div class="u-title" style="margin-top: 250px">
                 <div class="icon" v-animate="'flow'">
-                    <img :src="imgurl + '2/no2.png'" />
+                    <img loading="lazy" :src="imgurl + '2/no2.png'" />
                 </div>
                 <div class="content">
-                    <img class="bg p-animation" :src="imgurl + '0/biaotilan.png'" v-animate="'fadeInLeft'" />
-                    <img class="text p-animation" :src="imgurl + '2/bt2.png'" v-animate="'fadeInRight'" />
+                    <img loading="lazy" class="bg p-animation" :src="imgurl + '0/biaotilan.png'" v-animate="'fadeInLeft'" />
+                    <img loading="lazy" class="text p-animation" :src="imgurl + '2/bt2.png'" v-animate="'fadeInRight'" />
                 </div>
             </div>
             <div class="card">
-                <img class="man" :src="imgurl + '2/jm-2.png'" alt="" />
-                <img class="boss-name" :src="imgurl + '2/jm-3.png'" alt="" />
+                <img loading="lazy" class="man" :src="imgurl + '2/jm-2.png'" alt="" />
+                <img loading="lazy" class="boss-name" :src="imgurl + '2/jm-3.png'" alt="" />
                 <div class="content">GUIXUZHILI</div>
-                <img class="content-image" :src="imgurl + '2/jm-4.png'" alt="" />
-                <img class="link-image" :src="imgurl + '2/anniu2.png'" alt="" @click="goto('https://origin.jx3box.com/fb/')"/>
+                <img loading="lazy" class="content-image" :src="imgurl + '2/jm-4.png'" alt="" />
+                <img loading="lazy" class="link-image" :src="imgurl + '2/anniu2.png'" alt="" @click="goto('https://origin.jx3box.com/fb/')"/>
             </div>
         </div>
         <!-- 全新秘境 -->
         <div class="m-new-secret">
             <div class="u-title" style="margin-top: 360px; margin-bottom: 38px">
                 <div class="icon" v-animate="'flow'">
-                    <img :src="imgurl + '3/no3.png'" />
+                    <img loading="lazy" :src="imgurl + '3/no3.png'" />
                 </div>
                 <div class="content">
-                    <img class="bg p-animation" :src="imgurl + '0/biaotilan.png'" v-animate="'fadeInLeft'" />
-                    <img class="text p-animation" :src="imgurl + '3/bt3.png?1'" v-animate="'fadeInRight'" />
+                    <img loading="lazy" class="bg p-animation" :src="imgurl + '0/biaotilan.png'" v-animate="'fadeInLeft'" />
+                    <img loading="lazy" class="text p-animation" :src="imgurl + '3/bt3.png?1'" v-animate="'fadeInRight'" />
                 </div>
             </div>
-            <img
+            <img loading="lazy"
                 class="yeshougucheng p-animation"
                 :src="imgurl + '3/yeshougucheng.png'"
                 alt=""
@@ -76,12 +76,12 @@
             />
             <div class="wenzi" v-animate="'text-visible'">
                 <div>
-                    <img :src="imgurl + '3/wenzi.png'" alt="" />
+                    <img loading="lazy" :src="imgurl + '3/wenzi.png'" alt="" />
                 </div>
             </div>
-            <img class="jiantou" :src="imgurl + '3/jiantou.png?1'" alt="" />
+            <img loading="lazy" class="jiantou" :src="imgurl + '3/jiantou.png?1'" alt="" />
             <div class="boss">
-                <img class="boss-image p-animation" :src="imgurl + '3/mj-2.png'" alt="" v-animate="'fadeInUp'" />
+                <img loading="lazy" class="boss-image p-animation" :src="imgurl + '3/mj-2.png'" alt="" v-animate="'fadeInUp'" />
                 <div class="detail-contianer">
                     <div v-animate="'active'">
                         <div
@@ -92,56 +92,56 @@
                                 active_boss === index || (index === 1 && active_boss === null) ? 'block' : 'none'
                             }`"
                         >
-                            <img class="boss-name" :src="imgurl + `3/bs${index}-1.png`" alt="" />
-                            <img class="boss-image" :src="imgurl + `3/bs${index}.png`" alt="" />
+                            <img loading="lazy" class="boss-name" :src="imgurl + `3/bs${index}-1.png`" alt="" />
+                            <img loading="lazy" class="boss-image" :src="imgurl + `3/bs${index}.png`" alt="" />
                         </div>
                     </div>
                     <div
                         :class="`boss-avatar item-${index}`"
                         v-for="index in 5"
                         :key="index + 'boss'"
-                        @click="bossclick(index)"
+                        @mouseover="bossclick(index)"
                     >
-                        <img class="boss-avatar-circle" :src="imgurl + `3/boss0.png`" alt="" />
-                        <img class="boss-avatar-image" :src="imgurl + `3/boss${index}.png`" alt="" />
+                        <img loading="lazy" class="boss-avatar-circle" :src="imgurl + `3/boss0.png`" alt="" />
+                        <img loading="lazy" class="boss-avatar-image" :src="imgurl + `3/boss${index}.png`" alt="" />
                     </div>
                 </div>
             </div>
-            <img :src="imgurl + '3/fenge.svg'" alt="" />
+            <img loading="lazy" :src="imgurl + '3/fenge.svg'" alt="" />
         </div>
         <!-- 全新功能 -->
         <div class="m-new-function">
             <div class="u-title" style="margin-top: 260px; margin-bottom: 180px">
                 <div class="icon" v-animate="'flow'">
-                    <img :src="imgurl + '4/no4.png'" />
+                    <img loading="lazy" :src="imgurl + '4/no4.png'" />
                 </div>
                 <div class="content">
-                    <img class="bg p-animation" :src="imgurl + '0/biaotilan.png'" v-animate="'fadeInLeft'" />
-                    <img class="text p-animation" :src="imgurl + '4/bt4.png'" v-animate="'fadeInRight'" />
+                    <img loading="lazy" class="bg p-animation" :src="imgurl + '0/biaotilan.png'" v-animate="'fadeInLeft'" />
+                    <img loading="lazy" class="text p-animation" :src="imgurl + '4/bt4.png'" v-animate="'fadeInRight'" />
                 </div>
             </div>
             <div class="content-divide p-animation" v-animate="'fadeInRight'">
-                <img class="family" :src="imgurl + '4/tixing-2.png'" />
-                <img class="divide" :src="imgurl + '4/fenge2.svg'" />
+                <img loading="lazy" class="family" :src="imgurl + '4/tixing-2.png'" />
+                <img loading="lazy" class="divide" :src="imgurl + '4/fenge2.svg'" />
             </div>
-            <img class="body-image" :src="imgurl + '4/tixing1.png'" alt="" v-animate="'body-image-active'" />
-            <img class="link-image" :src="imgurl + '4/anniu3.png'" alt="" @click="goto('https://weibo.com/7572025559/5145877669218702')"/>
+            <img loading="lazy" class="body-image" :src="imgurl + '4/tixing1.png'" alt="" v-animate="'body-image-active'" />
+            <img loading="lazy" class="link-image" :src="imgurl + '4/anniu3.png'" alt="" @click="goto('https://weibo.com/7572025559/5145877669218702')"/>
         </div>
         <!-- 全新系统 -->
         <div class="m-new-systeam">
             <div class="u-title" style="margin-top: 65px">
                 <div class="icon" v-animate="'flow'">
-                    <img :src="imgurl + '5/no5.png'" />
+                    <img loading="lazy" :src="imgurl + '5/no5.png'" />
                 </div>
                 <div class="content">
-                    <img class="bg p-animation" :src="imgurl + '0/biaotilan.png'" v-animate="'fadeInLeft'" />
-                    <img class="text p-animation" :src="imgurl + '5/bt5.png'" v-animate="'fadeInRight'" />
+                    <img loading="lazy" class="bg p-animation" :src="imgurl + '0/biaotilan.png'" v-animate="'fadeInLeft'" />
+                    <img loading="lazy" class="text p-animation" :src="imgurl + '5/bt5.png'" v-animate="'fadeInRight'" />
                 </div>
             </div>
             <div class="assisdent">
                 <div class="p-animation" v-animate="'fadeInLeft'">
-                    <img class="hongchenxiaying p-animation" :src="imgurl + '5/hongchenxiaying.png'" alt="" />
-                    <img class="wenzi1" :src="imgurl + '5/wenzi1.png?1'" alt="" />
+                    <img loading="lazy" class="hongchenxiaying p-animation" :src="imgurl + '5/hongchenxiaying.png'" alt="" />
+                    <img loading="lazy" class="wenzi1" :src="imgurl + '5/wenzi1.png?1'" alt="" />
                 </div>
                 <div class="detail-contianer">
                     <div class="p-animation" v-animate="'fadeInRight'">
@@ -155,7 +155,7 @@
                             :key="index + 'assisdent'"
                             :style="`display:${active_assistant === index ? 'block' : 'none'}`"
                         >
-                            <img class="assistant-image" :src="imgurl + `5/xk${index}.png`" alt="" />
+                            <img loading="lazy" class="assistant-image" :src="imgurl + `5/xk${index}.png`" alt="" />
                         </div>
                     </div>
 
@@ -163,11 +163,11 @@
                         :class="`assistant-avatar item-${index}`"
                         v-for="index in 6"
                         :key="index"
-                        @click="assistantClick(index)"
+                        @mouseover="assistantClick(index)"
                         v-animate="'active'"
                     >
-                        <img class="assistant-avatar-circle" :src="imgurl + `5/xk00.png`" alt="" />
-                        <img class="assistant-avatar-image" :src="imgurl + `5/xk${index}-1.png`" alt="" />
+                        <img loading="lazy" class="assistant-avatar-circle" :src="imgurl + `5/xk00.png`" alt="" />
+                        <img loading="lazy" class="assistant-avatar-image" :src="imgurl + `5/xk${index}-1.png`" alt="" />
                     </div>
                 </div>
             </div>
@@ -176,16 +176,16 @@
         <div class="m-more">
             <div class="u-title" style="margin-top: 360px; margin-bottom: 60px">
                 <div class="icon" v-animate="'flow'">
-                    <img :src="imgurl + '6/no6.png'" />
+                    <img loading="lazy" :src="imgurl + '6/no6.png'" />
                 </div>
                 <div class="content">
-                    <img class="bg p-animation" :src="imgurl + '0/biaotilan.png'" v-animate="'fadeInLeft'" />
-                    <img class="text p-animation" :src="imgurl + '6/bt6.png'" v-animate="'fadeInRight'" />
+                    <img loading="lazy" class="bg p-animation" :src="imgurl + '0/biaotilan.png'" v-animate="'fadeInLeft'" />
+                    <img loading="lazy" class="text p-animation" :src="imgurl + '6/bt6.png'" v-animate="'fadeInRight'" />
                 </div>
             </div>
             <div class="u-footer">
                 <div class="waitu" v-animate="'active'">等你探索</div>
-                <img :src="imgurl + '6/logo2.png'" class="logo" />
+                <img loading="lazy" :src="imgurl + '6/logo2.png'" class="logo" />
             </div>
         </div>
     </div>
