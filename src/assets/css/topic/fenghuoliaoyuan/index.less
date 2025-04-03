@@ -34,7 +34,7 @@
             }
         }
         .icon.flow {
-            animation: flow 1.2s linear 1 forwards;
+            animation: flow 1s linear 1 forwards;
         }
         .content {
             text-align: center;
@@ -139,6 +139,7 @@
                 height: 865px;
                 margin-top: -105px;
                 margin-left: 147px;
+                transition: scale 0.5s;
                 &:hover {
                     scale: 1.05;
                 }
@@ -149,6 +150,7 @@
                 position: absolute;
                 top: 78px;
                 left: 773px;
+                transition: scale 0.5s;
                 &:hover {
                     scale: 1.05;
                 }
@@ -182,6 +184,7 @@
                 left: 882px;
                 width: 234.5px;
                 height: 53.5px;
+                transition: scale 0.5s;
                 &:hover {
                     scale: 1.05;
                 }
@@ -211,7 +214,7 @@
             }
         }
         .text-visible > div {
-            animation: wenzi 2s linear 1 forwards;
+            animation: wenzi 1.5s linear 1 forwards;
         }
         .jiantou {
             width: 123px;
@@ -242,6 +245,7 @@
                     .boss-image {
                         width: 1241.5px;
                         height: 813.5px;
+                        transition: scale 0.5s;
                         &:hover {
                             scale: 1.05;
                         }
@@ -250,11 +254,11 @@
                 .active {
                     .boss-name {
                         transform: translateX(-1000px);
-                        animation: activeName 1s linear 1 forwards;
+                        animation: activeName 0.5s linear 1 forwards;
                     }
                     .boss-image {
                         opacity: 0;
-                        animation: activeImage 1s linear 1 forwards;
+                        animation: activeImage 0.5s linear 1 forwards;
                     }
                     .isActive {
                         .boss-name {
@@ -263,7 +267,7 @@
                         }
                         .boss-image {
                             opacity: 0;
-                            animation: activeImage 0.5s linear 1 forwards;
+                            animation: activeImage 0.5s cubic-bezier(0.62, 0.02, 0.81, 0.24) 1 forwards;
                         }
                     }
                     .isCancle {
@@ -325,6 +329,7 @@
         .link-image {
             .size(233px,54px);
             transform: translate(0px, -230px);
+            transition: all 0.5s;
             &:hover {
                 scale: 1.05;
                 transform: translate(0px, -218.5px);
@@ -334,7 +339,7 @@
             opacity: 0;
         }
         .body-image-active {
-            animation: activeImage 3s linear 1 forwards;
+            animation: activeImage 2s linear 1 forwards;
         }
     }
     // 全新侠客
@@ -371,7 +376,7 @@
                 }
                 .isActive {
                     opacity: 0;
-                    animation: activeImage 0.5s linear 1 forwards;
+                    animation: activeImage 0.5s cubic-bezier(0.62, 0.02, 0.81, 0.24) 1 forwards;
                 }
                 .isCancle {
                     opacity: 1;
