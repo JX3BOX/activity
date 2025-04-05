@@ -52,7 +52,7 @@
             "name": "年度大事件",
             "link": "/event/bigbang",
             "month": "1",
-            "img": "https://cdn.jx3box.com/design/cover/cover_event/bigbang.png"
+            "img": "https://cdn.jx3box.com/design/cover/cover_event/bigbang_ce.png"
         },
         {
             "name": "剑三练习生",
@@ -94,7 +94,7 @@
             "name": "门派天团",
             "link": "/rank/",
             "month": "7",
-            "img": "https://cdn.jx3box.com/design/cover/cover_event/superstar.png"
+            "img": "https://cdn.jx3box.com/design/cover/cover_event/tiantuan_ce.png"
         },
         {
             "name": "情缘杯",

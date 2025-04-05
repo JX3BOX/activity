@@ -30,10 +30,13 @@
                 <div class="m-new-list-item" v-for="(item, i) in monthList" :key="i">
                     <div class="u-month" v-if="item.month">{{ item.month }}月</div>
                     <div class="u-month" v-else>特殊活动</div>
-                    <div class="m-month-list" :class="{
-                        isSingle: item.single,
-                        isSpecial : !item.month
-                    }">
+                    <div
+                        class="m-month-list"
+                        :class="{
+                            isSingle: item.single,
+                            isSpecial: !item.month,
+                        }"
+                    >
                         <a
                             class="u-item"
                             target="_blank"
@@ -56,11 +59,11 @@
 </template>
 
 <script>
-import { __imgPath, __Root } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __cdn, __imgPath, __Root } from "@jx3box/jx3box-common/data/jx3box.json";
 import data from "@/assets/data/event/index.json";
 export default {
     name: "Index",
-    data: function() {
+    data: function () {
         return {
             list: [],
             eventLink: __Root + "event",
@@ -71,11 +74,8 @@ export default {
         };
     },
     computed: {
-        imgLink() {
-            return __imgPath + "topic/event/img/";
-        },
-        newImgLink() {
-            return __imgPath + "topic/event/newimg/";
+        imgPath() {
+            return __cdn + "/design/cover/cover_event";
         },
         topImg() {
             return __imgPath + "topic/event/top.png";
@@ -117,6 +117,7 @@ export default {
                 }
                 return acc;
             }, []);
+            console.log(this.monthList);
         },
         change() {
             this.isNewEvent = !this.isNewEvent;
