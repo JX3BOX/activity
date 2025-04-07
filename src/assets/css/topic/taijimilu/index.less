@@ -1,0 +1,212 @@
+.m-index {
+    width: 100%;
+    .first-screen {
+        width: 100%;
+        height: 1100px;
+        display: block;
+    }
+    .optimization_reform {
+        position: relative;
+        height: 1040px;
+        .bg {
+            width: 100%;
+            display: block;
+            height: 1040px;
+        }
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 1344px;
+            height: 856px;
+            margin-left: -672px;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            .title {
+                transform: translateY(300px);
+                opacity: 0;
+                width: 935px;
+                height: 301px;
+            }
+            .imgs {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                margin: 10px 0 30px;
+                .img {
+                    width: 320px;
+                    height: 453px;
+                    transform: translateY(300px);
+                    opacity: 0;
+                }
+                .flowUp {
+                    animation: flowUp 0.3s linear 0.05s 1 forwards;
+                }
+                .text {
+                    color: #000;
+                    font-family: "Microsoft YaHei";
+                    font-size: 16px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: 32px; /* 200% */
+                }
+            }
+        }
+    }
+    .secret_land {
+        position: relative;
+        height: 1200px;
+        .bg {
+            width: 100%;
+            display: block;
+            height: 1200px;
+        }
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            .title {
+                width: 935px;
+                height: 301px;
+            }
+            .introduce {
+                width: 100%;
+                display: flex;
+                height: 560px;
+                padding: 20px 0;
+                .img {
+                    width: 50%;
+                    height: 100%;
+                }
+                .text {
+                    background: #222;
+                    padding: 20px;
+                    .text-title {
+                        color: #fff;
+                        font-family: "Microsoft YaHei";
+                        font-size: 32px;
+                        font-style: normal;
+                        font-weight: 700;
+                        line-height: 48px; /* 150% */
+                        margin-bottom: 20px;
+                    }
+                    .text-content {
+                        color: #ededed;
+                        font-family: "Microsoft YaHei";
+                        font-size: 18px;
+                        font-style: normal;
+                        font-weight: 400;
+                        line-height: 27px; /* 171.429% */
+                    }
+                }
+            }
+            .button {
+                width: 114px;
+                height: 40px;
+                transform: translateY(250px);
+                transition: filter 0.3s;
+                &:hover {
+                    filter: brightness(150%);
+                }
+            }
+        }
+    }
+    .boss {
+        width: 100%;
+        height: 1068px;
+        position: relative;
+        .bg-head {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: block;
+            height: 172px;
+            z-index: 10;
+        }
+        .bg-foot {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            display: block;
+            height: 172px;
+            z-index: 10;
+        }
+        .bg-content {
+            transition: all 0.3s;
+            opacity: 0;
+            width: 100%;
+            display: block;
+            height: 100%;
+        }
+        .bg-boss {
+            transition: all 0.3s;
+            opacity: 0;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            display: block;
+            height: 100%;
+        }
+        .boss-names {
+            position: absolute;
+            top: 50%;
+            left: 20px;
+            color: #fff;
+            margin-top: -134px;
+            cursor: pointer;
+            .boss-name {
+                font-family: "Microsoft YaHei";
+                font-size: 21px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 47.5px; /* 225% */
+                transition: all 0.3s;
+            }
+            .isActive {
+                color: #fff;
+                font-family: "Microsoft YaHei";
+                font-size: 32px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 40px; /* 93.75% */
+            }
+        }
+    }
+    .fadeIn {
+        .bg-content {
+            animation: fadeIn 0.3s linear 1 forwards;
+        }
+        .bg-boss {
+            animation: fadeIn 0.3s linear 0.015s 1 forwards;
+        }
+    }
+    .flowUp {
+        animation: flowUp 0.3s linear 1 forwards;
+    }
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+    @keyframes flowUp {
+        0% {
+            transform: translateY(300px);
+            opacity: 0;
+        }
+        100% {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+}

@@ -113,6 +113,14 @@
     ],
     "std": [
         {
+            "name": "太极秘录",
+            "key": "taijimilu",
+            "year": "2025",
+            "date": "04-24",
+            "time": "2025.04.24",
+            "link": "/topic/taijimilu"
+        },
+        {
             "name": "丝路风语",
             "key": "silufengyu",
             "year": "2024",
