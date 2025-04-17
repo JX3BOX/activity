@@ -42,17 +42,17 @@
 import PICS from "@/assets/js/pics.js";
 import race_header from "@/components/rank/race_header.vue";
 import { getEvent } from "@/service/rank/event.js";
-import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __cdn } from "@jx3box/jx3box-common/data/jx3box.json";
 export default {
     name: "RankLayout",
     props: [],
     data: function () {
         return {
             data: "",
-            back_img_url: __imgPath + "image/rank/common/history.png",
+            back_img_url: __cdn + "image/rank/common/history.png",
             win_env: window.outerWidth < 780 ? "isMobile" : "isPC",
             achieves: [],
-            arrow: `${__imgPath}image/rank/common/timeline_arrow.svg`,
+            arrow: `${__cdn}image/rank/common/timeline_arrow.svg`,
             showBackToTop: false,
         };
     },

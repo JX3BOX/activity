@@ -33,7 +33,7 @@ import threeView from "./modules/threeView.vue";
 import fourView from "./modules/fourView.vue";
 import fiveView from "./modules/fiveView.vue";
 import sixView from "./modules/sixView.vue";
-import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __cdn } from "@jx3box/jx3box-common/data/jx3box.json";
 export default {
     name: "Index",
     data() {
@@ -75,7 +75,7 @@ export default {
             return this.current == 0 ? "1066px" : "800px";
         },
         img() {
-            return __imgPath + "topic/bashufengyun/";
+            return __cdn + "design/topic/bashufengyun/";
         },
     },
     methods: {

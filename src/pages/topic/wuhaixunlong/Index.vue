@@ -117,14 +117,14 @@
 
 <script>
 const KEY = "wuhaixunlong";
-import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __imgPath, __cdn } from "@jx3box/jx3box-common/data/jx3box.json";
 export default {
     name: "Index",
     props: [],
     components: {},
     data: function () {
         return {
-            imgPath: __imgPath + "topic/" + KEY,
+            imgPath: __cdn + "design/topic/" + KEY,
             kvVideoVisible: false,
             boxTool: [
                 {

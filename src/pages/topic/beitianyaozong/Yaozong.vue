@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __cdn } from "@jx3box/jx3box-common/data/jx3box.json";
 import mount from "./mount.vue";
 import scenery from "./scenery.vue";
 import skill from "./skill.vue";
@@ -56,7 +56,7 @@ export default {
     data: function () {
         return {
             // 背景ROOT
-            img_root: __imgPath + "topic/beitianyaozong/sect/",
+            img_root: __cdn + "design/topic/beitianyaozong/sect/",
             // 当前索引
             index: 0,
             menu: ["story", "mount", "skill", "weapon", "equip"],

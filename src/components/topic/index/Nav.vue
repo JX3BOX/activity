@@ -21,7 +21,7 @@
 </template>
 <script>
 import { new_topic, std_topic, origin_topic } from "@/assets/data/topic/topic.json";
-import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __cdn } from "@jx3box/jx3box-common/data/jx3box.json";
 export default {
     name: "demo",
     data: function () {
@@ -57,13 +57,13 @@ export default {
             ];
         },
         boxBG: function () {
-            return __imgPath + "topic/nav/" + this.new_topic + "_bg.jpg";
+            return __cdn + "design/topic/nav/" + this.new_topic + "_bg.jpg";
         },
         logoImg: function () {
-            return __imgPath + "topic/nav/" + this.new_topic + "_logo.png";
+            return __cdn + "design/topic/nav/" + this.new_topic + "_logo.png";
         },
         peopleImg: function () {
-            return __imgPath + "topic/nav/" + this.new_topic + "_people.png";
+            return __cdn + "design/topic/nav/" + this.new_topic + "_people.png";
         },
     },
 
@@ -77,10 +77,10 @@ export default {
         imgStyle(img) {
             return this.screenWidth < 1600
                 ? {
-                      backgroundImage: "url(" + __imgPath + "topic/nav/" + img + "_smalltab.jpg)",
+                      backgroundImage: "url(" + __cdn + "design/topic/nav/" + img + "_smalltab.jpg)",
                   }
                 : {
-                      backgroundImage: "url(" + __imgPath + "topic/nav/" + img + "_bigtab.jpg)",
+                      backgroundImage: "url(" + __cdn + "design/topic/nav/" + img + "_bigtab.jpg)",
                   };
         },
         // 跳转
