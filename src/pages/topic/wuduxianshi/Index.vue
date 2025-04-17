@@ -52,7 +52,7 @@
 
 <script>
 const KEY = "wuduxianshi";
-import { __imgPath, __OriginRoot } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __cdn, __OriginRoot } from "@jx3box/jx3box-common/data/jx3box.json";
 import { getTopic } from "@/service/topic";
 export default {
     name: "Index",
@@ -63,7 +63,7 @@ export default {
             OriginRoot: __OriginRoot,
             buttons: [],
             more: [],
-            imgPath: __imgPath + "topic/wuduxianshi/",
+            imgPath: __cdn + "design/topic/wuduxianshi/",
         };
     },
     directives: {

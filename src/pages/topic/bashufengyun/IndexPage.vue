@@ -189,7 +189,7 @@
     </div>
 </template>
 <script>
-import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __cdn } from "@jx3box/jx3box-common/data/jx3box.json";
 export default {
     name: "Index",
     data() {
@@ -233,7 +233,7 @@ export default {
             return this.mobile ? this.mobileHeight : this.current == 0 ? "1066px" : "800px";
         },
         img() {
-            return __imgPath + "topic/bashufengyun/";
+            return __cdn + "design/topic/bashufengyun/";
         },
         video() {
             return `<iframe src="//player.bilibili.com/player.html?aid=513903294&bvid=BV17g41117o3&cid=786179224&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>`;

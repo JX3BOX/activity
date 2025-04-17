@@ -13,9 +13,7 @@
 
 <script>
 import { postStat } from "@jx3box/jx3box-common/js/stat";
-import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
-const isDev = process.env.NODE_ENV === "development";
-const imgPath = isDev ? "/tmp/" :  __imgPath + "topic/silufengyu/"
+import { __cdn } from "@jx3box/jx3box-common/data/jx3box.json";
 export default {
     name: "App",
     props: [],
@@ -24,7 +22,7 @@ export default {
         return {};
     },
     provide: {
-        __imgRoot: imgPath
+        __imgRoot: __cdn + "design/topic/silufengyu/",
     },
     computed: {
         page_name: function () {

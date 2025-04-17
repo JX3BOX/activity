@@ -76,7 +76,7 @@
                     <div class="u-subTitle u-swTitle"></div>
                     <div class="m-sw"></div>
                     <a href="https://origin.jx3box.com/cj/" class="u-button">
-                        <img :src="imgurl + '/p4/p4-right.png'" class="u-arrow">
+                        <img :src="imgurl + 'p4/p4-right.png'" class="u-arrow">
                     </a>
                 </div>
             </div>
@@ -151,7 +151,7 @@ export default {
             navActive: 1,
             mouseoverActive: null, //导航鼠标经过事件
             isMobile: navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i),
-            imgurl: "https://img.jx3box.com/topic/riyuemingzun/",
+            imgurl: "https://cdn.jx3box.com/design/topic/riyuemingzun/",
             sliderinit: {
                 currentPage: 0,//当前页码
                 effect: 'nest',

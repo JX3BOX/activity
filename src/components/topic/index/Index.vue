@@ -45,7 +45,7 @@
 </template>
 <script>
 import { std, origin } from "@/assets/data/topic/topic.json";
-import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __cdn } from "@jx3box/jx3box-common/data/jx3box.json";
 export default {
     name: "Index",
     data: function () {
@@ -120,7 +120,7 @@ export default {
         },
         showImg(key) {
             if (!key) key = "normal";
-            return __imgPath + "topic/index/" + key + ".png";
+            return __cdn + "design/topic/index/" + key + ".png";
         },
     },
 };

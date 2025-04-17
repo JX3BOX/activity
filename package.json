@@ -27,7 +27,7 @@
         "vue": "^2.6.11",
         "vue-clipboard2": "^0.3.3",
         "vue-concise-slider": "^4.2.5",
-        "vue-dragscroll": "^4.0.6",
+        "vue-dragscroll": "^3.0.1",
         "vue-easy-slider": "^5.3.4",
         "vue-echarts": "^5.0.0-beta.0",
         "vue-katex-auto-render": "^0.2.0",
