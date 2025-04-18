@@ -23,13 +23,14 @@
 </template>
 
 <script>
+import { __cdn } from "@jx3box/jx3box-common/data/jx3box.json";
 import { getEvent } from "@/service/rank/event.js";
 export default {
     name: "SuperstarInfo",
     components: {},
     data: function () {
         return {
-            imgurl: "https://img.jx3box.com/topic/menpaitiantuan/",
+            imgurl: __cdn + "design/rank/menpaitiantuan/",
             menu: [
                 {
                     name: "活动介绍",
