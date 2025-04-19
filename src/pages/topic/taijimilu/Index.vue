@@ -57,8 +57,8 @@
         <div class="boss" v-timer v-animate="'fadeIn'">
             <img loading="lazy" class="bg-head" :src="imgurl + '2.5/bg-mask@2x.png'" alt="" />
             <img loading="lazy" class="bg-foot" :src="imgurl + '2.5/bg-mask2@2x.png'" alt="" />
-            <img loading="lazy" class="bg-content" :src="`${imgurl}2.5/bg3-${active}@2x.jpg`" alt="" ref="bg-content" />
-            <img loading="lazy" class="bg-boss" :src="`${imgurl}2.5/content3-${active}@2x.png`" alt="" ref="bg-boss" />
+            <div class="bg-content" :style="{backgroundImage: `url(${imgurl}2.5/bg3-${active}@2x.jpg)`}" alt="" ref="bg-content" ></div>
+            <div class="bg-boss" :style="{backgroundImage: `url(${imgurl}2.5/content3-${active}@2x.png`}" alt="" ref="bg-boss" ></div>
             <div class="boss-names">
                 <div
                     v-for="item in 6"
@@ -75,7 +75,6 @@
 </template>
 
 <script>
-const KEY = "taijimilu";
 export default {
     name: "Index",
     props: [],
@@ -143,7 +142,7 @@ export default {
                 if (binding.addtimer) {
                     window.removeEventListener("scroll", binding.addtimer);
                     clearInterval(that.timer);
-                    that.timer = that;
+                    that.timer = null;
                 }
             },
         },
@@ -155,16 +154,21 @@ export default {
             window.open(url, "_blank");
         },
         resetAnimation() {
-            this.$refs["bg-content"].style.animation = "none";
-            this.$refs["bg-boss"].style.animation = "none";
-            setTimeout(() => {
-                this.$refs["bg-content"].style.animation = "fadeIn 0.3s linear 1 forwards";
-                this.$refs["bg-boss"].style.animation = "fadeIn 0.3s linear .015s 1 forwards";
-            }, 10);
+            if (this.$refs["bg-content"] && this.$refs["bg-boss"]) {
+                this.$refs["bg-content"].style.animation = "none";
+                this.$refs["bg-boss"].style.animation = "none";
+                setTimeout(() => {
+                    this.$refs["bg-content"].style.animation = "fadeIn 0.3s linear 1 forwards";
+                    this.$refs["bg-boss"].style.animation = "fadeIn 0.3s linear .015s 1 forwards";
+                }, 1);
+            }
         },
         changeBoss(item) {
+            if (this.timer) {
+                clearInterval(this.timer);
+                this.timer = null;
+            }
             if (this.active === item) return;
-            clearInterval(this.timer);
             this.active = item;
             this.resetAnimation();
         },
