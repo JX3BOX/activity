@@ -3,8 +3,12 @@
         <div class="m-header">
             <img :src="__imgRoot + `logo-${logoNumber}.svg`" class="u-text u-logo" alt="魔盒" />
             <img :src="__imgRoot + `font-${textNumber}.svg`" class="u-text u-text-1" alt="全力以赴" />
-            <img :src="__imgRoot + `${year}.png`" class="u-text u-year" />
-            <img :src="__imgRoot + 'text.png'" class="u-text u-text-2" :style="{ filter }" alt="2023剑三高考卷" />
+            <div class="u-text m-year">
+                <div class="u-year">{{ year }}</div>
+                <div class="u-text1">JIANSAN</div>
+                <div class="u-text2">GAOKAOJUAN</div>
+            </div>
+            <img :src="__imgRoot + 'text.png'" class="u-text u-text-2" :style="{ filter }" alt="剑三高考卷" />
         </div>
         <div class="m-exam">
             <div class="m-title">
