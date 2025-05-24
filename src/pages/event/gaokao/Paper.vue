@@ -12,7 +12,9 @@
         </div>
         <div class="m-exam">
             <div class="m-title">
-                <span :style="{ color: font, background }">{{ name }}</span>
+                <span @click="openchangeExam" :style="{ color: font, backgroundColor: background }">
+                    {{ name }}
+                </span>
             </div>
             <div class="m-content">
                 <ExamCard
@@ -34,6 +36,37 @@
                 </div>
             </div>
         </div>
+
+        <el-drawer class="m-exam-drawer" :visible.sync="changeExamVisible" direction="btt" :with-header="false">
+            <div class="m-drawer">
+                <div class="m-drawer-title">年份</div>
+                <div class="m-drawer-select">
+                    <span
+                        v-for="(item, key) in exams"
+                        :key="key"
+                        :class="['u-item', { active: showYear == key }]"
+                        @click="showYear = key"
+                    >
+                        {{ key }}
+                    </span>
+                </div>
+                <div class="m-drawer-title">类型</div>
+                <div class="m-drawer-select">
+                    <span
+                        v-for="(item, id) in exam"
+                        :key="id"
+                        :class="['u-item', { active: showTypeId == id }]"
+                        @click="showTypeId = id"
+                    >
+                        {{ item.name }}
+                    </span>
+                </div>
+                <div class="m-drawer-actions">
+                    <button class="u-reset" @click="examDrawerReset">重置</button>
+                    <button class="u-confirm" :disabled="examDrawerSubDis" @click="examDrawerSub">确定</button>
+                </div>
+            </div>
+        </el-drawer>
     </div>
 </template>
 
@@ -42,10 +75,12 @@ import { postStat } from "@jx3box/jx3box-common/js/stat.js";
 import ExamCard from "./ExamCard.vue";
 import { submitAnswer, getPaper } from "@/service/event/exam.js";
 import User from "@jx3box/jx3box-common/js/user";
+import { exams } from "@/assets/data/event/exam.json";
+import { isMiniProgram } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "Paper",
     inject: ["__imgRoot"],
-    props: ["paper", "showKey", "showId", "showYear"],
+    props: ["paper", "showKey", "showId"],
     components: { ExamCard },
     data: function () {
         return {
@@ -56,9 +91,17 @@ export default {
             userAnswers: {},
             isSubmitted: false,
             loading: false,
+            changeExamVisible: false,
+            exams,
+            showYear: "",
+            showTypeId: "",
+            isMiniProgram: isMiniProgram(),
         };
     },
     computed: {
+        exam() {
+            return this.exams[this.showYear];
+        },
         id() {
             return this.paper.key;
         },
@@ -92,7 +135,10 @@ export default {
             return id;
         },
         year() {
-            return this.$route.params.year || this.showYear;
+            return this.$route.params.year;
+        },
+        examDrawerSubDis() {
+            return this.showYear == this.year && this.showTypeId == this.showId;
         },
     },
     watch: {
@@ -182,9 +228,24 @@ export default {
                 });
             }
         },
+        openchangeExam() {
+            if (this.isMiniProgram) {
+                this.changeExamVisible = true;
+            }
+        },
+        examDrawerReset() {
+            this.showYear = this.year;
+            this.showTypeId = this.showId;
+        },
+        examDrawerSub() {
+            this.changeExamVisible = false;
+            this.$parent.sonChangeExam(this.showYear, this.showTypeId);
+        },
     },
     mounted() {
         this.loadData();
+        this.showYear = this.$route.params.year;
+        this.showTypeId = this.showId;
     },
 };
 </script>

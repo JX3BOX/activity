@@ -105,6 +105,11 @@ export default {
             this.$router.push({ name: "index", params: { year: this.year }, query: { paper: this.exam[id].key } });
             window.scrollTo(0, 0);
         },
+        sonChangeExam(year, id) {
+            this.showId = id;
+            this.$router.push({ name: "index", params: { year: year }, query: { paper: this.exam[id].key } });
+            window.scrollTo(0, 0);
+        },
         changeShow() {
             this.show = !this.show;
         },
@@ -122,4 +127,5 @@ export default {
 <style lang="less">
 @import "~@/assets/css/event/2023exam/index.less";
 @import "~@/assets/css/event/2023exam/card.less";
+@import "~@/assets/css/event/2023exam/miniprogram.less";
 </style>
