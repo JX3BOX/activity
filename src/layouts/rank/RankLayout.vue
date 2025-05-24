@@ -49,10 +49,10 @@ export default {
     data: function () {
         return {
             data: "",
-            back_img_url: __cdn + "image/rank/common/history.png",
+            back_img_url: __cdn + "design/rank/common/history.png",
             win_env: window.outerWidth < 780 ? "isMobile" : "isPC",
             achieves: [],
-            arrow: `${__cdn}image/rank/common/timeline_arrow.svg`,
+            arrow: `${__cdn}design/rank/common/timeline_arrow.svg`,
             showBackToTop: false,
         };
     },

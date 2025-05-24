@@ -417,7 +417,9 @@ export default {
         loadMixRank() {
             if (!this.allParams.aids) return false;
             this.loading = true;
-            getMixRank(this.allParams)
+            let { mount, aids, event_id } = this.allParams;
+            aids = aids.split(",").slice(0, 6).join(",");
+            getMixRank({ mount, aids, event_id })
                 .then((res) => {
                     this.data = res.data?.data || [];
                     this.data = Object.freeze(this.data);

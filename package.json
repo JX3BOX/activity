@@ -3,7 +3,8 @@
     "private": true,
     "scripts": {
         "dev": "env DEV_SERVER=true vue-cli-service serve --mode development",
-        "serve": "vue-cli-service serve --mode production",
+        "dev+": "cross-env DEV_SERVER=true vue-cli-service serve --mode development",
+        "serve": "vue-cli-service serve --mode serve",
         "debug": "env DEV_SERVER=true vue-cli-service serve --mode staging",
         "build": "vue-cli-service build",
         "preview": "env BUILD_MODE=preview vue-cli-service build",
@@ -12,9 +13,9 @@
         "update": "npm --registry https://registry.npmjs.org install @jx3box/jx3box-common-ui@latest @jx3box/jx3box-common@latest @jx3box/jx3box-data@latest"
     },
     "dependencies": {
-        "@jx3box/jx3box-common": "^8.5.2",
-        "@jx3box/jx3box-common-ui": "^9.0.12",
-        "@jx3box/jx3box-data": "^3.7.0",
+        "@jx3box/jx3box-common": "^8.7.0",
+        "@jx3box/jx3box-common-ui": "^9.3.2",
+        "@jx3box/jx3box-data": "^3.8.2",
         "animate.css": "^4.1.1",
         "axios": "^0.19.2",
         "core-js": "^3.4.3",
@@ -43,6 +44,7 @@
         "@vue/cli-plugin-vuex": "^4.0.0",
         "@vue/cli-service": "^4.1.2",
         "babel-eslint": "^10.0.3",
+        "cross-env": "^7.0.3",
         "csslab": "^4.0.3",
         "eslint": "^5.16.0",
         "eslint-plugin-vue": "^5.0.0",
