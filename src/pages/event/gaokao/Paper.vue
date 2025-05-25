@@ -14,6 +14,7 @@
             <div class="m-title">
                 <span @click="openchangeExam" :style="{ color: font, backgroundColor: background }">
                     {{ name }}
+                    <img svg-inline src="@/assets/img/event/switch_touchbar.svg" :style="{ fill: font }" />
                 </span>
             </div>
             <div class="m-content">
@@ -31,8 +32,14 @@
                     @changeVal="finalAnswer"
                 />
 
-                <div class="m-exam-submit" @click="submit" :class="{ isSubmitted }" v-if="list.length">
-                    <el-button class="u-btn" :disabled="isSubmitted">提交</el-button>
+                <div class="m-exam-submit" :class="{ isSubmitted }" v-if="list.length">
+                    <el-button class="u-btn" @click="submit" :disabled="isSubmitted">提交</el-button>
+                    <div @click="openchangeExam" v-if="isMiniProgram && isSubmitted" class="m-switch-exam">
+                        <el-button class="u-btn" :style="{ color: font, backgroundColor: background }"
+                            >试试别的</el-button
+                        >
+                        <img svg-inline src="@/assets/img/event/switch_touchbar.svg" :style="{ fill: font }" />
+                    </div>
                 </div>
             </div>
         </div>

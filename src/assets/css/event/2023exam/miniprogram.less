@@ -28,11 +28,22 @@
                     top: 51px;
                     left: 12px;
                 }
-                &.u-year {
+                &.m-year {
                     top: 140px;
                     right: 46px;
                     left: auto;
-                    width: 90px;
+                    width: max-content;
+                    .u-year {
+                        color: #fff;
+                        font-size: 24px;
+                        line-height: 30px;
+                    }
+                    .u-text1,
+                    .u-text2 {
+                        font-size: 12px;
+                        line-height: 18px;
+                        font-weight: bold;
+                    }
                 }
             }
         }
@@ -50,10 +61,14 @@
                     line-height: 42px;
                     font-size: 14px;
                     .r(20px);
-                    background-image: url("@{kv_exam}switch_touchbar.svg");
-                    background-size: 16px;
-                    background-repeat: no-repeat;
-                    background-position: right 13px center;
+                    position: relative;
+                    svg {
+                        width: 16px;
+                        position: absolute;
+                        right: 13px;
+                        top: 50%;
+                        transform: translateY(-50%);
+                    }
                 }
             }
             .m-content {
@@ -162,12 +177,29 @@
                     }
                 }
                 .m-exam-submit {
-                    width: 160px;
-                    height: 42px;
                     margin-top: 31px;
+                    display: flex;
+                    gap: 10px;
+                    align-items: center;
+                    justify-content: center;
+                    width: 100%;
+
                     .u-btn {
+                        width: 160px;
+                        height: 42px;
                         .r(20px);
                         font-size: 14px;
+                        border: none;
+                    }
+                    .m-switch-exam {
+                        position: relative;
+                        svg {
+                            position: absolute;
+                            width: 16px;
+                            top: 50%;
+                            transform: translateY(-50%);
+                            right: 13px;
+                        }
                     }
                 }
             }

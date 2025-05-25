@@ -48,12 +48,12 @@
                     <template v-if="item.type === 'checkbox'">
                         <el-checkbox-group v-model="checkbox" @change="checkAnswers(item.id, checkbox)">
                             <el-checkbox
+                                :class="[{ 'has-hover': !isMiniProgram }, myWrongClass(i)]"
                                 v-for="(option, i) of options"
                                 :key="i"
                                 :label="i"
                                 border
                                 :disabled="isSubmitted"
-                                :class="myWrongClass(i)"
                             >
                                 <div class="u-radio">
                                     <span class="u-num">{{ String.fromCharCode(65 + i) }}.</span>
@@ -202,7 +202,7 @@ export default {
 <style lang="less">
 .color-1 {
     .el-radio:hover,
-    .el-checkbox:hover,
+    .has-hover:hover,
     .is-checked {
         background: #ffe353 !important;
         .u-radio {
@@ -212,7 +212,7 @@ export default {
 }
 .color-2 {
     .el-radio:hover,
-    .el-checkbox:hover,
+    .has-hover:hover,
     .is-checked {
         background: #bbd4ce !important;
         .u-radio {
@@ -222,7 +222,7 @@ export default {
 }
 .color-3 {
     .el-radio:hover,
-    .el-checkbox:hover,
+    .has-hover:hover,
     .is-checked {
         background: #f9c397 !important;
         .u-radio {
@@ -232,7 +232,7 @@ export default {
 }
 .color-4 {
     .el-radio:hover,
-    .el-checkbox:hover,
+    .has-hover:hover,
     .is-checked {
         background: #ae7897 !important;
         .u-radio {
@@ -242,7 +242,7 @@ export default {
 }
 .color-5 {
     .el-radio:hover,
-    .el-checkbox:hover,
+    .has-hover:hover,
     .is-checked {
         background: #f9b4ab !important;
         .u-radio {
@@ -252,7 +252,7 @@ export default {
 }
 .color-6 {
     .el-radio:hover,
-    .el-checkbox:hover,
+    .has-hover:hover,
     .is-checked {
         background: #f9b4ab !important;
         .u-radio {
@@ -262,7 +262,7 @@ export default {
 }
 .color-7 {
     .el-radio:hover,
-    .el-checkbox:hover,
+    .has-hover:hover,
     .is-checked {
         background: #f55951 !important;
         .u-radio {
