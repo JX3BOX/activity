@@ -43,7 +43,8 @@
 </template>
 
 <script>
-import { exams, papers } from "@/assets/data/event/exam.json";
+import { getMenu } from "@jx3box/jx3box-common/js/api_misc";
+import { papers } from "@/assets/data/event/exam.json";
 import Paper from "./Paper.vue";
 export default {
     name: "Index",
@@ -55,19 +56,29 @@ export default {
             show: false,
             showYear: "",
             papers,
-            exams,
+            exams: {},
         };
     },
     mounted() {
-        const year = Object.keys(this.exams).reverse()[0];
-        this.$router.push({ name: "index", params: { year } });
+        getMenu("exam_pagers").then((res) => {
+            this.exams = res.reduce((acc, item) => {
+                const list = JSON.parse(item.list);
+                acc[item.year] = list.reduce((acc, item, index) => {
+                    acc[`${index + 1}`] = { key: item.key, name: item.name };
+                    return acc;
+                }, {});
+                return acc;
+            }, {});
+            const year = Object.keys(this.exams).reverse()[0];
+            if (this.year !== year) this.$router.push({ name: "index", params: { year } });
+        });
     },
     computed: {
         exam() {
-            return this.exams[this.year];
+            return (this.exams && this.exams[this.year]) || {};
         },
         showKey() {
-            return this.exam[this.showId].key;
+            return this.exam[this.showId]?.key;
         },
         showColor() {
             return this.papers[this.showId].color;
@@ -85,6 +96,7 @@ export default {
             return this.$route.params.year || this.showYear;
         },
         paperList() {
+            if (!this.showKey) return {};
             const id = ~~this.showId === 0 ? 1 : ~~this.showId;
             const count = Object.keys(this.exam).length;
             const last = id - 1 === 0 ? count : id - 1;
