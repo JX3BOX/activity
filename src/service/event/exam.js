@@ -32,6 +32,13 @@ function submitAnswer(id, answers, force = false) {
 	);
 }
 
+function submitAnswerTrial(id, answers) {
+    return $next().post(
+        `/api/next2/question/user-exam-paper/${id}/i-finish-all/trial?force`,
+        answers
+    );
+}
+
 function submitQuestionAnswer(id, answers) {
 	return $next().post(
 		`/api/question/user-exam-paper/q/${id}/answer`,
@@ -71,6 +78,7 @@ export {
 	getQuestion,
 	submitAnswer,
 	submitQuestionAnswer,
+    submitAnswerTrial,
 	getAnswer,
 	getStat,
 	checkPaper,

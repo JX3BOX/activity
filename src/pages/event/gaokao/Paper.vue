@@ -80,7 +80,7 @@
 <script>
 import { postStat } from "@jx3box/jx3box-common/js/stat.js";
 import ExamCard from "./ExamCard.vue";
-import { submitAnswer, getPaper } from "@/service/event/exam.js";
+import { submitAnswer, getPaper, submitAnswerTrial } from "@/service/event/exam.js";
 import User from "@jx3box/jx3box-common/js/user";
 import { exams } from "@/assets/data/event/exam.json";
 import { isMiniProgram } from "@jx3box/jx3box-common/js/utils";
@@ -147,6 +147,9 @@ export default {
         examDrawerSubDis() {
             return this.showYear == this.year && this.showTypeId == this.showId;
         },
+        isPractice() {
+            return this.$route?.query?.mode == "practice";
+        }
     },
     watch: {
         showKey() {
@@ -198,7 +201,7 @@ export default {
             };
         },
         submit() {
-            if (!User.isLogin()) return this.$message.error("请先登录");
+            if (!this.isPractice && !User.isLogin()) return this.$message.error("请先登录");
             if (!Object.keys(this.userAnswers).length) {
                 this.$alert("不能交白卷哦~", "提交失败", {
                     type: "error",
@@ -218,7 +221,8 @@ export default {
                         myAnswer: this.userAnswers[i].sort(),
                     });
                 }
-                submitAnswer(this.id, submitList, true).then((res) => {
+                const fn = this.isPractice ? submitAnswerTrial : submitAnswer;
+                fn(this.id, submitList, true).then((res) => {
                     if (res.data.score) {
                         document.documentElement.scrollTop = 0;
                         const paper = res.data.paper;
