@@ -17,7 +17,7 @@
                     <img svg-inline src="@/assets/img/event/switch_touchbar.svg" :style="{ fill: font }" />
                 </span>
             </div>
-            <div class="m-content">
+            <div class="m-content" v-if="list && list.length">
                 <ExamCard
                     v-for="(item, index) in list"
                     :key="item.id"
