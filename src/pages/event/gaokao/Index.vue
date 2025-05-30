@@ -45,6 +45,7 @@
 <script>
 import { getMenu } from "@jx3box/jx3box-common/js/api_misc";
 import { papers } from "@/assets/data/event/exam.json";
+import { findKey } from "lodash";
 import Paper from "./Paper.vue";
 export default {
     name: "Index",
@@ -69,31 +70,40 @@ export default {
                 }, {});
                 return acc;
             }, {});
-            const year = Object.keys(this.exams).reverse()[0];
-            if (this.year !== year) this.$router.push({ name: "index", params: { year } });
+            this.showYear = Object.keys(this.exams).reverse()[0];
+            const data = this.getRouter(this.exams, this.pathId);
+            if (data) {
+                this.showYear = data.year;
+                const id = findKey(this.exam, (obj) => obj.key === data.key) || 1;
+                this.changeExam(id, data.year);
+            }
         });
     },
     computed: {
         exam() {
-            return (this.exams && this.exams[this.year]) || {};
+            let year = this.year;
+            if (this.showYear !== year) {
+                year = this.showYear;
+            }
+            return (this.exams && this.exams[year]) || {};
         },
         showKey() {
             return this.exam[this.showId]?.key;
         },
         showColor() {
-            return this.papers[this.showId].color;
+            return this.papers[this.showId]?.color;
         },
         showBackground() {
-            return this.papers[this.showId].background;
+            return this.papers[this.showId]?.background;
         },
         showFont() {
-            return this.papers[this.showId].font;
+            return this.papers[this.showId]?.font;
         },
         pathId() {
             return this.$route.query.paper;
         },
         year() {
-            return this.$route.params.year || this.showYear;
+            return this.$route.params.year;
         },
         paperList() {
             if (!this.showKey) return {};
@@ -112,14 +122,9 @@ export default {
         },
     },
     methods: {
-        changeExam(id) {
+        changeExam(id, year = this.year) {
             this.showId = id;
-            this.$router.push({ name: "index", params: { year: this.year }, query: { paper: this.exam[id].key } });
-            window.scrollTo(0, 0);
-        },
-        sonChangeExam(year, id) {
-            this.showId = id;
-            this.$router.push({ name: "index", params: { year: year }, query: { paper: this.exam[id].key } });
+            this.$router.push({ name: "index", params: { year }, query: { paper: this.exam[id].key } });
             window.scrollTo(0, 0);
         },
         changeShow() {
@@ -131,6 +136,15 @@ export default {
             this.showId = 1;
             this.$router.push({ name: "index", params: { year: year } });
             window.scrollTo(0, 0);
+        },
+        getRouter(data, targetKey) {
+            for (const year in data) {
+                for (const month in data[year]) {
+                    if (data[year][month].key == targetKey) {
+                        return { year, key: targetKey };
+                    }
+                }
+            }
         },
     },
 };

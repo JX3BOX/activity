@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { postStat } from "@jx3box/jx3box-common/js/stat";
+// import { postStat } from "@jx3box/jx3box-common/js/stat";
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 import { isMiniProgram } from "@jx3box/jx3box-common/js/utils";
 export default {
@@ -29,7 +29,7 @@ export default {
         },
     },
     created: function () {
-        postStat("event", "gaokao");
+        // postStat("event", "gaokao");
         // 小程序下设置viewport
         if (isMiniProgram()) {
             let meta = document.createElement("meta");

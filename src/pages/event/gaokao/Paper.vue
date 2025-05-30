@@ -78,7 +78,7 @@
 </template>
 
 <script>
-import { postStat } from "@jx3box/jx3box-common/js/stat.js";
+// import { postStat } from "@jx3box/jx3box-common/js/stat.js";
 import ExamCard from "./ExamCard.vue";
 import { submitAnswer, getPaper, submitAnswerTrial } from "@/service/event/exam.js";
 import User from "@jx3box/jx3box-common/js/user";
@@ -149,7 +149,7 @@ export default {
         },
         isPractice() {
             return this.$route?.query?.mode == "practice";
-        }
+        },
     },
     watch: {
         showKey() {
@@ -171,7 +171,7 @@ export default {
                         let data = res.data;
 
                         // 发送统计
-                        postStat("paper", id);
+                        // postStat("paper", id);
 
                         data.tags = JSON.parse(data.tags);
                         data.questionDetailList =
