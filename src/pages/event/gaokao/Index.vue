@@ -125,6 +125,7 @@ export default {
     methods: {
         changeExam(id, year = this.year) {
             this.showId = id;
+            this.showYear = year;
             this.$router.push({ name: "index", params: { year }, query: { paper: this.exam[id].key } });
             window.scrollTo(0, 0);
         },
