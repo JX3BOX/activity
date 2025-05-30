@@ -248,7 +248,6 @@ export default {
         },
         examDrawerSub() {
             this.changeExamVisible = false;
-            console.log(this.showTypeId, this.showYear)
             this.$parent.changeExam(this.showTypeId, this.showYear);
         },
     },
