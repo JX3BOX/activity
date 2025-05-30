@@ -18,6 +18,7 @@
             v-for="(item, i) in paperList"
             :key="i"
             :paper="item"
+            :exams="exams"
             :showKey="showKey"
             :showId="showId"
             :showYear="showYear"

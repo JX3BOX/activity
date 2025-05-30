@@ -82,12 +82,11 @@
 import ExamCard from "./ExamCard.vue";
 import { submitAnswer, getPaper, submitAnswerTrial } from "@/service/event/exam.js";
 import User from "@jx3box/jx3box-common/js/user";
-import { exams } from "@/assets/data/event/exam.json";
 import { isMiniProgram } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "Paper",
     inject: ["__imgRoot"],
-    props: ["paper", "showKey", "showId"],
+    props: ["paper", "showKey", "showId", "exams"],
     components: { ExamCard },
     data: function () {
         return {
@@ -99,7 +98,6 @@ export default {
             isSubmitted: false,
             loading: false,
             changeExamVisible: false,
-            exams,
             showYear: "",
             showTypeId: "",
             isMiniProgram: isMiniProgram(),
