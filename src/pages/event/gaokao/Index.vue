@@ -124,10 +124,13 @@ export default {
     },
     methods: {
         changeExam(id, year = this.year) {
-            if (!id) return;
             this.showId = id;
             this.showYear = year;
-            this.$router.push({ name: "index", params: { year }, query: { paper: this.exam[id].key } });
+            this.$router.push({
+                name: "index",
+                params: { year: this.showYear },
+                query: { paper: this.exam[id]?.key || "" },
+            });
             window.scrollTo(0, 0);
         },
         changeShow() {
