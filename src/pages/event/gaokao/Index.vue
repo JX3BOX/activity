@@ -8,7 +8,7 @@
                     v-for="(item, id) in exam"
                     :key="id"
                     :class="['u-paper', { active: showId == id }]"
-                    @click="changeExam(id)"
+                    @click="changeExam(id, year, item.key)"
                 >
                     {{ item.name }}
                 </span>
@@ -76,7 +76,7 @@ export default {
             if (data) {
                 this.showYear = data.year;
                 const id = findKey(this.exam, (obj) => obj.key === data.key) || 1;
-                this.changeExam(id, data.year);
+                this.changeExam(id, data.year, this.pathId);
             }
         });
     },
@@ -123,13 +123,13 @@ export default {
         },
     },
     methods: {
-        changeExam(id, year = this.year) {
+        changeExam(id, year, paper) {
             this.showId = id;
             this.showYear = year;
             this.$router.push({
                 name: "index",
-                params: { year: this.showYear },
-                query: { paper: this.exam[id]?.key || "" },
+                params: { year },
+                query: { paper },
             });
             window.scrollTo(0, 0);
         },

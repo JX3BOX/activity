@@ -97,7 +97,7 @@ export default {
             userAnswers: {},
             isSubmitted: false,
             loading: false,
-            changeExamVisible: false,
+            changeExamVisible: true,
             showYear: "",
             showTypeId: "",
             isMiniProgram: isMiniProgram(),
@@ -248,7 +248,7 @@ export default {
         },
         examDrawerSub() {
             this.changeExamVisible = false;
-            this.$parent.changeExam(this.showTypeId, this.showYear);
+            this.$parent.changeExam(this.showTypeId, this.showYear, this.showKey);
         },
     },
     mounted() {
