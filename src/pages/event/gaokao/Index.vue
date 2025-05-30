@@ -8,7 +8,7 @@
                     v-for="(item, id) in exam"
                     :key="id"
                     :class="['u-paper', { active: showId == id }]"
-                    @click="changeExam(id, year, item.key)"
+                    @click="changeExam(id, showYear, item.key)"
                 >
                     {{ item.name }}
                 </span>
@@ -126,6 +126,7 @@ export default {
         changeExam(id, year, paper) {
             this.showId = id;
             this.showYear = year;
+            console.log(id, year, paper)
             this.$router.push({
                 name: "index",
                 params: { year },

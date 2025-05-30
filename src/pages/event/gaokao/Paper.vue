@@ -97,7 +97,7 @@ export default {
             userAnswers: {},
             isSubmitted: false,
             loading: false,
-            changeExamVisible: true,
+            changeExamVisible: false,
             showYear: "",
             showTypeId: "",
             isMiniProgram: isMiniProgram(),
