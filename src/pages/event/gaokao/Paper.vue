@@ -248,7 +248,7 @@ export default {
         },
         examDrawerSub() {
             this.changeExamVisible = false;
-            this.$parent.sonChangeExam(this.showYear, this.showTypeId);
+            this.$parent.changeExam(this.showTypeId, this.showYear);
         },
     },
     mounted() {
