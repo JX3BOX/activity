@@ -44,6 +44,7 @@
 </template>
 
 <script>
+import { isMiniProgram } from "@jx3box/jx3box-common/js/utils";
 import { getMenu } from "@jx3box/jx3box-common/js/api_misc";
 import { papers } from "@/assets/data/event/exam.json";
 import { findKey } from "lodash";
@@ -59,6 +60,7 @@ export default {
             showYear: "",
             papers,
             exams: {},
+            isMiniProgram: isMiniProgram(),
         };
     },
     mounted() {
@@ -100,6 +102,9 @@ export default {
         showFont() {
             return this.papers[this.showId]?.font;
         },
+        pathMode() {
+            return this.$route.query.mode;
+        },
         pathId() {
             return this.$route.query.paper;
         },
@@ -126,10 +131,12 @@ export default {
         changeExam(id, year, paper) {
             this.showId = id;
             this.showYear = year;
+            const query = { ...this.$route.query, paper };
+            if (this.isMiniProgram) query.mode = "practice";
             this.$router.push({
                 name: "index",
                 params: { year },
-                query: { ...this.$route.query, paper },
+                query,
             });
             window.scrollTo(0, 0);
         },
