@@ -146,7 +146,7 @@ export default {
             return this.showYear == this.year && this.showTypeId == this.showId;
         },
         isPractice() {
-            return this.$route?.query?.mode == "practice";
+            return this.$route?.query?.mode == "practice" || this.isMiniProgram;
         },
     },
     watch: {
