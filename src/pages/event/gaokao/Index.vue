@@ -126,11 +126,10 @@ export default {
         changeExam(id, year, paper) {
             this.showId = id;
             this.showYear = year;
-            console.log(id, year, paper)
             this.$router.push({
                 name: "index",
                 params: { year },
-                query: { paper },
+                query: { ...this.$route.query, paper },
             });
             window.scrollTo(0, 0);
         },
