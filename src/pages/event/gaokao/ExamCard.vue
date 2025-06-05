@@ -31,7 +31,7 @@
                         <div class="u-user">
                             <span class="u-label" :style="{ background, color: font }">出题人</span
                             >{{ item.createUser }}
-                            <Avatar :uid="item.createUserId" class="u-avatar" />
+                            <Avatar :url="item.userInfo.avatar" class="u-avatar" />
                         </div>
                         <div class="u-exam">
                             <span class="u-label" :style="{ background, color: font }">试题编号</span>{{ item.id }}
