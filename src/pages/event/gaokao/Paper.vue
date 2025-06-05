@@ -258,7 +258,3 @@ export default {
     },
 };
 </script>
-
-<style lang="less">
-@import "~@/assets/css/event/2023exam/card.less";
-</style>
