@@ -18,25 +18,14 @@
                 </div>
 
                 <div class="u-right">
-                    <template v-if="!isMiniProgram">
-                        <a class="u-user" :href="authorLink(item.createUserId)" target="_blank"
-                            ><span class="u-label" :style="{ background, color: font }">出题人</span
-                            >{{ item.createUser }}
-                        </a>
-                        <a class="u-exam" :href="`${exam_link}${item.id}`" target="_blank"
-                            ><span class="u-label" :style="{ background, color: font }">试题编号</span>{{ item.id }}</a
-                        >
-                    </template>
-                    <template v-else>
-                        <div class="u-user">
-                            <span class="u-label" :style="{ background, color: font }">出题人</span
-                            >{{ item.createUser }}
-                            <Avatar :url="item.userInfo.avatar" class="u-avatar" />
-                        </div>
-                        <div class="u-exam">
-                            <span class="u-label" :style="{ background, color: font }">试题编号</span>{{ item.id }}
-                        </div>
-                    </template>
+                    <a class="u-user" :href="authorLink(item.userInfo.id)" target="_blank"
+                        ><span class="u-label" :style="{ background, color: font }">出题人</span
+                        ><span v-if="!isMiniProgram">{{ item.userInfo.display_name }}</span>
+                        <Avatar v-else :url="item.userInfo.avatar" class="u-avatar" />
+                    </a>
+                    <a class="u-exam" :href="`${exam_link}${item.id}`" target="_blank"
+                        ><span class="u-label" :style="{ background, color: font }">试题编号</span>{{ item.id }}</a
+                    >
                 </div>
             </div>
             <div class="u-cont">
