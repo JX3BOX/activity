@@ -43,3 +43,11 @@ export function getMyJoinRecord(eventId) {
 export function getLoverProgress(params) {
     return $team().get(`/api/team/pvp-event-process/public/list`, { params });
 }
+
+export function vote(eventId, recordId, data) {
+    return $team().post(`/api/team/pvp-event/${eventId}/public/join-record/item/${recordId}/vote`, data);
+}
+
+export function getVoteStatus(eventId, recordId, voteId) {
+    return $team().get(`/api/team/pvp-event/${eventId}/public/join-record/item/${recordId}/vote/item/${voteId}/status`);
+}

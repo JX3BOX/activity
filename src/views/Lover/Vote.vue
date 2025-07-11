@@ -18,16 +18,12 @@
                     </el-image>
                     <div class="u-team">{{ item.team_name }}</div>
                     <div class="u-name">
-                        <el-avatar
-                            class="u-avatar-pic"
-                            shape="circle"
-                            :size="24"
-                            :src="item.user_info.avatar"
-                        ></el-avatar>
-                        <span>{{ item.user_info.display_name }}</span>
+                        <span v-for="(user, index) in uniqBy(item.teammeta_user_list, 'id')" :key="index">
+                            {{ user.display_name }}
+                        </span>
                     </div>
                     <div class="u-slogan">{{ item.slogan }}</div>
-                    <div class="u-button"></div>
+                    <div class="u-button" @click="onVote(item)" :class="{ 'is-loading': vote_loading }"></div>
                 </div>
             </div>
         </div>
@@ -45,7 +41,8 @@
 </template>
 
 <script>
-import { getJoinList } from "@/service/rank/lover";
+import { uniqBy } from "lodash";
+import { getJoinList, vote, getVoteStatus } from "@/service/rank/lover";
 export default {
     name: "LoverVote",
     inject: ["__imgRoot"],
@@ -55,14 +52,19 @@ export default {
             index: 1,
             list: [],
             total: 0,
+
+            vote_loading: false,
         };
     },
     computed: {
-        loverId() {
-            return this.$store.state.loverId;
+        eventId() {
+            return this.$store.getters.currentEventId;
+        },
+        event() {
+            return this.$store.state.event;
         },
         vote_note() {
-            return this.$store.state.info.vote_note;
+            return this.$store.state.event.vote_note;
         },
         params() {
             return {
@@ -81,14 +83,47 @@ export default {
         },
     },
     methods: {
+        uniqBy,
         load() {
-            getJoinList(this.loverId).then((res) => {
+            getJoinList(this.eventId).then((res) => {
                 this.list = res.data.data.list || [];
                 this.total = res.data.data.page.total;
             });
         },
         changePage(i) {
             this.index = i;
+        },
+        async onVote(item) {
+            if (this.vote_loading) return;
+            this.vote_loading = true;
+            try {
+                const vote_resp = await vote(this.eventId, item.id, { vote: 1 });
+                const vote_record_id = vote_resp.data?.data?.id;
+                if (this.event.is_point_vote) {
+                    if (!vote_record_id) {
+                        this.$message.error("投票失败，请稍后再试");
+                        return;
+                    }
+                    // 是积分投票，需要轮询一段时间的接口
+                    for (let i = 0; i < 10; i++) {
+                        // 每500ms检查一次
+                        await new Promise((resolve) => setTimeout(resolve, 500));
+                        const resp = await getVoteStatus(this.eventId, item.id, vote_record_id);
+                        const res = resp.data?.data?.status;
+                        if (res) {
+                            this.$message.success("投票成功");
+                            item.votes += 1;
+                            break;
+                        }
+                    }
+                } else {
+                    // 非积分投票
+                    this.$message.success("投票成功");
+                    item.votes += 1;
+                }
+            } finally {
+                this.vote_loading = false;
+            }
         },
     },
 };

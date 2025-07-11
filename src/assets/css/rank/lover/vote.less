@@ -50,16 +50,17 @@
             .flex;
             gap: 10px;
             align-items: center;
-            .el-avatar {
-                .size(24px);
-                flex-shrink: 0;
-            }
-            span {
-                .nobreak;
-            }
-            .el-avatar > img {
-                width: 100%;
-            }
+            justify-content: space-between;
+            // .el-avatar {
+            //     .size(24px);
+            //     flex-shrink: 0;
+            // }
+            // span {
+            //     .nobreak;
+            // }
+            // .el-avatar > img {
+            //     width: 100%;
+            // }
         }
         .u-slogan {
             .break(2);
@@ -73,6 +74,36 @@
             background-size: 100% 100%;
             &:hover {
                 filter: brightness(110%);
+            }
+
+            &.is-loading {
+                pointer-events: none;
+                filter: grayscale(60%);
+                // loading 动画
+
+                @keyframes lover-spin {
+                    0% {
+                        transform: rotate(0deg);
+                    }
+                    100% {
+                        transform: rotate(360deg);
+                    }
+                }
+
+                &::after {
+                    content: "";
+                    position: absolute;
+                    .lt(50%);
+                    .size(18px);
+                    margin-left: -12px;
+                    margin-top: -12px;
+                    border: 3px solid #fff;
+                    border-top: 3px solid #409eff;
+                    border-radius: 50%;
+                    animation: lover-spin 0.8s linear infinite;
+                    z-index: 2;
+                    background: transparent;
+                }
             }
         }
     }
