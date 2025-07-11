@@ -7,7 +7,7 @@
                     <div class="m-menu" :key="item">
                         <router-link
                             :class="['u-menu', { active: item.key == page }]"
-                            :to="{ name: item.key }"
+                            :to="{ name: item.key, params: { slug: slug } }"
                             v-for="item in group(item)"
                             :key="item.key"
                         >
@@ -46,18 +46,19 @@ export default {
         page() {
             return this.$route?.name;
         },
+        slug() {
+            return this.$store.state.slug || this.$store.getters.defaultEventSlug || "?";
+        },
     },
     methods: {
         group(i) {
-            const data = {
-                1: this.menus.slice(0, 3),
-                2: this.menus.slice(3),
-            };
-            return data[i];
+            return this.menus.slice((i - 1) * 3, i * 3);
         },
     },
-    mounted() {
-        store.dispatch("loadLoverId");
+    watch: {
+        "$route.params.slug": function (newSlug) {
+            store.commit("SET_SLUG", newSlug);
+        },
     },
 };
 </script>

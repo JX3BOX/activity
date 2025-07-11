@@ -4,7 +4,7 @@
             <img class="u-img" :src="`${__imgRoot}join-title.png`" />
         </div>
         <!-- 报名成功提示 -->
-        <template v-if="success">
+        <template v-if="joined">
             <div class="m-success">
                 <img class="u-img" :src="`${__imgRoot}success.svg`" />
                 <span>报名成功，你的报名信息如下</span>
@@ -13,66 +13,72 @@
         <!-- 登录后 -->
         <template v-if="isLogin">
             <!-- 情缘证 -->
-            <div class="m-lover-box m-lover-certificate" v-loading="loading">
-                <template v-if="list.length">
-                    <div class="no-certificate" v-if="!certificate">ღ 暂无绑定的主情缘 ღ</div>
-                    <template v-else>
-                        <certificate :data="certificate" />
-                        <div class="u-button" @click="setLover" v-if="!join">设定为主情缘</div>
-                    </template>
-                </template>
-                <div class="no-certificate" v-else-if="!loading">ღ 请按教程在游戏内绑定情缘 ღ</div>
-            </div>
-
-            <!-- 情缘列表 -->
-            <div class="m-lover-list" v-if="!join" v-loading="loading">
-                <div class="m-lover-box" v-for="(item, i) in list" :key="item.id" @click="changeLover(i)">
-                    <div class="u-user">
-                        <div class="u-avatar">
-                            <el-avatar
-                                class="u-avatar-pic"
-                                shape="circle"
-                                :size="30"
-                                :src="item.user_info_1.avatar"
-                            ></el-avatar>
-                        </div>
-                        <span class="u-name">{{ item.user_info_1.display_name }}</span>
-                    </div>
-                    <div class="u-user">
-                        <div class="u-avatar">
-                            <el-avatar
-                                class="u-avatar-pic"
-                                shape="circle"
-                                :size="30"
-                                :src="item.user_info_2.avatar"
-                            ></el-avatar>
-                        </div>
-                        <span class="u-name">{{ item.user_info_2.display_name }}</span>
-                    </div>
+            <div class="m-lover-box m-lover-certificate">
+                <certificate v-if="loverHasBind" :data="loverNet" />
+                <div class="no-certificate" v-else>
+                    ღ 请先前往 <a href="/dashboard/privacy?tab=lover"></a> 绑定情缘哦~ ღ
                 </div>
             </div>
             <!-- 报名 -->
-            <div class="m-lover-box m-lover-enroll" v-if="entry" v-loading="loading">
+            <div class="m-lover-box m-lover-enroll" v-if="loverHasBind" v-loading="loading">
                 <h3>情缘杯报名</h3>
                 <el-form
-                    :class="['m-lover-form', { disabled: join }]"
-                    :disabled="join"
+                    :class="['m-lover-form', { disabled: joined }]"
+                    :disabled="joined"
                     ref="form"
                     :model="form"
                     :rules="rules"
                     label-width="80px"
                 >
                     <el-form-item label="队伍名" prop="team_name">
-                        <el-input v-model.number="form.team_name" />
+                        <el-input v-model="form.team_name" />
+                    </el-form-item>
+                    <el-form-item label="战队图标">
+                        <div v-if="joined" class="u-image-list">
+                            <img class="u-image-item" v-for="(src, index) in form.images" :src="src" :key="index" />
+                        </div>
+                        <uploadImage v-else ref="upload-image" @onFinish="onImageUploaded"></uploadImage>
                     </el-form-item>
                     <el-form-item label="参赛宣言" prop="slogan">
-                        <el-input v-model="form.slogan" type="textarea" :rows="2" />
+                        <el-input v-model="form.slogan" type="textarea" :rows="3" />
                     </el-form-item>
-                    <el-form-item label="合照上传">
-                        <uploadImage v-model="form.image" :max-size="30"></uploadImage>
+                    <el-form-item label="服务器" prop="server">
+                        <el-select v-model="form.server" placeholder="请选择服务器">
+                            <el-option
+                                v-for="(item, index) in serverOptions"
+                                :key="index"
+                                :label="item.label"
+                                :value="item.value"
+                            >
+                                {{ item.label }}
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="联系QQ" prop="qq">
+                        <el-input v-model="form.qq" />
+                    </el-form-item>
+                    <el-form-item label="联系电话" prop="qq">
+                        <el-input v-model="form.phone" />
+                    </el-form-item>
+                    <el-form-item label="直播信息" prop="live_id">
+                        <div class="u-live-form">
+                            <el-select
+                                v-model="form.live_platform"
+                                allow-create
+                                default-first-option
+                                filterable
+                                placeholder="直播平台"
+                            >
+                                <el-option label="斗鱼" value="douyu"></el-option>
+                                <el-option label="虎牙" value="huya"></el-option>
+                                <el-option label="B站" value="bilibili"></el-option>
+                                <el-option label="抖音" value="douyin"></el-option>
+                            </el-select>
+                            <el-input v-model="form.live_url" placeholder="直播间地址"></el-input>
+                        </div>
                     </el-form-item>
                 </el-form>
-                <div :class="['u-submit', { disabled: join }]" @click="toJoin">
+                <div :class="['u-submit', { disabled: joined }]" @click="startUploadImage">
                     <img class="u-img" :src="`${__imgRoot}join.png`" />
                 </div>
             </div>
@@ -86,8 +92,9 @@
 </template>
 
 <script>
+import server_std from "@jx3box/jx3box-data/data/server/server_std.json";
 import User from "@jx3box/jx3box-common/js/user.js";
-import { getMyLover, joinLover, setMyLover } from "@/service/rank/lover";
+import { joinLover, getMyProfile } from "@/service/rank/lover";
 import { authorLink } from "@jx3box/jx3box-common/js/utils";
 import uploadImage from "@jx3box/jx3box-comment-ui/src/components/upload.vue";
 import certificate from "@/components/rank/lover/certificate.vue";
@@ -98,108 +105,127 @@ export default {
     data: function () {
         return {
             loading: false,
-            lover: false,
-            isLogin: User.isLogin(),
             list: [],
 
             form: {
                 team_name: "",
-                images: [],
-                lover_jx3id: "",
-                phone: "",
-                qq: "",
-                remark: "",
-                server: "",
                 slogan: "",
-                team_name: "",
-                user_jx3id: "",
+                images: [],
+                server: "",
+                qq: "",
+                phone: "",
+
+                live_platform: "", // 直播平台
+                live_url: "", // 直播间
             },
             rules: {
                 team_name: [{ required: true, message: "请输入队伍名", trigger: "blur" }],
             },
 
-            certificate: null,
-            join: false,
-            entry: false,
-            success: false,
+            join_loading: false,
         };
     },
     computed: {
-        loverId() {
-            return this.$store.state.loverId;
+        // 服务器选项
+        serverOptions() {
+            return server_std.map((item) => {
+                return {
+                    value: item,
+                    label: item,
+                };
+            });
         },
-        myJoin() {
-            return this.$store.state.my_join || null;
+        eventId() {
+            return this.$store.getters.currentEventId;
+        },
+        isLogin() {
+            return User.isLogin();
+        },
+        loverNet() {
+            return this.$store.state.lover_net;
+        },
+        loverHasBind() {
+            return this.loverNet && this.loverNet?.members?.filter((m) => m.status === 1)?.length > 1;
+        },
+        joinRecord() {
+            return this.$store.state.join_record;
+        },
+        joined() {
+            return Boolean(this.joinRecord);
+        },
+        systemJoinParams() {
+            return {
+                event_id: this.eventId,
+                user_id: User.profile.ID,
+                status: 0,
+                team_mates: this.loverNet.members.map((m) => m.user_id),
+                relation_net_id: this.loverNet.net.id,
+                remark: null,
+            };
         },
     },
-    watch: {
-        isLogin: {
-            immediate: true,
-            handler: function (val) {
-                if (val) {
-                    this.loadMyLover();
-                    this.$store.dispatch("getMyEventStatus");
-                }
-            },
-        },
-        join(val) {
-            if (val) this.entry = true;
-        },
-        myJoin: {
-            immediate: true,
-            handler: function (obj) {
-                if (obj?.id) {
-                    this.form = val;
-                    this.join = true;
-                    this.entry = true;
-                }
-            },
-        },
-    },
+    watch: {},
     methods: {
         authorLink,
         toLogin() {
             User.toLogin();
         },
-        loadMyLover() {
-            // 获取我的情缘 && 判断是否有主情缘
-            this.loading = true;
-            getMyLover()
-                .then((res) => {
-                    const list = res.data.data.list || [];
-                    this.list = list;
-                    this.certificate = list.filter((item) => item.star === 1)[0] || null;
-                })
-                .finally(() => {
-                    this.loading = false;
-                });
+        startUploadImage() {
+            if (this.joined) return;
+            // 点击报名按钮后，先上传图片，通过图片上传结束的回调获取图片列表进行实际报名~
+            const uploadImageRef = this.$refs["upload-image"];
+            this.join_loading = true;
+            uploadImageRef.upload();
         },
-        changeLover(index) {
-            this.certificate = this.list[index];
+        onImageUploaded(data) {
+            this.form.images = data;
+            this.toJoin();
         },
-        setLover() {
-            // 设置主情缘 && 显示报名模块
-            setMyLover(this.certificate.id).then(() => {
-                this.entry = true;
-                this.$notify({
-                    title: "主情缘设置成功",
-                    type: "success",
-                });
-            });
-        },
-
         toJoin() {
             // 报名
-            if (this.join) return;
-            joinLover(this.form).then(() => {
-                this.join = true;
-                this.success = true;
-                this.$notify({
-                    title: "报名成功",
-                    type: "success",
+            const params = {
+                ...this.systemJoinParams,
+                ...this.form,
+            };
+            // 先上传图片
+
+            joinLover(this.eventId, params)
+                .then(() => {
+                    this.$notify({
+                        title: "报名成功",
+                        type: "success",
+                    });
+                    this.$store.dispatch("loadJoinRecord", { force: true });
+                })
+                .finally(() => {
+                    this.join_loading = false;
                 });
-            });
         },
+        initJoinForm() {
+            if (!this.isLogin) return;
+            // 初始化报名表单
+            if (this.joined) {
+                // 已报名：
+                this.form.team_name = this.joinRecord.team_name;
+                this.form.slogan = this.joinRecord.slogan;
+                this.form.images = this.joinRecord.images || [];
+                this.form.server = this.joinRecord.server;
+                this.form.qq = this.joinRecord.qq;
+                this.form.phone = this.joinRecord.phone;
+                this.form.live_platform = this.joinRecord.live_platform;
+                this.form.live_url = this.joinRecord.live_url;
+            } else {
+                getMyProfile().then((res) => {
+                    const data = res.data.data;
+                    this.form.server = data.jx3_server;
+                    this.form.phone = data.user_phone || "";
+                    this.form.qq = data.qq_number;
+                });
+            }
+        },
+    },
+    mounted() {
+        this.initJoinForm();
     },
 };
 </script>
