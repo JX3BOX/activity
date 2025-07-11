@@ -1,12 +1,24 @@
-import { $team } from "@jx3box/jx3box-common/js/https.js";
+import { $team, $cms } from "@jx3box/jx3box-common/js/https.js";
 
+export function getMyProfile() {
+    return $cms().get("/api/cms/user/my/profile");
+}
+
+// 获取活动列表
+export function getLoverEvents(id) {
+    return $team().get(`/api/team/pvp-event/public/list`);
+}
+
+// 获取详情
 export function getLoverEvent(id) {
     return $team().get(`/api/team/pvp-event/public/item/${id}`);
 }
-// 获取我的情缘
-export function getMyLover() {
-    return $team().get(`/api/team/my-lover/list`);
+
+// 获取“情缘”类型的关系网
+export function getLoverRelationNet() {
+    return $team().get(`/api/team/relation-net/members/by-type/lover`);
 }
+
 // 设置我的主情缘
 export function setMyLover(id) {
     return $team().put(`/api/team/my-lover/item/${id}/star`);
@@ -23,7 +35,7 @@ export function getJoinList(eventId, params) {
 }
 
 // 我参加的情缘活动
-export function getMyJoinLover(eventId) {
+export function getMyJoinRecord(eventId) {
     return $team().get(`/api/team/pvp-event/${eventId}/my/join-record`);
 }
 

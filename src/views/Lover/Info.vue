@@ -13,9 +13,9 @@
                     <img class="u-img" :src="`${__imgRoot}step${i + 1}.svg`" />
                 </div>
                 <span class="u-dot"><i></i></span>
-                <span class="u-name">{{ item.name }}</span>
+                <span class="u-name">{{ item.text }}</span>
                 <span class="u-time">{{ item.time }}</span>
-                <span class="u-desc">{{ item.desc }}</span>
+                <!-- <span class="u-desc">{{ item.desc }}</span> -->
             </div>
         </div>
         <div class="m-lover-box">
@@ -35,28 +35,20 @@ export default {
     name: "LoverInfo",
     inject: ["__imgRoot"],
     data: function () {
-        return {
-            process: [
-                { name: "报名申请", time: "~01.31", desc: "选择你心仪的TA一起参赛，必须用报名的角色进后续的比赛" },
-                { name: "海选投票", time: "02.01~02.21", desc: "快来磕CP，撒份子钱啦" },
-                { name: "海选入围", time: "02.21", desc: "" },
-                { name: "初赛日", time: "02.21", desc: "" },
-                { name: "决赛日", time: "02.21", desc: "" },
-            ],
-        };
+        return {};
     },
     computed: {
-        loverId() {
-            return this.$store.state.loverId;
+        process() {
+            return this.$store.state.event.timeline;
         },
         describe() {
-            return this.$store.state.info.describe;
+            return this.$store.state.event.describe;
         },
         gifts() {
-            return this.$store.state.info.gifts;
+            return this.$store.state.event.gifts;
         },
         rule() {
-            return this.$store.state.info.rule;
+            return this.$store.state.event.rule;
         },
     },
     methods: {},
