@@ -32,11 +32,11 @@ let store = {
             }
             return event ? event.slug : "";
         },
+        // 这是列表中的一个项目，内容相对较少，主要形成slug和id的映射
+        // 页面内实际使用state.event来获取当前活动的详细信息
         currentEvent: (state) => {
-            if (state.slug) {
-                const event = state.events.find((item) => item.slug === state.slug);
-            }
-            return state.events.find((item) => item.slug === state.slug) || "";
+            const defaultEvent = state.events.find((item) => item.id === state.default_event_id);
+            return state.events.find((item) => item.slug === state.slug) || defaultEvent;
         },
         currentEventId: (state, getters) => {
             return getters.currentEvent ? getters.currentEvent.id : "";
@@ -77,7 +77,17 @@ let store = {
             commit("SET_DEFAULT_LOVER_ID", res);
             console.log("默认活动加载完毕");
         },
-        async loadEvent({ commit, state, getters }) {
+        async loadLoverRelationNet({ state }) {
+            if (lover_net_loading || state.lover_net) return; // 如果已经加载过，则不再加载
+            if (!User.isLogin()) return; // 未登录不查询
+            lover_net_loading = true;
+            const members_resp = await getLoverRelationNet();
+            const info = members_resp.data?.data;
+            info.members = uniqBy(info.members, "user_info.id"); // 去重
+            state.lover_net = info;
+            console.log("当前情缘关系加载完毕");
+        },
+        async loadEvent({ commit, state, getters }, { slug } = {}) {
             if (state.events_loading) return;
             if (state.event.slug == state.slug) return;
             if (!state.slug) state.slug = getters.defaultEventSlug; // 如果没有slug，则使用默认活动的slug
@@ -93,16 +103,6 @@ let store = {
             } finally {
                 state.event_loading = false;
             }
-        },
-        async loadLoverRelationNet({ state }) {
-            if (lover_net_loading || state.lover_net) return; // 如果已经加载过，则不再加载
-            if (!User.isLogin()) return; // 未登录不查询
-            lover_net_loading = true;
-            const members_resp = await getLoverRelationNet();
-            const info = members_resp.data?.data;
-            info.members = uniqBy(info.members, "user_info.id"); // 去重
-            state.lover_net = info;
-            console.log("当前情缘关系加载完毕");
         },
         async loadJoinRecord({ state, getters }, { force } = {}) {
             if (!force) {

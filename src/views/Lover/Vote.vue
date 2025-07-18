@@ -97,7 +97,10 @@ export default {
             if (this.vote_loading) return;
             this.vote_loading = true;
             try {
-                const vote_resp = await vote(this.eventId, item.id, { vote: 1 });
+                const promise = this.event.is_point_vote
+                    ? vote(this.eventId, item.id, { votes_count: 10 })
+                    : vote(this.eventId, item.id, { votes_count: 10 });
+                const vote_resp = await promise;
                 const vote_record_id = vote_resp.data?.data?.id;
                 if (this.event.is_point_vote) {
                     if (!vote_record_id) {

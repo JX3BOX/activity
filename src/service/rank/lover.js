@@ -11,7 +11,7 @@ export function getLoverEvents(id) {
 
 // 获取详情
 export function getLoverEvent(id) {
-    return $team().get(`/api/team/pvp-event/public/item/${id}`);
+    return $team({ mute: true }).get(`/api/team/pvp-event/public/item/${id}`);
 }
 
 // 获取“情缘”类型的关系网
@@ -50,4 +50,12 @@ export function vote(eventId, recordId, data) {
 
 export function getVoteStatus(eventId, recordId, voteId) {
     return $team().get(`/api/team/pvp-event/${eventId}/public/join-record/item/${recordId}/vote/item/${voteId}/status`);
+}
+
+export function getEventCardList(params) {
+    return $team().get(`/api/team/pvp-event-card/public/list`, { params });
+}
+
+export function pickCard(eventId, processId) {
+    return $team().get(`/api/team/pvp-event-card/manage/event/${eventId}/process/${processId}/pick`);
 }

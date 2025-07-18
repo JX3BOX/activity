@@ -18,7 +18,7 @@ reporter.install(Vue);
 import router from "./router";
 import store from "./store";
 
-import App from "./Lover.vue";
+import App from "./App.vue";
 new Vue({
     router,
     store,
