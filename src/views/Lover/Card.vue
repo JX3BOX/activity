@@ -437,6 +437,7 @@ export default {
                 border-radius: 2px;
                 background: linear-gradient(90deg, rgba(217, 188, 154, 1) 0%, rgba(250, 229, 187, 1) 100%);
                 padding: 0px 8px 0px 8px;
+                color: #492925;
 
                 font-size: 12px;
                 font-weight: 700;
@@ -469,6 +470,7 @@ export default {
             align-items: center;
             padding: 6px 8px 6px 8px;
             width: fit-content;
+            color: #492925;
 
             .fz(13px, 18.82px);
             font-weight: 700;
