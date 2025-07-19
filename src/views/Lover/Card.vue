@@ -261,9 +261,11 @@ export default {
                 this.$set(this.cardMoveDistance, cardRefs.length - 1 - i, rightDistance);
             }
         },
+        reset() {
+            this.resetAnimation();
+            this.currentCard = null;
+        },
         resetAnimation() {
-            this.enableFlipperAnimation = false;
-            this.enableMoveAnimation = false;
             this.enableResultAnimation = false;
             this.animationPlaying = false;
             this.cardRotateDeg = 0;
@@ -279,6 +281,11 @@ export default {
                 return {
                     transform: `scale(1.2)`,
                     transition: "transform 0.5s",
+                };
+            }
+            if(!this.currentCard || index !== Math.floor(this.cards.length / 2)) {
+                return {
+                    transition: "all 0.5s",
                 };
             }
         },
@@ -334,7 +341,10 @@ export default {
                         this.loadProcessList();
                     });
                 })
-                .catch(() => {});
+                .catch(() => {})
+                .finally(() => {
+                    this.reset();
+                });
         },
     },
 };
