@@ -54,24 +54,50 @@
             </div>
             <div class="m-actions-section">
                 <div class="m-select">
-                    <div class="m-select-section">
-                        <el-select class="u-select u-select-event" v-model="slug" placeholder="选择活动">
-                            <el-option
-                                v-for="item in $store.state.events"
-                                :key="item.slug"
-                                :label="item.name"
-                                :value="item.slug"
-                            >
-                            </el-option>
-                        </el-select>
-                        <div class="u-select u-select-process">8月25日第3场</div>
-                    </div>
-                    <div class="m-select-section">
-                        <div class="u-select u-select-team">魔盒体验队伍</div>
-                    </div>
+                    <el-select
+                        class="u-select u-select-event"
+                        v-model="slug"
+                        placeholder="选择活动"
+                        popper-class="m-card-select-popper"
+                        @change="onSelectEvent"
+                        :disabled="onDrawing || enableResultAnimation"
+                    >
+                        <el-option
+                            v-for="item in $store.state.events"
+                            :key="item.slug"
+                            :label="item.name"
+                            :value="item.slug"
+                        >
+                        </el-option>
+                    </el-select>
+                    <el-select
+                        class="u-select u-select-process"
+                        v-model="currentProcessId"
+                        placeholder="选择赛程"
+                        popper-class="m-card-select-popper"
+                        :disabled="onDrawing || enableResultAnimation"
+                    >
+                        <el-option
+                            v-for="item in processes"
+                            :key="item.id"
+                            :label="`第 ${item.round} 轮`"
+                            :value="item.id"
+                        >
+                        </el-option>
+                    </el-select>
+                    <el-select
+                        class="u-select u-select-team"
+                        v-model="currentTeamId"
+                        placeholder="选择队伍"
+                        popper-class="m-card-select-popper"
+                        :disabled="onDrawing || enableResultAnimation"
+                    >
+                        <el-option v-for="item in teamOptions" :key="item.id" :label="item.team_name" :value="item.id">
+                        </el-option>
+                    </el-select>
                 </div>
                 <div class="u-draw-button" @click="onDraw"></div>
-                <div class="u-confirm-button" :class="{ 'is-ready': currentCard }">
+                <div class="u-confirm-button" :class="{ 'is-ready': currentCard }" @click="onSetCard">
                     <div class="u-draw-result" v-if="currentCard">
                         <span>本次抽得：</span>
                         <span class="u-draw-result-name">{{ currentCard.name }}</span>
@@ -86,7 +112,7 @@
 
 <script>
 import { __cdn as cdnLink } from "@jx3box/jx3box-common/data/jx3box.json";
-import { getEventCardList, pickCard } from "@/service/rank/lover.js";
+import { getEventCardList, pickCard, getProcessListManage, setProcessCardId } from "@/service/rank/lover.js";
 
 export default {
     name: "",
@@ -97,7 +123,10 @@ export default {
         slug: null,
         cardBackImg: `${cdnLink}design/event/lover/q0.png`,
         cards: [],
+        processes: [],
 
+        currentProcessId: null,
+        currentTeamId: null, // 当前选中的队伍ID
         currentCard: null,
 
         // 动画控制
@@ -148,13 +177,19 @@ export default {
             }
             return list;
         },
+        currentProcess() {
+            return this.processes.find((item) => item.id === this.currentProcessId) || null;
+        },
+        teamOptions() {
+            if (!this.currentProcess) return [];
+            return [this.currentProcess.team1_record, this.currentProcess.team2_record].filter(Boolean);
+        },
     },
     watch: {
         "$route.params.slug": {
             immediate: true,
             handler(newVal) {
-                if (newVal === this.$store.state.slug) return;
-                this.$store.state.slug = newVal;
+                this.slug = newVal;
             },
         },
         "currentEvent.id": {
@@ -162,12 +197,17 @@ export default {
             deep: true,
             handler() {
                 this.loadCards();
+                this.loadProcessList();
             },
         },
     },
     methods: {
         async onDraw() {
             if (this.onDrawing || this.animationPlaying) return;
+            if (!this.currentProcessId || !this.currentTeamId) {
+                this.$message.error("请先选择赛程和队伍");
+                return;
+            }
             this.onDrawing = true;
             this.currentCard = null; // 重置当前卡片
             const [drawResult] = await Promise.all([this.loadDrawResult(), this.playAnimation()]);
@@ -250,6 +290,20 @@ export default {
                 this.cards = res.data.data.list || [];
             });
         },
+        loadProcessList() {
+            getProcessListManage({
+                _no_page: 1,
+                event_id: this.currentEvent.id,
+            })
+                .then((res) => {
+                    this.processes = res.data.data.list || [];
+                    console.log([...this.processes]);
+                })
+                .catch((error) => {
+                    console.error("获取流程列表失败:", error);
+                    this.$message.error("获取流程列表失败，请稍后再试");
+                });
+        },
         async loadDrawResult() {
             return pickCard(this.currentEvent.id, 190)
                 .then((res) => {
@@ -260,11 +314,65 @@ export default {
                     this.$message.error("抽签请求失败，请稍后再试");
                 });
         },
+        onSelectEvent(value) {
+            if (value != this.slug) {
+                this.$router.push({ name: "card", params: { slug: value } });
+            }
+        },
+        onSetCard() {
+            if (!this.currentCard) {
+                return;
+            }
+            this.$confirm(`是否将卡片 ${this.currentCard.name} 设置为当前队伍的天命签？`, "确认")
+                .then(() => {
+                    const key =
+                        this.currentProcess.team1_record.id === this.currentTeamId ? "team1_card" : "team2_card";
+                    setProcessCardId(this.currentProcessId, {
+                        [key]: this.currentCard.id,
+                    }).then(() => {
+                        this.$message.success("设置卡片成功");
+                        this.loadProcessList();
+                    });
+                })
+                .catch(() => {});
+        },
     },
 };
 </script>
 
 <style lang="less">
+.m-card-select-popper {
+    &.el-select-dropdown {
+        border: none;
+        background: rgba(44, 24, 24, 0.8);
+
+        .popper__arrow {
+            border-bottom-color: rgba(44, 24, 24, 0.8);
+
+            &::after {
+                border-bottom-color: rgba(44, 24, 24, 0.8);
+            }
+        }
+
+        .el-select-dropdown__item {
+            background: transparent;
+            color: #f3ca94;
+
+            &.hover {
+                background: rgba(44, 24, 24, 0.5);
+            }
+
+            &.selected {
+                filter: brightness(1.2);
+            }
+        }
+
+        .el-select-dropdown__empty {
+            color: #f3ca94;
+            text-align: center;
+        }
+    }
+}
 .p-lover-card {
     display: flex;
     align-items: center;
@@ -442,12 +550,44 @@ export default {
         gap: 48px;
         .pt(30px);
 
+        .u-select {
+            padding: 0;
+            box-sizing: border-box;
+            height: 37px;
+            border-radius: 18px;
+            background: rgba(44, 24, 24, 0.5);
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 0;
+
+            .fz(14px, 20.27px);
+            font-weight: 400;
+
+            /** 文本1 */
+            color: rgba(243, 202, 148, 1);
+            flex-grow: 1;
+
+            .el-input__inner {
+                background-color: transparent;
+                color: rgba(243, 202, 148, 1);
+                border: none;
+                box-shadow: none;
+
+                &::placeholder {
+                    color: rgba(243, 202, 148, 0.5);
+                }
+            }
+        }
+
         .u-draw-button {
+            .pr;
             .pointer;
             .size(285px, 80px);
             box-sizing: border-box;
             background-image: var(--draw-image);
             background-size: cover;
+            filter: drop-shadow(0px -30px 40px rgba(38, 27, 25, 0.5));
 
             &:hover {
                 background-image: var(--draw-image-hover);
@@ -487,6 +627,7 @@ export default {
             color: rgba(255, 229, 31, 1);
             top: -30px;
             font-weight: 400;
+            pointer-events: none;
         }
         .u-draw-result-name {
             font-weight: 700;
@@ -497,40 +638,22 @@ export default {
     .m-select {
         display: flex;
         flex-direction: column;
-        gap: 6px;
+        gap: 2px;
         width: 250px;
         box-sizing: border-box;
+        .pr;
+
+        .u-select-team {
+            .pa;
+            top: -52px;
+            width: 200px;
+            left: calc(50% + 213px);
+        }
     }
 
     .m-select-section {
         display: flex;
         gap: 8px;
-
-        .u-select {
-            padding: 0;
-            box-sizing: border-box;
-            height: 37px;
-            border-radius: 18px;
-            background: rgba(44, 24, 24, 0.5);
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            padding: 8px 24px 8px 24px;
-
-            .fz(14px, 20.27px);
-            font-weight: 400;
-
-            /** 文本1 */
-            color: rgba(243, 202, 148, 1);
-            flex-grow: 1;
-
-            .el-input__inner {
-                background-color: transparent;
-                color: rgba(243, 202, 148, 1);
-                border: none;
-                box-shadow: none;
-            }
-        }
     }
 }
 </style>

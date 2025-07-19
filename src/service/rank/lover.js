@@ -59,3 +59,11 @@ export function getEventCardList(params) {
 export function pickCard(eventId, processId) {
     return $team().get(`/api/team/pvp-event-card/manage/event/${eventId}/process/${processId}/pick`);
 }
+
+export function getProcessListManage(params) {
+    return $team().get(`/api/team/pvp-event-process/manage/list`, { params });
+}
+
+export function setProcessCardId(processId, payload) {
+    return $team().post(`/api/team/pvp-event-process/manage/item/${processId}/set-card-id`, payload);
+}
