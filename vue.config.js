@@ -1,6 +1,7 @@
 const path = require("path");
 const pkg = require("./package.json");
 const { JX3BOX, SEO } = require("@jx3box/jx3box-common");
+const VueProxyPlugin = require("@jx3box/jx3box-fe-proxy");
 const topics = require("./src/assets/data/topic/topic_map.json");
 const events = require("./src/assets/data/event/event_map.json");
 const topicPages = {
@@ -64,6 +65,33 @@ module.exports = {
         },
         ...topicPages,
         ...eventPages,
+    },
+    devServer: {
+        proxy: {
+             ...VueProxyPlugin.generateBuiltinProxy(),
+            // 专门为直接的 /api/next2/ 路径配置代理到 dev.next2.jx3box.com
+            '/api/next2': {
+                target: 'https://dev.next2.jx3box.com',
+                changeOrigin: true,
+                pathRewrite: {
+                    '^/api/next2': '/api/next2'
+                },
+                onProxyReq: function (request) {
+                    request.setHeader("origin", "");
+                },
+            },
+            '/api/summary-any': {
+                target: 'https://dev.next2.jx3box.com',
+                changeOrigin: true,
+                pathRewrite: {
+                    '^/api/next2': '/api/next2'
+                },
+                onProxyReq: function (request) {
+                    request.setHeader("origin", "");
+                },
+            }
+        },
+        port: process.env.DEV_PORT || 12028, // 默认端口为
     },
 
     outputDir: process.env["BUILD_MODE"] == "preview" ? path.resolve(__dirname, pkg.name) : "dist", // 指定构建输出的目录
