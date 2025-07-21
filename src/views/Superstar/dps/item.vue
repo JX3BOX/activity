@@ -336,11 +336,13 @@ export default {
             }
         },
         getBarWidth(dps, i) {
+
             let max = this.type ? (this.type == 2 ? this.data[0].dps : this.data[0][this.options[this.active].key]) : 0;
             if (max == 0) {
-                return 198 + i * 30 + "px";
+                let num=368 / this.data.length;
+                return 198 + i * num + "px";
             }
-            return (dps / max).toFixed(4) * 520 + "px";
+            return (dps / max).toFixed(4) * 580 + "px";
         },
         showTime: function (val) {
             return showTime(new Date(val * 1000));
