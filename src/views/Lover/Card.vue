@@ -80,7 +80,7 @@
                         <el-option
                             v-for="item in processes"
                             :key="item.id"
-                            :label="`第 ${item.round} 轮`"
+                            :label="`第 ${item.round} 轮 - 第 ${item.position} 场`"
                             :value="item.id"
                         >
                         </el-option>
