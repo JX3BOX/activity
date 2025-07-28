@@ -51,16 +51,17 @@ body {
             .bold(700);
             transition: 0.3s ease-in;
             color: #666;
-            background: url("@{lover}button.png") center center no-repeat;
-            background-size: cover;
+            background: url("@{lover}/inactive.svg") center center no-repeat;
+            background-size: contain;
             &:hover {
                 color: #454545;
                 filter: brightness(120%);
             }
             &.active {
                 color: #f3c768;
-                background: url("@{lover}button-active.png") center center no-repeat;
-                background-size: cover;
+                // background: url("@{lover}button-active.png") center center no-repeat;
+                background: url("@{lover}/active.svg") center center no-repeat;
+                background-size: contain;
                 &:hover {
                     color: #f3c768;
                     filter: brightness(100%);
