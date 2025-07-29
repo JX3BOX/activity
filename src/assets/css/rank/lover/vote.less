@@ -4,15 +4,27 @@
     .auto(x);
     .u-page-title {
         .mb(40px);
+        padding-top: 40px;
     }
     .u-title-img {
         height: 96px;
     }
     .m-rule-box {
-        background: radial-gradient(48.55% 91.83% at 50% 0%, #9e7246 0%, #5e3730 100%);
+        // background: radial-gradient(48.55% 91.83% at 50% 0%, #9e7246 0%, #5e3730 100%);
+        background: radial-gradient(ellipse at center, #93704b 0%, rgba(147, 112, 75, 0.4) 60%, transparent 100%);
+        clip-path: ellipse(50% 100% at 50% 0%);
+        mask-image: linear-gradient(to bottom, black 0%, rgba(0, 0, 0, 0.5) 60%, transparent 100%);
+        -webkit-mask-image: linear-gradient(to bottom, black 0%, rgba(0, 0, 0, 0.5) 60%, transparent 100%);
+
         color: #fff;
-        padding: 24px 0;
+        padding: 24px 0 40px 0;
+        margin-bottom: 30px;
         .x;
+
+        a{
+            color:#fff;
+            text-decoration: underline;
+        }
     }
     .u-rule-title {
         .fz(20px,1.5);
@@ -44,11 +56,12 @@
             border-radius: 16px;
             background: url("@{lover}/toupiaoye-mr.png") center center no-repeat;
             background-size: cover;
-            border: 1px solid #FFD573;
+            border: 1px solid #ffd573;
+            transition: 0.15s ease-in;
 
             &.is-voted {
                 .u-hot-icon {
-                    color: #FF5E5E;
+                    color: #ff5e5e;
                 }
             }
 
@@ -56,7 +69,7 @@
                 background: url("@{lover}/toupiaoye-xt.png") center center no-repeat;
                 background-size: cover;
             }
-         }
+        }
         .u-hot {
             .fz(13px);
             margin-bottom: 6px;
@@ -70,7 +83,7 @@
             .flex;
             margin-top: 6px;
             flex-direction: column;
-            gap:4px;
+            gap: 4px;
         }
         .u-team {
             .fz(16px);
