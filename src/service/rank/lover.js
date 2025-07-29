@@ -34,6 +34,11 @@ export function getJoinList(eventId, params) {
     return $team().get(`/api/team/pvp-event/${eventId}/public/join-record/list`, { params });
 }
 
+// 获取入围队伍
+export function getSelectedList(eventId, params) {
+    return $team().get(`/api/team/pvp-event/${eventId}/public/join-record/selected/list`, { params });
+}
+
 // 我参加的情缘活动
 export function getMyJoinRecord(eventId) {
     return $team().get(`/api/team/pvp-event/${eventId}/my/join-record`);
@@ -50,6 +55,11 @@ export function vote(eventId, recordId, data) {
 
 export function getVoteStatus(eventId, recordId, voteId) {
     return $team().get(`/api/team/pvp-event/${eventId}/public/join-record/item/${recordId}/vote/item/${voteId}/status`);
+}
+
+// 获取我的投票记录
+export function getMyVoteRecords(params) {
+    return $team().get(`/api/team/pvp-event/my/vote-log`, { params });
 }
 
 export function getEventCardList(params) {

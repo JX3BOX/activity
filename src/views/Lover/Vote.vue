@@ -1,48 +1,47 @@
 <template>
     <div class="m-lover-vote wp">
         <div class="u-page-title">
-            <img class="u-img" :src="`${__imgRoot}vote-title.png?11`" />
+            <img class="u-img" :src="`${__imgRoot}vote-title.png`" />
         </div>
-        <div class="m-line-box">
-            <div class="m-box">
-                <h2>投票规则</h2>
-                <div class="u-rule" v-html="vote_note"></div>
-            </div>
+        <div class="m-rule-box">
+            <h2 class="u-rule-title">投票规则</h2>
+            <div class="u-rule-icon">♡</div>
+            <div class="u-rule" v-html="vote_note"></div>
         </div>
         <div class="m-vote-list">
-            <div class="m-line-box" v-for="(item, i) in list" :key="i">
-                <div class="m-box">
-                    <div class="u-hot">人气值：{{ item.votes }}</div>
-                    <el-image class="u-img" :src="item.images[0]">
-                        <i slot="error"></i>
-                    </el-image>
+            <div class="m-vote-box" v-for="item in list" :key="item.id" :class="{
+                'is-voted': item.voted
+            }">
+                <div class="u-hot">
+                    <i class="u-hot-icon">{{ item.voted ? '♥' : '♡' }}</i>
+                    人气值：{{ item.votes }}</div>
+                <el-image class="u-img" :src="item.images[0]">
+                    <i slot="error"></i>
+                </el-image>
+                <div class="m-team-box">
                     <div class="u-team">{{ item.team_name }}</div>
                     <div class="u-name">
                         <span v-for="(user, index) in uniqBy(item.teammeta_user_list, 'id')" :key="index">
-                            {{ user.display_name }}
+                            {{ user.display_name }} <img class="u-hua-icon" v-if="!index" :src="`${__imgRoot}hua.png`" alt="">
                         </span>
                     </div>
                     <div class="u-slogan">{{ item.slogan }}</div>
-                    <div class="u-button" @click="onVote(item)" :class="{ 'is-loading': vote_loading }"></div>
+                </div>
+                <div class="u-button" @click="onVote(item)" :class="{
+                    'voted': item.voted,
+                    'disabled': vote_loading || item.voted
+                }">
+                    <span class="u-text">{{ item.voted ? '已投票' : '投票' }}</span>
                 </div>
             </div>
         </div>
-        <el-pagination
-            class="m-pagination"
-            background
-            :total="total"
-            hide-on-single-page
-            layout="prev, pager, next"
-            :current-page="index"
-            :page-size="pageSize"
-            @current-change="changePage"
-        ></el-pagination>
     </div>
 </template>
 
 <script>
 import { uniqBy } from "lodash";
-import { getJoinList, vote, getVoteStatus } from "@/service/rank/lover";
+import { getSelectedList, vote, getVoteStatus, getMyVoteRecords } from "@/service/rank/lover";
+import User from "@jx3box/jx3box-common/js/user";
 export default {
     name: "LoverVote",
     inject: ["__imgRoot"],
@@ -72,6 +71,12 @@ export default {
                 index: this.index,
             };
         },
+        uid() {
+            return User.getInfo().uid;
+        },
+        isLogin() {
+            return User.isLogin();
+        },
     },
     watch: {
         params: {
@@ -85,13 +90,17 @@ export default {
     methods: {
         uniqBy,
         load() {
-            getJoinList(this.eventId).then((res) => {
+            getSelectedList(this.eventId).then((res) => {
                 this.list = res.data.data.list || [];
-                this.total = res.data.data.page.total;
+
+                getMyVoteRecords({ user_id: this.uid, event_id: this.eventId }).then((voteRes) => {
+                    const myVotes = voteRes.data.data.list || [];
+                    this.list.forEach((item) => {
+                        const voted = myVotes.some((vote) => vote.record_id === item.id);
+                        this.$set(item, "voted", voted);
+                    });
+                });
             });
-        },
-        changePage(i) {
-            this.index = i;
         },
         async onVote(item) {
             if (this.vote_loading) return;
@@ -99,7 +108,7 @@ export default {
             try {
                 const promise = this.event.is_point_vote
                     ? vote(this.eventId, item.id, { votes_count: 10 })
-                    : vote(this.eventId, item.id, { votes_count: 10 });
+                    : vote(this.eventId, item.id, { votes_count: 0 });
                 const vote_resp = await promise;
                 const vote_record_id = vote_resp.data?.data?.id;
                 if (this.event.is_point_vote) {
@@ -116,6 +125,7 @@ export default {
                         if (res) {
                             this.$message.success("投票成功");
                             item.votes += 1;
+                            item.voted = true;
                             break;
                         }
                     }
@@ -123,6 +133,7 @@ export default {
                     // 非积分投票
                     this.$message.success("投票成功");
                     item.votes += 1;
+                    item.voted = true;
                 }
             } finally {
                 this.vote_loading = false;
