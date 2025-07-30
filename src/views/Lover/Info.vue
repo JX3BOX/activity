@@ -14,10 +14,9 @@
         <div class="m-lover-process">
             <img class="u-step-img" :src="`${__imgRoot}info-step.png`" alt="" />
             <div class="m-steps">
-                <div class="m-step" v-for="(item, i) in process" :key="i">
+                <div class="m-step" v-for="(item, i) in process" :key="i" :class="`m-step-${timeDesc(item.time)}`">
                     <div class="u-icon">
-                        <!-- <img class="u-img" :src="`${__imgRoot}step${i + 1}.svg`" /> -->
-                        <img class="u-img" :src="require(`../../../tmp/status-${timeDesc(item.time)}.png`)" />
+                        <img class="u-img" :src="`${__imgRoot}status-${timeDesc(item.time)}.png`" />
                     </div>
                     <span class="u-dot"><i></i></span>
                     <span class="u-name">{{ item.text }}</span>
