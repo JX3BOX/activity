@@ -69,7 +69,7 @@ export default {
     methods: {
         // 是否进行中
         timeDesc(time) {
-            const now = dayjs("2025-08-28");
+            const now = dayjs();
             // 分割符可能是~或-
             const [start, end] = time.split(/[-~]/).map((t) => dayjs(t.trim()));
             // time可能是范围和单个时间，对比今日，可能是未开始、进行中或已结束

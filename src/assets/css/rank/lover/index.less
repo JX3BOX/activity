@@ -1,3 +1,11 @@
+// 引入字体
+@font-face {
+    font-family: 'NanoOldSongA-Regular';
+    src: url('@{lover}NanoOldSongA-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 body {
     background-color: #522c29;
 }
@@ -24,7 +32,7 @@ body {
         align-items: center;
         padding-top:40px;
         .u-img {
-            height: 110px;
+            height: 96px;
             user-select: none;
         }
     }
@@ -46,6 +54,7 @@ body {
             gap: 20px;
         }
         .u-menu {
+            font-family: 'NanoOldSongA-Regular';
             .size(190px,100px);
             .x;
             .fz(32px,100px);
@@ -56,11 +65,12 @@ body {
             background-size: contain;
             &:hover {
                 color: #454545;
-                filter: brightness(120%);
+                background: url("@{lover}/active.svg") center center no-repeat;
+                background-size: contain;
+                color: #f3c768;
             }
             &.active {
                 color: #f3c768;
-                // background: url("@{lover}button-active.png") center center no-repeat;
                 background: url("@{lover}/active.svg") center center no-repeat;
                 background-size: contain;
                 &:hover {

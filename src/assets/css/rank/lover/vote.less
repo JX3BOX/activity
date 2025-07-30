@@ -10,19 +10,16 @@
         height: 96px;
     }
     .m-rule-box {
-        // background: radial-gradient(48.55% 91.83% at 50% 0%, #9e7246 0%, #5e3730 100%);
-        background: radial-gradient(ellipse at center, #93704b 0%, rgba(147, 112, 75, 0.4) 60%, transparent 100%);
-        clip-path: ellipse(50% 100% at 50% 0%);
-        mask-image: linear-gradient(to bottom, black 0%, rgba(0, 0, 0, 0.5) 60%, transparent 100%);
-        -webkit-mask-image: linear-gradient(to bottom, black 0%, rgba(0, 0, 0, 0.5) 60%, transparent 100%);
+        background: url("@{lover}/rule-title.png") no-repeat center center;
+        background-size: cover;
 
         color: #fff;
         padding: 24px 0 40px 0;
         margin-bottom: 30px;
         .x;
 
-        a{
-            color:#fff;
+        a {
+            color: #fff;
             text-decoration: underline;
         }
     }
@@ -48,16 +45,21 @@
         flex-wrap: wrap;
         color: #fff;
         gap: 24px;
+        min-height: 360px;
+        justify-content: flex-start;
         .m-vote-box {
-            padding: 10px;
-            flex-shrink: 0;
+            padding: 16px;
+            flex: 0 0 auto;
             .pr;
-            .size(200px, 280px);
+            .size(296px, 206px);
             border-radius: 16px;
-            background: url("@{lover}/toupiaoye-mr.png") center center no-repeat;
+            // background: url("@{lover}/toupiaoye-mr.png") center center no-repeat;
+            background: url("@{lover}/toupiao.png") center center no-repeat;
             background-size: cover;
             border: 1px solid #ffd573;
             transition: 0.15s ease-in;
+            display: flex;
+            flex-direction: column;
 
             &.is-voted {
                 .u-hot-icon {
@@ -66,49 +68,84 @@
             }
 
             &:hover {
-                background: url("@{lover}/toupiaoye-xt.png") center center no-repeat;
+                background: url("@{lover}/toupiao-active.png") center center no-repeat;
                 background-size: cover;
             }
+        }
+        .u-team-img {
+            .size(80px);
+            background-color: #999;
+            .fl;
+            margin-right: 8px;
+            border-radius: 4px;
+        }
+        .m-team-box {
+            background: linear-gradient(90deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0) 100%);
+            padding: 8px;
+            box-sizing: border-box;
+            border-radius: 8px;
+            height: 96px;
+        }
+        .m-team-info {
+            .flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            padding: 2px 0;
+            box-sizing: border-box;
+        }
+        .u-team {
+            .fz(16px);
+            .bold;
+            .nobreak;
+            color: #fff1db;
+        }
+        .u-avatar {
+            .size(20px);
+            border-radius: 50%;
+            overflow: hidden;
+        }
+        .u-teammates {
+            font-size: 13px;
+        }
+        .u-teammate {
+            .flex;
+            gap: 4px;
+            align-items: center;
+            &:not(:last-child) {
+                margin-bottom: 4px;
+            }
+            color: #ffe9c7;
         }
         .u-hot {
             .fz(13px);
             margin-bottom: 6px;
             font-weight: 300;
         }
-        .u-img {
-            .size(auto,120px);
-            background-color: #999;
-        }
-        .m-team-box {
-            .flex;
-            margin-top: 6px;
-            flex-direction: column;
-            gap: 4px;
-        }
-        .u-team {
-            .fz(16px);
-            .bold;
-            .nobreak;
-        }
-        .u-hua-icon {
-            .size(12px);
-            .pr;
-            top: 1px;
-            margin: 0 4px 0 3px;
-        }
-        .u-name {
-            .flex;
-            font-size: 13px;
-            align-items: center;
+        .m-slogan-box {
+            color: #fff;
+            background: linear-gradient(90deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0) 100%);
+            padding: 8px;
+            box-sizing: border-box;
+            border-radius: 8px;
+            margin-top: 8px;
+            font-size: 12px;
         }
         .u-slogan {
             .break(2);
-            font-size: 12px;
+            color: #ffe9c7;
+        }
+
+        .m-action-box {
+            .flex;
+            justify-content: space-between;
+            margin-top: auto;
+            align-items: center;
+            color: #FFE9C7;
+            color: 13px;
         }
 
         .u-button {
-            .pa;
-            .rb(10px);
             .pointer;
             .size(72px,30px);
             align-self: flex-end;
@@ -156,5 +193,7 @@
                 margin-left: 2px;
             }
         }
+
+
     }
 }
