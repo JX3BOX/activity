@@ -1,7 +1,7 @@
 // 引入字体
 @font-face {
     font-family: 'NanoOldSongA-Regular';
-    src: url('@{lover}NanoOldSongA-Regular.ttf') format('truetype');
+    src: url('./NanoOldSongA-Regular-min.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
 }
@@ -60,21 +60,19 @@ body {
             .fz(32px,100px);
             .bold(700);
             transition: 0.3s ease-in;
-            color: #666;
+            color: #A35555;
             background: url("@{lover}/inactive.svg") center center no-repeat;
             background-size: contain;
             &:hover {
-                color: #454545;
                 background: url("@{lover}/active.svg") center center no-repeat;
                 background-size: contain;
-                color: #f3c768;
+                color: #FFDBB0;
             }
             &.active {
-                color: #f3c768;
+                color: #FFDBB0;
                 background: url("@{lover}/active.svg") center center no-repeat;
                 background-size: contain;
                 &:hover {
-                    color: #f3c768;
                     filter: brightness(100%);
                 }
             }

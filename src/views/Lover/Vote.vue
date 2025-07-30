@@ -11,7 +11,10 @@
         <div class="m-vote-list">
             <div class="m-vote-box" v-for="item in list" :key="item.id" :class="{
                 'is-voted': item.voted
-            }">
+            }" @mouseenter="onMouseEnter(item.id)" @mouseleave="onMouseLeave(item.id)">
+                <!-- 粒子特效容器 -->
+                <ParticleEffect :ref="`particle-${item.id}`" />
+
                 <div class="m-team-box">
                     <el-image class="u-team-img" :src="item.images[0]">
                         <i slot="error"></i>
@@ -51,9 +54,14 @@ import { uniqBy } from "lodash";
 import { getSelectedList, vote, getVoteStatus, getMyVoteRecords } from "@/service/rank/lover";
 import User from "@jx3box/jx3box-common/js/user";
 import { showAvatar } from "@jx3box/jx3box-common/js/utils";
+import ParticleEffect from "@/components/rank/ParticleEffect.vue";
+
 export default {
     name: "LoverVote",
     inject: ["__imgRoot"],
+    components: {
+        ParticleEffect
+    },
     data: function () {
         return {
             pageSize: 30,
@@ -150,6 +158,18 @@ export default {
                 }
             } finally {
                 this.vote_loading = false;
+            }
+        },
+        onMouseEnter(itemId) {
+            const particleRef = this.$refs[`particle-${itemId}`];
+            if (particleRef && particleRef[0]) {
+                particleRef[0].playAnimation();
+            }
+        },
+        onMouseLeave(itemId) {
+            const particleRef = this.$refs[`particle-${itemId}`];
+            if (particleRef && particleRef[0]) {
+                particleRef[0].stopAnimation();
             }
         },
     },
