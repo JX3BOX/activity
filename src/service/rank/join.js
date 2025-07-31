@@ -23,4 +23,9 @@ function joinRecord(params) {
     return $team().get(`/pvp-event/{eventId}/my/join-record`, { params });
 }
 
-export { joinEvent, hasJoined, getMyJoin, joinLover, joinRecord };
+// 修改报名
+function updateJoinRecord(eventId, recordId, data) {
+    return $team().put(`/api/team/pvp-event/${eventId}/my/join-record/item/${recordId}`, data);
+}
+
+export { joinEvent, hasJoined, getMyJoin, joinLover, joinRecord, updateJoinRecord };
