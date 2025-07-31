@@ -31,11 +31,11 @@ export default {
         return {
             menus: [
                 { name: "活动介绍", key: "info" },
-                { name: "报名参赛", key: "join" },
-                { name: "支持投票", key: "vote" },
-                { name: "直播平台", key: "live" },
                 { name: "赛事进程", key: "process" },
-                { name: "相关活动", key: "activity" },
+                { name: "擂台挑战", key: "activity" },
+                { name: "报名参赛", key: "join" },
+                { name: "在线直播", key: "live" },
+                { name: "支持投票", key: "vote" },
             ],
         };
     },
