@@ -94,9 +94,9 @@ export default {
         formatTime(time) {
             const [start, end] = time.split(/[-~]/).map((t) => dayjs(t.trim()));
             if (end) {
-                return `${start.format("MM-DD")}-${end.format("MM-DD")}`;
+                return `${start.format("MM/DD")}~${end.format("MM/DD")}`;
             } else {
-                return start.format("MM-DD");
+                return start.format("MM/DD");
             }
         },
     },

@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 
 const fontPath = './tmp/NanoOldSongA-Regular.ttf';
-const text = '活动介绍报名参赛支持投票直播平台赛事进程相关';
+const text = '活动介绍赛事进程擂台挑战报名参在线直播支持投票';
 const outputDir = 'output';
 
 // 确保输出目录存在
