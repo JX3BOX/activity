@@ -5,21 +5,21 @@ const VueProxyPlugin = require("@jx3box/jx3box-fe-proxy");
 const topics = require("./src/assets/data/topic/topic_map.json");
 const events = require("./src/assets/data/event/event_map.json");
 const topicPages = {
-	topic: {
-		title: "JX3BOX - 魔盒专题导航",
-		entry: `src/pages/topic/main.js`,
-		template: "public/pc.html",
-		filename: `topic/index.html`,
-	},
+    topic: {
+        title: "JX3BOX - 魔盒专题导航",
+        entry: `src/pages/topic/main.js`,
+        template: "public/pc.html",
+        filename: `topic/index.html`,
+    },
 };
 
 topics.forEach((topic) => {
-	topicPages[topic.key] = {
-		title: topic.title + ' » 魔盒（JX3BOX） - 一站式剑网3资源工具站',
-		entry: `src/pages/topic/${topic.key}/index.js`,
-		template: "public/pc.html",
-		filename: `topic/${topic.key}/index.html`,
-	};
+    topicPages[topic.key] = {
+        title: topic.title + " » 魔盒（JX3BOX） - 一站式剑网3资源工具站",
+        entry: `src/pages/topic/${topic.key}/index.js`,
+        template: "public/pc.html",
+        filename: `topic/${topic.key}/index.html`,
+    };
 });
 
 const eventPages = {
@@ -29,11 +29,11 @@ const eventPages = {
         template: "public/pc.html",
         filename: `event/index.html`,
     },
-}
+};
 
 events.forEach((event) => {
     eventPages[event.key] = {
-        title: event.title + ' » 魔盒（JX3BOX） - 一站式剑网3资源工具站',
+        title: event.title + " » 魔盒（JX3BOX） - 一站式剑网3资源工具站",
         entry: `src/pages/event/${event.key}/index.js`,
         template: "public/pc.html",
         filename: `event/${event.key}/index.html`,
@@ -68,28 +68,28 @@ module.exports = {
     },
     devServer: {
         proxy: {
-             ...VueProxyPlugin.generateBuiltinProxy(),
+            ...VueProxyPlugin.generateBuiltinProxy(),
             // 专门为直接的 /api/next2/ 路径配置代理到 dev.next2.jx3box.com
-            '/api/next2': {
-                target: 'https://dev.next2.jx3box.com',
+            "/api/next2": {
+                target: "https://dev.next2.jx3box.com",
                 changeOrigin: true,
                 pathRewrite: {
-                    '^/api/next2': '/api/next2'
+                    "^/api/next2": "/api/next2",
                 },
                 onProxyReq: function (request) {
                     request.setHeader("origin", "");
                 },
             },
-            '/api/summary-any': {
-                target: 'https://dev.next2.jx3box.com',
+            "/api/summary-any": {
+                target: "https://dev.next2.jx3box.com",
                 changeOrigin: true,
                 pathRewrite: {
-                    '^/api/next2': '/api/next2'
+                    "^/api/next2": "/api/next2",
                 },
                 onProxyReq: function (request) {
                     request.setHeader("origin", "");
                 },
-            }
+            },
         },
         port: process.env.DEV_PORT || 12028, // 默认端口为
     },
@@ -116,7 +116,6 @@ module.exports = {
         (process.env.STATIC_PATH == "root" && "/") ||
         //for lost
         "/",
-
 
     chainWebpack: (config) => {
         //💘 html-webpack-plugin ~
@@ -149,7 +148,7 @@ module.exports = {
             path.resolve(__dirname, "./src/assets/css/var.less"),
             path.resolve(__dirname, "./src/assets/css/rank/var.less"),
             path.resolve(__dirname, "./src/assets/css/topic/var.less"),
-            path.resolve(__dirname, "./src/assets/css/event/var.less"),
+            path.resolve(__dirname, "./src/assets/css/event/var.less")
         );
         function addStyleResource(rule) {
             rule.use("style-resource").loader("style-resources-loader").options({

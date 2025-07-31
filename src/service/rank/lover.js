@@ -35,8 +35,8 @@ export function getJoinList(eventId, params) {
 }
 
 // 获取入围队伍
-export function getSelectedList(eventId, params) {
-    return $team().get(`/api/team/pvp-event/${eventId}/public/join-record/selected/list`, { params });
+export function getSelectedList(eventId) {
+    return $team().get(`/api/team/pvp-event/${eventId}/public/join-record/selected/list`);
 }
 
 // 我参加的情缘活动

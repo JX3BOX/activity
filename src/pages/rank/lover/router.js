@@ -16,6 +16,7 @@ const Live = () => import("@/views/Lover/Live.vue");
 const Process = () => import("@/views/Lover/Process.vue");
 const Activity = () => import("@/views/Lover/Activity.vue");
 const Card = () => import("@/views/Lover/Card.vue");
+const Draw = () => import("@/views/Lover/Draw.vue");
 
 const routes = [
     {
@@ -32,6 +33,7 @@ const routes = [
         ],
     },
     { name: "card", path: "/card/:slug?", component: Card },
+    { name: "draw", path: "/draw/:slug?", component: Draw },
 ];
 
 const router = new VueRouter({
@@ -55,8 +57,8 @@ router.beforeEach(async (to, from, next) => {
         // 如果slug对应的活动不存在，则跳转到默认活动
         const defaultSlug = store.getters.defaultEventSlug;
         if (defaultSlug) {
-            if (to.name === "card") {
-                next({ name: "card", params: { slug: defaultSlug } });
+            if (["card", "draw"].includes(to.name)) {
+                next({ name: to.name, params: { slug: defaultSlug } });
                 return;
             }
             next({ name: "info", params: { slug: defaultSlug } });
