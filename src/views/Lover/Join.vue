@@ -1,7 +1,7 @@
 <template>
     <div class="m-lover-join wp">
         <div class="m-page-title">
-            <img class="u-img" :src="`${__imgRoot}join-title.png`" />
+            <img class="u-join-img" :src="`${__imgRoot}join-title.png`" />
 
             <div class="u-join-notice" v-html="notice"></div>
         </div>
