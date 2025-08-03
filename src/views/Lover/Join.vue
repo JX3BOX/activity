@@ -61,25 +61,23 @@
             </template>
             <template v-else>
                 <!-- 情缘证 -->
-                <div class="m-lover-box m-lover-certificate" v-if="loverHasBind">
+                <!-- <div class="m-lover-box m-lover-certificate" v-if="loverHasBind">
                     <certificate :data="loverNet" />
-                </div>
-                <div class="m-join-bind" v-else>
+                </div> -->
+                <div class="m-join-bind" v-if="!loverHasBind">
                     <a class="u-bind-btn" target="_blank" href="/dashboard/privacy?tab=lover"></a>
                 </div>
                 <!-- 报名 -->
             </template>
-            <div class="m-join-form" v-if="(loverHasBind && !joined) || (joined && joinRecord.status == -1)" v-loading="loading">
-                <el-form
-                    :class="['m-lover-form']"
-                    ref="form"
-                    :model="form"
-                    :rules="rules"
-                    label-width="80px"
-                >
+            <div
+                class="m-join-form"
+                v-if="(loverHasBind && !joined) || (joined && joinRecord.status == -1)"
+                v-loading="loading"
+            >
+                <el-form :class="['m-lover-form']" ref="form" :model="form" :rules="rules" label-width="80px">
                     <el-row :gutter="10">
-                        <el-col :span="12" v-for="item in uniqBy(loverNet.members, 'id')" :key="item.id">
-                            <el-form-item label="角色名">
+                        <el-col :span="12" v-for="(item,i) in uniqBy(loverNet.members, 'id')" :key="item.id">
+                            <el-form-item :label="`队员${i + 1}`">
                                 <div class="m-role">
                                     <el-image class="u-avatar" :src="showAvatar(item.user_info.avatar)"></el-image>
                                     {{ item.user_info.display_name }}
@@ -89,7 +87,7 @@
                     </el-row>
                     <el-row :gutter="10">
                         <el-col :span="12">
-                            <el-form-item label="队伍名" prop="team_name">
+                            <el-form-item label="队伍名称" prop="team_name">
                                 <el-input v-model="form.team_name" placeholder="请输入队伍名" />
                             </el-form-item>
                         </el-col>
@@ -139,7 +137,12 @@
                         </div>
                     </el-form-item>
                     <el-form-item label="参赛宣言" prop="slogan">
-                        <el-input v-model="form.slogan" type="textarea" :rows="3" placeholder="请输入参赛宣言(最多30字)" />
+                        <el-input
+                            v-model="form.slogan"
+                            type="textarea"
+                            :rows="3"
+                            placeholder="请输入参赛宣言(最多30字)"
+                        />
                     </el-form-item>
                     <el-form-item label="合照">
                         <div v-if="joined && joinRecord.images.length" class="u-image-list">
@@ -173,7 +176,10 @@ import { getBreadcrumb } from "@jx3box/jx3box-common/js/api_misc";
 export default {
     name: "LoverJoin",
     inject: ["__imgRoot"],
-    components: { certificate, uploadImage },
+    components: {
+        // certificate,
+        uploadImage,
+    },
     data: function () {
         return {
             loading: false,

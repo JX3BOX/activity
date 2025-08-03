@@ -144,7 +144,7 @@ export default {
         },
     },
     methods: {
-        onDraw() {
+        async onDraw() {
             if (this.disableButton) return;
             if (this.step === 0) {
                 // 先分好组
@@ -163,19 +163,24 @@ export default {
                 this.step = 1;
                 // 播放动画
                 this.disableButton = true;
-                this.playStep1().finally(() => {
+                await this.playStep1().finally(() => {
                     this.disableButton = false;
                 });
+                await wait(500); // 等待动画结束
+                this.onDraw(); // 触发下一步
             } else if (this.step === 1) {
                 // 播放第二步动画
                 this.disableButton = true;
-                this.playStep2().finally(() => {
+                await this.playStep2().finally(() => {
                     this.disableButton = false;
                     this.currentGroupColumn++;
-                    if (this.currentGroupColumn === 4) {
-                        this.step = 2; // 如果所有组都展示了，进入下一步
-                    }
                 });
+                if (this.currentGroupColumn === 4) {
+                    this.step = 2; // 如果所有组都展示了，进入下一步
+                } else {
+                    await wait(500); // 等待动画结束
+                    this.onDraw(); // 继续抽取下一组
+                }
             } else if (this.step === 2) {
                 this.$confirm("确定保存并应用当前的抽签结果吗？", "提示", {
                     confirmButtonText: "确定",
@@ -256,7 +261,6 @@ export default {
             this.fire.animation = false;
             this.fire.left = groupEl.offsetLeft;
             this.fire.top = 0;
-
             groupsToShow.forEach((group, index) => {
                 setTimeout(async () => {
                     // 计算该group的两个teams的位置，将team元素移动过去
