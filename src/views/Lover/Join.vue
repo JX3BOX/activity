@@ -2,14 +2,13 @@
     <div class="m-lover-join wp">
         <div class="m-page-title">
             <img class="u-join-img" :src="`${__imgRoot}join-title.png`" />
-
-            <div class="u-join-notice" v-html="notice"></div>
         </div>
         <template v-if="isLogin">
             <!-- 报名成功提示 -->
             <template v-if="joined">
                 <div class="m-success">
                     <img class="u-success-img" :src="`${__imgRoot}join-success.png`" />
+                    <div class="u-join-notice" v-html="notice"></div>
 
                     <!-- 审核被拒 -->
                     <div class="m-reject" v-if="joinRecord.status == -1">
