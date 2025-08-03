@@ -9,13 +9,18 @@
             <!-- 报名成功提示 -->
             <template v-if="joined">
                 <div class="m-success">
-                    <img class="u-success-img" :src="`${__imgRoot}join-success.png`" />
+                    <img class="u-success-img" :src="`${__imgRoot}join-success.png`" v-if="joinRecord.status != -1" />
 
                     <!-- 审核被拒 -->
                     <div class="m-reject" v-if="joinRecord.status == -1">
-                        <span class="u-text">报名审核未通过</span>
+                        <span class="u-text"><i class="el-icon-remove-outline" style="color: #F56C6C;"></i> 报名审核未通过</span>
                         <span class="u-reason">原因：{{ joinRecord.comment || "暂无" }}</span>
                     </div>
+                    <template v-if="joinRecord.status == 0">
+                        <div class="m-join-record">
+                            <span class="u-text"><i class="el-icon-alarm-clock"></i> 等待审核中</span>
+                        </div>
+                    </template>
                 </div>
                 <div class="m-team-box" v-if="joinRecord.status != -1">
                     <div class="m-team-info">
@@ -142,7 +147,7 @@
                     <el-form-item label="参赛宣言" prop="slogan">
                         <el-input v-model="form.slogan" type="textarea" :rows="3" placeholder="请输入参赛宣言(最多30字)" />
                     </el-form-item>
-                    <el-form-item label="合照">
+                    <el-form-item label="合照" prop="images">
                         <div v-if="joined && joinRecord.images.length" class="u-image-list">
                             <img class="u-image-item" v-for="(src, index) in form.images" :src="src" :key="index" />
                         </div>
@@ -193,6 +198,17 @@ export default {
             },
             rules: {
                 team_name: [{ required: true, message: "请输入队伍名", trigger: "blur" }],
+                server: [{ required: true, message: "请选择服务器", trigger: "change" }],
+                qq: [{ required: true, message: "请输入联系QQ", trigger: "blur" }],
+                phone: [{ required: true, message: "请输入联系电话", trigger: "blur" }],
+                slogan: [{ required: true, message: "请输入参赛宣言", trigger: "blur" }],
+                images: [{ required: true, message: "请上传合照", trigger: "blur", validator: (rule, value, callback) => {
+                    if (this.$refs["upload-image"].fileList.length === 0) {
+                        callback(new Error("请上传合照"));
+                    } else {
+                        callback();
+                    }
+                } }],
             },
 
             join_loading: false,
@@ -248,10 +264,17 @@ export default {
         },
         startUploadImage() {
             if (this.joined && this.joinRecord.status != -1) return;
-            // 点击报名按钮后，先上传图片，通过图片上传结束的回调获取图片列表进行实际报名~
-            const uploadImageRef = this.$refs["upload-image"];
-            this.join_loading = true;
-            uploadImageRef.upload();
+            this.$refs["form"].validate((valid) => {
+                if (valid) {
+                    // 点击报名按钮后，先上传图片，通过图片上传结束的回调获取图片列表进行实际报名~
+                    const uploadImageRef = this.$refs["upload-image"];
+                    this.join_loading = true;
+                    uploadImageRef.upload();
+                } else {
+                    this.join_loading = false;
+                    return false;
+                }
+            });
         },
         onImageUploaded(data) {
             this.form.images = data;
@@ -272,7 +295,9 @@ export default {
                             title: "更新成功",
                             type: "success",
                         });
-                        this.$store.dispatch("loadJoinRecord", { force: true });
+                        // this.$store.dispatch("loadJoinRecord", { force: true });
+                        // 刷新页面
+                        this.$router.go(0);
                     })
                     .finally(() => {
                         this.join_loading = false;
@@ -285,7 +310,9 @@ export default {
                             title: "报名成功",
                             type: "success",
                         });
-                        this.$store.dispatch("loadJoinRecord", { force: true });
+                        // this.$store.dispatch("loadJoinRecord", { force: true });
+                        // 刷新页面
+                        this.$router.go(0);
                     })
                     .finally(() => {
                         this.join_loading = false;

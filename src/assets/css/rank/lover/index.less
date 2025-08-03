@@ -42,8 +42,9 @@ body {
     .h(1050px);
     justify-content: space-between;
     align-items: flex-end;
-    background: url("@{lover}kv.png") center top no-repeat;
+    background: url("../../../../../tmp/kv-index.png") center top no-repeat;
     background-size: cover;
+    .pr;
     .m-menus {
         .flex;
         .pb(34px);
@@ -77,6 +78,17 @@ body {
                 }
             }
         }
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        top: 375px;
+        right: 350px;
+        width: 200px;
+        height: 75px;
+        background: url("../../../../../tmp/逐影.png") center center no-repeat;
+        background-size: cover;
     }
 }
 
