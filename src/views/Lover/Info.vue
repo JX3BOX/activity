@@ -9,7 +9,7 @@
             </div>
             <img class="u-top-left" :src="`${__imgRoot}fengye1.svg`" alt="" />
             <img class="u-bottom-right" :src="`${__imgRoot}fengye2.svg`" alt="" />
-            <router-link :to="{name: 'join'}"><img class="u-join-btn" src="../../../tmp/to-join.png" alt=""></router-link>
+            <router-link :to="{name: 'join'}"><img class="u-join-btn" :src="`${__imgRoot}to-join.png`" alt=""></router-link>
         </div>
         <div class="m-lover-process">
             <img class="u-step-img" :src="`${__imgRoot}info-step.png`" alt="" />
