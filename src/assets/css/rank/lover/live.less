@@ -41,7 +41,6 @@
         }
     }
 
-
     .m-player-list {
         display: flex;
         flex-wrap: wrap;
@@ -58,7 +57,7 @@
         background-size: contain;
         padding: 12px;
         box-sizing: border-box;
-        border: 1px solid #FFD573;
+        border: 1px solid #ffd573;
 
         &:hover {
             background: url("@{lover}/xuanshoubox-hover.png") no-repeat center center;
@@ -80,10 +79,65 @@
             height: 100%;
             z-index: 3;
         }
+        .u-video {
+            .db;
+            background-color: #222;
+            .h(194px);
+            .clip;
+            margin-bottom: 4px;
+
+            .u-live-cover {
+                .size(100%);
+            }
+
+            .u-live-null {
+                .size(120px);
+                .db;
+                margin: 40px auto;
+            }
+
+            transition: 0.1s ease-in-out;
+            &:hover {
+                background-color: #111;
+            }
+
+            .pr;
+            .u-status {
+                .pa;
+                .rb(10px);
+                background-color: #0cf;
+                color: #fff;
+                .r(2px);
+                font-style: normal;
+                .fz(12px, 2);
+                padding: 0 10px;
+
+                &.on {
+                    background-color: #49c10f;
+                }
+            }
+
+            @keyframes playerRotate {
+                0% {
+                    transform: rotate(0deg);
+                }
+                30% {
+                    transform: rotate(360deg);
+                }
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+        }
+        .u-team-logo {
+            .fl;
+            .size(100px);
+            .mr(10px);
+        }
     }
 
     .m-player-info {
-        color: #FFE9C7;
+        color: #ffe9c7;
         .u-team-logo {
             .size(80px);
             .fl;
