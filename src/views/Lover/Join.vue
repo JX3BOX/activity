@@ -9,19 +9,8 @@
                 <div class="m-success">
                     <img class="u-success-img" :src="`${__imgRoot}join-success.png`" v-if="joinRecord.status != -1" />
                     <div class="u-join-notice" v-html="notice"></div>
-
-                    <!-- 审核被拒 -->
-                    <div class="m-reject" v-if="joinRecord.status == -1">
-                        <span class="u-text"><i class="el-icon-remove-outline" style="color: #F56C6C;"></i> 报名审核未通过</span>
-                        <span class="u-reason">原因：{{ joinRecord.comment || "暂无" }}</span>
-                    </div>
-                    <template v-if="joinRecord.status == 0">
-                        <div class="m-join-record">
-                            <span class="u-text"><i class="el-icon-alarm-clock"></i> 等待审核中</span>
-                        </div>
-                    </template>
                 </div>
-                <div class="m-team-box" v-if="joinRecord.status != -1">
+                <div class="m-team-box" v-if="joinRecord.status == 2 || joinRecord.status == 1">
                     <div class="m-team-info">
                         <div class="m-team-info__left">
                             <img class="u-team-logo" :src="joinRecord.images[0]" alt="" />
@@ -76,10 +65,10 @@
             </template>
             <div
                 class="m-join-form"
-                v-if="(loverHasBind && !joined) || (joined && joinRecord.status == -1)"
+                v-if="(loverHasBind && !joined) || (joined && joinRecord.status == -1 || joinRecord.status == 0)"
                 v-loading="loading"
             >
-                <el-form :class="['m-lover-form']" ref="form" :model="form" :rules="rules" label-width="80px">
+                <el-form :class="['m-lover-form']" ref="form" :disabled="formDisabled" :model="form" :rules="rules" label-width="80px">
                     <el-row :gutter="10">
                         <el-col :span="12" v-for="(item,i) in uniqBy(loverNet.members, 'id')" :key="item.id">
                             <el-form-item :label="`队员${i + 1}`">
@@ -156,7 +145,7 @@
                         <uploadImage v-else ref="upload-image" @onFinish="onImageUploaded"></uploadImage>
                     </el-form-item>
                 </el-form>
-                <div :class="['u-submit']" @click="startUploadImage">
+                <div :class="['u-submit', { 'disabled': formDisabled }]" @click="startUploadImage">
                     <img class="u-submit-img" :src="`${__imgRoot}join-btn.png`" />
                 </div>
             </div>
@@ -207,17 +196,20 @@ export default {
                 qq: [{ required: true, message: "请输入联系QQ", trigger: "blur" }],
                 phone: [{ required: true, message: "请输入联系电话", trigger: "blur" }],
                 slogan: [{ required: true, message: "请输入参赛宣言", trigger: "blur" }],
-                // images: [{ required: true, message: "请上传合照", trigger: "blur", validator: (rule, value, callback) => {
-                //     if (this.$refs["upload-image"].fileList.length === 0) {
-                //         callback(new Error("请上传合照"));
-                //     } else {
-                //         callback();
-                //     }
-                // } }],
+                images: [{ required: true, message: "请上传合照", trigger: "blur", validator: (rule, value, callback) => {
+                    if (this.$refs["upload-image"]?.fileList.length === 0) {
+                        callback(new Error("请上传合照"));
+                    } else {
+                        if (this.form.images.length) {
+                            callback();
+                        }
+                        callback();
+                    }
+                } }],
             },
 
             join_loading: false,
-            notice: "",
+            origin_notice: "",
         };
     },
     computed: {
@@ -258,8 +250,23 @@ export default {
                 remark: null,
             };
         },
+        notice() {
+            return this.event_notice || this.origin_notice
+        },
+        event_notice() {
+            const status = this.joinRecord?.status;
+            if (status ===0) {
+                return "⏳ 报名已提交，请等待审核！"
+            }
+            if (status ==  -1) {
+                return `⚠️ 申请未通过，请重新提交信息</br>Reason：${this.joinRecord.comment}`;
+            }
+            return ""
+        },
+        formDisabled() {
+            return this.joined && this.joinRecord.status == 0; // 如果已经报名且状态为审核中，则禁用表单
+        },
     },
-    watch: {},
     methods: {
         uniqBy,
         authorLink,
@@ -274,6 +281,11 @@ export default {
                     // 点击报名按钮后，先上传图片，通过图片上传结束的回调获取图片列表进行实际报名~
                     const uploadImageRef = this.$refs["upload-image"];
                     this.join_loading = true;
+                    if (this.form.images.length) {
+                        // 如果已经有图片，直接报名
+                        this.toJoin();
+                        return;
+                    }
                     uploadImageRef.upload();
                 } else {
                     this.join_loading = false;
@@ -282,6 +294,7 @@ export default {
             });
         },
         onImageUploaded(data) {
+            console.log("图片上传成功", data);
             this.form.images = data;
             this.toJoin();
         },
@@ -349,7 +362,7 @@ export default {
         loadNotice() {
             // 获取情缘杯报名公告
             getBreadcrumb("lover-join").then((res) => {
-                this.notice = res;
+                this.origin_notice = res;
             });
         },
     },
