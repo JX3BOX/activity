@@ -207,13 +207,13 @@ export default {
                 qq: [{ required: true, message: "请输入联系QQ", trigger: "blur" }],
                 phone: [{ required: true, message: "请输入联系电话", trigger: "blur" }],
                 slogan: [{ required: true, message: "请输入参赛宣言", trigger: "blur" }],
-                images: [{ required: true, message: "请上传合照", trigger: "blur", validator: (rule, value, callback) => {
-                    if (this.$refs["upload-image"].fileList.length === 0) {
-                        callback(new Error("请上传合照"));
-                    } else {
-                        callback();
-                    }
-                } }],
+                // images: [{ required: true, message: "请上传合照", trigger: "blur", validator: (rule, value, callback) => {
+                //     if (this.$refs["upload-image"].fileList.length === 0) {
+                //         callback(new Error("请上传合照"));
+                //     } else {
+                //         callback();
+                //     }
+                // } }],
             },
 
             join_loading: false,
