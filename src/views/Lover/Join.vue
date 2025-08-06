@@ -10,7 +10,7 @@
                     <img class="u-success-img" :src="`${__imgRoot}join-success.png`" v-if="joinRecord.status != -1" />
                     <div class="u-join-notice" v-html="notice"></div>
                 </div>
-                <div class="m-team-box" v-if="joinRecord.status == 2 || joinRecord.status == 1">
+                <div class="m-team-box" v-if="joinRecord.status == 2 || joinRecord.status == 1 || joinRecord.status == -2">
                     <div class="m-team-info">
                         <div class="m-team-info__left">
                             <img class="u-team-logo" :src="joinRecord.images[0]" alt="" />
@@ -260,6 +260,10 @@ export default {
             }
             if (status ==  -1) {
                 return `⚠️ 申请未通过，请重新提交信息</br>Reason：${this.joinRecord.comment}`;
+            }
+            if (status == -2) {
+                // 退赛或淘汰
+                return "❌ 报名已取消或淘汰！";
             }
             return ""
         },
