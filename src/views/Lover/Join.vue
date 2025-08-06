@@ -191,7 +191,18 @@ export default {
                 live_url: "", // 直播间
             },
             rules: {
-                team_name: [{ required: true, message: "请输入队伍名", trigger: "blur" }],
+                team_name: [{ required: true,  trigger: "blur", validator: (rule, value, callback) => {
+                    // 队伍名不能超过7字，只能是中文
+                    if (value.length > 7) {
+                        callback(new Error("队伍名不能超过7字"));
+                    } else if (value.length === 0) {
+                        callback(new Error("请输入队伍名"));
+                    } else if (!/^[\u4e00-\u9fa5]+$/.test(value)) {
+                        callback(new Error("队伍名只能包含中文"));
+                    } else {
+                        callback();
+                    }
+                } }],
                 server: [{ required: true, message: "请选择服务器", trigger: "change" }],
                 qq: [{ required: true, message: "请输入联系QQ", trigger: "blur" }],
                 phone: [{ required: true, message: "请输入联系电话", trigger: "blur" }],
