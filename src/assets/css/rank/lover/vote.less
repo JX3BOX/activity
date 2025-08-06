@@ -69,9 +69,37 @@
             }
 
             &:hover {
-                background: url("@{lover}/toupiao-active.png") center center no-repeat;
-                background-size: cover;
+                // 使用多个背景图像叠加：粒子效果在上层，active背景在下层
+                background:
+                    url("@{lover}/lizi3.webp") center center no-repeat,
+                    url("@{lover}/toupiao-active.png") center center no-repeat;
+                background-size: cover, cover;
             }
+
+            // 或者使用伪元素的方式实现叠加效果
+            &::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: url("@{lover}/lizi3.webp") center center no-repeat;
+                background-size: cover;
+                opacity: 0;
+                transition: opacity 0.15s ease-in;
+                pointer-events: none;
+                border-radius: 16px;
+            }
+
+            &:hover::before {
+                opacity: 1;
+            }
+
+            // &:hover {
+            //     background: url("@{lover}/toupiao-active.png") center center no-repeat;
+            //     background-size: cover;
+            // }
         }
         .u-team-img {
             .size(80px);
