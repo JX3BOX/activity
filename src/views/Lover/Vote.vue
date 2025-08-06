@@ -13,7 +13,7 @@
                 'is-voted': item.voted
             }" @mouseenter="onMouseEnter(item.id)" @mouseleave="onMouseLeave(item.id)">
                 <!-- 粒子特效容器 -->
-                <ParticleEffect :ref="`particle-${item.id}`" />
+                <!-- <ParticleEffect :ref="`particle-${item.id}`" /> -->
 
                 <div class="m-team-box">
                     <el-image class="u-team-img" :src="item.images[0]">
@@ -60,7 +60,7 @@ export default {
     name: "LoverVote",
     inject: ["__imgRoot"],
     components: {
-        ParticleEffect
+        // ParticleEffect
     },
     data: function () {
         return {

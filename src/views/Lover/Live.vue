@@ -56,7 +56,7 @@
                     </div>
                     <div class="u-slogan">{{ item.slogan }}</div>
                 </div>
-                <ParticleEffect :ref="`playerParticleEffect_${itemIndex}`" />
+                <!-- <ParticleEffect :ref="`playerParticleEffect_${itemIndex}`" /> -->
             </div>
         </div>
         <div class="m-no-data" v-else>暂无选手直播</div>
@@ -73,7 +73,7 @@ import { default_avatar } from "@jx3box/jx3box-common/data/jx3box.json";
 export default {
     name: "LoverLive",
     components: {
-        ParticleEffect,
+        // ParticleEffect,
     },
     inject: ["__imgRoot"],
     data: function () {
