@@ -58,12 +58,12 @@
 </template>
 
 <script>
-// import { __cdn as cdnLink } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __cdn as cdnLink } from "@jx3box/jx3box-common/data/jx3box.json";
 import { getSelectedList, batchCreateProcess } from "@/service/rank/lover";
 import { shuffle, chunk, sortBy } from "lodash";
 import { wait } from "@/utils/animation";
 
-const cdnLink = "https://oss.jx3box.com/";
+// const cdnLink = "https://oss.jx3box.com/";
 
 export default {
     name: "",
