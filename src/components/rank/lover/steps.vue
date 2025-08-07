@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import battle from "@/components/rank/lover/battle.vue";
+import battle from "@/components/rank/lover/battle_old.vue";
 import { groupBy, chunk } from "lodash";
 export default {
     name: "steps",

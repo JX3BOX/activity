@@ -1,62 +1,75 @@
 <template>
     <div class="m-lover-process">
-        <div class="u-page-title">
-            <img class="u-img" :src="`${__imgRoot}process-title.png`" />
+        <div class="m-page-title">
+            <img class="u-img" :src="`${cdnLink}/design/event/lover/process/process_title.png`" />
         </div>
-        <LoverSteps :steps="steps" :data="teams" />
+        <div class="m-process-wrapper">
+            <div class="m-step" :class="`m-step-${round}`" v-for="round in [1, 2, 3, 4, 5, 6]" :key="round">
+                <img v-if="headImage[round - 1]" class="u-head" :src="headImage[round - 1]" alt="" />
+                <div v-else class="u-head-empty"></div>
+                <div class="m-step-battles">
+                    <LoverBattleItem
+                        class="m-step-battle"
+                        v-for="(process, index) in steps[round] || []"
+                        :key="index"
+                        :process="process"
+                    />
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
-import LoverSteps from "@/components/rank/lover/steps.vue";
-import { getLoverProgress } from "@/service/rank/lover";
+import { __cdn as cdnLink } from "@jx3box/jx3box-common/data/jx3box.json";
+import { getProcessListManage } from "@/service/rank/lover";
+import LoverBattleItem from "@/components/rank/lover/battle.vue";
+import { groupBy } from "lodash";
+
 export default {
     name: "LoverProcess",
-    inject: ["__imgRoot"],
-    components: { LoverSteps },
-    data: function () {
-        return {
-            steps: [],
-            teams: [],
-            process: {},
-        };
-    },
+    components: { LoverBattleItem },
+    data: () => ({
+        cdnLink,
+        process: [],
+        headImage: [
+            `${cdnLink}/design/event/lover/process/32_16.png`,
+            `${cdnLink}/design/event/lover/process/16_8.png`,
+            `${cdnLink}/design/event/lover/process/8_4.png`,
+            `${cdnLink}/design/event/lover/process/4_2.png`,
+            `${cdnLink}/design/event/lover/process/2_1.png`,
+        ],
+    }),
     computed: {
-        limit() {
-            return this.$store.state.info.join_limit;
+        events() {
+            return this.$store.state.events;
         },
-        loverId() {
-            return this.$store.state.loverId;
+        currentEvent() {
+            return this.$store.state.event;
         },
-        params() {
-            return {
-                event_id: this.loverId,
-                round: -1,
-                pair: -1,
-            };
-        },
-    },
-    watch: {
-        limit: {
-            handler: function (number) {
-                number && this.getStep(number);
-            },
-            immediate: true,
+        steps() {
+            const result = groupBy(this.process, "round");
+            for (let i = 1; i <= 5; i++) {
+                if (!result[i]) result[i] = [];
+                const shouldProcesses = Math.pow(2, 5 - i);
+                if (result[i].length < shouldProcesses) {
+                    const emptyProcesses = Array(shouldProcesses - result[i].length).fill(null);
+                    result[i] = [...result[i], ...emptyProcesses];
+                }
+            }
+            return result;
         },
     },
     methods: {
-        getStep(number) {
-            let steps = [];
-            while (number > 1) {
-                number /= 2;
-                steps.push(number);
-            }
-            this.steps = steps.concat(0);
-        },
-        load() {
-            getLoverProgress(this.params).then((res) => {
-                this.teams = res.data.data || [];
+        loadProcess() {
+            getProcessListManage(this.currentEvent.id).then((res) => {
+                this.process = res.data.data.list || [];
+                console.log("process", this.process);
             });
+        },
+
+        load() {
+            this.loadProcess();
         },
     },
     mounted() {
@@ -65,5 +78,110 @@ export default {
 };
 </script>
 <style lang="less">
-@import "~@/assets/css/rank/lover/process.less";
+.m-lover-process {
+    .w(100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 48px;
+
+    --step-1-padding-top: 45px;
+    --step-1-group-odd: 130px;
+    --step-1-group-even: 48px;
+    --step-1-curve-height: 234px;
+    --step-1-line-top: 181px;
+
+    --step-2-padding-top: 163px;
+    --step-2-group-odd: 284px;
+    --step-2-group-even: 284px;
+    --step-2-curve-height: 388px;
+    --step-2-line-top: 258px;
+
+    --step-3-padding-top: 357px;
+    --step-3-group-odd: 676px;
+    --step-3-group-even: 672px;
+    --step-3-curve-height: 780px;
+    --step-3-line-top: 453px;
+
+    --step-4-padding-top: 747px;
+    --step-4-group-odd: 1456px;
+    --step-4-curve-height: 1560px;
+    --step-4-line-top: 844px;
+
+    --step-5-padding-top: 1528px;
+    --step-6-padding-top: 1528px;
+
+    .m-page-title {
+        padding-top: 40px;
+        .u-img {
+            .size(320px, 96px);
+        }
+    }
+
+    .m-process-wrapper {
+        box-sizing: border-box;
+        .w(1627px);
+        background: rgba(38, 8, 8, 0.25);
+        display: flex;
+        padding: 36px 48px 120px;
+        gap: 52px;
+
+        .m-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            .w(272px);
+
+            .u-head {
+                height: 39px;
+            }
+
+            .u-head-empty {
+                height: 39px;
+                width: 100%;
+            }
+        }
+
+        .loop-step(@i) when (@i <= 4) {
+            .m-step-@{i} {
+                .m-step-battles {
+                    padding-top: ~"var(--step-@{i}-padding-top)";
+                }
+                .m-step-battle:nth-of-type(2n + 1) {
+                    margin-bottom: ~"var(--step-@{i}-group-odd)";
+                    .pr;
+                    &::after {
+                        content: "";
+                        .pa;
+                        border-radius: 0 16px 16px 0;
+                        border-width: 1px 1px 1px 0;
+                        border-style: solid;
+
+                        .rt(-24px, 64px);
+                        .size(24px, ~"var(--step-@{i}-curve-height)");
+                    }
+                    &::before {
+                        content: "";
+                        .pa;
+                        .size(24px, 1px);
+                        .rt(-48px, ~"var(--step-@{i}-line-top)");
+                        background-color: white;
+                    }
+                }
+                // 仅第1~3步有even分组
+                .m-step-battle:nth-of-type(2n):not(:last-of-type) when (@i <= 3) {
+                    margin-bottom: ~"var(--step-@{i}-group-even)";
+                }
+            }
+            .loop-step(@i + 1);
+        }
+        .loop-step(1);
+
+        .m-step-5 {
+            .m-step-battles {
+                padding-top: var(--step-5-padding-top);
+            }
+        }
+    }
+}
 </style>
