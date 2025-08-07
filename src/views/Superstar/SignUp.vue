@@ -43,7 +43,7 @@ export default {
     },
     computed: {
         id: function () {
-            return this.$route.params.id;
+            return this.$store.state.id;
         },
         desc: function () {
             return this.$store.state.race.desc;

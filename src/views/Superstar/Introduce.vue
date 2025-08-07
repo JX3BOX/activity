@@ -55,7 +55,7 @@ export default {
     },
     computed: {
         id: function () {
-            return this.$route.params.id;
+            return this.$store.state.id;
         },
         superstar_desc: function () {
             return this.$store.state.race.superstar_desc;

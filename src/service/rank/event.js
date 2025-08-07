@@ -26,6 +26,11 @@ function getEvents(params) {
     });
 }
 
+// 从slug获取id
+function getIdFromSlug(slug) {
+    return $team().get(`/api/team/rank/events/item?slug=${slug}`);
+}
+
 export {
     createEvent,
     updateEvent,
@@ -33,4 +38,5 @@ export {
     stopEvent,
     getEvent,
     getEvents,
+    getIdFromSlug,
 };
