@@ -7,18 +7,6 @@
                 <span>共32支参赛队伍将被随机分为16组进行对决，首轮32进16采用BO1的单败赛制。</span>
             </div>
             <div class="m-draw-wrapper">
-                <video
-                    ref="fire"
-                    class="m-fire"
-                    :style="fireStyle"
-                    autoplay
-                    disablepictureinpicture
-                    disableremoteplayback
-                    loop
-                    muted
-                    playsinline
-                    :src="`${cdnLink}design/event/lover/fire.webm`"
-                ></video>
                 <div class="m-team-list">
                     <div
                         class="m-team-item"
@@ -62,7 +50,7 @@
                 </div>
             </div>
             <div class="m-actions">
-                <div class="u-draw-button" @click="onDraw"></div>
+                <div class="u-draw-button" :class="{ 'is-disabled': disableButton }" @click="onDraw"></div>
                 <div class="u-reset-button" @click="onReset"></div>
             </div>
         </div>
@@ -71,7 +59,7 @@
 
 <script>
 // import { __cdn as cdnLink } from "@jx3box/jx3box-common/data/jx3box.json";
-import { getSelectedList } from "@/service/rank/lover";
+import { getSelectedList, batchCreateProcess } from "@/service/rank/lover";
 import { shuffle, chunk, sortBy } from "lodash";
 import { wait } from "@/utils/animation";
 
@@ -94,12 +82,6 @@ export default {
         step: 0,
         currentGroupColumn: 0,
         disableButton: false,
-        fire: {
-            animation: false,
-            show: false,
-            left: 0,
-            top: 0,
-        },
     }),
     computed: {
         events() {
@@ -119,14 +101,6 @@ export default {
 
             return result;
         },
-        fireStyle() {
-            return {
-                "--fire-transition": this.fire.animation ? "transform 0.7s ease" : "none",
-                "--fire-opacity": this.fire.show ? 1 : 0,
-                "--fire-left": `${this.fire.left}px`,
-                "--fire-top": `${this.fire.top}px`,
-            };
-        },
     },
     watch: {
         "$route.params.slug": {
@@ -144,9 +118,13 @@ export default {
         },
     },
     methods: {
-        async onDraw() {
+        onClickDraw() {
             if (this.disableButton) return;
+            this.onDraw();
+        },
+        async onDraw() {
             if (this.step === 0) {
+                this.disableButton = true;
                 // 先分好组
                 const shuffled = shuffle(this.selectedTeams);
                 this.groups = chunk(shuffled, 2).map((pair) => ({
@@ -162,21 +140,17 @@ export default {
                 });
                 this.step = 1;
                 // 播放动画
-                this.disableButton = true;
-                await this.playStep1().finally(() => {
-                    this.disableButton = false;
-                });
+                await this.playStep1();
                 await wait(500); // 等待动画结束
                 this.onDraw(); // 触发下一步
             } else if (this.step === 1) {
                 // 播放第二步动画
-                this.disableButton = true;
                 await this.playStep2().finally(() => {
-                    this.disableButton = false;
                     this.currentGroupColumn++;
                 });
                 if (this.currentGroupColumn === 4) {
                     this.step = 2; // 如果所有组都展示了，进入下一步
+                    this.disableButton = false;
                 } else {
                     await wait(500); // 等待动画结束
                     this.onDraw(); // 继续抽取下一组
@@ -187,10 +161,7 @@ export default {
                     cancelButtonText: "取消",
                     type: "warning",
                 }).then(() => {
-                    this.$message({
-                        type: "success",
-                        message: "抽签结果已保存！(实际暂未)",
-                    });
+                    this.saveResult();
                 });
             }
         },
@@ -255,12 +226,7 @@ export default {
         async playStep2() {
             // 从groups抽出4组，每组50s
             const groupsToShow = this.groups.slice(this.currentGroupColumn * 4, this.currentGroupColumn * 4 + 4);
-            // 先把火弄到第一个组的位置
-            // this.fire.show = false;
-            const groupEl = this.$refs.group[this.currentGroupColumn * 4];
-            this.fire.animation = false;
-            this.fire.left = groupEl.offsetLeft;
-            this.fire.top = 0;
+
             groupsToShow.forEach((group, index) => {
                 setTimeout(async () => {
                     // 计算该group的两个teams的位置，将team元素移动过去
@@ -277,14 +243,6 @@ export default {
                     // 展示group的背景
                     group.is_selected = true;
                     group.show = true;
-                    if (this.fire.top === 0) {
-                        this.fire.show = true;
-                        this.fire.animation = true;
-                        this.fire.top += 400;
-                        setTimeout(() => {
-                            this.fire.show = false;
-                        }, 700);
-                    }
                     // 展示vs
                     // 不再显示team
                     group.teams.forEach((team) => {
@@ -295,6 +253,7 @@ export default {
             await wait(700);
         },
         onReset() {
+            if (this.disableButton) return;
             this.selectedTeams = sortBy(this.selectedTeams, "_index");
             this.selectedTeams.forEach((team) => {
                 this.$set(team, "_show", undefined);
@@ -306,12 +265,6 @@ export default {
             this.currentGroupColumn = 0;
             this.groups = [];
             this.step = 0;
-            this.fire = {
-                animation: false,
-                show: false,
-                left: 0,
-                top: 0,
-            };
         },
         loadTeams() {
             getSelectedList(this.currentEvent.id).then((res) => {
@@ -321,6 +274,31 @@ export default {
                 }));
                 console.log("Selected teams loaded:", this.selectedTeams);
             });
+        },
+        saveResult() {
+            let round = 1;
+            let position = 1;
+            const result = this.groups.map((group) => {
+                return {
+                    event_id: this.currentEvent.id,
+                    round,
+                    position: position++,
+                    team1_id: group.teams[0]?.id,
+                    team2_id: group.teams[1]?.id,
+                };
+            }).filter((item) => item.team1_id && item.team2_id);
+            batchCreateProcess(result)
+                .then((res) => {
+                    this.$message({
+                        type: "success",
+                        message: "赛程已保存！",
+                    });
+                    this.disableButton = true;
+                })
+                .catch((error) => {
+                    this.$message.error("保存赛程失败，请稍后再试。");
+                    console.error("Error saving process:", error);
+                });
         },
     },
 };
@@ -386,17 +364,6 @@ export default {
         .mb(30px);
     }
 
-    .m-fire {
-        .pa;
-        .lt(0px);
-        .size(160px);
-        z-index: 99;
-        transition: var(--fire-transition);
-        opacity: var(--fire-opacity);
-        transform: translate(var(--fire-left), var(--fire-top));
-        pointer-events: none;
-    }
-
     .team {
         display: flex;
         gap: 6px;
@@ -429,6 +396,8 @@ export default {
             border: 1px solid #c7b26fff;
             color: rgba(128, 100, 77, 1);
             padding: 0px 2px;
+            flex-shrink: 0;
+            .pointer;
         }
     }
 
@@ -550,7 +519,8 @@ export default {
             background-size: cover;
             filter: drop-shadow(0px -30px 40px rgba(38, 27, 25, 0.5));
 
-            &:hover {
+            &:hover,
+            &.is-disabled {
                 background-image: var(--draw-image-hover);
             }
         }
@@ -566,7 +536,8 @@ export default {
             background-size: cover;
             filter: drop-shadow(0px -30px 40px rgba(38, 27, 25, 0.5));
 
-            &:hover {
+            &:hover,
+            &.is-disabled {
                 background-image: var(--reset-image-hover);
             }
         }
