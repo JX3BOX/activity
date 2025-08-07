@@ -23,7 +23,6 @@
 
             <!-- 网页二维码 -->
             <QRcode class="u-mobile-qrcode" v="static" :s="100" />
-
         </div>
 
         <img
@@ -41,8 +40,9 @@
 <script>
 import PICS from "@/assets/js/pics.js";
 import race_header from "@/components/rank/race_header.vue";
-import { getEvent } from "@/service/rank/event.js";
+import { getEvent, getIdFromSlug } from "@/service/rank/event.js";
 import { __cdn } from "@jx3box/jx3box-common/data/jx3box.json";
+import { isNumber } from "lodash";
 export default {
     name: "RankLayout",
     props: [],
@@ -54,21 +54,19 @@ export default {
             achieves: [],
             arrow: `${__cdn}design/rank/common/timeline_arrow.svg`,
             showBackToTop: false,
+            id: "",
         };
     },
     computed: {
-        id: function () {
-            return this.$route.params.id || 0;
-        },
         note: function () {
             return this.$store.state.race.note;
         },
         id_cls: function () {
             return "m-rank-event-" + this.id;
         },
-        Bg(){
+        Bg() {
             return `background-image: url(${PICS.bg(this.id)})`;
-        }
+        },
     },
     methods: {
         init: function () {
@@ -98,11 +96,19 @@ export default {
         this.handleScroll();
     },
     watch: {
-        "$route.params.id": {
+        $route: {
+            deep: true,
             immediate: true,
-            handler: function (id) {
-                if (id) {
-                    this.$store.state.id = id;
+            async handler(val) {
+                const id = Number(val.params.id);
+                if (!isNaN(id) && isNumber(id)) {
+                    this.id = id;
+                    this.$store.state.id = this.id || 0;
+                    this.init();
+                } else {
+                    const res = await getIdFromSlug(val.params.id);
+                    this.id = res.data.data.id;
+                    this.$store.state.id = this.id || 0;
                     this.init();
                 }
             },
