@@ -94,100 +94,107 @@ export function getProcessListManage(params) {
                 },
             },
         };
+        const getProcessRecord = (id, payload) => ({
+            id: id,
+            event_id: 1,
+            round: 1,
+            position: Math.ceil(id / 2),
+            team1_id: (id - 1) * 2 + 1,
+            team2_id: (id - 1) * 2 + 2,
+            team1_conf: [
+                {
+                    user_id: 541896,
+                    pz_id: 544,
+                },
+                {
+                    user_id: 541898,
+                    pz_id: 545,
+                },
+            ],
+            team2_conf: [
+                {
+                    user_id: 541897,
+                    pz_id: 544,
+                },
+                {
+                    user_id: 541899,
+                    pz_id: 545,
+                },
+            ],
+            team1_card: Math.floor(Math.random() * 5) + 1,
+            team2_card: Math.floor(Math.random() * 5) + 1,
+            winner_id: 0,
+            next_match_id: 0,
+            created_at: "2025-08-07 15:13:45",
+            updated_at: "2025-08-07 15:13:45",
+            team1_record: getJoinRecord((id - 1) * 2 + 1),
+            team2_record: getJoinRecord((id - 1) * 2 + 2),
+            team1_teammates: [
+                {
+                    id: 541896,
+                    display_name: "路人甲",
+                    avatar: "",
+                    user_avatar_frame: "",
+                    sign: 0,
+                    wechat_unionid: "",
+                },
+                {
+                    id: 541898,
+                    display_name: "路人乙",
+                    avatar: "",
+                    user_avatar_frame: "",
+                    sign: 0,
+                    wechat_unionid: "",
+                },
+            ],
+            team2_teammates: [
+                {
+                    id: 541897,
+                    display_name: "路人丙",
+                    avatar: "",
+                    user_avatar_frame: "",
+                    sign: 0,
+                    wechat_unionid: "",
+                },
+                {
+                    id: 541899,
+                    display_name: "路人丁",
+                    avatar: "",
+                    user_avatar_frame: "",
+                    sign: 0,
+                    wechat_unionid: "",
+                },
+            ],
+            ...payload,
+        });
+        const getJoinRecord = (id) => ({
+            id,
+            event_id: 1,
+            user_id: Math.floor(Math.random() * 10000),
+            team_name: `Team ${id}`,
+            server: "Server",
+            remark: "",
+            status: 1,
+            votes: 0,
+            created_at: "2025-08-07 10:50:44",
+            updated_at: "2025-08-07 10:50:44",
+            live_url: "",
+            live_platform: "",
+            teammates: [541896, 541898],
+            images: [
+                `https://raw.githubusercontent.com/tabler/tabler-icons/refs/heads/main/icons/outline/number-${id}-small.svg`,
+            ],
+        });
         for (let i = 1; i <= 16; i++) {
-            mockData.data.data.list.push({
-                id: i,
-                event_id: 1,
-                round: 1,
-                position: Math.ceil(i / 2),
-                team1_id: (i - 1) * 2 + 1,
-                team2_id: (i - 1) * 2 + 2,
-                team1_conf: null,
-                team2_conf: null,
-                team1_card: 0,
-                team2_card: 0,
-                winner_id: 0,
-                next_match_id: 0,
-                created_at: "2025-08-07 15:13:45",
-                updated_at: "2025-08-07 15:13:45",
-                team1_record: {
-                    id: (i - 1) * 2 + 1,
-                    event_id: 1,
-                    user_id: Math.floor(Math.random() * 10000),
-                    team_name: `Team ${(i - 1) * 2 + 1}`,
-                    server: "Server",
-                    remark: "",
-                    status: 1,
-                    votes: 0,
-                    created_at: "2025-08-07 10:50:44",
-                    updated_at: "2025-08-07 10:50:44",
-                    live_url: "",
-                    live_platform: "",
-                    teammates: [541896, 541898],
-                    images: [
-                        `https://raw.githubusercontent.com/tabler/tabler-icons/refs/heads/main/icons/outline/number-${
-                            (i - 1) * 2 + 1
-                        }-small.svg`,
-                    ],
-                },
-                team2_record: {
-                    id: (i - 1) * 2 + 2,
-                    event_id: 1,
-                    user_id: Math.floor(Math.random() * 10000),
-                    team_name: `Team ${(i - 1) * 2 + 2}`,
-                    server: "Server",
-                    remark: "",
-                    status: 1,
-                    votes: 0,
-                    created_at: "2025-08-07 10:50:44",
-                    updated_at: "2025-08-07 10:50:44",
-                    live_url: "",
-                    live_platform: "",
-                    teammates: [541896, 541898],
-                    images: [
-                        `https://raw.githubusercontent.com/tabler/tabler-icons/refs/heads/main/icons/outline/number-${
-                            (i - 1) * 2 + 2
-                        }-small.svg`,
-                    ],
-                },
-                team1_teammetas: [
-                    {
-                        id: 541896,
-                        display_name: "少侠567598",
-                        avatar: "",
-                        user_avatar_frame: "",
-                        sign: 0,
-                        wechat_unionid: "",
-                    },
-                    {
-                        id: 541898,
-                        display_name: "少侠144923",
-                        avatar: "",
-                        user_avatar_frame: "",
-                        sign: 0,
-                        wechat_unionid: "",
-                    },
-                ],
-                team2_teammetas: [
-                    {
-                        id: 541896,
-                        display_name: "少侠567598",
-                        avatar: "",
-                        user_avatar_frame: "",
-                        sign: 0,
-                        wechat_unionid: "",
-                    },
-                    {
-                        id: 541898,
-                        display_name: "少侠144923",
-                        avatar: "",
-                        user_avatar_frame: "",
-                        sign: 0,
-                        wechat_unionid: "",
-                    },
-                ],
-            });
+            mockData.data.data.list.push(getProcessRecord(i));
         }
+        mockData.data.data.list.push(
+            getProcessRecord(17, {
+                winner_id: 33,
+                round: 5,
+            })
+        );
+
         resolve(mockData);
     });
 }
