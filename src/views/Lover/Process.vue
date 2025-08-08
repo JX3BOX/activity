@@ -4,19 +4,32 @@
             <img class="u-img" :src="`${cdnLink}/design/event/lover/process/process_title.png`" />
         </div>
         <div class="m-process-wrapper">
-            <div class="m-step" :class="`m-step-${round}`" v-for="round in [1, 2, 3, 4, 5, 6]" :key="round">
-                <img v-if="headImage[round - 1]" class="u-head" :src="headImage[round - 1]" alt="" />
-                <div v-else class="u-head-empty"></div>
+            <div class="m-step" :class="`m-step-${round}`" v-for="round in [1, 2, 3, 4, 5]" :key="round">
+                <img class="u-head" :src="headImage[round - 1]" alt="" />
                 <div class="m-step-battles">
                     <LoverBattleItem
                         class="m-step-battle"
                         v-for="(process, index) in steps[round] || []"
                         :key="index"
                         :process="process"
+                        @view-detail="viewDetail(process)"
                     />
                 </div>
             </div>
+            <div class="m-step m-step-6">
+                <div class="u-head-empty"></div>
+                <div class="m-step-winner" v-if="winner">
+                    <img class="u-icon" :src="winner.images[0]" alt="" />
+                    <span class="u-team-name">{{ winner.team_name }}</span>
+                    <div class="u-user-names">
+                        <span class="u-user-name" v-for="(user, index) in winner.teammates_info" :key="index">
+                            {{ user.display_name }}
+                        </span>
+                    </div>
+                </div>
+            </div>
         </div>
+        <LoverBattleDetail ref="battle-detail"></LoverBattleDetail>
     </div>
 </template>
 
@@ -24,11 +37,12 @@
 import { __cdn as cdnLink } from "@jx3box/jx3box-common/data/jx3box.json";
 import { getProcessListManage } from "@/service/rank/lover";
 import LoverBattleItem from "@/components/rank/lover/battle.vue";
+import LoverBattleDetail from "@/components/rank/lover/battle_detail.vue";
 import { groupBy } from "lodash";
 
 export default {
     name: "LoverProcess",
-    components: { LoverBattleItem },
+    components: { LoverBattleItem, LoverBattleDetail },
     data: () => ({
         cdnLink,
         process: [],
@@ -40,6 +54,13 @@ export default {
             `${cdnLink}/design/event/lover/process/2_1.png`,
         ],
     }),
+    provide() {
+        // 使用函数的形式，可以访问到 `this`
+        return {
+            cdnLink: this.cdnLink,
+            headImage: this.headImage,
+        };
+    },
     computed: {
         events() {
             return this.$store.state.events;
@@ -59,6 +80,21 @@ export default {
             }
             return result;
         },
+        winner() {
+            const process = this.steps[5]?.[0];
+            if (!process?.winner_id) return null;
+            if (process.team1_id === process.winner_id) {
+                return {
+                    ...process.team1_record,
+                    teammates_info: process.team1_teammates,
+                };
+            } else {
+                return {
+                    ...process.team2_record,
+                    teammates_info: process.team2_teammates,
+                };
+            }
+        },
     },
     methods: {
         loadProcess() {
@@ -66,6 +102,9 @@ export default {
                 this.process = res.data.data.list || [];
                 console.log("process", this.process);
             });
+        },
+        viewDetail(process) {
+            this.$refs["battle-detail"].open(process);
         },
 
         load() {
@@ -109,7 +148,7 @@ export default {
     --step-4-line-top: 844px;
 
     --step-5-padding-top: 1528px;
-    --step-6-padding-top: 1528px;
+    --step-6-padding-top: 1520px;
 
     .m-page-title {
         padding-top: 40px;
@@ -180,6 +219,50 @@ export default {
         .m-step-5 {
             .m-step-battles {
                 padding-top: var(--step-5-padding-top);
+            }
+        }
+
+        .m-step-6 {
+            padding-top: var(--step-6-padding-top);
+        }
+
+        .m-step-winner {
+            display: flex;
+            flex-direction: column;
+            .size(175px, 140px);
+            box-sizing: border-box;
+            background: rgba(0, 0, 0, 0.2);
+            border-left: 4px solid #f3c768ff;
+            gap: 4px;
+            padding: 5px 0 0 6px;
+            .pr;
+            &::before {
+                content: "";
+                .pa;
+                background-color: white;
+
+                .lt(-54px, 70px);
+                .size(48px, 1px);
+            }
+
+            .u-icon {
+                .size(60px);
+            }
+
+            .u-team-name {
+                .fz(16px, 23.17px);
+                font-weight: 700;
+            }
+
+            .u-user-name {
+                .fz(13px, 18.82px);
+                font-weight: 400;
+                color: rgba(255, 233, 199, 1);
+            }
+
+            .u-user-names {
+                display: flex;
+                flex-direction: column;
             }
         }
     }

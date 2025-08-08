@@ -14,7 +14,7 @@
             :key="index"
         >
             <template v-if="item">
-                <img class="u-icon" :src="item.images[0]" alt="" />
+                <img class="u-icon" draggable="false" :src="item.images[0]" alt="" />
                 <span class="u-name">{{ item.team_name }}</span>
                 <span class="u-win-icon">胜</span>
             </template>
@@ -51,13 +51,15 @@ export default {
     computed: {
         teams() {
             return [this.process?.team1_record || null, this.process?.team2_record || null];
-        }
+        },
     },
     methods: {
-        onViewDetail() {},
+        onViewDetail() {
+            this.$emit("view-detail");
+        },
         isWinner(team) {
-            if(!team) return false;
-            return process.winner_id === team.id;
+            if (!team) return false;
+            return this.process.winner_id === team.id;
         },
     },
 };
@@ -120,8 +122,7 @@ export default {
         background: #00000033;
         border-left: 4px solid #f3c768ff;
         &.is-empty {
-        border-left: 4px solid rgba(255, 255, 255, 1);;
-
+            border-left: 4px solid rgba(255, 255, 255, 1);
         }
         .pr;
         &.is-winner {
@@ -144,6 +145,9 @@ export default {
         .u-win-icon {
             .pa;
             color: #783600ff;
+            .bold;
+            user-select: none;
+            pointer-events: none;
             .rb(12px, 8px);
             .fz(16px, 23.17px);
             display: none;
