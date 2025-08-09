@@ -32,7 +32,7 @@ export default {
             menus: [
                 { name: "活动介绍", key: "info" },
                 { name: "赛事进程", key: "process" },
-                { name: "擂台挑战", key: "activity" },
+                { name: "擂台挑战", key: "arena" },
                 { name: "报名参赛", key: "join" },
                 { name: "在线直播", key: "live" },
                 { name: "支持投票", key: "vote" },
