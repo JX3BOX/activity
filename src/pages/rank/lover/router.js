@@ -14,6 +14,7 @@ const Join = () => import("@/views/Lover/Join.vue");
 const Vote = () => import("@/views/Lover/Vote.vue");
 const Live = () => import("@/views/Lover/Live.vue");
 const Process = () => import("@/views/Lover/Process.vue");
+const Arena = () => import("@/views/Lover/Arena.vue");
 const Activity = () => import("@/views/Lover/Activity.vue");
 const Card = () => import("@/views/Lover/Card.vue");
 const Draw = () => import("@/views/Lover/Draw.vue");
@@ -29,6 +30,7 @@ const routes = [
             { name: "vote", path: "/:slug/vote", component: Vote },
             { name: "live", path: "/:slug/live", component: Live },
             { name: "process", path: "/:slug/process", component: Process },
+            { name: "arena", path: "/:slug/arena", component: Arena },
             { name: "activity", path: "/:slug/activity", component: Activity },
         ],
     },
