@@ -35,7 +35,7 @@
 
 <script>
 import { __cdn as cdnLink } from "@jx3box/jx3box-common/data/jx3box.json";
-import { getProcessListManage, getProcessListPublic } from "@/service/rank/lover";
+import { getProcessListFake, getProcessListPublic } from "@/service/rank/lover";
 import LoverBattleItem from "@/components/rank/lover/battle.vue";
 import LoverBattleDetail from "@/components/rank/lover/battle_detail.vue";
 import { groupBy } from "lodash";
@@ -98,7 +98,7 @@ export default {
     },
     methods: {
         loadProcess() {
-            getProcessListPublic({
+            getProcessListFake({
                 event_id: this.currentEvent.id,
             }).then((res) => {
                 this.process = res.data.data || [];

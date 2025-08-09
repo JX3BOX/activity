@@ -76,22 +76,14 @@ export function pickCard(eventId, processId) {
     return $team().get(`/api/team/pvp-event-card/manage/event/${eventId}/process/${processId}/pick`);
 }
 
-export function getProcessListManage(params) {
+export function getProcessListFake(params) {
     // mock 数据
     return new Promise((resolve) => {
         const mockData = {
             data: {
                 code: 0,
                 msg: "",
-                data: {
-                    list: [],
-                    page: {
-                        index: 1,
-                        pageSize: 1000,
-                        total: 0,
-                        pageTotal: 1,
-                    },
-                },
+                data: [],
             },
         };
         const getProcessRecord = (id, payload) => ({
@@ -186,9 +178,9 @@ export function getProcessListManage(params) {
             ],
         });
         for (let i = 1; i <= 16; i++) {
-            mockData.data.data.list.push(getProcessRecord(i));
+            mockData.data.data.push(getProcessRecord(i));
         }
-        mockData.data.data.list.push(
+        mockData.data.data.push(
             getProcessRecord(17, {
                 winner_id: 33,
                 round: 5,
