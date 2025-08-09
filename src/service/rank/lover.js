@@ -76,6 +76,10 @@ export function pickCard(eventId, processId) {
     return $team().get(`/api/team/pvp-event-card/manage/event/${eventId}/process/${processId}/pick`);
 }
 
+export function getProcessListManage(params) {
+    return $team().get(`/api/team/pvp-event-process/manage/list`, { params });
+}
+
 export function getProcessListFake(params) {
     // mock 数据
     return new Promise((resolve) => {
