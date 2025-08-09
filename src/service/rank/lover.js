@@ -77,7 +77,7 @@ export function pickCard(eventId, processId) {
 }
 
 export function getProcessListManage(params) {
-    // return $team().get(`/api/team/pvp-event-process/manage/list`, { params });
+    // mock 数据
     return new Promise((resolve) => {
         const mockData = {
             data: {
@@ -197,6 +197,10 @@ export function getProcessListManage(params) {
 
         resolve(mockData);
     });
+}
+
+export function getProcessListPublic(params) {
+    return $team().get(`/api/team/pvp-event-process/public/list`, { params });
 }
 
 export function setProcessCardId(processId, payload) {
