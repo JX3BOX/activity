@@ -98,8 +98,9 @@ export default {
     },
     methods: {
         loadProcess() {
-            getProcessListFake({
+            getProcessListPublic({
                 event_id: this.currentEvent.id,
+                round: -1,
             }).then((res) => {
                 this.process = res.data.data || [];
                 console.log("process", this.process);

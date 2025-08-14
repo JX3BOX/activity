@@ -161,6 +161,8 @@ export function getProcessListFake(params) {
                     wechat_unionid: "",
                 },
             ],
+            status: Math.floor(Math.random() * 3),
+            finish_at: "2025-08-07 15:13:45",
             ...payload,
         });
         const getJoinRecord = (id) => ({
