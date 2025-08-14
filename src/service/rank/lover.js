@@ -206,5 +206,5 @@ export function setProcessCardId(processId, payload) {
 }
 
 export function getChallengeList(params) {
-    return $team().get(`/api/team/pvp-event/manage/challenge/list`, { params });
+    return $team().get(`/api/team/pvp-event/challenge/public/list`, { params });
 }

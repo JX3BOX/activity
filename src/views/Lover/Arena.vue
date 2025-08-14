@@ -30,30 +30,35 @@
         <div class="m-current-reign">
             <div class="m-reign-header">
                 <img src="@/assets/img/rank/lover/1st.svg" alt="" />
-                <span>名字最长七个字</span>
+                <span>{{ currentReign.event_record?.teammates_info?.[0]?.display_name || "-" }}</span>
                 <img src="@/assets/img/rank/lover/meigui.svg" alt="" />
-                <span>名字最长七个字</span>
+                <span>{{ currentReign.event_record?.teammates_info?.[1]?.display_name || "-" }}</span>
             </div>
             <div class="m-reign-meta__wrapper">
                 <div class="m-reign-meta">
-                    <span class="u-data">15</span>
+                    <span class="u-data">{{ progressData.wins || 0 }}</span>
                     <span class="u-title">连胜场次</span>
                 </div>
                 <div class="m-reign-meta">
-                    <span class="u-data">5</span>
+                    <span class="u-data">{{ currentReign.days || 0 }}</span>
                     <span class="u-title">守擂天数</span>
                 </div>
                 <div class="m-reign-meta">
-                    <span class="u-data">10/15</span>
+                    <span class="u-data">{{ progressData.cur }}/{{ progressData.max }}</span>
                     <span class="u-title">下一成就</span>
                 </div>
             </div>
             <div class="m-reign-progress">
                 <div class="u-desc">
-                    <span>20胜成就：情比金坚</span>
-                    <span>10/20场</span>
+                    <span>{{ progressData.max }}胜奖励：{{ progressData.label }}</span>
+                    <span>{{ progressData.cur }}/{{ progressData.max }}场</span>
                 </div>
-                <el-progress class="u-progress" :percentage="50" :stroke-width="20" :show-text="false"></el-progress>
+                <el-progress
+                    class="u-progress"
+                    :percentage="(progressData.cur / progressData.max) * 100"
+                    :stroke-width="20"
+                    :show-text="false"
+                ></el-progress>
             </div>
         </div>
         <div class="m-title">
@@ -61,19 +66,19 @@
             <span>“逐影” 擂主</span>
         </div>
         <div class="m-reign-list">
-            <div class="m-reign-item" v-for="item in [1, 2, 3, 4, 7, 8, 9]" :key="item">
+            <div class="m-reign-item" v-for="(item, index) in noCurrentReign" :key="index">
                 <div class="u-header">
-                    <span>名字最长七个字</span>
+                    <span>{{ item.event_record?.teammates_info?.[0]?.display_name || "-" }}</span>
                     <img src="@/assets/img/rank/lover/meigui.svg" alt="" />
-                    <span>名字最长七个字</span>
+                    <span>{{ item.event_record?.teammates_info?.[1]?.display_name || "-" }}</span>
                 </div>
                 <div class="u-data">
                     <img svg-inline src="@/assets/img/rank/lover/star.svg" alt="" />
-                    当前连胜：15场
+                    当前连胜：{{ item.event_record?.wins || 0 }}场
                 </div>
                 <div class="u-data">
                     <img svg-inline src="@/assets/img/rank/lover/star.svg" alt="" />
-                    守擂开始：2023-10-10
+                    守擂开始：{{ dayjs(item?.reign_start_at).format("YYYY-MM-DD") }}
                 </div>
             </div>
         </div>
@@ -81,17 +86,44 @@
 </template>
 
 <script>
-import { cloneDeep } from "lodash";
-import { getChallengeList } from "@/service/rank/lover";
+import { cloneDeep, keyBy, uniq, uniqBy } from "lodash";
+import { getChallengeList, getJoinList } from "@/service/rank/lover";
 import { __cdn as cdnLink } from "@jx3box/jx3box-common/data/jx3box.json";
+import dayjs from "dayjs";
+
 export default {
     name: "LoverArena",
     components: {},
     props: {},
-    data: () => ({ cdnLink, challengeList: [] }),
+    data: () => ({
+        cdnLink,
+        challengeList: [],
+        records: [],
+        awards: [
+            { count: 5, label: "双人各 5000 盒币" },
+            { count: 10, label: "双人各 10000 盒币" },
+            { count: 20, label: "双人各 20000 盒币 + 魔盒卓越称号“一生一世”" },
+            { count: 30, label: "双人各 30000 盒币 + 魔盒卓越称号“情比金坚”" },
+            { count: 50, label: "双人各 50000 盒币 + 魔盒稀世称号“神仙眷侣”" },
+        ],
+    }),
     computed: {
+        progressData() {
+            let currentProgress = this.currentReign.id
+                ? this.awards.find((item) => this.currentReign.wins < item.count)
+                : this.awards[0];
+            if (!currentProgress) {
+                currentProgress = { ...this.awards[this.awards.length - 1] };
+                currentProgress.count = this.currentReign.wins;
+            }
+            return {
+                cur: this.currentReign?.wins || 0,
+                max: currentProgress.count,
+                label: currentProgress.label,
+            };
+        },
         currentEvent() {
-            return this.$store.state.currentEvent || {};
+            return this.$store.getters.currentEvent || {};
         },
         containerStyle() {
             return {
@@ -103,10 +135,34 @@ export default {
             };
         },
         currentReign() {
-            return this.challengeList.find((item) => item.status === 1);
+            return this.renderChallengeList.find((item) => item.status === 1) || {};
+        },
+        noCurrentReign() {
+            return this.renderChallengeList.filter((item) => item.status != 1);
+        },
+        renderChallengeList() {
+            const result = [];
+            const userMap = keyBy(uniqBy(this.records.map((r) => r.teammeta_user_list).flat(), "id"), "id");
+            this.challengeList.forEach((_item) => {
+                const item = {
+                    ..._item,
+                    event_record: {
+                        ..._item.event_record,
+                    },
+                };
+                if (item.event_record) {
+                    item.event_record.teammates_info = uniq(item.event_record.teammates)
+                        .map((id) => userMap[id] || null)
+                        .filter(Boolean);
+                }
+                item.days = dayjs(item.reign_end_at || new Date()).diff(dayjs(item.reign_start_at), "day");
+                result.push(item);
+            });
+            return result;
         },
     },
     methods: {
+        dayjs,
         loadChallengeList() {
             getChallengeList({ _no_page: 1, pvp_event_id: this.currentEvent.id })
                 .then((res) => {
@@ -117,9 +173,15 @@ export default {
                     console.error("获取擂台挑战列表失败", err);
                 });
         },
+        loadJoinList() {
+            getJoinList(this.currentEvent.id, { _no_page: 1 }).then((res) => {
+                this.records = res.data.data.list || [];
+            });
+        },
     },
     mounted() {
         this.loadChallengeList();
+        this.loadJoinList();
     },
 };
 </script>
@@ -228,7 +290,7 @@ export default {
 
         .m-reign-meta__wrapper {
             box-sizing: border-box;
-            .size(265px, 83px);
+            .size(fit-content, 83px);
             border-radius: 4px;
             background: rgba(74, 46, 13, 0.5);
             display: flex;
