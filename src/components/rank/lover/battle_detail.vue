@@ -19,9 +19,9 @@
             ></battle-detail-team>
             <div class="m-middle">
                 <img class="u-logo" :src="`${cdnLink}design/event/lover/battle_lover_logo.webp`" alt="" />
-                <img class="u-vs" :src="`${cdnLink}design/event/lover/vs.png`" alt="" />
+                <img class="u-vs" :src="`${cdnLink}design/event/lover/process/vs.png`" alt="" />
                 <img class="u-round" v-if="renderProcess" :src="headImage[renderProcess.round - 1]" alt="" />
-                <span class="u-time">{{ renderProcess.start_time }} </span>
+                <span class="u-time">{{ renderProcess.finish_at }} </span>
             </div>
             <battle-detail-team
                 :team="renderProcess.team2_record"

@@ -2,9 +2,11 @@
     <div class="m-battle-item">
         <div class="m-battle-meta">
             <template v-if="process">
-                <div class="u-status" :class="statusLabel[0].class">{{ statusLabel[0].label }}</div>
+                <div class="u-status" :class="statusLabel[process.status]?.class">
+                    {{ statusLabel[process.status]?.label }}
+                </div>
                 <div class="u-detail-btn" @click="onViewDetail">详 情</div>
-                <div class="u-time">{{ process.updated_at }}</div>
+                <div class="u-time">{{ process.finish_at }}</div>
             </template>
         </div>
         <div
