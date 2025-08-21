@@ -18,8 +18,10 @@ const Arena = () => import("@/views/Lover/Arena.vue");
 const Activity = () => import("@/views/Lover/Activity.vue");
 const Card = () => import("@/views/Lover/Card.vue");
 const Draw = () => import("@/views/Lover/Draw.vue");
+const List = () => import("@/views/Lover/List.vue");
 
 const routes = [
+    { name: "list", path: "/list", component: List },
     {
         name: "index",
         path: "/",
@@ -54,6 +56,10 @@ router.beforeEach(async (to, from, next) => {
     if (to.params.slug) {
         store.commit("SET_SLUG", to.params.slug);
         await Promise.all([store.dispatch("loadEvent"), store.dispatch("loadJoinRecord")]);
+    }
+    // 访问列表不需要slug
+    if (to.name === "list") {
+        return next();
     }
     if (!store.state.event) {
         // 如果slug对应的活动不存在，则跳转到默认活动
