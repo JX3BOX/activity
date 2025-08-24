@@ -141,7 +141,7 @@ export default {
     components: { extend, tifu },
     computed: {
         event_id() {
-            return ~~this.$route.params.id;
+            return ~~this.$store.state.id;
         },
         canSubmit() {
             return this.data.status && !this.alert_info && this.team_id;

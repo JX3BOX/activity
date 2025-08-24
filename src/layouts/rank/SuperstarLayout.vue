@@ -24,7 +24,8 @@
 
 <script>
 import { __cdn } from "@jx3box/jx3box-common/data/jx3box.json";
-import { getEvent } from "@/service/rank/event.js";
+import { getEvent, getIdFromSlug } from "@/service/rank/event.js";
+import { isNumber } from "lodash";
 export default {
     name: "SuperstarInfo",
     components: {},
@@ -54,18 +55,31 @@ export default {
                 },
             ],
             menuActive: 0,
+            id: "",
         };
     },
-    computed: {
-        id: function () {
-            return this.$route.params.id || 0;
-        },
+    watch: {
+        "$route": {
+            deep: true,
+            immediate: true,
+            async handler(val) {
+                const id = Number(val.params.id);
+                if (!isNaN(id) && isNumber(id)) {
+                    this.id = id;
+                    this.$store.state.id = this.id || 0;
+                    this.init();
+                } else {
+                    const res = await getIdFromSlug(val.params.id);
+                    this.id = res.data.data.id;
+                    this.$store.state.id = this.id || 0;
+                    this.init();
+                }
+            }
+        }
     },
     created() {
         let i = this.menu.findIndex((item) => item.key == this.$route.name);
         this.menuActive = i;
-        this.$store.state.id = this.id || 0;
-        this.init();
     },
     methods: {
         link: function (val) {

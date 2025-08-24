@@ -7,7 +7,6 @@
 </template>
 
 <script>
-// import store from "@/store/lover";
 export default {
     name: "Superstar",
     data: function () {

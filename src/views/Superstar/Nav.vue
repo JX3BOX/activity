@@ -7,7 +7,7 @@
         <!-- 入场券列表 -->
         <div class="m-list">
             <div class="u-item" v-for="(item, i) in data" :key="i">
-                <a :href="eventLink(item.ID)" target="_blank">
+                <a :href="eventLink(item.slug)" target="_blank">
                     <!-- <img :src="imgurl + 'nav/sort-1-bg.png'" height="130" /> -->
                     <div class="u-nav-img"><img :src="item.banner_pc" height="158" /></div>
 

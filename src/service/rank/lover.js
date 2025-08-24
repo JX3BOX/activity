@@ -37,6 +37,12 @@ export function getJoinList(eventId, params) {
 // 获取入围队伍
 export function getSelectedList(eventId) {
     return $team().get(`/api/team/pvp-event/${eventId}/public/join-record/selected/list`);
+    // return $team().get(`/api/team/pvp-event/${eventId}/public/join-record/list`);
+}
+
+// 批量创建赛程
+export function batchCreateProcess(data) {
+    return $team().post(`/api/team/pvp-event-process/manage/batch`, data);
 }
 
 // 我参加的情缘活动
@@ -74,6 +80,131 @@ export function getProcessListManage(params) {
     return $team().get(`/api/team/pvp-event-process/manage/list`, { params });
 }
 
+export function getProcessListFake(params) {
+    // mock 数据
+    return new Promise((resolve) => {
+        const mockData = {
+            data: {
+                code: 0,
+                msg: "",
+                data: [],
+            },
+        };
+        const getProcessRecord = (id, payload) => ({
+            id: id,
+            event_id: 1,
+            round: 1,
+            position: Math.ceil(id / 2),
+            team1_id: (id - 1) * 2 + 1,
+            team2_id: (id - 1) * 2 + 2,
+            team1_conf: [
+                {
+                    user_id: 541896,
+                    pz_id: 544,
+                },
+                {
+                    user_id: 541898,
+                    pz_id: 545,
+                },
+            ],
+            team2_conf: [
+                {
+                    user_id: 541897,
+                    pz_id: 544,
+                },
+                {
+                    user_id: 541899,
+                    pz_id: 545,
+                },
+            ],
+            team1_card: Math.floor(Math.random() * 5) + 1,
+            team2_card: Math.floor(Math.random() * 5) + 1,
+            winner_id: 0,
+            next_match_id: 0,
+            created_at: "2025-08-07 15:13:45",
+            updated_at: "2025-08-07 15:13:45",
+            team1_record: getJoinRecord((id - 1) * 2 + 1),
+            team2_record: getJoinRecord((id - 1) * 2 + 2),
+            team1_teammates: [
+                {
+                    id: 541896,
+                    display_name: "路人甲",
+                    avatar: "",
+                    user_avatar_frame: "",
+                    sign: 0,
+                    wechat_unionid: "",
+                },
+                {
+                    id: 541898,
+                    display_name: "路人乙",
+                    avatar: "",
+                    user_avatar_frame: "",
+                    sign: 0,
+                    wechat_unionid: "",
+                },
+            ],
+            team2_teammates: [
+                {
+                    id: 541897,
+                    display_name: "路人丙",
+                    avatar: "",
+                    user_avatar_frame: "",
+                    sign: 0,
+                    wechat_unionid: "",
+                },
+                {
+                    id: 541899,
+                    display_name: "路人丁",
+                    avatar: "",
+                    user_avatar_frame: "",
+                    sign: 0,
+                    wechat_unionid: "",
+                },
+            ],
+            status: Math.floor(Math.random() * 3),
+            finish_at: "2025-08-07 15:13:45",
+            ...payload,
+        });
+        const getJoinRecord = (id) => ({
+            id,
+            event_id: 1,
+            user_id: Math.floor(Math.random() * 10000),
+            team_name: `Team ${id}`,
+            server: "Server",
+            remark: "",
+            status: 1,
+            votes: 0,
+            created_at: "2025-08-07 10:50:44",
+            updated_at: "2025-08-07 10:50:44",
+            live_url: "",
+            live_platform: "",
+            teammates: [541896, 541898],
+            images: [
+                `https://raw.githubusercontent.com/tabler/tabler-icons/refs/heads/main/icons/outline/number-${id}-small.svg`,
+            ],
+        });
+        for (let i = 1; i <= 16; i++) {
+            mockData.data.data.push(getProcessRecord(i));
+        }
+        mockData.data.data.push(
+            getProcessRecord(17, {
+                winner_id: 33,
+                round: 5,
+            })
+        );
+
+        resolve(mockData);
+    });
+}
+
+export function getProcessListPublic(params) {
+    return $team().get(`/api/team/pvp-event-process/public/list`, { params });
+}
+
 export function setProcessCardId(processId, payload) {
     return $team().post(`/api/team/pvp-event-process/manage/item/${processId}/set-card-id`, payload);
+}
+
+export function getChallengeList(params) {
+    return $team().get(`/api/team/pvp-event/challenge/public/list`, { params });
 }

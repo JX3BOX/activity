@@ -8,7 +8,7 @@
             <div class="m-rank-content">
                 <ul v-if="data && data.length">
                     <li class="u-item" v-for="(item, i) in data" :key="i">
-                        <a :href="eventLink(item.ID)" target="_blank">
+                        <a :href="eventLink(item.slug)" target="_blank">
                             <img :src="eventCover(item)" :alt="item.name" />
                             <b>{{ item.name }}</b>
                             <div class="u-status">
