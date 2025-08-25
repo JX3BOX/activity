@@ -394,6 +394,7 @@ export default {
     width: 100vw;
 
     background-size: cover;
+    background-position: center;
     background-image: var(--background-image);
 
     .m-container {

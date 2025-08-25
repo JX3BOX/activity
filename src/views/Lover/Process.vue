@@ -35,10 +35,10 @@
 
 <script>
 import { __cdn as cdnLink } from "@jx3box/jx3box-common/data/jx3box.json";
-import { getProcessListFake, getProcessListPublic } from "@/service/rank/lover";
+import { getSelectedList, getProcessListPublic } from "@/service/rank/lover";
 import LoverBattleItem from "@/components/rank/lover/battle.vue";
 import LoverBattleDetail from "@/components/rank/lover/battle_detail.vue";
-import { groupBy } from "lodash";
+import { groupBy, keyBy } from "lodash";
 
 export default {
     name: "LoverProcess",
@@ -46,6 +46,7 @@ export default {
     data: () => ({
         cdnLink,
         process: [],
+        records: [],
         headImage: [
             `${cdnLink}/design/event/lover/process/32_16.png`,
             `${cdnLink}/design/event/lover/process/16_8.png`,
@@ -106,11 +107,20 @@ export default {
                 console.log("process", this.process);
             });
         },
+        loadRecords() {
+            getSelectedList(this.currentEvent.id).then((res) => {
+                this.records = keyBy(res.data.data.list || [], "id");
+            });
+        },
         viewDetail(process) {
-            this.$refs["battle-detail"].open(process);
+            const p = structuredClone(process);
+            p.team1_record.slogan = this.records[p.team1_id]?.slogan || "";
+            p.team2_record.slogan = this.records[p.team2_id]?.slogan || "";
+            this.$refs["battle-detail"].open(p);
         },
 
         load() {
+            this.loadRecords();
             this.loadProcess();
         },
     },

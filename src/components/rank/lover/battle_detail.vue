@@ -136,6 +136,7 @@ export default {
 
     .m-middle {
         display: flex;
+        flex-shrink: 0;
         align-items: center;
         flex-direction: column;
 

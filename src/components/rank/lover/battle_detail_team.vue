@@ -11,7 +11,7 @@
         <div class="u-slogan-title">参赛宣言</div>
         <div class="u-slogan">{{ team.slogan || "暂无宣言" }}</div>
         <div class="u-card-title">本场同心天命签：[{{ card.name || "未抽取" }}]</div>
-        <div class="u-card-desc">{{card.desc || '-'}}</div>
+        <div class="u-card-desc">{{ card.desc || "-" }}</div>
         <div class="u-live-btn" :class="{ 'is-disable': !team.live_url }" @click="onGoLive" target="_blank">
             {{ team.live_url ? "进入直播间" : "未开播" }}
         </div>
@@ -49,6 +49,9 @@ export default {
 <style lang="less" scoped>
 .m-battle-detail-team {
     display: flex;
+    flex-grow: 1;
+    flex-shrink: 0;
+    width: 0;
     flex-direction: column;
     align-items: flex-start;
 
@@ -93,10 +96,18 @@ export default {
         .mt(24px);
     }
 
+    .u-slogan {
+        height: 86px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: block;
+    }
+
     .u-slogan,
     .u-card-desc {
         .fz(12px, 17.38px);
         color: rgba(255, 232, 204, 1);
+        max-width: 320px;
     }
 
     .u-live-btn {
