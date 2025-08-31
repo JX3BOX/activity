@@ -39,7 +39,7 @@
                     </div>
                     <div class="u-button" @click="onVote(item)" :class="{
                         'voted': item.voted,
-                        'disabled': vote_loading || item.voted
+                        'disabled': vote_loading || item.voted || disabled
                     }">
                         <span class="u-text">{{ item.voted ? '已投票' : '投票' }}</span>
                     </div>
@@ -71,6 +71,7 @@ export default {
 
             vote_loading: false,
             loading: false,
+            disabled: false
         };
     },
     computed: {
@@ -120,6 +121,9 @@ export default {
                         const voted = myVotes.some((vote) => vote.record_id === item.id);
                         this.$set(item, "voted", voted);
                     });
+                    if(myVotes.length >= (this.event.vote_limit || 1)) {
+                        this.disabled = true;
+                    }
                 });
             });
         },
@@ -155,6 +159,9 @@ export default {
                     this.$message.success("投票成功");
                     item.votes += 1;
                     item.voted = true;
+                    if(this.list.filter(i => i.voted).length >= (this.event.vote_limit || 1)) {
+                        this.disabled = true;
+                    }
                 }
             } finally {
                 this.vote_loading = false;
