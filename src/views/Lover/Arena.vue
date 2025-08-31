@@ -11,15 +11,17 @@
                 </div>
                 <img class="u-box-girl" :src="`${cdnLink}/design/event/lover/arena/box_girl.png`" />
                 <div class="u-desc">
-                    <span class="u-desc-title">参赛资格：</span>全民皆可参与擂台挑战<br />
-                    <span class="u-desc-title">比赛规则：</span>魔盒邀请正赛热度较高的选手作为初始擂主<br />
+                    <span class="u-desc-title">参赛资格：</span
+                    >全民皆可参与擂台挑战，仅报名过的队伍挑战成功可成为擂主。<br />
+                    <span class="u-desc-title">比赛规则：</span
+                    >魔盒邀请正赛热度较高的选手作为初始擂主，比赛地图随机，装备与配置不限，客户端不限，唯一目标就是使用一切手段终结擂主胜利。比赛时间最长10分钟，时间结束未能有有效击杀但是靠赛点取胜的队伍按照胜利2场计算，其余情况按照1场计算。擂主连胜仅可被报名过的队伍终结，未报名队伍获胜仅可获得攻擂成功奖励。擂主每次易位后将重新计算连胜场次。消极对战、掉线、自绝经脉等情况均不计算连胜。<br />
                     <span class="u-desc-title">挑战方式：</span
-                    >通过直播间22练习房抢进，比赛地图随机，装备与配置不限<br />
+                    >通过直播间或魔盒QQ机器人（指令：擂台赛）提供的22练习房房号抢进<br />
                     <span class="u-desc-title">唯一目标：</span>使用一切手段终结擂主胜利<br />
                     <span class="u-desc-title">挑战时间：</span
                     >每日20:00-22:00。若擂主放弃守擂，赛事方将重新指定守擂选手<br />
                     <span class="u-desc-title">奖励规则：</span
-                    >擂主根据守擂成功次数累计奖励，可自主选择档位或继续冲击更高奖励；若守擂失败则易位<br />
+                    >擂主根据守擂成功次数累计奖励，可自主选择档位或继续冲击更高奖励。<br />
                 </div>
             </div>
         </div>
@@ -253,7 +255,7 @@ export default {
 
         .u-box-girl {
             .pa;
-            .rt(0);
+            .rb(0);
             .size(340px, 306px);
         }
 
@@ -261,6 +263,7 @@ export default {
             .fz(16px, 32px);
             font-weight: 400;
             color: rgba(255, 255, 255, 1);
+            width: calc(100% - 300px);
         }
 
         .u-desc-title {
