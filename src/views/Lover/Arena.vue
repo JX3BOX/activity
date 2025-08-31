@@ -87,7 +87,7 @@
 
 <script>
 import { cloneDeep, keyBy, uniq, uniqBy } from "lodash";
-import { getChallengeList, getJoinList } from "@/service/rank/lover";
+import { getChallengeList, getJoinList, getSelectedList } from "@/service/rank/lover";
 import { __cdn as cdnLink } from "@jx3box/jx3box-common/data/jx3box.json";
 import dayjs from "dayjs";
 
@@ -143,6 +143,7 @@ export default {
         renderChallengeList() {
             const result = [];
             const userMap = keyBy(uniqBy(this.records.map((r) => r.teammeta_user_list).flat(), "id"), "id");
+
             this.challengeList.forEach((_item) => {
                 const item = {
                     ..._item,
@@ -167,16 +168,17 @@ export default {
             getChallengeList({ _no_page: 1, pvp_event_id: this.currentEvent.id })
                 .then((res) => {
                     this.challengeList = res.data.data.list || [];
-                    console.log(cloneDeep(this.challengeList));
                 })
                 .catch((err) => {
                     console.error("获取擂台挑战列表失败", err);
                 });
         },
-        loadJoinList() {
-            getJoinList(this.currentEvent.id, { _no_page: 1 }).then((res) => {
-                this.records = res.data.data.list || [];
-            });
+        async loadJoinList() {
+            const [join, selected] = await Promise.all([
+                getSelectedList(this.currentEvent.id),
+                getJoinList(this.currentEvent.id, { _no_page: 1 }),
+            ]);
+            this.records = [...(join.data.data.list || []), ...(selected.data.data.list || [])];
         },
     },
     mounted() {
