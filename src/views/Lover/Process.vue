@@ -72,11 +72,11 @@ export default {
         steps() {
             const result = groupBy(this.process, "round");
             for (let i = 1; i <= 5; i++) {
-                if (!result[i]) result[i] = [];
+                const col = keyBy(result[i], "position");
+                result[i] = [];
                 const shouldProcesses = Math.pow(2, 5 - i);
-                if (result[i].length < shouldProcesses) {
-                    const emptyProcesses = Array(shouldProcesses - result[i].length).fill(null);
-                    result[i] = [...result[i], ...emptyProcesses];
+                for(let j = 1; j <= shouldProcesses; j++) {
+                    result[i][j - 1] = col[j] || null;
                 }
             }
             return result;
