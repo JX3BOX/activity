@@ -31,7 +31,6 @@ export default {
             immediate: true,
             handler: function (slider) {
                 if (slider) {
-                    console.log(slider);
                     this.slider = orderBy(slider, ["power"], ["desc"]);
                 }
             },

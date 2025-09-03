@@ -80,8 +80,7 @@ export default {
         },
         open(process) {
             this.visible = true;
-            this.process = process;
-            console.log("open process", this.process);
+            this.process = process; 
         },
         cardInfo(id) {
             return this.cards.find((item) => item.id === id) || {};

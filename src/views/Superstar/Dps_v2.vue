@@ -202,8 +202,7 @@ export default {
             });
         },
         //json数据初始化
-        dataInit() {
-            console.log("d", this.achieve_id);
+        dataInit() { 
             let data = this.dataBak;
             let key = this.bossList[this.achieve_id];
             let res = data[key.indexOf("&") == -1 ? key : key.split("&")[0]];

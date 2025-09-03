@@ -420,13 +420,11 @@ export default {
     },
     watch: {},
     methods: {
-        mouseover(val) {
-            // console.log(val)
+        mouseover(val) { 
             // this.navActive=this.navActive+','+val
             this.mouseoverActive = val;
         },
-        mouseout() {
-            // console.log('likai')
+        mouseout() { 
             this.mouseoverActive = null;
         },
         init: function () {
@@ -455,8 +453,7 @@ export default {
                 this.$refs.mark.style.backgroundPositionY = y + "px";
             }
         },
-        goAnchor(index) {
-            console.log(index);
+        goAnchor(index) { 
             // 用 class="d_jump" 添加锚点
             let jump = document.querySelectorAll(".m-jump");
             let total = jump[index].offsetTop;
@@ -503,8 +500,7 @@ export default {
             }
             this.pve_present++;
         },
-        pageChange(val) {
-            // console.log(this.pve_present)
+        pageChange(val) { 
             if (val && val > 0) {
                 this.pve_present = val - 1;
                 return;
@@ -534,8 +530,7 @@ export default {
                     this.navStyle = { right: (w - 1920) / 2 - 1 + "px" };
                 }
             });
-            // 锚点高度顺序 1620，4728，8008，10333，12963，15137
-            // console.log(this.$refs["m-one"].offsetTop)
+            // 锚点高度顺序 1620，4728，8008，10333，12963，15137 
             if (scrolled >= 15037) {
                 this.navActive = 6;
             } else if (scrolled >= 12933) {
@@ -550,8 +545,7 @@ export default {
                 this.navActive = 1;
             }
         },
-        slide(v) {
-            // console.log(v)
+        slide(v) { 
             this.pve_present = v.currentPage;
         },
         toastMsg() {

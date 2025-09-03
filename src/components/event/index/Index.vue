@@ -116,8 +116,7 @@ export default {
                     acc.push({ month: item.month, list: [item], single: item.single });
                 }
                 return acc;
-            }, []);
-            console.log(this.monthList);
+            }, []); 
         },
         change() {
             this.isNewEvent = !this.isNewEvent;

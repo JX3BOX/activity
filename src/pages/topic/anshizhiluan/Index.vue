@@ -160,8 +160,6 @@ export default {
                 this.slider = this.data.slider;
                 this.fb = sortBy(this.data.fb, (o) => o.id);
                 this.info = sortBy(this.data.info, (o) => o.id);
-
-                console.log(this.info);
             });
         },
         changePic(arr, key) {
@@ -170,9 +168,6 @@ export default {
                 obj[key] = obj[key].img;
             }
             return obj;
-        },
-        change(a) {
-            console.log(a);
         },
     },
     mounted: function () {

@@ -154,8 +154,7 @@ export default {
             this.loading = true;
             getTop100(this.achieve_id, this.id)
                 .then((res) => {
-                    // this.origin_data = res.data.data || [];
-                    console.log(res.data.data);
+                    // this.origin_data = res.data.data || []; 
                     this.getBattleOrJcl(res.data.data || []);
                 })
                 .finally(() => {

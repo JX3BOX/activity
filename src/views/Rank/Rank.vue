@@ -12,16 +12,22 @@
                 <li class="u-boss" @click="changeBoss(aid)" :class="{ on: aid == achieve_id || label == bossName }">
                     <img class="u-boss-icon" :src="bossIcon(aid)" :onerror="defaultBossIcon" />
                     <span class="u-boss-name">{{ label }}</span>
-                    <span class="u-boss-per" :class="getProcessCls(getTotal(aid))"
-                        >({{ getTotal(aid) }}/100)</span
-                    >
+                    <span class="u-boss-per" :class="getProcessCls(getTotal(aid))">({{ getTotal(aid) }}/100)</span>
                 </li>
             </el-col>
         </el-row>
 
         <div class="m-rank-server m-rank-filter">
             <ul>
-                <el-checkbox border class="u-pre" size="mini" :value="isPre" @change="onPreChange"  v-if="preBossData && preBossData.length">预赛</el-checkbox>
+                <el-checkbox
+                    border
+                    class="u-pre"
+                    size="mini"
+                    :value="isPre"
+                    @change="onPreChange"
+                    v-if="preBossData && preBossData.length"
+                    >预赛</el-checkbox
+                >
                 <li :class="{ on: !server }" @click="changeServer('')">全区全服</li>
                 <li v-for="item in servers" :key="item" @click="changeServer(item)" :class="{ on: server == item }">
                     {{ item }}
@@ -32,7 +38,14 @@
         <div class="m-rank-top100">
             <!-- A.列表不为空 -->
             <div class="m-rank-top100-list" v-if="data && data.length" :class="{ 'not-last': !isLastBoss }">
-                <rank-item v-for="(item, i) in data" :key="i" :i="i" :item="item" :newbie="newbie" :isLastBoss="isLastBoss"></rank-item>
+                <rank-item
+                    v-for="(item, i) in data"
+                    :key="i"
+                    :i="i"
+                    :item="item"
+                    :newbie="newbie"
+                    :isLastBoss="isLastBoss"
+                ></rank-item>
             </div>
 
             <!-- B.列表为空 -->
@@ -75,7 +88,7 @@ export default {
             newbie: {
                 keep_10: [],
                 youngster_list: [],
-                king_back: []
+                king_back: [],
             },
         };
     },
@@ -105,10 +118,12 @@ export default {
             return dict[this.achieve_id];
         },
         aids: function () {
-            const bossList = this.isPre ? this.preBossData?.reduce((acc, cur) => {
-                acc[cur.achievement_id] = cur.name;
-                return acc;
-            }, {}) : this.bossList;
+            const bossList = this.isPre
+                ? this.preBossData?.reduce((acc, cur) => {
+                      acc[cur.achievement_id] = cur.name;
+                      return acc;
+                  }, {})
+                : this.bossList;
             return Object.keys(bossList).join(",");
         },
         span: function () {
@@ -154,7 +169,7 @@ export default {
         changeBoss: function (val) {
             this.server = "";
             const bossName = this.bossList[val];
-            const id = this.isPre ? this.preBossData.find(item => item.name == bossName).achievement_id : val;
+            const id = this.isPre ? this.preBossData.find((item) => item.name == bossName).achievement_id : val;
             this.achieve_id = id;
             this.$router.push({
                 query: {
@@ -205,18 +220,18 @@ export default {
         },
         loadPreBossAid() {
             getBossAid({ rank_id: this.id, is_rank_boss: 2, _no_page: 1 }).then((res) => {
-                this.preBossData = res.data.data?.map(item => {
+                this.preBossData = res.data.data?.map((item) => {
                     return {
                         achievement_id: item.aid,
                         event_id: item.rank_id,
                         name: item.name,
-                    }
-                })
+                    };
+                });
             });
         },
         getTotal(aid) {
             const bossName = this.bossList[aid];
-            const id = this.isPre ? this.preBossData?.find(item => item.name == bossName)?.achievement_id : aid;
+            const id = this.isPre ? this.preBossData?.find((item) => item.name == bossName)?.achievement_id : aid;
             return this.total[id] > 100 ? 100 : this.total[id];
         },
         onPreChange() {
@@ -230,20 +245,23 @@ export default {
                 query.server = this.$route.query.server;
             }
             this.$router.push({
-                query
+                query,
             });
-        }
+        },
     },
     watch: {
         race: {
             deep: true,
             immediate: true,
             handler: function (val) {
-                if (val && !val?.status) {
+                const id = this.$route.query.aid;
+                if (val && !val?.status && !id) {
                     const aid = this.achieves[this.achieves.length - 1].achievement_id;
-                    this.$router.push({ query: {
-                        aid,
-                    } })
+                    this.$router.push({
+                        query: {
+                            aid,
+                        },
+                    });
                 }
             },
         },
@@ -283,8 +301,9 @@ export default {
                 if (!!~~this.$route.query.aid) {
                     this.achieve_id = this.$route.query.aid;
                 } else {
-                    this.achieve_id = this.isPre ? this.preBossData[0]?.achievement_id :
-                     _.first(Object.keys(this.bossList));
+                    this.achieve_id = this.isPre
+                        ? this.preBossData[0]?.achievement_id
+                        : _.first(Object.keys(this.bossList));
                 }
             },
         },

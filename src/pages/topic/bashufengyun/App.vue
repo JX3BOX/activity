@@ -30,8 +30,7 @@ export default {
     },
     mounted: function () {
         const width = document.documentElement.clientWidth;
-        const height = document.documentElement.clientHeight;
-        console.log(width, height);
+        const height = document.documentElement.clientHeight; 
         var screen_width = width; //屏幕宽度
         if (width < height) {
             screen_width = height; //如果 是竖屏，灵感的宽度就等于屏高

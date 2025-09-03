@@ -112,7 +112,6 @@ export default {
             return getVoteInfo(this.event_id)
                 .then((res) => {
                     this.eventList = res.data.data?.vote_items || []; // 待投票的事件列表
-                    console.log(this.eventList);
                     this.userStatus = res.data.data?.latest_vote_history_record?.vote_item_id_list || []; // 用户的投票状态
                     // 更新列表项的禁用状态
                     this.eventList.forEach((item) => {

@@ -14,8 +14,7 @@ export function req(options) {
             .then(response => {
                 resolve(response.data);
             })
-            .catch(error => {
-                console.log(error.response)
+            .catch(error => { 
                 if (error.response) {
                     if (error.response.data.code) {
                         reject(error.response.data)

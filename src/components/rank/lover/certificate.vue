@@ -37,10 +37,6 @@ export default {
             return maxDate.diff(dayjs(), "day") * -1; // 计算天数差
         },
     },
-    methods: {},
-    mounted() {
-        // console.log(this.data);
-    },
 };
 </script>
 <style lang="less">

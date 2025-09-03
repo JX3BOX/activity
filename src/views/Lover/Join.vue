@@ -308,8 +308,7 @@ export default {
                 }
             });
         },
-        onImageUploaded(data) {
-            console.log("图片上传成功", data);
+        onImageUploaded(data) { 
             this.form.images = data;
             this.toJoin();
         },
