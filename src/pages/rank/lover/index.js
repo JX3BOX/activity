@@ -18,8 +18,12 @@ reporter.install(Vue);
 import router from "./router";
 import store from "./store";
 
-import App from "./App.vue";
-new Vue({
+import LoverLayout from "@/layouts/lover/LoverLayout.vue";
+
+Vue.component("LoverLayout", LoverLayout);
+
+import App from "./Lover.vue";
+const app = new Vue({
     router,
     store,
     render: (h) => h(App),

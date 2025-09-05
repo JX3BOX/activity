@@ -1,66 +1,68 @@
 <template>
-    <div class="m-lover-live wp">
-        <div class="u-page-title">
-            <img class="u-img" :src="`${__imgRoot}jubanfang.png`" />
-        </div>
-        <div
-            class="m-live-box"
-            @mouseenter="handleMainBoxMouseEnter"
-            @mouseleave="handleMainBoxMouseLeave"
-            @click="handleMainBoxClick"
-        >
-            <div class="m-live-container">
-                <iframe
-                    class="m-live-iframe"
-                    width="100%"
-                    height="100%"
-                    :src="live_url"
-                    frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen
-                ></iframe>
+    <lover-layout>
+        <div class="m-lover-live wp">
+            <div class="u-page-title">
+                <img class="u-img" :src="`${__imgRoot}jubanfang.png`" />
             </div>
-            <img class="u-frame-img" :src="`${__imgRoot}jubanfangbox.png`" />
-        </div>
-
-        <div class="u-page-title">
-            <img class="u-img" :src="`${__imgRoot}xuanshou.png`" />
-        </div>
-        <div class="m-player-list" v-if="list && list.length">
             <div
-                class="m-player-item"
-                v-for="(item, itemIndex) in list"
-                :key="item.id"
-                @mouseenter="handlePlayerItemMouseEnter(itemIndex)"
-                @mouseleave="handlePlayerItemMouseLeave(itemIndex)"
+                class="m-live-box"
+                @mouseenter="handleMainBoxMouseEnter"
+                @mouseleave="handleMainBoxMouseLeave"
+                @click="handleMainBoxClick"
             >
-                <a class="u-video" :href="item.live_url" target="_blank">
-                    <img :src="teamLogo(item.images[0])" class="u-live-null" loading="lazy" />
-                    <i class="u-status"><i class="el-icon-warning-outline"></i> 未知</i>
-                </a>
-                <div class="m-player-info">
-                    <img class="u-team-logo" :src="teamLogo(item.images[0])" alt="" />
-                    <div class="u-team-name">{{ item.team_name }}</div>
-                    <div class="u-teammates">
-                        <div
-                            class="u-teammate"
-                            v-for="(user, index) in uniqBy(item.teammeta_user_list, 'id')"
-                            :key="index"
-                        >
-                            <el-image
-                                class="u-avatar"
-                                :src="showAvatar(user.avatar || `${__imgRoot}default.png`)"
-                            ></el-image
-                            >{{ user.display_name }}
-                        </div>
-                    </div>
-                    <div class="u-slogan">{{ item.slogan }}</div>
+                <div class="m-live-container">
+                    <iframe
+                        class="m-live-iframe"
+                        width="100%"
+                        height="100%"
+                        :src="live_url"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                    ></iframe>
                 </div>
-                <!-- <ParticleEffect :ref="`playerParticleEffect_${itemIndex}`" /> -->
+                <img class="u-frame-img" :src="`${__imgRoot}jubanfangbox.png`" />
             </div>
+
+            <div class="u-page-title">
+                <img class="u-img" :src="`${__imgRoot}xuanshou.png`" />
+            </div>
+            <div class="m-player-list" v-if="list && list.length">
+                <div
+                    class="m-player-item"
+                    v-for="(item, itemIndex) in list"
+                    :key="item.id"
+                    @mouseenter="handlePlayerItemMouseEnter(itemIndex)"
+                    @mouseleave="handlePlayerItemMouseLeave(itemIndex)"
+                >
+                    <a class="u-video" :href="item.live_url" target="_blank">
+                        <img :src="teamLogo(item.images[0])" class="u-live-null" loading="lazy" />
+                        <i class="u-status"><i class="el-icon-warning-outline"></i> 未知</i>
+                    </a>
+                    <div class="m-player-info">
+                        <img class="u-team-logo" :src="teamLogo(item.images[0])" alt="" />
+                        <div class="u-team-name">{{ item.team_name }}</div>
+                        <div class="u-teammates">
+                            <div
+                                class="u-teammate"
+                                v-for="(user, index) in uniqBy(item.teammeta_user_list, 'id')"
+                                :key="index"
+                            >
+                                <el-image
+                                    class="u-avatar"
+                                    :src="showAvatar(user.avatar || `${__imgRoot}default.png`)"
+                                ></el-image
+                                >{{ user.display_name }}
+                            </div>
+                        </div>
+                        <div class="u-slogan">{{ item.slogan }}</div>
+                    </div>
+                    <!-- <ParticleEffect :ref="`playerParticleEffect_${itemIndex}`" /> -->
+                </div>
+            </div>
+            <div class="m-no-data" v-else>暂无选手直播</div>
         </div>
-        <div class="m-no-data" v-else>暂无选手直播</div>
-    </div>
+    </lover-layout>
 </template>
 
 <script>

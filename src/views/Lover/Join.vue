@@ -1,160 +1,162 @@
 <template>
-    <div class="m-lover-join wp">
-        <div class="m-page-title">
-            <img class="u-join-img" :src="`${__imgRoot}join-title.png`" />
-        </div>
-        <template v-if="isLogin">
-            <!-- 报名成功提示 -->
-            <template v-if="joined">
-                <div class="m-success">
-                    <img class="u-success-img" :src="`${__imgRoot}join-success.png`" v-if="joinRecord.status != -1" />
-                    <div class="u-join-notice" v-html="notice"></div>
-                </div>
-                <div class="m-team-box" v-if="joinRecord.status == 2 || joinRecord.status == 1 || joinRecord.status == -2">
-                    <div class="m-team-info">
-                        <div class="m-team-info__left">
-                            <img class="u-team-logo" :src="joinRecord.images[0]" alt="" />
-                            <div class="u-team-slogan">{{ joinRecord.slogan }}</div>
-                        </div>
-                        <div class="m-team-info__right">
-                            <div class="m-info-item u-team-name">
-                                <span class="u-label">队伍名</span>
-                                <span class="u-value">{{ joinRecord.team_name }}</span>
+    <lover-layout>
+        <div class="m-lover-join wp">
+            <div class="m-page-title">
+                <img class="u-join-img" :src="`${__imgRoot}join-title.png`" />
+            </div>
+            <template v-if="isLogin">
+                <!-- 报名成功提示 -->
+                <template v-if="joined">
+                    <div class="m-success">
+                        <img class="u-success-img" :src="`${__imgRoot}join-success.png`" v-if="joinRecord.status != -1" />
+                        <div class="u-join-notice" v-html="notice"></div>
+                    </div>
+                    <div class="m-team-box" v-if="joinRecord.status == 2 || joinRecord.status == 1 || joinRecord.status == -2">
+                        <div class="m-team-info">
+                            <div class="m-team-info__left">
+                                <img class="u-team-logo" :src="joinRecord.images[0]" alt="" />
+                                <div class="u-team-slogan">{{ joinRecord.slogan }}</div>
                             </div>
-                            <template v-for="item in uniqBy(joinRecord.teammeta_user_list, 'id')">
-                                <div class="m-info-item u-team-member" :key="item.id">
-                                    <span class="u-label">角色名</span>
-                                    <span class="u-value">
-                                        <el-image class="u-avatar" :src="showAvatar(item.avatar)"></el-image>
-                                        {{ item.display_name }}
-                                    </span>
+                            <div class="m-team-info__right">
+                                <div class="m-info-item u-team-name">
+                                    <span class="u-label">队伍名</span>
+                                    <span class="u-value">{{ joinRecord.team_name }}</span>
                                 </div>
-                            </template>
-                            <div class="m-info-item u-server">
-                                <span class="u-label">服务器</span>
-                                <span class="u-value">{{ joinRecord.server }}</span>
-                            </div>
-                            <div class="m-info-item u-live">
-                                <span class="u-label">直播信息</span>
-                                <span class="u-value" v-if="joinRecord.live_platform && joinRecord.live_url">
-                                    {{ joinRecord.live_platform }}: {{ joinRecord.live_url }}
-                                </span>
-                                <span class="u-value" v-else> - </span>
-                            </div>
-                            <div class="m-info-item u-qq">
-                                <span class="u-label">联系QQ</span>
-                                <span class="u-value">{{ joinRecord.qq }}</span>
-                            </div>
-                            <div class="m-info-item u-phone">
-                                <span class="u-label">联系电话</span>
-                                <span class="u-value">{{ joinRecord.phone }}</span>
+                                <template v-for="item in uniqBy(joinRecord.teammeta_user_list, 'id')">
+                                    <div class="m-info-item u-team-member" :key="item.id">
+                                        <span class="u-label">角色名</span>
+                                        <span class="u-value">
+                                            <el-image class="u-avatar" :src="showAvatar(item.avatar)"></el-image>
+                                            {{ item.display_name }}
+                                        </span>
+                                    </div>
+                                </template>
+                                <div class="m-info-item u-server">
+                                    <span class="u-label">服务器</span>
+                                    <span class="u-value">{{ joinRecord.server }}</span>
+                                </div>
+                                <div class="m-info-item u-live">
+                                    <span class="u-label">直播信息</span>
+                                    <span class="u-value" v-if="joinRecord.live_platform && joinRecord.live_url">
+                                        {{ joinRecord.live_platform }}: {{ joinRecord.live_url }}
+                                    </span>
+                                    <span class="u-value" v-else> - </span>
+                                </div>
+                                <div class="m-info-item u-qq">
+                                    <span class="u-label">联系QQ</span>
+                                    <span class="u-value">{{ joinRecord.qq }}</span>
+                                </div>
+                                <div class="m-info-item u-phone">
+                                    <span class="u-label">联系电话</span>
+                                    <span class="u-value">{{ joinRecord.phone }}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </template>
-            <template v-else>
-                <!-- 情缘证 -->
-                <!-- <div class="m-lover-box m-lover-certificate" v-if="loverHasBind">
-                    <certificate :data="loverNet" />
-                </div> -->
-                <div class="m-join-bind" v-if="!loverHasBind">
-                    <a class="u-bind-btn" target="_blank" href="/dashboard/privacy?tab=lover"></a>
-                </div>
-                <!-- 报名 -->
-            </template>
-            <div
-                class="m-join-form"
-                v-if="(loverHasBind && !joined) || (joined && joinRecord.status == -1 || joinRecord.status == 0)"
-                v-loading="loading"
-            >
-                <el-form :class="['m-lover-form']" ref="form" :disabled="formDisabled" :model="form" :rules="rules" label-width="80px">
-                    <el-row :gutter="10">
-                        <el-col :span="12" v-for="(item,i) in uniqBy(loverNet.members, 'id')" :key="item.id">
-                            <el-form-item :label="`队员${i + 1}`">
-                                <div class="m-role">
-                                    <el-image class="u-avatar" :src="showAvatar(item.user_info.avatar)"></el-image>
-                                    {{ item.user_info.display_name }}
-                                </div>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
-                    <el-row :gutter="10">
-                        <el-col :span="12">
-                            <el-form-item label="队伍名称" prop="team_name">
-                                <el-input v-model="form.team_name" placeholder="请输入队伍名" />
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="12">
-                            <el-form-item label="服务器" prop="server">
-                                <el-select v-model="form.server" placeholder="请选择服务器" style="width: 100%">
-                                    <el-option
-                                        v-for="(item, index) in serverOptions"
-                                        :key="index"
-                                        :label="item.label"
-                                        :value="item.value"
-                                    >
-                                        {{ item.label }}
-                                    </el-option>
-                                </el-select>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
-                    <el-row :gutter="10">
-                        <el-col :span="12">
-                            <el-form-item label="联系QQ" prop="qq">
-                                <el-input v-model="form.qq" />
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="12">
-                            <el-form-item label="联系电话" prop="phone">
-                                <el-input v-model="form.phone" />
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
+                </template>
+                <template v-else>
+                    <!-- 情缘证 -->
+                    <!-- <div class="m-lover-box m-lover-certificate" v-if="loverHasBind">
+                        <certificate :data="loverNet" />
+                    </div> -->
+                    <div class="m-join-bind" v-if="!loverHasBind">
+                        <a class="u-bind-btn" target="_blank" href="/dashboard/privacy?tab=lover"></a>
+                    </div>
+                    <!-- 报名 -->
+                </template>
+                <div
+                    class="m-join-form"
+                    v-if="(loverHasBind && !joined) || (joined && joinRecord.status == -1 || joinRecord.status == 0)"
+                    v-loading="loading"
+                >
+                    <el-form :class="['m-lover-form']" ref="form" :disabled="formDisabled" :model="form" :rules="rules" label-width="80px">
+                        <el-row :gutter="10">
+                            <el-col :span="12" v-for="(item,i) in uniqBy(loverNet.members, 'id')" :key="item.id">
+                                <el-form-item :label="`队员${i + 1}`">
+                                    <div class="m-role">
+                                        <el-image class="u-avatar" :src="showAvatar(item.user_info.avatar)"></el-image>
+                                        {{ item.user_info.display_name }}
+                                    </div>
+                                </el-form-item>
+                            </el-col>
+                        </el-row>
+                        <el-row :gutter="10">
+                            <el-col :span="12">
+                                <el-form-item label="队伍名称" prop="team_name">
+                                    <el-input v-model="form.team_name" placeholder="请输入队伍名" />
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="12">
+                                <el-form-item label="服务器" prop="server">
+                                    <el-select v-model="form.server" placeholder="请选择服务器" style="width: 100%">
+                                        <el-option
+                                            v-for="(item, index) in serverOptions"
+                                            :key="index"
+                                            :label="item.label"
+                                            :value="item.value"
+                                        >
+                                            {{ item.label }}
+                                        </el-option>
+                                    </el-select>
+                                </el-form-item>
+                            </el-col>
+                        </el-row>
+                        <el-row :gutter="10">
+                            <el-col :span="12">
+                                <el-form-item label="联系QQ" prop="qq">
+                                    <el-input v-model="form.qq" />
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="12">
+                                <el-form-item label="联系电话" prop="phone">
+                                    <el-input v-model="form.phone" />
+                                </el-form-item>
+                            </el-col>
+                        </el-row>
 
-                    <el-form-item label="直播信息" prop="live_id">
-                        <div class="u-live-form">
-                            <el-select
-                                v-model="form.live_platform"
-                                allow-create
-                                default-first-option
-                                filterable
-                                placeholder="直播平台"
-                            >
-                                <el-option label="斗鱼" value="douyu"></el-option>
-                                <el-option label="虎牙" value="huya"></el-option>
-                                <el-option label="B站" value="bilibili"></el-option>
-                                <el-option label="抖音" value="douyin"></el-option>
-                            </el-select>
-                            <el-input v-model="form.live_url" placeholder="直播间地址"></el-input>
-                        </div>
-                    </el-form-item>
-                    <el-form-item label="参赛宣言" prop="slogan">
-                        <el-input
-                            v-model="form.slogan"
-                            type="textarea"
-                            :rows="3"
-                            placeholder="请输入参赛宣言(最多30字)"
-                        />
-                    </el-form-item>
-                    <el-form-item label="合照" prop="images">
-                        <div v-if="joined && joinRecord.images.length" class="u-image-list">
-                            <img class="u-image-item" v-for="(src, index) in form.images" :src="src" :key="index" />
-                        </div>
-                        <uploadImage v-else ref="upload-image" @onFinish="onImageUploaded"></uploadImage>
-                    </el-form-item>
-                </el-form>
-                <div :class="['u-submit', { 'disabled': formDisabled }]" @click="startUploadImage">
-                    <img class="u-submit-img" :src="`${__imgRoot}join-btn.png`" />
+                        <el-form-item label="直播信息" prop="live_id">
+                            <div class="u-live-form">
+                                <el-select
+                                    v-model="form.live_platform"
+                                    allow-create
+                                    default-first-option
+                                    filterable
+                                    placeholder="直播平台"
+                                >
+                                    <el-option label="斗鱼" value="douyu"></el-option>
+                                    <el-option label="虎牙" value="huya"></el-option>
+                                    <el-option label="B站" value="bilibili"></el-option>
+                                    <el-option label="抖音" value="douyin"></el-option>
+                                </el-select>
+                                <el-input v-model="form.live_url" placeholder="直播间地址"></el-input>
+                            </div>
+                        </el-form-item>
+                        <el-form-item label="参赛宣言" prop="slogan">
+                            <el-input
+                                v-model="form.slogan"
+                                type="textarea"
+                                :rows="3"
+                                placeholder="请输入参赛宣言(最多30字)"
+                            />
+                        </el-form-item>
+                        <el-form-item label="合照" prop="images">
+                            <div v-if="joined && joinRecord.images.length" class="u-image-list">
+                                <img class="u-image-item" v-for="(src, index) in form.images" :src="src" :key="index" />
+                            </div>
+                            <uploadImage v-else ref="upload-image" @onFinish="onImageUploaded"></uploadImage>
+                        </el-form-item>
+                    </el-form>
+                    <div :class="['u-submit', { 'disabled': formDisabled }]" @click="startUploadImage">
+                        <img class="u-submit-img" :src="`${__imgRoot}join-btn.png`" />
+                    </div>
                 </div>
+            </template>
+            <!-- 未登录 -->
+            <div class="m-join-bind" v-else>
+                <a class="u-bind-btn" target="_blank" href="/dashboard/privacy?tab=lover"></a>
             </div>
-        </template>
-        <!-- 未登录 -->
-        <div class="m-join-bind" v-else>
-            <a class="u-bind-btn" target="_blank" href="/dashboard/privacy?tab=lover"></a>
         </div>
-    </div>
+    </lover-layout>
 </template>
 
 <script>
@@ -308,7 +310,7 @@ export default {
                 }
             });
         },
-        onImageUploaded(data) { 
+        onImageUploaded(data) {
             this.form.images = data;
             this.toJoin();
         },

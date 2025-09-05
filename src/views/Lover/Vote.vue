@@ -1,52 +1,54 @@
 <template>
-    <div class="m-lover-vote wp">
-        <div class="u-page-title">
-            <img class="u-img" :src="`${__imgRoot}vote-title.png`" />
-        </div>
-        <div class="m-rule-box">
-            <h2 class="u-rule-title">投票规则</h2>
-            <div class="u-rule-icon">♡</div>
-            <div class="u-rule" v-html="vote_note"></div>
-        </div>
-        <div class="m-vote-list">
-            <div class="m-vote-box" v-for="item in list" :key="item.id" :class="{
-                'is-voted': item.voted
-            }" @mouseenter="onMouseEnter(item.id)" @mouseleave="onMouseLeave(item.id)">
-                <!-- 粒子特效容器 -->
-                <!-- <ParticleEffect :ref="`particle-${item.id}`" /> -->
+    <lover-layout>
+        <div class="m-lover-vote wp">
+            <div class="u-page-title">
+                <img class="u-img" :src="`${__imgRoot}vote-title.png`" />
+            </div>
+            <div class="m-rule-box">
+                <h2 class="u-rule-title">投票规则</h2>
+                <div class="u-rule-icon">♡</div>
+                <div class="u-rule" v-html="vote_note"></div>
+            </div>
+            <div class="m-vote-list">
+                <div class="m-vote-box" v-for="item in list" :key="item.id" :class="{
+                    'is-voted': item.voted
+                }" @mouseenter="onMouseEnter(item.id)" @mouseleave="onMouseLeave(item.id)">
+                    <!-- 粒子特效容器 -->
+                    <!-- <ParticleEffect :ref="`particle-${item.id}`" /> -->
 
-                <div class="m-team-box">
-                    <el-image class="u-team-img" :src="item.images[0]">
-                        <i slot="error"></i>
-                    </el-image>
-                    <div class="m-team-info">
-                        <div class="u-team">{{ item.team_name }}</div>
-                        <div class="u-teammates">
-                            <div class="u-teammate" v-for="(user, index) in uniqBy(item.teammeta_user_list, 'id')" :key="index">
-                               <el-image class="u-avatar" :src="showAvatar(user.avatar)"></el-image>{{ user.display_name }}
+                    <div class="m-team-box">
+                        <el-image class="u-team-img" :src="item.images[0]">
+                            <i slot="error"></i>
+                        </el-image>
+                        <div class="m-team-info">
+                            <div class="u-team">{{ item.team_name }}</div>
+                            <div class="u-teammates">
+                                <div class="u-teammate" v-for="(user, index) in uniqBy(item.teammeta_user_list, 'id')" :key="index">
+                                   <el-image class="u-avatar" :src="showAvatar(user.avatar)"></el-image>{{ user.display_name }}
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="m-slogan-box">
-                    参赛宣言：
-                    <div class="u-slogan">{{ item.slogan }}</div>
-                </div>
-                <div class="m-action-box">
-                    <div class="u-hot">
-                        <i class="u-hot-icon">{{ item.voted ? '♥' : '♡' }}</i>
-                        人气值：{{ item.votes }}
+                    <div class="m-slogan-box">
+                        参赛宣言：
+                        <div class="u-slogan">{{ item.slogan }}</div>
                     </div>
-                    <div class="u-button" @click="onVote(item)" :class="{
-                        'voted': item.voted,
-                        'disabled': vote_loading || item.voted || disabled
-                    }">
-                        <span class="u-text">{{ item.voted ? '已投票' : '投票' }}</span>
+                    <div class="m-action-box">
+                        <div class="u-hot">
+                            <i class="u-hot-icon">{{ item.voted ? '♥' : '♡' }}</i>
+                            人气值：{{ item.votes }}
+                        </div>
+                        <div class="u-button" @click="onVote(item)" :class="{
+                            'voted': item.voted,
+                            'disabled': vote_loading || item.voted || disabled
+                        }">
+                            <span class="u-text">{{ item.voted ? '已投票' : '投票' }}</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </lover-layout>
 </template>
 
 <script>

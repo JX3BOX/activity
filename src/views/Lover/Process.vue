@@ -1,36 +1,38 @@
 <template>
-    <div class="m-lover-process">
-        <div class="m-page-title">
-            <img class="u-img" :src="`${cdnLink}/design/event/lover/process/process_title.png`" />
-        </div>
-        <div class="m-process-wrapper">
-            <div class="m-step" :class="`m-step-${round}`" v-for="round in [1, 2, 3, 4, 5]" :key="round">
-                <img class="u-head" :src="headImage[round - 1]" alt="" />
-                <div class="m-step-battles">
-                    <LoverBattleItem
-                        class="m-step-battle"
-                        v-for="(process, index) in steps[round] || []"
-                        :key="index"
-                        :process="process"
-                        @view-detail="viewDetail(process)"
-                    />
-                </div>
+    <lover-layout>
+        <div class="m-lover-process">
+            <div class="m-page-title">
+                <img class="u-img" :src="`${cdnLink}/design/event/lover/process/process_title.png`" />
             </div>
-            <div class="m-step m-step-6">
-                <div class="u-head-empty"></div>
-                <div class="m-step-winner" v-if="winner">
-                    <img class="u-icon" :src="winner.images[0]" alt="" />
-                    <span class="u-team-name">{{ winner.team_name }}</span>
-                    <div class="u-user-names">
-                        <span class="u-user-name" v-for="(user, index) in winner.teammates_info" :key="index">
-                            {{ user.display_name }}
-                        </span>
+            <div class="m-process-wrapper">
+                <div class="m-step" :class="`m-step-${round}`" v-for="round in [1, 2, 3, 4, 5]" :key="round">
+                    <img class="u-head" :src="headImage[round - 1]" alt="" />
+                    <div class="m-step-battles">
+                        <LoverBattleItem
+                            class="m-step-battle"
+                            v-for="(process, index) in steps[round] || []"
+                            :key="index"
+                            :process="process"
+                            @view-detail="viewDetail(process)"
+                        />
+                    </div>
+                </div>
+                <div class="m-step m-step-6">
+                    <div class="u-head-empty"></div>
+                    <div class="m-step-winner" v-if="winner">
+                        <img class="u-icon" :src="winner.images[0]" alt="" />
+                        <span class="u-team-name">{{ winner.team_name }}</span>
+                        <div class="u-user-names">
+                            <span class="u-user-name" v-for="(user, index) in winner.teammates_info" :key="index">
+                                {{ user.display_name }}
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
+            <LoverBattleDetail ref="battle-detail"></LoverBattleDetail>
         </div>
-        <LoverBattleDetail ref="battle-detail"></LoverBattleDetail>
-    </div>
+    </lover-layout>
 </template>
 
 <script>
@@ -103,7 +105,7 @@ export default {
                 event_id: this.currentEvent.id,
                 round: -1,
             }).then((res) => {
-                this.process = res.data.data || []; 
+                this.process = res.data.data || [];
             });
         },
         loadRecords() {

@@ -1,9 +1,11 @@
 <template>
-    <div class="m-lover-page m-lover-activity wp">
-        <div class="m-lover-box">
-            <div v-html="note"></div>
+    <lover-layout>
+        <div class="m-lover-page m-lover-activity wp">
+            <div class="m-lover-box">
+                <div v-html="note"></div>
+            </div>
         </div>
-    </div>
+    </lover-layout>
 </template>
 
 <script>

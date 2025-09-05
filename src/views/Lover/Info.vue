@@ -1,41 +1,43 @@
 <template>
-    <div class="m-lover-info wp">
-        <div class="u-page-title">
-            <img class="u-title-img" :src="`${__imgRoot}info-title.png`" />
-        </div>
-        <div class="m-desc-box">
-            <div class="m-info-box">
-                <div class="u-text" v-html="describe"></div>
+    <lover-layout>
+        <div class="m-lover-info wp">
+            <div class="u-page-title">
+                <img class="u-title-img" :src="`${__imgRoot}info-title.png`" />
             </div>
-            <img class="u-top-left" :src="`${__imgRoot}fengye1.svg`" alt="" />
-            <img class="u-bottom-right" :src="`${__imgRoot}fengye2.svg`" alt="" />
-            <router-link :to="{name: 'join'}"><img class="u-join-btn" :src="`${__imgRoot}to-join.png`" alt=""></router-link>
-        </div>
-        <div class="m-lover-process">
-            <img class="u-step-img" :src="`${__imgRoot}info-step.png`" alt="" />
-            <div class="m-steps">
-                <div class="m-step" v-for="(item, i) in process" :key="i" :class="`m-step-${timeDesc(item.time)}`">
-                    <div class="u-icon">
-                        <img class="u-img" :src="`${__imgRoot}status-${timeDesc(item.time)}.png`" />
+            <div class="m-desc-box">
+                <div class="m-info-box">
+                    <div class="u-text" v-html="describe"></div>
+                </div>
+                <img class="u-top-left" :src="`${__imgRoot}fengye1.svg`" alt="" />
+                <img class="u-bottom-right" :src="`${__imgRoot}fengye2.svg`" alt="" />
+                <router-link :to="{name: 'join'}"><img class="u-join-btn" :src="`${__imgRoot}to-join.png`" alt=""></router-link>
+            </div>
+            <div class="m-lover-process">
+                <img class="u-step-img" :src="`${__imgRoot}info-step.png`" alt="" />
+                <div class="m-steps">
+                    <div class="m-step" v-for="(item, i) in process" :key="i" :class="`m-step-${timeDesc(item.time)}`">
+                        <div class="u-icon">
+                            <img class="u-img" :src="`${__imgRoot}status-${timeDesc(item.time)}.png`" />
+                        </div>
+                        <span class="u-dot"><i></i></span>
+                        <span class="u-name">{{ item.text }}</span>
+                        <span class="u-time">{{ formatTime(item.time) }}</span>
+                        <span class="u-status" :class="timeDesc(item.time) ? `u-status-${timeDesc(item.time)}` : ''">
+                            {{ timeDescMap[timeDesc(item.time)] || "&nbsp;" }}
+                        </span>
                     </div>
-                    <span class="u-dot"><i></i></span>
-                    <span class="u-name">{{ item.text }}</span>
-                    <span class="u-time">{{ formatTime(item.time) }}</span>
-                    <span class="u-status" :class="timeDesc(item.time) ? `u-status-${timeDesc(item.time)}` : ''">
-                        {{ timeDescMap[timeDesc(item.time)] || "&nbsp;" }}
-                    </span>
                 </div>
             </div>
+            <div class="m-lover-gift">
+                <img class="u-gift-img" :src="`${__imgRoot}info-award.png`" alt="" />
+                <div class="m-gift-content" v-html="gifts"></div>
+            </div>
+            <div class="m-lover-rule">
+                <img class="u-rule-img" :src="`${__imgRoot}info-rule.png`" alt="" />
+                <div class="m-rule-content" v-html="rule"></div>
+            </div>
         </div>
-        <div class="m-lover-gift">
-            <img class="u-gift-img" :src="`${__imgRoot}info-award.png`" alt="" />
-            <div class="m-gift-content" v-html="gifts"></div>
-        </div>
-        <div class="m-lover-rule">
-            <img class="u-rule-img" :src="`${__imgRoot}info-rule.png`" alt="" />
-            <div class="m-rule-content" v-html="rule"></div>
-        </div>
-    </div>
+    </lover-layout>
 </template>
 
 <script>

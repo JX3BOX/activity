@@ -21,21 +21,14 @@ const Draw = () => import("@/views/Lover/Draw.vue");
 const List = () => import("@/views/Lover/List.vue");
 
 const routes = [
-    { name: "list", path: "/list", component: List },
-    {
-        name: "index",
-        path: "/",
-        component: Lover,
-        children: [
-            { name: "info", path: "/:slug/info", component: Info },
-            { name: "join", path: "/:slug/join", component: Join },
-            { name: "vote", path: "/:slug/vote", component: Vote },
-            { name: "live", path: "/:slug/live", component: Live },
-            { name: "process", path: "/:slug/process", component: Process },
-            { name: "arena", path: "/:slug/arena", component: Arena },
-            { name: "activity", path: "/:slug/activity", component: Activity },
-        ],
-    },
+    { name: "list", path: "/", component: List },
+    { name: "info", path: "/:slug/info", component: Info },
+    { name: "join", path: "/:slug/join", component: Join },
+    { name: "vote", path: "/:slug/vote", component: Vote },
+    { name: "live", path: "/:slug/live", component: Live },
+    { name: "process", path: "/:slug/process", component: Process },
+    { name: "arena", path: "/:slug/arena", component: Arena },
+    { name: "activity", path: "/:slug/activity", component: Activity },
     { name: "card", path: "/card/:slug?", component: Card },
     { name: "draw", path: "/draw/:slug?", component: Draw },
 ];
