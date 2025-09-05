@@ -114,6 +114,12 @@ export default {
 
         border: 1px solid rgba(255, 177, 94, 1);
         box-sizing: border-box;
+
+        &:hover{
+            box-shadow: 0px 0px 20px rgba(255, 177, 94, 0.5);
+            transform: scale(1.02);
+            transition: all 0.3s ease-in-out;
+        }
     }
 
     .m-footer {
