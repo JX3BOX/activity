@@ -77,7 +77,7 @@
                     </div>
                     <div class="u-data">
                         <img svg-inline src="@/assets/img/rank/lover/star.svg" alt="" />
-                        当前连胜：{{ item.event_record?.wins || 0 }}场
+                        连胜次数：{{ item.wins || 0 }}场
                     </div>
                     <div class="u-data">
                         <img svg-inline src="@/assets/img/rank/lover/star.svg" alt="" />
