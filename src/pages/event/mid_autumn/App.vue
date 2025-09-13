@@ -1,10 +1,10 @@
 <template>
     <!-- 中秋诗词专题页 -->
-    <div class="p-event midAutumn" :class="'v-' + page_name">
+    <div class="p-event midAutumn" :class="'v-' + page_name" v-loading="loading">
         <Header :overlayEnable="true"></Header>
         <!-- <router-view></router-view> -->
-        <transition name="fade" mode="out-in">
-            <router-view class="c-midAutumn"></router-view>
+        <transition name="fade" mode="out-in" v-if="!loading">
+            <router-view class="c-midAutumn" :years="years"></router-view>
         </transition>
     </div>
 </template>
@@ -12,10 +12,14 @@
 <script>
 import { postStat } from "@jx3box/jx3box-common/js/stat";
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
+import { getBreadcrumb } from '@jx3box/jx3box-common/js/api_misc';
 export default {
     name: "App",
     data: function () {
-        return {};
+        return {
+            years: [],
+            loading: false,
+        };
     },
     provide: {
         __imgRoot: __imgPath + "topic/midAutumn/",
@@ -27,14 +31,26 @@ export default {
     },
     created: function () {
         postStat("event", "midAutumn");
+
+        this.init();
     },
+    methods: {
+        init() {
+            this.loading = true;
+            getBreadcrumb("mid_autumn_map").then(res => {
+                this.years = JSON.parse(res)
+            }).finally(() => {
+                this.loading = false;
+            });
+        }
+    }
 };
 </script>
 <style lang="less">
 @import "~@/assets/css/event/common/animation.less";
 @import "~@/assets/css/event/midautumn/font.less";
 .c-midAutumn {
-    font-family: FZLTSJW;
+    font-family: "LXGWWenKaiMono-Regular", Arial, sans-serif;
     background-color: rgba(23, 36, 58, 0.95);
     transition: all 1s ease;
     min-width: 1366px;

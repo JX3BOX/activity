@@ -3,7 +3,6 @@
     background-color: #17243a;
 }
 .p-event-midAutumn {
-    .pointer;
 
     height: 100%;
     background-repeat: no-repeat;
@@ -15,15 +14,37 @@
         box-sizing: border-box;
         .size(100%);
         .clip;
-        .u-title {
-            .pa;
-            .lt(10vw,4vh);
-            height: 85vh;
-            cursor: pointer;
-        }
         .u-video {
             width: 100%;
             min-width: 1440px;
+        }
+    }
+    .m-title-box {
+        .pa;
+        left: calc(10vw - 4px);
+        top: 8vh;
+
+        .u-title {
+            height: 85vh;
+        }
+
+        .u-year {
+            .pa;
+            right: 50px;
+            top: 360px;
+            transform: translate(-50%, -50%);
+            color: #F3EABA;
+            font-size: 20px;
+            font-weight: bold;
+            letter-spacing: 8px;
+
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+        }
+
+        .u-year-switch {
+            .pr;
+            top: -25px;
         }
     }
 }

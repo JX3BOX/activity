@@ -7,7 +7,6 @@ export function getNewProgram(params) {
 export function getProgramDetail(id) {
     return $next().get(`/api/next2/vote-program/program/${id}/public`);
 }
-// /vote-program/program/{id}/public/vote-item/{voteItemId}
 
 // 用户获取公开的投票活动【单项】详情
 export function getProgramItem(id, voteItemId) {

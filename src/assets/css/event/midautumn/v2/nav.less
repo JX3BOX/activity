@@ -1,4 +1,4 @@
-.c-midAutumn-nav {  
+.c-midAutumn-nav {
     color: #fff;
     min-width: 163px;
     .bold(400);
@@ -13,7 +13,7 @@
         // .mt(35px);
         .w(103px);
     }
-    .u-date {
+    .m-date {
         .flex;
         justify-content: space-between;
         align-items: center;
@@ -24,7 +24,46 @@
         background: rgba(255, 255, 255, 0.2);
         padding: 0 10px;
         box-sizing: border-box;
+        .pointer;
+        .pr;
+
+        .u-date {
+            flex:1;
+            // 2024 均衡展开
+            letter-spacing: 10px;
+        }
     }
+    .m-date-picker {
+        .pa;
+        top: 100%;
+        left: 0;
+        background: #fff;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.25);
+        color: #606266;
+        margin-top: 4px;
+        z-index: 10;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 6px 0;
+        .m-date-item {
+            .fz(14px);
+            .bold(400);
+            .pointer;
+            padding: 6px 12px;
+            letter-spacing: 12px;
+            &:hover {
+                background: #f5f7fa;
+            }
+
+            &.active {
+                color: @primary;
+                font-weight: 600;
+            }
+        }
+
+    }
+
     .u-nav-box {
         .fz(24px,27px);
         .u-nav-item {

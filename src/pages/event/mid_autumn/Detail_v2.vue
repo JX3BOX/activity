@@ -1,25 +1,31 @@
 <template>
     <div class="p-midautumn-detail">
         <div class="u-bg" :style="bgStyle">
-            <Nav :poemName="poemData?.title || ''" @navChange="back"></Nav>
+            <Nav :poemName="poemData?.title || ''" @navChange="back" :years="years"></Nav>
             <div class="u-main-box">
                 <transition name="fade" mode="out-in">
-                    <Introduce v-if="achieve_id == 1"></Introduce>
-                    <Appreciate v-if="achieve_id == 2" @poem="poem" @back="back"></Appreciate
-                ></transition>
+                    <Introduce v-if="achieve_id === 'intro'" :years="years"></Introduce>
+                    <Poem v-if="achieve_id === 'poem'" :years="years" @poem="poem" @back="back"></Poem>
+                </transition>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import Nav from "./components_v2/nav.vue";
-import Introduce from "./components_v2/introduce.vue";
-import Appreciate from "./components_v2/appreciate.vue";
+import Nav from "./components/nav.vue";
+import Introduce from "./components/introduce.vue";
+import Poem from "./components/poem.vue";
 import color from "@/assets/data/event/color.json";
 
 export default {
-    components: { Nav, Introduce, Appreciate },
+    components: { Nav, Introduce, Poem },
+    props: {
+        years: {
+            type: Array,
+            default: () => [],
+        },
+    },
     data() {
         return {
             achieve_id: 1,
@@ -30,25 +36,18 @@ export default {
         };
     },
     watch: {
-        "$route.query": {
+        "$route.params": {
             handler: function (val) {
-                if (val.a) {
-                    this.achieve_id = val.a;
-                    this.$nextTick(() => {
-                        let dom = document.querySelector(".u-bg"); //获取组件
-                        dom && (dom.scrollTop = 0);
-                    });
-                }
+                this.achieve_id = val.tab;
+                this.$nextTick(() => {
+                    let dom = document.querySelector(".u-bg"); //获取组件
+                    dom && (dom.scrollTop = 0);
+                });
             },
             immediate: true,
         },
     },
-    created() {
-        // this.init();
-    },
-    mounted() {},
     methods: {
-        init() {},
         poem(e) {
             this.poemData = e.item;
             const bgStyle = color.color[e.c]?.color

@@ -21,35 +21,57 @@
                 object-fit="cover"
             ></video>
 
-            <img class="u-title" :src="`${__imgRoot}tittle.png`" alt=""/>
+            <div class="m-title-box">
+                <img class="u-title" :src="title" alt=""/>
+                <div class="u-year">{{ yearInChinese }}届 <img class="u-year-switch" src="~@/assets/img/event/switch_touchbar_mid.svg" alt=""></div>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+import {__cdn} from "@jx3box/jx3box-common/data/jx3box.json";
+const zh_num = ["〇", "一", "二", "三", "四", "五", "六", "七", "八", "九"];
 export default {
     name: "Index",
     inject: ["__imgRoot"],
+    props: {
+        years: {
+            type: Array,
+            default: () => [],
+        },
+    },
     components: {},
     data: function () {
-        return {};
+        return {
+            title: `${__cdn}design/event/mid_autumn/title.png`
+        };
     },
-    computed: {},
-
+    computed: {
+        year() {
+            return this.years[this.years.length - 1]?.year || new Date().getFullYear();
+        },
+        yearInChinese() {
+            return this.getYearInChinese();
+        }
+    },
     methods: {
         goToDetail() {
             // this.$router.push({
+            //     path: "detail",
             //     query: {
-            //         a: 1,
+            //         a: 2,
             //     },
             // });
-            this.$router.push({
-                path: "detail",
-                query: {
-                    a: 2,
-                },
-            });
         },
+        getYearInChinese() {
+            const year = this.year.toString().split("");
+            let res = "";
+            year.forEach((item) => {
+                res += zh_num[parseInt(item)];
+            });
+            return res;
+        }
     },
     mounted() {},
 };
