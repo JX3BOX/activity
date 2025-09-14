@@ -23,15 +23,18 @@
 
             <div class="m-title-box">
                 <img class="u-title" :src="title" alt=""/>
-                <div class="u-year">{{ yearInChinese }}届 <img class="u-year-switch" src="~@/assets/img/event/switch_touchbar_mid.svg" alt=""></div>
+                <div class="u-year" @click.stop="onYearChange">{{ yearInChinese }}届 <img class="u-year-switch" src="~@/assets/img/event/switch_touchbar_mid.svg" alt=""></div>
             </div>
         </div>
+
+        <YearChange v-model="showDialog" :years="years" @year-selected="onYearSelected"></YearChange>
     </div>
 </template>
 
 <script>
 import {__cdn} from "@jx3box/jx3box-common/data/jx3box.json";
 const zh_num = ["〇", "一", "二", "三", "四", "五", "六", "七", "八", "九"];
+import YearChange from "./components/year_change.vue";
 export default {
     name: "Index",
     inject: ["__imgRoot"],
@@ -41,10 +44,14 @@ export default {
             default: () => [],
         },
     },
-    components: {},
+    components: {
+        YearChange,
+    },
     data: function () {
         return {
-            title: `${__cdn}design/event/mid_autumn/title.png`
+            title: `${__cdn}design/event/mid_autumn/title.png`,
+
+            showDialog: false,
         };
     },
     computed: {
@@ -57,12 +64,10 @@ export default {
     },
     methods: {
         goToDetail() {
-            // this.$router.push({
-            //     path: "detail",
-            //     query: {
-            //         a: 2,
-            //     },
-            // });
+            this.$router.push({
+                name: "detail",
+                params: {year: this.year, tab: "intro"},
+            });
         },
         getYearInChinese() {
             const year = this.year.toString().split("");
@@ -71,6 +76,15 @@ export default {
                 res += zh_num[parseInt(item)];
             });
             return res;
+        },
+        onYearChange() {
+            this.showDialog = true;
+        },
+        onYearSelected(item) {
+            this.$router.push({
+                name: "detail",
+                params: {year: item.year, tab: "intro"},
+            });
         }
     },
     mounted() {},

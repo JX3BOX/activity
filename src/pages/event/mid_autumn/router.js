@@ -7,9 +7,9 @@ VueRouter.prototype.push = function push(location) {
     return originalPush.call(this, location).catch((err) => err);
 };
 
-const Index = () => import("./Index_v2.vue");
-const Detail = () => import("./Detail_v2.vue");
-const Poem = () => import("./Poem_Detail.vue");
+const Index = () => import("./Index.vue");
+const Detail = () => import("./Detail.vue");
+const Poem = () => import("./PoemDetail.vue");
 
 Vue.use(VueRouter);
 

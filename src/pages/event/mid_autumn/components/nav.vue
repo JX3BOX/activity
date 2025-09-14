@@ -2,11 +2,12 @@
     <div class="c-midAutumn-nav">
         <div class="m-midAutumn-nav" :class="`m-midAutumn-nav-${i}`" v-for="(nav, i) in navs" :key="i">
             <div class="u-title">
-                <img :src="`${__imgRoot}menu.png`" />
+                <img :src="getCdnLink(`design/event/mid_autumn/title.png`)" />
             </div>
 
-            <div class="m-date" @click.stop="onDateShow">
-                <span class="u-date">{{ currentYear }}</span>
+            <!-- <div class="m-date" @click.stop="onDateShow"> -->
+            <img class="u-change-button" @click.stop="onDateShow" :src="getCdnLink('design/event/mid_autumn/change_button.png')" alt="">
+                <!-- <span class="u-date">{{ currentYear }}</span>
 
                 <div class="m-date-picker" v-show="dateShow">
                     <div
@@ -19,8 +20,8 @@
                         {{ item.year }}
                     </div>
                 </div>
-                <i class="el-icon-arrow-down"></i>
-            </div>
+                <i class="el-icon-arrow-down"></i> -->
+            <!-- </div> -->
 
             <div class="u-nav-box">
                 <div
@@ -35,10 +36,13 @@
                 <div class="u-select-poem" v-show="poemName">《{{ poemName }}》</div>
             </div>
         </div>
+        <YearChange v-model="showDialog" :years="years" @year-selected="onYearSelected"></YearChange>
     </div>
 </template>
 
 <script>
+import {__cdn} from "@jx3box/jx3box-common/data/jx3box.json";
+import YearChange from "./year_change.vue";
 export default {
     props: {
         poemName: {
@@ -50,11 +54,12 @@ export default {
             default: () => [],
         },
     },
-    inject: ["__imgRoot"],
-    components: {},
+    components: {
+        YearChange,
+    },
     data() {
         return {
-            achieve_id: 1,
+            achieve_id: "intro",
             navs: [
                 { text: "活动介绍", value: 'intro' },
                 { text: "诗词赏析", value: 'poem' },
@@ -64,6 +69,8 @@ export default {
             currentYear: 2024,
 
             dateShow: false,
+
+            showDialog: false,
         };
     },
     watch: {
@@ -107,13 +114,23 @@ export default {
             });
         },
         onDateShow() {
-            this.dateShow = !this.dateShow;
-            document.addEventListener("click", this.onClose);
+            // this.dateShow = !this.dateShow;
+            // document.addEventListener("click", this.onClose);
+            this.showDialog = true;
         },
         onClose() {
             this.dateShow = false;
             document.removeEventListener("click", this.onClose);
         },
+        getCdnLink(url) {
+            return `${__cdn}${url}`;
+        },
+        onYearSelected(item) {
+            this.$router.push({
+                name: "detail",
+                params: {year: item.year, tab: "intro"},
+            });
+        }
     }
 };
 </script>
