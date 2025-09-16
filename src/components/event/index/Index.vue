@@ -62,8 +62,8 @@
 <script>
 import { __cdn, __imgPath, __Root } from "@jx3box/jx3box-common/data/jx3box.json";
 import data from "@/assets/data/event/index.json";
-import "@/assets/js/jweixin-1.3.2.js";
 import { isMiniProgram } from "@jx3box/jx3box-common/js/utils";
+import wx from 'weixin-js-sdk'
 export default {
     name: "Index",
     data: function () {
