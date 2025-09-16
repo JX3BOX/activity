@@ -10,7 +10,8 @@
 <template>
     <div class="c-midAutumn-introduce">
         <div class="u-content" v-html="data"></div>
-        <div class="u-tips">介<br />绍</div>
+        <!-- <div class="u-tips">介<br />绍</div> -->
+        <!-- <img class="u-qrcode" src="@/assets/img/event/mid_autumn_qrcode.png" alt="" /> -->
     </div>
 </template>
 

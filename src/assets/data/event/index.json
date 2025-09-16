@@ -106,7 +106,8 @@
             "name": "中秋诗词大会",
             "link": "/event/mid_autumn/",
             "month": "9",
-            "img": "https://cdn.jx3box.com/design/cover/cover_event/zhongqiushici3.1_ce.png"
+            "img": "https://cdn.jx3box.com/design/cover/cover_event/zhongqiushici3.1_ce.png",
+            "mini_path": "/pages/midautumn/introduce/introduce"
         },
         {
             "name": "数据大师赛",
