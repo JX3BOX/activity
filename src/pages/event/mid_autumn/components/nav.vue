@@ -2,14 +2,16 @@
     <div class="c-midAutumn-nav">
         <div class="m-midAutumn-nav" :class="`m-midAutumn-nav-${i}`" v-for="(nav, i) in navs" :key="i">
             <div class="u-title">
-                <img :src="getCdnLink(`design/event/mid_autumn/title.png`)" />
+                <img :src="getCdnLink(`design/event/mid_autumn/title_2024.png`)" />
             </div>
 
-            <!-- <div class="m-date" @click.stop="onDateShow"> -->
-            <img class="u-change-button" @click.stop="onDateShow" :src="getCdnLink('design/event/mid_autumn/change_button.png')" alt="">
-                <!-- <span class="u-date">{{ currentYear }}</span>
+            <div class="m-date" @click.stop="onDateShow">
+            <!-- <img class="u-change-button" @click.stop="onDateShow" :src="getCdnLink('design/event/mid_autumn/change_button.png')" alt=""> -->
+                <span class="u-date">
+                    <span v-for="(text, index) in String(currentYear)" :key="index">{{ text }}</span>
+                </span>
 
-                <div class="m-date-picker" v-show="dateShow">
+                <!-- <div class="m-date-picker" v-show="dateShow">
                     <div
                         v-for="item in years"
                         :key="item.year"
@@ -21,7 +23,7 @@
                     </div>
                 </div>
                 <i class="el-icon-arrow-down"></i> -->
-            <!-- </div> -->
+            </div>
 
             <div class="u-nav-box">
                 <div
