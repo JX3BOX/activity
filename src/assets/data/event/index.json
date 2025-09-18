@@ -61,12 +61,6 @@
             "img": "https://cdn.jx3box.com/design/cover/cover_event/lianxisheng.jpg"
         },
         {
-            "name": "积分抽奖",
-            "link": "/vip/lottery",
-            "month": "2",
-            "img": "https://cdn.jx3box.com/design/cover/cover_event/xinnianchoujiang_ce.png"
-        },
-        {
             "name": "妖秀节",
             "link": "/event/2023yaoxiu",
             "month": "3",
@@ -75,13 +69,13 @@
         {
             "name": "百强榜",
             "link": "/rank/",
-            "month": "5",
+            "month": "4",
             "img": "https://cdn.jx3box.com/design/cover/cover_event/jdt0_ce.png"
         },
         {
             "name": "剑三萌宠节",
             "link": "",
-            "month": "6",
+            "month": "5",
             "img": "https://cdn.jx3box.com/design/cover/cover_event/mengchongjie_ce.jpg"
         },
         {
@@ -92,7 +86,7 @@
         },
         {
             "name": "门派天团",
-            "link": "/rank/",
+            "link": "/superstar/",
             "month": "7",
             "img": "https://cdn.jx3box.com/design/cover/cover_event/tiantuan_ce.png"
         },
@@ -110,28 +104,22 @@
             "mini_path": "/pages/midautumn/introduce/introduce"
         },
         {
+            "name": "百强榜",
+            "link": "/rank/",
+            "month": "10",
+            "img": "https://cdn.jx3box.com/design/cover/cover_event/jdt0_ce.png"
+        },
+        {
             "name": "数据大师赛",
             "link": "/event/jx3dat",
             "month": "10",
             "img": "https://cdn.jx3box.com/upload/post/2023/12/15/4011_9750855.png"
         },
         {
-            "name": "百强榜",
-            "link": "/rank/",
-            "month": "11",
-            "img": "https://cdn.jx3box.com/design/cover/cover_event/jdt0_ce.png"
-        },
-        {
             "name": "茶馆风月录",
             "link": "/event/jx3story",
             "month": "12",
             "img": "https://cdn.jx3box.com/upload/post/2023/12/21/49682_7354896.jpg"
-        },
-        {
-            "name": "年终总结",
-            "link": "https://www.jx3box.com/community/4277",
-            "month": "12",
-            "img": "https://cdn.jx3box.com/design/cover/cover_event/nianzhong_ce.jpg"
         },
         {
             "name": "周年庆",
