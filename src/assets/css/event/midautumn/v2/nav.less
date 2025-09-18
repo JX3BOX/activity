@@ -35,29 +35,34 @@
         justify-content: space-between;
         align-items: center;
         .mt(12px);
-        .ml(8px);
+        margin-bottom: 30px;
         .fz(14px);
         .bold(400);
-        .size(95px,21px);
-        background: rgba(255, 255, 255, 0.2);
-        padding: 0 10px;
+        width: 130px;
+        padding: 0 40px;
         box-sizing: border-box;
         .pointer;
         .pr;
+        // background: url("@{design_url}event/mid_autumn/change_button_2.png") no-repeat right center;
+        // background-size: cover;
+
+        .u-change-button {
+            .pa;
+            width: 130px;
+            left: -10px;
+            z-index: 0;
+        }
 
         .u-date {
             flex: 1;
             .flex;
             justify-content: space-between;
             align-items: center;
+            z-index: 1;
+            color: #F2ECCD;
+            .pr;
+            left: -8px;
         }
-    }
-
-    .u-change-button {
-        .pointer;
-        width: 130px;
-        .pr;
-        left: -8px;
     }
     .m-date-picker {
         .pa;

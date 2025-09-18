@@ -6,7 +6,7 @@
             </div>
 
             <div class="m-date" @click.stop="onDateShow">
-            <!-- <img class="u-change-button" @click.stop="onDateShow" :src="getCdnLink('design/event/mid_autumn/change_button.png')" alt=""> -->
+                <img class="u-change-button" :src="getCdnLink('design/event/mid_autumn/change_button_2.png')" alt="">
                 <span class="u-date">
                     <span v-for="(text, index) in String(currentYear)" :key="index">{{ text }}</span>
                 </span>
