@@ -1,44 +1,35 @@
 @import "../common/animation.less";
-
-.v-index {
-    background-color: #000;
-}
-.m-jb{
-    .db;
-    .w(220px);
-    padding:40px;
-}
 .m-index {
     .pr;
-    .min-height(100vh);
-    min-width: 1028px;
-    max-width: 100%;
+    .clip;
+    .size(100%,100vh);
     background: url("@{kv_yaoxiujie}bg.png") no-repeat;
     background-size: cover;
-    user-select: none;
 }
-.m-logo-mobile {
-    display: none;
-}
+
 .m-logo {
-    .size(2232px, 1493px);
     .pa;
-    .rt(88px,127px);
+    .lt(40px, 20px);
+    .w(220px);
+}
+
+.m-slogan {
+    .pa;
+    .rb(20px);
+    .w(1800px);
+    .pt(800px);
     background: url("@{kv_yaoxiujie}yxj.png") no-repeat;
-    background-size: cover;
+    background-size: 100% auto;
     .u-box {
-        .pa;
-        .size(820px, 478px);
+        .w(820px);
         box-sizing: border-box;
         padding: 10px;
         .auto(x);
-        .rt(465px,936px);
-        background-color: #731111;
 
         .u-video {
             background-color: #fff;
             padding: 3px;
-            .size(100%);
+            .size(100%, 478px);
             box-sizing: border-box;
             iframe,
             video {
@@ -54,6 +45,7 @@
                 .flex;
                 align-items: center;
                 .u-avatar {
+                    .size(80px, 80px);
                     img {
                         .size(100%);
                     }
@@ -61,26 +53,53 @@
                 .u-name {
                     color: #fff;
                     .ml(10px);
-                    .fz(32px,42px);
+                    .fz(28px,42px);
                 }
             }
             .u-btn {
                 cursor: pointer;
                 .size(384px,97px);
+                .lh(97px);
+                .fz(30px);
                 background: #ff5583;
                 color: #fff;
-                .flex;
-                .flex(x);
-                align-items: center;
+                .x;
             }
         }
     }
 }
+
+@media screen and (min-width: 1440px) and (max-width: @2k) {
+    .m-slogan {
+        scale: 0.5;
+        .rb(-300px);
+    }
+}
+
+@media screen and (min-width: 1080px) and (max-width: 1440px) {
+    .m-slogan {
+        scale: 0.3;
+        .rb(-500px,-400px);
+    }
+}
+
+@media screen and (min-width: 750px) and (max-width: 1080px) {
+    .m-index {
+        background-position: -500px 0;
+    }
+    .m-slogan {
+        scale: 0.3;
+        .rb(-600px,-400px);
+        transform: translate(-20%, -20%);
+    }
+}
+
 .m-dialog {
     //隐藏原背景色重新布局
     background-color: rgba(255, 255, 255, 0);
     box-shadow: none;
     .w(1400px);
+    max-width: 100%;
     .el-dialog__header {
         display: none;
     }
@@ -131,8 +150,8 @@
                     .mb(30px);
                     .mt(70px);
                 }
-                .u-desc{
-                    color:#fff;
+                .u-desc {
+                    color: #fff;
                     .fz(22px,3);
                     .mb(12px);
                     .bold;
@@ -140,7 +159,7 @@
                 .u-btn-box {
                     .flex;
                     justify-content: center;
-                    gap:20px;
+                    gap: 20px;
                     .u-btn {
                         .size(430px,120px);
                     }
@@ -240,149 +259,6 @@
                     color: #fff;
                 }
             }
-        }
-    }
-}
-@media screen and (max-width: 1920px) {
-    .m-logo {
-        .size(1116px, 746.5px);
-        .rt(44px,63.5px);
-        .u-box {
-            .size(410px, 239px);
-            .rt(232.5px,458px);
-            .u-info {
-                .u-avatar-box {
-                    .u-avatar {
-                        .size(44px);
-                    }
-                    .u-name {
-                        .fz(16px,21px);
-                    }
-                }
-                .u-btn {
-                    .size(192px,48.5px);
-                }
-            }
-        }
-    }
-    // 弹出层样式
-    .m-dialog {
-        .w(700px);
-        .m-dialog-box {
-            .size(100%,400px);
-            .m-dialog-close {
-                .pa;
-                .size(50px);
-                background: #ff5583;
-                .rt(-70px,0);
-                .el-icon-close {
-                    .fz(50px);
-                    color: #fff;
-                    .pointer;
-                }
-                .pointer;
-            }
-            .m-dialog-content {
-                .u-common {
-                    .u-title {
-                        .fz(35px,46px);
-                        .mb(30px);
-                    }
-                    .u-btn {
-                        .fz(25px,33px);
-                    }
-                }
-                .u-step1 {
-                    .u-name {
-                        .fz(25px,33px);
-                        .mb(15px);
-                        .mt(35px);
-                    }
-                    .u-btn-box {
-                        .u-btn {
-                            .size(215px,60px);
-                        }
-                        .u-btn:last-child {
-                            .ml(25px);
-                        }
-                    }
-                }
-                .u-step2 {
-                    .u-frame {
-                        .size(455px,60px);
-                        .fz(25px,33px);
-                        padding: 13.5px 10px;
-                        overflow-x: auto;
-                    }
-                    .u-tips,
-                    .u-plug {
-                        .fz(16px,21px);
-                        .u-refresh {
-                            .fz(16px,21px);
-                        }
-                    }
-                    .u-btn-box {
-                        .mt(30px);
-                        .u-btn {
-                            .size(145px,60px);
-                        }
-                        .u-btn:last-child {
-                            .ml(25px);
-                            .size(281px,60px);
-                        }
-                    }
-                }
-                .u-step3 {
-                    .u-role {
-                        .size(455px,60px);
-                        .el-select {
-                            .el-input,
-                            .el-input__inner {
-                                .h(100%);
-                                .fz(25px,33px);
-                            }
-                        }
-                    }
-                    .u-tips {
-                        .mt(15px);
-                        span {
-                            .fz(18px,24px);
-                        }
-                        .u-honor {
-                            .mt(5px);
-                            .fz(25px,33px);
-                        }
-                    }
-                    .u-btn-box {
-                        .mt(40px);
-                        .size(281px,60px);
-                    }
-                }
-                .u-step4 {
-                    .u-tips {
-                        .mt(35px);
-                        .fz(25px,33px);
-                    }
-                }
-            }
-        }
-    }
-}
-@media screen and (max-width: 1200px) {
-    .m-index {
-        .pr;
-        height: 100vh;
-        min-width: 100vw;
-        background: url("@{kv_yaoxiujie}bg_mobile.png") no-repeat;
-        background-size: cover;
-    }
-    .m-logo {
-        .h(45vh);
-        background: url("@{kv_yaoxiujie}yxj_mobile.png") top right no-repeat;
-        background-size: contain;
-        .u-box {
-            transform: scale(2);
-            top: 55vh;
         }
     }
 }

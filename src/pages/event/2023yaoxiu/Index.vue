@@ -1,21 +1,11 @@
 <template>
     <div class="m-index">
-        <a class="m-jb" target="_blank" href="/">
-            <img src="@/assets/img/event/jb2.png" alt="魔盒">
+        <a class="m-logo" target="_blank" href="/">
+            <img src="@/assets/img/event/jb2.png" alt="魔盒" />
         </a>
-        <div class="m-logo">
+        <div class="m-slogan">
             <div class="u-box">
-                <!-- <div class="u-txtr p-animation" v-animate="'fadeInRight'"></div> -->
                 <div class="u-video">
-                    <!-- <iframe
-                        src="//www.bilibili.com/video/BV1n54y1u7bu/?vd_source=01c3106a06b3cb3f34cfd07de3204752"
-                        scrolling="no"
-                        border="0"
-                        frameborder="no"
-                        framespacing="0"
-                        allowfullscreen="true"
-                    >
-                    </iframe> -->
                     <iframe
                         src="//player.bilibili.com/player.html?aid=865435138&bvid=BV1n54y1u7bu&cid=1037931815&page=1"
                         scrolling="no"
@@ -37,14 +27,7 @@
         </div>
 
         <!-- 弹出层界面 -->
-        <el-dialog
-            :visible.sync="showDialog"
-            custom-class="m-dialog"
-            :close-on-click-modal="false"
-            :close-on-press-escape="false"
-            :show-close="false"
-            destroy-on-close
-        >
+        <el-dialog :visible.sync="showDialog" custom-class="m-dialog">
             <div class="m-dialog-box" v-loading="loading">
                 <div class="m-dialog-close" @click="showDialog = false" title="取消"><i class="el-icon-close"></i></div>
                 <div class="m-dialog-content">
@@ -170,7 +153,7 @@ export default {
             getAllMyRoles().then((res) => {
                 this.roles =
                     res.data.data.list?.filter((item) => {
-                        return (item.body_type == 5) && (item.mount == 4) && item.custom == 0;
+                        return item.body_type == 5 && item.mount == 4 && item.custom == 0;
                     }) || [];
             });
         },
