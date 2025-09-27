@@ -9,13 +9,13 @@
 </template>
 
 <script>
-    import Index from "@/components/event/index/Index.vue";
-    export default {
-        name: "App",
-        components: { Index },
-    };
+import Index from "@/components/event/index/Index.vue";
+export default {
+    name: "App",
+    components: { Index },
+};
 </script>
 
 <style lang="less">
-    @import "~@/assets/css/event/app.less";
+@import "~@/assets/css/event/app.less";
 </style>
