@@ -108,10 +108,10 @@
 </template>
 
 <script>
-import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __imgPath } from "@/utils/config";
 import { getTop100 } from "@/service/rank/superstar.js";
 import { getThumbnail, getLink } from "@jx3box/jx3box-common/js/utils";
-import { default_avatar } from "@jx3box/jx3box-common/data/jx3box.json";
+import { default_avatar } from "@/utils/config";
 import { showTime } from "@jx3box/jx3box-common/js/moment";
 export default {
     name: "Superstar",

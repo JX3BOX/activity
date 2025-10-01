@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { __cdn } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __cdn } from "@/utils/config";
 import mount from "./mount.vue";
 import scenery from "./scenery.vue";
 import skill from "./skill.vue";

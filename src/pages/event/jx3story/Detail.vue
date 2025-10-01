@@ -60,7 +60,7 @@
 import LanternGroup from "./components/LanternGroup.vue";
 import { getEventAc } from "@/service/event/jx3story";
 import { getProgramDetail, userPoll } from "@/service/event/vote";
-import { __cdn, __Root } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __cdn, __Root } from "@/utils/config";
 export default {
     name: "jx3storyEvent",
     inject: ["__imgRoot"],

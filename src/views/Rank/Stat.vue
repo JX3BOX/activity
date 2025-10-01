@@ -50,12 +50,12 @@
 </template>
 
 <script>
-import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __imgPath } from "@/utils/config";
 import schools from "@jx3box/jx3box-data/data/xf/school.json";
 import xfids from "@jx3box/jx3box-data/data/xf/xfid.json";
 import mount_group from "@jx3box/jx3box-data/data/xf/mount_group.json";
 import { axios, realUrl } from "@/service/rank/api.js";
-import { __Root } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __Root } from "@/utils/config";
 import BarChart from "@/components/rank/barChart.vue";
 import PieChart from "@/components/rank/pieChart.vue";
 import rank_boss from "@/components/rank/rank_boss.vue";

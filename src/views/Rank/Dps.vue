@@ -214,7 +214,7 @@
 <script>
 import xfmap from "@jx3box/jx3box-data/data/xf/xfid.json";
 import { colors_by_mount_name } from "@jx3box/jx3box-data/data/xf/colors.json";
-import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __imgPath } from "@/utils/config";
 import { authorLink, getLink, getThumbnail, showAvatar } from "@jx3box/jx3box-common/js/utils";
 import { mount_group } from "@jx3box/jx3box-data/data/xf/mount_group.json";
 import server_std from "@jx3box/jx3box-data/data/server/server_cn";

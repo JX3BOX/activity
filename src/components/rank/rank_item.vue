@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import { __imgPath, __cdn } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __imgPath, __cdn } from "@/utils/config";
 import { getThumbnail, getLink } from "@jx3box/jx3box-common/js/utils";
 import { showTime } from "@jx3box/jx3box-common/js/moment";
 export default {

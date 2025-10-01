@@ -72,7 +72,7 @@
 import color from "@/assets/data/event/color.json";
 import Nav from "./components/nav.vue";
 import { getProgramItem, getVoteJudges, getVoteItemQrcode } from "@/service/event/vote";
-import { __cdn } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __cdn } from "@/utils/config";
 import { cloneDeep } from "lodash";
 export default {
     props: {

@@ -117,7 +117,7 @@
 
 <script>
 const KEY = "wuhaixunlong";
-import { __imgPath, __cdn } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __imgPath, __cdn } from "@/utils/config";
 export default {
     name: "Index",
     props: [],

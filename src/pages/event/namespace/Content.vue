@@ -95,7 +95,7 @@
 import { getNamespaceList, getNamespace } from "@/service/event/namespace.js";
 import { publishLink } from "@jx3box/jx3box-common/js/utils.js";
 import { showDate } from "@jx3box/jx3box-common/js/moment";
-import { __Root } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __Root } from "@/utils/config";
 import { cloneDeep } from "lodash";
 import User from "@jx3box/jx3box-common/js/user";
 import Form from "./Form";

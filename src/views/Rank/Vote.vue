@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __imgPath } from "@/utils/config";
 import servers from "@jx3box/jx3box-data/data/server/server_cn.json";
 import { getAllJoinedTeams, getVoteStatus } from "@/service/rank/vote.js";
 import vote_item_v1 from "@/components/rank/vote_item_v1.vue";

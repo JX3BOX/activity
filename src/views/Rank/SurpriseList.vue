@@ -32,7 +32,7 @@
 <script>
 import { getEvents } from "@/service/rank/surprise.js";
 import { showDate } from "@jx3box/jx3box-common/js/moment.js";
-import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __imgPath } from "@/utils/config";
 import { resolveImagePath } from "@jx3box/jx3box-common/js/utils";
 export default {
     components: {},

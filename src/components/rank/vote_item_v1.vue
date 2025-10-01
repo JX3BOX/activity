@@ -50,7 +50,7 @@
 import {
     __imgPath,
     default_avatar,
-} from "@jx3box/jx3box-common/data/jx3box.json";
+} from "@/utils/config";
 import { moment } from "@jx3box/jx3box-common/js/moment";
 import { getThumbnail, getLink } from "@jx3box/jx3box-common/js/utils";
 import User from "@jx3box/jx3box-common/js/user.js";

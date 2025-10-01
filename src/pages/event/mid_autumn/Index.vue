@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import {__cdn} from "@jx3box/jx3box-common/data/jx3box.json";
+import {__cdn} from "@/utils/config";
 const zh_num = ["〇", "一", "二", "三", "四", "五", "六", "七", "八", "九"];
 import YearChange from "./components/year_change.vue";
 export default {

@@ -9,8 +9,7 @@
 </template>
 
 <script>
-import { postStat } from "@jx3box/jx3box-common/js/stat";
-import { __cdn, __Links, __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __cdn, __Links, __imgPath } from "@/utils/config";
 
 export default {
     name: "App",

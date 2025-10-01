@@ -64,9 +64,9 @@
 </template>
 
 <script>
-import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __imgPath } from "@/utils/config";
 import { getVideos } from "@/service/rank/video.js";
-import { default_avatar } from "@jx3box/jx3box-common/data/jx3box.json";
+import { default_avatar } from "@/utils/config";
 import { getThumbnail, getLink } from "@jx3box/jx3box-common/js/utils";
 import rank_boss from "@/components/rank/rank_boss.vue";
 import { cloneDeep, filter } from "lodash";

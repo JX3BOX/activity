@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __imgPath } from "@/utils/config";
 import { getTop100, getBattleOrJcl } from "@/service/rank/superstar.js";
 import { getThumbnail, getLink } from "@jx3box/jx3box-common/js/utils";
 import PICS from "@/assets/js/pics.js";
@@ -154,7 +154,7 @@ export default {
             this.loading = true;
             getTop100(this.achieve_id, this.id)
                 .then((res) => {
-                    // this.origin_data = res.data.data || []; 
+                    // this.origin_data = res.data.data || [];
                     this.getBattleOrJcl(res.data.data || []);
                 })
                 .finally(() => {

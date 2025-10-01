@@ -50,7 +50,7 @@
 <script>
 import color from "@/assets/data/event/color.json";
 import { getProgramDetail, getVoteJudges } from "@/service/event/vote";
-import { __cdn, __Root } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __cdn, __Root } from "@/utils/config";
 import { cloneDeep, shuffle } from "lodash";
 export default {
     components: {},

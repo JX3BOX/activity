@@ -13,7 +13,7 @@
 
 <script>
     import { postStat } from "@jx3box/jx3box-common/js/stat";
-    import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
+    import { __imgPath } from "@/utils/config";
     export default {
         name: "App",
         data: function () {

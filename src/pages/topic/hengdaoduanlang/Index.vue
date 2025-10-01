@@ -261,7 +261,7 @@
 import { slider, slideritem } from "vue-concise-slider"; // 引入slider组件
 const KEY = "hengdaoduanlang";
 import { getTopic } from "@/service/topic";
-import { __cdn } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __cdn } from "@/utils/config";
 export default {
     name: "Index",
     props: [],
@@ -420,11 +420,11 @@ export default {
     },
     watch: {},
     methods: {
-        mouseover(val) { 
+        mouseover(val) {
             // this.navActive=this.navActive+','+val
             this.mouseoverActive = val;
         },
-        mouseout() { 
+        mouseout() {
             this.mouseoverActive = null;
         },
         init: function () {
@@ -453,7 +453,7 @@ export default {
                 this.$refs.mark.style.backgroundPositionY = y + "px";
             }
         },
-        goAnchor(index) { 
+        goAnchor(index) {
             // 用 class="d_jump" 添加锚点
             let jump = document.querySelectorAll(".m-jump");
             let total = jump[index].offsetTop;
@@ -500,7 +500,7 @@ export default {
             }
             this.pve_present++;
         },
-        pageChange(val) { 
+        pageChange(val) {
             if (val && val > 0) {
                 this.pve_present = val - 1;
                 return;
@@ -530,7 +530,7 @@ export default {
                     this.navStyle = { right: (w - 1920) / 2 - 1 + "px" };
                 }
             });
-            // 锚点高度顺序 1620，4728，8008，10333，12963，15137 
+            // 锚点高度顺序 1620，4728，8008，10333，12963，15137
             if (scrolled >= 15037) {
                 this.navActive = 6;
             } else if (scrolled >= 12933) {
@@ -545,7 +545,7 @@ export default {
                 this.navActive = 1;
             }
         },
-        slide(v) { 
+        slide(v) {
             this.pve_present = v.currentPage;
         },
         toastMsg() {

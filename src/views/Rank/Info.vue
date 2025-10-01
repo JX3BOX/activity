@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __imgPath } from "@/utils/config";
 import TimeLine from "@/components/rank/time_line.vue";
 export default {
     components: {

@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __imgPath } from "@/utils/config";
 import { getTop100, getDps } from "@/service/rank/superstar.js";
 import { getEvents } from "@/service/rank/event.js";
 import PICS from "@/assets/js/pics.js";
@@ -202,7 +202,7 @@ export default {
             });
         },
         //json数据初始化
-        dataInit() { 
+        dataInit() {
             let data = this.dataBak;
             let key = this.bossList[this.achieve_id];
             let res = data[key.indexOf("&") == -1 ? key : key.split("&")[0]];

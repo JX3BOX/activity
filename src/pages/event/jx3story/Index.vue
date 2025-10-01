@@ -50,7 +50,7 @@
 
 <script>
 import Lantern from "./components/Lantern.vue";
-import { __cdn } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __cdn } from "@/utils/config";
 export default {
     name: "jx3storyMain",
     inject: ["__imgRoot"],

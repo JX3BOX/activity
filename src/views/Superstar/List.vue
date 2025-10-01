@@ -155,7 +155,7 @@
 </template>
 
 <script>
-import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __imgPath } from "@/utils/config";
 import { cloneDeep } from "lodash";
 import { getTop100 } from "@/service/rank/superstar.js";
 import { showTime } from "@jx3box/jx3box-common/js/moment";

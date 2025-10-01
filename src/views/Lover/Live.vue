@@ -70,7 +70,7 @@ import { getSelectedList } from "@/service/rank/lover";
 import { uniqBy } from "lodash";
 import { showAvatar, getThumbnail } from "@jx3box/jx3box-common/js/utils";
 import ParticleEffect from "@/components/rank/ParticleEffect.vue";
-import { default_avatar } from "@jx3box/jx3box-common/data/jx3box.json";
+import { default_avatar } from "@/utils/config";
 
 export default {
     name: "LoverLive",

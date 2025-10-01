@@ -33,7 +33,7 @@ import threeView from "./modules/threeView.vue";
 import fourView from "./modules/fourView.vue";
 import fiveView from "./modules/fiveView.vue";
 import sixView from "./modules/sixView.vue";
-import { __cdn } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __cdn } from "@/utils/config";
 export default {
     name: "Index",
     data() {

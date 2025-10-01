@@ -11,7 +11,7 @@
 
 <script>
 import { postStat } from "@jx3box/jx3box-common/js/stat";
-import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __imgPath } from "@/utils/config";
 import { getBreadcrumb } from '@jx3box/jx3box-common/js/api_misc';
 export default {
     name: "App",

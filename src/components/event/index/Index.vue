@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import { __cdn, __imgPath, __Root } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __cdn, __imgPath, __Root } from "@/utils/config";
 import data from "@/assets/data/event/index.json";
 import { isMiniProgram } from "@jx3box/jx3box-common/js/utils";
 import wx from 'weixin-js-sdk'

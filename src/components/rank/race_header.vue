@@ -70,7 +70,7 @@
 <script>
 import PICS from "@/assets/js/pics.js";
 import tabs from "./race_tab.vue";
-import { __imgPath, __ossMirror } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __imgPath, __ossMirror } from "@/utils/config";
 import QrcodeVue from 'qrcode.vue'
 export default {
     props: ["data"],

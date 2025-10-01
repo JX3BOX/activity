@@ -1,5 +1,5 @@
 import { $team, $https } from "@jx3box/jx3box-common/js/https.js";
-import { __dataPath } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __dataPath } from "@/utils/config";
 function getTop100(aid, event_id) {
     return $team().get(`/api/team/race/achieve/${aid}/top100`, {
         params: {

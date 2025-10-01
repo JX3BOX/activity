@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __imgPath } from "@/utils/config";
 import servers from "@jx3box/jx3box-data/data/server/server_cn.json";
 import _ from "lodash";
 import { getTop100, getTopTotal, getEventNewbie, getBossAid } from "@/service/rank/race.js";

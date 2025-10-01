@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { __imgPath, __cdn } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __imgPath, __cdn } from "@/utils/config";
 import xf from "@jx3box/jx3box-data/data/xf/xf.json";
 import { showTime } from "@jx3box/jx3box-common/js/moment";
 import { getThumbnail, getLink, showMountIcon } from "@jx3box/jx3box-common/js/utils";

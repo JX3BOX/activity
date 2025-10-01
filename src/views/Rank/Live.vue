@@ -81,10 +81,10 @@
 </template>
 
 <script>
-import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __imgPath } from "@/utils/config";
 import { getLives } from "@/service/rank/video.js";
 import { getThumbnail, getLink } from "@jx3box/jx3box-common/js/utils";
-import { default_avatar } from "@jx3box/jx3box-common/data/jx3box.json";
+import { default_avatar } from "@/utils/config";
 import getTVlink from "@/assets/js/tv.js";
 const liveStatusMap = ["等待开播", "直播中", "直播结束"];
 import servers from "@jx3box/jx3box-data/data/server/server_list.json";

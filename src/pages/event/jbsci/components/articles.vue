@@ -71,7 +71,7 @@
 import userAvatar from "@/components/event/avatar.vue";
 import { getUsers } from "@/service/event/topic";
 import { uniq, flatMapDeep, isObject, isArray, flatMap } from "lodash";
-import { __cdn } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __cdn } from "@/utils/config";
 import xf from "@jx3box/jx3box-data/data/xf/xf.json";
 export default {
     name: "articles",

@@ -303,7 +303,7 @@ export default {
                 event_id: this.currentEvent.id,
             })
                 .then((res) => {
-                    this.processes = res.data.data.list || []; 
+                    this.processes = res.data.data.list || [];
                 })
                 .catch((error) => {
                     console.error("获取流程列表失败:", error);

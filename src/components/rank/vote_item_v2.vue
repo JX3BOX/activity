@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { __imgPath, default_avatar, __cdn } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __imgPath, default_avatar, __cdn } from "@/utils/config";
 import { moment } from "@jx3box/jx3box-common/js/moment";
 import { getThumbnail, getLink, authorLink } from "@jx3box/jx3box-common/js/utils";
 import User from "@jx3box/jx3box-common/js/user.js";

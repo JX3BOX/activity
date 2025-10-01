@@ -145,7 +145,7 @@
 
 <script>
 const KEY = "jianyuxiadao";
-import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __imgPath } from "@/utils/config";
 import play from "@/assets/data/event/dnd.json";
 import { reduce } from "lodash";
 export default {

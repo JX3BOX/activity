@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __imgPath } from "@/utils/config";
 import store from "@/pages/rank/lover/store";
 export default {
     name: "LoverLayout",

@@ -25,7 +25,7 @@
 
 <script>
 import Lantern from "./Lantern.vue";
-import { __cdn } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __cdn } from "@/utils/config";
 export default {
     components: {
         Lantern,

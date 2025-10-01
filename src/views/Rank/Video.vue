@@ -105,9 +105,9 @@
 </template>
 
 <script>
-import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __imgPath } from "@/utils/config";
 import { getVideos, deleteVideo, addVideo, updateVideo } from "@/service/rank/video.js";
-import { default_avatar } from "@jx3box/jx3box-common/data/jx3box.json";
+import { default_avatar } from "@/utils/config";
 import { getThumbnail, getLink } from "@jx3box/jx3box-common/js/utils";
 import User from "@jx3box/jx3box-common/js/user";
 import servers from "@jx3box/jx3box-data/data/server/server_list.json";

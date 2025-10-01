@@ -33,7 +33,7 @@
 <script>
 import { getProgramDetail } from "@/service/event/vote";
 import LanternGroup from "./components/LanternGroup.vue";
-import { __cdn, __Root } from "@jx3box/jx3box-common/data/jx3box.json";
+import { __cdn, __Root } from "@/utils/config";
 export default {
     name: "jx3storyEvent",
     inject: ["__imgRoot"],
