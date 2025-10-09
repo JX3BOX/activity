@@ -10,7 +10,7 @@
 
                             <div class="u-author-info">
                                 <div class="u-title">{{ poemData.title }}</div>
-                                <div class="u-author">{{ poemData.sub_title }}</div>
+                                <!-- <div class="u-author">{{ poemData.sub_title }}</div> -->
                                 <a :href="`/author/${poemData.user_info.id}`" target="_blank" class="u-user">{{
                                     poemData.user_info.display_name
                                 }}</a>
@@ -43,6 +43,7 @@
                                     <div class="u-desc">有机会赢取故宫中秋好礼！</div>
                                 </div>
                             </div>
+                            <div class="m-tips m-detail" v-if="poemData?.sub_title" @click="onDetailClick">查看原帖</div>
                             <template v-if="poemData?.id && judges[poemData.id] && judges[poemData.id].length">
                                 <img :src="`${getPic('design/miniprogram/midautumn/judges.png')}`" class="u-judges" />
                                 <div class="m-scrollbar">
@@ -182,6 +183,11 @@ export default {
             const _c = colors[i] ? colors[i] : `rgba(23, 36, 58, 0.95)`;
             this.bgStyle = `background:linear-gradient(90deg, ${_c} 0%, rgba(175, 72, 89, 0) 100%)`;
         },
+        onDetailClick() {
+            if (this.poemData?.sub_title) {
+                window.open(`/community/${this.poemData.sub_title}`, "_blank");
+            }
+        }
     }
 }
 </script>
