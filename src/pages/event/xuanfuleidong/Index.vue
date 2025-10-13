@@ -27,32 +27,42 @@
         </div>
         <div class="m-content">
             <div class="u-start"></div>
-            <img :src="`${__imgRoot}end.png`" class="u-line" alt="line" />
-            <div class="m-info">
-                
-            </div>
-            <img :src="`${__imgRoot}end.png`" class="u-line" alt="line" />
+            <img :src="`${__imgRoot}end.png`" class="u-axis" />
+            <!-- 详细内容 -->
+            <component class="m-info" :is="active" />
+            <img :src="`${__imgRoot}end.png`" class="u-axis" />
         </div>
     </div>
 </template>
 <script>
+import introduction from "./components/introduction.vue";
+import vote from "./components/vote.vue";
+import winner from "./components/winner.vue";
 export default {
     name: "Index",
     inject: ["__imgRoot"],
-    components: {},
+    components: {
+        introduction,
+        vote,
+        winner,
+    },
     data: function () {
         return {
             index: 1,
-            key: "rule",
+            key: "vote",
             tabs: [
-                { name: "活动介绍", key: "rule", active: true },
-                { name: "玩法投票", key: "prize", active: false },
-                { name: "获奖作品", key: "winner", active: false },
+                { name: "活动介绍", key: "introduction", component: introduction },
+                { name: "玩法投票", key: "vote", component: vote },
+                { name: "获奖作品", key: "winner", component: winner },
             ],
         };
     },
 
-    computed: {},
+    computed: {
+        active() {
+            return this.tabs.find((item) => item.key == this.key).component;
+        },
+    },
     watch: {},
     methods: {
         handleTabClick(key) {

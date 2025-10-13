@@ -71,27 +71,30 @@ body {
         .drop(@n, (@i + 1));
     }
     .m-content {
-        .pr;  
+        .pr;
         .u-start {
             .pa;
-            .size(100%);
+            .size(100%,calc(100% - 64px));
+            margin: 30px 0;
+            user-select: none;
+            pointer-events: none;
             z-index: 1;
             background: url("@{xuanfuleidong}start.png") repeat-y top center;
             background-size: 1920px auto;
         }
     }
 
-    .u-line {
+    .u-axis {
         .size(1700px,30px);
     }
-    .m-info + .u-line {
+    .m-info + .u-axis {
         margin-top: -5px;
     }
     .m-info {
         .w(1520px);
         .auto(x);
         box-sizing: border-box;
-        padding: 100px;
+        padding:120px 100px;
         margin-top: -5px;
         min-height: 500px;
         background-color: #192d4b;
