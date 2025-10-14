@@ -50,16 +50,6 @@
         background: url("@{xuanfuleidong}line.png") no-repeat center center;
         background-size: auto 32px;
     }
-}
-
-.m-vote {
-    .m-section p {
-        .x;
-    }
-    .u-line {
-        .size(100%,224px);
-        background-size: auto 32px;
-    }
     .u-button {
         .pointer;
         .lh(32px);
@@ -86,6 +76,17 @@
             }
         }
     }
+}
+
+.m-vote {
+    .m-section p {
+        .x;
+    }
+    .u-line {
+        .size(100%,224px);
+        background-size: auto 32px;
+    }
+
     .m-search {
         .x(left);
         .fz(18px,80px);
@@ -193,6 +194,81 @@
                     }
                 }
             }
+        }
+    }
+}
+
+.m-winner .m-winner-section {
+    .m-title {
+        .x;
+        .fz(20px,30px);
+        color: #b8d5ff;
+        .u-title {
+            .db;
+            .h(148px);
+            .auto(x);
+        }
+    }
+    .m-list {
+        .flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        padding: 24px 0;
+        gap: 24px;
+        .m-item {
+            .fz(16px,24px);
+            .r(34px);
+            .size(410px,280px);
+            box-sizing: border-box;
+            background-color: #fff;
+            color: #808080;
+            padding: 18px;
+            &:hover {
+                box-shadow: 0px 0px 50px #6699ff;
+            }
+            h4 {
+                .fz(28px,40px);
+                .bold;
+                margin: 0;
+                color: #24292e;
+            }
+            .u-user {
+                .flex;
+                justify-content: center;
+                align-items: center;
+                gap: 4px;
+                padding: 8px 0;
+                .u-avatar {
+                    .r(50%);
+                    .size(20px);
+                }
+            }
+            .u-info {
+                .r(12px);
+                padding: 12px;
+                background-color: #fafafa;
+            }
+            .u-tag {
+                .flex;
+                justify-content: space-between;
+                .u-button {
+                    .lh(24px);
+                }
+                a {
+                    .fz(18px);
+                    color: #383838;
+                    text-decoration: underline;
+                }
+            }
+            .u-content {
+                .pt(8px);
+                .fz(14px);
+                .x(left);
+                .break(4);
+            }
+        }
+        &.comingsoon .m-item {
+            .w(628px) !important;
         }
     }
 }

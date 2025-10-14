@@ -25,19 +25,22 @@
                 @click="handleTabClick(item.key)"
             ></div>
         </div>
-        <div class="m-content">
+        <div class="m-content" v-loading="loading">
             <div class="u-start"></div>
             <img :src="`${__imgRoot}end.png`" class="u-axis" />
             <!-- 详细内容 -->
-            <component class="m-info" :is="active" />
+            <component class="m-info" :is="active" :list="componentData" />
             <img :src="`${__imgRoot}end.png`" class="u-axis" />
         </div>
     </div>
 </template>
 <script>
+import { getProgramDetail } from "@/service/event/vote";
+import { getMenu } from "@jx3box/jx3box-common/js/api_misc";
 import introduction from "./components/introduction.vue";
 import vote from "./components/vote.vue";
 import winner from "./components/winner.vue";
+import { shuffle } from "lodash";
 export default {
     name: "Index",
     inject: ["__imgRoot"],
@@ -48,8 +51,13 @@ export default {
     },
     data: function () {
         return {
-            index: 1,
-            key: "vote",
+            loading: false,
+            index: 1, // 届数
+            id: 25, // 投票ID
+            list: [], // 投票列表
+            winList: [], // 获奖作品列表
+            key: "winner", // 当前选中的tab
+            menu: "2025_xuanfuleidong_winner", // 获奖作品Key
             tabs: [
                 { name: "活动介绍", key: "introduction", component: introduction },
                 { name: "玩法投票", key: "vote", component: vote },
@@ -62,11 +70,42 @@ export default {
         active() {
             return this.tabs.find((item) => item.key == this.key).component;
         },
+        componentData() {
+            return this.key == "winner" ? this.winList : this.list;
+        },
     },
-    watch: {},
+    created() {
+        this.loadData();
+    },
     methods: {
         handleTabClick(key) {
             this.key = key;
+        },
+        loadData() {
+            this.loading = true;
+            getProgramDetail(this.id)
+                .then((res) => {
+                    this.list = shuffle(res.data.data.vote_items || []);
+                    this.loadWinner();
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
+        },
+        loadWinner() {
+            getMenu(this.menu).then((res) => {
+                this.winList =
+                    res.map((item) => {
+                        if (item.ids) {
+                            item.list = item.ids.split(",").map((id) => {
+                                return this.list.find((e) => e.id == id);
+                            });
+                        } 
+                        return item;
+                    }) || [];
+                    
+                    console.log(this.winList)
+            });
         },
     },
 };
@@ -74,4 +113,5 @@ export default {
 
 <style lang="less">
 @import "~@/assets/css/event/xuanfuleidong/index.less";
+@import "~@/assets/css/event/xuanfuleidong/components.less";
 </style>

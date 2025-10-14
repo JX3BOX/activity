@@ -20,7 +20,7 @@
             <div class="m-item">
                 <div class="m-header">
                     <span class="u-label">玩法简介</span>
-                    <span :class="`active u-button ${item.sub_title} `">{{ item.sub_title }}</span>
+                    <span :class="`active u-button ${item.tag} `">{{ item.tag }}</span>
                 </div>
                 <div class="u-content">{{ item.content }}</div>
                 <div class="m-footer">
@@ -43,16 +43,16 @@
     </div>
 </template>
 <script>
-import { getProgramDetail } from "@/service/event/vote";
-import { shuffle } from "lodash";
 export default {
     inject: ["__imgRoot"],
+    props: {
+        list: {
+            type: Array,
+            default: () => [],
+        },
+    },
     data: function () {
         return {
-            loading: false,
-            list: [],
-            judges: {},
-            id: 25,
             actives: ["PVP", "PVE", "PVX"],
             types: ["PVP", "PVE", "PVX"],
             content:
@@ -62,23 +62,10 @@ export default {
 
     computed: {
         showList() {
-            return this.list.filter((item) => this.actives.includes(item.sub_title));
+            return this.list.filter((item) => this.actives.includes(item.tag));
         },
-    },
-    mounted() {
-        this.loadData();
     },
     methods: {
-        loadData() {
-            this.loading = true;
-            getProgramDetail(this.id)
-                .then((res) => {
-                    this.list = shuffle(res.data.data.vote_items || []);
-                })
-                .finally(() => {
-                    this.loading = false;
-                });
-        },
         change(item) {
             if (this.actives.includes(item)) {
                 if (this.actives.length == 1) return;
@@ -90,7 +77,3 @@ export default {
     },
 };
 </script>
-
-<style lang="less">
-@import "~@/assets/css/event/xuanfuleidong/components.less";
-</style>
