@@ -103,10 +103,13 @@
         }
         &.is-fixed {
             position: fixed;
-            top: 74px; 
+            top: 74px;
             z-index: 9;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
+    }
+    .u-padding {
+        .pt(80px);
     }
     .m-vote-item {
         .fz(16px,24px);
@@ -115,6 +118,7 @@
         padding: 6px;
         box-sizing: border-box;
         background-color: #fff;
+
         &:hover {
             box-shadow: 0px 0px 50px #6699ff;
         }
@@ -189,6 +193,8 @@
                     .flex;
                     color: #fff;
                     flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
                     box-sizing: border-box;
                     padding: 6px 24px;
                     height: 64px;

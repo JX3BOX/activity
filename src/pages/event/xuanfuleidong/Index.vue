@@ -35,7 +35,7 @@
     </div>
 </template>
 <script>
-import { getProgramDetail } from "@/service/event/vote";
+import { getProgramDetail, getMyVote } from "@/service/event/vote";
 import { getMenu } from "@jx3box/jx3box-common/js/api_misc";
 import introduction from "./components/introduction.vue";
 import vote from "./components/vote.vue";
@@ -56,7 +56,8 @@ export default {
             id: 25, // 投票ID
             list: [], // 投票列表
             winList: [], // 获奖作品列表
-            key: "winner", // 当前选中的tab
+            myVote: [], // 我的投票
+            key: "vote", // 当前选中的tab
             menu: "2025_xuanfuleidong_winner", // 获奖作品Key
             tabs: [
                 { name: "活动介绍", key: "introduction", component: introduction },
@@ -75,6 +76,7 @@ export default {
         },
     },
     created() {
+        this.loadMyVote();
         this.loadData();
     },
     methods: {
@@ -97,14 +99,23 @@ export default {
                 this.winList =
                     res.map((item) => {
                         if (item.ids) {
-                            item.list = item.ids.split(",").map((id) => {
-                                return this.list.find((e) => e.id == id);
-                            });
+                            item.list = item.ids
+                                .split(",")
+                                .map((id) => {
+                                    return this.list.find((e) => e.id == id);
+                                })
+                                .map((item) => {
+                                    item.isVoted = this.myVote.find((e) => e.vote_item_id == item.id) ? true : false; 
+                                    return item;
+                                });
                         }
                         return item;
                     }) || [];
-
-                console.log(this.winList);
+            });
+        },
+        loadMyVote() {
+            getMyVote(this.id).then((res) => {
+                this.myVote = res.data?.data?.list || [];
             });
         },
     },

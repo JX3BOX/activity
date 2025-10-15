@@ -15,7 +15,7 @@
                     <div class="u-info">
                         <div class="u-tag">
                             <span class="u-button active" :class="e.tag">{{ e.tag }}</span>
-                            <a href="http://" target="_blank">查看详细</a>
+                            <a :href="`/community/${e.sub_title}`" target="_blank">查看详细</a>
                         </div>
                         <div class="u-content">{{ e.content }}</div>
                     </div>

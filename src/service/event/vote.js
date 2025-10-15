@@ -12,6 +12,14 @@ export function getProgramDetail(id) {
 export function getProgramItem(id, voteItemId) {
     return $next().get(`/api/next2/vote-program/program/${id}/public/vote-item/${voteItemId}`);
 }
+// 获取我的投票
+export function getMyVote(id) {
+    return $next().get(`/api/next2/vote-program/program/${id}/my-vote-history`);
+}
+// 投票
+export function vote(id, data) {
+    return $next().post(`/api/next2/vote-program/program/${id}/vote`, data);
+}
 
 export function getVoteItemQrcode(id, params) {
     return $cms().get(`/api/cms/vote/program/item/${id}/qrcode`, {

@@ -15,7 +15,7 @@
                 >{{ item }}</span
             >
         </div>
-
+        <div :class="{ 'u-padding': isFixed }"></div>
         <div class="m-vote-item" v-for="(item, i) in showList" :key="i">
             <div class="m-item">
                 <div class="m-header">
@@ -31,16 +31,16 @@
                         >
                     </div>
                     <div class="u-item-button">
-                        <a class="u-view" :href="`/event/vote/detail/${item.id}`" target="_blank">查看详细</a>
-                        <span class="u-vote">
-                            <span class="u-count">(已投票)</span>
-                            <span>投票</span>
+                        <a class="u-view" :href="`/community/${item.sub_title}`" target="_blank">查看详细</a>
+                        <span class="u-vote" @click="handleVote(item)">
+                            <span class="u-count" v-if="item.isVoted">(已投票)</span>
+                            <span>{{ !item.isVoted ? "投票" : `${item.amount}人 想玩！` }}</span>
                         </span>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="m-code">
+        <div class="m-code" :class="{ 'is-show': isShow }">
             <div class="u-box">
                 <img class="u-code" :src="`${__imgRoot}code.png`" alt="活动代码" />
                 <p>微信扫码<br />给喜欢的玩法投票吧！</p>
@@ -49,6 +49,8 @@
     </div>
 </template>
 <script>
+import User from "@jx3box/jx3box-common/js/user.js";
+import { vote } from "@/service/event/vote";
 export default {
     inject: ["__imgRoot"],
     props: {
@@ -59,7 +61,10 @@ export default {
     },
     data: function () {
         return {
+            isLogin: User.isLogin(),
+            h: 1100,
             isFixed: false,
+            isShow: false,
             elementOffsetTop: 0,
             actives: ["PVP", "PVE", "PVX"],
             types: ["PVP", "PVE", "PVX"],
@@ -67,6 +72,7 @@ export default {
                 "<p>投票期用户可在专题页/小程序投票。<br/>单个账号限制三票，且单个账号对单个玩法仅可投票一次。</p>",
         };
     },
+
     mounted() {
         this.$nextTick(() => {
             const element = this.$refs.stickyElement;
@@ -74,6 +80,7 @@ export default {
                 this.elementOffsetTop = element.offsetTop;
             }
         });
+
         window.addEventListener("scroll", this.handleScroll);
     },
     beforeUnmount() {
@@ -94,9 +101,24 @@ export default {
             }
         },
         handleScroll() {
-            const h = 1100;
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
-            this.isFixed = scrollTop > this.elementOffsetTop + h;
+            this.isFixed = scrollTop > this.elementOffsetTop + this.h;
+            this.isShow = scrollTop > this.elementOffsetTop;
+        },
+        handleVote(item) {
+            if (item.voted) return;
+            if (!this.isLogin) {
+                User.toLogin();
+                return;
+            }
+            vote(item.program_id, { vote_id_list: [item.id] }).then(() => {
+                this.$message({
+                    message: "投票成功",
+                    type: "success",
+                });
+                item.isVoted = true;
+                item.amount++;
+            });
         },
     },
 };
