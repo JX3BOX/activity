@@ -92,11 +92,20 @@
         .fz(18px,80px);
         .h(80px);
         .r(40px);
+        .w(100%);
+        max-width: 1320px;
+        box-sizing: border-box;
         padding: 0 36px;
         background-color: #0e1937;
         color: #fff;
         .u-button {
             margin-right: 12px;
+        }
+        &.is-fixed {
+            position: fixed;
+            top: 74px; 
+            z-index: 9;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
     }
     .m-vote-item {

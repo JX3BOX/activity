@@ -100,11 +100,11 @@ export default {
                             item.list = item.ids.split(",").map((id) => {
                                 return this.list.find((e) => e.id == id);
                             });
-                        } 
+                        }
                         return item;
                     }) || [];
-                    
-                    console.log(this.winList)
+
+                console.log(this.winList);
             });
         },
     },

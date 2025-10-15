@@ -5,7 +5,7 @@
             <div class="u-content" v-html="content"></div>
         </div>
         <div class="u-line"></div>
-        <div class="m-search">
+        <div class="m-search" ref="stickyElement" :class="{ 'is-fixed': isFixed }">
             <span>赛道筛选：</span>
             <span
                 v-for="item in types"
@@ -40,6 +40,12 @@
                 </div>
             </div>
         </div>
+        <div class="m-code">
+            <div class="u-box">
+                <img class="u-code" :src="`${__imgRoot}code.png`" alt="活动代码" />
+                <p>微信扫码<br />给喜欢的玩法投票吧！</p>
+            </div>
+        </div>
     </div>
 </template>
 <script>
@@ -53,13 +59,26 @@ export default {
     },
     data: function () {
         return {
+            isFixed: false,
+            elementOffsetTop: 0,
             actives: ["PVP", "PVE", "PVX"],
             types: ["PVP", "PVE", "PVX"],
             content:
                 "<p>投票期用户可在专题页/小程序投票。<br/>单个账号限制三票，且单个账号对单个玩法仅可投票一次。</p>",
         };
     },
-
+    mounted() {
+        this.$nextTick(() => {
+            const element = this.$refs.stickyElement;
+            if (element) {
+                this.elementOffsetTop = element.offsetTop;
+            }
+        });
+        window.addEventListener("scroll", this.handleScroll);
+    },
+    beforeUnmount() {
+        window.removeEventListener("scroll", this.handleScroll);
+    },
     computed: {
         showList() {
             return this.list.filter((item) => this.actives.includes(item.tag));
@@ -73,6 +92,11 @@ export default {
             } else {
                 this.actives.push(item);
             }
+        },
+        handleScroll() {
+            const h = 1100;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+            this.isFixed = scrollTop > this.elementOffsetTop + h;
         },
     },
 };
