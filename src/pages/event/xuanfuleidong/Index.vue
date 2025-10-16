@@ -76,7 +76,6 @@ export default {
         },
     },
     created() {
-        this.loadMyVote();
         this.loadData();
     },
     methods: {
@@ -86,36 +85,37 @@ export default {
         loadData() {
             this.loading = true;
             getProgramDetail(this.id)
-                .then((res) => {
-                    this.list = shuffle(res.data.data.vote_items || []);
-                    this.loadWinner();
+                .then(async (res) => {
+                    this.list = shuffle(res.data?.data?.vote_items || []);
+                    await this.loadMyVote();
+                    await this.loadWinner();
                 })
                 .finally(() => {
                     this.loading = false;
                 });
         },
-        loadWinner() {
-            getMenu(this.menu).then((res) => {
-                this.winList =
-                    res.map((item) => {
-                        if (item.ids) {
-                            item.list = item.ids
-                                .split(",")
-                                .map((id) => {
-                                    return this.list.find((e) => e.id == id);
-                                })
-                                .map((item) => {
-                                    item.isVoted = this.myVote.find((e) => e.vote_item_id == item.id) ? true : false; 
-                                    return item;
-                                });
-                        }
-                        return item;
-                    }) || [];
-            });
+        async loadMyVote() {
+            const myVote = await getMyVote(this.id);
+            this.myVote = myVote.data?.data?.list || [];
         },
-        loadMyVote() {
-            getMyVote(this.id).then((res) => {
-                this.myVote = res.data?.data?.list || [];
+        async loadWinner() {
+            const winList = await getMenu(this.menu);
+            this.winList = (winList || []).map((item) => {
+                const newItem = { ...item };
+                if (newItem.ids) {
+                    newItem.list = newItem.ids
+                        .split(",")
+                        .map((id) => {
+                            return this.list.find((e) => e.id == id);
+                        })
+                        .filter(Boolean)
+                        .map((voteItem) => {
+                            const foundVote = this.myVote.find((e) => e.vote_item_id == voteItem.id);
+                            this.$set(voteItem, "isVoted", !!foundVote);
+                            return voteItem;
+                        });
+                }
+                return newItem;
             });
         },
     },

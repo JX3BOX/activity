@@ -5,27 +5,31 @@
                 <img :src="`${__imgRoot}${item.type}.png`" class="u-title" />
                 <span>{{ item.label }}</span>
             </div>
-            <div class="m-list" :class="item.type" v-if="item.list">
-                <div class="m-item" v-for="(e, index) in item.list" :key="index">
-                    <h4>{{ e.title }}</h4>
-                    <div class="u-user">
-                        <img class="u-avatar" :src="e.user_info.avatar" />
-                        <span>{{ e.user_info.display_name }}</span>
-                    </div>
-                    <div class="u-info">
-                        <div class="u-tag">
-                            <span class="u-button active" :class="e.tag">{{ e.tag }}</span>
-                            <a :href="`/community/${e.sub_title}`" target="_blank">查看详细</a>
+            <template v-if="item.list?.length">
+                <div class="m-list" :class="item.type" v-if="item.list">
+                    <div class="m-item" v-for="(e, index) in item.list" :key="index">
+                        <h4>{{ e.title }}</h4>
+                        <div class="u-user">
+                            <img class="u-avatar" :src="e.user_info.avatar" />
+                            <span>{{ e.user_info.display_name }}</span>
                         </div>
-                        <div class="u-content">{{ e.content }}</div>
+                        <div class="u-info">
+                            <div class="u-tag">
+                                <span class="u-button active" :class="e.tag">{{ e.tag }}</span>
+                                <a :href="`/community/${e.sub_title}`" target="_blank">查看详细</a>
+                            </div>
+                            <div class="u-content">{{ e.content }}</div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </template>
+            <img v-else :src="`${imgUrl}image/rank/common/null.png`" />
             <div class="u-line"></div>
         </div>
     </div>
 </template>
 <script>
+import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 export default {
     inject: ["__imgRoot"],
     props: {
@@ -33,6 +37,11 @@ export default {
             type: Array,
             default: () => [],
         },
+    },
+    data() {
+        return {
+            imgUrl: __imgPath,
+        }
     },
 };
 </script>
