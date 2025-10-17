@@ -23,13 +23,12 @@
                     </div>
                 </div>
             </template>
-            <img v-else :src="`${imgUrl}image/rank/common/null.png`" />
+            <img v-else :src="`${__imgRoot}null.png`" />
             <div class="u-line"></div>
         </div>
     </div>
 </template>
 <script>
-import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 export default {
     inject: ["__imgRoot"],
     props: {
@@ -38,10 +37,6 @@ export default {
             default: () => [],
         },
     },
-    data() {
-        return {
-            imgUrl: __imgPath,
-        }
-    },
+
 };
 </script>

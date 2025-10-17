@@ -4,7 +4,7 @@
             <img :src="`${__imgRoot}kv.jpg`" alt="玄府雷动" />
             <div class="m-title">
                 <img :src="`${__imgRoot}title.png`" alt="玩法创意大赛" />
-                <img :src="`${__imgRoot}no${index}.png`" class="u-no" :alt="`第${index}届`" />
+                <img :src="`${__imgRoot}no${index}.png?2`" class="u-no" :alt="`第${index || '1'}届`" />
                 <p class="u-desc">
                     侠影开新境，巧思妙笔神。至微至玄、不可察之空隙，亦能震荡躁动，声势若雷鸣，名曰玄府雷动。<br />
                     侠士是江湖最微小的构成点，是否也心有丘壑，意蕴磅礴，遂于一瞬，巧思如泉涌，欲为江湖开辟新局、创作出新鲜的玩法呢？<br />
@@ -52,7 +52,7 @@ export default {
     data: function () {
         return {
             loading: false,
-            index: 1, // 届数
+            index: "", // 届数
             id: 25, // 投票ID
             list: [], // 投票列表
             winList: [], // 获奖作品列表
