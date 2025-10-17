@@ -107,8 +107,11 @@ body {
         .clip;
         .z(9);
         .ml(720px);
+        min-width: 210px;
         padding: 6px;
         background-color: #fff;
+        user-select: none;
+        pointer-events: none;
         box-shadow: 0px 20px 40px rgba(11, 26, 42, 0.5);
         &.is-show {
             .db;
@@ -126,6 +129,7 @@ body {
             .r(50%);
             .size(140px);
             padding: 10px;
+            flex-shrink: 0;
         }
         p {
             .none;
