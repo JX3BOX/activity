@@ -1,0 +1,116 @@
+.isMiniProgram {
+    .m-xuanfuleidong {
+        width: 100%;
+    }
+    .c-header,
+    .p-event-footer {
+        .none;
+    }
+}
+.m-miniprogram {
+    height: 100vh;
+    background: linear-gradient(
+        180deg,
+        rgba(11, 26, 42, 1) 0%,
+        rgba(11, 26, 42, 1) 55.56%,
+        rgba(0, 10, 99, 1) 88.89%,
+        rgba(7, 119, 224, 1) 100%
+    );
+    .m-one {
+        .pt(240px);
+        .x;
+        .fz(12px,32px);
+        color: #fff;
+        box-sizing: border-box;
+        height: 100vh;
+        background: url("@{xuanfuleidong}miniBG.png?1") no-repeat center top;
+        background-size: contain;
+        .u-desc {
+            padding: 80px 20px;
+            opacity: 0.9;
+        }
+        .u-button {
+            width: 50%;
+            .auto(x);
+        }
+    }
+    .m-two {
+        .pt(180px);
+        min-height: 100vh;
+        box-sizing: border-box;
+        background: url("@{xuanfuleidong}miniKV.png") no-repeat center top;
+        background-size: contain;
+        .m-tabs {
+            gap: 20px;
+            .u-tab-item {
+                .size(25%,34px);
+            }
+        }
+        .m-content {
+            height: calc(100vh - 240px);
+            .mt(-10px);
+        }
+        .m-introduction,
+        .m-vote,
+        .m-winner {
+            height: calc(100% - 20px);
+            overflow: auto;
+        }
+        .m-vote .u-line {
+            height: 124px;
+        }
+        .m-search {
+            .none;
+        }
+        .u-axis {
+            .size(100%,10px);
+        }
+        .m-info + .u-axis {
+            transform: translateY(-10px);
+        }
+        .m-info {
+            width: calc(100% - 40px);
+            padding: 34px 24px 24px 24px;
+            margin: 0 20px;
+            .mt(-5px);
+            .m-section {
+                padding: 0;
+                background: none;
+                width: 100%;
+                border: 0;
+                .u-title {
+                    .mt(0);
+                    .size(140px,30px);
+                    transform: translateY(0);
+                }
+                h3 {
+                    .fz(16px);
+                }
+                p {
+                    .fz(14px,30px);
+                }
+            }
+            .u-enter {
+                .flex;
+                justify-content: center;
+                align-items: center;
+                .size(100%,150px);
+                img {
+                    width: 70%;
+                    height: auto;
+                }
+            }
+            .u-line {
+                margin-top: 0;
+                height: 130px;
+                background-size: contain;
+            }
+        }
+        .m-winner-section .m-title {
+            .fz(14px);
+            .u-title {
+                height: 68px;
+            }
+        }
+    }
+}

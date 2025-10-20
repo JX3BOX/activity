@@ -1,12 +1,17 @@
 body {
     background: #0b1a2a;
 }
-
+// .v-index {
+//     @media screen and (max-width: 1920px) {
+//         zoom: 0.85;
+//     }
+// }
 .m-xuanfuleidong {
     min-height: 100vh;
     box-sizing: border-box;
     width: 1920px;
     margin: 0 auto;
+
     .x;
     .m-kv {
         .pr;
@@ -55,12 +60,15 @@ body {
         gap: 24px;
         .drop(3);
     }
+    .u-tab-item {
+        .size(315px,100px);
+    }
     .drop(@n, @i: 1) when (@i =< @n) {
         .u-tab-0@{i} {
             .pointer;
             .clip;
             text-indent: -100px;
-            .size(315px,100px);
+
             background: url("@{xuanfuleidong}tab-0@{i}.png");
             background-size: 100%;
             &.active {
