@@ -48,8 +48,7 @@ export default {
     },
     data: function () {
         return {
-            // isMiniProgram: isMiniProgram(),
-            isMiniProgram: true,
+            isMiniProgram: isMiniProgram(),
             loading: false,
             index: "", // 届数
             id: 25, // 投票ID

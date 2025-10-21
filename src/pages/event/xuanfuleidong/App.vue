@@ -18,9 +18,8 @@ import { __cdn } from "@/utils/config";
 export default {
     name: "App",
     data: function () {
-        return {
-            isMiniProgram: true,
-            // isMiniProgram: isMiniProgram(),
+        return { 
+            isMiniProgram: isMiniProgram(),
         };
     },
     provide: {

@@ -56,9 +56,6 @@
             height: calc(100% - 20px);
             overflow: auto;
         }
-        .m-vote .u-line {
-            height: 124px;
-        }
         .m-search {
             .none;
         }
@@ -105,11 +102,87 @@
                 height: 130px;
                 background-size: contain;
             }
+            .u-button {
+                .fz(14px,24px);
+                padding: 0 12px;
+            }
         }
-        .m-winner-section .m-title {
-            .fz(14px);
-            .u-title {
-                height: 68px;
+        .m-vote {
+            .u-line {
+                height: 124px;
+            }
+            .m-vote-item {
+                margin: 0 0 30px 0;
+                background: linear-gradient(180deg, rgba(247, 248, 255, 1) 0%, #fff 100%);
+                .m-item {
+                    border: 0px;
+                }
+                .u-label {
+                    .fz(16px,24px);
+                }
+                .u-content-mini {
+                    .r(12px);
+                    margin: 12px 0;
+                    padding: 12px;
+                    background-color: #fff;
+                    .u-user {
+                        .flex;
+                        .fz(12px);
+                        color: #999;
+                        gap: 5px;
+                        align-items: center;
+                    }
+                    .u-avatar {
+                        .r(50%);
+                        .size(18px);
+                    }
+                    .u-desc {
+                        .db;
+                        .x(left);
+                        .fz(14px);
+                        .mt(12px);
+                        color: #666;
+                        text-align: justify;
+                        text-indent: 1em;
+                    }
+                }
+                .u-vote {
+                    .color(#fff);
+                    .r(25px);
+                    .bold;
+                    height: 50px;
+                    line-height: 50px;
+                    background: linear-gradient(227.29deg, rgba(102, 117, 255, 1) 0%, rgba(102, 181, 255, 1) 100%);
+                    .u-count {
+                        font-weight: 400;
+                        opacity: 0.6;
+                    }
+                }
+            }
+        }
+        .m-winner-section {
+            .m-title {
+                .fz(14px);
+                .u-title {
+                    height: 68px;
+                }
+            }
+            .m-item {
+                height: auto;
+                h4 {
+                    .fz(20px);
+                }
+                .u-tag a {
+                    .fz(16px);
+                }
+                .u-content {
+                    text-indent: 1em; 
+                    overflow: visible;
+                    white-space: normal;
+                    text-overflow: clip; 
+                    -webkit-line-clamp: none;
+                    line-clamp: none;
+                }
             }
         }
     }
