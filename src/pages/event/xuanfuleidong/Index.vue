@@ -14,7 +14,7 @@
                 <div
                     v-for="(item, i) in tabs"
                     :key="i"
-                    :class="[{ active: item.key == key }, [`u-tab-0${i + 1} 'u-tab-item'`]]"
+                    :class="[{ active: item.key == key }, [`u-tab-0${i + 1} u-tab-item`]]"
                     @click="handleTabClick(item.key)"
                 ></div>
             </div>
