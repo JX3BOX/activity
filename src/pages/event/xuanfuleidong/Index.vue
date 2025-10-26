@@ -55,7 +55,7 @@ export default {
             list: [], // 投票列表
             winList: [], // 获奖作品列表
             myVote: [], // 我的投票
-            key: "vote", // 当前选中的tab
+            // key: "vote", // 当前选中的tab
             menu: "2025_xuanfuleidong_winner", // 获奖作品Key
             tabs: [
                 { name: "活动介绍", key: "introduction", component: introduction },
@@ -74,7 +74,6 @@ export default {
                 `,
         };
     },
-
     computed: {
         active() {
             return this.tabs.find((item) => item.key == this.key).component;
@@ -91,13 +90,20 @@ export default {
                 tabs: this.tabs,
             };
         },
+        key() {
+            return this.$route.query.key || "introduction";
+        },
     },
     created() {
         this.loadData();
     },
     methods: {
         handleTabClick(key) {
-            this.key = key;
+            this.$router.push({
+                query: {
+                    key: key,
+                },
+            });
         },
         loadData() {
             this.loading = true;
