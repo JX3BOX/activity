@@ -31,8 +31,8 @@ export default {
                 {
                     title: "活动奖励",
                     img: "info-title-2.png",
-                    content:
-                        "<p style=\"text-align: center;\"><img src='https://cdn.jx3box.com/upload/post/2025/9/14/49682_1703903.png' width='339' height='437'><img src='https://cdn.jx3box.com/upload/post/2025/9/14/49682_6387044.png' width='326' height='437'></span></p><p style=\"text-align: center;\"><img src='https://cdn.jx3box.com/upload/post/2025/9/14/49682_1061804.png' width='681' height='418'></p>",
+                    content: `<table style="border-collapse: collapse;width: 100%; table-layout: fixed;"><tbody><tr><td>奖项（可重复获得）</td><td>获奖人数</td><td>盒币奖励</td><td>社区奖励</td><td>奖项说明</td></tr><tr><td>comingsoon</td><td>1</td><td><span>50000盒币/篇</span><span>故宫冰箱贴</span></td><td><span>社区勋章</span><span>社区称号</span><span>积分1000点</span></td><td>神秘嘉宾组评定</td></tr><tr><td>todolist</td><td>3</td><td>20000盒币/篇</td><td><span>社区勋章</span><span>社区称号</span><span>积分500点</span></td><td>神秘嘉宾组评定</td></tr><tr><td>awesome</td><td>5</td><td>10000盒币/篇</td><td><span>社区勋章</span><span>社区称号</span><span>积分500点</span></td><td>魔盒评委小组综合评定</td></tr><tr><td>sortdesc</td><td>5</td><td>5000盒币/篇</td><td><span>社区勋章</span><span>社区称号</span><span>积分200点</span></td><td>投票</td></tr><tr><td>undefined</td><td>5</td><td>5000盒币/篇</td><td><span>社区勋章</span><span>社区称号</span><span>积分200点</span></td><td>创意奖（魔盒小组评定）</td></tr><tr><td>优选作品</td><td>-</td><td>100-5000盒币</td><td>社区勋章</td><td>你的才思值得这个奖</td></tr><tr><td>投票幸运奖</td><td>1</td><td>故宫冰箱贴</td><td>积分1000点</td><td>参与投票的侠士中随机抽取</td></tr><tr><td>投票参与奖</td><td>-</td><td>-</td><td>积分100点</td><td>投票皆可得</td></tr></tbody></table><br/><img src="https://cdn.jx3box.com/design/event/xuanfuleidong/prize.png"> 
+`
                 },
                 {
                     title: "评选流程",
