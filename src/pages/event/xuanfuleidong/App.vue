@@ -1,24 +1,26 @@
 <template>
     <!-- 专题页 -->
-    <div class="p-event" :class="'v-' + page_name">
+    <div class="p-event" :class="[`v-${page_name}`, { isMiniProgram }]">
         <Header :overlayEnable="true"></Header>
         <router-view></router-view>
-        <!-- <div class="p-event-footer">
+        <div class="p-event-footer">
             <div class="wp">
                 <Footer></Footer>
             </div>
-        </div> -->
+        </div>
     </div>
 </template>
 
 <script>
 import { isMiniProgram } from "@jx3box/jx3box-common/js/utils";
-// import { postStat } from "@jx3box/jx3box-common/js/stat";
+import { postStat } from "@jx3box/jx3box-common/js/stat";
 import { __cdn } from "@/utils/config";
 export default {
     name: "App",
     data: function () {
-        return {};
+        return { 
+            isMiniProgram: isMiniProgram(),
+        };
     },
     provide: {
         __imgRoot: __cdn + "design/event/xuanfuleidong/",
@@ -29,7 +31,7 @@ export default {
         },
     },
     created: function () {
-        // postStat("event", "xuanfuleidong");
+        postStat("event", "xuanfuleidong");
         // 小程序下设置viewport
         if (isMiniProgram()) {
             let meta = document.createElement("meta");

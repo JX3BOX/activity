@@ -1,10 +1,14 @@
-.m-xuanfuleidong.is-mini {
-    width: 100%;
+.isMiniProgram {
+    .m-xuanfuleidong {
+        width: 100%;
+    }
+    .c-header,
+    .p-event-footer {
+        .none;
+    }
 }
-
 .m-miniprogram {
     height: 100vh;
-    width: 100%;
     background: linear-gradient(
         180deg,
         rgba(11, 26, 42, 1) 0%,
@@ -172,10 +176,10 @@
                     .fz(16px);
                 }
                 .u-content {
-                    text-indent: 1em;
+                    text-indent: 1em; 
                     overflow: visible;
                     white-space: normal;
-                    text-overflow: clip;
+                    text-overflow: clip; 
                     -webkit-line-clamp: none;
                     line-clamp: none;
                 }
