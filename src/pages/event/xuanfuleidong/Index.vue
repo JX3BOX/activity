@@ -1,5 +1,5 @@
 <template>
-    <div class="m-index m-xuanfuleidong">
+    <div class="m-index m-xuanfuleidong" :class="{ 'is-mini': isMiniProgram }">
         <Miniprogram v-if="isMiniProgram" :data="miniData" />
         <template v-else>
             <div class="m-kv">

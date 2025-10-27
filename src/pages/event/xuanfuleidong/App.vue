@@ -1,6 +1,6 @@
 <template>
     <!-- 专题页 -->
-    <div class="p-event" :class="[`v-${page_name}`, { isMiniProgram }]">
+    <div class="p-event" :class="'v-' + page_name">
         <Header :overlayEnable="true"></Header>
         <router-view></router-view>
         <!-- <div class="p-event-footer">
@@ -18,9 +18,7 @@ import { __cdn } from "@/utils/config";
 export default {
     name: "App",
     data: function () {
-        return { 
-            isMiniProgram: isMiniProgram(),
-        };
+        return {};
     },
     provide: {
         __imgRoot: __cdn + "design/event/xuanfuleidong/",
