@@ -39,8 +39,8 @@
                         :class="{ 'opacity-1': cgAddClassStatus }"
                         :src="imgurl + 'cg-3.png'"
                     />
-                    <img class="u-counter-content u-mw-content p-animation" :src="imgurl + 'cg-4.png'" />
-                    <img class="u-counter-content u-xz-content p-animation" :src="imgurl + 'cg-5.png'" />
+                    <img class="u-counter-content u-mw-content p-animation" :src="imgurl + 'cg-4.png?1'" />
+                    <img class="u-counter-content u-xz-content p-animation" :src="imgurl + 'cg-5.png?1'" />
                 </div>
             </div>
             <!-- 新团本 -->
@@ -344,6 +344,7 @@
 
 <script>
 const KEY = "jiandanqinxin";
+import { getTopic } from "@/service/topic";
 export default {
     name: "Index",
     props: [],
@@ -369,6 +370,18 @@ export default {
             xlCarouselIndex: 0,
             zyCarouselIndex: 0,
         };
+    },
+    computed: {
+        data: function (val) {
+            let _data = {};
+            this.raw.forEach((item) => {
+                if (!_data[item.subtype]) {
+                    _data[item.subtype] = [];
+                }
+                _data[item.subtype].push(item);
+            });
+            return _data;
+        },
     },
     directives: {
         animate: {
@@ -396,9 +409,21 @@ export default {
             },
         },
     },
-    computed: {},
-    watch: {},
+    mounted: function () {
+        this.init();
+    },
     methods: {
+        init() {
+            getTopic(KEY).then((res) => {
+                this.raw = res.data.data;
+                this.pic = this.changePic(this.data.pic, "desc");
+                this.title = this.changePic(this.data.title, "desc");
+                this.play = sortBy(this.data.play, (o) => o.id);
+                this.slider = this.data.slider;
+                this.fb = sortBy(this.data.fb, (o) => o.id);
+                this.info = sortBy(this.data.info, (o) => o.id);
+            });
+        },
         addCgClass() {
             this.cgAddClassStatus = true;
         },
