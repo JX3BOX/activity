@@ -18,14 +18,14 @@ function getTopTotal(achieve_arr) {
 }
 
 function getMountDpsRace(achieveId, query) {
-    return $team().get(`/api/team/achieve/${achieveId}/mount/top?_no_cache`, {
+    return $team().get(`/api/team/achieve/${achieveId}/mount/top`, {
         params: query
     })
 }
 
 // 获取综合排名
 function getMixRank(params){
-    return $team().get(`/api/team/achieve-mix/top?_no_cache`, {
+    return $team().get(`/api/team/achieve-mix/top`, {
         params,
     })
 }
