@@ -343,8 +343,7 @@
 </template>
 
 <script>
-const KEY = "jiandanqinxin";
-import { getTopic } from "@/service/topic";
+const KEY = "jiandanqinxin"; 
 export default {
     name: "Index",
     props: [],
@@ -409,21 +408,7 @@ export default {
             },
         },
     },
-    mounted: function () {
-        this.init();
-    },
     methods: {
-        init() {
-            getTopic(KEY).then((res) => {
-                this.raw = res.data.data;
-                this.pic = this.changePic(this.data.pic, "desc");
-                this.title = this.changePic(this.data.title, "desc");
-                this.play = sortBy(this.data.play, (o) => o.id);
-                this.slider = this.data.slider;
-                this.fb = sortBy(this.data.fb, (o) => o.id);
-                this.info = sortBy(this.data.info, (o) => o.id);
-            });
-        },
         addCgClass() {
             this.cgAddClassStatus = true;
         },
