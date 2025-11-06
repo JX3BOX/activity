@@ -341,7 +341,7 @@
 </template>
 
 <script>
-const KEY = "jiandanqinxin_yq";
+const KEY = "jiandanqinxin";
 export default {
     name: "Index",
     props: [],
@@ -414,5 +414,5 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "~@/assets/css/topic/jiandanqinxin_yq/index.less";
+@import "~@/assets/css/topic/jiandanqinxin/index.less";
 </style>
