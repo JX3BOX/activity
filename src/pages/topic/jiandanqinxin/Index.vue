@@ -170,28 +170,30 @@
                     />
                 </div>
 
-                <img
-                    class="u-jzhy-wz-item p-animation"
-                    v-animate="'fadeInUp'"
-                    loading="lazy"
-                    :src="imgurl + `jzhy-wz1.png`"
-                    v-if="jzhyMoveClass === 'u-jzhy-bt-item1'"
-                />
-                <img
-                    class="u-jzhy-wz-item p-animation"
-                    v-animate="'fadeInUp'"
-                    loading="lazy"
-                    :src="imgurl + `jzhy-wz2.png`"
-                    v-if="jzhyMoveClass === 'u-jzhy-bt-item2'"
-                />
+                <div class="u-jzhy-wz-item-container">
+                    <img
+                        class="u-jzhy-wz-item p-animation"
+                        v-animate="'fadeInUp'"
+                        loading="lazy"
+                        :src="imgurl + `jzhy-wz1.png`"
+                        v-if="jzhyMoveClass === 'u-jzhy-bt-item1'"
+                    />
+                    <img
+                        class="u-jzhy-wz-item p-animation"
+                        v-animate="'fadeInUp'"
+                        loading="lazy"
+                        :src="imgurl + `jzhy-wz2.png`"
+                        v-if="jzhyMoveClass === 'u-jzhy-bt-item2'"
+                    />
 
-                <img
-                    class="u-jzhy-wz-item p-animation"
-                    v-animate="'fadeInUp'"
-                    loading="lazy"
-                    :src="imgurl + `jzhy-wz3.png`"
-                    v-if="jzhyMoveClass === 'u-jzhy-bt-item3'"
-                />
+                    <img
+                        class="u-jzhy-wz-item p-animation"
+                        v-animate="'fadeInUp'"
+                        loading="lazy"
+                        :src="imgurl + `jzhy-wz3.png`"
+                        v-if="jzhyMoveClass === 'u-jzhy-bt-item3'"
+                    />
+                </div>
             </div>
             <!-- 阵营更新 -->
             <div class="m-content-title" style="margin-top: 14.7%">
@@ -341,7 +343,7 @@
 </template>
 
 <script>
-const KEY = "jiandanqinxin_yq";
+const KEY = "jiandanqinxin";
 export default {
     name: "Index",
     props: [],
@@ -414,5 +416,5 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "~@/assets/css/topic/jiandanqinxin_yq/index.less";
+@import "~@/assets/css/topic/jiandanqinxin/index.less";
 </style>

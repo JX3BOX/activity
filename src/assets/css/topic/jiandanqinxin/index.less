@@ -138,9 +138,10 @@
                 .m-xl-carousel {
                     width: 65.1%;
                     margin: 0 3.5%;
+                    overflow-y: hidden;
                     /deep/.el-carousel__container {
                         height: auto;
-                        padding-bottom: 73.2%;
+                        padding-bottom: 73.7%;
 
                         .u-xl-item {
                             cursor: pointer;
@@ -252,12 +253,20 @@
                     }
                 }
             }
-            .u-jzhy-wz-item {
+            .u-jzhy-wz-item-container {
                 position: absolute;
-                top: 4.5%;
-                width: 94.5%;
-                left: 2.75%;
-                opacity: 0;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                overflow: hidden;
+                .u-jzhy-wz-item {
+                    position: absolute;
+                    top: 4.5%;
+                    width: 94.5%;
+                    left: 2.75%;
+                    opacity: 0;
+                }
             }
         }
 
@@ -385,6 +394,7 @@
                 flex-wrap: wrap;
                 align-content: center;
                 padding-left: 2%;
+                overflow: hidden;
                 .u-zy-wz {
                     height: 26.5%;
                 }
