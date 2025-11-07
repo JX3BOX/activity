@@ -453,12 +453,13 @@ export default {
 
         // 选择tab的方法
         selectTab(tabIndex) {
-            this.selectedTab = tabIndex;
-            this.handlePageClick(1);
-
+            this.$nextTick(() => {
+                this.selectedTab = tabIndex;
+                this.handlePageClick(1,true);
+            })
         },
-        handlePageClick(page) {
-            if (this.currentPage === page) return;
+        handlePageClick(page, isReload=false) {
+            if (this.currentPage === page && !isReload) return;
 
             // 获取当前图片元素
             const currentImg = this.$refs.pageContainer.querySelector('.u-right-img');
