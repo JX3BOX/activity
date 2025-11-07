@@ -8,7 +8,7 @@
         </transition>
         <!--TODO        区域二内容-->
         <transition name="fade">
-            <div v-show="active===2" v-animate="'flowUp'" class="m-two">
+            <div v-show="active===2" class="m-two">
                 <img :src="imgurl+'1/bg_1.jpg'" class="u-img" />
                 <div class="u-content">
 
@@ -107,18 +107,18 @@
                 <!--                容器分左右，中间竖向线条间隔-->
                 <div class="u-content">
                     <div class="u-left">
-                        <img :src="imgurl+'4/tab/1.png'" class="u-img" @click="selectTab(1)"
+                        <img :src="imgurl+'4/tab/1.png'" :style="{ opacity: getTabOpacity5(1) }" class="u-img"
+                             @click="selectTab(1)"
                              @mouseenter="hoverTab5 = 1"
-                             @mouseleave="hoverTab5 = null"
-                             :style="{ opacity: getTabOpacity5(1) }"/>
-                        <img :src="imgurl+'4/tab/2.png'" class="u-img" @click="selectTab(2)"
+                             @mouseleave="hoverTab5 = null"/>
+                        <img :src="imgurl+'4/tab/2.png'" :style="{ opacity: getTabOpacity5(2) }" class="u-img"
+                             @click="selectTab(2)"
                              @mouseenter="hoverTab5 = 2"
-                             @mouseleave="hoverTab5 = null"
-                             :style="{ opacity: getTabOpacity5(2) }"/>
+                             @mouseleave="hoverTab5 = null"/>
                     </div>
                     <div class="u-line"></div>
                     <div class="u-right">
-                        <div class="u-right-box"  ref="pageContainer">
+                        <div ref="pageContainer"  class="u-right-box">
                             <img  :key="`${selectedTab}_${currentPage}`" :src="`${imgurl}4/${selectedTab}_${currentPage}.png`" class="u-right-img"/>
                         </div>
                         <div class="pagination">
@@ -187,65 +187,7 @@ export default {
             currentPage:1
         };
     },
-    directives: {
-        animate: {
-            inserted: function(el, binding) {
-                binding.addClass = () => {
-                    const { top } = el.getBoundingClientRect();
-                    const h = document.documentElement.clientHeight || document.body.clientHeight;
-                    if (top < h) {
-                        if (el.className.indexOf(binding.value) == -1) {
-                            // 初次还未绑定过，则新增类名(注意：下面单引号中间是一个空格！！！)
-                            el.className = binding.value + " " + el.className;
-                        }
-                        if (binding.addClass) {
-                            window.removeEventListener("scroll", binding.addClass);
-                        }
-                    }
-                };
-                window.addEventListener("scroll", binding.addClass, true);
-                binding.addClass();
-            },
-            unbind: function(el, binding) {
-                if (binding.addClass) {
-                    window.removeEventListener("scroll", binding.addClass);
-                }
-            },
-        },
-        timer: {
-            inserted: function(el, binding, vnode) {
-                let that = vnode.context;
-                binding.addtimer = () => {
-                    const { top } = el.getBoundingClientRect();
-                    const h = document.documentElement.clientHeight || document.body.clientHeight;
-                    if (top < h) {
-                        if (!that.timer) {
-                            that.timer = setInterval(() => {
-                                that.active === 6 ? (that.active = 1) : that.active++;
-                                that.resetAnimation();
-                            }, 5000);
-                        }
-                    } else {
-                        if (that.timer) {
-                            clearInterval(that.timer);
-                            that.timer = null;
-                            that.active = 1;
-                        }
-                    }
-                };
-                window.addEventListener("scroll", binding.addtimer, true);
-                binding.addtimer();
-            },
-            unbind: function(el, binding, vnode) {
-                let that = vnode.context;
-                if (binding.addtimer) {
-                    window.removeEventListener("scroll", binding.addtimer);
-                    clearInterval(that.timer);
-                    that.timer = null;
-                }
-            },
-        },
-    },
+
     computed: {},
     watch: {},
     mounted() {
@@ -294,7 +236,7 @@ export default {
             this.showOptions = false;
             this.currentDetail = item;
         },
-// 鼠标进入小图，切换大背景图
+        // 鼠标进入小图，切换大背景图
         handleThumbEnter(item, index) {
             if (this.currentDetail && this.currentDetail.value === 4) {
                 // 预加载目标图片
@@ -309,19 +251,19 @@ export default {
                         const newBackground = document.createElement("div");
                         newBackground.className = "new-background-layer";
                         newBackground.style.cssText = `
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    background-image: url(${this.imgurl}1/yongningwan/${item}.jpg);
-                    background-size: 100% 100%;
-                    background-repeat: no-repeat;
-                    background-position: right;
-                    opacity: 0;
-                    z-index: 2;
-                    transition: opacity 400ms ease-in-out;
-                `;
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            width: 100%;
+                            height: 100%;
+                            background-image: url(${this.imgurl}1/yongningwan/${item}.jpg);
+                            background-size: 100% 100%;
+                            background-repeat: no-repeat;
+                            background-position: right;
+                            opacity: 0;
+                            z-index: 2;
+                            transition: opacity 400ms ease-in-out;
+                        `;
 
                         // 添加新背景层到容器
                         detailBox.appendChild(newBackground);
@@ -407,10 +349,9 @@ export default {
             return 0.3;
         },
 
-// tab点击事件
+        // tab点击事件
         handleTabClick(tabIndex) {
             if (this.fourActive === tabIndex) return;
-
             // 获取当前大图元素和进度条图片元素
             const currentImg = document.querySelector(".u-big-img");
             const jdtImg = document.querySelector(".u-jdt-img");
@@ -538,8 +479,8 @@ export default {
                     top: 0;
                     left: 0;
                     max-height: 24.7vw;
-                     object-fit: contain;
-                   opacity: 0;
+                    object-fit: contain;
+                    opacity: 0;
                     transition: opacity 300ms ease-in-out;
                   `;
 
@@ -566,34 +507,10 @@ export default {
                 };
             } else {
                 this.currentPage = page;
-            }},
+            }
+        },
         open(url) {
             window.open(url, "_blank");
-        },
-        resetAnimation() {
-            if (this.$refs["bg-content"] && this.$refs["bg-boss"]) {
-                this.$refs["bg-content"].style.animation = "none";
-                this.$refs["bg-boss"].style.animation = "none";
-                setTimeout(() => {
-                    this.$refs["bg-content"].style.animation = "fadeIn 0.3s linear 1 forwards";
-                    this.$refs["bg-boss"].style.animation = "fadeIn 0.3s linear .015s 1 forwards";
-                }, 1);
-            }
-        },
-        changeBoss(item) {
-            if (this.timer) {
-                clearInterval(this.timer);
-                this.timer = null;
-            }
-            if (this.active === item) return;
-            this.active = item;
-            this.resetAnimation();
-        },
-        resetTimer() {
-            this.timer = setInterval(() => {
-                this.active === 6 ? (this.active = 1) : this.active++;
-                this.resetAnimation();
-            }, 5000);
         },
     },
 };
