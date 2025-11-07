@@ -1,0 +1,280 @@
+.m-index {
+    width: 100vw;
+    max-width: 100%;
+
+    .h(calc(100vh - 59px));
+    //.h(100vh);
+    overflow: hidden;
+    .fade-enter-active, .fade-leave-active {
+        transition: all 300ms ease-in-out;
+    }
+
+    .fade-enter {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    .fade-leave-to {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    .m-first{
+        .size(100%);
+        position: relative;
+        overflow: hidden;
+        .flex;
+        .flex(o);
+       video{
+           .pa;
+           .lt(0);
+           .size(100%);
+
+           object-fit: cover;
+           z-index: -1;
+           pointer-events: none;
+       }
+        .u-img{
+            .pa;
+            .h(100%);
+        }
+    }
+    .m-two{
+        .size(100%);
+        .pr;
+        .u-img{
+            .w(100%);
+        }
+        .u-content{
+            .size(100%);
+            .pa;
+            .z(2);
+            .lt(0);
+            .flex;
+            .flex(o);
+            gap:1.5vw;
+            .u-item{
+                .w(16vw);
+            }
+            .u-detail {
+                .flex;
+                flex-direction: column;
+                gap:20px;
+                .w(100%);
+                .flex(o);
+                .pa;
+                .z(3);
+                .u-detail-box{
+                    .pr;
+                    .w(100%);
+                    .h(23.4vw);
+                    background-size: 100% 100%;
+                    background-repeat: no-repeat;
+                    background-position: right;
+                    overflow: hidden;
+                    .u-check-img{
+                        .pa;
+                        .rb(0);
+                        .w(5.2vw)
+                    }
+                    //永宁湾遮罩图
+                    .u-shade-img{
+                        .w(100%);
+                        .pa;
+                        .z(3);
+                    }
+                    .u-for-img{
+                        .pa;
+                        z-index: 4;
+                        .flex;
+                        left: 3.6vw;
+                        bottom: 5.4vw;
+                        gap:0.52vw;
+                        flex-wrap: wrap;
+                        .w(28.08vw);
+                        .u-for-img-box{
+                            .w(5.2vw);
+                            background: #ffffff;
+                            padding: 4px;
+                            box-sizing: border-box;
+                            .flex;
+                            .flex(o);
+                        }
+                    }
+                }
+              .u-close{
+                  .w(10vw);
+                  &:hover {
+                      background-color: rgba(0, 0, 0, 0.4);
+                  }
+              }
+            }
+
+        }
+    }
+
+    .m-three{
+        .size(100%);
+        position: relative;
+        overflow: hidden;
+        .u-icon-img{
+            .pa;
+            .lt(64px);
+            .z(2);
+        }
+        .u-bg-img{
+            .w(100%);
+        }
+        .u-right{
+            .pa;
+            .rb(0);
+            .h(100%);
+            .w(36.8vw);
+            overflow: auto;
+            padding: 0 6vw;
+            box-sizing: border-box;
+            &::-webkit-scrollbar {
+                width: 0;
+            }
+            .u-content{
+                .mt(100px);
+            }
+            .u-first-tip{
+                .w(100%);
+                .pa;
+                .rb(0);
+                .z(3);
+            }
+
+        }
+    }
+    .m-four{
+        .size(100%);
+        position: relative;
+        overflow: hidden;
+
+        .u-bg-img{
+            .w(100%);
+        }
+        .u-content{
+            .pa;
+            .size(100%);
+            .z(2);
+            .lt(0);
+            .u-big-img{
+                //.mt(64px);
+                .h(44.3vw);
+              .pa;
+            }
+            .u-jdt-img{
+                .w(50vw);
+                .pa;
+                .z(4);
+                bottom:7vw;
+                left: 0;
+            }
+            .u-bottom{
+                .pa;
+                .lb(0);
+                .w(100%);
+                .u-img{
+                    .h(3.6vw);
+                    .pr;
+                    left:3.1vw;
+                }
+                .u-bottom-page{
+                    .flex;
+                    .flex(o);
+                    .pa;
+                     .size(100%);
+                    .lt(0);
+                    gap:2.6vw;
+                    .z(3);
+                   .u-page-img {
+                        transition: opacity 300ms ease-in-out;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+    }
+    .m-five{
+         .size(100%);
+        .flex;
+        .flex(o);
+        position: relative;
+        overflow: hidden;
+        .u-bg-img{
+            .w(100%);
+        }
+        .u-content{
+            .pa;
+            .size(50.6vw,27.9vw);
+            .z(2);
+            top:10vw;
+            .flex;
+           justify-content: center;
+            gap:1.5vw;
+            .u-left{
+                .w(6.9vw);
+                flex-shrink: 0;
+                .u-img{
+                    .mb(1vw);
+                    transition: opacity 0.3s ease;
+                    user-select: none;
+                }
+            }
+            .u-line{
+                .h(10vw);
+                .w(4px);
+                background: #000;
+            }
+            .u-right{
+                flex:1;
+                .h(100%);
+                .pr;
+                .u-right-box{
+                    max-height: calc(100% - 62px);
+                    .u-right-img{
+                        max-height: 24.7vw;
+                        object-fit: contain;
+                        .pa;
+                        .lt(0);
+                    }
+
+                }
+                .pagination {
+                    .pa;
+                    .lb(0);
+                    display: flex;
+                    justify-content: center;
+                    gap: 8px;
+                    padding: 16px 0;
+                    bottom: 0;
+                }
+
+                .page-item {
+                    width: 32px;
+                    height: 32px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border: 1px solid #000;
+                    cursor: pointer;
+                    transition: all 0.2s ease;
+                }
+
+                .page-item:hover {
+                    background-color: #f0f0f0;
+                }
+
+                .page-item.active {
+                    background-color: #000;
+                    color: #fff;
+                    border-color: #000;
+                }
+            }
+        }
+    }
+}
+
