@@ -1,14 +1,13 @@
 .m-index {
-    width: 100vw;
-    max-width: 100%;
 
-    .h(calc(100vh - 59px));
-    //.h(100vh);
-    overflow: hidden;
+    max-width: 100%;
+    min-width: 1280px;
+    .mt(64px);
+    .h(calc(100vh - 123px));
+    overflow:hidden;
     .fade-enter-active, .fade-leave-active {
         transition: all 300ms ease-in-out;
     }
-
     .fade-enter {
         opacity: 0;
         transform: translateY(20px);
@@ -42,9 +41,9 @@
     .m-two{
         .size(100%);
         .pr;
-        .u-img{
-            .w(100%);
-        }
+        background-image: url("@{kv_shanhayuanliu}1/bg_1.jpg");
+        background-size: cover;
+        background-position: center -20px;
         .u-content{
             .size(100%);
             .pa;
@@ -52,10 +51,11 @@
             .lt(0);
             .flex;
             .flex(o);
-            gap:1.5vw;
+            gap:1.5%;
             .u-item{
-                .w(16vw);
+                .w(16%);
             }
+
             .u-detail {
                 .flex;
                 flex-direction: column;
@@ -67,15 +67,16 @@
                 .u-detail-box{
                     .pr;
                     .w(100%);
-                    .h(23.4vw);
-                    background-size: 100% 100%;
+                    aspect-ratio:64/15;
+                    background-size: cover;
                     background-repeat: no-repeat;
                     background-position: right;
                     overflow: hidden;
                     .u-check-img{
                         .pa;
                         .rb(0);
-                        .w(5.2vw)
+                        .w(15.6%);
+                        aspect-ratio: 3/1;
                     }
                     //永宁湾遮罩图
                     .u-shade-img{
@@ -87,18 +88,23 @@
                         .pa;
                         z-index: 4;
                         .flex;
-                        left: 3.6vw;
-                        bottom: 5.4vw;
-                        gap:0.52vw;
+                        left: 3.6%;
+                        bottom: 20%;
+                        gap:2%;
                         flex-wrap: wrap;
-                        .w(28.08vw);
+                        .w(28.08%);
+
                         .u-for-img-box{
-                            .w(5.2vw);
-                            background: #ffffff;
-                            padding: 4px;
+                            .w(calc(calc(92%) / 5));
+                            aspect-ratio: 25/14;
                             box-sizing: border-box;
                             .flex;
                             .flex(o);
+                            .mb(16px);
+                            &.active{
+                                background: #ffffff;
+                                padding: 4px;
+                            }
                         }
                     }
                 }
@@ -115,7 +121,7 @@
 
     .m-three{
         .size(100%);
-        position: relative;
+        .pr;
         overflow: hidden;
         .u-icon-img{
             .pa;
@@ -129,9 +135,9 @@
             .pa;
             .rb(0);
             .h(100%);
-            .w(36.8vw);
+            .w(36.8%);
             overflow: auto;
-            padding: 0 6vw;
+            padding: 0 6%;
             box-sizing: border-box;
             &::-webkit-scrollbar {
                 width: 0;
@@ -150,73 +156,77 @@
     }
     .m-four{
         .size(100%);
-        position: relative;
+        .pr;
+        background-position: center top;
+        background-size: cover;
         overflow: hidden;
-
-        .u-bg-img{
-            .w(100%);
-        }
         .u-content{
-            .pa;
             .size(100%);
-            .z(2);
-            .lt(0);
-            .u-big-img{
-                //.mt(64px);
-                .h(44.3vw);
-              .pa;
-            }
+            .flex;
+            flex-direction: column;
+            //全部在底部
+            justify-content: flex-end;
             .u-jdt-img{
-                .w(50vw);
-                .pa;
-                .z(4);
-                bottom:7vw;
-                left: 0;
+                .w(50%);
+                display: inline-block;
+                aspect-ratio: 107/23;
+                object-fit: contain;
+                .mb(75px)
             }
             .u-bottom{
-                .pa;
-                .lb(0);
-                .w(100%);
+
+                .flex;
                 .u-img{
-                    .h(3.6vw);
-                    .pr;
-                    left:3.1vw;
+                    .w(10%);
+                    aspect-ratio: 192/70;
+                    .pl(60px);
                 }
                 .u-bottom-page{
+                    .pa;
+                    .z(2);
+                    .lb(0,20px);
+                    .w(100%);
+
                     .flex;
                     .flex(o);
-                    .pa;
-                     .size(100%);
-                    .lt(0);
-                    gap:2.6vw;
-                    .z(3);
+
+                    gap:2.6%;
+
                    .u-page-img {
+                        .w(1%);
+                        aspect-ratio: 21/22;
                         transition: opacity 300ms ease-in-out;
                         cursor: pointer;
+                       &.other{
+                           aspect-ratio: 34/11;
+                           .w(3.5%);
+                       }
                     }
                 }
             }
         }
     }
     .m-five{
-         .size(100%);
+        .size(100%);
         .flex;
         .flex(o);
-        position: relative;
+        .pr;
         overflow: hidden;
-        .u-bg-img{
-            .w(100%);
-        }
+        background-image: url("@{kv_shanhayuanliu}4/bg_4.jpg");
+        background-size: cover;
+        background-position: center top;
         .u-content{
             .pa;
-            .size(50.6vw,27.9vw);
-            .z(2);
-            top:10vw;
+           .w(50.6%);
+            aspect-ratio: 971/536;
+            .z(1);
+            top:20%;
             .flex;
            justify-content: center;
-            gap:1.5vw;
+            gap:3%;
             .u-left{
-                .w(6.9vw);
+                .w(13.6%);
+                aspect-ratio: 22/5;
                 flex-shrink: 0;
                 .u-img{
                     .mb(1vw);
@@ -234,31 +244,27 @@
                 .h(100%);
                 .pr;
                 .u-right-box{
-                    max-height: calc(100% - 62px);
+                    .h(88.8%);
+                    overflow: hidden;
                     .u-right-img{
-                        max-height: 24.7vw;
                         object-fit: contain;
-                        .pa;
-                        .lt(0);
+                        object-position: center top;
+                        .h(100%);
                     }
-
                 }
                 .pagination {
+                    .w(100%);
                     .pa;
                     .lb(0);
-                    display: flex;
-                    justify-content: center;
-                    gap: 8px;
-                    padding: 16px 0;
-                    bottom: 0;
+                   .flex;
+                    gap:1.3%;
                 }
 
                 .page-item {
-                    width: 32px;
-                    height: 32px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
+                   .w(3.9%);
+                    aspect-ratio: 1/1;
+                   .flex;
+                    .flex(o);
                     border: 1px solid #000;
                     cursor: pointer;
                     transition: all 0.2s ease;

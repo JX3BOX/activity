@@ -9,9 +9,7 @@
         <!--TODO        区域二内容-->
         <transition name="fade">
             <div v-show="active===2" class="m-two">
-                <img :src="imgurl+'1/bg_1.jpg'" class="u-img" />
                 <div class="u-content">
-
                     <div
                         v-for="(item,index) in twoImg"
                         v-show="showOptions"
@@ -45,7 +43,7 @@
                                 <!--                        9个循环图-->
                                 <div class="u-for-img">
                                     <div v-for="(item,index) in currentDetail.options" :key="index"
-                                         class="u-for-img-box" @click="handleThumbEnter(item, index)">
+                                         class="u-for-img-box" :class="{active:currentDetail.active===item}" @click="handleThumbEnter(item, index)">
                                         <img :src="imgurl+'1/yongningwan/slider/'+item+'.jpg'" class="u-for-img-item" />
                                     </div>
                                 </div>
@@ -79,19 +77,18 @@
         </transition>
         <!--        区域四内容-->
         <transition name="fade">
-            <div v-show="active===4" class="m-four">
-                <img :src="imgurl+'3/bg_3.jpg'" class="u-bg-img" />
+            <div v-show="active===4" class="m-four" :style="{backgroundImage: `url(${imgurl}3/${fourActive}.jpg)`}">
                 <div class="u-content">
-                    <img :src="`${imgurl}3/${fourActive}.jpg`" class="u-big-img" />
                     <!--                    底部区域图标及切换区域-->
+                    <!--                        百强图片链接-->
+                    <img :src="`${imgurl}3/jdt.jpg`" class="u-jdt-img" @click="jdtClick"  v-if="fourActive!==6"/>
                     <div class="u-bottom">
-                        <img :src="`${imgurl}3/icon_2.png`" class="u-img" />
-                        <!--                        百强图片链接-->
-                        <img :src="`${imgurl}3/jdt.jpg`" class="u-jdt-img" @click="jdtClick" />
+                        <img :src="`${imgurl}3/icon_2.png`" class="u-img" v-if="fourActive!==6"/>
                         <div class="u-bottom-page">
                             <img v-for="item in 6" :key="item" :src="`${imgurl}3/tab/${item}.png`"
                                  :style="{ opacity: getTabOpacity(item) }"
                                  class="u-page-img"
+                                 :class="{other:item===6}"
                                  @click="handleTabClick(item)"
                                  @mouseenter="handleTabMouseEnter(item)"
                                  @mouseleave="handleTabMouseLeave(item)" />
@@ -103,7 +100,7 @@
         <!--        区域五内容-->
         <transition name="fade">
             <div v-show="active===5" class="m-five">
-                <img :src="imgurl+'4/bg_4.jpg'" class="u-bg-img" />
+
                 <!--                容器分左右，中间竖向线条间隔-->
                 <div class="u-content">
                     <div class="u-left">
@@ -146,7 +143,7 @@ export default {
     data: function() {
         return {
             imgurl: "https://cdn.jx3box.com/design/topic/shanhaiyuanliu/",
-            active: 1,
+            active:1,
             scrollCooldown: false, // 防止快速滚动
             currentDetail: "", // 当前2显示的详情图片
             showOptions: true, // 控制是否显示选项
@@ -212,6 +209,7 @@ export default {
 
             // 设置冷却时间，防止连续触发
             this.scrollCooldown = true;
+
             setTimeout(() => {
                 this.scrollCooldown = false;
             }, 800); // 800ms 内只能翻页一次
@@ -255,29 +253,24 @@ export default {
                             top: 0;
                             left: 0;
                             width: 100%;
-                            height: 100%;
+                            aspect-ratio:64/15;
                             background-image: url(${this.imgurl}1/yongningwan/${item}.jpg);
-                            background-size: 100% 100%;
+                            background-size:cover;
                             background-repeat: no-repeat;
                             background-position: right;
                             opacity: 0;
                             z-index: 2;
                             transition: opacity 400ms ease-in-out;
                         `;
-
                         // 添加新背景层到容器
                         detailBox.appendChild(newBackground);
-
                         // 触发重排
                         newBackground.offsetHeight;
-
                         // 开始淡入动画
                         newBackground.style.opacity = "1";
-
                         // 旧背景淡出（通过降低当前元素的opacity）
                         detailBox.style.transition = "opacity 400ms ease-in-out";
                         detailBox.style.opacity = "0.8";
-
                         // 动画完成后更新背景并清理
                         setTimeout(() => {
                             // 更新数据
@@ -349,86 +342,66 @@ export default {
             return 0.3;
         },
 
-        // tab点击事件
+        // handleTabClick 方法
         handleTabClick(tabIndex) {
             if (this.fourActive === tabIndex) return;
-            // 获取当前大图元素和进度条图片元素
-            const currentImg = document.querySelector(".u-big-img");
-            const jdtImg = document.querySelector(".u-jdt-img");
 
-            if (currentImg) {
-                // 预加载新图片
+            // 获取当前背景容器元素
+            const fourContainer = document.querySelector(".m-four");
+
+            if (fourContainer) {
+                // 预加载新背景图
                 const img = new Image();
                 img.src = `${this.imgurl}3/${tabIndex}.jpg`;
 
                 img.onload = () => {
-                    // 创建新图片元素
-                    const newImg = document.createElement("img");
-                    newImg.src = img.src;
-                    newImg.className = "u-big-img";
-                    newImg.style.cssText = `
-                        position: absolute;
-                        top:0px;
-                        right: 0;
-                        height: 44.3vw;
-                        transform: translateX(100%);
-                        transition: transform 300ms ease-in-out;
-                    `;
+                    // 创建新的背景层
+                    const newBackground = document.createElement("div");
+                    newBackground.className = "new-background-layer";
+                    newBackground.style.cssText = `
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-image: url(${this.imgurl}3/${tabIndex}.jpg);
+                    background-size: cover;
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    opacity: 0;
+                    z-index: 1;
+                    transition: opacity 400ms ease-in-out;
+                  `;
 
-                    // 插入到当前图片后面
-                    currentImg.parentNode.insertBefore(newImg, currentImg.nextSibling);
+                    // 添加新背景层到容器
+                    fourContainer.appendChild(newBackground);
 
                     // 触发重排
-                    newImg.offsetHeight;
+                    newBackground.offsetHeight;
 
-                    // 同时执行两个动画：旧图片向左滑出，新图片从右侧滑入
-                    currentImg.style.transform = "translateX(-100%)";
-                    currentImg.style.transition = "transform 300ms ease-in-out";
-                    newImg.style.transform = "translateX(0)";
+                    // 开始淡入动画
+                    newBackground.style.opacity = "1";
 
-                    // 如果存在进度条图片，也执行相同动画
-                    if (jdtImg) {
-                        jdtImg.style.transform = "translateX(-100%)";
-                        jdtImg.style.transition = "transform 300ms ease-in-out";
-                        // 创建新的进度条图片元素
-                        const newJdtImg = document.createElement("img");
-                        newJdtImg.src = `${this.imgurl}3/jdt.jpg`;
-                        newJdtImg.className = "u-jdt-img";
-                        newJdtImg.style.cssText = `
-                            width:50vw;
-                            position: absolute;
-                            bottom: 7vw;
-                            left: 0;
-                            transform: translateX(100%);
-                            transition: transform 300ms ease-in-out;
-                            display:${tabIndex < 6 ? "block" : "none"}
-                        `;
+                    // 旧背景淡出
+                    fourContainer.style.transition = "opacity 400ms ease-in-out";
+                    fourContainer.style.opacity = "0.8";
 
-                        // 插入到进度条图片后面
-                        jdtImg.parentNode.insertBefore(newJdtImg, jdtImg.nextSibling);
-                        newJdtImg.offsetHeight;
-                        newJdtImg.style.transform = "translateX(0)";
-                        // 添加点击事件监听器
-                        newJdtImg.addEventListener("click", () => {
-                            this.jdtClick(tabIndex);
-                        });
-                    }
 
-                    // 动画完成后更新状态并清理
+                    // 动画完成后更新背景并清理
                     setTimeout(() => {
+                        // 更新数据
                         this.fourActive = tabIndex;
-                        // 移除旧图片元素
-                        if (currentImg.parentNode) {
-                            currentImg.parentNode.removeChild(currentImg);
+                        // 移除临时元素和样式
+                        if (newBackground.parentNode) {
+                            newBackground.parentNode.removeChild(newBackground);
                         }
-                        // 移除旧进度条图片元素
-                        if (jdtImg && jdtImg.parentNode) {
-                            jdtImg.parentNode.removeChild(jdtImg);
-                        }
-                    }, 300);
+                        // 恢复主容器的opacity
+                        fourContainer.style.transition = "";
+                        fourContainer.style.opacity = "";
+                    }, 400);
                 };
             } else {
-                // 如果找不到当前图片元素，直接更新状态
+                // 如果找不到容器元素，直接更新状态
                 this.fourActive = tabIndex;
             }
         },
@@ -479,8 +452,9 @@ export default {
                     position: absolute;
                     top: 0;
                     left: 0;
-                    max-height: 24.7vw;
+                    height:88.8%;
                     object-fit: contain;
+                    object-position: center top;
                     opacity: 0;
                     transition: opacity 300ms ease-in-out;
                   `;
