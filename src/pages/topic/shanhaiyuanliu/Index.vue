@@ -1,5 +1,5 @@
 <template>
-    <div class="m-index">
+    <div class="m-index" @touchstart="handleTouchstart" @touchend="handleTouchend">
         <transition name="fade">
             <div v-show="active===1" class="m-first">
                 <video :src="imgurl+'KV/WXL_KW_MP4.mp4'" autoplay loop muted playsinline />
@@ -181,7 +181,9 @@ export default {
             selectedTab: 1, // 添加选中tab状态
             hoverTab5: null,
             totalPages: [6,7], // 固定7个页码
-            currentPage:1
+            currentPage:1,
+            //竖屏下
+            startTime:null
         };
     },
 
@@ -193,6 +195,14 @@ export default {
         if (this.mIndexElement) {
             this.mIndexElement.addEventListener("wheel", this.handleWheel, { passive: false });
         }
+        document.addEventListener(
+            "touchmove",
+            function (ev) {
+                ev.preventDefault();
+            },
+            { passive: false }
+        );
+        // this.handleOrientationChange()
     },
 
     beforeDestroy() {
@@ -202,6 +212,54 @@ export default {
         }
     },
     methods: {
+        //屏幕滑动
+        //手指按下屏幕
+        handleTouchstart(event) {
+            this.startTime = Date.now();
+            this.startX = event.changedTouches[0].clientX;
+            this.startY = event.changedTouches[0].clientY;
+        },
+        //手指离开屏幕
+        handleTouchend(event) {
+            const endTime = Date.now();
+            const endX = event.changedTouches[0].clientX;
+            const endY = event.changedTouches[0].clientY;
+            //判断按下的时长
+            if (endTime - this.startTime < 200) {
+                if (event.target.tagName == "A" || event.target.tagName == "a") {
+                    event.preventDefault();
+                    return window.open(event.target.href, "_self");
+                }
+            }
+
+            if (endTime - this.startTime > 2000) {
+                return;
+            }
+            //滑动的方向
+            let direction = "";
+
+            if (Math.abs(endX - this.startX) > 10) {
+                if (Math.abs(endY - this.startY) > 100) {
+                    return;
+                } else {
+                    direction = endX - this.startX > 0 ? "right" : "left";
+                }
+            } else {
+                return;
+            }
+            //用户做了合法的滑动操作
+            if (direction === "right") {
+                // 向下滚动，进入下一页
+                if (this.active < 5) { // 假设总共有6页
+                    this.active++;
+                }
+            } else {
+                // 向上滚动，返回上一页
+                if (this.active > 1) {
+                    this.active--;
+                }
+            }
+        },
         // 添加滚轮事件处理函数
         handleWheel(event) {
             // 如果正在冷却中则不处理
@@ -490,7 +548,13 @@ export default {
     },
 };
 </script>
+<!--<style>-->
+<!--html,body{-->
+<!--    min-height: 100vh;-->
+<!--    width: 100%;-->
+<!--}-->
+<!--</style>-->
+<style lang="less" >
 
-<style lang="less" scoped>
 @import "~@/assets/css/topic/shanhaiyuanliu/index.less";
 </style>
