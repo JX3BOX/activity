@@ -2,7 +2,7 @@
     <div class="m-index" @touchstart="handleTouchstart" @touchend="handleTouchend">
         <transition name="fade">
             <div v-show="active===1" class="m-first">
-                <video :src="imgurl+'KV/WXL_KW_MP4.mp4'" autoplay loop muted playsinline />
+                <video :src="imgurl+'KV/WXL_KW_MP4.mp4'" autoplay loop muted playsinline v-if="!isMobile"/>
                 <img :src="imgurl+'KV/kv.png'" class="u-img" />
             </div>
         </transition>
@@ -183,7 +183,8 @@ export default {
             totalPages: [6,7], // 固定7个页码
             currentPage:1,
             //竖屏下
-            startTime:null
+            startTime:null,
+            isMobile: false,
         };
     },
 
@@ -195,14 +196,16 @@ export default {
         if (this.mIndexElement) {
             this.mIndexElement.addEventListener("wheel", this.handleWheel, { passive: false });
         }
-        document.addEventListener(
-            "touchmove",
-            function (ev) {
-                ev.preventDefault();
-            },
-            { passive: false }
-        );
-        // this.handleOrientationChange()
+
+        // 在 mounted 中替换原有的 touchmove 监听器
+        document.addEventListener("touchmove", this.handleTouchMove, { passive: false });
+
+
+        const width = document.documentElement.clientWidth;
+        const height = document.documentElement.clientHeight;
+        if (width < height) {
+            this.isMobile = true;
+        }
     },
 
     beforeDestroy() {
@@ -213,6 +216,17 @@ export default {
     },
     methods: {
         //屏幕滑动
+        // 新增方法：处理 touchmove 事件
+        handleTouchMove(ev) {
+            // 如果当前处于第3个区域，并且触摸的目标在 #three-box 或其子元素上，则允许滚动并不阻止切换
+            if (this.active === 3 && (ev.target.closest('#three-box') || ev.target.id === 'three-box')) {
+                return; // 不阻止默认行为，允许滚动，也不触发页面切换
+            }
+
+            // 其他情况阻止默认行为
+            ev.preventDefault();
+        },
+
         //手指按下屏幕
         handleTouchstart(event) {
             this.startTime = Date.now();
@@ -221,6 +235,7 @@ export default {
         },
         //手指离开屏幕
         handleTouchend(event) {
+
             const endTime = Date.now();
             const endX = event.changedTouches[0].clientX;
             const endY = event.changedTouches[0].clientY;
@@ -245,6 +260,11 @@ export default {
                     direction = endX - this.startX > 0 ? "right" : "left";
                 }
             } else {
+                return;
+            }
+            // 在处理方向滑动之前添加判断
+            if (this.active === 3 && (event.target.closest('#three-box') || event.target.id === 'three-box')) {
+                // 如果在第三页且在可滚动区域内，不执行页面切换
                 return;
             }
             //用户做了合法的滑动操作
