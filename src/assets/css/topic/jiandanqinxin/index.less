@@ -1,6 +1,11 @@
+.pageBg(@index) {
+    background-image: url("@{kv_jiandanqinxin}bg_0@{index}.jpg");
+    background-size: 100% 100%;
+}
 .m-index {
     max-width: 1920px;
     margin: 0 auto;
+    overflow: hidden;
     .mt(64px);
     .pr;
     img {
@@ -11,44 +16,19 @@
         -ms-user-drag: none;
         user-drag: none;
     }
-    .m-content {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        .u-page-title {
+    .m-kv {
+        .pageBg(1);
+        padding: 22.7% 0 14.2%;
+        .u-img {
             width: 67%;
             margin: 0 auto;
-            margin-top: 23%;
         }
-
-        .m-content-title {
-            position: relative;
-            .u-title-index {
-                margin: 0 auto;
-                width: 25%;
-                position: relative;
-                z-index: 1;
-            }
-            .u-title-text {
-                margin: 0 auto;
-                width: 63%;
-                position: relative;
-                z-index: 1;
-            }
-            .u-title-bg {
-                position: absolute;
-                left: 0;
-                width: 100%;
-                top: 50%;
-                transform: translateY(-50%);
-                z-index: 0;
-                pointer-events: none;
-            }
-        }
-
+    }
+    .m-cg-box {
+        .pageBg(2);
+        padding: 6.7% 0 10.7%;
         .m-cg {
-            margin-top: 11%;
+            margin-top: 11.3%;
             .pr;
             .u-bg {
                 width: 63%;
@@ -63,7 +43,7 @@
                 position: absolute;
                 width: 40%;
                 left: 0%;
-                top: -8%;
+                top: -21%;
             }
             .u-title {
                 position: absolute;
@@ -118,7 +98,11 @@
                 }
             }
         }
+    }
 
+    .m-xl-box {
+        .pageBg(3);
+        padding: 2.9% 0 9.4%;
         .m-xl {
             .u-xl-title {
                 width: 39%;
@@ -191,7 +175,11 @@
                 }
             }
         }
+    }
 
+    .m-dz-box {
+        .pageBg(4);
+        padding: 5.2% 0 7.3%;
         .m-dz {
             display: flex;
             align-items: center;
@@ -212,7 +200,11 @@
                 }
             }
         }
+    }
 
+    .m-jzhy-box {
+        .pageBg(5);
+        padding: 5.5% 0 6.6%;
         .m-jzhy {
             margin: 0 auto;
             margin-top: 6.6%;
@@ -269,7 +261,11 @@
                 }
             }
         }
+    }
 
+    .m-zy-box {
+        .pageBg(6);
+        padding: 8.1% 0 12.4%;
         .m-zy {
             width: 63.3%;
             margin-top: 5.5%;
@@ -400,7 +396,11 @@
                 }
             }
         }
+    }
 
+    .m-qy-box {
+        .pageBg(7);
+        padding: 5.3% 0 5.6%;
         .m-qy {
             width: 65.7%;
             display: flex;
@@ -422,7 +422,11 @@
                 }
             }
         }
+    }
 
+    .m-more-box {
+        .pageBg(8);
+        padding: 8.6% 0 35.6%;
         .m-more {
             width: 60.5%;
             margin: 0 auto;
