@@ -1,0 +1,42 @@
+.m-jx3story-main {
+    height: calc(100vh - 64px);
+    background: url("@{jx3story}web/bg1.jpg") no-repeat top center/cover;
+    .m-left {
+        height: 100%;
+        width: 580px !important;
+    }
+    .m-tabs {
+        .u-router {
+            .db;
+            .x;
+            .size(573px,180px);
+            color: #fff3d3;
+            padding: 45px 50px 0 0;
+            box-sizing: border-box;
+            background-image: url("@{jx3story}web/tab.png");
+            background-repeat: no-repeat;
+            background-position: center top;
+            &:hover {
+                background-image: url("@{jx3story}web/tab_hover.png?");
+            }
+            &.active {
+                background-image: url("@{jx3story}web/tab_active.png");
+            }
+            .u-txt {
+                .flex;
+                .fz(35px);
+                .lh(92px);
+                gap: 5px;
+                justify-content: center;
+                align-items: center;
+                &::before {
+                    content: "◇";
+                    .fz(60px);
+                }
+                &:hover::before {
+                    content: "◆";
+                }
+            }
+        }
+    }
+}

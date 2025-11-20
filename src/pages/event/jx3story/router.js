@@ -8,24 +8,13 @@ const router = new VueRouter({
         {
             path: "/",
             name: "Index",
-            component: () => import("./Index.vue"),
+            component: () => import("./new/Index.vue"),
         },
         {
-            path: "/event",
-            name: "Event",
-            meta: { key: "event" },
-            component: () => import("./Detail.vue"),
-        },
-        {
-            path: "/vote",
-            name: "Vote",
-            meta: { key: "vote" },
-            component: () => import("./Detail.vue"),
-        },
-        {
-            path: "/article",
-            name: "Article",
-            component: () => import("./Article.vue"),
+            path: "/detail",
+            name: "Detail",
+            meta: { key: "detail" },
+            component: () => import("./new/Detail.vue"),
         },
     ],
 });

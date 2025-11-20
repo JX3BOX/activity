@@ -4,11 +4,11 @@
         <Header :overlayEnable="true"></Header>
         <!-- <img :src="imgRoot + '/main/main__bg.png'" class="m-bg" /> -->
         <router-view></router-view>
-        <div class="p-event-footer">
+        <!-- <div class="p-event-footer">
             <div class="wp">
                 <Footer></Footer>
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 
