@@ -1,9 +1,12 @@
 .m-jx3story-main {
     height: calc(100vh - 64px);
-    background: url("@{jx3story}web/bg1.jpg") no-repeat top center/cover;
+    background: url("@{jx3story}web/bg.png") no-repeat top center/cover;
     .m-left {
-        height: 100%;
-        width: 580px !important;
+        .size(580px,100%) !important;
+    }
+    .m-change {
+        .h(220px);
+        background: url("@{jx3story}web/logo.png") no-repeat center;
     }
     .m-tabs {
         .u-router {

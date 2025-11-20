@@ -1,6 +1,11 @@
 <template>
     <div class="m-jx3story-main">
         <div class="m-left">
+            <div class="m-change">
+                <div class="m-change-item">
+                    <img :src="__imgRoot + 'main/main__bg.png'" class="m-bg" />
+                </div>
+            </div>
             <div class="m-tabs">
                 <router-link
                     class="u-router"
