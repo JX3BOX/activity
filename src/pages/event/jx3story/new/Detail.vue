@@ -1,10 +1,8 @@
 <template>
-    <div class="m-jx3story-main">
+    <div class="m-jx3story-main" :class="`m-${key}-main`">
         <div class="m-left">
             <div class="m-change">
-                <div class="m-change-item">
-                    <img :src="__imgRoot + 'main/main__bg.png'" class="m-bg" />
-                </div>
+                <div class="m-change-item"></div>
             </div>
             <div class="m-tabs">
                 <router-link
@@ -19,11 +17,12 @@
             </div>
         </div>
         <div class="m-main">
-            <component :is="components[key]"></component>
+            <component :is="components[key]" :data="componentData"></component>
         </div>
     </div>
 </template>
 <script>
+import { getMenu } from "@jx3box/jx3box-common/js/api_misc";
 import { __cdn } from "@/utils/config";
 import Info from "../components/Info.vue";
 import Vote from "../components/Vote.vue";
@@ -33,6 +32,8 @@ export default {
     inject: ["__imgRoot"],
     data() {
         return {
+            list: [],
+            year: "2025",
             tabs: [
                 {
                     name: "返回首页",
@@ -64,6 +65,20 @@ export default {
     computed: {
         key() {
             return this.$route.query.key || "vote";
+        },
+        componentData() { 
+            const data = this.list.filter((item) => item.year == this.year)[0] || {};
+            return { ...data, nullImg: __cdn + "/design/event/jx3story/2025/web/null.png" };
+        },
+    },
+    mounted() {
+        this.load();
+    },
+    methods: {
+        load() {
+            getMenu("jx3story_data").then((res) => {
+                this.list = res;
+            });
         },
     },
 };
