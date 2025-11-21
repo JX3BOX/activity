@@ -3,16 +3,20 @@
         <div class="m-list-box" v-if="list.length">
             <div class="m-list">
                 <div class="m-list-item m-list-item-header">
-                    <span>序号</span>
-                    <span>入选作品</span>
-                    <span>作者</span>
-                    <span>票数</span>
+                    <span class="u-number">序号</span>
+                    <span class="u-post"> 入选作品</span>
+                    <span class="u-author">作者</span>
+                    <span class="u-number">票数</span>
                 </div>
                 <div class="m-list-item" v-for="(item, i) in list" :key="i">
-                    <span>{{ i + 1 }}</span>
-                    <span>{{ item.title }}</span>
-                    <span>{{ item.user_info.display_name }}</span>
-                    <span>{{ item.amount }}</span>
+                    <span class="u-number">{{ i + 1 }}</span>
+                    <span class="u-post">
+                        <a href="http://" target="_blank">{{ item.title }}</a>
+                    </span>
+                    <span class="u-author">
+                        <a href="http://" target="_blank">{{ item.user_info.display_name }}</a>
+                    </span>
+                    <span class="u-number">{{ item.amount }}</span>
                 </div>
             </div>
         </div>

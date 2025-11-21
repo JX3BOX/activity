@@ -13,13 +13,14 @@
 </template>
 
 <script>
+import { isMiniProgram } from "@jx3box/jx3box-common/js/utils";
 import { postStat } from "@jx3box/jx3box-common/js/stat";
 import { __imgPath } from "@/utils/config";
 export default {
     name: "App",
     data: function () {
         return {
-            imgRoot: __imgPath + "topic/jx3story/",
+            isMiniProgram: isMiniProgram(),
         };
     },
     provide: {
@@ -32,6 +33,14 @@ export default {
     },
     created: function () {
         postStat("event", "jx3story");
+
+        // 小程序下设置viewport
+        if (isMiniProgram()) {
+            let meta = document.createElement("meta");
+            meta.setAttribute("name", "viewport");
+            meta.setAttribute("content", "width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=no");
+            document.getElementsByTagName("head")[0].appendChild(meta);
+        }
     },
 };
 </script>
