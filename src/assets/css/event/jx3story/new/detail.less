@@ -10,8 +10,41 @@
         flex-shrink: 0;
     }
     .m-change {
+        .pr;
         .h(220px);
         background: url("@{jx3story}web/logo.png") no-repeat center;
+        .m-change-item {
+            .pa;
+            .x;
+            .pointer;
+            .size(219px,48px);
+            .fz(28px,48px);
+            .lb(50%,0);
+            color: #fff3d3;
+            background: url("@{jx3story}web/menu0.png") no-repeat center;
+            .active {
+                background: url("@{jx3story}web/menu1.png") no-repeat center;
+            }
+            .u-ul {
+                // .none;
+                .pa;
+                .r(10px);
+                .w(100%);
+                .clip;
+                top: 22px;
+                padding: 0;
+                background-color: #fff;
+                li {
+                    .pointer;
+                    list-style: none;
+                    color: #5c5c5c;
+                    &:hover {
+                        color: #fff;
+                        background-color: #999;
+                    }
+                }
+            }
+        }
     }
     .m-tabs {
         .u-router {
@@ -168,15 +201,29 @@
         .m-list-box {
             .pr;
             .w(1000px);
+            color: #4c4340;
             border-radius: 20px;
             background: url("@{jx3story}web/paper_bg.png") center;
             &::before {
-                content: "";
-                .db;
                 .pa;
                 .full;
+                content: "";
                 pointer-events: none;
                 background: url("@{jx3story}web/paper_bg2.png") no-repeat bottom right;
+                background-size: 100% auto;
+            }
+            .m-list-header {
+                .db;
+                .pa;
+                .size(640px,40px);
+                .fz(28px);
+                .x;
+                .ml(-320px);
+                padding-bottom: 48px;
+                top: 80px;
+                left: 50%;
+                pointer-events: none;
+                background: url("@{jx3story}web/paper_line.png") no-repeat center bottom;
                 background-size: 100% auto;
             }
             .m-list {
@@ -185,16 +232,6 @@
                 background: url("@{jx3story}web/paper_top.png") no-repeat;
                 background-size: calc(100% - 60px) auto;
                 background-position: 30px 30px;
-                &::before {
-                    content: "";
-                    .db;
-                    .pa;
-                    .size(640px,40px);
-                    top: 130px;
-                    pointer-events: none;
-                    background: url("@{jx3story}web/paper_line.png") no-repeat center top;
-                    background-size: 100% auto;
-                }
             }
             .m-list-item-header {
                 .fz(24px,2);
@@ -204,7 +241,6 @@
             .m-list-item {
                 .flex;
                 .fz(16px,48px);
-                color: #4c4340;
                 border-bottom: dashed 1px #aaa;
                 align-items: center;
                 justify-content: space-between;

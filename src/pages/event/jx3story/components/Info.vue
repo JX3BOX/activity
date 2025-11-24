@@ -30,6 +30,7 @@ export default {
     watch: {
         ac_id: {
             handler(id) {
+                this.content = "";
                 id && this.loadInfo(id);
             },
             immediate: true,

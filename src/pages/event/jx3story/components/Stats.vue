@@ -1,6 +1,9 @@
 <template>
     <div class="m-stats-content" v-loading="loading">
         <div class="m-list-box" v-if="list.length">
+            <div class="m-list-header">
+                <span class="u-title">{{ data.year }}年茶馆风月录入选作品投票统计榜</span>
+            </div>
             <div class="m-list">
                 <div class="m-list-item m-list-item-header">
                     <span class="u-number">序号</span>
@@ -50,6 +53,7 @@ export default {
     watch: {
         vote_id: {
             handler(id) {
+                this.list = [];
                 id && this.loadVote(id);
             },
             immediate: true,

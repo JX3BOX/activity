@@ -2,7 +2,12 @@
     <div class="m-jx3story-main" :class="`m-${key}-main`">
         <div class="m-left">
             <div class="m-change">
-                <div class="m-change-item"></div>
+                <div class="m-change-item" :class="{ active: changeYear }" @click="changeYear = !changeYear">
+                    <span class="u-txt">{{ year }}</span>
+                    <ul class="u-ul" v-show="changeYear">
+                        <li v-for="item in list" :key="item.year" @click.stop="onChange(item.year)">{{ item.year }}</li>
+                    </ul>
+                </div>
             </div>
             <div class="m-tabs">
                 <router-link
@@ -34,6 +39,7 @@ export default {
         return {
             list: [],
             year: "2025",
+            changeYear: false,
             tabs: [
                 {
                     name: "返回首页",
@@ -66,12 +72,22 @@ export default {
         key() {
             return this.$route.query.key || "vote";
         },
-        componentData() { 
+        componentData() {
             const data = this.list.filter((item) => item.year == this.year)[0] || {};
             return { ...data, nullImg: __cdn + "/design/event/jx3story/2025/web/null.png" };
         },
     },
+    watch: {
+        year(newVal, oldVal) {
+            this.$router.push({
+                path: "/detail",
+                query: { key: this.key, year: newVal },
+            });
+        },
+    },
     mounted() {
+        const year = this.$route.query.year || "2025";
+        this.year = year;
         this.load();
     },
     methods: {
@@ -79,6 +95,10 @@ export default {
             getMenu("jx3story_data").then((res) => {
                 this.list = res;
             });
+        },
+        onChange(year) {
+            this.year = year;
+            this.changeYear = false;
         },
     },
 };

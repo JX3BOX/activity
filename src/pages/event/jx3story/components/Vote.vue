@@ -52,6 +52,7 @@ export default {
     watch: {
         vote_id: {
             handler(id) {
+                this.list = [];
                 id && this.loadVote(id);
             },
             immediate: true,

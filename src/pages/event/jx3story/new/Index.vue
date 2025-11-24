@@ -1,8 +1,9 @@
 <template>
     <router-link to="/detail" class="p-jx3story m-video">
-        <video class="mp4" playsinline="" autoplay="" muted="" loop="" :poster="poster">
+        <!-- <video class="mp4" playsinline="" autoplay="" muted="" loop="" :poster="poster">
             <source :src="videoLink" type="video/mp4" />
-        </video>
+        </video> --> 
+        <img class="u-logo" :src="`${cdn}2025/web/1/logo.png`" />
     </router-link>
 </template>
 
@@ -12,7 +13,9 @@ export default {
     name: "jx3storyMain",
     inject: ["__imgRoot"],
     data() {
-        return {};
+        return {
+            cdn: __cdn + "design/event/jx3story/",
+        };
     },
     computed: {
         videoLink() {
