@@ -93,7 +93,7 @@ export default {
             actives: ["PVP", "PVE", "PVX"],
             types: ["PVP", "PVE", "PVX"],
             content:
-                "<p>投票期用户可在专题页/小程序投票。<br/>单个账号限制三票，且单个账号对单个玩法仅可投票一次。</p>",
+                "<p>投票期用户可在专题页/小程序投票。<br/>单个账号限制三票，且单个账号对单个玩法仅可投票一次。<br/>投票时间：11月28日 00:00 - 12月04日 00:00</p>",
             imgUrl: __imgPath,
             lastVoteTime: 0,
         };
