@@ -14,10 +14,12 @@
                 <div class="m-list-item" v-for="(item, i) in list" :key="i">
                     <span class="u-number">{{ i + 1 }}</span>
                     <span class="u-post">
-                        <a href="http://" target="_blank">{{ item.title }}</a>
+                        <a :href="`${root}community/${item.content}`" target="_blank">{{ item.title }}</a>
                     </span>
                     <span class="u-author">
-                        <a href="http://" target="_blank">{{ item.user_info.display_name }}</a>
+                        <a :href="`${root}author/${item.user_info.id}`" target="_blank">{{
+                            item.user_info.display_name
+                        }}</a>
                     </span>
                     <span class="u-number">{{ item.amount }}</span>
                 </div>
@@ -31,6 +33,7 @@
 <script>
 import { getProgramDetail } from "@/service/event/vote";
 import { shuffle } from "lodash";
+import { __Root } from "@/utils/config";
 export default {
     name: "jx3storyStats",
     props: {
@@ -43,6 +46,7 @@ export default {
         return {
             loading: false,
             list: [],
+            root: __Root,
         };
     },
     computed: {
