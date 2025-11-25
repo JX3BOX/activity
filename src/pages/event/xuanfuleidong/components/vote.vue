@@ -60,8 +60,6 @@
             </div>
         </template>
         <img v-else :src="`${imgUrl}image/rank/common/null.png`" />
-
-
     </div>
 </template>
 <script>
@@ -82,7 +80,7 @@ export default {
             isMiniProgram: isMiniProgram(),
             isLogin: User.isLogin(),
             h: 1100,
-            isFixed: false, 
+            isFixed: false,
             elementOffsetTop: 0,
             actives: ["PVP", "PVE", "PVX"],
             types: ["PVP", "PVE", "PVX"],
@@ -109,7 +107,7 @@ export default {
     },
     computed: {
         showList() {
-            return this.list.filter((item) => this.actives.includes(item.tag));
+            return this.list?.filter((item) => this.actives.includes(item.tag));
         },
     },
     methods: {
@@ -123,7 +121,7 @@ export default {
         },
         handleScroll() {
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
-            this.isFixed = scrollTop > this.elementOffsetTop + this.h; 
+            this.isFixed = scrollTop > this.elementOffsetTop + this.h;
         },
         handleVote(item) {
             if (item.isVoted) return;
@@ -145,8 +143,7 @@ export default {
                     message: "投票成功",
                     type: "success",
                 });
-                item.isVoted = true;
-                item.amount++;
+                window.location.reload();
             });
         },
     },

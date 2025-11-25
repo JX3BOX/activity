@@ -93,7 +93,7 @@ export default {
             return this.tabs.find((item) => item.key == this.key).component;
         },
         componentData() {
-            return this.key == "winner" ? this.winList : this.list;
+            return this.key === "winner" ? this.winList : this.list;
         },
         miniData() {
             return {
@@ -142,7 +142,7 @@ export default {
                         return item;
                     });
                     await this.loadMyVote();
-                    await this.loadWinner();
+                    if (this.key === "winner") await this.loadWinner();
                 })
                 .finally(() => {
                     this.loading = false;
@@ -151,6 +151,10 @@ export default {
         async loadMyVote() {
             const myVote = await getMyVote(this.id);
             this.myVote = myVote.data?.data?.list || [];
+            this.list = this.list.map((item) => {
+                item.isVoted = this.myVote.some((e) => e.vote_item_id == item.id);
+                return item;
+            });
         },
         async loadWinner() {
             const winList = await getMenu(this.menu);
