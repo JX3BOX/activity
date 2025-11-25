@@ -142,8 +142,8 @@ export default {
                 this.$message({
                     message: "投票成功",
                     type: "success",
-                });
-                window.location.reload();
+                }); 
+                this.$emit("update", item.id);
             });
         },
     },

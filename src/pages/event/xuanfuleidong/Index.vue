@@ -22,7 +22,7 @@
                 <div class="u-start"></div>
                 <img :src="`${__imgRoot}end.png`" class="u-axis" />
                 <!-- 详细内容 -->
-                <component class="m-info" :is="active" :list="componentData" />
+                <component class="m-info" :is="active" :list="componentData" @update="changeList" />
                 <img :src="`${__imgRoot}end.png`" class="u-axis" />
             </div>
             <div class="m-tips" :class="{ 'is-show': isShow }">
@@ -168,13 +168,17 @@ export default {
                             return this.list.find((e) => e.id == id);
                         })
                         .filter(Boolean);
-                    // .map((voteItem) => {
-                    //     const foundVote = this.myVote.find((e) => e.vote_item_id == voteItem.id);
-                    //     this.$set(voteItem, "isVoted", !!foundVote);
-                    //     return voteItem;
-                    // });
                 }
                 return newItem;
+            });
+        },
+        changeList(id) {
+            this.list = this.list.map((item) => {
+                if (item.id == id) {
+                    item.isVoted = true;
+                    item.amount++;
+                }
+                return item;
             });
         },
         handleScroll() {
