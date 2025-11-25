@@ -63,7 +63,7 @@
 
         <div class="m-code" :class="{ 'is-show': isShow }">
             <div class="u-box">
-                <img class="u-code" :src="`${__imgRoot}code.png`" alt="活动代码" />
+                <img class="u-code" :src="`${__imgRoot}qrcode.png`" alt="活动代码" />
                 <p>微信扫码<br />给喜欢的玩法投票吧！</p>
             </div>
         </div>
