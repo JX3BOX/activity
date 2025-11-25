@@ -49,6 +49,7 @@ import winner from "./components/winner.vue";
 import Miniprogram from "./components/miniprogram.vue";
 import { shuffle } from "lodash";
 import { __cdn } from "@jx3box/jx3box-common/data/jx3box.json";
+import User from "@jx3box/jx3box-common/js/user.js";
 export default {
     name: "Index",
     inject: ["__imgRoot"],
@@ -141,8 +142,10 @@ export default {
                         if (!item?.user_info?.avatar) item.user_info.avatar = `${__cdn}image/common/avatar.png`;
                         return item;
                     });
-                    await this.loadMyVote();
-                    if (this.key === "winner") await this.loadWinner();
+                    if (User.isLogin()) {
+                        await this.loadMyVote();
+                        if (this.key === "winner") await this.loadWinner();
+                    }
                 })
                 .finally(() => {
                     this.loading = false;
