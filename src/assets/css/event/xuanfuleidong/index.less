@@ -68,11 +68,10 @@ body {
             .pointer;
             .clip;
             text-indent: -100px;
-
-            background: url("@{xuanfuleidong}tab-0@{i}.png");
+            background: url("@{xuanfuleidong}tab-0@{i}.png") no-repeat center/cover;
             background-size: 100%;
             &.active {
-                background: url("@{xuanfuleidong}tab-0@{i}-active.png");
+                background: url("@{xuanfuleidong}tab-0@{i}-active.png") no-repeat center/cover;
                 background-size: 100%;
             }
         }
@@ -110,24 +109,23 @@ body {
     .m-code {
         .none;
         .pf;
-        .lb(50%,80px);
+        .rb(20px,80px);
         .r(50%);
         .clip;
-        .z(9);
+        .z(99);
         .ml(720px);
         // .size(215px);
         padding: 6px;
         background-color: #fff;
-        user-select: none;
-        pointer-events: none;
         box-shadow: 0px 20px 40px rgba(11, 26, 42, 0.5);
         &.is-show {
             .db;
+            cursor: pointer;
         }
         .u-box {
             .flex;
             .r(50%);
-            // padding: 20px;
+            padding: 20px;
             border: 6px solid #deedff;
             flex-direction: column;
             justify-content: center;

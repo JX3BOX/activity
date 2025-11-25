@@ -2,6 +2,12 @@
     <div class="m-index m-xuanfuleidong">
         <Miniprogram v-if="isMiniProgram" :data="miniData" />
         <template v-else>
+            <div class="m-code" :class="{ 'is-show': isShow }">
+                <div class="u-box">
+                    <img class="u-code" :src="`${__imgRoot}qrcode.png`" alt="活动代码" />
+                    <p>微信扫码<br />给喜欢的玩法投票吧！</p>
+                </div>
+            </div>
             <div class="m-kv">
                 <img :src="`${__imgRoot}kv.jpg`" alt="玄府雷动" />
                 <div class="m-title">
@@ -37,6 +43,7 @@ import vote from "./components/vote.vue";
 import winner from "./components/winner.vue";
 import Miniprogram from "./components/miniprogram.vue";
 import { shuffle } from "lodash";
+import { __cdn } from "@jx3box/jx3box-common/data/jx3box.json";
 export default {
     name: "Index",
     inject: ["__imgRoot"],
@@ -55,6 +62,8 @@ export default {
             list: [], // 投票列表
             winList: [], // 获奖作品列表
             myVote: [], // 我的投票
+            isShow: false,
+            elementOffsetTop: 0,
             // key: "vote", // 当前选中的tab
             menu: "2025_xuanfuleidong_winner", // 获奖作品Key
             tabs: [
@@ -97,6 +106,19 @@ export default {
     created() {
         this.loadData();
     },
+    mounted() {
+        this.$nextTick(() => {
+            const element = this.$refs.stickyElement;
+            if (element) {
+                this.elementOffsetTop = element.offsetTop;
+            }
+        });
+
+        window.addEventListener("scroll", this.handleScroll);
+    },
+    beforeUnmount() {
+        window.removeEventListener("scroll", this.handleScroll);
+    },
     methods: {
         handleTabClick(key) {
             this.$router.push({
@@ -109,7 +131,11 @@ export default {
             this.loading = true;
             getProgramDetail(this.id)
                 .then(async (res) => {
-                    this.list = shuffle(res.data?.data?.vote_items || []);
+                    const list = shuffle(res.data?.data?.vote_items || []);
+                    this.list = list.map((item) => {
+                        if (!item?.user_info?.avatar) item.user_info.avatar = `${__cdn}image/common/avatar.png`;
+                        return item;
+                    });
                     await this.loadMyVote();
                     await this.loadWinner();
                 })
@@ -140,6 +166,10 @@ export default {
                 }
                 return newItem;
             });
+        },
+        handleScroll() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+            this.isShow = scrollTop > this.elementOffsetTop;
         },
     },
 };

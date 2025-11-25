@@ -20,7 +20,9 @@
             <div class="m-vote-item" v-for="(item, i) in showList" :key="i">
                 <div class="m-item">
                     <div class="m-header">
-                        <span class="u-label">玩法简介</span>
+                        <a :href="`/community/${item.sub_title}`" target="_blank" class="u-label">
+                            {{ item.title }}
+                        </a>
                         <span :class="`active u-button ${item.tag} `">{{ item.tag }}</span>
                     </div>
                     <template v-if="isMiniProgram">
@@ -41,12 +43,10 @@
                     <template v-else>
                         <div class="u-content">{{ item.content }}</div>
                         <div class="m-footer">
-                            <div class="u-info">
-                                <span>{{ item.title }}</span>
-                                <a class="u-name" :href="`/author/${item.user_info.id}`" target="_blank"
-                                    >@{{ item.user_info.display_name }}</a
-                                >
-                            </div>
+                            <a :href="`/author/${item.user_info.id}`" target="_blank" class="u-info">
+                                <img class="u-avatar" :src="item.user_info.avatar" />
+                                <span> @{{ item.user_info.display_name }} </span>
+                            </a>
                             <div class="u-item-button">
                                 <a class="u-view" :href="`/community/${item.sub_title}`" target="_blank">查看详细</a>
                                 <span class="u-vote" @click="handleVote(item)">
@@ -61,12 +61,7 @@
         </template>
         <img v-else :src="`${imgUrl}image/rank/common/null.png`" />
 
-        <div class="m-code" :class="{ 'is-show': isShow }">
-            <div class="u-box">
-                <img class="u-code" :src="`${__imgRoot}qrcode.png`" alt="活动代码" />
-                <p>微信扫码<br />给喜欢的玩法投票吧！</p>
-            </div>
-        </div>
+
     </div>
 </template>
 <script>
@@ -87,8 +82,7 @@ export default {
             isMiniProgram: isMiniProgram(),
             isLogin: User.isLogin(),
             h: 1100,
-            isFixed: false,
-            isShow: false,
+            isFixed: false, 
             elementOffsetTop: 0,
             actives: ["PVP", "PVE", "PVX"],
             types: ["PVP", "PVE", "PVX"],
@@ -96,6 +90,7 @@ export default {
                 "<p>投票期用户可在专题页/小程序投票。<br/>单个账号限制三票，且单个账号对单个玩法仅可投票一次。<br/>投票时间：11月28日 00:00 - 12月04日 00:00</p>",
             imgUrl: __imgPath,
             lastVoteTime: 0,
+            avatar: `https://img.jx3box.com/img/avatar/shota.jpg`,
         };
     },
 
@@ -128,8 +123,7 @@ export default {
         },
         handleScroll() {
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
-            this.isFixed = scrollTop > this.elementOffsetTop + this.h;
-            this.isShow = scrollTop > this.elementOffsetTop;
+            this.isFixed = scrollTop > this.elementOffsetTop + this.h; 
         },
         handleVote(item) {
             if (item.isVoted) return;
