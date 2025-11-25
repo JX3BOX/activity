@@ -2,12 +2,6 @@
     <div class="m-index m-xuanfuleidong">
         <Miniprogram v-if="isMiniProgram" :data="miniData" />
         <template v-else>
-            <div class="m-code" :class="{ 'is-show': isShow }">
-                <div class="u-box">
-                    <img class="u-code" :src="`${__imgRoot}qrcode.png`" alt="活动代码" />
-                    <p>微信扫码<br />给喜欢的玩法投票吧！</p>
-                </div>
-            </div>
             <div class="m-kv">
                 <img :src="`${__imgRoot}kv.jpg`" alt="玄府雷动" />
                 <div class="m-title">
@@ -30,6 +24,17 @@
                 <!-- 详细内容 -->
                 <component class="m-info" :is="active" :list="componentData" />
                 <img :src="`${__imgRoot}end.png`" class="u-axis" />
+            </div>
+            <div class="m-tips" :class="{ 'is-show': isShow }">
+                <div class="m-code" v-if="key == 'vote'">
+                    <div class="u-box">
+                        <img class="u-code" :src="`${__imgRoot}qrcode.png`" alt="魔盒小程序" />
+                        <p>微信扫码<br />给喜欢的玩法投票吧！</p>
+                    </div>
+                </div>
+                <div class="u-top" @click="goTop">
+                    <img :src="`${__imgRoot}top.png`" alt="返回顶部" />
+                </div>
             </div>
         </template>
     </div>
@@ -170,6 +175,12 @@ export default {
         handleScroll() {
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
             this.isShow = scrollTop > this.elementOffsetTop;
+        },
+        goTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth",
+            });
         },
     },
 };

@@ -106,22 +106,31 @@ body {
         min-height: 500px;
         background-color: #192d4b;
     }
-    .m-code {
+    .m-tips {
         .none;
         .pf;
-        .rb(20px,80px);
-        .r(50%);
-        .clip;
-        .z(99);
+        .lb(50%,120px);
         .ml(720px);
-        // .size(215px);
-        padding: 6px;
-        background-color: #fff;
-        box-shadow: 0px 20px 40px rgba(11, 26, 42, 0.5);
+        .z(9);
+        width: 224px;
         &.is-show {
             .db;
             cursor: pointer;
         }
+        .u-top {
+            .pa;
+            .lb(50%,-100px);
+            .size(80px);
+            .ml(-40px);
+        }
+    }
+    .m-code {
+        .r(50%);
+        width: 224px;
+        box-sizing: border-box;
+        padding: 6px;
+        box-shadow: 0px 20px 40px rgba(11, 26, 42, 0.5);
+        background-color: #fff;
         .u-box {
             .flex;
             .r(50%);
@@ -133,10 +142,11 @@ body {
         }
         .u-code {
             .r(50%);
-            .size(120px);
+            .size(140px);
             padding: 10px;
             flex-shrink: 0;
         }
+
         p {
             .none;
             .x;
@@ -146,13 +156,12 @@ body {
         }
         &:hover {
             .r(36px);
-            transition: all 0.2s ease;
+            transition: all 0.2s ease-in-out;
             .u-box {
                 .r(36px);
             }
             .u-code {
-                .size(160px);
-                padding: 0;
+                .size(120px);
             }
             p {
                 .db;
