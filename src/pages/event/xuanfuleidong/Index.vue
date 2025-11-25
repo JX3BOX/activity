@@ -142,10 +142,8 @@ export default {
                         if (!item?.user_info?.avatar) item.user_info.avatar = `${__cdn}image/common/avatar.png`;
                         return item;
                     });
-                    if (User.isLogin()) {
-                        await this.loadMyVote();
-                        if (this.key === "winner") await this.loadWinner();
-                    }
+                    if (User.isLogin()) await this.loadMyVote();
+                    if (this.key === "winner") await this.loadWinner();
                 })
                 .finally(() => {
                     this.loading = false;
@@ -169,12 +167,12 @@ export default {
                         .map((id) => {
                             return this.list.find((e) => e.id == id);
                         })
-                        .filter(Boolean)
-                        .map((voteItem) => {
-                            const foundVote = this.myVote.find((e) => e.vote_item_id == voteItem.id);
-                            this.$set(voteItem, "isVoted", !!foundVote);
-                            return voteItem;
-                        });
+                        .filter(Boolean);
+                    // .map((voteItem) => {
+                    //     const foundVote = this.myVote.find((e) => e.vote_item_id == voteItem.id);
+                    //     this.$set(voteItem, "isVoted", !!foundVote);
+                    //     return voteItem;
+                    // });
                 }
                 return newItem;
             });
