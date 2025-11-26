@@ -1,8 +1,8 @@
 <template>
     <router-link to="/detail" class="p-jx3story m-video">
-        <!-- <video class="mp4" playsinline="" autoplay="" muted="" loop="" :poster="poster">
+        <video class="mp4" playsinline="" autoplay="" muted="" loop="" :poster="poster">
             <source :src="videoLink" type="video/mp4" />
-        </video> --> 
+        </video>
         <img class="u-logo" :src="`${cdn}2025/web/1/logo.png`" />
     </router-link>
 </template>
@@ -19,10 +19,10 @@ export default {
     },
     computed: {
         videoLink() {
-            return __cdn + "design/video/20231128-fengyue-bg.mp4";
+            return __cdn + "design/event/jx3story/2025/web/index.mp4";
         },
         poster() {
-            return `${this.__imgRoot}main/main__bg.png`;
+            return `${this.__imgRoot}web/1/bg.jpg`;
         },
     },
 };

@@ -273,3 +273,29 @@
         }
     }
 }
+
+@media screen and(max-width:@phone) {
+    .m-jx3story-main {
+        background: url("@{jx3story}mini/bg.png") no-repeat top center/cover;
+        &.m-vote-main {
+            background: url("@{jx3story}mini/bg2.png") no-repeat top center/cover;
+        }
+        &.isMiniProgram {
+            .m-left {
+                .none;
+            }
+            .m-main {
+                max-width: 100%;
+            }
+            .m-info-content {
+                padding: 0 20px;
+            }
+            .u-null {
+                margin: 0 20px;
+                img {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}

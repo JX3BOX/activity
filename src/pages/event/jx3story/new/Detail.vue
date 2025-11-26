@@ -1,5 +1,5 @@
 <template>
-    <div class="m-jx3story-main" :class="`m-${key}-main`">
+    <div class="m-jx3story-main" :class="[`m-${key}-main`, { isMiniProgram }]">
         <div class="m-left">
             <div class="m-change">
                 <div class="m-change-item" :class="{ active: changeYear }" @click="changeYear = !changeYear">
@@ -27,6 +27,7 @@
     </div>
 </template>
 <script>
+import { isMiniProgram } from "@jx3box/jx3box-common/js/utils";
 import { getMenu } from "@jx3box/jx3box-common/js/api_misc";
 import { __cdn } from "@/utils/config";
 import Info from "../components/Info.vue";
@@ -40,6 +41,7 @@ export default {
             list: [],
             year: "2025",
             changeYear: false,
+            isMiniProgram: isMiniProgram(),
             tabs: [
                 {
                     name: "返回首页",
