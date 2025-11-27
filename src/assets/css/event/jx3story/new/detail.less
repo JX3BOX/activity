@@ -9,6 +9,13 @@
         .w(580px);
         flex-shrink: 0;
     }
+    .m-top {
+        .none;
+        .mt(20px);
+        .size(100%,100px);
+        background: url("@{jx3story}mini/logo.png") no-repeat center center/cover;
+        background-size: auto 80%;
+    }
     .m-change {
         .pr;
         .h(220px);
@@ -40,7 +47,7 @@
                     color: #5c5c5c;
                     &:hover {
                         color: #fff;
-                        background-color: #999;
+                        background-color: #929292;
                     }
                 }
             }
@@ -127,72 +134,117 @@
             height: 100%;
             gap: 20px;
             overflow-x: auto;
+            .m-vote-item {
+                .pointer;
+                width: 159px;
+                .u-top {
+                    .db;
+                    background: url("@{jx3story}web/title-01-hover.png") no-repeat center bottom;
+                    min-height: 125px;
+                    .w(100%);
+                }
+                &::after {
+                    content: "";
+                    .db;
+                    .w(100%);
+                    .h(125px);
+                    background: url("@{jx3story}web/title-03-hover.png") no-repeat center bottom;
+                }
+                .u-vote {
+                    .flex;
+                    user-select: none;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 0 50px;
+                    box-sizing: border-box;
+                    background: url("@{jx3story}web/title-02-hover.png?1") center center;
+                }
+                &:hover {
+                    .u-top {
+                        background: url("@{jx3story}web/title-01.png") no-repeat center bottom;
+                    }
+                    &::after {
+                        background: url("@{jx3story}web/title-03.png") no-repeat center bottom;
+                    }
+                    .u-vote {
+                        background: url("@{jx3story}web/title-02.png?1") center center;
+                    }
+                    .u-title {
+                        color: #a77447;
+                    }
+                }
+                &.active {
+                    .u-top {
+                        background: url("@{jx3story}web/title-01-active.png") no-repeat center bottom;
+                    }
+                    &::after {
+                        background: url("@{jx3story}web/title-03-active.png") no-repeat center bottom;
+                    }
+                    .u-vote {
+                        background: url("@{jx3story}web/title-02-active.png?1") center center;
+                    }
+                    .u-title {
+                        color: #ffba79;
+                    }
+                }
+
+                .u-title {
+                    .fz(40px);
+                    .pt(20px);
+                    color: #5e2f16;
+                    writing-mode: vertical-lr;
+                }
+
+                .u-icon {
+                    .w(42px);
+                    .mt(30px);
+                }
+            }
         }
-        .m-vote-item {
-            .pointer;
-            width: 159px;
-            .u-top {
-                .db;
-                background: url("@{jx3story}web/title-01-hover.png") no-repeat center bottom;
-                min-height: 125px;
-                .w(100%);
-            }
-            &::after {
-                content: "";
-                .db;
-                .w(100%);
-                .h(125px);
-                background: url("@{jx3story}web/title-03-hover.png") no-repeat center bottom;
-            }
-            .u-vote {
-                .flex;
-                user-select: none;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                padding: 0 50px;
-                box-sizing: border-box;
-                background: url("@{jx3story}web/title-02-hover.png?1") center center;
-            }
-            &:hover {
-                .u-top {
-                    background: url("@{jx3story}web/title-01.png") no-repeat center bottom;
-                }
-                &::after {
-                    background: url("@{jx3story}web/title-03.png") no-repeat center bottom;
-                }
-                .u-vote {
-                    background: url("@{jx3story}web/title-02.png?1") center center;
-                }
-                .u-title {
-                    color: #a77447;
-                }
-            }
-            &.active {
-                .u-top {
-                    background: url("@{jx3story}web/title-01-active.png") no-repeat center bottom;
-                }
-                &::after {
-                    background: url("@{jx3story}web/title-03-active.png") no-repeat center bottom;
+        .m-mini-box {
+            .auto(x);
+            .mt(30px);
+            width: 90%;
+            padding: 30px 10px;
+            box-sizing: border-box;
+            background: url("@{jx3story}mini/vote-box.png") no-repeat center center/cover;
+            background-size: 100% 100%;
+        }
+        .m-mini-list {
+            max-height: calc(100vh - 300px);
+            overflow: auto;
+            .m-item {
+                .mb(40px);
+                .m-info {
+                    .flex;
+                    .mb(20px);
+                    padding: 15px 20px;
+                    background: url("@{jx3story}mini/vote-title.png") no-repeat center center/cover;
+                    background-size: 100% 100%;
+                    flex-direction: column;
+                    color: #f7f0d6; 
+                    gap: 10px;
+                    .u-title {
+                        .db;
+                        align-self: center;
+                    }
+                    .u-author {
+                        .fz(12px);  
+                        align-self: flex-end;
+                    }
                 }
                 .u-vote {
-                    background: url("@{jx3story}web/title-02-active.png?1") center center;
+                    .auto(x);
+                    .size(142px, 42px);
+                    .x;
+                    line-height: 36px;
+                    color: #f7f0d6;
+                    background: url("@{jx3story}mini/vote-button-01.png") no-repeat center center/cover;
+                    &.active {
+                        background: url("@{jx3story}mini/vote-button-02.png") no-repeat center center/cover;
+                    }
                 }
-                .u-title {
-                    color: #ffba79;
-                }
-            }
-
-            .u-title {
-                .fz(40px);
-                .pt(20px);
-                color: #5e2f16;
-                writing-mode: vertical-lr;
-            }
-
-            .u-icon {
-                .w(42px);
-                .mt(30px);
             }
         }
     }
@@ -275,7 +327,12 @@
 }
 
 @media screen and(max-width:@phone) {
+    .p-event {
+        padding: 0;
+    }
     .m-jx3story-main {
+        flex-direction: column;
+        min-height: 100vh;
         background: url("@{jx3story}mini/bg.png") no-repeat top center/cover;
         &.m-vote-main {
             background: url("@{jx3story}mini/bg2.png") no-repeat top center/cover;
@@ -284,16 +341,30 @@
             .m-left {
                 .none;
             }
+            .m-top {
+                .flex;
+            }
             .m-main {
                 max-width: 100%;
             }
             .m-info-content {
                 padding: 0 20px;
+                height: calc(100vh - 120px);
+                box-sizing: border-box;
+                a {
+                    .fz(14px);
+                }
+            }
+            .m-vote-content {
+                .m-vote-list {
+                    .none;
+                }
             }
             .u-null {
+                height: 60vh;
                 margin: 0 20px;
                 img {
-                    width: 100%;
+                    width: 60%;
                 }
             }
         }

@@ -15,7 +15,7 @@
 <script>
 import { isMiniProgram } from "@jx3box/jx3box-common/js/utils";
 import { postStat } from "@jx3box/jx3box-common/js/stat";
-import { __imgPath } from "@/utils/config";
+import { __cdn } from "@/utils/config";
 export default {
     name: "App",
     data: function () {
@@ -24,7 +24,7 @@ export default {
         };
     },
     provide: {
-        __imgRoot: __imgPath + "topic/jx3story/",
+        __imgRoot: __cdn + "design/event/jx3story/",
     },
     computed: {
         page_name: function () {

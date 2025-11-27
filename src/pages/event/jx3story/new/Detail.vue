@@ -21,6 +21,7 @@
                 </router-link>
             </div>
         </div>
+        <div class="m-top"></div>
         <div class="m-main">
             <component :is="components[key]" :data="componentData"></component>
         </div>
@@ -76,7 +77,8 @@ export default {
         },
         componentData() {
             const data = this.list.filter((item) => item.year == this.year)[0] || {};
-            return { ...data, nullImg: __cdn + "/design/event/jx3story/2025/web/null.png" };
+            const client = this.isMiniProgram ? "mini" : "web";
+            return { ...data, nullImg: `${__cdn}/design/event/jx3story/2025/${client}/null.png?${Date.now()}` };
         },
     },
     watch: {

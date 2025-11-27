@@ -1,22 +1,44 @@
 <template>
     <div class="m-vote-content" v-loading="loading">
-        <div class="m-vote-list" v-if="list.length">
-            <div class="m-vote-item" :class="{ active: item.active }" v-for="(item, i) in list" :key="i">
-                <div class="u-top" :style="{ paddingTop: item.padding }"></div>
-                <div class="u-vote">
-                    <span class="u-title">{{ item.title }}</span>
-                    <img
-                        class="u-icon"
-                        @click.stop="handleVote(item)"
-                        :src="`${cdn}design/event/jx3story/2025/web/${item.active ? 'active' : 'vote'}.png`"
-                    />
+        <template v-if="list.length">
+            <!-- pc端 -->
+            <div class="m-vote-list">
+                <div class="m-vote-item" :class="{ active: item.active }" v-for="(item, i) in list" :key="i">
+                    <div class="u-top" :style="{ paddingTop: item.padding }"></div>
+                    <div class="u-vote">
+                        <a :href="`${root}community/${item.content}`" target="_blank" class="u-title">
+                            {{ item.title }}
+                        </a>
+                        <img
+                            class="u-icon"
+                            @click.stop="handleVote(item)"
+                            :src="`${cdn}design/event/jx3story/2025/web/${item.active ? 'active' : 'vote'}.png`"
+                        />
+                    </div>
+                </div>
+                <div class="u-txt">
+                    <span>* 点击文章下方的按钮即可参与投票哦</span>
+                    <img class="u-icon" :src="`${cdn}design/event/jx3story/2025/web/vote.png`" />
                 </div>
             </div>
-            <div class="u-txt">
-                <span>* 点击文章下方的按钮即可参与投票哦</span>
-                <img class="u-icon" :src="`${cdn}design/event/jx3story/2025/web/vote.png`" />
+            <!-- 小程序端 -->
+            <div class="m-mini-box">
+                <div class="m-mini-list">
+                    <div class="m-item" v-for="(item, i) in list" :key="i">
+                        <a :href="`${root}community/${item.content}`" target="_blank" class="m-info">
+                            <span class="u-title">
+                                {{ item.title }}
+                            </span>
+                            <span class="u-author"> —— {{ item.user_info.display_name }} </span>
+                        </a>
+                        <div class="u-vote" :class="{ active: item.active }" @click.stop="handleVote(item)">
+                            {{ item.active ? "已投票" : "投TA一票" }}
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+        </template>
+
         <div class="u-null" v-else-if="!loading">
             <img :src="data.nullImg" />
         </div>
@@ -26,7 +48,7 @@
 import { getProgramDetail, getMyVote, vote } from "@/service/event/vote";
 import { shuffle } from "lodash";
 import User from "@jx3box/jx3box-common/js/user.js";
-import { __cdn } from "@/utils/config";
+import { __cdn, __Root } from "@/utils/config";
 export default {
     name: "jx3storyVote",
     props: {
@@ -41,6 +63,7 @@ export default {
             loading: false,
             list: [],
             cdn: __cdn,
+            root: __Root,
             lastVoteTime: 0,
         };
     },
