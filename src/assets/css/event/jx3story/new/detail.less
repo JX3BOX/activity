@@ -112,7 +112,7 @@
         flex: 1;
         justify-content: center;
         align-items: center;
-        height: 80%;
+        height: 60vh;
         margin: 0 400px 0 200px;
         img {
             max-width: 800px;
@@ -344,7 +344,6 @@
 .p-event.isPhone {
     .m-jx3story-main {
         flex-direction: column;
-
         .m-left {
             width: 100%;
         }
@@ -384,13 +383,10 @@
 
     .m-jx3story-main {
         flex-direction: column;
-        min-height: 100vh;
-
+        min-height: 100vh; 
         &.isMiniProgram {
             background: url("@{jx3story}mini/bg.png") no-repeat top center/cover;
-            &.m-vote-main {
-                background: url("@{jx3story}mini/bg2.png") no-repeat top center/cover;
-            }
+            background-size: 100% 100%;
             .m-left {
                 .none;
             }
