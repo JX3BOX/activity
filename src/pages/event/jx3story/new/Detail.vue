@@ -21,7 +21,9 @@
                 </router-link>
             </div>
         </div>
-        <div class="m-top"></div>
+        <router-link to="/" class="m-top">
+            <span class="u-back"></span>
+        </router-link>
         <div class="m-main">
             <component :is="components[key]" :data="componentData"></component>
         </div>

@@ -5,16 +5,25 @@
     &.m-vote-main {
         background: url("@{jx3story}web/vote_bg.jpg") no-repeat top center/cover;
     }
+
     .m-left {
         .w(580px);
         flex-shrink: 0;
     }
     .m-top {
+        .pr;
         .none;
         .mt(20px);
         .size(100%,100px);
         background: url("@{jx3story}mini/logo.png") no-repeat center center/cover;
         background-size: auto 80%;
+        .u-back {
+            .pa;
+            .lt(20px,10px);
+            .size(24px);
+            background: url("@{jx3story}mini/back.png") no-repeat center center;
+            background-size: cover;
+        }
     }
     .m-change {
         .pr;
@@ -27,6 +36,7 @@
             .size(219px,48px);
             .fz(28px,48px);
             .lb(50%,0);
+            .ml(-68px);
             color: #fff3d3;
             background: url("@{jx3story}web/menu0.png") no-repeat center;
             &.active {
@@ -223,14 +233,14 @@
                     background: url("@{jx3story}mini/vote-title.png") no-repeat center center/cover;
                     background-size: 100% 100%;
                     flex-direction: column;
-                    color: #f7f0d6; 
+                    color: #f7f0d6;
                     gap: 10px;
                     .u-title {
                         .db;
                         align-self: center;
                     }
                     .u-author {
-                        .fz(12px);  
+                        .fz(12px);
                         align-self: flex-end;
                     }
                 }
@@ -330,10 +340,12 @@
     .p-event {
         padding: 0;
     }
+
     .m-jx3story-main {
         flex-direction: column;
         min-height: 100vh;
         background: url("@{jx3story}mini/bg.png") no-repeat top center/cover;
+
         &.m-vote-main {
             background: url("@{jx3story}mini/bg2.png") no-repeat top center/cover;
         }
@@ -358,6 +370,83 @@
             .m-vote-content {
                 .m-vote-list {
                     .none;
+                }
+            }
+            .m-stats-content {
+                padding: 0;
+                margin-top: -30px;
+                .m-list-box {
+                    width: 100%;
+                    padding: 160px 0 40px 0;
+                    background: url("@{jx3story}mini/win-bg.png") no-repeat center center/cover;
+                    background-size: 100% 100%;
+                    &::before {
+                        top: 80px;
+                        background: url("@{jx3story}web/paper_top.png") no-repeat center top;
+                        background-size: 80% auto;
+                    }
+                    .m-list-header {
+                        .fz(12px);
+                        .ml(0);
+                        height: 34px;
+                        padding: 0;
+                        left: 15%;
+                        top: 110px;
+                        width: 70%;
+                    }
+                    .m-list-item-header {
+                        .u-author {
+                            .none;
+                        }
+                    }
+                    .m-list {
+                        .auto(x);
+                        padding: 0 45px;
+                        background: none;
+                    }
+                    .m-mini-scroll {
+                        height: 380px;
+                        overflow: auto;
+                    }
+                    .m-list-item {
+                        .fz(12px,32px);
+                        .u-number {
+                            .none;
+                            &:last-child {
+                                .db;
+                            }
+                        }
+                        .u-post {
+                            .x(left);
+                        }
+                        .u-info {
+                            .flex;
+                            padding: 10px 0 5px 0;
+                            width: 80%;
+                            flex-direction: column;
+                        }
+                        .u-post {
+                            .fz(14px);
+                            .bold;
+                            width: 100%;
+                        }
+                        .u-author {
+                            opacity: 0.8;
+                            width: 100%;
+                            .x(right);
+                            a {
+                                .mr(20px);
+                            }
+                        }
+                        .u-number {
+                            width: auto;
+                            min-width: 60px;
+                            .bold;
+                        }
+                        .u-number {
+                            .fr;
+                        }
+                    }
                 }
             }
             .u-null {
