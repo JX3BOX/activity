@@ -1,6 +1,6 @@
 <template>
     <!-- 专题页 -->
-    <div class="p-event" :class="'v-' + page_name">
+    <div :class="`p-event ${isPhone ? 'isPhone' : ''} v-${page_name}`">
         <Header :overlayEnable="true"></Header>
         <!-- <img :src="imgRoot + '/main/main__bg.png'" class="m-bg" /> -->
         <router-view></router-view>
@@ -30,7 +30,13 @@ export default {
         page_name: function () {
             return this.$route.name;
         },
+        isPhone() {
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            const mobileRegex = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
+            return mobileRegex.test(userAgent);
+        },
     },
+
     created: function () {
         postStat("event", "jx3story");
 
