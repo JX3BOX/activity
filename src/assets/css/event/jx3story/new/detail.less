@@ -153,19 +153,20 @@
             overflow-x: auto;
             .m-vote-item {
                 .pointer;
-                width: 159px;
+                width: 88px;
                 .u-top {
                     .db;
                     background: url("@{jx3story}web/title-01-hover.png") no-repeat center bottom;
-                    min-height: 125px;
-                    .w(100%);
+                    background-size: 100% auto;
+                    min-height: 124px;
                 }
                 &::after {
                     content: "";
                     .db;
-                    .w(100%);
-                    .h(125px);
-                    background: url("@{jx3story}web/title-03-hover.png") no-repeat center bottom;
+                    .h(66px);
+                    .mt(-2px);
+                    background: url("@{jx3story}web/title-03-hover.png") no-repeat center top;
+                    background-size: 100% auto;
                 }
                 .u-vote {
                     .flex;
@@ -173,19 +174,23 @@
                     flex-direction: column;
                     align-items: center;
                     justify-content: center;
-                    padding: 0 50px;
+                    padding: 0 20px;
                     box-sizing: border-box;
                     background: url("@{jx3story}web/title-02-hover.png?1") center center;
+                    background-size: 100% auto;
                 }
                 &:hover {
                     .u-top {
                         background: url("@{jx3story}web/title-01.png") no-repeat center bottom;
+                        background-size: 100% auto;
                     }
                     &::after {
-                        background: url("@{jx3story}web/title-03.png") no-repeat center bottom;
+                        background: url("@{jx3story}web/title-03.png") no-repeat center top;
+                        background-size: 100% auto;
                     }
                     .u-vote {
                         background: url("@{jx3story}web/title-02.png?1") center center;
+                        background-size: 100% auto;
                     }
                     .u-title {
                         color: #a77447;
@@ -194,12 +199,15 @@
                 &.active {
                     .u-top {
                         background: url("@{jx3story}web/title-01-active.png") no-repeat center bottom;
+                        background-size: 100% auto;
                     }
                     &::after {
-                        background: url("@{jx3story}web/title-03-active.png") no-repeat center bottom;
+                        background: url("@{jx3story}web/title-03-active.png") no-repeat center top;
+                        background-size: 100% auto;
                     }
                     .u-vote {
                         background: url("@{jx3story}web/title-02-active.png?1") center center;
+                        background-size: 100% auto;
                     }
                     .u-title {
                         color: #ffba79;
@@ -207,15 +215,15 @@
                 }
 
                 .u-title {
-                    .fz(40px);
+                    .fz(20px);
                     .pt(20px);
                     color: #5e2f16;
                     writing-mode: vertical-lr;
                 }
 
                 .u-icon {
-                    .w(42px);
-                    .mt(30px);
+                    .w(20px);
+                    .mt(20px);
                 }
             }
         }
@@ -353,6 +361,9 @@
             flex-direction: row;
             .pl(20px);
             margin: 40px 0 0 0;
+        }
+        .m-change {
+            background-size: auto 100%;
         }
         .m-info-content {
             .mt(50px);
