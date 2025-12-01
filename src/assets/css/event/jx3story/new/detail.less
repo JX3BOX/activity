@@ -7,7 +7,7 @@
     }
 
     .m-left {
-        .w(580px);
+        .w(380px);
         flex-shrink: 0;
     }
     .m-top {
@@ -27,18 +27,20 @@
     }
     .m-change {
         .pr;
-        .h(220px);
+        .h(160px);
         background: url("@{jx3story}web/logo.png") no-repeat center;
+        background-size: 100% auto;
         .m-change-item {
             .pa;
             .x;
             .pointer;
-            .size(219px,48px);
-            .fz(28px,48px);
+            .size(165px,32px);
+            .fz(20px,32px);
             .lb(50%,0);
             .ml(-68px);
             color: #fff3d3;
             background: url("@{jx3story}web/menu0.png") no-repeat center;
+            background-size: 100% 100%;
             &.active {
                 background: url("@{jx3story}web/menu1.png") no-repeat center;
             }
@@ -68,7 +70,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        margin: 30px 0 0 120px;
+        margin: 30px 0 0 0;
         .u-router {
             .db;
             .x;
@@ -99,7 +101,7 @@
                 align-items: center;
                 &::before {
                     content: "◇";
-                    .fz(40px,42px);
+                    .fz(20px,42px);
                 }
             }
         }
@@ -121,7 +123,7 @@
     .m-info-content {
         .scrollbar;
         box-sizing: border-box;
-        padding: 100px 200px;
+        padding: 100px 0;
         color: #fff;
         height: calc(100vh - 64px);
         overflow: auto;
@@ -265,7 +267,7 @@
         }
     }
     .m-stats-content {
-        padding: 120px 200px;
+        padding: 120px 0;
         .m-list-box {
             .pr;
             .w(1000px);
