@@ -1,27 +1,13 @@
 <template>
     <div class="m-index">
-        <div class="m-bg-list">
-            <img loading="lazy" v-for="index in 8" :key="index" :src="imgurl + 'bg_0' + index + '.jpg'" width="100%" />
+        <!-- 头部KV -->
+        <div class="m-kv">
+            <img class="u-img p-animation" v-animate="'fadeInUp'" :src="imgurl + 'dabiaoti.png'" />
         </div>
-        <div class="m-content">
-            <img class="u-page-title p-animation" v-animate="'fadeInUp'" :src="imgurl + 'dabiaoti.png'" />
 
-            <!-- 新门派 -->
-            <div class="m-content-title" style="margin-top: 21%">
-                <img
-                    class="u-title-index p-animation"
-                    v-animate="'fadeInUp'"
-                    loading="lazy"
-                    :src="imgurl + 'bt1-2.png'"
-                />
-                <img
-                    class="u-title-text p-animation"
-                    v-animate="'fadeInDown'"
-                    loading="lazy"
-                    :src="imgurl + 'bt1-1.png'"
-                />
-                <img class="u-title-bg p-animation" v-animate="`fadeIn`" loading="lazy" :src="imgurl + 'bt-0.png'" />
-            </div>
+        <!-- 新门派 -->
+        <div class="m-cg-box">
+            <PageTitle titleIndex="1" />
             <div class="m-cg">
                 <img class="p-animation u-bg" :class="{ 'opacity-1': cgAddClassStatus }" :src="imgurl + 'cg-bg.png'" />
                 <img
@@ -43,22 +29,10 @@
                     <img class="u-counter-content u-xz-content p-animation" :src="imgurl + 'cg-5.png?1'" />
                 </div>
             </div>
-            <!-- 新团本 -->
-            <div class="m-content-title" style="margin-top: 13.5%">
-                <img
-                    class="u-title-index p-animation"
-                    v-animate="'fadeInUp'"
-                    loading="lazy"
-                    :src="imgurl + 'bt2-2.png'"
-                />
-                <img
-                    class="u-title-text p-animation"
-                    v-animate="'fadeInDown'"
-                    loading="lazy"
-                    :src="imgurl + 'bt2-1.png'"
-                />
-                <img class="u-title-bg p-animation" v-animate="`fadeIn`" loading="lazy" :src="imgurl + 'bt-0.png'" />
-            </div>
+        </div>
+        <!-- 新团本 -->
+        <div class="m-xl-box">
+            <PageTitle titleIndex="2" />
             <div class="m-xl">
                 <img class="p-animation u-xl-title" v-animate="'fadeInRight'" :src="imgurl + 'xl-bt.png'" />
 
@@ -108,22 +82,10 @@
                     />
                 </div>
             </div>
-            <!-- 新大战本 -->
-            <div class="m-content-title" style="margin-top: 15%">
-                <img
-                    class="u-title-index p-animation"
-                    v-animate="'fadeInUp'"
-                    loading="lazy"
-                    :src="imgurl + 'bt3-2.png'"
-                />
-                <img
-                    class="u-title-text p-animation"
-                    v-animate="'fadeInDown'"
-                    loading="lazy"
-                    :src="imgurl + 'bt3-1.png'"
-                />
-                <img class="u-title-bg p-animation" v-animate="`fadeIn`" loading="lazy" :src="imgurl + 'bt-0.png'" />
-            </div>
+        </div>
+        <!-- 新大战本 -->
+        <div class="m-dz-box">
+            <PageTitle titleIndex="3" />
             <div class="m-dz">
                 <img
                     loading="lazy"
@@ -134,22 +96,10 @@
                     :src="imgurl + `dz${index + 1}.png`"
                 />
             </div>
-            <!-- 剑踪幻域 -->
-            <div class="m-content-title" style="margin-top: 19.2%">
-                <img
-                    class="u-title-index p-animation"
-                    v-animate="'fadeInUp'"
-                    loading="lazy"
-                    :src="imgurl + 'bt4-2.png'"
-                />
-                <img
-                    class="u-title-text p-animation"
-                    v-animate="'fadeInDown'"
-                    loading="lazy"
-                    :src="imgurl + 'bt4-1.png'"
-                />
-                <img class="u-title-bg p-animation" v-animate="`fadeIn`" loading="lazy" :src="imgurl + 'bt-0.png'" />
-            </div>
+        </div>
+        <!-- 剑踪幻域 -->
+        <div class="m-jzhy-box">
+            <PageTitle titleIndex="4" />
             <div class="m-jzhy">
                 <img class="u-jzhy-bt" loading="lazy" :src="imgurl + `jzhy-bt.png`" />
                 <img class="u-jzhy-bg" loading="lazy" :src="imgurl + `jzhy-bg.png`" />
@@ -171,46 +121,22 @@
                 </div>
 
                 <div class="u-jzhy-wz-item-container">
-                    <img
-                        class="u-jzhy-wz-item p-animation"
-                        v-animate="'fadeInUp'"
-                        loading="lazy"
-                        :src="imgurl + `jzhy-wz1.png`"
-                        v-if="jzhyMoveClass === 'u-jzhy-bt-item1'"
-                    />
-                    <img
-                        class="u-jzhy-wz-item p-animation"
-                        v-animate="'fadeInUp'"
-                        loading="lazy"
-                        :src="imgurl + `jzhy-wz2.png`"
-                        v-if="jzhyMoveClass === 'u-jzhy-bt-item2'"
-                    />
-
-                    <img
-                        class="u-jzhy-wz-item p-animation"
-                        v-animate="'fadeInUp'"
-                        loading="lazy"
-                        :src="imgurl + `jzhy-wz3.png`"
-                        v-if="jzhyMoveClass === 'u-jzhy-bt-item3'"
-                    />
+                    <template v-for="item in 3">
+                        <img
+                            :key="'jzhy-wz-item' + item"
+                            class="u-jzhy-wz-item p-animation"
+                            v-animate="'fadeInUp'"
+                            loading="lazy"
+                            :src="imgurl + `jzhy-wz${item}.png`"
+                            v-if="jzhyMoveClass === `u-jzhy-bt-item${item}`"
+                        />
+                    </template>
                 </div>
             </div>
-            <!-- 阵营更新 -->
-            <div class="m-content-title" style="margin-top: 14.7%">
-                <img
-                    class="u-title-index p-animation"
-                    v-animate="'fadeInUp'"
-                    loading="lazy"
-                    :src="imgurl + 'bt5-2.png'"
-                />
-                <img
-                    class="u-title-text p-animation"
-                    v-animate="'fadeInDown'"
-                    loading="lazy"
-                    :src="imgurl + 'bt5-1.png'"
-                />
-                <img class="u-title-bg p-animation" v-animate="`fadeIn`" loading="lazy" :src="imgurl + 'bt-0.png'" />
-            </div>
+        </div>
+        <!-- 阵营更新 -->
+        <div class="m-zy-box">
+            <PageTitle titleIndex="5" />
             <div class="m-zy">
                 <!-- <img class="" loading="lazy" :src="imgurl + 'bt5-2.png'" /> -->
                 <el-carousel ref="zyCarouselRef" indicator-position="outside" arrow="never" @change="zyCarouselChange">
@@ -220,30 +146,16 @@
                 </el-carousel>
                 <img class="u-arrow" loading="lazy" :src="imgurl + 'jt3.png'" />
                 <div class="u-zy-wz-container">
-                    <img
-                        class="u-zy-wz p-animation"
-                        v-animate="'fadeInUp'"
-                        :key="'zy-0'"
-                        v-if="zyCarouselIndex === 0"
-                        loading="lazy"
-                        :src="imgurl + 'zy1-3.png'"
-                    />
-                    <img
-                        class="u-zy-wz p-animation"
-                        v-animate="'fadeInUp'"
-                        :key="'zy-1'"
-                        v-if="zyCarouselIndex === 1"
-                        loading="lazy"
-                        :src="imgurl + 'zy2-3.png'"
-                    />
-                    <img
-                        class="u-zy-wz p-animation"
-                        v-animate="'fadeInUp'"
-                        :key="'zy-2'"
-                        v-if="zyCarouselIndex === 2"
-                        loading="lazy"
-                        :src="imgurl + 'zy3-3.png'"
-                    />
+                    <template v-for="item in 3">
+                        <img
+                            class="u-zy-wz p-animation"
+                            v-animate="'fadeInUp'"
+                            :key="'zy-' + item"
+                            v-if="zyCarouselIndex === item - 1"
+                            loading="lazy"
+                            :src="imgurl + `zy${item}-3.png`"
+                        />
+                    </template>
                 </div>
                 <img
                     class="u-zy-tip"
@@ -254,22 +166,10 @@
                 <img class="u-arrow" @click="$refs.zyCarouselRef.next()" loading="lazy" :src="imgurl + 'jt3.png'" />
                 <img class="u-zy-bg" loading="lazy" :src="imgurl + 'zy-bg.png'" />
             </div>
-            <!-- 新奇遇 -->
-            <div class="m-content-title" style="margin-top: 18.2%">
-                <img
-                    class="u-title-index p-animation"
-                    v-animate="'fadeInUp'"
-                    loading="lazy"
-                    :src="imgurl + 'bt6-2.png'"
-                />
-                <img
-                    class="u-title-text p-animation"
-                    v-animate="'fadeInDown'"
-                    loading="lazy"
-                    :src="imgurl + 'bt6-1.png'"
-                />
-                <img class="u-title-bg p-animation" v-animate="`fadeIn`" loading="lazy" :src="imgurl + 'bt-0.png'" />
-            </div>
+        </div>
+        <!-- 新奇遇 -->
+        <div class="m-qy-box">
+            <PageTitle titleIndex="6" />
             <div class="m-qy">
                 <img
                     v-for="(item, index) in qyJumpUrlArr"
@@ -280,61 +180,29 @@
                     :src="imgurl + `qy${index + 1}.png`"
                 />
             </div>
-            <!-- 更多精彩 -->
-            <div class="m-content-title" style="margin-top: 18.2%">
-                <img
-                    class="u-title-index p-animation"
-                    v-animate="'fadeInUp'"
-                    loading="lazy"
-                    :src="imgurl + 'bt7-2.png'"
-                />
-                <img
-                    class="u-title-text p-animation"
-                    v-animate="'fadeInDown'"
-                    loading="lazy"
-                    :src="imgurl + 'bt7-1.png'"
-                />
-                <img class="u-title-bg p-animation" v-animate="`fadeIn`" loading="lazy" :src="imgurl + 'bt-0.png'" />
-            </div>
+        </div>
+        <!-- 更多精彩 -->
+        <div class="m-more-box">
+            <PageTitle titleIndex="7" />
             <div class="m-more">
-                <div class="m-more-item">
+                <div class="m-more-item" v-for="(item, index) in moreData" :key="index">
                     <img
                         class="u-more-bg p-animation"
                         v-animate="'fadeInRight'"
                         loading="lazy"
-                        :src="imgurl + 'xk1.png'"
+                        :src="imgurl + `${item}1.png`"
                     />
                     <img
                         class="u-more-title p-animation"
                         v-animate="'fadeInLeft'"
                         loading="lazy"
-                        :src="imgurl + 'xk2.png'"
+                        :src="imgurl + `${item}2.png`"
                     />
                     <img
                         class="u-more-tip p-animation"
                         v-animate="'fadeInLeft'"
                         loading="lazy"
-                        :src="imgurl + 'xk3.png'"
-                    />
-                </div>
-                <div class="m-more-item">
-                    <img
-                        class="u-more-bg p-animation"
-                        v-animate="`fadeInLeft`"
-                        loading="lazy"
-                        :src="imgurl + 'sh1.png'"
-                    />
-                    <img
-                        class="u-more-title p-animation"
-                        v-animate="'fadeInRight'"
-                        loading="lazy"
-                        :src="imgurl + 'sh2.png'"
-                    />
-                    <img
-                        class="u-more-tip p-animation"
-                        v-animate="'fadeInRight'"
-                        loading="lazy"
-                        :src="imgurl + 'sh3.png'"
+                        :src="imgurl + `${item}3.png`"
                     />
                 </div>
             </div>
@@ -343,31 +211,39 @@
 </template>
 
 <script>
-const KEY = "jiandanqinxin"; 
+import { __cdn, __Root } from "@jx3box/jx3box-common/data/jx3box.json";
+import PageTitle from "./components/PageTitle.vue";
+const KEY = "jiandanqinxin";
+import { getTopic } from "@/service/topic";
 export default {
     name: "Index",
     props: [],
-    components: {},
+    components: {
+        PageTitle,
+    },
     data: function () {
         return {
-            imgurl: `https://cdn.jx3box.com/design/topic/${KEY}/`,
+            imgurl: `${__cdn}/design/topic/${KEY}/`,
 
             cgAddClassStatus: false,
             dzJumpUrlArr: [
-                "https://www.jx3box.com/fb/31227",
-                "https://www.jx3box.com/fb/31223",
-                "https://www.jx3box.com/fb/31220",
-                "https://www.jx3box.com/fb/31222",
-                "https://www.jx3box.com/fb/31226",
+                `${__Root}/fb/31227`,
+                `${__Root}/fb/31223`,
+                `${__Root}/fb/31220`,
+                `${__Root}/fb/31222`,
+                `${__Root}/fb/31226`,
             ],
-            qyJumpUrlArr: [
-                "https://www.jx3box.com/cj/view/5179",
-                "https://www.jx3box.com/cj/view/5187",
-                "https://www.jx3box.com/cj/view/9732",
-            ],
+            qyJumpUrlArr: [`${__Root}/cj/view/5179`, `${__Root}/cj/view/5187`, `${__Root}/cj/view/9732`],
             jzhyMoveClass: "",
             xlCarouselIndex: 0,
             zyCarouselIndex: 0,
+
+            moreData: ["xk", "sh"],
+        };
+    },
+    provide() {
+        return {
+            imgurl: this.imgurl,
         };
     },
     computed: {

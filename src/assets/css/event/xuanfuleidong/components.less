@@ -151,16 +151,20 @@
             .flex;
             .fz(36px,36px);
             justify-content: space-between;
+            gap:20px;
+            align-items: center;
             .u-label {
-                .fz(24px);
+                .fz(22px);
                 .color(#000);
                 .bold;
                 .pl(30px);
+                .x(left);
                 background: url("@{xuanfuleidong}x.svg") no-repeat center left;
             }
             .u-button {
-                .fz(20px,36px);
+                .fz(20px,24px);
                 .r(26px);
+                height: 24px;
                 cursor: default;
                 padding: 0 24px;
             }
@@ -183,11 +187,20 @@
             .flex;
             align-items: flex-end;
             justify-content: space-between;
+            .u-info {
+                .flex;
+                .color(#999);
+                align-items: center;
+                gap: 10px;
+            }
             .u-name {
                 .ml(12px);
                 .fz(20px);
-                .color(#999);
                 font-weight: 400;
+            }
+            .u-avatar {
+                .size(28px);
+                .r(50%);
             }
             .u-item-button {
                 .flex;

@@ -22,8 +22,19 @@
                 <div class="u-start"></div>
                 <img :src="`${__imgRoot}end.png`" class="u-axis" />
                 <!-- 详细内容 -->
-                <component class="m-info" :is="active" :list="componentData" />
+                <component class="m-info" :is="active" :list="componentData" @update="changeList" />
                 <img :src="`${__imgRoot}end.png`" class="u-axis" />
+            </div>
+            <div class="m-tips" :class="{ 'is-show': isShow }">
+                <div class="m-code" v-if="key == 'vote'">
+                    <div class="u-box">
+                        <img class="u-code" :src="`${__imgRoot}qrcode.png`" alt="魔盒小程序" />
+                        <p>微信扫码<br />给喜欢的玩法投票吧！</p>
+                    </div>
+                </div>
+                <div class="u-top" @click="goTop">
+                    <img :src="`${__imgRoot}top.png`" alt="返回顶部" />
+                </div>
             </div>
         </template>
     </div>
@@ -37,6 +48,8 @@ import vote from "./components/vote.vue";
 import winner from "./components/winner.vue";
 import Miniprogram from "./components/miniprogram.vue";
 import { shuffle } from "lodash";
+import { __cdn } from "@jx3box/jx3box-common/data/jx3box.json";
+import User from "@jx3box/jx3box-common/js/user.js";
 export default {
     name: "Index",
     inject: ["__imgRoot"],
@@ -55,6 +68,8 @@ export default {
             list: [], // 投票列表
             winList: [], // 获奖作品列表
             myVote: [], // 我的投票
+            isShow: false,
+            elementOffsetTop: 0,
             // key: "vote", // 当前选中的tab
             menu: "2025_xuanfuleidong_winner", // 获奖作品Key
             tabs: [
@@ -79,7 +94,7 @@ export default {
             return this.tabs.find((item) => item.key == this.key).component;
         },
         componentData() {
-            return this.key == "winner" ? this.winList : this.list;
+            return this.key === "winner" ? this.winList : this.list;
         },
         miniData() {
             return {
@@ -97,6 +112,28 @@ export default {
     created() {
         this.loadData();
     },
+    mounted() {
+        this.$nextTick(() => {
+            const element = this.$refs.stickyElement;
+            if (element) {
+                this.elementOffsetTop = element.offsetTop;
+            }
+        });
+
+        window.addEventListener("scroll", this.handleScroll);
+    },
+    beforeUnmount() {
+        window.removeEventListener("scroll", this.handleScroll);
+    },
+    watch: {
+        key: {
+            handler(val) {
+                if (val !== "introduction") this.loadData();
+
+            },
+            immediate: true,
+        },
+    },
     methods: {
         handleTabClick(key) {
             this.$router.push({
@@ -109,9 +146,13 @@ export default {
             this.loading = true;
             getProgramDetail(this.id)
                 .then(async (res) => {
-                    this.list = shuffle(res.data?.data?.vote_items || []);
-                    await this.loadMyVote();
-                    await this.loadWinner();
+                    const list = shuffle(res.data?.data?.vote_items || []);
+                    this.list = list.map((item) => {
+                        if (!item?.user_info?.avatar) item.user_info.avatar = `${__cdn}image/common/avatar.png`;
+                        return item;
+                    });
+                    if (User.isLogin()) await this.loadMyVote();
+                    if (this.key === "winner") await this.loadWinner();
                 })
                 .finally(() => {
                     this.loading = false;
@@ -120,6 +161,10 @@ export default {
         async loadMyVote() {
             const myVote = await getMyVote(this.id);
             this.myVote = myVote.data?.data?.list || [];
+            this.list = this.list.map((item) => {
+                item.isVoted = this.myVote.some((e) => e.vote_item_id == item.id);
+                return item;
+            });
         },
         async loadWinner() {
             const winList = await getMenu(this.menu);
@@ -131,14 +176,28 @@ export default {
                         .map((id) => {
                             return this.list.find((e) => e.id == id);
                         })
-                        .filter(Boolean)
-                        .map((voteItem) => {
-                            const foundVote = this.myVote.find((e) => e.vote_item_id == voteItem.id);
-                            this.$set(voteItem, "isVoted", !!foundVote);
-                            return voteItem;
-                        });
+                        .filter(Boolean);
                 }
                 return newItem;
+            });
+        },
+        changeList(id) {
+            this.list = this.list.map((item) => {
+                if (item.id == id) {
+                    item.isVoted = true;
+                    item.amount++;
+                }
+                return item;
+            });
+        },
+        handleScroll() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+            this.isShow = scrollTop > this.elementOffsetTop;
+        },
+        goTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth",
             });
         },
     },
