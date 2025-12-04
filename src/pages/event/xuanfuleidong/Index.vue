@@ -127,11 +127,7 @@ export default {
     },
     watch: {
         key() {
-            if (this.key === "winner") {
-                this.loadWinner();
-            } else {
-                this.loadData();
-            }
+            if (key !== "introduction") this.loadData();
         },
     },
     methods: {
@@ -152,6 +148,7 @@ export default {
                         return item;
                     });
                     if (User.isLogin()) await this.loadMyVote();
+                    if (this.key === "winner") await this.loadWinner();
                 })
                 .finally(() => {
                     this.loading = false;
