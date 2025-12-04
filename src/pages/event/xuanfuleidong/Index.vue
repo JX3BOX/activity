@@ -126,8 +126,12 @@ export default {
         window.removeEventListener("scroll", this.handleScroll);
     },
     watch: {
-        key() {
-            if (key !== "introduction") this.loadData();
+        key: {
+            handler(val) {
+                if (val !== "introduction") this.loadData();
+
+            },
+            immediate: true,
         },
     },
     methods: {

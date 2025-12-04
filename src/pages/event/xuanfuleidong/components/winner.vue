@@ -42,7 +42,6 @@ export default {
     },
     computed: {
         isNull() {
-            console.log(this.list)
             return this.list && this.list.every((item) => item.ids == "");
         },
     },
