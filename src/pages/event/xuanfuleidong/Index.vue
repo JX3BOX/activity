@@ -125,6 +125,15 @@ export default {
     beforeUnmount() {
         window.removeEventListener("scroll", this.handleScroll);
     },
+    watch: {
+        key() {
+            if (this.key === "winner") {
+                this.loadWinner();
+            } else {
+                this.loadData();
+            }
+        },
+    },
     methods: {
         handleTabClick(key) {
             this.$router.push({
@@ -143,7 +152,6 @@ export default {
                         return item;
                     });
                     if (User.isLogin()) await this.loadMyVote();
-                    if (this.key === "winner") await this.loadWinner();
                 })
                 .finally(() => {
                     this.loading = false;
