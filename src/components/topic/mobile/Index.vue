@@ -31,10 +31,11 @@ export default {
     },
     computed: {
         client() {
-            return location.href.includes('std') ? 'std' : 'origin'
+            return location.href.includes('origin') ? 'origin' : 'std'
         },
     },
     created() {
+        console.log(this.client)
         if (this.client === 'origin') {
             document.title = '缘起'
         } else {
