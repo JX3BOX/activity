@@ -1,9 +1,9 @@
 @font-face {
-  font-family: 'ZcoolXW';
-  src: url('../../../../../assets/font/zcoolxw.OTF') format('opentype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
+    font-family: "ZcoolXW";
+    src: url("../../../../../assets/font/zcoolxw.OTF") format("opentype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
 }
 
 .m-jx3story-main {
@@ -14,50 +14,37 @@
         background: url("@{jx3story}web/vote_bg.jpg") no-repeat top center/cover;
     }
 
-    .m-left {
-        .w(380px);
-        flex-shrink: 0;
-    }
-    .m-top {
-        .pr;
-        .none;
-        .mt(20px);
-        .size(100%,100px);
-        background: url("@{jx3story}mini/logo.png") no-repeat center center/cover;
-        background-size: auto 80%;
-        .u-back {
-            .pa;
-            .lt(20px,10px);
-            .size(24px);
-            background: url("@{jx3story}mini/back.png") no-repeat center center;
-            background-size: cover;
+    .u-null {
+        .flex;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        height: 70vh;
+        img {
+            max-width: 660px;
         }
+    }
+    .m-left {
+        width: 300px;
     }
     .m-change {
         .pr;
-        .h(160px);
-        // background: url("@{jx3story}web/logo.png") no-repeat center;
-        // background-size: 100% auto;
-
-        .u-logo{
-            padding:10px;
-        }
-
+        .pt(20px);
+        .size(300px,auto);
+        .mb(40px);
         .m-change-item {
-            .pa;.z(1);
+            .pa;
             .x;
             .pointer;
-            .size(165px,32px);
-            .fz(16px,32px);
-            letter-spacing: 5px;
-            font-family: 'Times New Roman', Times, serif;
+            .size(108px,24px);
+            .fz(15px,24px);
             .lb(50%,0);
-            .ml(-68px);
+            .ml(-50px);
             color: #fff3d3;
-            background: url("@{jx3story}web/menu0.png") no-repeat center;
+            background: url("@{jx3story}web/menu0.png?") no-repeat center;
             background-size: 100% 100%;
             &.active {
-                background: url("@{jx3story}web/menu1.png") no-repeat center;
+                background: url("@{jx3story}web/menu1.png?") no-repeat center;
                 background-size: 100% 100%;
             }
             .u-ul {
@@ -66,7 +53,8 @@
                 .r(10px);
                 .w(100%);
                 .clip;
-                top: 22px;
+                .z(9);
+                top: 16px;
                 padding: 0;
                 background-color: #fff;
                 li {
@@ -82,69 +70,66 @@
         }
     }
     .m-tabs {
-        .flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        margin: 30px 0 0 0;
         .u-router {
+            .pr;
             .db;
-            .x;
-            .size(282px,90px);
-            color: #fff3d3;
-            padding: 24px 50px 0 0;
-            box-sizing: border-box;
-            background-image: url("@{jx3story}web/tab.png");
-            background-repeat: no-repeat;
-            background-size: 100% 100%;
-            transition:all 0.2s ease-in-out;
+            .size(270px,80px);
+            .u-mark {
+                .none;
+                .pa;
+                .rt( -24px);
+                .size(90px);
+                .z(1);
+                background: url("@{jx3story}web/new/but.png") no-repeat center/cover;
+            }
             &:hover {
-                background-image: url("@{jx3story}web/tab_hover.png?");
-                background-position: 0 1px;
-            }
-            &.active {
-                background-image: url("@{jx3story}web/tab_active.png");
-                background-position: 0 0;
-                .u-txt::before {
-                    content: "◆";
+                .u-mark {
+                    .db;
+                    transition: all 0.2s ease-in-out;
                 }
             }
-            .u-txt {
-                .flex;
-                .fz(16px);
-                .lh(38px);
-                gap: 5px;
-                justify-content: center;
-                align-items: center;
-                font-family: "楷体";
-                &::before {
-                    content: "◇";
-                    .fz(16px,42px);
+        }
+        .drop(4);
+        .drop(@n, @i: 1) when (@i =< @n) {
+            .u-router-@{i} {
+                .pointer;
+                text-indent: -100px;
+                background: url("@{jx3story}web/new/tab@{i}.png") no-repeat center/cover;
+                background-size: 100%;
+                &:hover {
+                    background: url("@{jx3story}web/new/tab@{i}_hover.png") no-repeat center/cover;
+                    background-size: 100%;
+                    transition: all 0.2s ease-in-out;
+                }
+                &.active {
+                    background: url("@{jx3story}web/new/tab@{i}_active.png") no-repeat center/cover;
+                    background-size: 100%;
                 }
             }
+            .drop(@n, (@i + 1));
         }
     }
     .m-main {
         flex: 1;
     }
-    .u-null {
-        .flex;
-        flex: 1;
-        justify-content: center;
-        align-items: center;
-        height: 60vh;
-        margin: 0 400px 0 200px;
-        img {
-            max-width: 800px;
-        }
-    }
+
     .m-info-content {
         .scrollbar;
+        .mt(100px);
+        width: 100%;
+        height: calc(100vh - 164px);
         box-sizing: border-box;
-        padding: 100px 40px;
-        color: #fff;
-        height: calc(100vh - @header-height);
+        color: #4a3c35;
         overflow: auto;
+        max-width: 960px;
+        box-sizing: border-box;
+        .auto(x);
+        border: 10px solid #736d6a;
+        background: linear-gradient(180deg, #f5f1e4 0%, #d1cdc0 100%);
+        .m-info {
+            .x;
+            padding: 40px 120px;
+        }
     }
     .m-vote-content {
         .u-txt {
@@ -172,7 +157,7 @@
             .m-vote-item {
                 .pointer;
                 width: 88px;
-                *{
+                * {
                     transition: all 0.15s ease-in-out;
                 }
                 .u-top {
@@ -215,7 +200,7 @@
                     }
                     .u-title {
                         // color: #a77447;
-                        color:#fff;
+                        color: #fff;
                     }
                 }
                 &.active {
@@ -379,12 +364,16 @@
     .m-jx3story-main {
         flex-direction: column;
         .m-left {
+            .flex;
+            flex-direction: column;
+            align-items: center;
             width: 100%;
         }
         .m-tabs {
+            .flex;
             flex-direction: row;
             .pl(20px);
-            margin: 40px 0 0 0;
+            margin: 0;
         }
         .m-change {
             background-size: auto 100%;

@@ -2,10 +2,8 @@
     <div class="m-jx3story-main" :class="[`m-${key}-main`, { isMiniProgram }]">
         <div class="m-left">
             <div class="m-change">
-                <router-link to="/">
-                    <img class="u-logo" :src="`${cdn}2025/web/logo.png`" />
-                </router-link>
-                <div class="m-change-item" :class="{ active: changeYear }" @click.stop="changeYear = !changeYear">
+                <img :src="`${cdn}2025/web/logo.png`" alt="" srcset="" />
+                <div class="m-change-item" :class="{ active: changeYear }" @click="changeYear = !changeYear">
                     <span class="u-txt">{{ year }}</span>
                     <ul class="u-ul" v-show="changeYear">
                         <li v-for="item in list" :key="item.year" @click.stop="onChange(item.year)">{{ item.year }}</li>
@@ -15,12 +13,12 @@
             <div class="m-tabs">
                 <router-link
                     class="u-router"
-                    :class="key == item.key ? 'active' : ''"
+                    :class="[key == item.key ? 'active' : '', `u-router-${i + 2}`]"
                     :to="item.link"
-                    v-for="item in tabs"
+                    v-for="(item, i) in tabs"
                     :key="item.name"
                 >
-                    <span class="u-txt">{{ item.name }}</span>
+                    <span class="u-mark"></span>
                 </router-link>
             </div>
         </div>
