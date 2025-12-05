@@ -77,11 +77,7 @@ export default {
             }, []);
         },
         onclick(item) {
-            if (item.mini_path) {
-                wx.miniProgram.navigateTo({
-                    url: item.mini_path,
-                });
-            }
+            window.open(item.link, '_blank')
         },
         handleScroll() {
             const scrollWrapper = this.$refs.scrollWrapper;
