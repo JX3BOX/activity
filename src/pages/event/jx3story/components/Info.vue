@@ -1,7 +1,10 @@
 <template>
-    <div class="m-info-content" v-loading="loading">
-        <h1 class="u-title">{{ data.year }}年茶馆风月录</h1>
-        <div class="m-info" v-html="content" v-if="content"></div>
+    <div v-loading="loading">
+        <div class="m-info-content" v-if="content">
+            <h1 class="u-title">{{ data.year }}年茶馆风月录</h1>
+            <div class="m-info" v-html="content"></div>
+        </div>
+
         <div class="u-null" v-else-if="!loading">
             <img :src="data.nullImg" />
         </div>

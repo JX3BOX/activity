@@ -2,7 +2,7 @@
     <div class="m-jx3story-main" :class="[`m-${key}-main`, { isMiniProgram }]">
         <div class="m-left">
             <div class="m-change">
-                <img :src="`${cdn}2025/web/logo.png`" alt="" srcset="" />
+                <router-link to="/"> <img :src="`${cdn}2025/web/logo.png`" alt="" srcset="" /></router-link>
                 <div class="m-change-item" :class="{ active: changeYear }" @click="changeYear = !changeYear">
                     <span class="u-txt">{{ year }}</span>
                     <ul class="u-ul" v-show="changeYear">

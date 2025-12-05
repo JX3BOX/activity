@@ -49,6 +49,7 @@ import { getProgramDetail, getMyVote, vote } from "@/service/event/vote";
 import { shuffle } from "lodash";
 import User from "@jx3box/jx3box-common/js/user.js";
 import { __cdn, __Root } from "@/utils/config";
+
 export default {
     name: "jx3storyVote",
     props: {
@@ -57,6 +58,7 @@ export default {
             default: () => {},
         },
     },
+
     data() {
         return {
             isLogin: User.isLogin(),
