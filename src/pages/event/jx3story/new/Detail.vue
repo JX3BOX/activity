@@ -2,7 +2,10 @@
     <div class="m-jx3story-main" :class="[`m-${key}-main`, { isMiniProgram }]">
         <div class="m-left">
             <div class="m-change">
-                <div class="m-change-item" :class="{ active: changeYear }" @click="changeYear = !changeYear">
+                <router-link to="/">
+                    <img class="u-logo" :src="`${cdn}2025/web/logo.png`" />
+                </router-link>
+                <div class="m-change-item" :class="{ active: changeYear }" @click.stop="changeYear = !changeYear">
                     <span class="u-txt">{{ year }}</span>
                     <ul class="u-ul" v-show="changeYear">
                         <li v-for="item in list" :key="item.year" @click.stop="onChange(item.year)">{{ item.year }}</li>
@@ -45,23 +48,24 @@ export default {
             year: "2025",
             changeYear: false,
             isMiniProgram: isMiniProgram(),
+            cdn: __cdn + "design/event/jx3story/",
             tabs: [
-                {
-                    name: "返回首页",
-                    link: { path: "/" },
-                },
+                // {
+                //     name: "返回首页",
+                //     link: { path: "/" },
+                // },
                 {
                     name: "活动介绍",
                     key: "info",
                     link: { path: "/detail", query: { key: "info" } },
                 },
                 {
-                    name: "投票赏析",
+                    name: "入选作品",
                     key: "vote",
                     link: { path: "/detail", query: { key: "vote" } },
                 },
                 {
-                    name: "票数统计",
+                    name: "参与投票",
                     key: "stats",
                     link: { path: "/detail", query: { key: "stats" } },
                 },

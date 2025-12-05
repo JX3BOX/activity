@@ -1,6 +1,10 @@
 <template>
     <div class="m-stats-content" v-loading="loading">
-        <div class="m-list-box" v-if="list.length">
+        <div class="u-null">
+            <img :src="cdn + '2025/web/null.png'" />
+        </div>
+        <!-- TODO:写完再放出来 -->
+        <div class="m-list-box" v-if="list.length && false">
             <div class="m-list-header">
                 <span class="u-title">{{ data.year }}年茶馆风月录入选作品投票统计榜</span>
             </div>
@@ -42,16 +46,13 @@
                 </template>
             </div>
         </div>
-        <div class="u-null" v-else-if="!loading">
-            <img :src="data.nullImg" />
-        </div>
     </div>
 </template>
 <script>
 import { isMiniProgram } from "@jx3box/jx3box-common/js/utils";
 import { getProgramDetail } from "@/service/event/vote";
 import { shuffle } from "lodash";
-import { __Root } from "@/utils/config";
+import { __cdn, __Root } from "@/utils/config";
 export default {
     name: "jx3storyStats",
     props: {
@@ -66,6 +67,7 @@ export default {
             list: [],
             root: __Root,
             isMiniProgram: isMiniProgram(),
+            cdn: __cdn + "design/event/jx3story/",
         };
     },
     computed: {

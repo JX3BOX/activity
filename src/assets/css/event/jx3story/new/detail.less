@@ -1,3 +1,11 @@
+@font-face {
+  font-family: 'ZcoolXW';
+  src: url('../../../../../assets/font/zcoolxw.OTF') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 .m-jx3story-main {
     .flex;
     min-height: calc(100vh - 64px);
@@ -28,14 +36,21 @@
     .m-change {
         .pr;
         .h(160px);
-        background: url("@{jx3story}web/logo.png") no-repeat center;
-        background-size: 100% auto;
+        // background: url("@{jx3story}web/logo.png") no-repeat center;
+        // background-size: 100% auto;
+
+        .u-logo{
+            padding:10px;
+        }
+
         .m-change-item {
-            .pa;
+            .pa;.z(1);
             .x;
             .pointer;
             .size(165px,32px);
-            .fz(20px,32px);
+            .fz(16px,32px);
+            letter-spacing: 5px;
+            font-family: 'Times New Roman', Times, serif;
             .lb(50%,0);
             .ml(-68px);
             color: #fff3d3;
@@ -43,6 +58,7 @@
             background-size: 100% 100%;
             &.active {
                 background: url("@{jx3story}web/menu1.png") no-repeat center;
+                background-size: 100% 100%;
             }
             .u-ul {
                 // .none;
@@ -81,6 +97,7 @@
             background-image: url("@{jx3story}web/tab.png");
             background-repeat: no-repeat;
             background-size: 100% 100%;
+            transition:all 0.2s ease-in-out;
             &:hover {
                 background-image: url("@{jx3story}web/tab_hover.png?");
                 background-position: 0 1px;
@@ -94,14 +111,15 @@
             }
             .u-txt {
                 .flex;
-                .fz(22px);
+                .fz(16px);
                 .lh(38px);
                 gap: 5px;
                 justify-content: center;
                 align-items: center;
+                font-family: "楷体";
                 &::before {
                     content: "◇";
-                    .fz(20px,42px);
+                    .fz(16px,42px);
                 }
             }
         }
@@ -123,9 +141,9 @@
     .m-info-content {
         .scrollbar;
         box-sizing: border-box;
-        padding: 100px 0;
+        padding: 100px 40px;
         color: #fff;
-        height: calc(100vh - 64px);
+        height: calc(100vh - @header-height);
         overflow: auto;
     }
     .m-vote-content {
@@ -154,6 +172,9 @@
             .m-vote-item {
                 .pointer;
                 width: 88px;
+                *{
+                    transition: all 0.15s ease-in-out;
+                }
                 .u-top {
                     .db;
                     background: url("@{jx3story}web/title-01-hover.png") no-repeat center bottom;
@@ -181,19 +202,20 @@
                 }
                 &:hover {
                     .u-top {
-                        background: url("@{jx3story}web/title-01.png") no-repeat center bottom;
+                        background: url("@{jx3story}web/title-01-active.png") no-repeat center bottom;
                         background-size: 100% auto;
                     }
                     &::after {
-                        background: url("@{jx3story}web/title-03.png") no-repeat center top;
+                        background: url("@{jx3story}web/title-03-active.png") no-repeat center top;
                         background-size: 100% auto;
                     }
                     .u-vote {
-                        background: url("@{jx3story}web/title-02.png?1") center center;
+                        background: url("@{jx3story}web/title-02-active.png?1") center center;
                         background-size: 100% auto;
                     }
                     .u-title {
-                        color: #a77447;
+                        // color: #a77447;
+                        color:#fff;
                     }
                 }
                 &.active {
@@ -219,6 +241,8 @@
                     .pt(20px);
                     color: #5e2f16;
                     writing-mode: vertical-lr;
+                    letter-spacing: 5px;
+                    font-family: "ZcoolXW";
                 }
 
                 .u-icon {

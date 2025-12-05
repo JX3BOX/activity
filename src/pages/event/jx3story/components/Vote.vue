@@ -9,17 +9,17 @@
                         <a :href="`${root}community/${item.content}`" target="_blank" class="u-title">
                             {{ item.title }}
                         </a>
-                        <img
+                        <!-- <img
                             class="u-icon"
                             @click.stop="handleVote(item)"
                             :src="`${cdn}design/event/jx3story/2025/web/${item.active ? 'active' : 'vote'}.png`"
-                        />
+                        /> -->
                     </div>
                 </div>
-                <div class="u-txt">
+                <!-- <div class="u-txt">
                     <span>* 点击文章下方的按钮即可参与投票哦</span>
                     <img class="u-icon" :src="`${cdn}design/event/jx3story/2025/web/vote.png`" />
-                </div>
+                </div> -->
             </div>
             <!-- 小程序端 -->
             <div class="m-mini-box">
