@@ -8,7 +8,7 @@
                     </span>
                     <span v-else>特殊活动</span>
                 </div>
-                <div class="event-item" v-for="(listItem, index) in item.list" :key="index">
+                <div class="event-item" v-for="(listItem, index) in item.list" :key="index" @click="onclick(listItem)">
                     <div class="event-image">
                         <img :src="listItem.img" alt="" class="u-image">
                     </div>
