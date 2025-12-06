@@ -1,26 +1,28 @@
 <template>
-    <div class="m-vote-content" v-loading="loading">
+    <div class="m-vote-content">
         <template v-if="list.length">
             <!-- pc端 -->
-            <div class="m-vote-list">
-                <div class="m-vote-item" :class="{ active: item.active }" v-for="(item, i) in list" :key="i">
+            <transition-group name="fall" tag="div" class="m-vote-list">
+                <div
+                    class="m-vote-item"
+                    :class="{ falling: item.isFalling }"
+                    v-for="(item, i) in list"
+                    :key="item.id"
+                    :style="{
+                        animationDelay: `${item.fallDelay}s`,
+                        swingDuration: `${item.swingDuration}s`,
+                    }"
+                    @animationend="onFallEnd(i)"
+                >
                     <div class="u-top" :style="{ paddingTop: item.padding }"></div>
                     <div class="u-vote">
                         <a :href="`${root}community/${item.content}`" target="_blank" class="u-title">
                             {{ item.title }}
                         </a>
-                        <!-- <img
-                            class="u-icon"
-                            @click.stop="handleVote(item)"
-                            :src="`${cdn}design/event/jx3story/2025/web/${item.active ? 'active' : 'vote'}.png`"
-                        /> -->
                     </div>
                 </div>
-                <!-- <div class="u-txt">
-                    <span>* 点击文章下方的按钮即可参与投票哦</span>
-                    <img class="u-icon" :src="`${cdn}design/event/jx3story/2025/web/vote.png`" />
-                </div> -->
-            </div>
+            </transition-group>
+
             <!-- 小程序端 -->
             <div class="m-mini-box">
                 <div class="m-mini-list">
@@ -89,8 +91,10 @@ export default {
             getProgramDetail(id)
                 .then(async (res) => {
                     const list = shuffle(res.data?.data?.vote_items || []);
-                    this.list = list.map((item) => {
+                    this.list = list.map((item, i) => {
                         const randomNum = Math.floor(Math.random() * 220);
+                        item.fallDelay = i * 0.2;
+                        item.isFalling = false;
                         return {
                             ...item,
                             padding: `${randomNum}px`,
@@ -101,6 +105,9 @@ export default {
                 .finally(() => {
                     this.loading = false;
                 });
+        },
+        onFallEnd(index) {
+            this.list[index].isFalling = true;
         },
         async loadMyVote(id) {
             const myVote = await getMyVote(id);

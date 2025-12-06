@@ -13,11 +13,12 @@
             <div class="m-tabs">
                 <router-link
                     class="u-router"
-                    :class="[key == item.key ? 'active' : '', `u-router-${i + 2}`]"
+                    :class="[key == item.key ? 'active' : '']"
                     :to="item.link"
-                    v-for="(item, i) in tabs"
+                    v-for="item in tabs"
                     :key="item.name"
                 >
+                    <span class="u-txt">{{ item.name }}</span>
                     <span class="u-mark"></span>
                 </router-link>
             </div>

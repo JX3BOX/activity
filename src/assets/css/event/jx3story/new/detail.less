@@ -80,11 +80,26 @@
         .u-router {
             .pr;
             .db;
+            .x;
+            .pointer;
+            .fz(24px,40px);
             .size(270px,80px);
-            // @keyframes fadeIn{
-            //     from{}
-            //     to{}
-            // }
+            font-family: "ZcoolXW";
+            text-indent: 1em;
+            box-sizing: border-box;
+            padding: 20px 0;
+            color: #fff3d3;
+            background: url("@{jx3story}web/new/tab.png") no-repeat center;
+            background-size: 100%;
+            &:hover {
+                background: url("@{jx3story}web/new/tab_hover.png") no-repeat center;
+                background-size: 100%;
+                transition: all 0.2s ease-in-out;
+            }
+            &.active {
+                background: url("@{jx3story}web/new/tab_active.png") no-repeat center;
+                background-size: 100%;
+            }
             .u-mark {
                 .pa;
                 .rt( -24px);
@@ -95,32 +110,12 @@
                 opacity: 0;
                 transition: all 0.4s ease-in-out;
                 pointer-events: none;
-                // transition-behavior: allow-discrete;
             }
             &:hover {
                 .u-mark {
                     opacity: 1;
                 }
             }
-        }
-        .drop(4);
-        .drop(@n, @i: 1) when (@i =< @n) {
-            .u-router-@{i} {
-                .pointer;
-                text-indent: -100px;
-                background: url("@{jx3story}web/new/tab@{i}.png") no-repeat center/cover;
-                background-size: 100%;
-                &:hover {
-                    background: url("@{jx3story}web/new/tab@{i}_hover.png") no-repeat center/cover;
-                    background-size: 100%;
-                    transition: all 0.2s ease-in-out;
-                }
-                &.active {
-                    background: url("@{jx3story}web/new/tab@{i}_active.png") no-repeat center/cover;
-                    background-size: 100%;
-                }
-            }
-            .drop(@n, (@i + 1));
         }
     }
     .m-main {
@@ -154,6 +149,7 @@
         }
     }
     .m-vote-content {
+        min-height: 300px;
         .u-txt {
             .pf;
             .flex;
@@ -172,15 +168,40 @@
         .m-vote-list {
             .flex;
             .scrollbar(10px,#923f35,#f7f0d6);
-            width: calc(100vw - 640px);
-            height: 100%;
+            width: calc(100vw - 320px);
+            height: calc(100vh - 64px);
             gap: 20px;
             overflow-x: auto;
+            overflow-y: hidden;
             .m-vote-item {
                 .pointer;
                 width: 88px;
+                transform: translateY(-100px);
+                opacity: 0;
+                animation: fall 0.8s ease-out forwards;
                 * {
                     transition: all 0.05s ease-in;
+                }
+
+                &::after {
+                    content: "";
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 8px;
+                }
+
+                &.falling {
+                    opacity: 1;
+                    animation: shake 3s ease-in-out infinite both;
+                    transform-origin: top center;
+                }
+
+                &:nth-child(odd) {
+                    margin-top: 15px;
+                }
+                &:nth-child(even) {
+                    margin-top: -10px;
                 }
                 .u-top {
                     .db;
@@ -546,5 +567,39 @@
         img {
             width: 60%;
         }
+    }
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(-100px);
+        opacity: 0;
+    }
+    80% {
+        transform: translateY(20px);
+        opacity: 1;
+    }
+    90% {
+        transform: translateY(10px);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+@keyframes shake {
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    25% {
+        transform: translateY(-2px) rotate(-2deg);
+    }
+    50% {
+        transform: translateY(1px) rotate(2deg);
+    }
+    75% {
+        transform: translateY(-1px) rotate(-1deg);
     }
 }
