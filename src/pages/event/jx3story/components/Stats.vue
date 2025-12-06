@@ -1,15 +1,15 @@
 <template>
-    <div class="m-stats-content">
+    <div class="m-stats-content" :class="list.length ? '' : 'noPadding'" v-loading="loading">
         <div class="m-list-box" v-if="list.length">
             <div class="m-list-header">
                 <span class="u-title">{{ data.year }}年茶馆风月录作品投票</span>
             </div>
             <div class="m-list">
                 <div class="m-list-item m-list-item-header">
-                    <span class="u-number">序号</span>
+                    <span class="u-number endVote">序号</span>
                     <span class="u-post"> 入选作品</span>
                     <span class="u-author">作者</span>
-                    <span class="u-number endVote">票数</span>
+                    <span class="u-number">票数</span>
                 </div>
                 <div class="m-mini-scroll" v-if="isMiniProgram">
                     <div class="m-list-item" v-for="(item, i) in list" :key="i">
@@ -28,7 +28,9 @@
                 </div>
                 <template v-else>
                     <div class="m-list-item" v-for="(item, i) in list" :key="i">
-                        <span class="u-number">{{ i + 1 }}</span>
+                        <span class="u-number">
+                            <span class="u-amount">{{ i + 1 }}</span>
+                        </span>
                         <span class="u-post">
                             <a :href="`${root}community/${item.content}`" target="_blank">{{ item.title }}</a>
                         </span>
@@ -37,8 +39,8 @@
                                 {{ item.user_info.display_name }}
                             </a>
                         </span>
-                        <span class="u-number" :class="{ endVote }" @click.stop="handleVote(item)">
-                            {{ item.amount }}
+                        <span class="u-number" @click.stop="handleVote(item)">
+                            <span class="u-amount">{{ item.amount }}</span>
                             <img
                                 v-if="!endVote"
                                 class="u-vote"

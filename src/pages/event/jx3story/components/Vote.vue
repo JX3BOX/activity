@@ -1,5 +1,5 @@
 <template>
-    <div class="m-vote-content">
+    <div class="m-vote-content" v-loading="loading">
         <template v-if="list.length">
             <!-- pc端 -->
             <transition-group name="fall" tag="div" class="m-vote-list">
@@ -78,6 +78,7 @@ export default {
         vote_id: {
             handler(id) {
                 this.list = [];
+                this.$emit("update", { hasVote: false });
                 id && this.loadVote(id);
             },
             immediate: true,
@@ -98,7 +99,7 @@ export default {
                             padding: `${randomNum}px`,
                         };
                     });
-                    this.$emit("update", { hasVote: !!list.length });
+                    this.$emit("update", { hasVote: list.length });
                 })
                 .finally(() => {
                     this.loading = false;

@@ -1,6 +1,6 @@
 <template>
     <div class="m-jx3story-main" :class="[`m-${key}-main`, { isMiniProgram }, { 'm-vote-main-bg': hasVote }]">
-        <div class="m-left">
+        <el-aside class="m-left">
             <div class="m-change">
                 <router-link to="/"> <img :src="`${cdn}2025/web/logo.png`" alt="" srcset="" /></router-link>
                 <div class="m-change-item" :class="{ active: changeYear }" @click="changeYear = !changeYear">
@@ -22,13 +22,14 @@
                     <span class="u-mark"></span>
                 </router-link>
             </div>
-        </div>
+        </el-aside>
+
         <router-link to="/" class="m-top">
             <span class="u-back"></span>
         </router-link>
-        <div class="m-main">
+        <el-main class="m-main">
             <component :is="components[key]" :data="componentData" @update="updateData"></component>
-        </div>
+        </el-main>
     </div>
 </template>
 <script>
@@ -79,7 +80,7 @@ export default {
     },
     computed: {
         key() {
-            return this.$route.query.key || "vote";
+            return this.$route.query.key || "info";
         },
         componentData() {
             const data = this.list.filter((item) => item.year == this.year)[0] || {};
