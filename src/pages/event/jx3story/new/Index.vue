@@ -19,10 +19,10 @@ export default {
     },
     computed: {
         videoLink() {
-            return __cdn + "design/event/jx3story/2025/web/index.mp4";
+            return __cdn + "design/event/jx3story/2025/web/index.mp4?timestamp=" + Date.now();
         },
         poster() {
-            return `${this.__imgRoot}web/1/bg.jpg`;
+            return `${this.__imgRoot}web/1/bg.jpg?timestamp=` + Date.now();
         },
     },
 };
