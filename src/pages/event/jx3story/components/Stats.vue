@@ -104,7 +104,8 @@ export default {
             getProgramDetail(id)
                 .then(async (res) => {
                     this.end_at = res.data?.data?.end_at || 0;
-                    this.list = shuffle(res.data?.data?.vote_items || []);
+                    const list = shuffle(res.data?.data?.vote_items || []);
+                    this.list = list.sort((a, b) => b.amount - a.amount);
                     this.isLogin && (await this.loadMyVote(id));
                 })
                 .finally(() => {
