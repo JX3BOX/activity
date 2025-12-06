@@ -1,5 +1,5 @@
 <template>
-    <div class="m-jx3story-main" :class="[`m-${key}-main`, { isMiniProgram }]">
+    <div class="m-jx3story-main" :class="[`m-${key}-main`, { isMiniProgram }, { 'm-vote-main-bg': hasVote }]">
         <div class="m-left">
             <div class="m-change">
                 <router-link to="/"> <img :src="`${cdn}2025/web/logo.png`" alt="" srcset="" /></router-link>
@@ -27,7 +27,7 @@
             <span class="u-back"></span>
         </router-link>
         <div class="m-main">
-            <component :is="components[key]" :data="componentData"></component>
+            <component :is="components[key]" :data="componentData" @update="updateData"></component>
         </div>
     </div>
 </template>
@@ -44,6 +44,7 @@ export default {
     data() {
         return {
             list: [],
+            hasVote: false,
             year: "2025",
             changeYear: false,
             isMiniProgram: isMiniProgram(),
@@ -108,6 +109,10 @@ export default {
         onChange(year) {
             this.year = year;
             this.changeYear = false;
+        },
+        updateData(data) {
+            const { hasVote } = data || {};
+            this.hasVote = hasVote || false;
         },
     },
 };

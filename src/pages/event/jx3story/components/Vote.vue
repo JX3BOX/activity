@@ -98,6 +98,7 @@ export default {
                             padding: `${randomNum}px`,
                         };
                     });
+                    this.$emit("update", { hasVote: !!list.length });
                 })
                 .finally(() => {
                     this.loading = false;
