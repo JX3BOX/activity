@@ -20,6 +20,7 @@
                             {{ item.title }}
                         </a>
                     </div>
+                    <div class="u-bottom"></div>
                 </div>
             </transition-group>
 

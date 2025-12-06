@@ -183,20 +183,11 @@
                     transition: all 0.05s ease-in;
                 }
 
-                &::after {
-                    content: "";
-                    display: block;
-                    width: 100%;
-                    height: 100%;
-                    border-radius: 8px;
-                }
-
                 &.falling {
                     opacity: 1;
                     animation: shake 3s ease-in-out infinite both;
                     transform-origin: top center;
                 }
-
                 &:nth-child(odd) {
                     margin-top: 15px;
                 }
@@ -205,16 +196,15 @@
                 }
                 .u-top {
                     .db;
-                    background: url("@{jx3story}web/title-01-hover.png") no-repeat center bottom;
+                    background: url("@{jx3story}web/new/title-01.png") no-repeat center bottom;
                     background-size: 100% auto;
                     min-height: 124px;
                 }
-                &::after {
-                    content: "";
+                .u-bottom {
                     .db;
                     .h(66px);
                     .mt(-2px);
-                    background: url("@{jx3story}web/title-03-hover.png") no-repeat center top;
+                    background: url("@{jx3story}web/new/title-03.png") no-repeat center top;
                     background-size: 100% auto;
                 }
                 .u-vote {
@@ -225,42 +215,25 @@
                     justify-content: center;
                     padding: 0 20px;
                     box-sizing: border-box;
-                    background: url("@{jx3story}web/title-02-hover.png?1") center center;
+                    background: url("@{jx3story}web/new/title-02.png?1") center center;
                     background-size: 100% auto;
                 }
                 &:hover {
                     .u-top {
-                        background: url("@{jx3story}web/title-01-active.png") no-repeat center bottom;
+                        background: url("@{jx3story}web/new/title-01-active.png") no-repeat center bottom;
                         background-size: 100% auto;
                     }
-                    &::after {
-                        background: url("@{jx3story}web/title-03-active.png") no-repeat center top;
+                    .u-bottom {
+                        background: url("@{jx3story}web/new/title-03-active.png") no-repeat center top;
                         background-size: 100% auto;
                     }
                     .u-vote {
-                        background: url("@{jx3story}web/title-02-active.png?1") center center;
+                        background: url("@{jx3story}web/new/title-02-active.png?1") center center;
                         background-size: 100% auto;
                     }
                     .u-title {
                         // color: #a77447;
                         color: #fff;
-                    }
-                }
-                &.active {
-                    .u-top {
-                        background: url("@{jx3story}web/title-01-active.png") no-repeat center bottom;
-                        background-size: 100% auto;
-                    }
-                    &::after {
-                        background: url("@{jx3story}web/title-03-active.png") no-repeat center top;
-                        background-size: 100% auto;
-                    }
-                    .u-vote {
-                        background: url("@{jx3story}web/title-02-active.png?1") center center;
-                        background-size: 100% auto;
-                    }
-                    .u-title {
-                        color: #ffba79;
                     }
                 }
 
