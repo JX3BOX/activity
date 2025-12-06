@@ -81,18 +81,25 @@
             .pr;
             .db;
             .size(270px,80px);
+            // @keyframes fadeIn{
+            //     from{}
+            //     to{}
+            // }
             .u-mark {
-                .none;
                 .pa;
                 .rt( -24px);
                 .size(90px);
                 .z(1);
                 background: url("@{jx3story}web/new/but.png") no-repeat center/cover;
+
+                opacity: 0;
+                transition: all 0.4s ease-in-out;
+                pointer-events: none;
+                // transition-behavior: allow-discrete;
             }
             &:hover {
                 .u-mark {
-                    .db;
-                    transition: all 0.2s ease-in-out;
+                    opacity: 1;
                 }
             }
         }
@@ -173,7 +180,7 @@
                 .pointer;
                 width: 88px;
                 * {
-                    transition: all 0.15s ease-in-out;
+                    transition: all 0.05s ease-in;
                 }
                 .u-top {
                     .db;
