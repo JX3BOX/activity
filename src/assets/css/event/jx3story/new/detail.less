@@ -22,7 +22,6 @@
 
 .m-jx3story-main {
     .flex;
-    // .scrollbar;
     height: calc(100vh - 64px);
     background: url("@{jx3story}web/bg.png") no-repeat top center/cover;
     &.m-vote-main.m-vote-main-bg {
@@ -158,6 +157,7 @@
         }
     }
     .m-vote-content {
+        .mt(-30px);
         min-height: 300px;
         .u-txt {
             .pf;
@@ -177,11 +177,10 @@
         .m-vote-list {
             .flex;
             .scrollbar(10px,#923f35,#f7f0d6);
-            width: calc(100vw - 320px);
+            width: calc(100vw - 340px);
+            justify-content: flex-end;
             height: calc(100vh - 64px);
-            gap: 20px;
-            overflow-x: auto;
-            overflow-y: hidden;
+            gap: 20px; 
             .m-vote-item {
                 .pointer;
                 width: 100px;
@@ -198,10 +197,10 @@
                     transform-origin: top center;
                 }
                 &:nth-child(odd) {
-                    margin-top: 15px;
+                    margin-top: 0;
                 }
                 &:nth-child(even) {
-                    margin-top: -10px;
+                    margin-top: 10px;
                 }
                 .u-top {
                     .db;
