@@ -10,7 +10,6 @@
                     :key="item.id"
                     :style="{
                         animationDelay: `${item.fallDelay}s`,
-                        swingDuration: `${item.swingDuration}s`,
                     }"
                     @animationend="onFallEnd(i)"
                 >
