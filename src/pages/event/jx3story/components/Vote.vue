@@ -34,9 +34,9 @@
                             </span>
                             <span class="u-author"> —— {{ item.user_info.display_name }} </span>
                         </a>
-                        <div class="u-vote" :class="{ active: item.active }" @click.stop="handleVote(item)">
+                        <!-- <div class="u-vote" :class="{ active: item.active }" @click.stop="handleVote(item)">
                             {{ item.active ? "已投票" : "投TA一票" }}
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -92,7 +92,7 @@ export default {
                     const list = shuffle(res.data?.data?.vote_items || []);
                     this.list = list.map((item, i) => {
                         const randomNum = Math.floor(Math.random() * 220);
-                        item.fallDelay = i * 0.2;
+                        item.fallDelay = i * 0.1;
                         item.isFalling = false;
                         return {
                             ...item,

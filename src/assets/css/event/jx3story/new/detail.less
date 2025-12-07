@@ -180,13 +180,15 @@
             width: calc(100vw - 340px);
             justify-content: flex-end;
             height: calc(100vh - 64px);
-            gap: 20px; 
+            gap: 20px;
             .m-vote-item {
                 .pointer;
                 width: 100px;
                 transform: translateY(-100px);
                 opacity: 0;
-                animation: fall 0.8s ease-out forwards;
+                animation: fall 2s ease-in-out forwards;
+                transform-origin: top center;
+
                 * {
                     transition: all 0.05s ease-in;
                 }
@@ -575,19 +577,15 @@
 
 @keyframes fall {
     0% {
-        transform: translateY(-100px);
+        transform: translateY(-100px) rotate(-3deg);
         opacity: 0;
     }
-    80% {
-        transform: translateY(20px);
-        opacity: 1;
-    }
-    90% {
-        transform: translateY(10px);
+    50% {
+        transform: translateY(0) rotate(3deg);
         opacity: 1;
     }
     100% {
-        transform: translateY(0);
+        transform: translateY(0) rotate(0);
         opacity: 1;
     }
 }
@@ -597,13 +595,13 @@
         transform: translateY(0) rotate(0deg);
     }
     25% {
-        transform: translateY(-2px) rotate(-2deg);
+        transform: translateY(-1px) rotate(2deg);
     }
     50% {
         transform: translateY(1px) rotate(1deg);
     }
     75% {
-        transform: translateY(-1px) rotate(-1deg);
+        transform: translateY(-1px) rotate(-2deg);
     }
 }
 @keyframes butterflyFloat {
@@ -620,3 +618,21 @@
         opacity: 1;
     }
 }
+// @keyframes fall {
+//     0% {
+//         transform: translateY(-100px);
+//         opacity: 0;
+//     }
+//     50% {
+//         transform: translateY(20px) rotate(-2deg);
+//         opacity: 1;
+//     }
+//     80% {
+//         transform: translateY(10px) rotate(0);
+//         opacity: 1;
+//     }
+//     75% {
+//         transform: translateY(0) rotate(0);
+//         opacity: 1;
+//     }
+// }
