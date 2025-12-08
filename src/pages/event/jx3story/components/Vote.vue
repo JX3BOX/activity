@@ -90,14 +90,16 @@ export default {
             getProgramDetail(id)
                 .then(async (res) => {
                     const list = shuffle(res.data?.data?.vote_items || []);
-                    this.list = list.map((item) => {
+                    this.list = list.map((item, i) => {
                         const randomNum = Math.floor(Math.random() * 220);
+                        item.fallDelay = i * 0.1;
+                        item.isFalling = false;
                         return {
                             ...item,
                             padding: `${randomNum}px`,
                         };
                     });
-                    this.isLogin && (await this.loadMyVote(id));
+                    this.$emit("update", { hasVote: list.length });
                 })
                 .finally(() => {
                     this.loading = false;
