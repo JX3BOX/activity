@@ -52,7 +52,7 @@
             </div>
         </div>
         <div class="u-null" v-else-if="!loading">
-            <img :src="cdn + '2025/web/null.png'" />
+            <img :src="data.nullImg" />
         </div>
     </div>
 </template>
