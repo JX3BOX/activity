@@ -33,9 +33,9 @@
                             </span>
                             <span class="u-author"> —— {{ item.user_info.display_name }} </span>
                         </a>
-                        <!-- <div class="u-vote" :class="{ active: item.active }" @click.stop="handleVote(item)">
+                        <div class="u-vote" :class="{ active: item.active }" @click.stop="handleVote(item)">
                             {{ item.active ? "已投票" : "投TA一票" }}
-                        </div> -->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -46,11 +46,12 @@
         </div>
     </div>
 </template>
-<script>
-import { getProgramDetail } from "@/service/event/vote";
-import { shuffle } from "lodash";
-import { __cdn, __Root } from "@/utils/config";
 
+<script>
+import { getProgramDetail, getMyVote, vote } from "@/service/event/vote";
+import { shuffle } from "lodash";
+import User from "@jx3box/jx3box-common/js/user.js";
+import { __cdn, __Root } from "@/utils/config";
 export default {
     name: "jx3storyVote",
     props: {
@@ -59,13 +60,14 @@ export default {
             default: () => {},
         },
     },
-
     data() {
         return {
+            isLogin: User.isLogin(),
             loading: false,
             list: [],
             cdn: __cdn,
             root: __Root,
+            lastVoteTime: 0,
         };
     },
     computed: {
@@ -77,7 +79,6 @@ export default {
         vote_id: {
             handler(id) {
                 this.list = [];
-                this.$emit("update", { hasVote: false });
                 id && this.loadVote(id);
             },
             immediate: true,
@@ -89,20 +90,50 @@ export default {
             getProgramDetail(id)
                 .then(async (res) => {
                     const list = shuffle(res.data?.data?.vote_items || []);
-                    this.list = list.map((item, i) => {
+                    this.list = list.map((item) => {
                         const randomNum = Math.floor(Math.random() * 220);
-                        item.fallDelay = i * 0.1;
-                        item.isFalling = false;
                         return {
                             ...item,
                             padding: `${randomNum}px`,
                         };
                     });
-                    this.$emit("update", { hasVote: list.length });
+                    this.isLogin && (await this.loadMyVote(id));
                 })
                 .finally(() => {
                     this.loading = false;
                 });
+        },
+        async loadMyVote(id) {
+            const myVote = await getMyVote(id);
+            const ids = myVote.data?.data?.list || [];
+            const list = ids.map((item) => item.vote_item_id);
+            this.list = this.list.map((item) => ({
+                ...item,
+                active: list.includes(item.id),
+            }));
+        },
+        handleVote(item) {
+            if (item.active) return;
+            if (!this.isLogin) {
+                User.toLogin();
+                return;
+            }
+            const time = 1000;
+            const now = Date.now();
+            if (now - this.lastVoteTime < time) {
+                return this.$message({
+                    message: "投票速度太快啦！",
+                    type: "warning",
+                });
+            }
+            this.lastVoteTime = now;
+            vote(item.program_id, { vote_id_list: [item.id] }).then(() => {
+                this.$message({
+                    message: "投票成功",
+                    type: "success",
+                });
+                item.active = true;
+            });
         },
         onFallEnd(index) {
             this.list[index].isFalling = true;
