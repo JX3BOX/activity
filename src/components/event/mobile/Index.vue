@@ -1,7 +1,7 @@
 <template>
     <div class="event-container">
         <div class="event-scroll-wrapper" ref="scrollWrapper">
-            <div class="event-list" ref="eventList">
+            <div class="event-list" ref="eventList" v-if="currentMonthEvents">
                 <div class="event-month">
                     <span>
                         {{ currentMonthEvents.month }}月
@@ -50,7 +50,7 @@ export default {
             isNewEvent: true,
             monthList: [],
             //当月事件
-            currentMonthEvents: {},
+            currentMonthEvents: null,
         }
     },
     computed: {
