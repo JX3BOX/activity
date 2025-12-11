@@ -1,6 +1,20 @@
 <template>
     <div class="event-container">
         <div class="event-scroll-wrapper" ref="scrollWrapper">
+            <div class="event-list" ref="eventList">
+                <div class="event-month">
+                    <span>
+                        {{ currentMonthEvents.month }}月
+                    </span>
+                </div>
+                <div class="event-item" v-for="(listItem, index) in currentMonthEvents.list" :key="index"
+                    @click="onclick(listItem)">
+                    <div class="event-image">
+                        <img :src="listItem.img" alt="" class="u-image">
+                    </div>
+                    <div class="event-name">{{ listItem.name }}</div>
+                </div>
+            </div>
             <div class="event-list" ref="eventList" v-for="(item, i) in monthList" :key="i">
                 <div class="event-month">
                     <span v-if="item.month">
@@ -35,6 +49,8 @@ export default {
             name: "",
             isNewEvent: true,
             monthList: [],
+            //当月事件
+            currentMonthEvents: {},
         }
     },
     computed: {
@@ -75,6 +91,11 @@ export default {
                 }
                 return acc;
             }, []);
+            //初始化当月事件，并从总的列表里移除
+            const currentMonth = new Date().getMonth() + 1;
+            this.currentMonthEvents = this.monthList.find((m) => m.month == currentMonth) || {};
+
+            this.monthList = this.monthList.filter((m) => m.month != currentMonth);
         },
         onclick(item) {
             window.open(item.link, '_blank')
