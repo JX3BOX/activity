@@ -129,7 +129,8 @@ export default {
                 }
                 &.sign {
                     border-right: 4px solid #ba9624;
-                    background: linear-gradient(to left, rgba(0, 0, 0, 0.02), rgba(255, 215, 0, 0.3));
+                    background:url(../../../../assets/img/event/vip.png) no-repeat center right;
+                    background-size:cover;
                 }
             }
         }
