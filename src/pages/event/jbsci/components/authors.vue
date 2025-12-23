@@ -11,32 +11,19 @@
         <div class="m-content">
             <div class="m-content-title">
                 <h2>AUTHORS</h2>
-                <h3>入选名单</h3>
+                <h3>签约名单</h3>
             </div>
-            <template v-for="(item, i) in list">
-                <a
-                    :href="users[item.author].link"
-                    target="_blank"
-                    class="m-content-item"
-                    :key="i"
-                    v-if="users[item.author]"
-                >
-                    <div class="m-info">
-                        <user-avatar class="u-avatar" :src="users[item.author].avatar" :size="120" />
-                        <div class="u-info">
-                            <h4>
-                                <span> {{ users[item.author].name }}</span>
-                                <label>Join in {{ dataFormat(users[item.author].time) }}</label>
-                            </h4>
-                            <div class="u-sci">
-                                <label>入围作品：</label>
-                                <span>{{ item.desc || "暂无作品" }}</span>
-                            </div>
-                        </div>
+
+            <a :href="item.link" target="_blank" class="m-content-item" v-for="(item, i) in list" :key="i">
+                <div class="m-info">
+                    <user-avatar class="u-avatar" :src="item.avatar" :size="60" />
+                    <div class="u-info">
+                        <h4>
+                            <span> {{ item.name }}</span>
+                        </h4>
                     </div>
-                    <span class="u-desc">{{ item.title || "暂无介绍" }}</span>
-                </a>
-            </template>
+                </div>
+            </a>
         </div>
     </div>
 </template>
@@ -63,16 +50,22 @@ export default {
         data: {
             deep: true,
             immediate: true,
-            handler: function (authors) {
+            handler: async function (authors) {
                 if (authors && authors.length) {
-                    this.year = uniq(authors.map((item) => item.icon)).sort((a, b) => b - a);
-                    this.authors = authors.reduce((acc, cur) => {
-                        const { icon } = cur;
-                        if (!acc[icon]) acc[icon] = [];
-                        acc[icon].push(cur);
-                        return acc;
-                    }, {});
-                    this.loadUser(authors);
+                    this.year = uniq(authors.map((item) => item.title)).sort((a, b) => b - a);
+
+                    const authorsMap = {};
+                    for (const cur of authors) {
+                        const { title, desc } = cur;
+                        if (!authorsMap[title]) {
+                            authorsMap[title] = [];
+                        }
+
+                        const userData = await this.loadUser(desc);
+                        authorsMap[title] = userData;
+                    }
+
+                    this.authors = authorsMap;
                     this.active = this.queryYear || this.year[0];
                 }
             },
@@ -80,6 +73,7 @@ export default {
     },
     computed: {
         list() {
+            console.log(this.authors[this.active]);
             return this.authors[this.active] || [];
         },
         queryYear() {
@@ -87,20 +81,18 @@ export default {
         },
     },
     methods: {
-        loadUser(list) {
-            const users = uniq(list.map((item) => item.author).filter(Boolean)).join(",");
-            users &&
-                getUsers({ list: users }).then((res) => {
-                    this.users = res.data.data.reduce((acc, cur) => {
-                        acc[cur.ID] = {
-                            name: cur.display_name,
-                            avatar: cur.user_avatar,
-                            link: "/author/" + cur.ID,
-                            time: cur.user_registered,
-                        };
-                        return acc;
-                    }, {});
-                });
+        async loadUser(list) {
+            const res = await getUsers({ list });
+            const _list = res.data.data || [];
+            const data = _list.map((item) => {
+                return {
+                    author: item.ID,
+                    name: item.display_name,
+                    avatar: item.user_avatar,
+                    link: "/author/" + item.ID,
+                };
+            });
+            return data;
         },
         dataFormat(val) {
             return showDate(val);
@@ -122,9 +114,9 @@ export default {
         box-sizing: border-box;
 
         &-item {
-            .fz(12px,20px);
+            .fz(16px,60px);
             color: #000;
-            width: calc(50% - 10px);
+            width: calc(33% - 11px);
             .m-info {
                 .flex;
                 box-sizing: border-box;
@@ -134,33 +126,6 @@ export default {
                 .u-avatar {
                     flex-shrink: 0;
                 }
-                .u-info {
-                    .flex;
-                    padding: 10px 0;
-                    flex-direction: column;
-                    justify-content: space-between;
-                    box-sizing: border-box;
-                    label,
-                    span {
-                        .db;
-                    }
-                    label {
-                        .tm(0.4);
-                    }
-                    span {
-                        .tm(1);
-                    }
-                    h4 span {
-                        .fz(16px);
-                    }
-                }
-            }
-            .u-desc {
-                .mt(20px);
-                .tm(0.6);
-                .break(2);
-                height: 40px;
-                .none;
             }
         }
     }

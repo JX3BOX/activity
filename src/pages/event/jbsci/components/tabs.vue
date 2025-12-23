@@ -25,7 +25,8 @@ export default {
         return {
             tabs: [
                 { name: "精选作品", label: "ARTICLES" },
-                { name: "特约作者", label: "AUTHORS" },
+                { name: "特约作者", label: "INVITED" },
+                { name: "签约作者", label: "AUTHORS" },
             ],
             active: "SLIDER",
         };
@@ -47,6 +48,7 @@ export default {
                 const key = {
                     sci: "ARTICLES",
                     authors: "AUTHORS",
+                    invited: "INVITED",
                 };
                 this.active = key[this.key] || "SLIDER";
             },
@@ -57,6 +59,7 @@ export default {
                 SLIDER: "index",
                 ARTICLES: "sci",
                 AUTHORS: "authors",
+                INVITED: "invited",
             };
             this.$router.push({ query: { tab: key[this.active] } });
         },

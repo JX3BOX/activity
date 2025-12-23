@@ -17,11 +17,12 @@ import Tabs from "./components/tabs.vue";
 import SLIDER from "./components/slider.vue";
 import ARTICLES from "./components/articles.vue";
 import AUTHORS from "./components/authors.vue";
+import INVITED from "./components/invited.vue";
 
 export default {
     name: "Index",
     inject: ["__imgRoot"],
-    components: { Mark, Tabs, ARTICLES, AUTHORS, SLIDER },
+    components: { Mark, Tabs, ARTICLES, AUTHORS, SLIDER, INVITED },
     data: function () {
         return {
             raw: [],
@@ -31,6 +32,7 @@ export default {
 
             slider: [],
             authors: [],
+            invited: [],
             SCI: {},
             season: [],
             cover: [],
@@ -67,6 +69,7 @@ export default {
                 },
                 AUTHORS: this.authors,
                 SLIDER: this.slider,
+                INVITED: this.invited,
             };
             return _data[this.key];
         },
@@ -86,6 +89,7 @@ export default {
                         index: "SLIDER",
                         sci: "ARTICLES",
                         authors: "AUTHORS",
+                        invited: "INVITED",
                     };
                     this.showComponent(key[val]);
                 }
@@ -107,9 +111,10 @@ export default {
                     if (item.link) item.type = item.link.split("/")[0];
                     return item;
                 });
-                const { slider, authors, SCI, season, cover } = this.data;
+                const { slider, authors, year_groups, SCI, season, cover } = this.data;
                 this.slider = slider;
-                this.authors = authors;
+                this.authors = year_groups;
+                this.invited = authors;
                 this.SCI = SCI;
                 this.season = season;
                 this.cover = cover;
@@ -126,6 +131,7 @@ export default {
                 ARTICLES,
                 AUTHORS,
                 SLIDER,
+                INVITED,
             };
             this.key = name;
             this.active = data[name];
