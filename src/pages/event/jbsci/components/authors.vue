@@ -15,7 +15,7 @@
             </div>
 
             <a :href="item.link" target="_blank" class="m-content-item" v-for="(item, i) in list" :key="i">
-                <div class="m-info">
+                <div class="m-info" :class="{ sign: item.sign }">
                     <user-avatar class="u-avatar" :src="item.avatar" :size="60" />
                     <div class="u-info">
                         <h4>
@@ -90,6 +90,7 @@ export default {
                     name: item.display_name,
                     avatar: item.user_avatar,
                     link: "/author/" + item.ID,
+                    sign: item.sign,
                 };
             });
             return data;
@@ -115,16 +116,20 @@ export default {
 
         &-item {
             .fz(16px,60px);
-            color: #000;
+            color: rgba(0, 0, 0, 0.9);
             width: calc(33% - 11px);
             .m-info {
                 .flex;
                 box-sizing: border-box;
-                border-right: 4px solid #ba9624;
+                border-right: 4px solid #aaa;
                 gap: 10px;
                 background: rgba(0, 0, 0, 0.02);
                 .u-avatar {
                     flex-shrink: 0;
+                }
+                &.sign {
+                    border-right: 4px solid #ba9624;
+                    background: linear-gradient(to left, rgba(0, 0, 0, 0.02), rgba(255, 215, 0, 0.3));
                 }
             }
         }
