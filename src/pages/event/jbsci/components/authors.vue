@@ -55,6 +55,7 @@ export default {
                 if (authors && authors.length) {
                     this.year = uniq(authors.map((item) => item.title)).sort((a, b) => b - a);
                     this.active = this.year[0] || this.queryYear;
+                    this.loadData(this.active);
                     this.authors = authors.reduce((prev, cur) => {
                         const { title, desc } = cur;
                         if (!prev[title]) {
