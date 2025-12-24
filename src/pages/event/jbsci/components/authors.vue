@@ -73,7 +73,7 @@ export default {
     },
     computed: {
         list() {
-            console.log(this.authors[this.active]);
+            // console.log(this.authors[this.active]);
             return this.authors[this.active] || [];
         },
         queryYear() {
@@ -84,15 +84,21 @@ export default {
         async loadUser(list) {
             const res = await getUsers({ list });
             const _list = res.data.data || [];
-            const data = _list.map((item) => {
-                return {
-                    author: item.ID,
-                    name: item.display_name,
-                    avatar: item.user_avatar,
-                    link: "/author/" + item.ID,
-                    sign: item.sign,
-                };
-            });
+            let data = [];
+            //console.log(list,_list)
+            for(let item of list){
+                for(let u of _list){
+                    if(u.ID == item){
+                        data.push({
+                            author: u.ID,
+                            name: u.display_name,
+                            avatar: u.user_avatar,
+                            link: "/author/" + u.ID,
+                            sign: u.sign,
+                        });
+                    }
+                }
+            }
             return data;
         },
         dataFormat(val) {
