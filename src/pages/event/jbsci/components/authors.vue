@@ -54,8 +54,6 @@ export default {
             handler: async function (authors) {
                 if (authors && authors.length) {
                     this.year = uniq(authors.map((item) => item.title)).sort((a, b) => b - a);
-                    this.active = this.year[0] || this.queryYear;
-                    this.loadData(this.active);
                     this.authors = authors.reduce((prev, cur) => {
                         const { title, desc } = cur;
                         if (!prev[title]) {
@@ -67,8 +65,19 @@ export default {
                 }
             },
         },
-        active(year) {
-            this.loadData(year);
+        year: {
+            immediate: true,
+            handler: function (arr) {
+                if (arr.length) {
+                    this.active = this.year[0];
+                }
+            },
+        },
+        active: {
+            immediate: true,
+            handler: function (year) {
+                this.loadData(year);
+            },
         },
     },
     computed: {
@@ -97,9 +106,6 @@ export default {
                 };
             });
             return data;
-        },
-        dataFormat(val) {
-            return showDate(val);
         },
     },
 };
