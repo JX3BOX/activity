@@ -25,7 +25,7 @@ export default {
         return {
             tabs: [
                 { name: "精选作品", label: "ARTICLES" },
-                { name: "特约作者", label: "INVITED" },
+                // { name: "特约作者", label: "INVITED" },
                 { name: "签约作者", label: "AUTHORS" },
             ],
             active: "SLIDER",
