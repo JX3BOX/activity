@@ -14,7 +14,7 @@
                 <h3>签约名单</h3>
             </div>
 
-            <a :href="item.link" target="_blank" class="m-content-item" v-for="(item, i) in list" :key="i">
+            <a :href="item.link" target="_blank" class="m-content-item" v-for="(item, i) in users[active]" :key="i">
                 <div class="m-info" :class="{ sign: item.sign }">
                     <user-avatar class="u-avatar" :src="item.avatar" :size="60" />
                     <div class="u-info">
@@ -41,6 +41,7 @@ export default {
     data: function () {
         return {
             authors: {},
+            author_list: {},
             year: [],
             active: "",
             users: {},
@@ -53,34 +54,35 @@ export default {
             handler: async function (authors) {
                 if (authors && authors.length) {
                     this.year = uniq(authors.map((item) => item.title)).sort((a, b) => b - a);
-
-                    const authorsMap = {};
-                    for (const cur of authors) {
+                    this.active = this.year[0] || this.queryYear;
+                    this.authors = authors.reduce((prev, cur) => {
                         const { title, desc } = cur;
-                        if (!authorsMap[title]) {
-                            authorsMap[title] = [];
+                        if (!prev[title]) {
+                            prev[title] = "";
                         }
-
-                        const userData = await this.loadUser(desc);
-                        authorsMap[title] = userData;
-                    }
-
-                    this.authors = authorsMap;
-                    this.active = this.queryYear || this.year[0];
+                        prev[title] = desc;
+                        return prev;
+                    }, {});
                 }
             },
         },
+        active(year) {
+            this.loadData(year);
+        },
     },
     computed: {
-        list() {
-            console.log(this.authors[this.active]);
-            return this.authors[this.active] || [];
-        },
         queryYear() {
             return ~~this.$route.query.year;
         },
     },
     methods: {
+        async loadData(year) {
+            const str = this.authors[year];
+            if (str && !this.users[year]?.length) {
+                const data = await this.loadUser(str);
+                this.$set(this.users, year, data || []);
+            }
+        },
         async loadUser(list) {
             const res = await getUsers({ list });
             const _list = res.data.data || [];
@@ -129,8 +131,8 @@ export default {
                 }
                 &.sign {
                     border-right: 4px solid #ba9624;
-                    background:url(../../../../assets/img/event/vip.png) no-repeat center right;
-                    background-size:cover;
+                    background: url(../../../../assets/img/event/vip.png) no-repeat center right;
+                    background-size: cover;
                 }
             }
         }
