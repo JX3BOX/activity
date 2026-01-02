@@ -32,7 +32,7 @@
                 <img :src="getImgUrl('bg__top.png')" class="scroll__top" alt="卷轴上端" />
                 <div class="m-table" v-if="eventList.length">
                     <div class="m-table__header">
-                        <span class="u-index">名次</span>
+                        <span class="u-index">序号</span>
                         <span class="u-event">事件</span>
                         <span class="u-vote">我喜欢</span>
                     </div>
