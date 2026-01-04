@@ -255,7 +255,7 @@ export default {
                         .pa;
                         .lb(0);
                         .size(100%,230px);
-                        background-color: rgba(0, 0, 0, 0.4);
+                        background-color: rgba(0, 0, 0, 0.2);
                     }
                     .u-year{
                         .pa;
