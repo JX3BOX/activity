@@ -37,10 +37,11 @@
                 <div class="m-content-list">
                     <div class="m-item" v-for="item in season" :key="item.id">
                         <a :href="showLink(item.link)" target="_blank" class="cover">
+                            <b class="u-year">{{ filter.year }}</b>
                             <img class="u-img" :src="showImg({ ...item, year: filter.year }) || ''" />
                             <i
                                 class="u-mark"
-                                :class="[`${item.type}`, { hasImg: item.img, coverYear: filter.year >= '2024' }]"
+                                :class="[`${item.type}`, { hasImg: item.img, coverYear}]"
                                 >{{ s }}</i
                             >
                             <div class="u-title" v-html="getCoverTitle(item.title)"></div>
@@ -255,6 +256,13 @@ export default {
                         .lb(0);
                         .size(100%,230px);
                         background-color: rgba(0, 0, 0, 0.4);
+                    }
+                    .u-year{
+                        .pa;
+                        .lt(12px,40px);
+                        .fz(20px,28px);
+                        .color(#fff);
+                        .bold;
                     }
                     .u-mark {
                         .pa;
