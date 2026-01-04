@@ -198,7 +198,12 @@ export default {
                 this.coverYear = false;
             } else {
                 this.coverYear = true;
-                const _cover = this.cover[this.filter.year];
+                const _cover = {};
+                if (!this.cover[this.filter.year]) {
+                    _cover = this.cover["2024"];
+                } else {
+                    _cover = this.cover[this.filter.year];
+                }
                 const school = (bgcolor && Object.keys(_cover).filter((item) => item.includes(bgcolor))[0]) || "通用";
                 cover = _cover[school];
             }
