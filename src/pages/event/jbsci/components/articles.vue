@@ -198,7 +198,7 @@ export default {
                 this.coverYear = false;
             } else {
                 this.coverYear = true;
-                const _cover = {};
+                let _cover = {};
                 if (!this.cover[this.filter.year]) {
                     _cover = this.cover["2024"];
                 } else {
