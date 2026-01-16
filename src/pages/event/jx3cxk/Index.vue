@@ -30,7 +30,7 @@ export default {
     data: function () {
         return {
             imgRoot: this.__imgRoot,
-            active: 0,
+            active: 1,
             tabs: ["活动介绍", "参赛作品", "获奖展示"],
             components: {
                 0: Info,

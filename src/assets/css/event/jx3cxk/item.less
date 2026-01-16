@@ -1,0 +1,42 @@
+.m-item-box {
+    .r(24px);
+    width: 400px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 24px;
+    .m-item {
+        .pointer;
+        .r(16px);
+        padding: 32px 36px;
+        box-sizing: border-box;
+        width: 100%;
+        height: 100px;
+        background: linear-gradient(180deg, #7676f0 0%, #9495e9 100%);
+        .u-title {
+            .x;
+            .bold;
+            .fz(24px);
+            color: #fff;
+            &::before {
+                content: "《";
+                .dbi;
+                .mr(3px);
+            }
+            &::after {
+                content: "》";
+                .dbi;
+                .ml(3px);
+            }
+        }
+    }
+    &.play {
+        .m-item {
+            background: linear-gradient(180deg, #55c79f 0%, #9697ed 100%);
+        }
+    }
+    &:hover {
+        background: rgba(255, 255, 255, 0.15);
+        .m-item {
+            background: linear-gradient(180deg, #f9c27f 0%, #9697ed 100%);
+        }
+    }
+}
