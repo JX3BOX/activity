@@ -1,0 +1,106 @@
+body {
+    background-color: #4f3e5e;
+}
+@font-face {
+    font-family: "ALIMAMASHUHEITI";
+    src: url("../../../font/ALIMAMASHUHEITI.OTF") format("opentype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+.p-jx3cxk {
+    .pr;
+    .auto(x);
+    .clip;
+    width: 100%;
+    max-width: 1920px;
+    min-height: 100vh;
+    .m-jx3cxk-bg {
+        .pa;
+        .lt(0);
+        .rb(0);
+        user-select: none;
+        pointer-events: none;
+        width: 100%;
+        .u-note {
+            .pa;
+            .lt(0);
+            .size(100%, 100%);
+            background: url("@{jx3cxk}web/note.png") repeat-y center top;
+            background-size: 1920px auto;
+        }
+        .u-staff {
+            .size(100%, 100%);
+            min-height: 100vh;
+            background: url("@{jx3cxk}web/staff.png") repeat-y center top;
+            background-size: 1920px auto;
+        }
+    }
+    .m-kv {
+        .pr;
+        .size(100%, 1120px);
+        background: url("@{jx3cxk}web/kv.jpg") no-repeat center top;
+        background-size: cover;
+        user-select: none;
+        pointer-events: none;
+        .u-title {
+            .flex;
+            .pa;
+            .lt(50%,500px);
+            .ml(-600px);
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 1200px;
+            .u-year {
+                .w(70%);
+                .mt(-50px);
+            }
+            .u-star {
+                .pa;
+                .tm(0.75);
+                left: 50%;
+                top: -106px;
+                width: 189%;
+                max-width: 200%;
+                margin-left: -93%;
+            }
+        }
+    }
+    .wp {
+        .auto(x);
+        width: 100%;
+        max-width: 1280px;
+    }
+    .m-tabs {
+        .flex;
+        padding: 24px 0;
+        justify-content: space-between;
+        gap: 24px;
+        .u-tab {
+            .pointer;
+            .flex;
+            .h(64px);
+            .fz(36px);
+            .bold;
+            color: #fff;
+            flex: 1;
+            align-items: center;
+            justify-content: center;
+            font-family: "ALIMAMASHUHEITI";
+            &.active {
+                .r(32px);
+                background-color: rgba(255, 255, 255, 0.1);
+                color: #ebb8ff;
+            }
+            &:hover {
+                color: #ebb8ff;
+            }
+        }
+    }
+    .m-content {
+        .pr;
+        .z(1);
+        padding: 48px 0 120px 0;
+    }
+}
