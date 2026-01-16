@@ -3,17 +3,30 @@
     box-sizing: border-box;
     width: 376px;
     background: rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease-in-out;
     padding: 24px;
     .m-item {
+        .pr;
         .pointer;
         .r(16px);
+        .clip;
         .mb(24px);
         color: #fff;
         padding: 32px 36px;
         box-sizing: border-box;
         width: 100%;
         background: linear-gradient(180deg, #7676f0 0%, #9495e9 100%);
+        &::before {
+            content: "";
+            .pa;
+            .lt(0);
+            .tm(0);
+            .size(100%);
+            transition: opacity 0.3s ease-in-out;
+            background: linear-gradient(180deg, #f9c27f 0%, #9697ed 100%);
+        }
         .u-title {
+            .pr;
             .x;
             .bold;
             .fz(24px);
@@ -57,6 +70,7 @@
             }
         }
         .m-play {
+            .pr;
             .flex;
             .pt(10px);
             justify-content: space-around;
@@ -95,14 +109,16 @@
         .size(220px,54px);
         .r(27px);
         .auto(x);
-
+        transition: all 0.3s ease-in-out;
         align-items: center;
         border: 1px solid #fff;
         background-color: #fff;
         box-sizing: border-box;
         .u-call {
+            .pr;
             .bold;
             .x;
+            .clip;
             .fz(24px,52px);
             .r(27px);
             .size(160px,52px);
@@ -110,11 +126,22 @@
             background: linear-gradient(180deg, #7689ff 0%, #e889f9 100%);
             span {
                 .dbi;
+                transition: all 0.3s ease-in-out;
+            }
+            &::before {
+                content: "";
+                .pa;
+                .lt(0);
+                .tm(0);
+                .size(100%);
+                transition: opacity 0.3s ease-in-out;
+                background: linear-gradient(180deg, #ff92a9 0%, #ffb570 100%);
             }
         }
         .u-icon {
             .size(32px);
             .auto(x);
+            transition: all 0.3s ease-in-out;
             &.u-hover,
             &.u-active {
                 .none;
@@ -122,10 +149,10 @@
         }
         &:hover {
             .u-call {
-                transition: all 0.3s ease-in-out;
-                background: linear-gradient(180deg, #ff92a9 0%, #ffb570 100%);
+                &::before {
+                    .tm(1);
+                }
                 span {
-                    transition: all 0.3s ease-in-out;
                     transform: rotate(12deg) scale(1.1);
                 }
             }
@@ -165,8 +192,9 @@
     }
     &:hover {
         background: rgba(255, 255, 255, 0.15);
-        .m-item {
-            background: linear-gradient(180deg, #f9c27f 0%, #9697ed 100%);
+        .m-item::before {
+            .tm(1)
+            // background: linear-gradient(180deg, #f9c27f 0%, #9697ed 100%);
         }
     }
 }
