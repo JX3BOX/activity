@@ -1,4 +1,5 @@
 .m-item-box {
+    .pr;
     .r(24px);
     box-sizing: border-box;
     width: 376px;
@@ -26,27 +27,25 @@
             background: linear-gradient(180deg, #f9c27f 0%, #9697ed 100%);
         }
         .u-title {
+            .flex;
             .pr;
-            .x;
             .bold;
             .fz(24px);
+            .x;
+            justify-content: center;
+            align-items: center;
+            max-width: 300px;
+            box-sizing: border-box;
             font-family: "ALIMAMASHUHEITI";
-            &::before {
-                content: "《";
-                .dbi;
-                .mr(3px);
-            }
-            &::after {
-                content: "》";
-                .dbi;
-                .ml(3px);
-            }
         }
         .u-author {
             .x;
             .fz(14px);
             .tm(0.75);
             .mt(5px);
+            a {
+                color: #fff;
+            }
         }
         .m-record {
             .pr;
@@ -56,6 +55,16 @@
                 .lt(50%,0);
                 .size(120px,72px);
                 .ml(-10px);
+                transition: transform 0.3s ease-out, top 0.3s ease-out, margin 0.3s ease-out;
+                transform-origin: 0% 0%;
+                transform: rotate(0deg);
+                &.isPlaying {
+                    top: -4px;
+                    margin: 2px;
+                    transform-origin: 0% 0%;
+                    transform: rotate(30deg);
+                    display: inline-block;
+                }
             }
             .u-record {
                 .size(182px);
@@ -185,6 +194,13 @@
             }
         }
     }
+    .m-bilibili {
+        .pa;
+        .clip;
+        .lt(30%);
+        .size(100px);
+        .z(-1);
+    }
     &.play {
         .m-item {
             background: linear-gradient(180deg, #55c79f 0%, #9697ed 100%);
@@ -193,8 +209,7 @@
     &:hover {
         background: rgba(255, 255, 255, 0.15);
         .m-item::before {
-            .tm(1)
-            // background: linear-gradient(180deg, #f9c27f 0%, #9697ed 100%);
+            .tm(1);
         }
     }
 }
