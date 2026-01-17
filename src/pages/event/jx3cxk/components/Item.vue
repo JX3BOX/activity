@@ -52,8 +52,7 @@
 <script>
 import { __cdn, __Root } from "@/utils/config";
 export default {
-    inject: ["__imgRoot"],
-    emits:["update"],
+    inject: ["__imgRoot"], 
     props: {
         data: {
             type: Object,
@@ -95,8 +94,7 @@ export default {
         },
         togglePlay() {
             this.isPlaying = !this.isPlaying;
-            this.play = this.data.content
-            // if (this.isPlaying) this.$emit("update", this.data);
+            this.play = this.data.content 
         },
     },
     mounted() {
