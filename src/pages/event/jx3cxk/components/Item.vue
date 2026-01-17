@@ -40,7 +40,7 @@
                 <a :href="`${link}${data.sub_title}`" target="_blank">查看原帖</a>
             </div>
         </div>
-        <div class="m-button">
+        <div class="m-button" :class="{ active: isVote }" @click="toVote">
             <div class="u-call"><span>打call !</span></div>
             <img class="u-icon" :src="`${imgRoot}web/item/emoji-1.svg`" />
             <img class="u-icon u-hover" :src="`${imgRoot}web/item/emoji-2.svg`" />
@@ -51,8 +51,10 @@
 </template>
 <script>
 import { __cdn, __Root } from "@/utils/config";
+import { vote } from "@/service/event/vote";
 export default {
-    inject: ["__imgRoot"], 
+    inject: ["__imgRoot"],
+    emits: ["update:vote"],
     props: {
         data: {
             type: Object,
@@ -72,19 +74,21 @@ export default {
 
             // 播放
             isPlaying: false,
-            play:''
+            play: "",
         };
     },
-
+    computed: {
+        isVote() {
+            return this.data?.isVoted || false;
+        },
+    },
     methods: {
         checkTextWidth() {
             const textEl = this.$refs.marqueeText;
             const wrapperEl = this.$refs.marqueeWrapper;
             if (!textEl || !wrapperEl) return;
-
             const singleTextWidth = textEl.offsetWidth;
             this.isMarqueeActive = singleTextWidth > this.maxWidth;
-
             if (this.isMarqueeActive) {
                 const duration = singleTextWidth / this.scrollSpeed;
                 wrapperEl.style.animationDuration = `${duration}s`;
@@ -94,7 +98,28 @@ export default {
         },
         togglePlay() {
             this.isPlaying = !this.isPlaying;
-            this.play = this.data.content 
+            this.play = this.data.content;
+        },
+        toVote() {
+            const item = this.data;
+            if (item.isVoted) return;
+            const time = 1000;
+            const now = Date.now();
+            if (now - this.lastVoteTime < time) {
+                return this.$message({
+                    message: "投票速度太快啦！",
+                    type: "warning",
+                });
+            }
+            this.lastVoteTime = now;
+            vote(item.program_id, { vote_id_list: [item.id] }).then(() => {
+                this.$message({
+                    message: "投票成功",
+                    type: "success",
+                });
+                item.isVoted = true;
+                this.$emit("update:vote", item.id);
+            });
         },
     },
     mounted() {

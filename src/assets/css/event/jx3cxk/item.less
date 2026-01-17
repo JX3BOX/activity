@@ -127,6 +127,7 @@
         border: 1px solid #fff;
         background-color: #fff;
         box-sizing: border-box;
+        user-select: none;
         .u-call {
             .pr;
             .bold;
@@ -178,6 +179,11 @@
         }
         &.active {
             background: linear-gradient(180deg, #f9bde1 0%, #ca5e9a 99%);
+            &:hover {
+                .u-call::before {
+                    .none;
+                }
+            }
             .u-call {
                 order: 1;
                 background: linear-gradient(180deg, #ffffff 0%, #ffb8d1 100%);
@@ -198,7 +204,7 @@
             }
         }
     }
-    .m-bilibili{
+    .m-bilibili {
         .pa;
         .clip;
         .lt(100px);
@@ -214,6 +220,16 @@
         background: rgba(255, 255, 255, 0.15);
         .m-item::before {
             .tm(1);
+        }
+    }
+    &.m-show-item {
+        width: 380px;
+        background: none;
+        .m-item {
+            margin-bottom: 0;
+        }
+        .m-button {
+            .none;
         }
     }
 }
