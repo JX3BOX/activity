@@ -19,7 +19,7 @@
             <div class="m-record">
                 <img class="u-needle" :class="{ isPlaying }" :src="`${imgRoot}web/item/needle.svg`" />
                 <div class="u-record">
-                    <img class="u-avatar" :src="data.user_info.avatar" />
+                    <img class="u-avatar" :class="{ isPlaying }" :src="data.user_info.avatar" />
                 </div>
             </div>
             <el-slider v-model="slider" size="small" :show-tooltip="false" />
@@ -53,6 +53,7 @@
 import { __cdn, __Root } from "@/utils/config";
 export default {
     inject: ["__imgRoot"],
+    emits:["update"],
     props: {
         data: {
             type: Object,
@@ -72,6 +73,7 @@ export default {
 
             // 播放
             isPlaying: false,
+            play:''
         };
     },
 
@@ -92,8 +94,9 @@ export default {
             }
         },
         togglePlay() {
-            this.play = this.play ? "" : this.data.content;
             this.isPlaying = !this.isPlaying;
+            this.play = this.data.content
+            // if (this.isPlaying) this.$emit("update", this.data);
         },
     },
     mounted() {

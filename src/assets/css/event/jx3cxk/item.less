@@ -76,6 +76,10 @@
             }
             .u-avatar {
                 .r(50%);
+                transition: transform 0.6s ease-out;
+                &.isPlaying {
+                    animation: rotate 6s linear infinite;
+                }
             }
         }
         .m-play {
@@ -194,10 +198,10 @@
             }
         }
     }
-    .m-bilibili {
+    .m-bilibili{
         .pa;
         .clip;
-        .lt(30%);
+        .lt(100px);
         .size(100px);
         .z(-1);
     }
@@ -211,5 +215,13 @@
         .m-item::before {
             .tm(1);
         }
+    }
+}
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
     }
 }

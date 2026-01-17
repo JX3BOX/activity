@@ -1,11 +1,12 @@
 <template>
     <div class="m-content m-vote wp">
         <template v-if="list.length">
-            <vote-item v-for="item in list" :key="item.id" :data="item" @toPlay="toPlay"></vote-item>
+            <vote-item v-for="item in list" :key="item.id" :data="item" @update="toPlay"></vote-item>
         </template>
     </div>
 </template>
 <script>
+import axios from "axios";
 import voteItem from "./Item.vue";
 import User from "@jx3box/jx3box-common/js/user.js";
 import { shuffle } from "lodash";
@@ -47,7 +48,15 @@ export default {
             });
         },
         toPlay(data) {
-            this.play = data.content;
+            // this.play = data.content;
+            const [bvid] = data.content.split("||");
+            this.getHeaders(bvid);
+        },
+        getHeaders(bvid) {
+            return {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+                Referer: `https://www.bilibili.com/video/${bvid}`,
+            };
         },
     },
     mounted() {
