@@ -55,7 +55,7 @@
             <component :is="components[active]" :list="componentList"></component>
         </div>
         <el-backtop :bottom="300" :visibility-height="1200">
-            <div class="u-menu" v-for="(item, i) in menus" :key="i" @click="handleMenuClick(item)">
+            <div class="u-menu" v-for="(item, i) in menus" :key="i" @click.stop="handleMenuClick(item)">
                 <img class="u-star" :src="`${imgRoot}web/star-tab.svg`" />
                 {{ item.name }}
             </div>
@@ -305,9 +305,13 @@ export default {
                 window.open(link, "_blank");
                 return;
             }
-            this.$router.push({
-                query: { tab: link.replace("?tab=", "") },
-            });
+            this.$router
+                .push({
+                    query: { tab: link.replace("?tab=", "") },
+                })
+                .finally(() => {
+                    window.scrollTo({ top: 1000, behavior: "smooth" });
+                });
         },
     },
     mounted() {
