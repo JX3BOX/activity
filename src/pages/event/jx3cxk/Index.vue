@@ -54,7 +54,7 @@
 
             <component :is="components[active]" :list="componentList"></component>
         </div>
-        <el-backtop :bottom="300">
+        <el-backtop :bottom="300" :visibility-height="1200">
             <div class="u-menu" v-for="(item, i) in menus" :key="i" @click="handleMenuClick(item)">
                 <img class="u-star" :src="`${imgRoot}web/star-tab.svg`" />
                 {{ item.name }}
