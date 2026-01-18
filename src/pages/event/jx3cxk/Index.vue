@@ -122,7 +122,7 @@ export default {
             menus: [
                 { name: "立即投稿", link: `https://www.jx3box.com/publish#/community` },
                 { name: "作品集锦", link: "?tab=vote" },
-                { name: "获奖展示", link: "?tab=vote" },
+                { name: "获奖展示", link: "?tab=stats" },
             ],
         };
     },
@@ -298,6 +298,16 @@ export default {
                 });
             }
             this[targetList] = generated;
+        },
+        handleMenuClick(item) {
+            const { link } = item;
+            if (link.startsWith("http")) {
+                window.open(link, "_blank");
+                return;
+            }
+            this.$router.push({
+                query: { tab: link.replace("?tab=", "") },
+            });
         },
     },
     mounted() {
