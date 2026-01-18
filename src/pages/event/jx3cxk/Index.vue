@@ -54,6 +54,12 @@
 
             <component :is="components[active]" :list="componentList"></component>
         </div>
+        <el-backtop :bottom="300">
+            <div class="u-menu" v-for="(item, i) in menus" :key="i" @click="handleMenuClick(item)">
+                <img class="u-star" :src="`${imgRoot}web/star-tab.svg`" />
+                {{ item.name }}
+            </div>
+        </el-backtop>
     </div>
 </template>
 <script>
@@ -71,9 +77,10 @@ export default {
     data: function () {
         return {
             id: 28,
-            menu: "jx3cxk_data",
+            key: "jx3cxk_data",
             imgRoot: this.__imgRoot,
 
+            // tab
             active: "stats",
             tabs: [
                 { key: "info", name: "活动介绍" },
@@ -86,17 +93,19 @@ export default {
                 stats: Stats,
             },
 
+            // 数据
             loading: false,
             firstLoad: true,
             list: [],
             myVote: [],
             stats: [],
 
-            itemSpacing: 1000, // 元素垂直间距
+            // 音符
+            itemSpacing: 1000,
             floatConfig: {
-                duration: 3, // 单次动画时长（秒）
-                delayStep: 0.2, // 每个元素的延迟步长（秒）
-                range: 10, // 浮动范围（像素）
+                duration: 3,
+                delayStep: 0.2,
+                range: 10,
             },
             originalItems: [
                 ["note1.svg?1", "note2.svg?1"],
@@ -107,8 +116,14 @@ export default {
             generatedItems_stats: [],
             resizeObserver: null,
             resizeTimer: null,
-            // 存储已监听的容器，避免重复监听
             observedContainers: new Set(),
+
+            // link
+            menus: [
+                { name: "立即投稿", link: `https://www.jx3box.com/publish#/community` },
+                { name: "作品集锦", link: "?tab=vote" },
+                { name: "获奖展示", link: "?tab=vote" },
+            ],
         };
     },
     computed: {
@@ -204,7 +219,7 @@ export default {
         loadStats() {
             if (this.stats.length) return;
             this.loading = true;
-            getMenu(this.menu)
+            getMenu(this.key)
                 .then((res) => {
                     this.stats = res || [];
                 })

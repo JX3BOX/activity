@@ -123,6 +123,53 @@ body {
             }
         }
     }
+    .el-backtop {
+        right: 50% !important;
+        .mr(-900px);
+        .size(220px,auto);
+        .r(0);
+        .flex;
+        .z(9);
+        flex-direction: column;
+        gap: 43px;
+        background: none;
+
+        .u-menu {
+            .pr;
+            .r(35px);
+            .fz(36px);
+            .size(230px,70px);
+            .x;
+            .lh(70px);
+            transition: all 0.3s ease;
+            color: #fff;
+            background: linear-gradient(180deg, #9899f2 0%, #5d5ecb 100%);
+            font-family: "ALIMAMASHUHEITI";
+            box-sizing: border-box;
+            border: 2px solid #ffffff;
+            text-shadow: 1px 1px 0 #7778d9, -1px 1px 0 #7778d9, 1px -1px 0 #7778d9, -1px -1px 0 #7778d9;
+            .u-star {
+                .pa;
+                .size(100px);
+                top: -20px;
+                left: -56px;
+                transform: scale(0.25) rotate(15.81deg);
+                opacity: 0;
+                transition: transform 0.3s linear, opacity 0.3s linear;
+                transform-origin: center center;
+                object-fit: cover;
+            }
+            &:hover {
+                background: linear-gradient(180deg, #dfe0ff 0%, #ffffff 100%);
+                color: #7778d9;
+                text-shadow: none;
+                .u-star {
+                    transform: scale(1) rotate(105.81deg);
+                    opacity: 1;
+                }
+            }
+        }
+    }
 }
 
 .float-animation {
@@ -135,9 +182,9 @@ body {
 }
 @keyframes float {
     0% {
-        transform: translateY(0); /* 初始位置 */
+        transform: translateY(0);
     }
     100% {
-        transform: translateY(var(--float-range)); /* 浮动到下方（负数则向上） */
+        transform: translateY(var(--float-range));
     }
 }
