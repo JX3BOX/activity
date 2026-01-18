@@ -3,11 +3,11 @@
         <template v-if="hasList">
             <div class="m-list m-top-list">
                 <img class="u-title" :src="`${imgRoot}web/item/good1.png`" />
-                <vote-item class="m-show-item" v-for="item in topList" :key="item.id" :data="item"></vote-item>
+                <vote-item class="m-show-item" show v-for="item in topList" :key="item.id" :data="item"></vote-item>
             </div>
             <div class="m-list m-other-list">
                 <img class="u-title" :src="`${imgRoot}web/item/good2.png`" />
-                <vote-item class="m-show-item" v-for="item in otherList" :key="item.id" :data="item"></vote-item>
+                <vote-item class="m-show-item" show v-for="item in otherList" :key="item.id" :data="item"></vote-item> 
             </div>
         </template>
         <div class="m-list" v-else>
@@ -42,8 +42,6 @@ export default {
             return this.topList.length && this.otherList.length;
         },
     },
-    methods: {},
-    mounted() {},
 };
 </script>
 <style lang="less" scoped>
@@ -53,6 +51,7 @@ export default {
         .flex;
         .r(48px);
         .mt(240px);
+        justify-content: center;
         padding: 74px 67px 64px 67px;
         flex-wrap: wrap;
         background: linear-gradient(180deg, rgba(69, 50, 85, 0.5) 0%, rgba(179, 133, 209, 0.5) 99%);

@@ -42,7 +42,7 @@ export default {
             id: 28,
             menu: "jx3cxk_data",
             imgRoot: this.__imgRoot,
-            active: "info",
+            active: "stats",
             tabs: [
                 { key: "info", name: "活动介绍" },
                 { key: "vote", name: "参赛作品" },

@@ -86,24 +86,25 @@
             .pr;
             .flex;
             .pt(10px);
-            justify-content: space-around;
+            flex-wrap: wrap;
+            justify-content: space-between;
             align-items: center;
+            .u-play-button {
+                .flex;
+                justify-content: space-between;
+                width: 70%;
+                box-sizing: border-box;
+                margin: 0 15% 20px 15%;
+                align-items: center;
+            }
             .u-icon {
                 .size(24px);
             }
             .u-play {
                 .size(64px);
             }
-        }
-        .m-link {
-            .flex;
-            .pt(16px);
-            .fz(20px);
-            .tm(0.75);
-            justify-content: space-between;
-            align-items: center;
-            color: #fff;
             .u-like {
+                .tm(0.75);
                 .flex;
                 align-items: center;
                 gap: 5px;
@@ -111,7 +112,8 @@
                     .size(20px);
                 }
             }
-            a {
+            .u-link {
+                .tm(0.75);
                 color: #fff;
             }
         }
@@ -223,10 +225,74 @@
         }
     }
     &.m-show-item {
-        width: 380px;
+        width: 500px;
         background: none;
         .m-item {
+            padding: 24px 95px;
             margin-bottom: 0;
+            .u-name {
+                .pr;
+                .fz(24px);
+                .x;
+                .db;
+                font-family: "ALIMAMASHUHEITI";
+                color: #fff;
+                width: 100%;
+            }
+            .m-play {
+                width: calc(100% + 10px);
+                .ml(-10px);
+                flex-wrap: nowrap;
+                .u-play-button {
+                    order: 1;
+                    margin: 0;
+                    justify-content: center;
+                    gap: 24px;
+                    .u-icon {
+                        .size(18px);
+                        &.u-play {
+                            .size(36px);
+                        }
+                    }
+                }
+                .u-like {
+                    .fz(16px);
+                    width: 50px;
+                    flex-direction: column;
+                    order: 0;
+                    flex-shrink: 0;
+                    gap: 0;
+                    align-items: center;
+                    .u-icon {
+                        .size(12px);
+                    }
+                }
+                .u-link {
+                    .fz(14px);
+                    .r(3px);
+                    .x;
+                    width: 36px;
+                    order: 2;
+                    flex-shrink: 0;
+                    border: 1px solid #fff;
+                    padding: 0 4px;
+                }
+            }
+            .u-song {
+                .fz(18px);
+                .tm(0.5);
+                margin: 20px 0;
+                &::before,
+                &::after {
+                    .none;
+                }
+                .marquee-text {
+                    &::before,
+                    &::after {
+                        .none;
+                    }
+                }
+            }
         }
         .m-button {
             .none;

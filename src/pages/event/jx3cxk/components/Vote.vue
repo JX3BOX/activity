@@ -1,7 +1,7 @@
 <template>
     <div class="m-content m-vote wp" v-loading="loading" @click="checkLogin">
         <template v-if="list.length">
-            <vote-item v-for="item in list" :key="item.id" :data="item"></vote-item>
+            <vote-item v-for="item in list" :key="item.id" :data="item"></vote-item> 
         </template>
     </div>
 </template>
@@ -21,7 +21,6 @@ export default {
     data() {
         return {
             play: "",
-            User,
             loading: false,
         };
     },

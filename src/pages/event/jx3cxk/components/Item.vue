@@ -1,43 +1,72 @@
 <template>
     <div class="m-item-box" v-if="data.id">
         <div class="m-item">
-            <div class="u-title" :class="{ 'marquee-active': isMarqueeActive }">
-                <div class="clip">
-                    <div class="marquee-wrapper" ref="marqueeWrapper" :class="{ 'marquee-animate': isMarqueeActive }">
-                        <span class="marquee-text" ref="marqueeText">
-                            {{ data.title }}
-                        </span>
-                        <span class="marquee-text copy">{{ data.title }}</span>
+            <template v-if="!show">
+                <div class="u-title" :class="{ 'marquee-active': isMarqueeActive }">
+                    <div class="clip">
+                        <div
+                            class="marquee-wrapper"
+                            ref="marqueeWrapper"
+                            :class="{ 'marquee-animate': isMarqueeActive }"
+                        >
+                            <span class="marquee-text" ref="marqueeText">
+                                {{ data.title }}
+                            </span>
+                            <span v-if="isMarqueeActive" class="marquee-text copy">{{ data.title }}</span>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="u-author">
-                练习生：<a :href="`https://jx3box.com/user/${data.user_info.id}`" target="_blank">
-                    {{ data.user_info.display_name }}
-                </a>
-            </div>
+                <div class="u-author">
+                    练习生：<a :href="`https://jx3box.com/user/${data.user_info.id}`" target="_blank">
+                        {{ data.user_info.display_name }}
+                    </a>
+                </div>
+            </template>
+            <a v-else class="u-name" :href="`${link}${data.sub_title}`" target="_blank">
+                {{ data.user_info.display_name }}
+            </a>
+
             <div class="m-record">
                 <img class="u-needle" :class="{ isPlaying }" :src="`${imgRoot}web/item/needle.svg`" />
                 <div class="u-record">
                     <img class="u-avatar" :class="{ isPlaying }" :src="data.user_info.avatar" />
                 </div>
             </div>
+            <template v-if="show">
+                <div class="u-title u-song" :class="{ 'marquee-active': isMarqueeActive }">
+                    <div class="clip">
+                        <div
+                            class="marquee-wrapper"
+                            ref="marqueeWrapper"
+                            :class="{ 'marquee-animate': isMarqueeActive }"
+                        >
+                            <span class="marquee-text" ref="marqueeText"> 出道歌曲：《{{ data.title }}》 </span>
+                            <span v-if="isMarqueeActive" class="marquee-text copy">
+                                出道歌曲：《{{ data.title }}》</span
+                            >
+                        </div>
+                    </div>
+                </div>
+            </template>
+
             <el-slider v-model="slider" size="small" :show-tooltip="false" />
             <div class="m-play">
-                <img class="u-icon" :src="`${imgRoot}web/item/left.svg`" />
-                <img
-                    class="u-icon u-play"
-                    :src="`${imgRoot}web/item/${isPlaying ? 'stop.svg' : 'play.svg'}`"
-                    @click="togglePlay"
-                />
-                <img class="u-icon" :src="`${imgRoot}web/item/right.svg`" />
-            </div>
-            <div class="m-link">
+                <div class="u-play-button">
+                    <img class="u-icon" :src="`${imgRoot}web/item/left.svg`" />
+                    <img
+                        class="u-icon u-play"
+                        :src="`${imgRoot}web/item/${isPlaying ? 'stop.svg' : 'play.svg'}`"
+                        @click="togglePlay"
+                    />
+                    <img class="u-icon" :src="`${imgRoot}web/item/right.svg`" />
+                </div>
                 <div class="u-like">
                     <img class="u-icon" :src="`${imgRoot}web/item/like.svg?jx3cxk`" />
                     {{ data.amount }}
                 </div>
-                <a :href="`${link}${data.sub_title}`" target="_blank">查看原帖</a>
+                <a class="u-link" :href="`${link}${data.sub_title}`" target="_blank">
+                    {{ `${show ? "" : "查看"}原帖` }}
+                </a>
             </div>
         </div>
         <div class="m-button" :class="{ active: isVote }" @click="toVote">
@@ -59,6 +88,10 @@ export default {
         data: {
             type: Object,
             default: () => {},
+        },
+        show: {
+            type: Boolean,
+            default: false,
         },
     },
     data() {
@@ -175,7 +208,7 @@ export default {
     display: none;
 }
 .marquee-text.copy {
-    margin-left: 50px;
+    margin-left: 180px;
     display: none;
 }
 .marquee-animate {
