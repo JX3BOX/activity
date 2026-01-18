@@ -22,7 +22,38 @@
                 {{ item.name }}
             </div>
         </div>
-        <component :is="components[active]" :list="componentList"></component>
+        <div class="m-component" :ref="`container_${active}`">
+            <div
+                v-for="(item, i) in this[`generatedItems_${active}`]"
+                :key="i"
+                class="u-note-item"
+                :style="{
+                    top: item.position + 'px',
+                    position: 'absolute',
+                }"
+            >
+                <img
+                    class="u-img float-animation reverse"
+                    :style="{
+                        animationDelay: `${item.animationDelay}s`,
+                        '--float-duration': `${floatConfig.duration}s`,
+                        '--float-range': `${floatConfig.range}px`,
+                    }"
+                    :src="`${imgRoot}web/${item.images[0]}`"
+                />
+                <img
+                    class="u-img float-animation"
+                    :style="{
+                        animationDelay: `${item.animationDelay}s`,
+                        '--float-duration': `${floatConfig.duration}s`,
+                        '--float-range': `${floatConfig.range}px`,
+                    }"
+                    :src="`${imgRoot}web/${item.images[1]}`"
+                />
+            </div>
+
+            <component :is="components[active]" :list="componentList"></component>
+        </div>
     </div>
 </template>
 <script>
@@ -42,6 +73,7 @@ export default {
             id: 28,
             menu: "jx3cxk_data",
             imgRoot: this.__imgRoot,
+
             active: "stats",
             tabs: [
                 { key: "info", name: "活动介绍" },
@@ -53,11 +85,30 @@ export default {
                 vote: Vote,
                 stats: Stats,
             },
+
             loading: false,
             firstLoad: true,
             list: [],
             myVote: [],
             stats: [],
+
+            itemSpacing: 1000, // 元素垂直间距
+            floatConfig: {
+                duration: 3, // 单次动画时长（秒）
+                delayStep: 0.2, // 每个元素的延迟步长（秒）
+                range: 10, // 浮动范围（像素）
+            },
+            originalItems: [
+                ["note1.svg?1", "note2.svg?1"],
+                ["note3.svg?1", "note4.svg?1"],
+            ],
+            generatedItems_info: [],
+            generatedItems_vote: [],
+            generatedItems_stats: [],
+            resizeObserver: null,
+            resizeTimer: null,
+            // 存储已监听的容器，避免重复监听
+            observedContainers: new Set(),
         };
     },
     computed: {
@@ -112,6 +163,12 @@ export default {
                 return;
             }
             (tabActionMap[this.active] || tabActionMap.default)();
+
+            this.$nextTick(() => {
+                setTimeout(() => {
+                    this.initContainer(`container_${this.active}`, `generatedItems_${this.active}`);
+                }, 100);
+            });
         },
         loadData() {
             if (!this.firstLoad) {
@@ -164,6 +221,84 @@ export default {
                 ...this.list.find((e) => e.id == item),
             }));
         },
+        initContainer(containerRef, targetList) {
+            const containerArr = this.$refs[containerRef];
+            const container = Array.isArray(containerArr) ? containerArr[0] : containerArr;
+
+            if (!container) {
+                console.warn(`容器 ${containerRef} 未找到，跳过初始化`);
+                return;
+            }
+            this.generateItems(container, targetList);
+            if (!this.observedContainers.has(container)) {
+                if (!this.resizeObserver) {
+                    this.resizeObserver = new ResizeObserver((entries) => {
+                        clearTimeout(this.resizeTimer);
+                        this.resizeTimer = setTimeout(() => {
+                            entries.forEach((entry) => {
+                                const activeContainerArr = this.$refs[`container_${this.active}`];
+                                const activeContainer = Array.isArray(activeContainerArr)
+                                    ? activeContainerArr[0]
+                                    : activeContainerArr;
+                                if (entry.target === activeContainer && activeContainer) {
+                                    this.generateItems(activeContainer, `generatedItems_${this.active}`);
+                                }
+                            });
+                        }, 50);
+                    });
+                }
+                this.resizeObserver.observe(container);
+                this.observedContainers.add(container);
+            }
+        },
+        generateItems(container, targetList) {
+            if (!container) return;
+            const containerHeight = container.clientHeight || container.offsetHeight || 0;
+            if (containerHeight === 0) {
+                console.warn(`容器高度为0，跳过元素生成`);
+                this[targetList] = [];
+                return;
+            }
+
+            const generated = [];
+            const originalLength = this.originalItems.length;
+            const singleRoundHeight = originalLength * this.itemSpacing;
+            const totalRounds = Math.ceil(containerHeight / singleRoundHeight);
+            let globalIndex = 0;
+
+            for (let round = 0; round < totalRounds; round++) {
+                this.originalItems.forEach((item, idx) => {
+                    const position = round * singleRoundHeight + idx * this.itemSpacing;
+                    if (position < containerHeight) {
+                        const animationDelay = globalIndex * this.floatConfig.delayStep;
+                        generated.push({
+                            images: item,
+                            position,
+                            isCopy: round > 0,
+                            copyRound: round,
+                            animationDelay,
+                        });
+                        globalIndex++;
+                    }
+                });
+            }
+            this[targetList] = generated;
+        },
+    },
+    mounted() {
+        this.$nextTick(() => {
+            setTimeout(() => {
+                this.initContainer(`container_${this.active}`, `generatedItems_${this.active}`);
+            }, 100);
+        });
+    },
+    beforeDestroy() {
+        if (this.resizeObserver) {
+            this.resizeObserver.disconnect();
+            this.resizeObserver = null;
+        }
+        clearTimeout(this.resizeTimer);
+        this.observedContainers.clear();
     },
 };
 </script>

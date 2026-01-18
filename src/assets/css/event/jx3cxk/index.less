@@ -103,4 +103,41 @@ body {
         .z(1);
         padding: 48px 0 120px 0;
     }
+    .m-component {
+        .pr;
+        .u-note-item {
+            .pa;
+            .flex;
+            .w(1820px);
+            .ml(-910px);
+            .z(9);
+            user-select: none;
+            pointer-events: none;
+            left: 50%;
+            justify-content: space-between;
+            .u-img {
+                .w(240px);
+                &:last-child {
+                    .mt(800px);
+                }
+            }
+        }
+    }
+}
+
+.float-animation {
+    animation: float var(--float-duration) ease-in-out infinite alternate;
+    --float-duration: v-bind(floatConfig.duration + "s");
+    --float-range: v-bind(floatConfig.range + "px");
+    &.reverse {
+        animation-direction: alternate-reverse;
+    }
+}
+@keyframes float {
+    0% {
+        transform: translateY(0); /* 初始位置 */
+    }
+    100% {
+        transform: translateY(var(--float-range)); /* 浮动到下方（负数则向上） */
+    }
 }

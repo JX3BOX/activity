@@ -1,5 +1,5 @@
 <template>
-    <div class="m-item-box" v-if="data.id">
+    <div class="m-item-box" :class="{ play: isPlaying }" v-if="data.id">
         <div class="m-item">
             <template v-if="!show">
                 <div class="u-title" :class="{ 'marquee-active': isMarqueeActive }">
