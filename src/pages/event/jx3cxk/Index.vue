@@ -1,5 +1,5 @@
 <template>
-    <div class="p-event-content p-jx3cxk">
+    <div class="p-event-content p-jx3cxk" :class="{ isPhone }">
         <div class="m-jx3cxk-bg">
             <div class="u-note"></div>
             <div class="u-staff"></div>
@@ -149,6 +149,11 @@ export default {
                 awesome: this.awesomeList,
             };
             return obj[this.active] || [];
+        },
+        isPhone() {
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            const mobileRegex = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
+            return mobileRegex.test(userAgent);
         },
     },
     watch: {
