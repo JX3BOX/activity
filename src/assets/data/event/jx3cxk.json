@@ -25,11 +25,11 @@
         "1": { "info": "将翻唱视频上传至<b class='u-white'>Bilibili</b>" },
         "2": {
             "info": "前往<b class='u-white'>【魔盒-茶馆】</b>发帖<br/>选择<b class='u-white'>【交流分享】</b>类别<br/>标题需带<b class='u-white'>「2026剑三练习生」</b>前缀（点击可复制）",
-            "img": ["step2.jpg"]
+            "img": ["step2.png"]
         },
         "3": {
-            "info": "正文插入B站视频即<b class='u-white'>视为参赛</b>",
-            "img": ["step3.1.jpg", "step3.2.jpg"]
+            "info": "正文插入B站视频 & 上传音频，即<b class='u-white'>视为参赛</b>",
+            "img": ["step3.png"]
         }
     }
 }
