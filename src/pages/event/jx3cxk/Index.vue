@@ -67,6 +67,7 @@ import Info from "./components/Info.vue";
 import Vote from "./components/Vote.vue";
 import Stats from "./components/Stats.vue";
 import User from "@jx3box/jx3box-common/js/user.js";
+import { __Root, __cdn } from "@/utils/config";
 import { shuffle } from "lodash";
 import { getMenu } from "@jx3box/jx3box-common/js/api_misc";
 import { getProgramDetail, getMyVote } from "@/service/event/vote";
@@ -81,16 +82,16 @@ export default {
             imgRoot: this.__imgRoot,
 
             // tab
-            active: "stats",
+            active: "about",
             tabs: [
-                { key: "info", name: "活动介绍" },
+                { key: "about", name: "活动介绍" },
                 { key: "vote", name: "参赛作品" },
-                { key: "stats", name: "获奖展示" },
+                { key: "awesome", name: "获奖展示" },
             ],
             components: {
-                info: Info,
+                about: Info,
                 vote: Vote,
-                stats: Stats,
+                awesome: Stats,
             },
 
             // 数据
@@ -98,7 +99,7 @@ export default {
             firstLoad: true,
             list: [],
             myVote: [],
-            stats: [],
+            awesome: [],
 
             // 音符
             itemSpacing: 1000,
@@ -108,21 +109,21 @@ export default {
                 range: 10,
             },
             originalItems: [
-                ["note1.svg?1", "note2.svg?1"],
-                ["note3.svg?1", "note4.svg?1"],
+                ["note1.svg", "note2.svg"],
+                ["note3.svg", "note4.svg"],
             ],
-            generatedItems_info: [],
+            generatedItems_about: [],
             generatedItems_vote: [],
-            generatedItems_stats: [],
+            generatedItems_awesome: [],
             resizeObserver: null,
             resizeTimer: null,
             observedContainers: new Set(),
 
             // link
             menus: [
-                { name: "立即投稿", link: `https://www.jx3box.com/publish#/community` },
+                { name: "立即投稿", link: `${__Root}publish#/community` },
                 { name: "作品集锦", link: "?tab=vote" },
-                { name: "获奖展示", link: "?tab=stats" },
+                { name: "获奖展示", link: "?tab=awesome" },
             ],
         };
     },
@@ -133,8 +134,8 @@ export default {
         year() {
             return this.$route.query.year || new Date().getFullYear();
         },
-        statsList() {
-            const obj = this.stats.reduce((prev, cur) => {
+        awesomeList() {
+            const obj = this.awesome.reduce((prev, cur) => {
                 prev[cur.year] = cur;
                 return prev;
             }, {});
@@ -145,7 +146,7 @@ export default {
         componentList() {
             const obj = {
                 vote: this.list,
-                stats: this.statsList,
+                awesome: this.awesomeList,
             };
             return obj[this.active] || [];
         },
@@ -161,29 +162,38 @@ export default {
     methods: {
         changeTab(key) {
             this.active = key;
-            const tabActionMap = {
-                info: () => {},
-                vote: () => {
-                    User.isLogin() && this.loadMyVote();
-                },
-                stats: () => {
-                    this.loadStats();
-                },
-                default: () => {
+            if (this.$route.query?.tab !== key) {
+                this.$router.replace({
+                    query: {
+                        ...this.$route.query,
+                        tab: key,
+                    },
+                });
+            } else {
+                const tabActionMap = {
+                    about: () => {},
+                    vote: () => {
+                        User.isLogin() && this.loadMyVote();
+                    },
+                    awesome: () => {
+                        this.loadStats();
+                    },
+                    default: () => {
+                        this.loadData();
+                    },
+                };
+                if (this.active !== "about" && this.firstLoad) {
                     this.loadData();
-                },
-            };
-            if (this.firstLoad) {
-                this.loadData();
-                return;
-            }
-            (tabActionMap[this.active] || tabActionMap.default)();
+                    return;
+                }
+                (tabActionMap[this.active] || tabActionMap.default)();
 
-            this.$nextTick(() => {
-                setTimeout(() => {
-                    this.initContainer(`container_${this.active}`, `generatedItems_${this.active}`);
-                }, 100);
-            });
+                this.$nextTick(() => {
+                    setTimeout(() => {
+                        this.initContainer(`container_${this.active}`, `generatedItems_${this.active}`);
+                    }, 100);
+                });
+            }
         },
         loadData() {
             if (!this.firstLoad) {
@@ -200,7 +210,7 @@ export default {
                         return item;
                     });
                     if (User.isLogin() && this.active === "vote") this.loadMyVote();
-                    if (this.active === "stats") this.loadStats();
+                    if (this.active === "awesome") this.loadStats();
                 })
                 .finally(() => {
                     this.loading = false;
@@ -217,11 +227,11 @@ export default {
             });
         },
         loadStats() {
-            if (this.stats.length) return;
+            if (this.awesome.length) return;
             this.loading = true;
             getMenu(this.key)
                 .then((res) => {
-                    this.stats = res || [];
+                    this.awesome = res || [];
                 })
                 .catch((err) => {
                     console.log(err);

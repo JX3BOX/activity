@@ -17,7 +17,7 @@
                     </div>
                 </div>
                 <div class="u-author">
-                    练习生：<a :href="`https://jx3box.com/user/${data.user_info.id}`" target="_blank">
+                    练习生：<a :href="`${author}${data.user_info.id}`" target="_blank">
                         {{ data.user_info.display_name }}
                     </a>
                 </div>
@@ -28,9 +28,9 @@
 
             <div class="m-record">
                 <img class="u-needle" :class="{ isPlaying }" :src="`${imgRoot}web/item/needle.svg`" />
-                <div class="u-record">
+                <a :href="`${author}${data.user_info.id}`" target="_blank" class="u-record">
                     <img class="u-avatar" :class="{ isPlaying }" :src="data.user_info.avatar" />
-                </div>
+                </a>
             </div>
             <template v-if="show">
                 <div class="u-title u-song" :class="{ 'marquee-active': isMarqueeActive }">
@@ -98,6 +98,7 @@ export default {
         return {
             imgRoot: this.__imgRoot,
             link: __Root + "community/",
+            author: __Root + "author/",
 
             // 滚动标题
             isMarqueeActive: false,
