@@ -155,7 +155,7 @@ export default {
             year = parseInt(year);
             if (year < 2025) {
                 year = 2025;
-            } 
+            }
             return year;
         },
         awesomeList() {
@@ -229,7 +229,7 @@ export default {
             }
         },
         loadData() {
-            if (!this.firstLoad) {
+            if (!this.firstLoad || !this.id) {
                 return;
             }
             this.loading = true;
