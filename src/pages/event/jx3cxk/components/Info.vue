@@ -74,7 +74,12 @@ export default {
     },
     computed: {
         year() {
-            return this.$route.query.year || new Date().getFullYear();
+            let year = this.$route.query.year || new Date().getFullYear();
+            year = parseInt(year);
+            if (year < 2025) {
+                year = 2025;
+            } 
+            return year;
         },
         preface() {
             const baseYear = 2010;

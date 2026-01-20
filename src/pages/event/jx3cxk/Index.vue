@@ -7,7 +7,7 @@
         <div class="m-kv">
             <div class="u-title">
                 <img :src="`${imgRoot}web/title.png`" />
-                <img class="u-year" :src="`${imgRoot}web/title2026.png`" />
+                <img class="u-year" :src="`${imgRoot}web/title${year}.png`" />
                 <img class="u-star" :src="`${imgRoot}web/biling.png`" />
             </div>
         </div>
@@ -16,11 +16,9 @@
                 <div>往期活动</div>
                 <template #dropdown>
                     <el-dropdown-menu>
-                        <el-dropdown-item command="2025">
-                            <span>2025</span><img class="u-icon" :src="`${imgRoot}web/check.svg`" />
-                        </el-dropdown-item>
-                        <el-dropdown-item command="2026">
-                            <span>2026</span><img class="u-icon" :src="`${imgRoot}web/check.svg`" />
+                        <el-dropdown-item :command="item" v-for="item in years" :key="item">
+                            <span>{{ item }}</span>
+                            <img class="u-icon" :src="`${imgRoot}web/check.svg`" />
                         </el-dropdown-item>
                     </el-dropdown-menu>
                 </template>
@@ -91,6 +89,7 @@ export default {
     components: { Info, Vote, Stats },
     data: function () {
         return {
+            years: ["2025", "2026"],
             ids: {
                 2025: 29,
                 2026: 28,
@@ -152,7 +151,12 @@ export default {
             return this.$route.query?.tab;
         },
         year() {
-            return this.$route.query.year || new Date().getFullYear();
+            let year = this.$route.query.year || new Date().getFullYear();
+            year = parseInt(year);
+            if (year < 2025) {
+                year = 2025;
+            } 
+            return year;
         },
         awesomeList() {
             const obj = this.awesome.reduce((prev, cur) => {
