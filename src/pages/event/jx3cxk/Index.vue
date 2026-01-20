@@ -64,7 +64,12 @@
                 />
             </div>
 
-            <component :is="components[active]" :list="componentList" v-loading="loading"></component>
+            <component
+                :is="components[active]"
+                :list="componentList"
+                v-loading="loading"
+                @update:vote="handleVoteUpdate"
+            ></component>
         </div>
         <el-backtop :bottom="300" :visibility-height="1200">
             <div class="u-menu" v-for="(item, i) in menus" :key="i" @click.stop="handleMenuClick(item)">
@@ -248,6 +253,9 @@ export default {
                 .finally(() => {
                     this.loading = false;
                 });
+        },
+        handleVoteUpdate(id) {
+            this.list = this.list.map((item) => (item.id == id ? { ...item, isVoted: true } : item));
         },
         loadMyVote() {
             if (this.myVote.length) return;

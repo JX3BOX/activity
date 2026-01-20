@@ -187,8 +187,7 @@ export default {
                 this.$message({
                     message: "投票成功",
                     type: "success",
-                });
-                item.isVoted = true;
+                }); 
                 this.$emit("update:vote", item.id);
             });
         },

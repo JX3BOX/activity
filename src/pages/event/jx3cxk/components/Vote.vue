@@ -37,8 +37,7 @@ export default {
             if (!User.isLogin()) {
                 return User.toLogin();
             }
-        },
-
+        }, 
         handlePlay(id) {
             if (this.currentPlayingId === id) {
                 this.currentPlayingId = null;
