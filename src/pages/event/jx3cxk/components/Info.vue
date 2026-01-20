@@ -28,7 +28,7 @@
             </h2>
             <ul>
                 <li v-for="(item, i) in jx3cxkData.condition" :key="i">
-                    <img class="u-icon" :src="`${imgRoot}web/info/${i + 1}.svg?jx3box`" />
+                    <b class="u-no">{{ i + 1 }}</b>
                     <span>{{ item }}</span>
                 </li>
                 <li class="u-ps" v-html="jx3cxkData.condition_ps"></li>
@@ -40,7 +40,7 @@
                 <h2>
                     <img class="u-icon" :src="`${imgRoot}web/info/star.svg`" />
                     <span>参赛步骤</span>
-                    <img class="u-number" :src="`${imgRoot}web/info/${i}.svg?jx3box`" />
+                    <b class="u-no" :style="{ marginRight: i == 1 ? '10px' : '' }">{{ i }}</b>
                 </h2>
                 <div class="u-info" v-html="item.info" @click="handleClick(i)"></div>
                 <template v-if="item.img">
@@ -78,7 +78,7 @@ export default {
             year = parseInt(year);
             if (year < 2025) {
                 year = 2025;
-            } 
+            }
             return year;
         },
         preface() {

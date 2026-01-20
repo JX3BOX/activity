@@ -29,7 +29,7 @@
             <div class="m-record">
                 <img class="u-needle" :class="{ isPlaying }" :src="`${imgRoot}web/item/needle.svg`" />
                 <a :href="`${author}${data.user_info.id}`" target="_blank" class="u-record">
-                    <img class="u-avatar" :class="{ isPlaying }" :src="data.user_info.avatar" />
+                    <img class="u-avatar" :class="{ isRotate, isPaused }" :src="data.user_info.avatar" />
                 </a>
             </div>
             <template v-if="show">
@@ -76,7 +76,9 @@
             </div>
         </div>
         <div class="m-button" :class="{ active: isVote }" @click="toVote">
-            <div class="u-call"><span>打call !</span></div>
+            <div class="u-call">
+                <span>{{ isVote ? "感谢支持" : "打call !" }}</span>
+            </div>
             <img class="u-icon" :src="`${imgRoot}web/item/emoji-1.svg`" />
             <img class="u-icon u-hover" :src="`${imgRoot}web/item/emoji-2.svg`" />
             <img class="u-icon u-active" :src="`${imgRoot}web/item/like.svg?jx3cxk`" />
@@ -118,6 +120,8 @@ export default {
 
             // 播放
             isPlaying: false,
+            isPaused: false,
+            isRotate: false,
         };
     },
     computed: {
@@ -132,9 +136,11 @@ export default {
             if (newVal) {
                 audio.play();
                 this.isPlaying = true;
+                this.isPaused = false;
             } else {
                 audio.pause();
                 this.isPlaying = false;
+                this.isPaused = true;
             }
         },
     },
@@ -164,10 +170,13 @@ export default {
 
             this.$emit("play", this.data.id);
             const audio = this.$refs.audioPlayer;
+            this.isRotate = true;
             if (this.isPlaying) {
                 audio.pause();
+                this.isPaused = true;
             } else {
                 audio.play();
+                this.isPaused = false;
             }
             this.isPlaying = !this.isPlaying;
         },
@@ -187,7 +196,7 @@ export default {
                 this.$message({
                     message: "投票成功",
                     type: "success",
-                }); 
+                });
                 this.$emit("update:vote", item.id);
             });
         },
@@ -204,6 +213,7 @@ export default {
             this.isPlaying = false;
             this.currentTime = 0;
             this.slider = 0;
+            this.isRotate = false;
             this.$emit("play", null);
         },
         handleSliderChange(value) {
