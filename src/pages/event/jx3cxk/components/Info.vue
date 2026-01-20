@@ -56,7 +56,7 @@
                 <img class="u-img" :src="`${imgRoot}web/info/bg-jiangli_03.png`" />
             </div>
             <div class="m-reward-content">
-                <img :src="`${imgRoot}web/prize${year}.jpg`" />
+                <img :src="`${imgRoot}web/prize${year}.jpg?jx3cxk`" />
             </div>
         </div>
     </div>
