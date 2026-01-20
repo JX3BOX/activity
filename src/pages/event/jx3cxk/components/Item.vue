@@ -48,8 +48,14 @@
                     </div>
                 </div>
             </template>
-
-            <el-slider v-model="slider" size="small" :show-tooltip="false" />
+            <el-slider
+                v-model="slider"
+                :max="100"
+                :show-tooltip="false"
+                @change="handleSliderChange"
+                @mousedown.native="isDragging = true"
+                @mouseup.native="isDragging = false"
+            ></el-slider>
             <div class="m-play">
                 <div class="u-play-button">
                     <img class="u-icon" :src="`${imgRoot}web/item/left.svg`" />
@@ -75,7 +81,15 @@
             <img class="u-icon u-hover" :src="`${imgRoot}web/item/emoji-2.svg`" />
             <img class="u-icon u-active" :src="`${imgRoot}web/item/like.svg?jx3cxk`" />
         </div>
-        <div class="m-bilibili" v-html="play"></div>
+        <div class="m-bilibili">
+            <audio
+                ref="audioPlayer"
+                :src="data.content"
+                @timeupdate="handleTimeUpdate"
+                @loadedmetadata="handleLoadedMetadata"
+                @ended="handleAudioEnded"
+            ></audio>
+        </div>
     </div>
 </template>
 <script>
@@ -108,7 +122,6 @@ export default {
 
             // 播放
             isPlaying: false,
-            play: "",
         };
     },
     computed: {
@@ -131,8 +144,13 @@ export default {
             }
         },
         togglePlay() {
+            const audio = this.$refs.audioPlayer;
+            if (this.isPlaying) {
+                audio.pause();
+            } else {
+                audio.play();
+            }
             this.isPlaying = !this.isPlaying;
-            this.play = this.data.content;
         },
         toVote() {
             const item = this.data;
@@ -154,6 +172,28 @@ export default {
                 item.isVoted = true;
                 this.$emit("update:vote", item.id);
             });
+        },
+        handleTimeUpdate() {
+            if (!this.isDragging) {
+                this.currentTime = this.$refs.audioPlayer.currentTime;
+                this.slider = (this.currentTime / this.duration) * 100 || 0;
+            }
+        },
+        handleLoadedMetadata() {
+            this.duration = this.$refs.audioPlayer.duration;
+        },
+        handleAudioEnded() {
+            this.isPlaying = false;
+            this.currentTime = 0;
+            this.slider = 0;
+        },
+        handleSliderChange(value) {
+            this.$refs.audioPlayer.currentTime = (value / 100) * this.duration;
+            this.currentTime = this.$refs.audioPlayer.currentTime;
+            this.isDragging = false;
+            if (this.isPlaying) {
+                this.$refs.audioPlayer.play();
+            }
         },
     },
     mounted() {
