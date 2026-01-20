@@ -1,8 +1,15 @@
 <template>
     <div class="m-content m-vote wp" v-loading="loading" @click="checkLogin">
         <template v-if="list.length">
-            <vote-item v-for="item in list" :key="item.id" :data="item"></vote-item>
-        </template> 
+            <vote-item
+                v-for="item in list"
+                :key="item.id"
+                :data="item"
+                :is-play="currentPlayingId === item.id"
+                @update:vote="$emit('update:vote', $event)"
+                @play="handlePlay"
+            ></vote-item>
+        </template>
     </div>
 </template>
 <script>
@@ -15,12 +22,13 @@ export default {
             default: () => [],
         },
     },
+    emits: ["update:vote"],
     components: {
         voteItem,
     },
     data() {
         return {
-            play: "",
+            currentPlayingId: null,
             loading: false,
         };
     },
@@ -28,6 +36,14 @@ export default {
         checkLogin() {
             if (!User.isLogin()) {
                 return User.toLogin();
+            }
+        },
+
+        handlePlay(id) {
+            if (this.currentPlayingId === id) {
+                this.currentPlayingId = null;
+            } else {
+                this.currentPlayingId = id;
             }
         },
     },

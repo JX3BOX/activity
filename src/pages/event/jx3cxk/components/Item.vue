@@ -97,16 +97,11 @@ import { __cdn, __Root } from "@/utils/config";
 import { vote } from "@/service/event/vote";
 export default {
     inject: ["__imgRoot"],
-    emits: ["update:vote"],
+    emits: ["update:vote", "update:play"],
     props: {
-        data: {
-            type: Object,
-            default: () => {},
-        },
-        show: {
-            type: Boolean,
-            default: false,
-        },
+        data: Object,
+        isPlay: Boolean,
+        show: Boolean,
     },
     data() {
         return {
@@ -128,6 +123,19 @@ export default {
     computed: {
         isVote() {
             return this.data?.isVoted || false;
+        },
+    },
+    watch: {
+        isPlay(newVal) {
+            const audio = this.$refs.audioPlayer;
+            if (!audio) return;
+            if (newVal) {
+                audio.play();
+                this.isPlaying = true;
+            } else {
+                audio.pause();
+                this.isPlaying = false;
+            }
         },
     },
     methods: {
@@ -153,6 +161,8 @@ export default {
         },
         togglePlay() {
             if (this.data.tag === "bilibili") return window.open(this.data.content);
+
+            this.$emit("play", this.data.id);
             const audio = this.$refs.audioPlayer;
             if (this.isPlaying) {
                 audio.pause();
@@ -195,6 +205,7 @@ export default {
             this.isPlaying = false;
             this.currentTime = 0;
             this.slider = 0;
+            this.$emit("play", null);
         },
         handleSliderChange(value) {
             this.$refs.audioPlayer.currentTime = (value / 100) * this.duration;
