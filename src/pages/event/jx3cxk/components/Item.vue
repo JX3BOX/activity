@@ -116,6 +116,7 @@ export default {
 
             // 滚动标题
             isMarqueeActive: false,
+            resizeObserver: null,
             maxWidth: 300,
             scrollSpeed: 40,
             slider: 0,
@@ -133,11 +134,18 @@ export default {
         checkTextWidth() {
             const textEl = this.$refs.marqueeText;
             const wrapperEl = this.$refs.marqueeWrapper;
+
             if (!textEl || !wrapperEl) return;
+
             const singleTextWidth = textEl.offsetWidth;
-            this.isMarqueeActive = singleTextWidth > this.maxWidth;
+            const containerWidth = wrapperEl.parentElement.clientWidth;
+
+            this.isMarqueeActive = singleTextWidth > containerWidth;
+
             if (this.isMarqueeActive) {
-                const duration = singleTextWidth / this.scrollSpeed;
+                const totalTextWidth = singleTextWidth * 2 + 20;
+                const duration = totalTextWidth / 30;
+
                 wrapperEl.style.animationDuration = `${duration}s`;
             } else {
                 wrapperEl.style.animationDuration = "";
@@ -197,9 +205,18 @@ export default {
         },
     },
     mounted() {
-        this.$nextTick(() => {
+        this.checkTextWidth();
+        this.resizeObserver = new ResizeObserver(() => {
             this.checkTextWidth();
         });
+        if (this.$refs.marqueeWrapper) {
+            this.resizeObserver.observe(this.$refs.marqueeWrapper.parentElement);
+        }
+    },
+    beforeUnmount() {
+        if (this.resizeObserver) {
+            this.resizeObserver.disconnect();
+        }
     },
 };
 </script>
