@@ -7,7 +7,7 @@
             </div>
             <div class="m-list m-other-list">
                 <img class="u-title" :src="`${imgRoot}web/item/good2.png`" />
-                <vote-item class="m-show-item" show v-for="item in otherList" :key="item.id" :data="item"></vote-item> 
+                <vote-item class="m-show-item" show v-for="item in otherList" :key="item.id" :data="item"></vote-item>
             </div>
         </template>
         <div class="m-list" v-else>

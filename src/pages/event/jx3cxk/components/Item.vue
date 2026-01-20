@@ -81,7 +81,7 @@
             <img class="u-icon u-hover" :src="`${imgRoot}web/item/emoji-2.svg`" />
             <img class="u-icon u-active" :src="`${imgRoot}web/item/like.svg?jx3cxk`" />
         </div>
-        <div class="m-bilibili">
+        <div class="m-bilibili" v-if="data.tag !== 'bilibili'">
             <audio
                 ref="audioPlayer"
                 :src="data.content"
@@ -152,6 +152,7 @@ export default {
             }
         },
         togglePlay() {
+            if (this.data.tag === "bilibili") return window.open(this.data.content);
             const audio = this.$refs.audioPlayer;
             if (this.isPlaying) {
                 audio.pause();

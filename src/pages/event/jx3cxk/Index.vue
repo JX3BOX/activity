@@ -12,6 +12,20 @@
             </div>
         </div>
         <div class="m-tabs wp">
+            <el-dropdown class="u-tab" placement="bottom-end" trigger="click" @command="handleCommand">
+                <div>往期活动</div>
+                <template #dropdown>
+                    <el-dropdown-menu>
+                        <el-dropdown-item command="2025">
+                            <span>2025</span><img class="u-icon" :src="`${imgRoot}web/check.svg`" />
+                        </el-dropdown-item>
+                        <el-dropdown-item command="2026">
+                            <span>2026</span><img class="u-icon" :src="`${imgRoot}web/check.svg`" />
+                        </el-dropdown-item>
+                    </el-dropdown-menu>
+                </template>
+            </el-dropdown>
+
             <div
                 class="u-tab"
                 v-for="(item, i) in tabs"
@@ -52,7 +66,7 @@
                 />
             </div>
 
-            <component :is="components[active]" :list="componentList"></component>
+            <component :is="components[active]" :list="componentList" v-loading="loading"></component>
         </div>
         <el-backtop :bottom="300" :visibility-height="1200">
             <div class="u-menu" v-for="(item, i) in menus" :key="i" @click.stop="handleMenuClick(item)">
@@ -77,7 +91,10 @@ export default {
     components: { Info, Vote, Stats },
     data: function () {
         return {
-            id: 28,
+            ids: {
+                2025: 29,
+                2026: 28,
+            },
             key: "jx3cxk_data",
             imgRoot: this.__imgRoot,
 
@@ -128,6 +145,9 @@ export default {
         };
     },
     computed: {
+        id() {
+            return this.ids[this.year];
+        },
         router_tab() {
             return this.$route.query?.tab;
         },
@@ -162,6 +182,10 @@ export default {
                 val ? this.changeTab(val) : this.changeTab(this.active);
             },
             immediate: true,
+        },
+        year() {
+            this.firstLoad = true;
+            this.loadData();
         },
     },
     methods: {
@@ -246,6 +270,7 @@ export default {
                 });
         },
         handlerItem(str) {
+            if (!str) return [];
             const list = str.split(",");
             return list.map((item) => ({
                 ...this.list.find((e) => e.id == item),
@@ -328,6 +353,15 @@ export default {
                     window.scrollTo({ top: 1000, behavior: "smooth" });
                 });
         },
+        handleCommand(year) {
+            if (this.year !== year)
+                this.$router.replace({
+                    query: {
+                        ...this.$route.query,
+                        year,
+                    },
+                });
+        },
     },
     mounted() {
         this.$nextTick(() => {
@@ -349,4 +383,21 @@ export default {
 
 <style lang="less">
 @import "~@/assets/css/event/jx3cxk/index.less";
+.el-dropdown-menu {
+    width: 240px;
+    .el-dropdown-menu__item {
+        .flex;
+        justify-content: space-between;
+
+        .u-icon {
+            .tm(0);
+        }
+        &:hover {
+            color: #9369c9;
+            .u-icon {
+                .tm(1);
+            }
+        }
+    }
+}
 </style>
