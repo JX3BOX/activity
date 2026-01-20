@@ -29,7 +29,7 @@
             <div class="m-record">
                 <img class="u-needle" :class="{ isPlaying }" :src="`${imgRoot}web/item/needle.svg`" />
                 <a :href="`${author}${data.user_info.id}`" target="_blank" class="u-record">
-                    <img class="u-avatar" :class="{ isRotate, isPaused }" :src="data.user_info.avatar" />
+                    <img class="u-avatar" :class="{ isRotate, isPaused }" :src="avatarUrl(data.user_info.avatar)" />
                 </a>
             </div>
             <template v-if="show">
@@ -97,6 +97,7 @@
 <script>
 import { __cdn, __Root } from "@/utils/config";
 import { vote } from "@/service/event/vote";
+import { showAvatar } from "@jx3box/jx3box-common/js/utils"
 export default {
     inject: ["__imgRoot"],
     emits: ["update:vote", "update:play"],
@@ -145,6 +146,9 @@ export default {
         },
     },
     methods: {
+        avatarUrl(avatar) {
+            return showAvatar(avatar, 240);
+        },
         checkTextWidth() {
             const textEl = this.$refs.marqueeText;
             const wrapperEl = this.$refs.marqueeWrapper;
