@@ -63,7 +63,6 @@ export default {
 <style lang="less" scoped>
 .m-content {
     .pt(80px) !important;
-
     .u-info {
         .pr;
         .bold;
@@ -79,6 +78,7 @@ export default {
         border-top: 8px solid #9899f2;
         border-bottom: 8px solid #9899f2;
         background: rgba(0, 0, 0, 0.2);
+
         /deep/ b {
             .fz(22px);
         }
@@ -101,6 +101,11 @@ export default {
         .m-item-box {
             .mb(20px);
         }
+    }
+}
+@media screen and (max-width: @phone) {
+    .m-content .u-info {
+        max-width: 90% !important;
     }
 }
 </style>
