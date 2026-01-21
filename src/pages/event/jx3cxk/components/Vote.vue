@@ -5,7 +5,14 @@
             <div v-html="voteInfo"></div>
         </div>
         <div class="m-vote" v-if="list.length">
-            <vote-item v-for="item in list" :key="item.id" :data="item"></vote-item>
+            <vote-item
+                v-for="item in list"
+                :key="item.id"
+                :data="item"
+                :is-play="currentPlayingId === item.id"
+                @update:vote="$emit('update:vote', $event)"
+                @play="handlePlay"
+            ></vote-item>
         </div>
     </div>
 </template>
@@ -42,7 +49,7 @@ export default {
             if (!User.isLogin()) {
                 return User.toLogin();
             }
-        }, 
+        },
         handlePlay(id) {
             if (this.currentPlayingId === id) {
                 this.currentPlayingId = null;
@@ -65,7 +72,7 @@ export default {
         .x;
         .auto(x);
         .r(8px);
-        box-sizing:border-box;
+        box-sizing: border-box;
         max-width: 1100px;
         padding: 64px 20px;
         color: #fff4db;

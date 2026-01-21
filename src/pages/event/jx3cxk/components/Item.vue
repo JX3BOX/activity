@@ -97,7 +97,7 @@
 <script>
 import { __cdn, __Root } from "@/utils/config";
 import { vote } from "@/service/event/vote";
-import { showAvatar } from "@jx3box/jx3box-common/js/utils"
+import { showAvatar } from "@jx3box/jx3box-common/js/utils";
 export default {
     inject: ["__imgRoot"],
     emits: ["update:vote", "update:play"],
