@@ -21,12 +21,13 @@ export default {
             default: () => [],
         },
     },
+    emits: ["update:vote"],
     components: {
         voteItem,
     },
     data() {
         return {
-            play: "",
+            currentPlayingId: null,
             loading: false,
             imgRoot: this.__imgRoot,
         };
@@ -40,6 +41,13 @@ export default {
         checkLogin() {
             if (!User.isLogin()) {
                 return User.toLogin();
+            }
+        }, 
+        handlePlay(id) {
+            if (this.currentPlayingId === id) {
+                this.currentPlayingId = null;
+            } else {
+                this.currentPlayingId = id;
             }
         },
     },
