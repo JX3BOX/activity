@@ -56,6 +56,7 @@ export default {
 <style lang="less" scoped>
 .m-content {
     .pt(80px) !important;
+
     .u-info {
         .pr;
         .bold;
@@ -64,6 +65,8 @@ export default {
         .x;
         .auto(x);
         .r(8px);
+        box-sizing:border-box;
+        max-width: 1100px;
         padding: 64px 20px;
         color: #fff4db;
         border-top: 8px solid #9899f2;
