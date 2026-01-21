@@ -83,6 +83,7 @@ import Info from "./components/Info.vue";
 import Vote from "./components/Vote.vue";
 import Stats from "./components/Stats.vue";
 import User from "@jx3box/jx3box-common/js/user.js";
+import { resolveImagePath } from "@jx3box/jx3box-common/js/utils";
 import { __Root, __cdn } from "@/utils/config";
 import { shuffle } from "lodash";
 import { getMenu } from "@jx3box/jx3box-common/js/api_misc";
@@ -197,6 +198,7 @@ export default {
         },
     },
     methods: {
+        resolveImagePath,
         changeTab(key) {
             this.active = key;
             if (this.$route.query?.tab !== key) {
@@ -242,7 +244,11 @@ export default {
                 .then(async (res) => {
                     const list = shuffle(res.data?.data?.vote_items || []);
                     this.list = list.map((item) => {
-                        if (!item?.user_info?.avatar) item.user_info.avatar = `${__cdn}image/common/avatar.png`;
+                        if (!item?.user_info?.avatar) {
+                            item.user_info.avatar = `${__cdn}image/common/avatar.png`;
+                        } else {
+                            item.user_info.avatar = this.resolveImagePath(item.user_info.avatar);
+                        }
                         item.slider = 0;
                         return item;
                     });
