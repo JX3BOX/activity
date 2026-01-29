@@ -362,9 +362,10 @@ export default {
                 window.open(link, "_blank");
                 return;
             }
+            const query = this.$route.query;
             this.$router
                 .push({
-                    query: { tab: link.replace("?tab=", "") },
+                    query: { tab: link.replace("?tab=", ""), ...query },
                 })
                 .finally(() => {
                     window.scrollTo({ top: 1000, behavior: "smooth" });
