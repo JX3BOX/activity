@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { isMiniProgram } from "@jx3box/jx3box-common/js/utils";
+import { isMiniProgram, isApp } from "@jx3box/jx3box-common/js/utils";
 import { postStat } from "@jx3box/jx3box-common/js/stat";
 import { __cdn } from "@/utils/config";
 export default {
@@ -30,7 +30,7 @@ export default {
     },
     created: function () {
         postStat("event", "bigbang");
-        if (isMiniProgram()) {
+        if (isMiniProgram() || isApp()) {
             let meta = document.createElement("meta");
             meta.setAttribute("name", "viewport");
             meta.setAttribute("content", "width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=no");

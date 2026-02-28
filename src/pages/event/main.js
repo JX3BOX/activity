@@ -1,9 +1,9 @@
 Vue.config.productionTip = false;
 Vue.config.devtools = true;
-import { isMiniProgram } from "@jx3box/jx3box-common/js/utils";
+import { isMiniProgram,isApp } from "@jx3box/jx3box-common/js/utils";
 
 // 检测小程序环境并动态添加viewport元标签
-if (isMiniProgram()) {
+if (isMiniProgram() || isApp()) {
     const viewportMeta = document.createElement("meta");
     viewportMeta.name = "viewport";
     viewportMeta.content = "width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=no";
@@ -31,7 +31,7 @@ import MobileApp from "./MobileApp.vue";
 import DesktopApp from "./App.vue";
 
 // 根据条件选择使用哪个组件
-const App = isMiniProgram() ? MobileApp : DesktopApp;
+const App = isMiniProgram() || isApp() ? MobileApp : DesktopApp;
 new Vue({
     // router,
     // store,

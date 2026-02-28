@@ -57,7 +57,7 @@
     </div>
 </template>
 <script>
-import { isMiniProgram } from "@jx3box/jx3box-common/js/utils";
+import { isMiniProgram, isApp } from "@jx3box/jx3box-common/js/utils";
 import { getProgramDetail, getMyVote, vote } from "@/service/event/vote";
 import { shuffle } from "lodash";
 import User from "@jx3box/jx3box-common/js/user.js";
@@ -76,7 +76,7 @@ export default {
             loading: false,
             list: [],
             root: __Root,
-            isMiniProgram: isMiniProgram(),
+            isMiniProgram: isMiniProgram() || isApp(),
             cdn: __cdn + "design/event/jx3story/",
             lastVoteTime: 0,
             end_at: 0,

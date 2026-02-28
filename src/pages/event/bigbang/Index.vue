@@ -119,7 +119,7 @@ import { getMenu } from "@jx3box/jx3box-common/js/api_misc";
 import { debounce } from "lodash";
 import { getVoteInfo, submitVote } from "@/service/event/bigbang";
 import { __Root } from "@jx3box/jx3box-common/data/jx3box.json";
-import { isMiniProgram } from "@jx3box/jx3box-common/js/utils";
+import { isMiniProgram, isApp } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "EventsPage",
     inject: ["__imgRoot"],
@@ -137,7 +137,7 @@ export default {
             tip: "踏入江湖，揭秘剑网3十大热门八卦！从深情告白到阵营风云，从副本黑幕到生活琐事，每一条都让你眼界大开。轻松一刻，尽在剑三八卦圈，大侠们，准备好瓜子，一起享受这场游戏界的八卦盛宴吧！",
 
             changeVisible: false,
-            isMiniProgram: isMiniProgram(),
+            isMiniProgram: isMiniProgram() || isApp(),
         };
     },
     computed: {

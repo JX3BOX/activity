@@ -14,7 +14,7 @@
 <script>
 // import { postStat } from "@jx3box/jx3box-common/js/stat";
 import { __imgPath } from "@/utils/config";
-import { isMiniProgram } from "@jx3box/jx3box-common/js/utils";
+import { isMiniProgram, isApp } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "App",
     data: function () {
@@ -31,7 +31,7 @@ export default {
     created: function () {
         // postStat("event", "gaokao");
         // 小程序下设置viewport
-        if (isMiniProgram()) {
+        if (isMiniProgram() || isApp()) {
             let meta = document.createElement("meta");
             meta.setAttribute("name", "viewport");
             meta.setAttribute("content", "width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=no");

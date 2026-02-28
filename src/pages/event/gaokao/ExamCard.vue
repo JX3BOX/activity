@@ -100,7 +100,7 @@
 import { authorLink, resolveImagePath } from "@jx3box/jx3box-common/js/utils";
 import { __Root } from "@jx3box/jx3box-common/data/jx3box.json";
 import { tags } from "@/assets/data/event/exam.json";
-import { isMiniProgram } from "@jx3box/jx3box-common/js/utils";
+import { isMiniProgram, isApp } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "Card",
     props: ["item", "answer", "index", "isSubmitted", "background", "color", "font", "showId"],
@@ -108,7 +108,7 @@ export default {
         return {
             checkbox: [],
             radio: {},
-            isMiniProgram: isMiniProgram(),
+            isMiniProgram: isMiniProgram() || isApp(),
         };
     },
     computed: {

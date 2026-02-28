@@ -33,7 +33,7 @@
     </div>
 </template>
 <script>
-import { isMiniProgram } from "@jx3box/jx3box-common/js/utils";
+import { isMiniProgram, isApp } from "@jx3box/jx3box-common/js/utils";
 import { getMenu } from "@jx3box/jx3box-common/js/api_misc";
 import { __cdn } from "@/utils/config";
 import Info from "../components/Info.vue";
@@ -48,7 +48,7 @@ export default {
             hasVote: false,
             year: "2025",
             changeYear: false,
-            isMiniProgram: isMiniProgram(),
+            isMiniProgram: isMiniProgram() || isApp(),
             cdn: __cdn + "design/event/jx3story/",
             tabs: [
                 // {

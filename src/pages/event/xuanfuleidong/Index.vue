@@ -40,7 +40,7 @@
     </div>
 </template>
 <script>
-import { isMiniProgram } from "@jx3box/jx3box-common/js/utils";
+import { isMiniProgram, isApp } from "@jx3box/jx3box-common/js/utils";
 import { getProgramDetail, getMyVote } from "@/service/event/vote";
 import { getMenu } from "@jx3box/jx3box-common/js/api_misc";
 import introduction from "./components/introduction.vue";
@@ -61,7 +61,7 @@ export default {
     },
     data: function () {
         return {
-            isMiniProgram: isMiniProgram(),
+            isMiniProgram: isMiniProgram() || isApp(),
             loading: false,
             index: "", // 届数
             id: 25, // 投票ID

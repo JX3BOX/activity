@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { isMiniProgram } from "@jx3box/jx3box-common/js/utils";
+import { isMiniProgram, isApp } from "@jx3box/jx3box-common/js/utils";
 import { getMenu } from "@jx3box/jx3box-common/js/api_misc";
 import { papers } from "@/assets/data/event/exam.json";
 import { findKey } from "lodash";
@@ -60,7 +60,7 @@ export default {
             showYear: "",
             papers,
             exams: {},
-            isMiniProgram: isMiniProgram(),
+            isMiniProgram: isMiniProgram() || isApp(),
         };
     },
     mounted() {

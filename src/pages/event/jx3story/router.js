@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import { isMiniProgram } from "@jx3box/jx3box-common/js/utils";
+import { isMiniProgram, isApp } from "@jx3box/jx3box-common/js/utils";
 Vue.use(VueRouter);
 const Mini = () => import("./new/Mini.vue");
 const Index = () => import("./new/Index.vue");
@@ -11,7 +11,7 @@ const router = new VueRouter({
         {
             path: "/",
             name: "Index",
-            component: isMiniProgram() ? Mini : Index,
+            component: isMiniProgram() || isApp() ? Mini : Index,
         },
         {
             path: "/detail",

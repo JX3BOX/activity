@@ -63,7 +63,7 @@
     </div>
 </template>
 <script>
-import { isMiniProgram } from "@jx3box/jx3box-common/js/utils";
+import { isMiniProgram, isApp } from "@jx3box/jx3box-common/js/utils";
 import User from "@jx3box/jx3box-common/js/user.js";
 import { vote } from "@/service/event/vote";
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
@@ -77,7 +77,7 @@ export default {
     },
     data: function () {
         return {
-            isMiniProgram: isMiniProgram(),
+            isMiniProgram: isMiniProgram() || isApp(),
             isLogin: User.isLogin(),
             h: 1100,
             isFixed: false,
@@ -142,7 +142,7 @@ export default {
                 this.$message({
                     message: "投票成功",
                     type: "success",
-                }); 
+                });
                 this.$emit("update", item.id);
             });
         },

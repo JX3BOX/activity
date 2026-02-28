@@ -82,7 +82,7 @@
 import ExamCard from "./ExamCard.vue";
 import { submitAnswer, getPaper, submitAnswerTrial } from "@/service/event/exam.js";
 import User from "@jx3box/jx3box-common/js/user";
-import { isMiniProgram } from "@jx3box/jx3box-common/js/utils";
+import { isMiniProgram, isApp } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "Paper",
     inject: ["__imgRoot"],
@@ -100,7 +100,7 @@ export default {
             changeExamVisible: false,
             showYear: "",
             showTypeId: "",
-            isMiniProgram: isMiniProgram(),
+            isMiniProgram: isMiniProgram() || isApp(),
         };
     },
     computed: {

@@ -12,14 +12,14 @@
 </template>
 
 <script>
-import { isMiniProgram } from "@jx3box/jx3box-common/js/utils";
+import { isMiniProgram, isApp } from "@jx3box/jx3box-common/js/utils";
 import { postStat } from "@jx3box/jx3box-common/js/stat";
 import { __cdn } from "@/utils/config";
 export default {
     name: "App",
     data: function () {
-        return { 
-            isMiniProgram: isMiniProgram(),
+        return {
+            isMiniProgram: isMiniProgram() || isApp(),
         };
     },
     provide: {
