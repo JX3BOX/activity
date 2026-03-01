@@ -7,6 +7,8 @@ if (isMiniProgram() || isApp()) {
     viewportMeta.name = "viewport";
     viewportMeta.content = "width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=no";
     document.head.appendChild(viewportMeta);
+
+    isApp() && localStorage.setItem("__env", "app");
 }
 // 第三方UI组件
 import Vue from "vue";

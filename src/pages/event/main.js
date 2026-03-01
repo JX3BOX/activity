@@ -1,6 +1,6 @@
 Vue.config.productionTip = false;
 Vue.config.devtools = true;
-import { isMiniProgram,isApp } from "@jx3box/jx3box-common/js/utils";
+import { isMiniProgram, isApp } from "@jx3box/jx3box-common/js/utils";
 
 // 检测小程序环境并动态添加viewport元标签
 if (isMiniProgram() || isApp()) {
@@ -8,6 +8,8 @@ if (isMiniProgram() || isApp()) {
     viewportMeta.name = "viewport";
     viewportMeta.content = "width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=no";
     document.head.appendChild(viewportMeta);
+
+    isApp() && localStorage.setItem("__env", "app");
 }
 // 第三方UI组件
 import Vue from "vue";

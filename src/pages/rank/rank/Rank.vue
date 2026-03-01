@@ -5,8 +5,12 @@
 </template>
 
 <script>
+import { isApp } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "Rank",
+    created() {
+        isApp() && localStorage.setItem("__env", "app");
+    },
 };
 </script>
 

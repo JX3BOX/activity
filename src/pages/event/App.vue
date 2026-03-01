@@ -10,9 +10,13 @@
 
 <script>
 import Index from "@/components/event/index/Index.vue";
+import { isApp } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "App",
     components: { Index },
+    created() {
+        isApp() && localStorage.setItem("__env", "app");
+    },
 };
 </script>
 
