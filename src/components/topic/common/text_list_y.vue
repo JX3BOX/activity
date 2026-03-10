@@ -1,17 +1,15 @@
 <template>
     <div class="m-topic-text-list m-topic-text-list-y">
         <ul class="u-list" v-if="list && list.length">
-            <li class="u-item" v-for="(item,i) in list" :key="i">
+            <li class="u-item" v-for="(item, i) in list" :key="i">
                 <a class="u-link" :href="item.link" target="_blank" :style="linkstyle">
                     <span
                         class="u-title"
-                        :style="{color:item.color,'font-weight':~~item.icon ? 'bold':'normal'}"
-                    >{{item.title}}</span>
-                    <span
-                        class="u-date"
-                        v-if="withDate"
-                    >{{(item.time || item.updated_at) | formatDate}}</span>
-                    <span class="u-author" v-if="withAuthor">{{item.author}}</span>
+                        :style="{ color: item.color, 'font-weight': ~~item.icon ? 'bold' : 'normal' }"
+                        >{{ item.title }}</span
+                    >
+                    <span class="u-date" v-if="withDate">{{ (item.time || item.updated_at) | formatDate }}</span>
+                    <span class="u-author" v-if="withAuthor">{{ item.author }}</span>
                 </a>
             </li>
         </ul>
@@ -49,9 +47,8 @@ export default {
         },
     },
     watch: {},
-    methods: {},
-    filters: {
-        formatDate: function (val) {
+    methods: {
+        formatDate(val) {
             return simpledate(val);
         },
     },

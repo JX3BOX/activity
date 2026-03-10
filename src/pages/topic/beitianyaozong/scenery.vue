@@ -26,7 +26,7 @@ export default {
             this.$emit("changeBg", this.bgIndex, "scenery");
         },
     },
-    filters: {},
+    
     created: function () {},
     mounted: function () {},
 };

@@ -232,7 +232,7 @@ export default {
             alert('敬请期待')
         }
 	},
-	filters: {},
+	
 	created: function () {},
 	mounted: function () {
 		// this.init();

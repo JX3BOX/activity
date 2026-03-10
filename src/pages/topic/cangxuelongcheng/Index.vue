@@ -287,7 +287,7 @@ export default {
             }, 200);
         },
     },
-    filters: {},
+    
     created: function () {
         this.getBoss();
     },

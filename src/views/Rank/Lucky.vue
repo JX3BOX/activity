@@ -20,7 +20,7 @@ export default {
         },
     },
     methods: {},
-    filters: {},
+    
     created: function() {},
     components: {},
 };

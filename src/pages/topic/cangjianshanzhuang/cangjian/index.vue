@@ -67,7 +67,7 @@ export default {
       this.tabIndex = i;
     },
   },
-  filters: {},
+  
   created: function () {},
   mounted: function () {},
   components: {

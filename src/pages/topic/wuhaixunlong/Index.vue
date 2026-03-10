@@ -246,7 +246,7 @@ export default {
     methods: {
         init: function () {},
     },
-    filters: {},
+    
     created: function () {},
     mounted: function () {
         this.init();

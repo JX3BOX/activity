@@ -312,7 +312,7 @@ export default {
             this.jjsc_present = val;
         },
     },
-    filters: {},
+    
     created: function () { },
     mounted: function () {
         // this.init();

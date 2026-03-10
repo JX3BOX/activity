@@ -575,7 +575,7 @@ export default {
             };
         },
     },
-    filters: {},
+    
 };
 </script>
 

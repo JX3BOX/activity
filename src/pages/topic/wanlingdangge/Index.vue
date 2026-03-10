@@ -565,7 +565,7 @@ export default {
             this.currentJq = jq;
         }
     },
-    filters: {},
+    
     created: function () {
         this.init();
     },

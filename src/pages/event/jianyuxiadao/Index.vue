@@ -38,7 +38,7 @@ export default {
             }
         }
 	},
-	filters: {},
+	
 	created: function () {
         // this.show=this.browserRedirect()
     },

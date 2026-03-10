@@ -222,7 +222,7 @@ export default {
             // alert("百强结榜后放出，敬请期待");
         },
     },
-    filters: {},
+    
     created: function () {},
     mounted: function () {
         // this.init();

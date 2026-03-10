@@ -73,7 +73,7 @@ export default {
             }, 500);
         },
     },
-    filters: {},
+    
     created: function () {},
     mounted: function () {},
 };

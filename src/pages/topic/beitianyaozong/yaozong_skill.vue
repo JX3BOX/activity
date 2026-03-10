@@ -52,7 +52,7 @@ export default {
             this.active = i;
         },
     },
-    filters: {},
+    
     created: function () {},
     mounted: function () {},
 };

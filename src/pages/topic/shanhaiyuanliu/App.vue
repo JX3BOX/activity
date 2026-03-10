@@ -33,7 +33,7 @@ export default {
 	},
 	watch: {},
 	methods: {},
-	filters: {},
+	
 	created: function () {
 		postStat("topic", "shanhaiyuanliu");
 	},

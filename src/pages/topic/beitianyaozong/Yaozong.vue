@@ -93,7 +93,7 @@ export default {
         },
 
     },
-    filters: {},
+    
     created: function () {},
     mounted: function () {},
     components: {

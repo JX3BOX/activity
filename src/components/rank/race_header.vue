@@ -2,7 +2,7 @@
     <div class="m-race-header">
         <!-- 视觉图 -->
         <div class="u-vision">
-            <img class="u-boss" :src="boss_img_url" v-if="id"/>
+            <img class="u-boss" :src="boss_img_url" v-if="id" />
             <img class="u-logo" :src="LOGO" />
             <img class="u-version" :src="version_img_url" v-if="id" />
         </div>
@@ -12,11 +12,7 @@
             <span>主办单位：</span>
             <ul>
                 <li>
-                    <a
-                        class="logo"
-                        href="https://www.jx3box.com"
-                        target="_blank"
-                    >
+                    <a class="logo" href="https://www.jx3box.com" target="_blank">
                         <img class="u-media-jx3box" :src="logos('jx3box')" />
                     </a>
                 </li>
@@ -71,48 +67,47 @@
 import PICS from "@/assets/js/pics.js";
 import tabs from "./race_tab.vue";
 import { __imgPath, __ossMirror } from "@/utils/config";
-import QrcodeVue from 'qrcode.vue'
+import QrcodeVue from "qrcode.vue";
 export default {
     props: ["data"],
-    data: function() {
+    data: function () {
         return {
             LOGO: PICS.LOGO,
             qrcode_img_url: __imgPath + "image/rank/common/boxqrcode.png",
         };
     },
     computed: {
-        id: function() {
+        id: function () {
             return this.$store.state.id;
         },
-        boss_img_url: function() {
+        boss_img_url: function () {
             return PICS.boss(this.id);
         },
-        version_img_url: function() {
+        version_img_url: function () {
             return PICS.version(this.id);
         },
-        sponsors: function() {
+        sponsors: function () {
             return (this.data && this.data.sponsors) || [];
         },
-        hasSponsors : function (){
-            if(this.sponsors && this.sponsors.length && this.sponsors[0].link){
-                return true
+        hasSponsors: function () {
+            if (this.sponsors && this.sponsors.length && this.sponsors[0].link) {
+                return true;
             }
-            return false
+            return false;
         },
         value() {
             return "https://www.jx3box.com/rank/race/#/" + this.id + "/rank";
-        }
+        },
     },
-    filters: {},
     methods: {
-        logos: function(val) {
+        logos: function (val) {
             return PICS.logos(val);
         },
     },
-    mounted: function() {},
+    mounted: function () {},
     components: {
         "race-tab": tabs,
-        QrcodeVue
+        QrcodeVue,
     },
 };
 </script>
