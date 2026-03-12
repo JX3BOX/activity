@@ -8,12 +8,15 @@
 </template>
 
 <script>
+import { isMiniProgram, isApp } from "@jx3box/jx3box-common/js/utils";
 import { postStat } from "@jx3box/jx3box-common/js/stat";
 import { __cdn } from "@/utils/config";
 export default {
     name: "App",
     data: function () {
-        return {};
+        return {
+            isMiniProgram: isMiniProgram() || isApp(),
+        };
     },
     provide: {
         __imgRoot: __cdn + "design/event/jx3cxk/",
@@ -22,9 +25,19 @@ export default {
         page_name: function () {
             return this.$route.name;
         },
+        isPhone() {
+            return window.innerWidth <= 768;
+        },
     },
     created: function () {
         postStat("event", "jx3cxk");
+        if (isMiniProgram() || this.isPhone) {
+            let meta = document.createElement("meta");
+            meta.setAttribute("name", "viewport");
+            meta.setAttribute("content", "width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=no");
+            document.getElementsByTagName("head")[0].appendChild(meta);
+        }
+        isApp() && localStorage.setItem("__env", "app");
     },
 };
 </script>

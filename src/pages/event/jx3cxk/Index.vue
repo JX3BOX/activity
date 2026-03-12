@@ -180,9 +180,7 @@ export default {
             return obj[this.active] || [];
         },
         isPhone() {
-            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-            const mobileRegex = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
-            return mobileRegex.test(userAgent);
+            return window.innerWidth <= 768;
         },
     },
     watch: {
@@ -419,4 +417,5 @@ export default {
         }
     }
 }
+@import "~@/assets/css/event/jx3cxk/mobile.less";
 </style>
