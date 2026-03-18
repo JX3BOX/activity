@@ -1,0 +1,123 @@
+@media screen and (max-width: @phone) {
+    .events-page__character.visible {
+        .none;
+    }
+    .events-page {
+        width: 100%;
+        max-width: 100%;
+        min-width: 100%;
+        background-size: contain;
+        margin: 64px 0;
+        padding: 0;
+    }
+    .events-page__header {
+        padding: 50px 0 0 0;
+    }
+    .events-page__header-title {
+        height: auto;
+        width: 80%;
+    }
+    .events-page__header-year {
+        .size(109px,32px);
+        margin: -30px auto 0 auto;
+
+        .el-dropdown {
+            .size(32px);
+            right: -45px;
+            margin: -18px 0 0 0;
+        }
+        .u-change {
+            .size(32px);
+            background-size: 100% 100%;
+        }
+    }
+    .scroll__top,
+    .scroll__bottom {
+        .none;
+    }
+    .events-page__tip {
+        width: 100%;
+        height: auto;
+        .fz(12px,1.2);
+        padding: 24px 10px 10px 70px;
+    }
+    .events-page__scroll {
+        width: 100%;
+    }
+
+    .m-table {
+        margin: 0 10px;
+        padding: 10px;
+        background: none;
+        border: 8px solid #6d4f25;
+        background-color: #ffe5b7;
+        box-sizing: border-box;
+        .m-table__header {
+            .fz(14px);
+            .u-index {
+                width: 46px;
+            }
+            .u-vote {
+                width: 80px;
+            }
+        }
+        .item__rank {
+            .fz(20px);
+            width: 30px;
+            flex-shrink: 0;
+        }
+        .item__title {
+            flex-direction: column;
+            .title {
+                .fz(16px,1.5);
+                width: 100%;
+                white-space: normal;
+                word-wrap: break-word;
+                word-break: break-word;
+            }
+            .u-tags {
+                gap: 4px;
+                .u-tag {
+                    zoom: 0.9;
+                    .fz(12px,20px);
+                    height: 22px;
+                }
+            }
+        }
+        .item__desc {
+            .fz(12px);
+        }
+        .item__stats {
+            width: 60px;
+            .u-btn {
+                .fz(14px,24px);
+                .size(60px);
+                padding: 5px;
+                box-sizing: border-box;
+                &.u-btn--voted {
+                    line-height: 50px;
+                }
+            }
+            .u-count {
+                .fz(12px);
+            }
+        }
+    }
+
+    .events-page__slogan {
+        width: 50px;
+        .bigbang-title {
+            height: auto;
+            width: 50px;
+        }
+        .el-dropdown {
+            position: static;
+            .size(28px);
+            margin: 0 10px;
+            .u-change {
+                .size(28px);
+                background-size: contain;
+            }
+        }
+    }
+}

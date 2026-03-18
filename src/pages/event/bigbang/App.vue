@@ -27,10 +27,13 @@ export default {
         page_name: function () {
             return this.$route.name;
         },
+        isPhone() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        },
     },
     created: function () {
         postStat("event", "bigbang");
-        if (isMiniProgram() || isApp()) {
+        if (isMiniProgram() || isApp() || this.isPhone) {
             let meta = document.createElement("meta");
             meta.setAttribute("name", "viewport");
             meta.setAttribute("content", "width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=no");

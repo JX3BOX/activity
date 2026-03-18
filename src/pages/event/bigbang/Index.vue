@@ -236,4 +236,5 @@ export default {
 
 <style lang="less">
 @import "~@/assets/css/event/bigbang/index.less";
+@import "~@/assets/css/event/bigbang/mobile.less";
 </style>
