@@ -8,7 +8,9 @@
             <video class="u-mp4" playsinline="" autoplay="" muted="" loop="" :poster="`${imgRoot}web/kv.jpg`">
                 <source :src="`${imgRoot}web/kv2.mp4`" type="video/mp4" />
             </video>
-            <img class="u-year" :src="`${imgRoot}web/${year}title.png`" />
+            <div class="u-year">
+                <img :src="`${imgRoot}web/${year}title.png`" />
+            </div>
         </div>
         <div class="m-tabs wp">
             <el-dropdown class="u-tab" placement="bottom-end" trigger="click" @command="handleCommand">

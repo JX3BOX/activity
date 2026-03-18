@@ -14,9 +14,7 @@ import { __cdn } from "@/utils/config";
 export default {
     name: "App",
     data: function () {
-        return {
-            isMiniProgram: isMiniProgram() || isApp(),
-        };
+        return {};
     },
     provide: {
         __imgRoot: __cdn + "design/event/jx3cxk/",
@@ -26,12 +24,12 @@ export default {
             return this.$route.name;
         },
         isPhone() {
-            return window.innerWidth <= 768;
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         },
     },
     created: function () {
         postStat("event", "jx3cxk");
-        if (isMiniProgram() || this.isPhone) {
+        if (isMiniProgram() || isApp() || this.isPhone) {
             let meta = document.createElement("meta");
             meta.setAttribute("name", "viewport");
             meta.setAttribute("content", "width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=no");
