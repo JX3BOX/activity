@@ -46,9 +46,9 @@ export default {
             immediate: true,
             handler: function () {
                 const key = {
-                    sci: "ARTICLES",
-                    authors: "AUTHORS",
-                    invited: "INVITED",
+                    ARTICLES: "ARTICLES",
+                    AUTHORS: "AUTHORS",
+                    INVITED: "INVITED",
                 };
                 this.active = key[this.key] || "SLIDER";
             },
@@ -56,10 +56,10 @@ export default {
         active() {
             this.$emit("update", this.active);
             const key = {
-                SLIDER: "index",
-                ARTICLES: "sci",
-                AUTHORS: "authors",
-                INVITED: "invited",
+                SLIDER: "SLIDER",
+                ARTICLES: "ARTICLES",
+                AUTHORS: "AUTHORS",
+                INVITED: "INVITED",
             };
             this.$router.push({ query: { tab: key[this.active] } });
         },

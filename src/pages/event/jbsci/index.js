@@ -1,4 +1,17 @@
 Vue.config.productionTip = false;
+import { isMiniProgram, isApp } from "@jx3box/jx3box-common/js/utils";
+const isPhone = () => {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+};
+// 检测小程序环境并动态添加viewport元标签
+if (isMiniProgram() || isApp() || isPhone()) {
+    const viewportMeta = document.createElement("meta");
+    viewportMeta.name = "viewport";
+    viewportMeta.content = "width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=no";
+    document.head.appendChild(viewportMeta);
+
+    isApp() && localStorage.setItem("__env", "app");
+}
 
 // 第三方UI组件
 import Vue from "vue";
@@ -28,7 +41,11 @@ reporter.install(Vue);
 import router from "./router.js";
 import "@/assets/css/event/jbsci/font.css";
 
-import App from "./App.vue";
+import MobileApp from "./MobileApp.vue";
+import DesktopApp from "./App.vue";
+
+const App = isMiniProgram() || isApp() || isPhone() ? MobileApp : DesktopApp;
+
 new Vue({
     router,
     // store,

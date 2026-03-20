@@ -86,10 +86,10 @@ export default {
             handler: function (val) {
                 if (val) {
                     const key = {
-                        index: "SLIDER",
-                        sci: "ARTICLES",
-                        authors: "AUTHORS",
-                        invited: "INVITED",
+                        SLIDER: "SLIDER",
+                        ARTICLES: "ARTICLES",
+                        AUTHORS: "AUTHORS",
+                        INVITED: "INVITED",
                     };
                     this.showComponent(key[val]);
                 }
