@@ -12,7 +12,7 @@
 <script>
 import { postStat } from "@jx3box/jx3box-common/js/stat";
 import { __imgPath } from "@/utils/config";
-import { getBreadcrumb } from '@jx3box/jx3box-common/js/api_misc';
+import { getBreadcrumb } from "@jx3box/jx3box-common/js/system";
 export default {
     name: "App",
     data: function () {
@@ -37,13 +37,15 @@ export default {
     methods: {
         init() {
             this.loading = true;
-            getBreadcrumb("mid_autumn_map").then(res => {
-                this.years = JSON.parse(res)
-            }).finally(() => {
-                this.loading = false;
-            });
-        }
-    }
+            getBreadcrumb("mid_autumn_map")
+                .then((res) => {
+                    this.years = JSON.parse(res);
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
+        },
+    },
 };
 </script>
 <style lang="less">

@@ -1,9 +1,9 @@
-import { $team, $cms } from "@jx3box/jx3box-common/js/https.js";
-function getTop100(params,event_id = 1) {
+import { $team, $cms } from "@jx3box/jx3box-common/js/api.js";
+function getTop100(params, event_id = 1) {
     return $team().get(`/api/team/race/achieve/${params.achieve_id}/top100`, {
         params: {
             server: params.server,
-            event_id
+            event_id,
         },
     });
 }
@@ -19,15 +19,15 @@ function getTopTotal(achieve_arr) {
 
 function getMountDpsRace(achieveId, query) {
     return $team().get(`/api/team/achieve/${achieveId}/mount/top`, {
-        params: query
-    })
+        params: query,
+    });
 }
 
 // 获取综合排名
-function getMixRank(params){
+function getMixRank(params) {
     return $team().get(`/api/team/achieve-mix/top`, {
         params,
-    })
+    });
 }
 
 /**
@@ -52,12 +52,4 @@ function getBossAid(params) {
     });
 }
 
-
-export {
-    getTop100,
-    getTopTotal,
-    getMountDpsRace,
-    getMixRank,
-    getEventNewbie,
-    getBossAid
-};
+export { getTop100, getTopTotal, getMountDpsRace, getMixRank, getEventNewbie, getBossAid };

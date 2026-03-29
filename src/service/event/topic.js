@@ -1,4 +1,4 @@
-import { $cms } from "@jx3box/jx3box-common/js/https";
+import { $cms } from "@jx3box/jx3box-common/js/api";
 function getTopic(topic) {
     return $cms().get("/api/cms/topic", {
         params: {
@@ -10,20 +10,18 @@ function getTopic(topic) {
 }
 
 async function getBreadcrumb(key) {
-    const res = await $cms()
-        .get(`/api/cms/breadcrumb/${key}`);
+    const res = await $cms().get(`/api/cms/breadcrumb/${key}`);
     return res.data.data.html || "";
 }
 
 function getUsers(params) {
     return $cms().get("/api/cms/user/list/info", {
-        params
+        params,
     });
 }
 
 function getTopicDetail(id) {
     return $cms().get(`/api/cms/topic/${id}`);
 }
-
 
 export { getTopic, getUsers, getBreadcrumb, getTopicDetail };

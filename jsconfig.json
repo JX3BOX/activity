@@ -1,18 +1,17 @@
 {
     "compilerOptions": {
-        "resolveJsonModule": true,
-        "baseUrl": ".",
+        "target": "es5",
+        "module": "esnext",
+        "baseUrl": "./",
+        "moduleResolution": "node",
         "paths": {
-            "@/*": [
-                "./src/*"
-            ]
-        }
-    },
-    "include": [
-        "src/**/*.js",
-        "src/**/*.vue",
-    ],
-    "exclude": [
-        "node_modules"
-    ]
+            "@/*": ["src/*"]
+        },
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
+        "allowJs": true,
+        "skipLibCheck": true
+    }
 }

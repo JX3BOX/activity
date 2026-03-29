@@ -1,4 +1,4 @@
-import { $next, $cms } from "@jx3box/jx3box-common/js/https";
+import { $next, $cms } from "@jx3box/jx3box-common/js/api";
 // 【用户】获取最新的一个公开的投票活动详情
 export function getNewProgram(params) {
     return $next().get(`/api/next2/vote-program/program/public/latest`, { params });

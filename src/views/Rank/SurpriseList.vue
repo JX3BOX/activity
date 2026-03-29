@@ -1,6 +1,6 @@
 <template>
     <div class="m-surprise">
-        <Header></Header>
+        <CommonHeader></CommonHeader>
         <div class="m-weal">
             <img :src="getCdnLink('design/rank/surprise/weal.svg')" alt="" />
             <div class="u-img-bottom"></div>
@@ -25,7 +25,7 @@
                 </div>
             </div>
         </div>
-        <Footer></Footer>
+        <CommonFooter></CommonFooter>
     </div>
 </template>
 

@@ -54,7 +54,7 @@
                         </div>
                         <div class="u-tips">
                             ( 令牌10分钟内有效，超时请
-                            <el-button type="text" class="u-refresh" title="刷新" @click="getToken">点击此处</el-button>
+                            <el-button link class="u-refresh" title="刷新" @click="getToken">点击此处</el-button>
                             刷新 )
                         </div>
                         <div class="u-plug">
@@ -220,7 +220,7 @@ export default {
             });
         },
     },
-    
+
     created: function () {},
     mounted: function () {
         this.init();

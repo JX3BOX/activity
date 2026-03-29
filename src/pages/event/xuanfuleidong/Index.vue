@@ -42,7 +42,7 @@
 <script>
 import { isMiniProgram, isApp } from "@jx3box/jx3box-common/js/utils";
 import { getProgramDetail, getMyVote } from "@/service/event/vote";
-import { getMenu } from "@jx3box/jx3box-common/js/api_misc";
+import { getMenu } from "@jx3box/jx3box-common/js/system";
 import introduction from "./components/introduction.vue";
 import vote from "./components/vote.vue";
 import winner from "./components/winner.vue";
@@ -129,7 +129,6 @@ export default {
         key: {
             handler(val) {
                 if (val !== "introduction") this.loadData();
-
             },
             immediate: true,
         },

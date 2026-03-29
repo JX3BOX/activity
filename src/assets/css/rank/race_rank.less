@@ -1,3 +1,4 @@
+@import "@/assets/css/rank/var.less";
 .m-rank-rank {
     .mt(40px);
     // width: 86.7% !important;
@@ -104,7 +105,6 @@
         align-items: center;
         height: 30px !important;
 
-
         .el-checkbox__input {
             top: 1px;
         }
@@ -210,7 +210,7 @@
             .db;
             .size(120px);
             img {
-                .full;
+                .size(100%);
                 .db;
             }
         }
@@ -336,22 +336,24 @@
     }
 
     .u-youngster {
-        padding:0 10px;
+        padding: 0 10px;
         .u-chanlian,
         .u-heima,
         .u-wangzhe {
             .size(120px,31px);
 
             .pr;
-            top:10px;
+            top: 10px;
         }
     }
 
-    &.is-No1,&.is-No2,&.is-No3 {
+    &.is-No1,
+    &.is-No2,
+    &.is-No3 {
         .u-chanlian,
         .u-heima,
         .u-wangzhe {
-            top:5px;
+            top: 5px;
         }
     }
 }

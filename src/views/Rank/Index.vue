@@ -1,6 +1,6 @@
 <template>
     <div id="app" class="m-rank-container">
-        <Header></Header>
+        <CommonHeader></CommonHeader>
         <div class="m-rank-index">
             <div class="m-rank-header">
                 <img class="u-logo" :src="LOGO" />
@@ -22,13 +22,14 @@
                 </ul>
             </div>
         </div>
-        <Footer></Footer>
+        <CommonFooter></CommonFooter>
     </div>
 </template>
 
 <script>
 import PICS from "@/assets/js/pics.js";
 import { getEvents } from "@/service/rank/event.js";
+import CommonHeader from "@jx3box/jx3box-ui/src/CommonHeader.vue";
 export default {
     name: "App",
     props: [],

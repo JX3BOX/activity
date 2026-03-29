@@ -1,4 +1,4 @@
-import { $team } from "@jx3box/jx3box-common/js/https.js";
+import { $team } from "@jx3box/jx3box-common/js/api.js";
 
 function getAllJoinedTeams(id) {
     if (id == 1) {
@@ -26,11 +26,9 @@ function getAllJoinedTeams(id) {
 
 function doVote(event_id, team_id) {
     if (event_id == 1) {
-        return $team().post(
-            `/api/team/events/${event_id}/vote-team/${team_id}`
-        );
+        return $team().post(`/api/team/events/${event_id}/vote-team/${team_id}`);
     } else {
-        return $team({ popType: "alert" }).post(`/api/team/rank/vote`,'',{
+        return $team({ popType: "alert" }).post(`/api/team/rank/vote`, "", {
             params: {
                 event_id: ~~event_id,
                 team_id: ~~team_id,

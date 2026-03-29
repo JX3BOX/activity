@@ -59,7 +59,7 @@
     }
 }
 .m-dot {
-    .full;
+    .size(100%);
     .pa;
     .lt(0);
     background-image: url("@{img}event/dot.png?88");
@@ -69,7 +69,7 @@
     &::before {
         content: "";
         .db;
-        .full;
+        .size(100%);
         background-image: url("@{img}event/dot.png?88");
     }
     &::after {
@@ -88,7 +88,7 @@
     }
 }
 .m-mark {
-    .full;
+    .size(100%);
     .pa;
     .lt(0);
     .rb(0);
@@ -115,7 +115,7 @@
         position: relative;
         transition: 0.4s ease-in;
         .u-img {
-            .full;
+            .size(100%);
             box-sizing: border-box;
             border: 8px solid #fff;
             img {
@@ -144,7 +144,7 @@
         }
         .u-mark {
             .none;
-            .full;
+            .size(100%);
             background-color: #000;
         }
         &:hover {
@@ -231,7 +231,7 @@
             // flex-wrap: wrap;
             gap: 50px;
 
-            &.isSpecial{
+            &.isSpecial {
                 flex-direction: row;
                 flex-wrap: wrap;
                 justify-content: space-between;
@@ -248,7 +248,7 @@
 
                 .u-img {
                     .r(30px);
-                    .full;
+                    .size(100%);
                     box-shadow: 0 0 0 4px #000;
                     transition: all 0.3s ease-in;
                     &:hover {

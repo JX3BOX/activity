@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <Header></Header>
+        <CommonHeader></CommonHeader>
         <div class="p-event-container">
             <Index />
         </div>

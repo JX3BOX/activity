@@ -56,7 +56,7 @@
                     :hide-on-single-page="true"
                     :page-size="per"
                     :total="total"
-                    :current-page.sync="page"
+                    v-model:current-page="page"
                 >
                 </el-pagination>
             </template>
@@ -68,7 +68,7 @@
         <el-dialog
             class="m-rank-video-dialog"
             title="添加/编辑视频"
-            :visible.sync="dialogVisible"
+            v-model="dialogVisible"
             width="30%"
             :append-to-body="true"
         >
@@ -96,10 +96,12 @@
                     </el-form-item>
                 </el-form>
             </div>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="dialogVisible = false">取 消</el-button>
-                <el-button type="primary" @click="submit">确 定</el-button>
-            </span>
+            <template #footer>
+                <div class="dialog-footer">
+                    <el-button @click="dialogVisible = false">取 消</el-button>
+                    <el-button type="primary" @click="submit">确 定</el-button>
+                </div>
+            </template>
         </el-dialog>
     </div>
 </template>

@@ -1,4 +1,4 @@
-import { $team, $cms } from "@jx3box/jx3box-common/js/https.js";
+import { $team, $cms } from "@jx3box/jx3box-common/js/api.js";
 
 export function getDesc(event_id) {
     return $team().get(`/api/team/team-gift/event/${event_id}`);

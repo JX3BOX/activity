@@ -1,6 +1,12 @@
 <template>
     <!-- 投票竞猜页 -->
-    <div class="m-rank-vote" v-loading="loading" element-loading-text="加载中..." element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.3)">
+    <div
+        class="m-rank-vote"
+        v-loading="loading"
+        element-loading-text="加载中..."
+        element-loading-spinner="el-icon-loading"
+        element-loading-background="rgba(0, 0, 0, 0.3)"
+    >
         <!-- <div class="m-rank-vote-title">
             <img :src="vote_title_img" />
         </div> -->
@@ -14,7 +20,9 @@
                         团队
                         <el-popover placement="top" width="220" trigger="click">
                             <el-input v-model="team_name" placeholder="输入团队名关键字" clearable></el-input>
-                            <el-button slot="reference" type="text"><i class="el-icon-search u-search-team"></i></el-button>
+                            <template #reference>
+                                <el-button link><i class="el-icon-search u-search-team"></i></el-button>
+                            </template>
                         </el-popover>
                     </th>
                     <th>
@@ -44,7 +52,7 @@ import vote_item_v2 from "@/components/rank/vote_item_v2.vue";
 export default {
     name: "Vote",
     props: [],
-    data: function() {
+    data: function () {
         return {
             servers,
             vote_title_img: __imgPath + "image/rank/common/vote.png",
@@ -53,19 +61,19 @@ export default {
             data: [],
             team_name: "",
             server: "",
-            voteTeam: []
+            voteTeam: [],
         };
     },
     computed: {
-        id: function() {
+        id: function () {
             return ~~this.$store.state.id;
         },
-        vote_note: function() {
+        vote_note: function () {
             return this.$store.state.race.vote_note || "";
         },
     },
     methods: {
-        loadData: function() {
+        loadData: function () {
             this.loading = true;
             getAllJoinedTeams(this.id)
                 .then((data) => {
@@ -75,7 +83,7 @@ export default {
                     this.loading = false;
                 });
         },
-        getStatus: function() {
+        getStatus: function () {
             getVoteStatus(this.id)
                 .then((res) => {
                     this.voteTeam = Object.keys(res.data.data || {});
@@ -84,7 +92,7 @@ export default {
                     console.log(err);
                 });
         },
-        init: function() {
+        init: function () {
             this.loadData();
             this.getStatus();
         },
@@ -92,7 +100,7 @@ export default {
     watch: {
         id: {
             immediate: true,
-            handler: function() {
+            handler: function () {
                 this.init();
             },
         },

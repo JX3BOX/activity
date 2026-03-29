@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { getArticle } from "@jx3box/jx3box-common/js/api_misc";
+import { getArticle } from "@jx3box/jx3box-common/js/system";
 export default {
     components: {},
     props: {
@@ -27,13 +27,13 @@ export default {
     },
     data() {
         return {
-            data : ''
+            data: "",
         };
     },
     computed: {
         year() {
             return this.$route.params.year || new Date().getFullYear();
-        }
+        },
     },
     watch: {
         year: {
@@ -47,8 +47,8 @@ export default {
                 });
             },
             immediate: true,
-        }
-    }
+        },
+    },
 };
 </script>
 

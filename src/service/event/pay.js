@@ -1,5 +1,4 @@
-import { $pay } from "@jx3box/jx3box-common/js/https";
-
+import { $pay } from "@jx3box/jx3box-common/js/api";
 
 // 获取中奖历史
 function getMyHistory(params) {
@@ -25,11 +24,4 @@ function goodLucky(id, batch) {
     return $pay().post(`/api/lucky-draw/public/item/${id}/try-my-lucky?batch=${batch}`);
 }
 
-
-export {
-    getMyHistory,
-    getBlindBox,
-    getMyLucky,
-    goodLucky,
-    getLuckyList
-};
+export { getMyHistory, getBlindBox, getMyLucky, goodLucky, getLuckyList };

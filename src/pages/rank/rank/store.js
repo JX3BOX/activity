@@ -1,20 +1,15 @@
-import Vue from "vue";
-import Vuex from "vuex";
-
-Vue.use(Vuex);
+import { createStore } from "vuex";
 
 let store = {
     state: {
-        id : '',
-        race : "",
-        achieves : [],
+        id: "",
+        race: "",
+        achieves: [],
     },
-    mutations: {
-    },
-    getters: {
-    },
+    mutations: {},
+    getters: {},
     actions: {},
-    modules: {}
+    modules: {},
 };
 
-export default new Vuex.Store(store);
+export default createStore(store);

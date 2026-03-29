@@ -34,7 +34,7 @@
 </template>
 <script>
 import { isMiniProgram, isApp } from "@jx3box/jx3box-common/js/utils";
-import { getMenu } from "@jx3box/jx3box-common/js/api_misc";
+import { getMenu } from "@jx3box/jx3box-common/js/system";
 import { __cdn } from "@/utils/config";
 import Info from "../components/Info.vue";
 import Vote from "../components/Vote.vue";

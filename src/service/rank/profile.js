@@ -1,5 +1,4 @@
-import { $cms } from "@jx3box/jx3box-common/js/https";
-
+import { $cms } from "@jx3box/jx3box-common/js/api";
 
 // 获取微信二维码
 export function getWechatQrcode() {

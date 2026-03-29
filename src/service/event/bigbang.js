@@ -1,4 +1,4 @@
-import { $next } from "@jx3box/jx3box-common/js/https";
+import { $next } from "@jx3box/jx3box-common/js/api";
 
 function getVoteInfo(id) {
     return $next().get(`/api/next2/vote-program/program/${id}/public`);

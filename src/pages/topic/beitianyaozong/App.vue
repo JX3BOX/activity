@@ -5,7 +5,7 @@
         <router-view></router-view>
         <div class="p-topic-footer">
             <div class="wp">
-                <Footer></Footer>
+                <CommonFooter></CommonFooter>
             </div>
         </div>
     </div>
@@ -17,21 +17,21 @@ export default {
     name: "App",
     props: [],
     components: {},
-    data: function() {
+    data: function () {
         return {};
     },
     computed: {
-        page_name: function() {
+        page_name: function () {
             return this.$route.name;
         },
     },
     watch: {},
     methods: {},
-    
-    created: function() {
+
+    created: function () {
         postStat("topic", "beitianyaozong");
     },
-    mounted: function() {},
+    mounted: function () {},
 };
 </script>
 

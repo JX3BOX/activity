@@ -7,7 +7,7 @@
         :style="containerStyle"
     >
         <template #title>
-            <el-button class="el-dialog__headerbtn" type="text" @click="visible = false">
+            <el-button class="el-dialog__headerbtn" link @click="visible = false">
                 <img src="@/assets/img/rank/lover/close.svg" svg-inline alt="" />
             </el-button>
         </template>
@@ -80,11 +80,11 @@ export default {
         },
         open(process) {
             this.visible = true;
-            this.process = process; 
+            this.process = process;
         },
         cardInfo(id) {
             return this.cards.find((item) => item.id === id) || {};
-        }
+        },
     },
     mounted() {
         this.loadCards();

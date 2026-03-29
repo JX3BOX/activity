@@ -1,4 +1,4 @@
-import { $cms } from "@jx3box/jx3box-common/js/https";
+import { $cms } from "@jx3box/jx3box-common/js/api";
 
 // 获取公开铭牌
 function getNamespaceList(params) {
@@ -14,11 +14,11 @@ function getNamespace(params) {
 }
 
 function updateNamespace(id, data) {
-    return $cms().put(`/api/cms/namespace/${id}`, data)
+    return $cms().put(`/api/cms/namespace/${id}`, data);
 }
 
 function createNamespace(data) {
-    return $cms().post('/api/cms/namespace', data)
+    return $cms().post("/api/cms/namespace", data);
 }
 
 function getNamespaceByKey(key) {
@@ -26,7 +26,7 @@ function getNamespaceByKey(key) {
         params: {
             key,
         },
-    })
+    });
 }
 
 export { getNamespaceList, getNamespace, updateNamespace, createNamespace, getNamespaceByKey };

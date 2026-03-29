@@ -1,4 +1,4 @@
-import { $team } from "@jx3box/jx3box-common/js/https.js";
+import { $team } from "@jx3box/jx3box-common/js/api.js";
 
 function createEvent(data) {
     return $team().post(`/api/team/rank/events`);
@@ -31,12 +31,4 @@ function getIdFromSlug(slug) {
     return $team().get(`/api/team/rank/events/item?slug=${slug}`);
 }
 
-export {
-    createEvent,
-    updateEvent,
-    activeEvent,
-    stopEvent,
-    getEvent,
-    getEvents,
-    getIdFromSlug,
-};
+export { createEvent, updateEvent, activeEvent, stopEvent, getEvent, getEvents, getIdFromSlug };

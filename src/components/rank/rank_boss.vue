@@ -8,7 +8,9 @@
         <el-col :span="span" v-for="(label, id) of data" :key="'aid-' + id">
             <li :class="['u-boss', { active: id == aid }]" @click="changeBoss(id)">
                 <el-image class="u-boss-icon" :src="bossIcon(id)">
-                    <img slot="error" :src="bossIcon(0)" />
+                    <template #error>
+                        <img :src="bossIcon(0)" />
+                    </template>
                 </el-image>
                 <span class="u-boss-name">{{ label }}</span>
             </li>
@@ -76,7 +78,7 @@ export default {
         &.active {
             background-color: #ffedc6;
             color: #703100;
-            &:hover{
+            &:hover {
                 background-color: #ffedc6;
                 color: #703100;
             }

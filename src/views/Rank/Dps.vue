@@ -40,20 +40,22 @@
                                 {{ ~~filterMount ? xfmap[filterMount] : "全部心法"
                                 }}<i class="el-icon-arrow-down el-icon--right"></i>
                             </span>
-                            <el-dropdown-menu slot="dropdown" append-to-body class="u-server-pop">
-                                <el-dropdown-item
-                                    @click.native="filterMount = '0'"
-                                    :class="{ active: filterMount === '0' }"
-                                    >全部心法</el-dropdown-item
-                                >
-                                <el-dropdown-item
-                                    v-for="(value, key) in filterXf"
-                                    :key="key"
-                                    @click.native="filterMount = key"
-                                    :class="{ active: filterMount === key }"
-                                    >{{ value }}</el-dropdown-item
-                                >
-                            </el-dropdown-menu>
+                            <template #dropdown>
+                                <el-dropdown-menu append-to-body class="u-server-pop">
+                                    <el-dropdown-item
+                                        @click="filterMount = '0'"
+                                        :class="{ active: filterMount === '0' }"
+                                        >全部心法</el-dropdown-item
+                                    >
+                                    <el-dropdown-item
+                                        v-for="(value, key) in filterXf"
+                                        :key="key"
+                                        @click="filterMount = key"
+                                        :class="{ active: filterMount === key }"
+                                        >{{ value }}</el-dropdown-item
+                                    >
+                                </el-dropdown-menu>
+                            </template>
                         </el-dropdown>
                     </div>
                 </el-col>
@@ -63,20 +65,22 @@
                             <span class="el-dropdown-link">
                                 {{ server }}<i class="el-icon-arrow-down el-icon--right"></i>
                             </span>
-                            <el-dropdown-menu slot="dropdown" append-to-body class="u-server-pop">
-                                <el-dropdown-item
-                                    @click.native="server = '全部服务器'"
-                                    :class="{ active: server === '全部服务器' }"
-                                    >全部服务器</el-dropdown-item
-                                >
-                                <el-dropdown-item
-                                    v-for="_server in server_std"
-                                    :key="_server"
-                                    @click.native="server = _server"
-                                    :class="{ active: server === _server }"
-                                    >{{ _server }}</el-dropdown-item
-                                >
-                            </el-dropdown-menu>
+                            <template #dropdown>
+                                <el-dropdown-menu append-to-body class="u-server-pop">
+                                    <el-dropdown-item
+                                        @click="server = '全部服务器'"
+                                        :class="{ active: server === '全部服务器' }"
+                                        >全部服务器</el-dropdown-item
+                                    >
+                                    <el-dropdown-item
+                                        v-for="_server in server_std"
+                                        :key="_server"
+                                        @click="server = _server"
+                                        :class="{ active: server === _server }"
+                                        >{{ _server }}</el-dropdown-item
+                                    >
+                                </el-dropdown-menu>
+                            </template>
                         </el-dropdown>
                     </div>
                 </el-col>
@@ -86,11 +90,10 @@
                 <el-col :span="2"><div class="u-achievement">成就点数</div></el-col>
                 <el-col :span="6"><div class="u-more">击杀详情</div></el-col>
             </el-row>
-            <template v-for="(item, i) in list">
+            <template v-for="(item, i) in list" :key="i">
                 <el-row
                     class="u-item"
                     :gutter="20"
-                    :key="i"
                     v-show="
                         (server === '全部服务器' ? true : item.server == server) &&
                         (filterMount === '0' ? true : item.mount == filterMount)
@@ -168,22 +171,24 @@
                             class="u-more-dropdown"
                             v-if="item.battle_exist || item.jx3box_battle_id || item.jx3box_jcl_id"
                         >
-                            <el-button type="text" class="u-btn-more">
+                            <el-button link class="u-btn-more">
                                 更多<i class="el-icon-arrow-down el-icon--right"></i>
                             </el-button>
-                            <el-dropdown-menu slot="dropdown" class="u-more-dropdown-item">
-                                <el-dropdown-item v-if="item.battle_exist">
-                                    <a class="u-log" target="_blank" :href="getBattleLink(item.battleId)">日志</a>
-                                </el-dropdown-item>
-                                <el-dropdown-item v-if="item.jx3box_battle_id">
-                                    <!-- 战斗数据 -->
-                                    <a :href="battleLink(item.jx3box_battle_id)" target="_blank">战斗数据</a>
-                                </el-dropdown-item>
-                                <el-dropdown-item v-if="item.jx3box_jcl_id">
-                                    <!-- JCL数据 -->
-                                    <a :href="jclLink(item.jx3box_jcl_id)" target="_blank">战斗分析</a>
-                                </el-dropdown-item>
-                            </el-dropdown-menu>
+                            <template #dropdown>
+                                <el-dropdown-menu class="u-more-dropdown-item">
+                                    <el-dropdown-item v-if="item.battle_exist">
+                                        <a class="u-log" target="_blank" :href="getBattleLink(item.battleId)">日志</a>
+                                    </el-dropdown-item>
+                                    <el-dropdown-item v-if="item.jx3box_battle_id">
+                                        <!-- 战斗数据 -->
+                                        <a :href="battleLink(item.jx3box_battle_id)" target="_blank">战斗数据</a>
+                                    </el-dropdown-item>
+                                    <el-dropdown-item v-if="item.jx3box_jcl_id">
+                                        <!-- JCL数据 -->
+                                        <a :href="jclLink(item.jx3box_jcl_id)" target="_blank">战斗分析</a>
+                                    </el-dropdown-item>
+                                </el-dropdown-menu>
+                            </template>
                         </el-dropdown>
                     </el-col>
                 </el-row>
@@ -213,10 +218,12 @@
 
 <script>
 import xfmap from "@jx3box/jx3box-data/data/xf/xfid.json";
-import { colors_by_mount_name } from "@jx3box/jx3box-data/data/xf/colors.json";
+import colorData from "@jx3box/jx3box-data/data/xf/colors.json";
+const { colors_by_mount_name } = colorData;
 import { __imgPath } from "@/utils/config";
 import { authorLink, getLink, getThumbnail, showAvatar } from "@jx3box/jx3box-common/js/utils";
-import { mount_group } from "@jx3box/jx3box-data/data/xf/mount_group.json";
+import mountData from "@jx3box/jx3box-data/data/xf/mount_group.json";
+const { mount_group } = mountData;
 import server_std from "@jx3box/jx3box-data/data/server/server_cn";
 import { getMountDpsRace, getMixRank } from "@/service/rank/race";
 import { cloneDeep, uniqBy } from "lodash";

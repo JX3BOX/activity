@@ -31,7 +31,7 @@ export default {
     background-size: cover;
     .u-item {
         .pr;
-        .full;
+        .size(100%);
         .flex;
         align-items: center;
         justify-content: center;
