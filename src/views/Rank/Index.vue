@@ -56,7 +56,7 @@ export default {
             });
         },
         eventLink: function (val) {
-            return "/rank/#/" + val;
+            return "/rank/" + val;
         },
         eventCover: function (item) {
             return item.banner_pc || PICS.cover(item.ID);

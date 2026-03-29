@@ -13,7 +13,9 @@
     list-style: none;
     .x;
     .el-col {
-        flex-grow: 1;
+        flex-grow: 1 !important;
+        flex-basis: auto !important;
+        max-width: unset !important;
     }
 
     .u-boss {
@@ -198,6 +200,8 @@
         background-size: 100% 100%;
         left: 0;
         top: 0;
+        .flex;
+        justify-content: center;
         span {
             cursor: default;
         }
@@ -220,7 +224,8 @@
     }
 
     .u-title {
-        .db;
+        .flex;
+        align-items: center;
         i {
             color: #eee;
             .mr(5px);
@@ -305,6 +310,8 @@
         .bold;
         .fz(14px, 24px);
         color: #fff;
+        .flex;
+        align-items: center;
         .u-username {
             .y(top);
             white-space: visible;
@@ -343,7 +350,6 @@
             .size(120px,31px);
 
             .pr;
-            top: 10px;
         }
     }
 
@@ -364,7 +370,7 @@
 }
 
 .m-rank-top100-list {
-    @w: (@box_width - 40px) / 3;
+    @w: calc((@box_width - 40px) / 3);
 
     .is-No1,
     .is-No2,
@@ -424,7 +430,9 @@
         }
 
         .u-leader {
-            .x;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             .u-username {
                 width: auto;
                 max-width: 80%;
@@ -438,8 +446,9 @@
         }
 
         .u-youngster {
-            .x;
-            .db;
+            .flex;
+            align-items: center;
+            justify-content: center;
             .pr;
             top: unset;
             margin-left: unset;
@@ -455,7 +464,7 @@
     @no3add: 40px;
 
     .is-No1 {
-        .ml(@w + 20px);
+        .ml(calc(@w + 20px));
         .u-logo {
             .pt(@basic);
         }
