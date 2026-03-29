@@ -1,0 +1,161 @@
+.m-yixueshangyang {
+    max-width: 1920px;
+    .auto(x);
+    .pt(64px);
+    .m-sections(7);
+    .m-section {
+        .u-title {
+            .db;
+            .auto(x);
+        }
+        &-1 {
+            height: 1090px;
+            .u-logo {
+                .pa;
+                .size(338px,98px);
+                .lt(60px,50px);
+            }
+            .u-yxsy {
+                .pa;
+                .size(1126px,auto);
+                .lb(50%,200px);
+                .ml(-563px);
+            }
+        }
+        &-2 {
+            .pt(100px);
+            height: 1321px;
+            .u-title {
+                .w(725px);
+            }
+            .m-container {
+                .mt(200px);
+
+                .u-item-content {
+                    .flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                .u-img {
+                    .size(1030px, 546px);
+                }
+            }
+        }
+        &-3 {
+            .pt(300px);
+            height: 1528px;
+            .u-title {
+                .w(523px);
+            }
+            .m-container {
+                .mt(150px);
+
+                .u-item-content {
+                    .pr;
+                    .flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    h2 {
+                        font-size: 58px;
+                        .bold;
+                        .color(#FFEABD);
+                        .mb(-40px);
+                        letter-spacing: 26px;
+                        .z(1); 
+                        .ml(26px);
+                    }
+                    .u-img {
+                        .size(1125px, auto);
+                    }
+                    &-1 {
+                        .u-img2 {
+                            .pa;
+                            .size(716px, auto);
+                            .lb(0);
+                        }
+                    }
+                    &-3 {
+                        .u-img2 {
+                            .pa;
+                            .rb(100px,0);
+                            .size(378px,auto);
+                        }
+                    }
+                }
+            }
+        }
+        &-4 {
+            .pt(200px);
+            height: 1373px;
+            .u-title {
+                .w(448px);
+            }
+        }
+        &-5 {
+            .pt(200px);
+            height: 1613px;
+            .u-title {
+                .w(448px);
+            }
+        }
+        &-6 {
+            .pt(300px);
+            height: 1404px;
+            .u-title {
+                .w(527px);
+            }
+            .m-box {
+                .flex;
+                .mt(200px);
+                justify-content: space-between;
+                .u-card {
+                    .pr;
+                    .pointer;
+                    .size(375px, 693px);
+                    perspective: 1000px;
+                    img {
+                        .pa;
+                        .lt(0, 0);
+                        .w(100%);
+                        transition: transform 0.6s;
+                        backface-visibility: hidden;
+                        &.u-img {
+                            .z(1);
+                            transform: rotateY(0deg);
+                        }
+                        &.u-img-hover {
+                            transform: rotateY(-180deg);
+                        }
+                        &.u-img.active {
+                            transform: rotateY(180deg);
+                        }
+                        &.u-img-hover.active {
+                            transform: rotateY(0deg);
+                        }
+                    }
+                }
+            }
+        }
+        &-7 {
+            height: 568px;
+            .flex;
+            justify-content: center;
+            align-items: center;
+            .u-logo {
+                .w(638px);
+            }
+        }
+    }
+}
+
+.m-sections(@n, @i: 1) when (@i <= @n) {
+    .m-section-@{i} {
+        .pr;
+        background: url("@{kv_yixueshangyang}bg/bg_0@{i}.jpg") no-repeat 0 0;
+        background-size: 1920px auto;
+        box-sizing: border-box;
+    }
+    .m-sections(@n, (@i + 1));
+}
