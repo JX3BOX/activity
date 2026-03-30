@@ -1,5 +1,6 @@
 .m-yixueshangyang {
     max-width: 1920px;
+    .clip;
     .auto(x);
     .pt(64px);
     .m-sections(7);
@@ -7,6 +8,63 @@
         .u-title {
             .db;
             .auto(x);
+        }
+        .m-carousel-indicators {
+            .flex;
+            .mb(150px);
+            justify-content: center;
+            align-items: center;
+            &::before,
+            &::after {
+                content: "";
+                .mt(-1px);
+                .size(350px,68px);
+                background: url("@{kv_yixueshangyang}line1.png") no-repeat center center;
+                background-size: 100% 2px;
+            }
+            &::after {
+                transform: rotate(180deg);
+            }
+            .u-item {
+                .pr;
+                .size(68px);
+                margin: 0 100px 0 0;
+                &::after {
+                    content: "";
+                    .db;
+                    .size(100px,68px);
+                    .ml(68px);
+                    background: url("@{kv_yixueshangyang}line2.png") no-repeat center center;
+                    background-size: 100% 2px;
+                }
+
+                &:last-child {
+                    margin: 0;
+                    &::after {
+                        .none;
+                    }
+                }
+                img {
+                    .pointer;
+                    .pa;
+                    .lt(0);
+                    .size(68px);
+                    max-width: none;
+                    &.u-active {
+                        .none;
+                        .size(86px);
+                        margin: -7px 0 0 -7px;
+                    }
+                }
+                &.active {
+                    img {
+                        .none;
+                    }
+                    img.u-active {
+                        .db;
+                    }
+                }
+            }
         }
         &-1 {
             height: 1090px;
@@ -63,7 +121,7 @@
                         .color(#FFEABD);
                         .mb(-40px);
                         letter-spacing: 26px;
-                        .z(1); 
+                        .z(1);
                         .ml(26px);
                     }
                     .u-img {
@@ -86,18 +144,58 @@
                 }
             }
         }
-        &-4 {
+        &-4,
+        &-5 {
             .pt(200px);
             height: 1373px;
             .u-title {
                 .w(448px);
             }
+            .el-carousel--horizontal {
+                overflow: visible !important;
+            }
+            .m-container {
+                .mt(100px);
+                background: url("@{kv_yixueshangyang}bg/syt.png") repeat-x bottom center;
+                background-size: 100% 650px;
+
+                .el-carousel__item {
+                    overflow: visible !important;
+                    .u-item-content {
+                        .pr;
+                        .auto(x);
+                        width: 1000px;
+                        .u-img {
+                            .pa;
+                            .rt(-80px,-98px);
+                            height: 728px;
+                        }
+                        .u-img2 {
+                            .pa;
+                            .z(2);
+                            top: 200px;
+                            width: 641px;
+                        }
+                    }
+                }
+            }
         }
         &-5 {
-            .pt(200px);
             height: 1613px;
-            .u-title {
-                .w(448px);
+            .m-container {
+                background: url("@{kv_yixueshangyang}bg/gfd.png") repeat-x bottom center;
+                background-size: 100% 650px;
+                .u-img {
+                    .pa;
+                    .lt(-50%,-98px);
+                    height: 728px;
+                }
+                .u-img2 {
+                    .z(2);
+                    right: 0;
+                    top: 150px !important;
+                    width: 641px;
+                }
             }
         }
         &-6 {

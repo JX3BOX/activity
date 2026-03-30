@@ -9,7 +9,7 @@
         <div class="m-section m-section-2">
             <img :src="`${imgPath}title/title1.png`" class="u-title" />
             <div class="m-container">
-                <el-carousel ref="carousel" :interval="3000" indicator-position="none" arrow="always" height="546px">
+                <el-carousel ref="carousel1" :interval="3000" indicator-position="none" arrow="always" height="546px">
                     <el-carousel-item v-for="item in carouselList1" :key="item">
                         <div class="u-item-content">
                             <img :src="`${imgPath}${item}`" class="u-img" />
@@ -22,8 +22,8 @@
         <div class="m-section m-section-3">
             <img :src="`${imgPath}title/title2.png`" class="u-title" />
             <div class="m-container">
-                <el-carousel ref="carousel" :interval="3000" indicator-position="none" arrow="always" height="900px">
-                    <el-carousel-item v-for="(item, i) in carouselList2" :key="item">
+                <el-carousel ref="carousel2" :interval="3000" indicator-position="none" arrow="always" height="900px">
+                    <el-carousel-item v-for="(item, i) in carouselList2" :key="i">
                         <div :class="`u-item-content u-item-content-${i + 1}`">
                             <h2>{{ item.title }}</h2>
                             <img :src="`${imgPath}${item.img}`" class="u-img" />
@@ -33,11 +33,75 @@
                 </el-carousel>
             </div>
         </div>
+        <!-- 双曜亭 -->
         <div class="m-section m-section-4">
             <img :src="`${imgPath}title/title3.png`" class="u-title" />
+            <div class="m-container">
+                <div class="m-carousel-indicators">
+                    <div
+                        v-for="(item, index) in carouselList3"
+                        :key="index"
+                        class="u-item"
+                        :class="{ active: activeIndex3 === index }"
+                        @click="handleClick(index, '3')"
+                    >
+                        <img :src="`${imgPath}dot.png`" />
+                        <img class="u-active" :src="`${imgPath}dot-active.png`" />
+                    </div>
+                </div>
+                <el-carousel
+                    v-model="activeIndex3"
+                    ref="carousel3"
+                    :interval="3000"
+                    arrow="always"
+                    indicator-position="none"
+                    height="650px"
+                    @change="handleCarouselChange($event, '3')"
+                >
+                    <el-carousel-item v-for="(item, i) in carouselList3" :key="i">
+                        <div :class="`u-item-content u-item-content-${i + 1}`">
+                            <h2>{{ item.title }}</h2>
+                            <img :src="`${imgPath}${item.img}`" class="u-img" />
+                            <img :src="`${imgPath}${item.txt}`" class="u-img2" />
+                        </div>
+                    </el-carousel-item>
+                </el-carousel>
+            </div>
         </div>
+        <!-- 观风殿 -->
         <div class="m-section m-section-5">
             <img :src="`${imgPath}title/title4.png`" class="u-title" />
+            <div class="m-container">
+                <div class="m-carousel-indicators">
+                    <div
+                        v-for="(item, index) in carouselList4"
+                        :key="index"
+                        class="u-item"
+                        :class="{ active: activeIndex4 === index }"
+                        @click="handleClick(index, '4')"
+                    >
+                        <img :src="`${imgPath}dot.png`" />
+                        <img class="u-active" :src="`${imgPath}dot-active.png`" />
+                    </div>
+                </div>
+                <el-carousel
+                    v-model="activeIndex4"
+                    ref="carousel4"
+                    :interval="3000"
+                    arrow="always"
+                    indicator-position="none"
+                    height="650px"
+                    @change="handleCarouselChange($event, '4')"
+                >
+                    <el-carousel-item v-for="(item, i) in carouselList4" :key="i">
+                        <div :class="`u-item-content u-item-content-${i + 1}`">
+                            <h2>{{ item.title }}</h2>
+                            <img :src="`${imgPath}${item.img}`" class="u-img" />
+                            <img :src="`${imgPath}${item.txt}`" class="u-img2" />
+                        </div>
+                    </el-carousel-item>
+                </el-carousel>
+            </div>
         </div>
         <div class="m-section m-section-6">
             <img :src="`${imgPath}title/title5.png`" class="u-title" />
@@ -69,11 +133,24 @@ export default {
             imgPath: __cdn + "design/topic/" + KEY + "/",
             key: KEY,
             activeIndex: 0,
+            activeIndex3: 0,
+            activeIndex4: 0,
             carouselList1: ["h-1.png", "h-3.png"],
             carouselList2: [
                 { img: "e-1.png", img2: "shangui.png", title: "剧情篇" },
                 { img: "e-2.png", title: "玩法篇" },
                 { img: "e-3.png", img2: "xuanjing.png", title: "奖励篇" },
+            ],
+            carouselList3: [
+                { img: "boss/boss1.png", txt: "boss/boss1_wz.png" },
+                { img: "boss/boss2.png", txt: "boss/boss2_wz.png" },
+                { img: "boss/boss3.png", txt: "boss/boss3_wz.png" },
+            ],
+            carouselList4: [
+                { img: "boss/boss4.png", txt: "boss/boss4_wz.png" },
+                { img: "boss/boss5.png", txt: "boss/boss5_wz.png" },
+                { img: "boss/boss6.png", txt: "boss/boss6_wz.png" },
+                { img: "boss/boss7.png", txt: "boss/boss7_wz.png" },
             ],
             shakeTimer: null,
         };
@@ -124,28 +201,37 @@ export default {
         init: function () {
             getTopic(KEY).then((res) => {
                 this.raw = res.data.data;
-                // this.video = this.data.index_video[0]["link"];
-                // this.pve = this.data.index_pve;
             });
         },
         startArrowShake() {
             let count = 0;
             this.shakeTimer = setInterval(() => {
-                const left = document.querySelector(".el-carousel__arrow--left");
-                const right = document.querySelector(".el-carousel__arrow--right");
-                if (!left || !right) return;
+                const leftArrows = document.querySelectorAll(".el-carousel__arrow--left");
+                const rightArrows = document.querySelectorAll(".el-carousel__arrow--right");
 
                 const pos = count % 2 === 0 ? "8px" : "0px";
-                left.style.cssText = `
-      left: 20px !important;
-      transform: translateY(-50%) rotate(180deg) translateX(-${pos}) !important;
-    `;
-                right.style.cssText = `
-      right: 20px !important;
-      transform: translateY(-50%) translateX(-${pos}) !important;
-    `;
+
+                leftArrows.forEach((left) => {
+                    left.style.cssText = `
+        transform: translateY(-50%) rotate(180deg) translateX(-${pos}) !important;
+      `;
+                });
+
+                rightArrows.forEach((right) => {
+                    right.style.cssText = `
+        transform: translateY(-50%) translateX(-${pos}) !important;
+      `;
+                });
+
                 count++;
             }, 300);
+        },
+        handleClick(index, num) {
+            this[`activeIndex${num}`] = index;
+            this.$refs[`carousel${num}`].setActiveItem(index);
+        },
+        handleCarouselChange(index, num) {
+            this[`activeIndex${num}`] = index;
         },
     },
     mounted() {
@@ -171,7 +257,7 @@ export default {
     background-position: center !important;
     background-size: contain !important;
     opacity: 1 !important;
-    z-index: 999 !important;
+    z-index: 9 !important;
     top: 50% !important;
 }
 /deep/ .el-carousel__arrow--left {
@@ -211,6 +297,20 @@ export default {
             right: 50% !important;
             top: 90px !important;
             margin: 0 -200px 0 0 !important;
+        }
+    }
+    &-4,
+    &-5 {
+        /deep/ .el-carousel__arrow {
+            width: 40px !important;
+            height: 29px !important;
+        }
+        /deep/ .el-carousel__arrow--left {
+            top: -190px !important;
+        }
+
+        /deep/ .el-carousel__arrow--right {
+            top: -190px !important;
         }
     }
 }
