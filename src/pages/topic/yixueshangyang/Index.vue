@@ -306,11 +306,15 @@ export default {
             height: 29px !important;
         }
         /deep/ .el-carousel__arrow--left {
-            top: -190px !important;
+            left: 50% !important;
+            margin: 0 0 0 -650px !important;
+            top: -185px !important;
         }
 
         /deep/ .el-carousel__arrow--right {
-            top: -190px !important;
+            right: 50% !important;
+            margin: 0 -650px 0 0 !important;
+            top: -185px !important;
         }
     }
 }
