@@ -7,7 +7,7 @@
         </div>
         <!-- 黑市寻影 -->
         <div class="m-section m-section-2">
-            <img :src="`${imgPath}title/title1.png`" class="u-title" />
+            <img :src="`${imgPath}title/title1.png`" class="u-title p-animation" v-animate="'fadeInUp'" />
             <div class="m-container">
                 <el-carousel ref="carousel1" :interval="3000" indicator-position="none" arrow="always" height="546px">
                     <el-carousel-item v-for="item in carouselList1" :key="item">
@@ -20,7 +20,7 @@
         </div>
         <!-- 厄境余息 -->
         <div class="m-section m-section-3">
-            <img :src="`${imgPath}title/title2.png`" class="u-title" />
+            <img :src="`${imgPath}title/title2.png`" class="u-title p-animation" v-animate="'fadeInUp'" />
             <div class="m-container">
                 <el-carousel ref="carousel2" :interval="3000" indicator-position="none" arrow="always" height="900px">
                     <el-carousel-item v-for="(item, i) in carouselList2" :key="i">
@@ -35,7 +35,7 @@
         </div>
         <!-- 双曜亭 -->
         <div class="m-section m-section-4">
-            <img :src="`${imgPath}title/title3.png`" class="u-title" />
+            <img :src="`${imgPath}title/title3.png`" class="u-title p-animation" v-animate="'fadeInUp'" />
             <div class="m-container">
                 <div class="m-carousel-indicators">
                     <div
@@ -59,10 +59,14 @@
                     @change="handleCarouselChange($event, '3')"
                 >
                     <el-carousel-item v-for="(item, i) in carouselList3" :key="i">
-                        <div :class="`u-item-content u-item-content-${i + 1}`">
-                            <h2>{{ item.title }}</h2>
-                            <img :src="`${imgPath}${item.img}`" class="u-img" />
-                            <img :src="`${imgPath}${item.txt}`" class="u-img2" />
+                        <div :class="`u-item-content u-item-content-${i + 1}`" v-if="activeIndex3 === i">
+                            <h2 class="p-animation" v-animate="'fadeIn'">{{ item.title }}</h2>
+                            <img
+                                :src="`${imgPath}${item.img}`"
+                                :class="`u-img p-animation`"
+                                v-animate="'fadeInRight'"
+                            />
+                            <img :src="`${imgPath}${item.txt}`" class="u-img2 p-animation" v-animate="'fadeInLeft'" />
                         </div>
                     </el-carousel-item>
                 </el-carousel>
@@ -70,7 +74,7 @@
         </div>
         <!-- 观风殿 -->
         <div class="m-section m-section-5">
-            <img :src="`${imgPath}title/title4.png`" class="u-title" />
+            <img :src="`${imgPath}title/title4.png`" class="u-title p-animation" v-animate="'fadeInUp'" />
             <div class="m-container">
                 <div class="m-carousel-indicators">
                     <div
@@ -94,17 +98,17 @@
                     @change="handleCarouselChange($event, '4')"
                 >
                     <el-carousel-item v-for="(item, i) in carouselList4" :key="i">
-                        <div :class="`u-item-content u-item-content-${i + 1}`">
-                            <h2>{{ item.title }}</h2>
-                            <img :src="`${imgPath}${item.img}`" class="u-img" />
-                            <img :src="`${imgPath}${item.txt}`" class="u-img2" />
+                        <div :class="`u-item-content u-item-content-${i + 1}`" v-if="activeIndex4 === i">
+                            <h2 class="p-animation" v-animate="'fadeIn'">{{ item.title }}</h2>
+                            <img :src="`${imgPath}${item.img}`" class="u-img p-animation" v-animate="'fadeInLeft'" />
+                            <img :src="`${imgPath}${item.txt}`" class="u-img2 p-animation" v-animate="'fadeInRight'" />
                         </div>
                     </el-carousel-item>
                 </el-carousel>
             </div>
         </div>
         <div class="m-section m-section-6">
-            <img :src="`${imgPath}title/title5.png`" class="u-title" />
+            <img :src="`${imgPath}title/title5.png`" class="u-title p-animation" v-animate="'fadeInUp'" />
             <div class="m-box">
                 <div class="u-card" v-for="i in 3" :key="i" @mouseenter="activeIndex = i" @mouseleave="activeIndex = 0">
                     <img
@@ -142,15 +146,15 @@ export default {
                 { img: "e-3.png", img2: "xuanjing.png", title: "奖励篇" },
             ],
             carouselList3: [
-                { img: "boss/boss1.png", txt: "boss/boss1_wz.png" },
-                { img: "boss/boss2.png", txt: "boss/boss2_wz.png" },
-                { img: "boss/boss3.png", txt: "boss/boss3_wz.png" },
+                { img: "boss/boss1.png", txt: "boss/boss1_wz.png", title: "壹号首领" },
+                { img: "boss/boss2.png", txt: "boss/boss2_wz.png", title: "贰号首领" },
+                { img: "boss/boss3.png", txt: "boss/boss3_wz.png", title: "叁号首领" },
             ],
             carouselList4: [
-                { img: "boss/boss4.png", txt: "boss/boss4_wz.png" },
-                { img: "boss/boss5.png", txt: "boss/boss5_wz.png" },
-                { img: "boss/boss6.png", txt: "boss/boss6_wz.png" },
-                { img: "boss/boss7.png", txt: "boss/boss7_wz.png" },
+                { img: "boss/boss4.png", txt: "boss/boss4_wz.png", title: "壹号首领" },
+                { img: "boss/boss5.png", txt: "boss/boss5_wz.png", title: "贰号首领" },
+                { img: "boss/boss6.png", txt: "boss/boss6_wz.png", title: "叁号首领" },
+                { img: "boss/boss7.png", txt: "boss/boss7_wz.png", title: "肆号首领" },
             ],
             shakeTimer: null,
         };
@@ -315,6 +319,22 @@ export default {
             right: 50% !important;
             margin: 0 -650px 0 0 !important;
             top: -185px !important;
+        }
+        /deep/ .el-carousel__item {
+            animation: none !important;
+            transition: none !important;
+        }
+        /deep/ .el-carousel__container {
+            transition: none !important;
+            transform: none !important;
+        }
+        /deep/ .el-carousel__item.is-active {
+            animation: none !important;
+            transition: none !important;
+        }
+        /deep/ .el-carousel__track {
+            transition: none !important;
+            transform: none !important;
         }
     }
 }
