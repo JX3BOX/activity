@@ -3,7 +3,7 @@
         <!-- kv -->
         <div class="m-section m-section-1">
             <img :src="`${imgPath}logo.png`" class="u-logo" />
-            <img :src="`${imgPath}yxsy.png`" class="u-yxsy" />
+            <img :src="`${imgPath}yxsy.png`" class="u-yxsy p-animation" v-animate="'fadeInUp'" />
         </div>
         <!-- 黑市寻影 -->
         <div class="m-section m-section-2">
