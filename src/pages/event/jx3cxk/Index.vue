@@ -88,7 +88,7 @@ import User from "@jx3box/jx3box-common/js/user.js";
 import { resolveImagePath } from "@jx3box/jx3box-common/js/utils";
 import { __Root, __cdn } from "@/utils/config";
 import { shuffle } from "lodash";
-import { getMenu } from "@jx3box/jx3box-common/js/api_misc";
+import { getMenu } from "@jx3box/jx3box-common/js/system";
 import { getProgramDetail, getMyVote } from "@/service/event/vote";
 export default {
     name: "Index",

@@ -1,12 +1,13 @@
 <template>
-    <div class="c-chart" :style="{'--height': isSmall ? '600px' : '700px'}">
+    <div class="c-chart" :style="{ '--height': isSmall ? '600px' : '700px' }">
         <v-chart :options="pieOption" theme="jx3box-dark" ref="chart" />
         <slot></slot>
     </div>
 </template>
 
 <script>
-import { colors_by_school_name, colors_by_mount_name } from "@jx3box/jx3box-data/data/xf/colors.json";
+import colorData from "@jx3box/jx3box-data/data/xf/colors.json";
+const { colors_by_school_name, colors_by_mount_name } = colorData;
 export default {
     name: "pieChart",
     components: {
@@ -50,7 +51,7 @@ export default {
 
         return {
             pieOption: {
-                backgroundColor: 'transparent',
+                backgroundColor: "transparent",
                 title: {
                     text: `${this.title}统计图`,
                     left: "center",
@@ -76,7 +77,7 @@ export default {
                         label: this.isSmall
                             ? {
                                   fontSize: 12,
-                                  formatter: "{b}\n{d}%"
+                                  formatter: "{b}\n{d}%",
                               }
                             : {},
                         emphasis: {
@@ -89,7 +90,7 @@ export default {
                         itemStyle: {
                             color: this.isCustomColor
                                 ? (param) => {
-                                        return colors_by_school_name[param.name] || colors_by_mount_name[param.name]
+                                      return colors_by_school_name[param.name] || colors_by_mount_name[param.name];
                                   }
                                 : "",
                         },

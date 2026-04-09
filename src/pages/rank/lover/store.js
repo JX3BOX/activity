@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { getBreadcrumb } from "@jx3box/jx3box-common/js/api_misc";
+import { getBreadcrumb } from "@jx3box/jx3box-common/js/system";
 import { getLoverEvents, getLoverEvent, getLoverRelationNet, getMyJoinRecord } from "@/service/rank/lover";
 import User from "@jx3box/jx3box-common/js/user";
 import { uniqBy } from "lodash";

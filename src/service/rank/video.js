@@ -1,4 +1,4 @@
-import { $team } from "@jx3box/jx3box-common/js/https.js";
+import { $team } from "@jx3box/jx3box-common/js/api.js";
 
 function getVideos(event_id, params) {
     return $team().get(`/api/team/video/event/${event_id}`, {
@@ -24,10 +24,4 @@ function getLives(event_id, params) {
     });
 }
 
-export {
-    getLives,
-    getVideos,
-    deleteVideo,
-    addVideo,
-    updateVideo,
-};
+export { getLives, getVideos, deleteVideo, addVideo, updateVideo };

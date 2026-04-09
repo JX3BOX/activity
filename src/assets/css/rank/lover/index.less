@@ -1,7 +1,7 @@
 // 引入字体
 @font-face {
-    font-family: 'NanoOldSongA-Regular';
-    src: url('~@/assets/font/NanoOldSongA-Regular-min.woff2') format('woff2');
+    font-family: "NanoOldSongA-Regular";
+    src: url("~@/assets/font/NanoOldSongA-Regular-min.woff2") format("woff2");
     font-weight: normal;
     font-style: normal;
 }
@@ -30,7 +30,7 @@ body {
         .flex;
         justify-content: center;
         align-items: center;
-        padding-top:40px;
+        padding-top: 40px;
         .u-img {
             height: 96px;
             user-select: none;
@@ -55,22 +55,22 @@ body {
             gap: 20px;
         }
         .u-menu {
-            font-family: 'NanoOldSongA-Regular';
+            font-family: "NanoOldSongA-Regular";
             .size(190px,100px);
             .x;
             .fz(32px,100px);
             .bold(700);
             transition: 0.3s ease-in;
-            color: #A35555;
+            color: #a35555;
             background: url("@{lover}/inactive.svg") center center no-repeat;
             background-size: contain;
             &:hover {
                 background: url("@{lover}/active.svg") center center no-repeat;
                 background-size: contain;
-                color: #FFDBB0;
+                color: #ffdbb0;
             }
             &.active {
-                color: #FFDBB0;
+                color: #ffdbb0;
                 background: url("@{lover}/active.svg") center center no-repeat;
                 background-size: contain;
                 &:hover {
@@ -118,7 +118,7 @@ body {
     box-sizing: border-box;
     border: 1px solid rgba(255, 255, 255, 0.3);
     .m-box {
-        .full;
+        .size(100%);
         background: rgba(72, 36, 36, 0.7);
         padding: 5px 10px;
         box-sizing: border-box;

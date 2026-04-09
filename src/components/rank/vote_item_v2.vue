@@ -34,7 +34,7 @@
                     :class="{ disabled: item.clicked || !event_status || !canVote || voteTeam.length > voteLimit }"
                     @click="vote(item)"
                     :disabled="item.clicked || !event_status || !canVote"
-                    ></button>
+                ></button>
                 <div v-else>已投票</div>
             </td>
         </tr>
@@ -50,7 +50,7 @@ import User from "@jx3box/jx3box-common/js/user.js";
 import { doVote } from "@/service/rank/vote.js";
 import { getUserInfo } from "@/service/rank/awards";
 import BindWxMp from "@/components/rank/misc/bind_wx_mp.vue";
-import { getConfig } from "@jx3box/jx3box-common/js/api_misc"
+import { getConfig } from "@jx3box/jx3box-common/js/system";
 export default {
     name: "voteItemV2",
     props: ["data", "team_name", "server", "voteTeam"],
@@ -171,10 +171,10 @@ export default {
         },
         // 获取投票上限
         getVoteLimit() {
-            getConfig({key: "rank_vote_limit"}).then((res) => {
+            getConfig({ key: "rank_vote_limit" }).then((res) => {
                 this.voteLimit = ~~res.data.data.val;
             });
-        }
+        },
     },
 };
 </script>

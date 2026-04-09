@@ -1,6 +1,6 @@
 <template>
     <div class="m-rank-container" ref="appRef" :class="[id_cls, win_env, 'm-rank-bg-' + id]" :style="Bg">
-        <Header></Header>
+        <CommonHeader></CommonHeader>
 
         <!-- <race-bg :class="'m-rank-bg-' + id"></race-bg> -->
         <div class="m-rank-primary">
@@ -33,7 +33,7 @@
             :src="arrow"
             @click="scrollToTop"
         />
-        <Footer></Footer>
+        <CommonFooter></CommonFooter>
     </div>
 </template>
 
@@ -41,7 +41,8 @@
 import PICS from "@/assets/js/pics.js";
 import race_header from "@/components/rank/race_header.vue";
 import { getEvent, getIdFromSlug } from "@/service/rank/event.js";
-import { __cdn } from "@jx3box/jx3box-common/data/jx3box.json";
+import jx3box from "@jx3box/jx3box-common/data/jx3box.json";
+const { __cdn } = jx3box;
 import { isNumber } from "lodash";
 export default {
     name: "RankLayout",
@@ -90,8 +91,6 @@ export default {
             });
         },
     },
-    created() {},
-    destroyed() {},
     mounted() {
         this.handleScroll();
     },

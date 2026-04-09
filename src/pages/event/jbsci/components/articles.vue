@@ -39,11 +39,7 @@
                         <a :href="showLink(item.link)" target="_blank" class="cover">
                             <b class="u-year">{{ filter.year }}</b>
                             <img class="u-img" :src="showImg({ ...item, year: filter.year }) || ''" />
-                            <i
-                                class="u-mark"
-                                :class="[`${item.type}`, { hasImg: item.img, coverYear}]"
-                                >{{ s }}</i
-                            >
+                            <i class="u-mark" :class="[`${item.type}`, { hasImg: item.img, coverYear }]">{{ s }}</i>
                             <div class="u-title" v-html="getCoverTitle(item.title)"></div>
                         </a>
                         <a :href="xfLink(item.color)" target="_blank" class="m-xf" v-if="showIcon(item.color)">
@@ -257,7 +253,7 @@ export default {
                         .size(100%,230px);
                         background-color: rgba(0, 0, 0, 0.2);
                     }
-                    .u-year{
+                    .u-year {
                         .pa;
                         .lt(12px,40px);
                         .fz(20px,28px);
@@ -305,7 +301,7 @@ export default {
                     .u-title {
                         .pa;
                         .lb(0,10px);
-                        .full;
+                        .size(100%);
                         .flex;
                         .fz(24px);
                         gap: 5px;

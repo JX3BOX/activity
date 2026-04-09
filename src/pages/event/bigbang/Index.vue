@@ -115,7 +115,7 @@
 </template>
 
 <script>
-import { getMenu } from "@jx3box/jx3box-common/js/api_misc";
+import { getMenu } from "@jx3box/jx3box-common/js/system";
 import { debounce } from "lodash";
 import { getVoteInfo, submitVote } from "@/service/event/bigbang";
 import { __Root } from "@jx3box/jx3box-common/data/jx3box.json";

@@ -1,6 +1,6 @@
 <template>
     <div id="app" class="m-rank-container">
-        <Header></Header>
+        <CommonHeader></CommonHeader>
         <div class="m-rank-primary">
             <div class="m-rank-join">
                 <div class="m-rank-header">
@@ -86,7 +86,7 @@
                 </div>
             </div>
         </div>
-        <Footer></Footer>
+        <CommonFooter></CommonFooter>
 
         <bindWxMp v-model="showBindWxMp" @update="onBindWxMpUpdate"></bindWxMp>
     </div>
@@ -99,7 +99,7 @@ import { getEvents } from "@/service/rank/event.js";
 import { joinEvent, hasJoined } from "@/service/rank/join.js";
 import { getMyTeams } from "@/service/rank/team.js";
 import User from "@jx3box/jx3box-common/js/user.js";
-import { getBreadcrumb } from "@jx3box/jx3box-common/js/api_misc";
+import { getBreadcrumb } from "@jx3box/jx3box-common/js/system";
 import { getUserInfo } from "@/service/rank/awards";
 
 import BindWxMp from "@/components/rank/misc/bind_wx_mp.vue";

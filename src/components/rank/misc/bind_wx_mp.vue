@@ -9,9 +9,11 @@
     >
         <div class="m-wechat-content" v-loading="loading">
             <el-image class="u-qr" v-if="ticket" :src="qrcodeValue" lazy>
-                <div slot="error" class="u-error">
-                    <i class="el-icon-picture-outline"></i>
-                </div>
+                <template #error>
+                    <div class="u-error">
+                        <i class="el-icon-picture-outline"></i>
+                    </div>
+                </template>
             </el-image>
             <i class="u-tip">打开微信扫一扫，关注剑三魔盒公众号</i>
 
@@ -68,7 +70,7 @@ export default {
             this.$emit("update:visible", false);
         },
         confirm() {
-            this.$emit("update")
+            this.$emit("update");
             this.$emit("update:visible", false);
         },
     },
@@ -90,7 +92,7 @@ export default {
             justify-content: center;
             .size(180px);
             .el-image__inner {
-                .full;
+                .size(100%);
             }
         }
         .u-error {

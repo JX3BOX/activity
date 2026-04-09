@@ -1,22 +1,3 @@
-Vue.config.productionTip = false;
-
-// 第三方UI组件
-import Vue from "vue";
-import ElementUI from "element-ui";
-Vue.use(ElementUI);
-
-// 通用UI模块
-import JX3BOX_UI from "@jx3box/jx3box-common-ui";
-import "@jx3box/jx3box-common/css/element.css";
-import "@jx3box/jx3box-common/css/normalize.css";
-Vue.use(JX3BOX_UI);
-
-// 数据与路由
-import router from "./router";
-import store from "./store";
-
-import ECharts from "vue-echarts"; // 在 webpack 环境下指向 components/ECharts.vue
-
 // 手动引入 ECharts 各模块来减小打包体积
 import "echarts/lib/chart/bar";
 import "echarts/lib/chart/pie";
@@ -29,17 +10,78 @@ import "echarts/lib/component/title";
 
 import jx3DarkTheme from "@/assets/data/rank/echartsTheme.json";
 
-import reporter from "@jx3box/jx3box-common/js/reporter";
-reporter.install(Vue);
-
-
-Vue.component("v-chart", ECharts);
-ECharts.registerTheme("jx3box-dark", jx3DarkTheme);
-import Katex from "vue-katex-auto-render";
-Vue.directive("katex", Katex);
+import { createApp } from "vue";
 import App from "./Rank.vue";
-new Vue({
-    router,
-    store,
-    render: (h) => h(App),
-}).$mount("#app");
+
+import router from "./router";
+import store from "./store";
+
+import { createHead } from "@vueuse/head";
+import { createJx3boxUiI18n, getJx3boxUiAvailableLocales, install as JX3BOX_UI } from "@jx3box/jx3box-ui";
+import { mergeAppLocaleMessages } from "@/locale";
+import { initRouterI18nHead } from "@/router/i18n-head";
+
+import "@jx3box/jx3box-common/css/normalize.css";
+import "@jx3box/jx3box-common/css/font.css";
+import "@jx3box/jx3box-common/css/element-plus-theme.scss";
+import "@jx3box/jx3box-common/css/element-fonticon.css";
+
+import ElementPlus from "element-plus";
+import zhCn from "element-plus/es/locale/lang/zh-cn";
+import en from "element-plus/es/locale/lang/en";
+import zhTw from "element-plus/es/locale/lang/zh-tw";
+import vi from "element-plus/es/locale/lang/vi";
+import * as ElementPlusIconsVue from "@element-plus/icons-vue";
+
+import "@/assets/css/tailwind.css";
+
+const app = createApp(App);
+
+app.use(router);
+app.use(store);
+
+import ECharts from "vue-echarts"; // 在 webpack 环境下指向 components/ECharts.vue
+app.component("v-chart", ECharts);
+// ECharts.registerTheme("jx3box-dark", jx3DarkTheme);
+import Katex from "@/utils/katex";
+app.directive("katex", Katex);
+
+const head = createHead();
+app.use(head);
+
+const langKey = (localStorage.getItem("lang") || "zh-cn").toLowerCase();
+const langMap = {
+    "zh-cn": "zh-CN",
+    "en-us": "en-US",
+    "zh-tw": "zh-TW",
+    vi: "vi",
+};
+const preferredLocale = langMap[langKey] || "zh-CN";
+const supportedLocales = getJx3boxUiAvailableLocales();
+const locale = supportedLocales.includes(preferredLocale) ? preferredLocale : "zh-CN";
+
+const i18n = createJx3boxUiI18n({ locale });
+mergeAppLocaleMessages(i18n);
+i18n.global.missingWarn = false;
+i18n.global.fallbackWarn = false;
+app.use(i18n);
+
+initRouterI18nHead(router, i18n, head);
+
+app.use(JX3BOX_UI);
+
+const elementLocaleMap = {
+    "zh-CN": zhCn,
+    "en-US": en,
+    "zh-TW": zhTw,
+    vi,
+};
+app.use(ElementPlus, {
+    locale: elementLocaleMap[locale] || zhCn,
+});
+
+for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+    app.component(key, component);
+}
+
+app.mount("#app");

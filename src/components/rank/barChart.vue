@@ -1,12 +1,13 @@
 <template>
-    <div class="c-chart" :style="{'--height': height}">
-        <v-chart :options="barOption" theme="jx3box-dark"/>
+    <div class="c-chart" :style="{ '--height': height }">
+        <v-chart :options="barOption" theme="jx3box-dark" />
         <slot></slot>
     </div>
 </template>
 
 <script>
-import { colors_by_school_name, colors_by_mount_name } from "@jx3box/jx3box-data/data/xf/colors.json";
+import colorData from "@jx3box/jx3box-data/data/xf/colors.json";
+const { colors_by_school_name, colors_by_mount_name } = colorData;
 export default {
     name: "barChart",
     components: {
@@ -27,16 +28,16 @@ export default {
         },
         height: {
             type: String,
-            default: '800px'
+            default: "800px",
         },
         isCustomColor: {
             type: Boolean,
             default: true,
         },
-        seriesName:{
-            type:String,
-            default:'团队数量'
-        }
+        seriesName: {
+            type: String,
+            default: "团队数量",
+        },
     },
     watch: {
         data(newVal, oldVal) {
@@ -54,7 +55,7 @@ export default {
 
         return {
             barOption: {
-                backgroundColor: 'transparent',
+                backgroundColor: "transparent",
                 title: {
                     show: true,
                     text: `${this.title}统计图`,
@@ -75,7 +76,7 @@ export default {
                     type: "value",
                     boundaryGap: [0, 0.01],
                     position: "top",
-                    minInterval: 1
+                    minInterval: 1,
                 },
                 yAxis: {
                     type: "category",
@@ -88,10 +89,10 @@ export default {
                         itemStyle: {
                             color: this.isCustomColor
                                 ? (param) => {
-                                    return colors_by_school_name[param.name] || colors_by_mount_name[param.name]
-                                }
+                                      return colors_by_school_name[param.name] || colors_by_mount_name[param.name];
+                                  }
                                 : "",
-                        }
+                        },
                     },
                 ],
             },

@@ -1,4 +1,4 @@
-import { $team } from "@jx3box/jx3box-common/js/https";
+import { $team } from "@jx3box/jx3box-common/js/api";
 // 监测资格
 function postApplyRecord(params) {
     return $team().post(`/api/team/apply/record`, params);

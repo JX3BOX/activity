@@ -1,6 +1,6 @@
 <template>
     <div class="m-single">
-        <Header></Header>
+        <CommonHeader></CommonHeader>
         <div class="m-kv">
             <img :src="getCdnLink('design/rank/surprise/weal.svg')" alt="" />
             <div class="u-img-bottom"></div>
@@ -83,25 +83,24 @@
                             }"
                         >
                             <el-table-column label="申请日期" width="160">
-                                <template slot-scope="scope">
+                                <template #default="scope">
                                     {{ showTime(scope.row.created_at) }}
                                 </template>
                             </el-table-column>
                             <el-table-column label="申请状态" width="80">
-                                <template slot-scope="scope">
+                                <template #default="scope">
                                     <span :class="`u-status${scope.row.status}`">{{
                                         logStatus(scope.row.status)
                                     }}</span>
                                 </template>
                             </el-table-column>
                             <el-table-column label="申请团队" width="120">
-                                <template slot-scope="scope">
+                                <template #default="scope">
                                     {{ logTeam(scope.row.team_id) }}
                                 </template>
                             </el-table-column>
                             <el-table-column label="申请详情">
-                                <template slot-scope="scope">
-                                    <!-- {{ scope.row.extend }} -->
+                                <template #default="scope">
                                     <extend :data="scope.row.extend" v-if="scope.row.extend" />
                                 </template>
                             </el-table-column>
@@ -109,7 +108,7 @@
                     </div> </el-col
             ></el-row>
         </div>
-        <Footer></Footer>
+        <CommonFooter></CommonFooter>
     </div>
 </template>
 <script>
@@ -118,7 +117,7 @@ import { showTime } from "@jx3box/jx3box-common/js/moment.js";
 import User from "@jx3box/jx3box-common/js/user";
 import extend from "@/components/rank/surprise/extend.vue";
 import tifu from "@/components/rank/surprise/tifu.vue";
-import {getCdnLink} from "@/utils/index.js";
+import { getCdnLink } from "@/utils/index.js";
 
 export default {
     name: "eventsApply",

@@ -1,6 +1,6 @@
 <template>
     <div class="p-lover-list" :style="containerStyle">
-        <Header></Header>
+        <CommonHeader></CommonHeader>
         <div class="m-container">
             <img class="m-title" draggable="false" :src="`${cdnLink}design/event/lover/list/title.png`" />
             <img class="m-subtitle" draggable="false" :src="`${cdnLink}design/event/lover/list/subtitle.png`" />
@@ -115,7 +115,7 @@ export default {
         border: 1px solid rgba(255, 177, 94, 1);
         box-sizing: border-box;
 
-        &:hover{
+        &:hover {
             box-shadow: 0px 0px 20px rgba(255, 177, 94, 0.5);
             transform: scale(1.02);
             transition: all 0.3s ease-in-out;

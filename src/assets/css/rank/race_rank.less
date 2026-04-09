@@ -1,3 +1,4 @@
+@import "@/assets/css/rank/var.less";
 .m-rank-rank {
     .mt(40px);
     // width: 86.7% !important;
@@ -12,7 +13,9 @@
     list-style: none;
     .x;
     .el-col {
-        flex-grow: 1;
+        flex-grow: 1 !important;
+        flex-basis: auto !important;
+        max-width: unset !important;
     }
 
     .u-boss {
@@ -103,7 +106,6 @@
         display: inline-flex;
         align-items: center;
         height: 30px !important;
-
 
         .el-checkbox__input {
             top: 1px;
@@ -198,6 +200,8 @@
         background-size: 100% 100%;
         left: 0;
         top: 0;
+        .flex;
+        justify-content: center;
         span {
             cursor: default;
         }
@@ -210,7 +214,7 @@
             .db;
             .size(120px);
             img {
-                .full;
+                .size(100%);
                 .db;
             }
         }
@@ -220,7 +224,8 @@
     }
 
     .u-title {
-        .db;
+        .flex;
+        align-items: center;
         i {
             color: #eee;
             .mr(5px);
@@ -305,6 +310,8 @@
         .bold;
         .fz(14px, 24px);
         color: #fff;
+        .flex;
+        align-items: center;
         .u-username {
             .y(top);
             white-space: visible;
@@ -336,22 +343,23 @@
     }
 
     .u-youngster {
-        padding:0 10px;
+        padding: 0 10px;
         .u-chanlian,
         .u-heima,
         .u-wangzhe {
             .size(120px,31px);
 
             .pr;
-            top:10px;
         }
     }
 
-    &.is-No1,&.is-No2,&.is-No3 {
+    &.is-No1,
+    &.is-No2,
+    &.is-No3 {
         .u-chanlian,
         .u-heima,
         .u-wangzhe {
-            top:5px;
+            top: 5px;
         }
     }
 }
@@ -362,7 +370,7 @@
 }
 
 .m-rank-top100-list {
-    @w: (@box_width - 40px) / 3;
+    @w: calc((@box_width - 40px) / 3);
 
     .is-No1,
     .is-No2,
@@ -422,7 +430,9 @@
         }
 
         .u-leader {
-            .x;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             .u-username {
                 width: auto;
                 max-width: 80%;
@@ -436,8 +446,9 @@
         }
 
         .u-youngster {
-            .x;
-            .db;
+            .flex;
+            align-items: center;
+            justify-content: center;
             .pr;
             top: unset;
             margin-left: unset;
@@ -453,7 +464,7 @@
     @no3add: 40px;
 
     .is-No1 {
-        .ml(@w + 20px);
+        .ml(calc(@w + 20px));
         .u-logo {
             .pt(@basic);
         }

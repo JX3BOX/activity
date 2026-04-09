@@ -8,10 +8,17 @@
                 <!-- 报名成功提示 -->
                 <template v-if="joined">
                     <div class="m-success">
-                        <img class="u-success-img" :src="`${__imgRoot}join-success.png`" v-if="joinRecord.status != -1" />
+                        <img
+                            class="u-success-img"
+                            :src="`${__imgRoot}join-success.png`"
+                            v-if="joinRecord.status != -1"
+                        />
                         <div class="u-join-notice" v-html="notice"></div>
                     </div>
-                    <div class="m-team-box" v-if="joinRecord.status == 2 || joinRecord.status == 1 || joinRecord.status == -2">
+                    <div
+                        class="m-team-box"
+                        v-if="joinRecord.status == 2 || joinRecord.status == 1 || joinRecord.status == -2"
+                    >
                         <div class="m-team-info">
                             <div class="m-team-info__left">
                                 <img class="u-team-logo" :src="joinRecord.images[0]" alt="" />
@@ -66,12 +73,19 @@
                 </template>
                 <div
                     class="m-join-form"
-                    v-if="(loverHasBind && !joined) || (joined && joinRecord.status == -1 || joinRecord.status == 0)"
+                    v-if="(loverHasBind && !joined) || (joined && joinRecord.status == -1) || joinRecord.status == 0"
                     v-loading="loading"
                 >
-                    <el-form :class="['m-lover-form']" ref="form" :disabled="formDisabled" :model="form" :rules="rules" label-width="80px">
+                    <el-form
+                        :class="['m-lover-form']"
+                        ref="form"
+                        :disabled="formDisabled"
+                        :model="form"
+                        :rules="rules"
+                        label-width="80px"
+                    >
                         <el-row :gutter="10">
-                            <el-col :span="12" v-for="(item,i) in uniqBy(loverNet.members, 'id')" :key="item.id">
+                            <el-col :span="12" v-for="(item, i) in uniqBy(loverNet.members, 'id')" :key="item.id">
                                 <el-form-item :label="`队员${i + 1}`">
                                     <div class="m-role">
                                         <el-image class="u-avatar" :src="showAvatar(item.user_info.avatar)"></el-image>
@@ -146,7 +160,7 @@
                             <uploadImage v-else ref="upload-image" @onFinish="onImageUploaded"></uploadImage>
                         </el-form-item>
                     </el-form>
-                    <div :class="['u-submit', { 'disabled': formDisabled }]" @click="startUploadImage">
+                    <div :class="['u-submit', { disabled: formDisabled }]" @click="startUploadImage">
                         <img class="u-submit-img" :src="`${__imgRoot}join-btn.png`" />
                     </div>
                 </div>
@@ -168,7 +182,7 @@ import uploadImage from "@jx3box/jx3box-comment-ui/src/components/upload.vue";
 import certificate from "@/components/rank/lover/certificate.vue";
 import { uniqBy } from "lodash";
 import { joinRecord, updateJoinRecord } from "@/service/rank/join";
-import { getBreadcrumb } from "@jx3box/jx3box-common/js/api_misc";
+import { getBreadcrumb } from "@jx3box/jx3box-common/js/system";
 export default {
     name: "LoverJoin",
     inject: ["__imgRoot"],
@@ -193,32 +207,45 @@ export default {
                 live_url: "", // 直播间
             },
             rules: {
-                team_name: [{ required: true,  trigger: "blur", validator: (rule, value, callback) => {
-                    // 队伍名不能超过7字，只能是中文
-                    if (value.length > 7) {
-                        callback(new Error("队伍名不能超过7字"));
-                    } else if (value.length === 0) {
-                        callback(new Error("请输入队伍名"));
-                    } else if (!/^[\u4e00-\u9fa5]+$/.test(value)) {
-                        callback(new Error("队伍名只能包含中文"));
-                    } else {
-                        callback();
-                    }
-                } }],
+                team_name: [
+                    {
+                        required: true,
+                        trigger: "blur",
+                        validator: (rule, value, callback) => {
+                            // 队伍名不能超过7字，只能是中文
+                            if (value.length > 7) {
+                                callback(new Error("队伍名不能超过7字"));
+                            } else if (value.length === 0) {
+                                callback(new Error("请输入队伍名"));
+                            } else if (!/^[\u4e00-\u9fa5]+$/.test(value)) {
+                                callback(new Error("队伍名只能包含中文"));
+                            } else {
+                                callback();
+                            }
+                        },
+                    },
+                ],
                 server: [{ required: true, message: "请选择服务器", trigger: "change" }],
                 qq: [{ required: true, message: "请输入联系QQ", trigger: "blur" }],
                 phone: [{ required: true, message: "请输入联系电话", trigger: "blur" }],
                 slogan: [{ required: true, message: "请输入参赛宣言", trigger: "blur" }],
-                images: [{ required: true, message: "请上传合照", trigger: "blur", validator: (rule, value, callback) => {
-                    if (this.$refs["upload-image"]?.fileList.length === 0) {
-                        callback(new Error("请上传合照"));
-                    } else {
-                        if (this.form.images.length) {
-                            callback();
-                        }
-                        callback();
-                    }
-                } }],
+                images: [
+                    {
+                        required: true,
+                        message: "请上传合照",
+                        trigger: "blur",
+                        validator: (rule, value, callback) => {
+                            if (this.$refs["upload-image"]?.fileList.length === 0) {
+                                callback(new Error("请上传合照"));
+                            } else {
+                                if (this.form.images.length) {
+                                    callback();
+                                }
+                                callback();
+                            }
+                        },
+                    },
+                ],
             },
 
             join_loading: false,
@@ -264,21 +291,21 @@ export default {
             };
         },
         notice() {
-            return this.event_notice || this.origin_notice
+            return this.event_notice || this.origin_notice;
         },
         event_notice() {
             const status = this.joinRecord?.status;
-            if (status ===0) {
-                return "⏳ 报名已提交，请等待审核！"
+            if (status === 0) {
+                return "⏳ 报名已提交，请等待审核！";
             }
-            if (status ==  -1) {
+            if (status == -1) {
                 return `⚠️ 申请未通过，请重新提交信息</br>Reason：${this.joinRecord.comment}`;
             }
             if (status == -2) {
                 // 退赛或淘汰
                 return "❌ 报名已取消或淘汰！";
             }
-            return ""
+            return "";
         },
         formDisabled() {
             return this.joined && this.joinRecord.status == 0; // 如果已经报名且状态为审核中，则禁用表单

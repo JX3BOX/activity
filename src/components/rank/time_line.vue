@@ -245,7 +245,7 @@ export default {
                     content: "";
                     .pa;
                     .z(-1);
-                    .full;
+                    .size(100%);
                     top: -2px;
                     right: 0;
                     bottom: 0;

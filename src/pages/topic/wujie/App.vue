@@ -5,7 +5,7 @@
         <router-view></router-view>
         <div class="p-topic-footer">
             <div class="wp">
-                <Footer></Footer>
+                <CommonFooter></CommonFooter>
             </div>
         </div>
     </div>
@@ -31,7 +31,7 @@ export default {
     },
     watch: {},
     methods: {},
-    
+
     created: function () {
         postStat("topic", "wujie");
     },

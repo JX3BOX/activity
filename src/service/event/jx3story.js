@@ -1,10 +1,12 @@
 // import axios from 'axios'
-import { $cms } from "@jx3box/jx3box-common/js/https";
+import { $cms } from "@jx3box/jx3box-common/js/api";
 
 function getEventAc(id) {
-    return $cms().get(`/api/cms/post/${id}`).then((res) => {
-        return res?.data?.data?.post_content
-    })
+    return $cms()
+        .get(`/api/cms/post/${id}`)
+        .then((res) => {
+            return res?.data?.data?.post_content;
+        });
 }
 
-export { getEventAc }
+export { getEventAc };

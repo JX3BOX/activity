@@ -1,43 +1,43 @@
 <template>
-	<!-- 专题页 -->
-	<div class="p-topic" :class="'v-' + page_name">
-		<Header :overlayEnable="true"></Header>
+    <!-- 专题页 -->
+    <div class="p-topic" :class="'v-' + page_name">
+        <Header :overlayEnable="true"></Header>
         <div id="box">
             <router-view></router-view>
         </div>
-		<div class="p-topic-footer">
-			<div class="wp">
-				<Footer></Footer>
-			</div>
-		</div>
-	</div>
+        <div class="p-topic-footer">
+            <div class="wp">
+                <CommonFooter></CommonFooter>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
 import { postStat } from "@jx3box/jx3box-common/js/stat";
 import { __cdn } from "@/utils/config";
 export default {
-	name: "App",
-	props: [],
-	components: {},
-	data: function () {
-		return {};
-	},
-	provide: {
-		__imgRoot: __cdn + "design/topic/demo/",
-	},
-	computed: {
-		page_name: function () {
-			return this.$route.name;
-		},
-	},
-	watch: {},
-	methods: {},
-	
-	created: function () {
-		postStat("topic", "shanhaiyuanliu");
-	},
-	mounted: function () {
+    name: "App",
+    props: [],
+    components: {},
+    data: function () {
+        return {};
+    },
+    provide: {
+        __imgRoot: __cdn + "design/topic/demo/",
+    },
+    computed: {
+        page_name: function () {
+            return this.$route.name;
+        },
+    },
+    watch: {},
+    methods: {},
+
+    created: function () {
+        postStat("topic", "shanhaiyuanliu");
+    },
+    mounted: function () {
         const width = document.documentElement.clientWidth;
         const height = document.documentElement.clientHeight;
         var screen_width = width; //屏幕宽度

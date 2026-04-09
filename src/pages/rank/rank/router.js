@@ -1,11 +1,4 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
-
-// 解决重复点击路由报错的BUG
-const originalPush = VueRouter.prototype.push;
-VueRouter.prototype.push = function push(location) {
-    return originalPush.call(this, location).catch((err) => err);
-};
+import { createRouter, createWebHistory } from "vue-router";
 
 const Info = () => import("@/views/Rank/Info.vue");
 const Rank = () => import("@/views/Rank/Rank.vue");
@@ -21,8 +14,6 @@ const Join = () => import("@/views/Rank/Join.vue");
 const Index = () => import("@/views/Rank/Index.vue");
 const SurpriseList = () => import("@/views/Rank/SurpriseList.vue");
 const SurpriseSingle = () => import("@/views/Rank/SurpriseSingle.vue");
-
-Vue.use(VueRouter);
 
 const routes = [
     // 当前活动进程，开赛后修改为Rank
@@ -50,9 +41,8 @@ const routes = [
     },
 ];
 
-const router = new VueRouter({
-    // mode : 'history',
-    base: "/rank",
+const router = createRouter({
+    history: createWebHistory("/rank"),
     routes,
 });
 

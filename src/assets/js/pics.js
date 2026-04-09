@@ -1,4 +1,5 @@
-import { __cdn } from "@jx3box/jx3box-common/data/jx3box.json";
+import jx3box from "@jx3box/jx3box-common/data/jx3box.json";
+const { __cdn } = jx3box;
 
 const PICS = {
     LOGO: __cdn + "design/rank/common/logo.png",

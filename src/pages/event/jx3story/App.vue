@@ -6,7 +6,7 @@
         <router-view></router-view>
         <!-- <div class="p-event-footer">
             <div class="wp">
-                <Footer></Footer>
+                <CommonFooter></CommonFooter>
             </div>
         </div> -->
     </div>

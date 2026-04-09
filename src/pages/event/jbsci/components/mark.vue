@@ -29,7 +29,7 @@ export default {
     .pf;
     .pointer;
     .lt(0,0);
-    .full;
+    .size(100%);
     .z(9);
     .flex;
     padding: 0;

@@ -112,7 +112,7 @@ import { getEvents } from "@/service/rank/event.js";
 import { joinEvent, hasJoined } from "@/service/rank/join.js";
 import { getMyTeams } from "@/service/rank/team.js";
 import User from "@jx3box/jx3box-common/js/user.js";
-import { getBreadcrumb } from "@jx3box/jx3box-common/js/api_misc";
+import { getBreadcrumb } from "@jx3box/jx3box-common/js/system";
 export default {
     components: {},
     data() {

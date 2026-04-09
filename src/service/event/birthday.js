@@ -1,4 +1,4 @@
-import { $cms, $pay, $next } from "@jx3box/jx3box-common/js/https";
+import { $cms, $pay, $next } from "@jx3box/jx3box-common/js/api";
 
 // 检查用户是否拥有该勋章
 function medalCheck(params) {
@@ -28,7 +28,7 @@ function decorationReceive(data) {
 function receiveVip(params) {
     return $cms().get("/api/cms/user/vip/receive", {
         params,
-    })
+    });
 }
 
 function getWechatQrcode() {
@@ -106,9 +106,8 @@ function getEventGiftRecord(id) {
     return $pay().get(`/api/jx3box/event/${id}/pay-order-award/mall-goods-award/chance/list`, {
         params: {
             got: 0,
-        }
+        },
     });
-
 }
 
 export {
@@ -131,7 +130,6 @@ export {
     mallGoodsAwardApply,
     getEventGiftRecord,
     pointsExchangeVipChance,
-
     receiveVip,
-    getWechatQrcode
+    getWechatQrcode,
 };

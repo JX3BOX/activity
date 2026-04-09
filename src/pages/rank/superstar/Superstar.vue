@@ -1,8 +1,8 @@
 <template>
     <div class="p-superstar">
-        <Header></Header>
+        <CommonHeader></CommonHeader>
         <router-view></router-view>
-        <Footer></Footer>
+        <CommonFooter></CommonFooter>
     </div>
 </template>
 

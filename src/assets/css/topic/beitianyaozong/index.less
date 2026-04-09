@@ -1,6 +1,6 @@
-@import './var.less';
-.p-topic.v-index{
-    background-color: @bgcolor ;
+@import "./var.less";
+.p-topic.v-index {
+    background-color: @bgcolor;
     min-width: 1280px;
     overflow-x: auto;
 }
@@ -15,26 +15,25 @@
 }
 
 .shadow {
-    box-shadow: 0 0 20px rgba(0, 0, 0, .5);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
 .m-topic-leaf {
-    .full;
+    .size(100%);
     .pa;
     .z(2);
     .lt(0, 0);
     overflow: hidden;
     background: no-repeat top;
     background-size: cover;
-    background-image: url('@{kv_beitianyaozong}new/leaf.png');
+    background-image: url("@{kv_beitianyaozong}new/leaf.png");
     pointer-events: none;
 }
-
 
 .m-topic-header {
     .pr;
     .h(1162px);
-    background-image: url('@{kv_beitianyaozong}new/top.jpg');
+    background-image: url("@{kv_beitianyaozong}new/top.jpg");
     background-repeat: no-repeat;
     background-position: top center;
 
@@ -51,7 +50,7 @@
         .lt(50%, 655px);
         .ml(93px);
         .z(9);
-        background-image: url('@{kv_beitianyaozong}new/sleeve.png');
+        background-image: url("@{kv_beitianyaozong}new/sleeve.png");
         background-repeat: no-repeat;
         pointer-events: none;
     }
@@ -59,7 +58,7 @@
 
 .m-topic-content {
     .pt(69px);
-    background-image: url('@{kv_beitianyaozong}new/bg.jpg');
+    background-image: url("@{kv_beitianyaozong}new/bg.jpg");
     background-repeat: no-repeat;
     background-position: top center;
 }
@@ -70,7 +69,7 @@
     .pointer;
     .size(950px, 542px);
     .pb(30px);
-    background-image: url('@{kv_beitianyaozong}new/bgVideo.png');
+    background-image: url("@{kv_beitianyaozong}new/bgVideo.png");
     background-repeat: no-repeat;
 
     .u-textImg {
@@ -78,8 +77,6 @@
         .rt(-178px, -168px);
         .size(99px, 657px);
     }
-
-
 
     // img {
     //     .pa;
@@ -98,7 +95,6 @@
             .size(100%);
         }
     }
-
 }
 
 .m-topic-info {
@@ -115,7 +111,7 @@
             .dbi;
             .size(50px, 250px);
             .ml(15px);
-            background-image: url('@{kv_beitianyaozong}new/btnYaozong.png');
+            background-image: url("@{kv_beitianyaozong}new/btnYaozong.png");
             background-repeat: no-repeat;
         }
 
@@ -136,7 +132,7 @@
         }
 
         .u-btn5 {
-            background-image: url('@{kv_beitianyaozong}new/btnMore.png');
+            background-image: url("@{kv_beitianyaozong}new/btnMore.png");
             background-position: bottom left;
         }
     }
@@ -152,7 +148,7 @@
 
     .u-cont {
         .auto(x);
-        background-image: url('@{kv_beitianyaozong}new/bgScroll.png');
+        background-image: url("@{kv_beitianyaozong}new/bgScroll.png");
     }
 }
 
@@ -174,7 +170,7 @@
                 margin: 0 47px;
 
                 &.leiyu {
-                    background-image: url('@{kv_beitianyaozong}new/leiyu.png');
+                    background-image: url("@{kv_beitianyaozong}new/leiyu.png");
 
                     &.active {
                         background-position: 0 -42px;
@@ -182,7 +178,7 @@
                 }
 
                 &.wushi {
-                    background-image: url('@{kv_beitianyaozong}new/wushi.png');
+                    background-image: url("@{kv_beitianyaozong}new/wushi.png");
 
                     &.active {
                         background-position: 0 -43px;
@@ -200,10 +196,10 @@
             .u-img {
                 .pr;
                 .size(550px, 340px);
-                box-shadow: 0 5px 10px rgba(0, 0, 0, .6);
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.6);
 
                 img {
-                    .full;
+                    .size(100%);
                 }
 
                 .u-more {
@@ -211,7 +207,7 @@
                     .z(3);
                     .lb(16px, 22px);
                     .size(175px, 45px);
-                    background-image: url('@{kv_beitianyaozong}new/bossMore.png');
+                    background-image: url("@{kv_beitianyaozong}new/bossMore.png");
                 }
             }
 
@@ -268,8 +264,8 @@
                 .u-btn {
                     .size(65px, 340px);
                     .mr(8px);
-                    box-shadow: 0 5px 8px rgba(0, 0, 0, .4);
-                    background-image: url('@{kv_beitianyaozong}new/btnFuben.png');
+                    box-shadow: 0 5px 8px rgba(0, 0, 0, 0.4);
+                    background-image: url("@{kv_beitianyaozong}new/btnFuben.png");
                 }
 
                 .u-btn1 {
@@ -291,16 +287,13 @@
             .fr;
             .mr(55px);
             .size(909px, 52px);
-            background-image: url('@{kv_beitianyaozong}new/sword.png');
+            background-image: url("@{kv_beitianyaozong}new/sword.png");
         }
-
     }
-
-
 }
 
 .m-topic-pvp {
-    padding-top:200px;
+    padding-top: 200px;
     .w(1278px);
     .auto(x);
 
@@ -320,7 +313,7 @@
             .mb(34px);
 
             img {
-                .full;
+                .size(100%);
             }
         }
     }
@@ -339,7 +332,7 @@
             .lt(48px, 50px);
 
             img {
-                .full;
+                .size(100%);
             }
 
             .el-carousel__arrow {
@@ -348,20 +341,17 @@
             }
         }
     }
-
 }
 
 .m-topic-qrcode {
     .x;
-    background-image: url('@{kv_beitianyaozong}new/codebg.jpg');
+    background-image: url("@{kv_beitianyaozong}new/codebg.jpg");
     padding: 200px 0;
     background-color: rgba(255, 255, 255, 1);
 }
 
-
-@media screen and (max-width:1680px) {
+@media screen and (max-width: 1680px) {
     .m-topic-header {
-
         .u-textImg {
             .pa;
             .size(334px, 553px);
@@ -375,7 +365,7 @@
             .lt(50%, 655px);
             .ml(93px);
             .z(9);
-            background-image: url('@{kv_beitianyaozong}new/sleeve.png');
+            background-image: url("@{kv_beitianyaozong}new/sleeve.png");
             background-repeat: no-repeat;
             pointer-events: none;
         }
