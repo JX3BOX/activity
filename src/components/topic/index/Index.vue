@@ -16,7 +16,7 @@
                 <div class="u-list-client" v-if="client == 'origin'">
                     <span class="u-button u-std" @click="goStd"></span>
                 </div>
-                <div class="m-scroll" v-dragscroll ref="scrollRef">
+                <div class="m-scroll" ref="scrollRef" @mousedown="onDragStart" @mousemove="onDragMove" @mouseup="onDragEnd" @mouseleave="onDragEnd">
                     <div
                         class="u-item p-animations3"
                         v-for="(item, i) in list"
@@ -44,8 +44,10 @@
     </div>
 </template>
 <script>
-import { std, origin } from "@/assets/data/topic/topic.json";
-import { __cdn } from "@jx3box/jx3box-common/data/jx3box.json";
+import topicData from "@/assets/data/topic/topic.json";
+const { std, origin } = topicData;
+import jx3boxData from "@jx3box/jx3box-common/data/jx3box.json";
+const { __cdn } = jx3boxData;
 export default {
     name: "Index",
     data: function () {
@@ -57,6 +59,9 @@ export default {
             firstAnimation: "",
             listShow: "",
             client: "",
+            isDragging: false,
+            dragStartX: 0,
+            dragScrollLeft: 0,
         };
     },
     computed: {
@@ -121,6 +126,20 @@ export default {
         showImg(key) {
             if (!key) key = "normal";
             return __cdn + "design/topic/index/" + key + ".png";
+        },
+        onDragStart(e) {
+            this.isDragging = true;
+            this.dragStartX = e.pageX;
+            this.dragScrollLeft = this.$refs.scrollRef.scrollLeft;
+        },
+        onDragMove(e) {
+            if (!this.isDragging) return;
+            e.preventDefault();
+            const dx = e.pageX - this.dragStartX;
+            this.$refs.scrollRef.scrollLeft = this.dragScrollLeft - dx;
+        },
+        onDragEnd() {
+            this.isDragging = false;
         },
     },
 };

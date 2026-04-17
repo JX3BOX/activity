@@ -208,7 +208,7 @@ export default {
         }
     },
 
-    beforeDestroy() {
+    beforeUnmount() {
         // 移除 m-index 元素上的鼠标滚轮事件监听
         if (this.mIndexElement) {
             this.mIndexElement.removeEventListener("wheel", this.handleWheel);

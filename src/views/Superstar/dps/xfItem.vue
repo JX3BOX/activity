@@ -49,7 +49,8 @@ import xf from "@jx3box/jx3box-data/data/xf/xf.json";
 import { showTime } from "@jx3box/jx3box-common/js/moment";
 import { getThumbnail, getLink, showMountIcon } from "@jx3box/jx3box-common/js/utils";
 import { orderBy } from "lodash";
-import { colors_by_mount_name } from "@jx3box/jx3box-data/data/xf/colors.json";
+import colorData from "@jx3box/jx3box-data/data/xf/colors.json";
+const { colors_by_mount_name } = colorData;
 import xfmap from "@jx3box/jx3box-data/data/xf/xfid.json";
 export default {
     components: {},

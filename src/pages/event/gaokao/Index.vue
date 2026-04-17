@@ -46,7 +46,8 @@
 <script>
 import { isMiniProgram, isApp } from "@jx3box/jx3box-common/js/utils";
 import { getMenu } from "@jx3box/jx3box-common/js/system";
-import { papers } from "@/assets/data/event/exam.json";
+import examData from "@/assets/data/event/exam.json";
+const { papers } = examData;
 import { findKey } from "lodash";
 import Paper from "./Paper.vue";
 export default {

@@ -98,8 +98,10 @@
 </template>
 <script>
 import { authorLink, resolveImagePath } from "@jx3box/jx3box-common/js/utils";
-import { __Root } from "@jx3box/jx3box-common/data/jx3box.json";
-import { tags } from "@/assets/data/event/exam.json";
+import jx3boxData from "@jx3box/jx3box-common/data/jx3box.json";
+const { __Root } = jx3boxData;
+import examData from "@/assets/data/event/exam.json";
+const { tags } = examData;
 import { isMiniProgram, isApp } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "Card",

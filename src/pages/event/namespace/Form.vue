@@ -48,7 +48,7 @@
             </el-form-item>
             <el-form-item label="链接" prop="link">
                 <el-input v-model.lazy="form.link" @blur="checkLink(form.key)" clearable placeholder="请输入跳转地址">
-                    <template slot="prepend">https://</template>
+                    <template #prepend>https://</template>
                 </el-input>
             </el-form-item>
             <el-form-item label="描述">

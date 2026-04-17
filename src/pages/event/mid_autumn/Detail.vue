@@ -5,7 +5,7 @@
             <div class="u-main-box">
                 <transition name="fade" mode="out-in">
                     <Introduce v-if="achieve_id === 'intro'" :years="years"></Introduce>
-                    <Poem v-if="achieve_id === 'poem'" :years="years" @poem="poem" @back="back"></Poem>
+                    <Poem v-else-if="achieve_id === 'poem'" :years="years" @poem="poem" @back="back"></Poem>
                 </transition>
             </div>
         </div>

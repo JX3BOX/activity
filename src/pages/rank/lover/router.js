@@ -1,12 +1,5 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 import store from "./store.js";
-
-Vue.use(VueRouter);
-const VueRouterPush = VueRouter.prototype.push;
-VueRouter.prototype.push = function push(to) {
-    return VueRouterPush.call(this, to).catch((err) => err);
-};
 
 const Lover = () => import("./Lover.vue");
 const Info = () => import("@/views/Lover/Info.vue");
@@ -33,13 +26,12 @@ const routes = [
     { name: "draw", path: "/draw/:slug?", component: Draw },
 ];
 
-const router = new VueRouter({
-    mode: "history",
-    base: "/lover",
+const router = createRouter({
+    history: createWebHistory("/lover"),
     routes,
 });
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async (to, from) => {
     // 如果没有slug参数直接跳转到默认slug的info页面
     await Promise.all([
         store.dispatch("loadDefaultEventId"),
@@ -52,22 +44,20 @@ router.beforeEach(async (to, from, next) => {
     }
     // 访问列表不需要slug
     if (to.name === "list") {
-        return next();
+        return true;
     }
     if (!store.state.event) {
         // 如果slug对应的活动不存在，则跳转到默认活动
         const defaultSlug = store.getters.defaultEventSlug;
         if (defaultSlug) {
             if (["card", "draw"].includes(to.name)) {
-                next({ name: to.name, params: { slug: defaultSlug } });
-                return;
+                return { name: to.name, params: { slug: defaultSlug } };
             }
-            next({ name: "info", params: { slug: defaultSlug } });
-            return;
+            return { name: "info", params: { slug: defaultSlug } };
         }
     }
 
-    next();
+    return true;
 });
 
 export default router;

@@ -18,7 +18,9 @@
 
                     <div class="m-team-box">
                         <el-image class="u-team-img" :src="item.images[0]">
-                            <i slot="error"></i>
+                            <template #error>
+                                <i></i>
+                            </template>
                         </el-image>
                         <div class="m-team-info">
                             <div class="u-team">{{ item.team_name }}</div>

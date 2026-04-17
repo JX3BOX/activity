@@ -1,5 +1,4 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
+﻿import { createRouter, createWebHashHistory } from "vue-router";
 
 // 解决重复点击路由报错的BUG
 const originalPush = VueRouter.prototype.push;
@@ -11,7 +10,6 @@ const Index = () => import("./Index.vue");
 const Detail = () => import("./Detail.vue");
 const Poem = () => import("./PoemDetail.vue");
 
-Vue.use(VueRouter);
 
 const routes = [
     { name: "index", path: "/", component: Index },
@@ -19,7 +17,8 @@ const routes = [
     { name: "detail", path: "/:year/:tab", component: Detail },
 ];
 
-const router = new VueRouter({
+const router = createRouter({
+    history: createWebHashHistory(),
     routes,
 });
 

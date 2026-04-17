@@ -58,7 +58,8 @@
 </template>
 
 <script>
-import { __cdn as cdnLink } from "@jx3box/jx3box-common/data/jx3box.json";
+import jx3boxData from "@jx3box/jx3box-common/data/jx3box.json";
+const { __cdn: cdnLink } = jx3boxData;
 import { getSelectedList, batchCreateProcess } from "@/service/rank/lover";
 import { shuffle, chunk, sortBy } from "lodash";
 import { wait } from "@/utils/animation";

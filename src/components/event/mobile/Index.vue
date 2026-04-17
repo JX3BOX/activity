@@ -71,7 +71,7 @@ export default {
         this.handleScroll();
         this.load();
     },
-    beforeDestroy() {
+    beforeUnmount() {
         // 移除滚动事件监听
         this.$refs.scrollWrapper.removeEventListener('scroll', this.handleScroll);
     },

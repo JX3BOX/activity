@@ -9,12 +9,13 @@
             v-for="item in list"
             :style="'margin-right:' + gap + 'px'"
         >
-            <img :src="item.img | resolveImagePath" />
+            <img :src="resolveImagePath(item.img)" />
         </a>
     </div>
 </template>
 
 <script>
+import { resolveImagePath } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "ImgListX",
     props: ["data", "gap"],
@@ -22,6 +23,11 @@ export default {
     computed: {
         list: function () {
             return this.data || [];
+        },
+    },
+    methods: {
+        resolveImagePath: function (path) {
+            return resolveImagePath(path);
         },
     },
 };

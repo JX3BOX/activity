@@ -12,12 +12,14 @@
                 <img :src="getYearImgUrl('year.png')" :alt="year" />
                 <el-dropdown trigger="click" placement="bottom-start" @command="onChange">
                     <span class="u-change" @click.stop="clickChange"></span>
-                    <el-dropdown-menu slot="dropdown" v-if="!changeVisible">
+                    <template #dropdown v-if="!changeVisible">
+                        <el-dropdown-menu>
                         <el-dropdown-item v-for="(item, index) in list" :key="index" :command="item.year">
                             <span>{{ item.year }}</span>
                             <i class="el-icon-check"></i>
                         </el-dropdown-item>
-                    </el-dropdown-menu>
+                        </el-dropdown-menu>
+                    </template>
                 </el-dropdown>
             </div>
         </div>
@@ -88,15 +90,17 @@
             <img :src="getYearImgUrl('slogan.png')" class="bigbang-title" alt="剑三年度大事件2024" />
             <el-dropdown trigger="click" placement="bottom-start" @command="onChange">
                 <span class="u-change"></span>
-                <el-dropdown-menu slot="dropdown">
+                <template #dropdown>
+                    <el-dropdown-menu>
                     <el-dropdown-item v-for="(item, index) in list" :key="index" :command="item.year">
                         <span>{{ item.year }}</span>
                         <i class="el-icon-check"></i>
                     </el-dropdown-item>
-                </el-dropdown-menu>
+                    </el-dropdown-menu>
+                </template>
             </el-dropdown>
         </div>
-        <el-drawer class="m-bigbang-drawer" :visible.sync="changeVisible" direction="btt" :with-header="false">
+        <el-drawer class="m-bigbang-drawer" v-model:visible="changeVisible" direction="btt" :with-header="false">
             <div class="m-drawer">
                 <div class="u-item">切换年份</div>
                 <span
@@ -118,7 +122,8 @@
 import { getMenu } from "@jx3box/jx3box-common/js/system";
 import { debounce } from "lodash";
 import { getVoteInfo, submitVote } from "@/service/event/bigbang";
-import { __Root } from "@jx3box/jx3box-common/data/jx3box.json";
+import jx3boxData from "@jx3box/jx3box-common/data/jx3box.json";
+const { __Root } = jx3boxData;
 import { isMiniProgram, isApp } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "EventsPage",

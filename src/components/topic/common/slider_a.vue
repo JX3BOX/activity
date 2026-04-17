@@ -11,7 +11,7 @@
         >
             <el-carousel-item v-for="(item, i) in list" :key="i">
                 <a class="u-img" :href="item.link" target="_blank">
-                    <img :src="item.img | resolveImagePath" :alt="item.title" />
+                    <img :src="resolveImagePath(item.img)" :alt="item.title" />
                 </a>
             </el-carousel-item>
         </el-carousel>
@@ -29,6 +29,7 @@
 
 <script>
 import Bus from "@/utils/bus.js";
+import { resolveImagePath } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "TopicSliderA",
     props: ["data", "height", "type", "current"],
@@ -50,11 +51,14 @@ export default {
         checkImg: function (index) {
             this.$refs.elcarousel.setActiveItem(index);
         },
+        resolveImagePath: function (path) {
+            return resolveImagePath(path);
+        },
     },
     watch: {
         index: function () {
             if (this.type && this.type === "fb") {
-                Bus.$emit("updateBossId", this.data[this.index]["desc"]);
+                Bus.emit("updateBossId", this.data[this.index]["desc"]);
             }
         },
         current: {

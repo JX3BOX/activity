@@ -28,16 +28,18 @@
                             >{{ item.label }}</span
                         >
                     </div>
-                    <div class="u-search" slot="search-before" key="namespace-search">
+                    <div class="u-search">
                         <el-input
                             placeholder="请输入搜索内容"
                             v-model.trim.lazy="search"
                             clearable
                             @clear="onSearch"
-                            @keydown.native.enter="onSearch"
+                            @keydown.enter="onSearch"
                             class="u-input"
                         >
-                            <el-button slot="append" icon="el-icon-search" @click="onSearch"></el-button>
+                            <template #append>
+                                <el-button icon="el-icon-search" @click="onSearch"></el-button>
+                            </template>
                         </el-input>
                     </div>
                 </div>
@@ -80,12 +82,12 @@
                     :hide-on-single-page="true"
                     :page-size="per"
                     :total="total"
-                    :current-page.sync="page"
+                    v-model:current-page="page"
                 ></el-pagination>
             </div>
         </div>
         <!-- 弹窗 -->
-        <el-dialog title="铭牌注册" :visible.sync="visible" width="600" :before-close="close">
+        <el-dialog title="铭牌注册" v-model:visible="visible" width="600" :before-close="close">
             <Form :data="data" @close="close" @update="update" />
         </el-dialog>
     </div>

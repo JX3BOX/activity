@@ -1,6 +1,6 @@
 <template>
     <div class="m-two" :style="{ height }">
-        <slider
+        <EasySlider
             class="m-slider"
             :height="height"
             :autoplay="false"
@@ -9,7 +9,7 @@
             :touch="false"
             v-model="sliderIndex"
         >
-            <slider-item class="u-item">
+            <EasySliderItem class="u-item">
                 <img
                     :src="`${img}home_02_01.png`"
                     class="u-img p-animation"
@@ -20,16 +20,16 @@
                     class="u-people p-animation fadeIn"
                     :class="`u-people-${index}`"
                 />
-            </slider-item>
-            <slider-item class="u-item">
+            </EasySliderItem>
+            <EasySliderItem class="u-item">
                 <div class="u-video" v-html="video"></div>
                 <img
                     :src="`${img}home_02_people.png`"
                     class="u-people p-animation fadeIn"
                     :class="`u-people-${index}`"
                 />
-            </slider-item>
-            <slider-item class="u-item">
+            </EasySliderItem>
+            <EasySliderItem class="u-item">
                 <div class="u-icon">
                     <img src="https://img.jx3box.com/image/xf/10224.png" @click="change" />
                     <img src="https://img.jx3box.com/image/xf/10225.png" @click="change" />
@@ -54,13 +54,16 @@
                     class="u-people p-animation fadeIn"
                     :class="`u-people-${index}`"
                 />
-            </slider-item>
-        </slider>
+            </EasySliderItem>
+        </EasySlider>
     </div>
 </template>
 <script>
+import EasySlider from "@/components/topic/common/EasySlider.vue";
+import EasySliderItem from "@/components/topic/common/EasySliderItem.vue";
 export default {
     name: "twoView",
+    components: { EasySlider, EasySliderItem },
     props: ["moduleData"],
     data: function () {
         return {

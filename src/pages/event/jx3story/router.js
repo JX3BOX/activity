@@ -1,12 +1,10 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
+﻿import { createRouter, createWebHashHistory } from "vue-router";
 import { isMiniProgram, isApp } from "@jx3box/jx3box-common/js/utils";
-Vue.use(VueRouter);
 const Mini = () => import("./new/Mini.vue");
 const Index = () => import("./new/Index.vue");
 const Detail = () => import("./new/Detail.vue");
 
-const router = new VueRouter({
+const router = createRouter({
     routes: [
         {
             path: "/",

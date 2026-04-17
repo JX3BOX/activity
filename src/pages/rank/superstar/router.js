@@ -1,11 +1,4 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
-
-Vue.use(VueRouter);
-const VueRouterPush = VueRouter.prototype.push;
-VueRouter.prototype.push = function push(to) {
-    return VueRouterPush.call(this, to).catch((err) => err);
-};
+import { createRouter, createWebHistory } from "vue-router";
 
 const Join = () => import("@/views/Superstar/Join.vue");
 const Nav = () => import("@/views/Superstar/Nav.vue");
@@ -33,9 +26,8 @@ const routes = [
     },
 ];
 
-const router = new VueRouter({
-    // mode: "history",
-    base: "/superstar",
+const router = createRouter({
+    history: createWebHistory("/superstar"),
     routes,
 });
 

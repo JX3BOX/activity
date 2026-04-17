@@ -30,14 +30,20 @@
             <div class="u-title p-animation" v-animate="'fadeInDown'"></div>
             <!--            副本-->
             <div class="m-fb-mobile" v-if="isMobile">
-                <slider :sliderinit="sliderinit" @slide="slide">
-                    <slideritem v-for="(item, index) in pve" :key="index">
+                <EasySlider
+                    :autoplay="false"
+                    animation="fade"
+                    :indicators="false"
+                    v-model="pve_present"
+                    @change="onSliderChange"
+                >
+                    <EasySliderItem v-for="(item, index) in pve" :key="index">
                         <div class="u-box u-img" :class="item.name" v-animate="'p-animation fadeInDown'">
                             <div class="m-text-mobile">
                                 <!--                            <img v-animate="'p-animation fadeInDown'" class="u-textImg" :src="imgurl+'/p1/'+item.imgurl" />-->
                                 <div class="u-fb-title">{{ item.title }}</div>
                                 <div class="u-text p-animation" v-animate="'fadeInDown'">
-                                    <span v-html="item.mobileText">{{ item.mobileText }}</span>
+                                    <span v-html="item.mobileText"></span>
                                 </div>
                                 <!--                            <div class="m-page">-->
                                 <!--                                <div class="u-page-box">-->
@@ -49,10 +55,9 @@
                                 <!--                            </div>-->
                             </div>
                         </div>
-                    </slideritem>
+                    </EasySliderItem>
 
-                    <!-- slot  -->
-                </slider>
+                </EasySlider>
             </div>
             <!--            pc-->
             <div class="m-fb" v-for="(item, index) in pve" :key="item.name" v-show="index == pve_present" v-else>
@@ -258,7 +263,8 @@
 </template>
 
 <script>
-import { slider, slideritem } from "vue-concise-slider"; // 引入slider组件
+import EasySlider from "@/components/topic/common/EasySlider.vue";
+import EasySliderItem from "@/components/topic/common/EasySliderItem.vue";
 const KEY = "hengdaoduanlang";
 import { getTopic } from "@/service/topic";
 import { __cdn } from "@/utils/config";
@@ -266,8 +272,8 @@ export default {
     name: "Index",
     props: [],
     components: {
-        slider,
-        slideritem,
+        EasySlider,
+        EasySliderItem,
     },
     data: function () {
         return {
@@ -316,16 +322,6 @@ export default {
                         "晋代虞喜《志林》曰：“信安山有石室。”石室山即烂柯山，西临乌溪，黛峰翠屏，景色幽邃，亦是传说王质观棋起源之处。<br />武林众人忽然自五湖四海而来齐聚烂柯山下，究其原因，还是传闻中的神秘鬼市即将开市。鬼市，江湖中最为神秘的集市，三年一开，开则无所不卖，只要有足够的钱财，便可在这里买到任何东西。而除却珍玩异宝，鬼市此次还准备了一把不知又将掀起多少波澜的“神剑”……",
                 },
             ],
-            sliderinit: {
-                currentPage: 0, //当前页码
-                effect: "nest",
-                thresholdDistance: 100, //滑动判定距离
-                thresholdTime: 100, //滑动判定时间
-                loop: true, //循环滚动
-                infinite: 1, //无限滚动前后遍历数
-                slidesToScroll: 1, //每次滑动项数
-                pagination: false,
-            },
             pve_present: 0,
             skillUrl: "https://www.jx3box.com/bps/45238",
             dztext: {
@@ -545,8 +541,8 @@ export default {
                 this.navActive = 1;
             }
         },
-        slide(v) {
-            this.pve_present = v.currentPage;
+        onSliderChange(index) {
+            this.pve_present = index;
         },
         toastMsg() {
             alert("敬请期待");

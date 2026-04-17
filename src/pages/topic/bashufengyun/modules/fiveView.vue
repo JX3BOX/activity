@@ -1,6 +1,6 @@
 <template>
     <div class="m-five" :style="{ height }">
-        <slider
+        <EasySlider
             class="m-slider"
             :height="height"
             :autoplay="false"
@@ -9,7 +9,7 @@
             v-model="sliderIndex"
             :touch="false"
         >
-            <slider-item class="u-item" v-for="index in 6" :key="index">
+            <EasySliderItem class="u-item" v-for="index in 6" :key="index">
                 <template v-if="index == 1">
                     <img :src="`${img}home_05.png`" class="u-img p-animation fadeIn" />
                     <img :src="`${img}home_05_txt.png`" class="u-txt p-animation fadeIn" />
@@ -21,13 +21,16 @@
                         :class="`u-cont-${index}`"
                     />
                 </template>
-            </slider-item>
-        </slider>
+            </EasySliderItem>
+        </EasySlider>
     </div>
 </template>
 <script>
+import EasySlider from "@/components/topic/common/EasySlider.vue";
+import EasySliderItem from "@/components/topic/common/EasySliderItem.vue";
 export default {
     name: "fiveView",
+    components: { EasySlider, EasySliderItem },
     props: ["moduleData"],
     data: function () {
         return {

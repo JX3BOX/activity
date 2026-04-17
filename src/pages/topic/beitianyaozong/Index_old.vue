@@ -27,9 +27,11 @@
                             <div class="m-yaozong-top-right">
                                 <el-tabs class="m-yaozong-tabs" v-model="yaozong_tab">
                                     <el-tab-pane label="最新热点" name="concat">
-                                        <span slot="label">
-                                            <i class="el-icon-collection-tag"></i> 最新热点
-                                        </span>
+                                        <template #label>
+                                            <span>
+                                                <i class="el-icon-collection-tag"></i> 最新热点
+                                            </span>
+                                        </template>
                                         <text-list-y
                                             :data="data.news_1"
                                             :length="7"
@@ -37,15 +39,19 @@
                                         ></text-list-y>
                                     </el-tab-pane>
                                     <el-tab-pane label="药宗资讯" name="news">
-                                        <span slot="label">
-                                            <i class="el-icon-collection-tag"></i> 药宗资讯
-                                        </span>
+                                        <template #label>
+                                            <span>
+                                                <i class="el-icon-collection-tag"></i> 药宗资讯
+                                            </span>
+                                        </template>
                                         <text-list-y :data="data.news_2" :length="7"></text-list-y>
                                     </el-tab-pane>
                                     <!-- <el-tab-pane label="新增玩法" name="posts">
-                                        <span slot="label">
-                                            <i class="el-icon-collection-tag"></i> 新增玩法
-                                        </span>
+                                        <template #label>
+                                            <span>
+                                                <i class="el-icon-collection-tag"></i> 新增玩法
+                                            </span>
+                                        </template>
                                         <text-list-y :data="data.news_3" :length="7"></text-list-y>
                                     </el-tab-pane>-->
                                 </el-tabs>

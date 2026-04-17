@@ -23,7 +23,8 @@
 </template>
 
 <script>
-import { __cdn } from "@jx3box/jx3box-common/data/jx3box.json";
+import jx3boxData from "@jx3box/jx3box-common/data/jx3box.json";
+const { __cdn } = jx3boxData;
 import { getEvent, getIdFromSlug } from "@/service/rank/event.js";
 import { isNumber } from "lodash";
 export default {

@@ -66,7 +66,8 @@
 import { isMiniProgram, isApp } from "@jx3box/jx3box-common/js/utils";
 import User from "@jx3box/jx3box-common/js/user.js";
 import { vote } from "@/service/event/vote";
-import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
+import jx3boxData from "@jx3box/jx3box-common/data/jx3box.json";
+const { __imgPath } = jx3boxData;
 export default {
     inject: ["__imgRoot"],
     props: {

@@ -27,7 +27,7 @@
         </div>
 
         <!-- 弹出层界面 -->
-        <el-dialog :visible.sync="showDialog" custom-class="m-dialog">
+        <el-dialog v-model:visible="showDialog" custom-class="m-dialog">
             <div class="m-dialog-box" v-loading="loading">
                 <div class="m-dialog-close" @click="showDialog = false" title="取消"><i class="el-icon-close"></i></div>
                 <div class="m-dialog-content">
@@ -45,9 +45,7 @@
                         <div
                             class="u-frame"
                             title="点击复制"
-                            v-clipboard:copy="token"
-                            v-clipboard:success="onCopy"
-                            v-clipboard:error="onError"
+                            @click="copyToken"
                         >
                             <i class="el-icon-document-copy"></i>
                             {{ token }}
@@ -167,17 +165,18 @@ export default {
                     this.loading = false;
                 });
         },
-        onCopy: function (val) {
-            this.$notify({
-                title: "复制成功",
-                message: val.text,
-                type: "success",
-            });
-        },
-        onError: function () {
-            this.$notify.error({
-                title: "复制失败",
-                message: "请手动复制",
+        copyToken() {
+            navigator.clipboard.writeText(this.token).then(() => {
+                this.$notify({
+                    title: "复制成功",
+                    message: this.token,
+                    type: "success",
+                });
+            }).catch(() => {
+                this.$notify.error({
+                    title: "复制失败",
+                    message: "请手动复制",
+                });
             });
         },
         hanldMask(event) {

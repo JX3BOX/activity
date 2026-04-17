@@ -1,11 +1,8 @@
-import Vue from "vue";
-import Vuex from "vuex";
+import { createStore } from "vuex";
 import { getBreadcrumb } from "@jx3box/jx3box-common/js/system";
 import { getLoverEvents, getLoverEvent, getLoverRelationNet, getMyJoinRecord } from "@/service/rank/lover";
 import User from "@jx3box/jx3box-common/js/user";
 import { uniqBy } from "lodash";
-
-Vue.use(Vuex);
 
 let events_loading = false;
 let default_event_id_loading = false;
@@ -132,4 +129,4 @@ let store = {
     modules: {},
 };
 
-export default new Vuex.Store(store);
+export default createStore(store);

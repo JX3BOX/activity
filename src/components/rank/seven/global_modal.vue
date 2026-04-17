@@ -3,7 +3,7 @@
         width="1152px"
         :close-on-click-modal="false"
         :show-close="false"
-        :visible.sync="visible"
+        v-model:visible="visible"
         mode
         destroy-on-close
     >

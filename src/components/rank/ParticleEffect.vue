@@ -17,7 +17,7 @@ export default {
   mounted() {
     this.initAnimation()
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.destroyAnimation()
   },
   methods: {

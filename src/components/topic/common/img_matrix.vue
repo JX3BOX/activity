@@ -9,7 +9,7 @@
             >
                 <!-- 图片矩阵 -->
                 <a class="u-img" :href="item.link" target="_blank">
-                    <img :src="item.img | resolveImagePath" />
+                    <img :src="resolveImagePath(item.img)" />
                 </a>
             </el-col>
         </el-row>
@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import { resolveImagePath } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "ImgMatrix",
     props: ["data", "gap", "span", "length"],
@@ -31,6 +32,11 @@ export default {
                 data = data.slice(0, this.length);
             }
             return data;
+        },
+    },
+    methods: {
+        resolveImagePath: function (path) {
+            return resolveImagePath(path);
         },
     },
 };

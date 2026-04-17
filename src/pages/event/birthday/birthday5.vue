@@ -716,7 +716,7 @@
         </div>
 
         <!--领取礼品弹窗-->
-        <el-dialog title="领取赠礼" :visible.sync="getGiftVisible" class="m-gift-dialog">
+        <el-dialog title="领取赠礼" v-model:visible="getGiftVisible" class="m-gift-dialog">
             <el-form :model="getGiftForm" :rules="getGiftRules" ref="getGiftRef" label-position="top">
                 <div class="u-gift-count">
                     当前可领取次数：<b class="u-count" :class="{ isValid: getGiftNum }">{{ getGiftNum || 0 }}</b>
@@ -751,14 +751,16 @@
                     </div>
                 </el-form-item>
             </el-form>
-            <div slot="footer" class="dialog-footer">
-                <el-button @click="getGiftVisible = false">取 消</el-button>
-                <el-button type="primary" @click="getGiftSubmit" :disabled="!getGiftNum">确 定</el-button>
-            </div>
+            <template #footer>
+                <div class="dialog-footer">
+                    <el-button @click="getGiftVisible = false">取 消</el-button>
+                    <el-button type="primary" @click="getGiftSubmit" :disabled="!getGiftNum">确 定</el-button>
+                </div>
+            </template>
         </el-dialog>
 
         <!-- 地址表单 -->
-        <el-dialog custom-class="m-address-dialog" :visible.sync="addAddressVisible" title="我的地址" width="750px">
+        <el-dialog custom-class="m-address-dialog" v-model:visible="addAddressVisible" title="我的地址" width="750px">
             <el-form :model="addAddressForm" :rules="addAddressRules" ref="addAddressRef" label-position="top">
                 <el-form-item label="联系人" prop="contact_name">
                     <el-input placeholder="请输入名称" v-model="addAddressForm.contact_name"></el-input>
@@ -778,10 +780,12 @@
                     </div>
                 </el-form-item>
             </el-form>
-            <span slot="footer" class="m-footer">
-                <el-button @click="addAddressVisible = false">取 消</el-button>
-                <el-button type="primary" @click="addAddressSubmit">确 定</el-button>
-            </span>
+            <template #footer>
+                <span class="m-footer">
+                    <el-button @click="addAddressVisible = false">取 消</el-button>
+                    <el-button type="primary" @click="addAddressSubmit">确 定</el-button>
+                </span>
+            </template>
         </el-dialog>
 
         <!-- 查看大图 -->
@@ -820,12 +824,10 @@ import {
 } from "@/service/event/birthday";
 import User from "@jx3box/jx3box-common/js/user";
 import addressList from "@/assets/data/event/address.json";
-import ElImageViewer from "element-ui/packages/image/src/image-viewer";
 import BindWxMp from "./components/BindWxMp.vue";
 
 export default {
     components: {
-        ElImageViewer,
         BindWxMp,
     },
     inject: ["__imgRoot", "__Links", "__imgPath"],
@@ -1002,7 +1004,7 @@ export default {
 
         this.Init();
     },
-    beforeDestroy() {
+    beforeUnmount() {
         const element = document.querySelector(".birthday");
         element.removeEventListener("scroll", this.handleScroll);
     },

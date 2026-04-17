@@ -134,7 +134,7 @@
 </template>
 
 <script>
-import { slider, slideritem } from 'vue-concise-slider'// 引入slider组件
+
 import { showMountIcon } from "@jx3box/jx3box-common/js/utils";//引入心法图标
 const KEY = "riyuemingzun";
 import { getTopic } from "@/service/topic";
@@ -142,8 +142,6 @@ export default {
     name: "Index",
     props: [],
     components: {
-        // slider,
-        // slideritem
     },
     data: function () {
         return {

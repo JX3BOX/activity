@@ -1,18 +1,21 @@
 <template>
     <div class="m-wechat-content" v-loading="loading">
         <el-image class="u-qr" v-if="ticket" :src="qrcodeValue" lazy>
-            <div slot="error" class="u-error">
-                <i class="el-icon-picture-outline"></i>
-            </div>
+            <template #error>
+                <div class="u-error">
+                    <i class="el-icon-picture-outline"></i>
+                </div>
+            </template>
         </el-image>
     </div>
 </template>
 
 <script>
 import { getWechatQrcode } from "@/service/event/birthday";
-import { SSE } from "@jx3box/jx3box-common/js/https";
+import { SSE } from "@jx3box/jx3box-common/js/sse";
 import User from "@jx3box/jx3box-common/js/user";
-import { __cms } from "@jx3box/jx3box-common/data/jx3box.json";
+import jx3boxData from "@jx3box/jx3box-common/data/jx3box.json";
+const { __cms } = jx3boxData;
 const base = `https://mp.weixin.qq.com/cgi-bin/showqrcode`;
 export default {
     name: 'BindWxMp',
@@ -38,7 +41,7 @@ export default {
     mounted() {
         this.loadQrcode();
     },
-    beforeDestroy() {
+    beforeUnmount() {
         if (this.sse) {
             this.sse.disconnect();
         }

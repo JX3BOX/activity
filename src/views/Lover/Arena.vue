@@ -92,7 +92,8 @@
 <script>
 import { cloneDeep, keyBy, uniq, uniqBy } from "lodash";
 import { getChallengeList, getJoinList, getSelectedList } from "@/service/rank/lover";
-import { __cdn as cdnLink } from "@jx3box/jx3box-common/data/jx3box.json";
+import jx3boxData from "@jx3box/jx3box-common/data/jx3box.json";
+const { __cdn: cdnLink } = jx3boxData;
 import dayjs from "dayjs";
 
 export default {

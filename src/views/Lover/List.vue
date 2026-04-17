@@ -19,7 +19,8 @@
 </template>
 
 <script>
-import { __cdn as cdnLink } from "@jx3box/jx3box-common/data/jx3box.json";
+import jx3boxData from "@jx3box/jx3box-common/data/jx3box.json";
+const { __cdn: cdnLink } = jx3boxData;
 export default {
     name: "LoverEventList",
     components: {},

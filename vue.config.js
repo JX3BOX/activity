@@ -43,20 +43,20 @@ const pages = {
         template: "public/rank.html",
         filename: "rank/index.html",
     },
-    // lover: {
-    //     title: "剑三情缘杯 - JX3BOX",
-    //     entry: "src/pages/rank/lover/index.js",
-    //     template: "public/lover.html",
-    //     filename: "lover/index.html",
-    // },
-    // superstar: {
-    //     title: "剑三门派天团 - JX3BOX",
-    //     entry: "src/pages/rank/superstar/index.js",
-    //     template: "public/superstar.html",
-    //     filename: "superstar/index.html",
-    // },
-    // ...topicPages,
-    // ...eventPages,
+    lover: {
+        title: "剑三情缘杯 - JX3BOX",
+        entry: "src/pages/rank/lover/index.js",
+        template: "public/lover.html",
+        filename: "lover/index.html",
+    },
+    superstar: {
+        title: "剑三门派天团 - JX3BOX",
+        entry: "src/pages/rank/superstar/index.js",
+        template: "public/superstar.html",
+        filename: "superstar/index.html",
+    },
+    ...topicPages,
+    ...eventPages,
 };
 
 const path = require("path");
@@ -170,6 +170,9 @@ function addStyleResource(rule) {
         path.resolve(__dirname, "./node_modules/@jx3box/jx3box-common/css/mixin.less"),
         path.resolve(__dirname, "./src/assets/css/var.less"),
         path.resolve(__dirname, "./src/assets/css/mixin.less"),
+        path.resolve(__dirname, "./src/assets/css/rank/var.less"),
+        path.resolve(__dirname, "./src/assets/css/topic/var.less"),
+        path.resolve(__dirname, "./src/assets/css/event/var.less")
     );
     rule.use("style-resource").loader("style-resources-loader").options({
         patterns: preload_styles,

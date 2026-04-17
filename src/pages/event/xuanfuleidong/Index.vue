@@ -48,7 +48,8 @@ import vote from "./components/vote.vue";
 import winner from "./components/winner.vue";
 import Miniprogram from "./components/miniprogram.vue";
 import { shuffle } from "lodash";
-import { __cdn } from "@jx3box/jx3box-common/data/jx3box.json";
+import jx3boxData from "@jx3box/jx3box-common/data/jx3box.json";
+const { __cdn } = jx3boxData;
 import User from "@jx3box/jx3box-common/js/user.js";
 export default {
     name: "Index",

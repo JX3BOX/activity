@@ -252,7 +252,8 @@
 </template>
 
 <script>
-import { mp, xf, play, pvp, pvx, box } from "@/assets/data/event/welcome.json";
+import welcomeData from "@/assets/data/event/welcome.json";
+const { mp, xf, play, pvp, pvx, box } = welcomeData;
 export default {
     name: "Index",
     inject: ["__imgRoot"],

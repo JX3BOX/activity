@@ -1,7 +1,7 @@
 <template>
     <div class="p-superstar-nav">
         <div class="m-logo">
-            <img :src="imgurl + 'nav/1.png'" height="183" />
+            <img :src="imgurl + 'nav/1.png'" style="height: 183px" />
         </div>
 
         <!-- 入场券列表 -->

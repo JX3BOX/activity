@@ -40,14 +40,14 @@ export default {
         },
     },
     mounted() {
-        Bus.$on("updateBossId", (id) => {
+        Bus.on("updateBossId", (id) => {
             this.bossId = id;
         });
 
         this.init();
     },
-    beforeDestroy() {
-        Bus.$off("updateBossId");
+    beforeUnmount() {
+        Bus.off("updateBossId");
     },
 };
 </script>

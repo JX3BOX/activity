@@ -9,7 +9,7 @@
         >
             <el-carousel-item v-for="(item, i) in list" :key="i">
                 <a class="u-img" :href="item.link" target="_blank">
-                    <img :src="item.img | resolveImagePath" :alt="item.title" />
+                    <img :src="resolveImagePath(item.img)" :alt="item.title" />
                 </a>
             </el-carousel-item>
         </el-carousel>
@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import { resolveImagePath } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "TopicSliderB",
     props: ["data", "height", "autoplay"],
@@ -29,7 +30,11 @@ export default {
             return this.data || [];
         },
     },
-    methods: {},
+    methods: {
+        resolveImagePath: function (path) {
+            return resolveImagePath(path);
+        },
+    },
     watch: {},
 };
 </script>

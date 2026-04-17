@@ -29,8 +29,8 @@
                                     <span class="u-label">队伍名</span>
                                     <span class="u-value">{{ joinRecord.team_name }}</span>
                                 </div>
-                                <template v-for="item in uniqBy(joinRecord.teammeta_user_list, 'id')">
-                                    <div class="m-info-item u-team-member" :key="item.id">
+                                <template v-for="item in uniqBy(joinRecord.teammeta_user_list, 'id')" :key="item.id">
+                                    <div class="m-info-item u-team-member">
                                         <span class="u-label">角色名</span>
                                         <span class="u-value">
                                             <el-image class="u-avatar" :src="showAvatar(item.avatar)"></el-image>
@@ -178,7 +178,7 @@ import server_std from "@jx3box/jx3box-data/data/server/server_std.json";
 import User from "@jx3box/jx3box-common/js/user.js";
 import { joinLover, getMyProfile } from "@/service/rank/lover";
 import { authorLink, showAvatar } from "@jx3box/jx3box-common/js/utils";
-import uploadImage from "@jx3box/jx3box-comment-ui/src/components/upload.vue";
+import uploadImage from "@jx3box/jx3box-ui/src/comment/Upload.vue";
 import certificate from "@/components/rank/lover/certificate.vue";
 import { uniqBy } from "lodash";
 import { joinRecord, updateJoinRecord } from "@/service/rank/join";

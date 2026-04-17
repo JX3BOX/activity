@@ -159,7 +159,8 @@ import { getBreadcrumb } from "@/service/event/topic";
 import { getBlindBox, goodLucky, getMyLucky } from "@/service/pay";
 import { cloneDeep, throttle, zip } from "lodash";
 import History from "./History.vue";
-import { __Root } from "@jx3box/jx3box-common/data/jx3box.json";
+import jx3boxData from "@jx3box/jx3box-common/data/jx3box.json";
+const { __Root } = jx3boxData;
 export default {
     name: "Index",
     inject: ["__imgRoot"],
@@ -412,7 +413,7 @@ export default {
             this.history = false;
         },
     },
-    destroyed() {
+    unmounted() {
         clearInterval(this.scrollInterval);
     },
 };

@@ -3,8 +3,8 @@
         <CommonHeader></CommonHeader>
         <div class="m-lover-kv">
             <div class="m-menus wp">
-                <template v-for="item in 2">
-                    <div class="m-menu" :key="item">
+                <template v-for="item in 2" :key="item">
+                    <div class="m-menu">
                         <router-link
                             :class="['u-menu', { active: item.key == page }]"
                             :to="{ name: item.key, params: { slug: slug } }"

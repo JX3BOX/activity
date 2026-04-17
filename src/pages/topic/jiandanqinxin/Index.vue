@@ -211,7 +211,8 @@
 </template>
 
 <script>
-import { __cdn, __Root } from "@jx3box/jx3box-common/data/jx3box.json";
+import jx3boxData from "@jx3box/jx3box-common/data/jx3box.json";
+const { __cdn, __Root } = jx3boxData;
 import PageTitle from "./components/PageTitle.vue";
 const KEY = "jiandanqinxin";
 import { getTopic } from "@/service/topic";

@@ -19,8 +19,10 @@
 
 <script>
 import { wxNewPage } from '@/utils/minprogram';
-import { std, origin } from "@/assets/data/topic/topic.json";
-import { __cdn } from "@jx3box/jx3box-common/data/jx3box.json";
+import topicData from "@/assets/data/topic/topic.json";
+const { std, origin } = topicData;
+import jx3boxData from "@jx3box/jx3box-common/data/jx3box.json";
+const { __cdn } = jx3boxData;
 export default {
     data() {
         return {
@@ -48,7 +50,7 @@ export default {
         // 初始检查滚动位置
         this.handleScroll();
     },
-    beforeDestroy() {
+    beforeUnmount() {
         // 移除滚动事件监听
         this.$refs.scrollWrapper.removeEventListener('scroll', this.handleScroll);
     },

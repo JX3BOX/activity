@@ -8,7 +8,7 @@
                         :style="{ color: item.color, 'font-weight': ~~item.icon ? 'bold' : 'normal' }"
                         >{{ item.title }}</span
                     >
-                    <span class="u-date" v-if="withDate">{{ (item.time || item.updated_at) | formatDate }}</span>
+                    <span class="u-date" v-if="withDate">{{ formatDate(item.time || item.updated_at) }}</span>
                     <span class="u-author" v-if="withAuthor">{{ item.author }}</span>
                 </a>
             </li>

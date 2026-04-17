@@ -1,5 +1,3 @@
-Vue.config.productionTip = false;
-Vue.config.devtools = true;
 import { isMiniProgram, isApp } from "@jx3box/jx3box-common/js/utils";
 
 // 检测小程序环境并动态添加viewport元标签
@@ -11,31 +9,71 @@ if (isMiniProgram() || isApp()) {
 
     isApp() && localStorage.setItem("__env", "app");
 }
-// 第三方UI组件
-import Vue from "vue";
-import ElementUI from "element-ui";
-Vue.use(ElementUI);
 
-// 通用UI模块
-import JX3BOX_UI from "@jx3box/jx3box-common-ui";
-import "@jx3box/jx3box-common/css/element.css";
+import { createApp } from "vue";
+import { createHead } from "@vueuse/head";
+import { createJx3boxUiI18n, getJx3boxUiAvailableLocales, install as JX3BOX_UI } from "@jx3box/jx3box-ui";
+import { mergeAppLocaleMessages } from "@/locale";
+import { initRouterI18nHead } from "@/router/i18n-head";
+
 import "@jx3box/jx3box-common/css/normalize.css";
-Vue.use(JX3BOX_UI);
+import "@jx3box/jx3box-common/css/font.css";
+import "@jx3box/jx3box-common/css/element-plus-theme.scss";
+import "@jx3box/jx3box-common/css/element-fonticon.css";
+
+import ElementPlus from "element-plus";
+import zhCn from "element-plus/es/locale/lang/zh-cn";
+import en from "element-plus/es/locale/lang/en";
+import zhTw from "element-plus/es/locale/lang/zh-tw";
+import vi from "element-plus/es/locale/lang/vi";
+import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 
 import reporter from "@jx3box/jx3box-common/js/reporter";
-reporter.install(Vue);
 
-// 数据与路由
-// import router from "./router";
-// import store from "./store";
 // 导入两个组件
 import MobileApp from "./MobileApp.vue";
 import DesktopApp from "./App.vue";
 
 // 根据条件选择使用哪个组件
 const App = isMiniProgram() || isApp() ? MobileApp : DesktopApp;
-new Vue({
-    // router,
-    // store,
-    render: (h) => h(App),
-}).$mount("#app");
+
+const app = createApp(App);
+
+const head = createHead();
+app.use(head);
+
+const langKey = (localStorage.getItem("lang") || "zh-cn").toLowerCase();
+const langMap = {
+    "zh-cn": "zh-CN",
+    "en-us": "en-US",
+    "zh-tw": "zh-TW",
+    vi: "vi",
+};
+const preferredLocale = langMap[langKey] || "zh-CN";
+const supportedLocales = getJx3boxUiAvailableLocales();
+const locale = supportedLocales.includes(preferredLocale) ? preferredLocale : "zh-CN";
+
+const i18n = createJx3boxUiI18n({ locale });
+mergeAppLocaleMessages(i18n);
+i18n.global.missingWarn = false;
+i18n.global.fallbackWarn = false;
+app.use(i18n);
+
+app.use(JX3BOX_UI);
+
+const elementLocaleMap = {
+    "zh-CN": zhCn,
+    "en-US": en,
+    "zh-TW": zhTw,
+    vi,
+};
+app.use(ElementPlus, {
+    locale: elementLocaleMap[locale] || zhCn,
+});
+
+for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+    app.component(key, component);
+}
+
+reporter.install(app);
+app.mount("#app");

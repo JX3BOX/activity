@@ -44,7 +44,7 @@
             </div>
         </div>
 
-        <el-drawer class="m-exam-drawer" :visible.sync="changeExamVisible" direction="btt" :with-header="false">
+        <el-drawer class="m-exam-drawer" v-model:visible="changeExamVisible" direction="btt" :with-header="false">
             <div class="m-drawer">
                 <div class="m-drawer-title">年份</div>
                 <div class="m-drawer-select">

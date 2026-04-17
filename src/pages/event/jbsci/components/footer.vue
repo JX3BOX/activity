@@ -6,11 +6,13 @@
                 <span>{{ item.name }}</span>
             </div>
         </div>
-        <el-dialog class="m-dialog m-jbsci-dialog" :visible.sync="visible" width="840px">
-            <div slot="title" class="dialog-title">
-                <span class="u-label">{{ showData.label }}</span>
-                <span>{{ showData.name }}</span>
-            </div>
+        <el-dialog class="m-dialog m-jbsci-dialog" v-model:visible="visible" width="840px">
+            <template #title>
+                <div class="dialog-title">
+                    <span class="u-label">{{ showData.label }}</span>
+                    <span>{{ showData.name }}</span>
+                </div>
+            </template>
             <div class="u-content" v-html="showData.desc"></div>
         </el-dialog>
     </div>

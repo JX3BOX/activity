@@ -53,8 +53,8 @@
                 :max="100"
                 :show-tooltip="false"
                 @change="handleSliderChange"
-                @mousedown.native="isDragging = true"
-                @mouseup.native="isDragging = false"
+                @mousedown="isDragging = true"
+                @mouseup="isDragging = false"
             ></el-slider>
             <div class="m-play">
                 <div class="u-play-button">

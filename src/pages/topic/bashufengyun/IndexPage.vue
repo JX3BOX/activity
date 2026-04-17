@@ -79,7 +79,7 @@
                     </el-carousel-item>
                     <!-- 第五屏 -->
                     <el-carousel-item name="4">
-                        <slider
+                        <EasySlider
                             class="u-three m-slider"
                             :height="carousel"
                             :autoplay="false"
@@ -88,7 +88,7 @@
                             :indicators="false"
                             v-model="threeIndex"
                         >
-                            <slider-item class="u-item" v-for="index in 4" :key="index">
+                            <EasySliderItem class="u-item" v-for="index in 4" :key="index">
                                 <div class="u-all">
                                     <img :src="`${img}home_03_0${index + 1}_num.png?num`" class="u-num" />
                                     <img
@@ -101,8 +101,8 @@
                                         :class="index ? `u-people-${index + 1}  p-animation fadeInLeft` : ''"
                                     />
                                 </div>
-                            </slider-item>
-                        </slider>
+                            </EasySliderItem>
+                        </EasySlider>
                     </el-carousel-item>
                     <!-- 第六屏 -->
                     <el-carousel-item name="5">
@@ -147,7 +147,7 @@
                     ></el-carousel-item>
                     <!-- 第九屏 -->
                     <el-carousel-item name="8">
-                        <slider
+                        <EasySlider
                             class="u-five m-slider"
                             :height="carousel"
                             :autoplay="false"
@@ -156,32 +156,32 @@
                             :indicators="false"
                             v-model="fiveIndex"
                         >
-                            <slider-item class="u-item" v-for="index in 5" :key="index">
+                            <EasySliderItem class="u-item" v-for="index in 5" :key="index">
                                 <img
                                     :src="`${img}home_05_0${index + 1}.png`"
                                     class="u-cont p-animation fadeIn"
                                     :class="`u-cont-${index + 1}`"
                                 />
-                            </slider-item> </slider
+                            </EasySliderItem> </EasySlider
                     ></el-carousel-item>
                     <!-- 第十屏 -->
                     <el-carousel-item name="9">
                         <div class="u-six u-item">
-                            <slider
+                            <EasySlider
                                 class="m-slider"
                                 :height="carousel"
                                 animation="fade"
                                 :touch="false"
-                                interval="5000"
+                                :interval="5000"
                                 :indicators="false"
                                 v-model="sixIndex"
                             >
-                                <slider-item class="u-item" v-for="(item, i) in sixImg" :key="i">
+                                <EasySliderItem class="u-item" v-for="(item, i) in sixImg" :key="i">
                                     <a :href="item.link" target="_blank" class="u-link">
                                         <img :src="item.src" class="u-bg" />
                                     </a>
-                                </slider-item>
-                            </slider></div
+                                </EasySliderItem>
+                            </EasySlider></div
                     ></el-carousel-item>
                 </el-carousel>
             </div>
@@ -190,8 +190,11 @@
 </template>
 <script>
 import { __cdn } from "@/utils/config";
+import EasySlider from "@/components/topic/common/EasySlider.vue";
+import EasySliderItem from "@/components/topic/common/EasySliderItem.vue";
 export default {
     name: "Index",
+    components: { EasySlider, EasySliderItem },
     data() {
         return {
             two: true,

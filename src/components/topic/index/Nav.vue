@@ -20,8 +20,10 @@
     </div>
 </template>
 <script>
-import { new_topic, std_topic, origin_topic } from "@/assets/data/topic/topic.json";
-import { __cdn } from "@jx3box/jx3box-common/data/jx3box.json";
+import topicData from "@/assets/data/topic/topic.json";
+const { new_topic, std_topic, origin_topic } = topicData;
+import jx3boxData from "@jx3box/jx3box-common/data/jx3box.json";
+const { __cdn } = jx3boxData;
 export default {
     name: "demo",
     data: function () {

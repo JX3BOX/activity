@@ -389,7 +389,7 @@ export default {
             }, 100);
         });
     },
-    beforeDestroy() {
+    beforeUnmount() {
         if (this.resizeObserver) {
             this.resizeObserver.disconnect();
             this.resizeObserver = null;

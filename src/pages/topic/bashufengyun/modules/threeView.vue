@@ -1,6 +1,6 @@
 <template>
     <div class="m-three" :style="{ height }">
-        <slider
+        <EasySlider
             class="m-slider"
             :height="height"
             :autoplay="false"
@@ -9,7 +9,7 @@
             :indicators="false"
             v-model="sliderIndex"
         >
-            <slider-item class="u-item" v-for="index in 5" :key="index">
+            <EasySliderItem class="u-item" v-for="index in 5" :key="index">
                 <template v-if="index == 1">
                     <img :src="`${img}home_03_0${index}.png`" class="u-img p-animation fadeIn" />
                     <img :src="`${img}home_03_txt.png`" class="u-txt p-animation fadeIn" />
@@ -23,13 +23,16 @@
                         :class="`u-people-${index}`"
                     />
                 </template>
-            </slider-item>
-        </slider>
+            </EasySliderItem>
+        </EasySlider>
     </div>
 </template>
 <script>
+import EasySlider from "@/components/topic/common/EasySlider.vue";
+import EasySliderItem from "@/components/topic/common/EasySliderItem.vue";
 export default {
     name: "threeView",
+    components: { EasySlider, EasySliderItem },
     props: ["moduleData"],
     data: function () {
         return {

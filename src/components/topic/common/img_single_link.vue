@@ -1,11 +1,12 @@
 <template>
     <a class="m-topic-img-single-link" :style="styles" :href="link">
         <!-- 带链接版单图片 -->
-        <img :src="url | resolveImagePath" :alt="alt" />
+        <img :src="resolveImagePath(url)" :alt="alt" />
     </a>
 </template>
 
 <script>
+import { resolveImagePath } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "ImgSingleLink",
     props: ["data", "width", "height", "alt", "href", "src"],
@@ -35,6 +36,11 @@ export default {
             } else {
                 return this.data?.[0]?.["link"];
             }
+        },
+    },
+    methods: {
+        resolveImagePath: function (path) {
+            return resolveImagePath(path);
         },
     },
 };

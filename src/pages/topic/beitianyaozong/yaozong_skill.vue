@@ -8,7 +8,7 @@
             <ul class="u-tabs">
                 <li v-for="(item,i) in tabs" :key="item">
                     <img
-                        :src="item | resolveImagePath"
+                        :src="resolveImagePath(item)"
                         @click="setActive(i)"
                         :class="{active : i==active}"
                     />
@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import { resolveImagePath } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "YaozongSkill",
     props: ["data"],
@@ -50,6 +51,9 @@ export default {
     methods: {
         setActive: function (i) {
             this.active = i;
+        },
+        resolveImagePath: function (path) {
+            return resolveImagePath(path);
         },
     },
     
