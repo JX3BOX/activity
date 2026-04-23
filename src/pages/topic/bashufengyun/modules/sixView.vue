@@ -1,5 +1,5 @@
 <template>
-    <div class="m-six" :style="{ height }">
+    <div class="m-six" :style="{ minHeight: height }">
         <img class="u-txt p-animation fadeIn" :src="`${img}home_06_txt.png`" />
     </div>
 </template>

@@ -257,7 +257,7 @@ export default {
                 this.tabImgLink = this.pvebanner[0].link;
             });
         },
-        slide(v) { 
+        slide(v) {
             this.pve_present = v.currentPage
         },
         toastMsg() {
@@ -267,7 +267,7 @@ export default {
         goAnchor(index) {
             // 用 class="m-jump" 添加锚点
             let jump = document.querySelectorAll('.m-jump');
-            let total = jump[index].offsetTop 
+            let total = jump[index].offsetTop
             if (index == 0) {
                 total = 0
             }
@@ -310,7 +310,7 @@ export default {
             this.jjsc_present = val;
         },
     },
-    
+
     created: function () { },
     mounted: function () {
         // this.init();

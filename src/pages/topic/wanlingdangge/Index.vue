@@ -557,7 +557,7 @@ export default {
             if (zoom < 0.5) {
                 zoom = 0.5
             }
-            el[0].style = `zoom: ${zoom}; margin-top:${64/zoom}px`
+            el[0].style = `zoom: ${zoom}; margin-top:${60/zoom}px`
             const pt = document.getElementsByClassName('p-topic');
             pt[0].style = 'min-width: 1920px'
         },
@@ -565,7 +565,7 @@ export default {
             this.currentJq = jq;
         }
     },
-    
+
     created: function () {
         this.init();
     },

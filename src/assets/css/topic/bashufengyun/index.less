@@ -4,9 +4,11 @@ body {
 
 .m-bashufengyun {
     .pt(64px);
-    .flex;
-    align-items: center;
-    overflow: hidden;
+    overflow: visible;
+
+    .m-bashufengyun__section {
+        width: 100%;
+    }
 
     .fullPageContainer {
         width: 100%;
@@ -26,13 +28,7 @@ body {
     }
 }
 @media screen and (orientation: portrait) {
-    html {
-        .size(100%);
-        overflow: hidden;
-    }
     body {
-        .size(100%);
-        overflow: hidden;
         -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
     a:focus,
@@ -41,17 +37,5 @@ body {
     div:focus {
         -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
         -webkit-user-modify: read-write-plaintext-only;
-    }
-    .p-topic {
-        .size(100%);
-        .pr;
-        #box {
-            .pa;
-            .lt(0);
-        }
-        .c-header,
-        .p-topic-footer {
-            .none;
-        }
     }
 }

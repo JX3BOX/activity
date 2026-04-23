@@ -2,14 +2,8 @@
     <!-- 专题页 -->
     <div class="p-topic" :class="'v-' + page_name">
         <CommonHeader :overlayEnable="true"></CommonHeader>
-        <div id="box">
-            <router-view></router-view>
-        </div>
-        <div class="p-topic-footer">
-            <div class="wp">
-                <CommonFooter></CommonFooter>
-            </div>
-        </div>
+        <router-view></router-view>
+        <CommonFooter></CommonFooter>
     </div>
 </template>
 

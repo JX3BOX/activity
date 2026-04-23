@@ -1,42 +1,26 @@
 <template>
-    <div class="m-five" :style="{ height }">
-        <EasySlider
-            class="m-slider"
-            :height="height"
-            :autoplay="false"
-            animation="fade"
-            :indicators="false"
-            v-model="sliderIndex"
-            :touch="false"
-        >
-            <EasySliderItem class="u-item" v-for="index in 6" :key="index">
-                <template v-if="index == 1">
+    <div class="m-five" :style="{ minHeight: height }">
+        <div class="m-stack">
+            <section class="u-item" v-for="slideIndex in 6" :key="slideIndex">
+                <template v-if="slideIndex == 1">
                     <img :src="`${img}home_05.png`" class="u-img p-animation fadeIn" />
                     <img :src="`${img}home_05_txt.png`" class="u-txt p-animation fadeIn" />
                 </template>
                 <template v-else>
                     <img
-                        :src="`${img}home_05_0${index}.png`"
+                        :src="`${img}home_05_0${slideIndex}.png`"
                         class="u-cont p-animation fadeIn"
-                        :class="`u-cont-${index}`"
+                        :class="`u-cont-${slideIndex}`"
                     />
                 </template>
-            </EasySliderItem>
-        </EasySlider>
+            </section>
+        </div>
     </div>
 </template>
 <script>
-import EasySlider from "@/components/topic/common/EasySlider.vue";
-import EasySliderItem from "@/components/topic/common/EasySliderItem.vue";
 export default {
     name: "fiveView",
-    components: { EasySlider, EasySliderItem },
     props: ["moduleData"],
-    data: function () {
-        return {
-            sliderIndex: 0,
-        };
-    },
     computed: {
         img() {
             return this.moduleData.img;
@@ -49,15 +33,17 @@ export default {
 </script>
 <style lang="less">
 .m-five {
-    .h(800px);
+    min-height: 800px;
     background-image: url("@{kv_bashufengyun}home_05_bg.png");
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
-    .m-slider {
+    .m-stack {
         .w(100%);
         .u-item {
             .pr;
+            min-height: 800px;
+            overflow: hidden;
             .u-img {
                 height: 100%;
             }
@@ -90,26 +76,6 @@ export default {
             }
             &.u-cont-6 {
                 margin: -335px 0 0 -467px;
-            }
-        }
-        .slider-btn {
-            outline: none;
-            .lt(50%,0);
-            background: none;
-            &:hover .slider-icon {
-                border-color: #000;
-            }
-            .slider-icon {
-                .size(30px);
-                border-left: 6px solid rgba(0, 0, 0, 0.8);
-                border-bottom: 6px solid rgba(0, 0, 0, 0.8);
-                transition: border 0.2s;
-            }
-            &.slider-btn-left {
-                .ml(-40%);
-            }
-            &.slider-btn-right {
-                .ml(40%);
             }
         }
     }

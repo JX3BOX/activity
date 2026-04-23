@@ -1,42 +1,26 @@
 <template>
-    <div class="m-four" :style="{ height }">
-        <EasySlider
-            class="m-slider"
-            :height="height"
-            :autoplay="false"
-            animation="fade"
-            :indicators="false"
-                :touch="false"
-            v-model="sliderIndex"
-        >
-            <EasySliderItem class="u-item" v-for="index in 4" :key="index">
-                <template v-if="index == 1">
-                    <img :src="`${img}home_04_0${index}.png`" class="u-img p-animation fadeIn" />
+    <div class="m-four" :style="{ minHeight: height }">
+        <div class="m-stack">
+            <section class="u-item" v-for="slideIndex in 4" :key="slideIndex">
+                <template v-if="slideIndex == 1">
+                    <img :src="`${img}home_04_0${slideIndex}.png`" class="u-img p-animation fadeIn" />
                     <img :src="`${img}home_04_txt.png`" class="u-txt p-animation fadeIn" />
                 </template>
                 <template v-else>
                     <img
-                        :src="`${img}home_04_0${index}.png`"
+                        :src="`${img}home_04_0${slideIndex}.png`"
                         class="u-cont p-animation fadeIn"
-                        :class="`u-cont-${index}`"
+                        :class="`u-cont-${slideIndex}`"
                     />
                 </template>
-            </EasySliderItem>
-        </EasySlider>
+            </section>
+        </div>
     </div>
 </template>
 <script>
-import EasySlider from "@/components/topic/common/EasySlider.vue";
-import EasySliderItem from "@/components/topic/common/EasySliderItem.vue";
 export default {
     name: "fourView",
-    components: { EasySlider, EasySliderItem },
     props: ["moduleData"],
-    data: function () {
-        return {
-            sliderIndex: 0,
-        };
-    },
     computed: {
         img() {
             return this.moduleData.img;
@@ -49,17 +33,19 @@ export default {
 </script>
 <style lang="less">
 .m-four {
-    .h(800px);
+    min-height: 800px;
     background-image: url("@{kv_bashufengyun}home_04_bg.png");
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
-    .m-slider {
+    .m-stack {
         .w(100%);
         .u-item {
             .pr;
+            min-height: 800px;
             .flex;
             align-items: center;
+            overflow: hidden;
             .u-img {
                 height: 100%;
             }
@@ -86,23 +72,6 @@ export default {
             }
             &.u-cont-4 {
                 margin: -348px 0 0 -415px;
-            }
-        }
-        .slider-btn {
-            outline: none;
-            .lt(50%,0);
-            background: none;
-            .slider-icon {
-                .size(30px);
-                border-left: 6px solid rgba(255, 255, 255, 0.8);
-                border-bottom: 6px solid rgba(255, 255, 255, 0.8);
-                transition: border 0.2s;
-            }
-            &.slider-btn-left {
-                .ml(-40%);
-            }
-            &.slider-btn-right {
-                .ml(40%);
             }
         }
     }

@@ -57,8 +57,8 @@
         <div class="boss" v-timer v-animate="'fadeIn'">
             <img loading="lazy" class="bg-head" :src="imgurl + '2.5/bg-mask@2x.png'" alt="" />
             <img loading="lazy" class="bg-foot" :src="imgurl + '2.5/bg-mask2@2x.png'" alt="" />
-            <div class="bg-content" :style="{backgroundImage: `url(${imgurl}2.5/bg3-${active}@2x.jpg)`}" alt="" ref="bg-content" ></div>
-            <div class="bg-boss" :style="{backgroundImage: `url(${imgurl}2.5/content3-${active}@2x.png`}" alt="" ref="bg-boss" ></div>
+            <div class="bg-content" :style="{ backgroundImage: `url(${imgurl}2.5/bg3-${active}@2x.jpg)` }" ref="bg-content"></div>
+            <div class="bg-boss" :style="{ backgroundImage: `url(${imgurl}2.5/content3-${active}@2x.png)` }" ref="bg-boss"></div>
             <div class="boss-names">
                 <div
                     v-for="item in 6"
@@ -178,6 +178,12 @@ export default {
                 this.resetAnimation();
             }, 5000);
         },
+    },
+    mounted() {
+        this.active = 1;
+        this.$nextTick(() => {
+            this.resetAnimation();
+        });
     },
 };
 </script>

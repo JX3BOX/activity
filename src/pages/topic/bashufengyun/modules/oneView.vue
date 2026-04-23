@@ -1,5 +1,5 @@
 <template>
-    <div class="m-one" :style="{ height }">
+    <div class="m-one" :style="{ minHeight: height }">
         <div class="u-item">
             <img class="u-fire p-animation fadeIn" :src="`${img}home_01_fire.png`" />
             <img class="u-txt p-animation fadeIn" :src="`${img}home_01_txt.png`" />
@@ -31,7 +31,8 @@ export default {
     background-size: cover;
     .u-item {
         .pr;
-        .size(100%);
+        min-height: inherit;
+        width: 100%;
         .flex;
         align-items: center;
         justify-content: center;

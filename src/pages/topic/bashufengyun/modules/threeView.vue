@@ -1,44 +1,28 @@
 <template>
-    <div class="m-three" :style="{ height }">
-        <EasySlider
-            class="m-slider"
-            :height="height"
-            :autoplay="false"
-            animation="fade"
-            :touch="false"
-            :indicators="false"
-            v-model="sliderIndex"
-        >
-            <EasySliderItem class="u-item" v-for="index in 5" :key="index">
-                <template v-if="index == 1">
-                    <img :src="`${img}home_03_0${index}.png`" class="u-img p-animation fadeIn" />
+    <div class="m-three" :style="{ minHeight: height }">
+        <div class="m-stack">
+            <section class="u-item" v-for="slideIndex in 5" :key="slideIndex">
+                <template v-if="slideIndex == 1">
+                    <img :src="`${img}home_03_0${slideIndex}.png`" class="u-img p-animation fadeIn" />
                     <img :src="`${img}home_03_txt.png`" class="u-txt p-animation fadeIn" />
                 </template>
                 <template v-else>
-                    <img :src="`${img}home_03_0${index}_num.png`" class="u-num p-animation fadeIn" />
-                    <img :src="`${img}home_03_0${index}.png`" class="p-animation fadeInRight" />
+                    <img :src="`${img}home_03_0${slideIndex}_num.png`" class="u-num p-animation fadeIn" />
+                    <img :src="`${img}home_03_0${slideIndex}.png`" class="p-animation fadeInRight" />
                     <img
-                        :src="`${img}home_03_0${index}_people.png`"
+                        :src="`${img}home_03_0${slideIndex}_people.png`"
                         class="u-people p-animation fadeInLeft"
-                        :class="`u-people-${index}`"
+                        :class="`u-people-${slideIndex}`"
                     />
                 </template>
-            </EasySliderItem>
-        </EasySlider>
+            </section>
+        </div>
     </div>
 </template>
 <script>
-import EasySlider from "@/components/topic/common/EasySlider.vue";
-import EasySliderItem from "@/components/topic/common/EasySliderItem.vue";
 export default {
     name: "threeView",
-    components: { EasySlider, EasySliderItem },
     props: ["moduleData"],
-    data: function () {
-        return {
-            sliderIndex: 0,
-        };
-    },
     computed: {
         img() {
             return this.moduleData.img;
@@ -51,15 +35,17 @@ export default {
 </script>
 <style lang="less">
 .m-three {
-    .h(800px);
+    min-height: 800px;
     background-image: url("@{kv_bashufengyun}home_03_bg.png");
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
-    .m-slider {
+    .m-stack {
         .w(100%);
         .u-item {
             .pr;
+            min-height: 800px;
+            overflow: hidden;
             .u-txt {
                 .pa;
                 .lt(50%);
@@ -89,26 +75,6 @@ export default {
             }
             &.u-people-5 {
                 margin: -328px 0 0 -568px;
-            }
-        }
-        .slider-btn {
-            outline: none;
-            .lt(50%,0);
-            background: none;
-            &:hover .slider-icon {
-                border-color: #f50;
-            }
-            .slider-icon {
-                .size(30px);
-                border-left: 6px solid rgba(255, 85, 0, 0.8);
-                border-bottom: 6px solid rgba(255, 85, 0, 0.8);
-                transition: border 0.2s;
-            }
-            &.slider-btn-left {
-                .ml(-40%);
-            }
-            &.slider-btn-right {
-                .ml(40%);
             }
         }
     }

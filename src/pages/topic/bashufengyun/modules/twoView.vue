@@ -1,15 +1,7 @@
 <template>
-    <div class="m-two" :style="{ height }">
-        <EasySlider
-            class="m-slider"
-            :height="height"
-            :autoplay="false"
-            animation="fade"
-            :indicators="false"
-            :touch="false"
-            v-model="sliderIndex"
-        >
-            <EasySliderItem class="u-item">
+    <div class="m-two" :style="{ minHeight: height }">
+        <div class="m-stack">
+            <section class="u-item u-item-1">
                 <img
                     :src="`${img}home_02_01.png`"
                     class="u-img p-animation"
@@ -18,59 +10,41 @@
                 <img
                     :src="`${img}home_02_people.png`"
                     class="u-people p-animation fadeIn"
-                    :class="`u-people-${index}`"
+                    :class="`u-people-${index + 1}`"
                 />
-            </EasySliderItem>
-            <EasySliderItem class="u-item">
+            </section>
+            <section class="u-item u-item-2">
                 <div class="u-video" v-html="video"></div>
                 <img
                     :src="`${img}home_02_people.png`"
                     class="u-people p-animation fadeIn"
-                    :class="`u-people-${index}`"
+                    :class="`u-people-${index + 2}`"
                 />
-            </EasySliderItem>
-            <EasySliderItem class="u-item">
+            </section>
+            <section class="u-item u-item-3">
                 <div class="u-icon">
-                    <img src="https://img.jx3box.com/image/xf/10224.png" @click="change" />
-                    <img src="https://img.jx3box.com/image/xf/10225.png" @click="change" />
+                    <img src="https://img.jx3box.com/image/xf/10224.png" />
+                    <img src="https://img.jx3box.com/image/xf/10225.png" />
                 </div>
                 <a href="http://" target="_blank">
-                    <img
-                        v-show="show"
-                        :src="`${img}home_02_02.png`"
-                        class="u-img"
-                        :class="show ? 'p-animation fadeInRight' : ''"
-                /></a>
+                    <img :src="`${img}home_02_02.png`" class="u-img p-animation fadeInRight" />
+                </a>
                 <a href="http://" target="_blank">
-                    <img
-                        v-show="!show"
-                        :src="`${img}home_02_03.png`"
-                        class="u-img"
-                        :class="show ? '' : 'p-animation fadeInRight'"
-                    />
+                    <img :src="`${img}home_02_03.png`" class="u-img u-img-alt p-animation fadeInRight" />
                 </a>
                 <img
                     :src="`${img}home_02_people.png`"
                     class="u-people p-animation fadeIn"
-                    :class="`u-people-${index}`"
+                    :class="`u-people-${index + 3}`"
                 />
-            </EasySliderItem>
-        </EasySlider>
+            </section>
+        </div>
     </div>
 </template>
 <script>
-import EasySlider from "@/components/topic/common/EasySlider.vue";
-import EasySliderItem from "@/components/topic/common/EasySliderItem.vue";
 export default {
     name: "twoView",
-    components: { EasySlider, EasySliderItem },
     props: ["moduleData"],
-    data: function () {
-        return {
-            sliderIndex: 0,
-            show: true,
-        };
-    },
     computed: {
         img() {
             return this.moduleData.img;
@@ -85,11 +59,6 @@ export default {
             return `<iframe src="//player.bilibili.com/player.html?aid=513903294&bvid=BV17g41117o3&cid=786179224&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>`;
         },
     },
-    methods: {
-        change() {
-            this.show = !this.show;
-        },
-    },
 };
 </script>
 <style lang="less">
@@ -98,13 +67,15 @@ export default {
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
-    .m-slider {
+    .m-stack {
         .w(100%);
         .u-item {
             .pr;
+            min-height: 800px;
             .flex;
             align-items: center;
             justify-content: center;
+            overflow: hidden;
             .u-icon {
                 .pa;
                 .z(3);
@@ -145,22 +116,10 @@ export default {
                     .size(100%);
                 }
             }
-        }
-        .slider-btn {
-            outline: none;
-            .lt(50%,0);
-            background: none;
-            .slider-icon {
-                .size(30px);
-                border-left: 6px solid rgba(255, 255, 255, 0.8);
-                border-bottom: 6px solid rgba(255, 255, 255, 0.8);
-                transition: border 0.2s;
-            }
-            &.slider-btn-left {
-                .ml(-45%);
-            }
-            &.slider-btn-right {
-                .ml(42%);
+            .u-img-alt {
+                .pa;
+                .lb(50%, 90px);
+                margin-left: 60px;
             }
         }
     }

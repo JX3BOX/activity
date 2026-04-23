@@ -3,11 +3,7 @@
     <div class="p-topic" :class="'v-' + page_name">
         <CommonHeader :overlayEnable="true"></CommonHeader>
         <router-view></router-view>
-        <div class="p-topic-footer">
-            <div class="wp">
-                <CommonFooter></CommonFooter>
-            </div>
-        </div>
+        <CommonFooter></CommonFooter>
     </div>
 </template>
 

@@ -2,7 +2,6 @@
     max-width: 100%;
     min-width: 1280px;
     margin-top:@header-height;
-    .h(calc(100vh - 123px));
     overflow: hidden;
     .fade-enter-active,
     .fade-leave-active {
@@ -280,6 +279,10 @@
             }
         }
     }
+}
+
+.m-block{
+    .h(calc(100vh - 123px)) !important;
 }
 
 @media screen and (orientation: portrait) {
