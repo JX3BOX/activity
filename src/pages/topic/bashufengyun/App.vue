@@ -1,15 +1,11 @@
 <template>
     <!-- 专题页 -->
     <div class="p-topic" :class="'v-' + page_name">
-        <Header :overlayEnable="true"></Header>
+        <CommonHeader :overlayEnable="true"></CommonHeader>
         <div id="box">
             <router-view></router-view>
         </div>
-        <div class="p-topic-footer">
-            <div class="wp">
-                <CommonFooter></CommonFooter>
-            </div>
-        </div>
+        <CommonFooter></CommonFooter>
     </div>
 </template>
 
@@ -46,5 +42,6 @@ export default {
 };
 </script>
 <style lang="less">
+@import "~@/assets/css/topic/app.less";
 @import "~@/assets/css/topic/common/animation.less";
 </style>

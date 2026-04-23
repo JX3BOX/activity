@@ -1,7 +1,7 @@
 <template>
     <!-- 专题页 -->
     <div :class="`p-event ${isPhone ? 'isPhone' : ''} v-${page_name}`">
-        <Header :overlayEnable="true"></Header>
+        <CommonHeader :overlayEnable="true"></CommonHeader>
         <!-- <img :src="imgRoot + '/main/main__bg.png'" class="m-bg" /> -->
         <router-view></router-view>
         <!-- <div class="p-event-footer">

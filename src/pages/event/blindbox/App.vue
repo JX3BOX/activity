@@ -1,7 +1,7 @@
 <template>
     <!-- 专题页 -->
     <div class="p-event mobile" :class="'v-' + page_name">
-        <Header :overlayEnable="true"></Header>
+        <CommonHeader :overlayEnable="true"></CommonHeader>
         <router-view></router-view>
         <!-- <div class="p-event-footer">
             <div class="wp">

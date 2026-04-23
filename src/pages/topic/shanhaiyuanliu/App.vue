@@ -1,7 +1,7 @@
 <template>
     <!-- 专题页 -->
     <div class="p-topic" :class="'v-' + page_name">
-        <Header :overlayEnable="true"></Header>
+        <CommonHeader :overlayEnable="true"></CommonHeader>
         <div id="box">
             <router-view></router-view>
         </div>
@@ -56,5 +56,6 @@ export default {
 </script>
 
 <style lang="less">
+@import "~@/assets/css/topic/app.less";
 @import "~@/assets/css/topic/common/common.less";
 </style>

@@ -79,7 +79,7 @@ export default {
         border-bottom: 8px solid #9899f2;
         background: rgba(0, 0, 0, 0.2);
 
-        /deep/ b {
+        :deep(b) {
             .fz(22px);
         }
         .u-title {

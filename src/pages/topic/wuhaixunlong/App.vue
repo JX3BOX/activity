@@ -1,7 +1,7 @@
 <template>
 	<!-- 专题页 -->
 	<div class="p-topic" :class="'v-' + page_name">
-		<Header :overlayEnable="true"></Header>
+		<CommonHeader :overlayEnable="true"></CommonHeader>
 		<router-view></router-view>
 		<div class="p-topic-footer">
 				<Footer darkMode></Footer>
@@ -29,7 +29,7 @@ export default {
 	},
 	watch: {},
 	methods: {},
-	
+
 	created: function () {
 		postStat("topic", "wuhaixunlong");
 	},
@@ -38,5 +38,6 @@ export default {
 </script>
 
 <style lang="less">
+@import "~@/assets/css/topic/app.less";
 @import "~@/assets/css/topic/common/common.less";
 </style>

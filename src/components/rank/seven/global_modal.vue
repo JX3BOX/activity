@@ -96,10 +96,10 @@ export default {
         object-fit: contain;
     }
 }
-/deep/.el-dialog__header {
+:deep(.el-dialog__header) {
     display: none;
 }
-/deep/.el-dialog {
+:deep(.el-dialog) {
     background: none;
     border: none;
     padding: 0;

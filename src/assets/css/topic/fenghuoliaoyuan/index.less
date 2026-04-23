@@ -90,7 +90,7 @@
                     }
                 }
                 .u-item {
-                    /deep/.el-carousel__mask {
+                    :deep(.el-carousel__mask) {
                         .none;
                     }
                     filter: brightness(50%);
@@ -103,22 +103,22 @@
                         width: 881px;
                     }
                 }
-                /deep/ .el-carousel__container {
+                :deep(.el-carousel__container) {
                     margin-bottom: 30px;
                 }
-                /deep/ .el-carousel__indicator--horizontal button {
+                :deep(.el-carousel__indicator--horizontal button) {
                     .size(15px);
                     .r(50%);
                 }
-                /deep/ .el-carousel__indicator.is-active button {
+                :deep(.el-carousel__indicator.is-active button) {
                     background-color: rgba(255, 255, 255, 1);
                 }
-                /deep/ .el-carousel__indicators--outside .el-carousel__indicator:hover button,
-                /deep/ .el-carousel__indicators--outside button {
+                :deep(.el-carousel__indicators--outside .el-carousel__indicator:hover button),
+                :deep(.el-carousel__indicators--outside button) {
                     .tm(1);
                     background-color: rgba(255, 222, 180, 1);
                 }
-                /deep/ .el-carousel__indicators--outside .el-carousel__indicator:hover button {
+                :deep(.el-carousel__indicators--outside .el-carousel__indicator:hover button) {
                     background-color: rgba(255, 222, 180, 1);
                 }
             }

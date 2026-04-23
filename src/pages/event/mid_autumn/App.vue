@@ -1,7 +1,7 @@
 <template>
     <!-- 中秋诗词专题页 -->
     <div class="p-event midAutumn" :class="'v-' + page_name" v-loading="loading">
-        <Header :overlayEnable="true"></Header>
+        <CommonHeader :overlayEnable="true"></CommonHeader>
         <!-- <router-view></router-view> -->
         <transition name="fade" mode="out-in" v-if="!loading">
             <router-view class="c-midAutumn" :years="years"></router-view>

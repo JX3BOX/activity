@@ -250,7 +250,7 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-/deep/ .el-carousel__arrow {
+:deep(.el-carousel__arrow) {
     background: transparent !important;
     background-color: transparent !important;
     font-size: 0 !important;
@@ -264,40 +264,40 @@ export default {
     z-index: 9 !important;
     top: 50% !important;
 }
-/deep/ .el-carousel__arrow--left {
+:deep(.el-carousel__arrow--left) {
     transform: translateY(-50%) rotate(180deg) !important;
     background-image: url("@{kv_yixueshangyang}arrow.png") !important;
 }
 
-/deep/ .el-carousel__arrow--right {
+:deep(.el-carousel__arrow--right) {
     transform: translateY(-50%) !important;
     background-image: url("@{kv_yixueshangyang}arrow.png") !important;
 }
 
 .m-section {
-    /deep/ .el-carousel__arrow {
+    :deep(.el-carousel__arrow) {
         width: 79px !important;
         height: 58px !important;
     }
-    /deep/ .el-carousel__arrow--left {
+    :deep(.el-carousel__arrow--left) {
         left: 20px !important;
     }
 
-    /deep/ .el-carousel__arrow--right {
+    :deep(.el-carousel__arrow--right) {
         right: 20px !important;
     }
     &-3 {
-        /deep/ .el-carousel__arrow {
+        :deep(.el-carousel__arrow) {
             width: 40px !important;
             height: 29px !important;
         }
-        /deep/ .el-carousel__arrow--left {
+        :deep(.el-carousel__arrow--left) {
             left: 50% !important;
             top: 90px !important;
             margin: 0 0 0 -200px !important;
         }
 
-        /deep/ .el-carousel__arrow--right {
+        :deep(.el-carousel__arrow--right) {
             right: 50% !important;
             top: 90px !important;
             margin: 0 -200px 0 0 !important;
@@ -305,34 +305,34 @@ export default {
     }
     &-4,
     &-5 {
-        /deep/ .el-carousel__arrow {
+        :deep(.el-carousel__arrow) {
             width: 40px !important;
             height: 29px !important;
         }
-        /deep/ .el-carousel__arrow--left {
+        :deep(.el-carousel__arrow--left) {
             left: 50% !important;
             margin: 0 0 0 -650px !important;
             top: -185px !important;
         }
 
-        /deep/ .el-carousel__arrow--right {
+        :deep(.el-carousel__arrow--right) {
             right: 50% !important;
             margin: 0 -650px 0 0 !important;
             top: -185px !important;
         }
-        /deep/ .el-carousel__item {
+        :deep(.el-carousel__item) {
             animation: none !important;
             transition: none !important;
         }
-        /deep/ .el-carousel__container {
+        :deep(.el-carousel__container) {
             transition: none !important;
             transform: none !important;
         }
-        /deep/ .el-carousel__item.is-active {
+        :deep(.el-carousel__item.is-active) {
             animation: none !important;
             transition: none !important;
         }
-        /deep/ .el-carousel__track {
+        :deep(.el-carousel__track) {
             transition: none !important;
             transform: none !important;
         }

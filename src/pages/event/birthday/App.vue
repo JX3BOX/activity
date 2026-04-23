@@ -1,7 +1,7 @@
 <template>
     <!-- 周年专题页 -->
     <div class="p-event birthday" :class="'v-' + page_name">
-        <Header :overlayEnable="true"></Header>
+        <CommonHeader :overlayEnable="true"></CommonHeader>
         <transition name="fade" mode="out-in">
             <router-view class="c-birthday"></router-view>
         </transition>

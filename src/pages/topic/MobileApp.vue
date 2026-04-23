@@ -1,5 +1,5 @@
 <template>
-    <div id="app">
+    <div id="app" class="p-topic">
         <CommonHeader></CommonHeader>
         <div class="p-topic-container_mobile">
             <Index />
@@ -17,6 +17,8 @@ export default {
 </script>
 
 <style lang="less">
+@import "~@/assets/css/topic/app.less";
+
 .v-miniprogram {
     body {
         height: 100vh;

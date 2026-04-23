@@ -1,7 +1,7 @@
 <template>
     <!-- 专题页 -->
     <div class="p-event" :class="'v-' + page_name">
-        <Header :overlayEnable="true"></Header>
+        <CommonHeader :overlayEnable="true"></CommonHeader>
         <router-view></router-view>
         <Footer darkMode></Footer>
     </div>

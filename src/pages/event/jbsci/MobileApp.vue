@@ -1,6 +1,6 @@
 <template>
     <div class="p-event" :class="'v-' + page_name">
-        <Header :overlayEnable="true"></Header>
+        <CommonHeader :overlayEnable="true"></CommonHeader>
         <div class="m-init" v-if="mark" @click="mark = false">
             <div class="m-mark-title">
                 <p>JX3BOX SCIENCE</p>
