@@ -10,6 +10,7 @@ if (isMiniProgram() || isApp()) {
     isApp() && localStorage.setItem("__env", "app");
 }
 
+
 import { createApp } from "vue";
 import { createHead } from "@vueuse/head";
 import { createJx3boxUiI18n, getJx3boxUiAvailableLocales, install as JX3BOX_UI } from "@jx3box/jx3box-ui";
@@ -32,8 +33,8 @@ import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 import reporter from "@jx3box/jx3box-common/js/reporter";
 
 // 导入两个组件
-import MobileApp from "./MobileApp.vue";
-import DesktopApp from "./App.vue";
+import MobileApp from "./index/MobileApp.vue";
+import DesktopApp from "./index/App.vue";
 
 // 根据条件选择使用哪个组件
 const App = isMiniProgram() || isApp() ? MobileApp : DesktopApp;

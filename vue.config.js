@@ -2,7 +2,7 @@ const topics = require("./src/assets/data/topic/topic_map.json");
 const events = require("./src/assets/data/event/event_map.json");
 const topicPages = {
     topic: {
-        title: "JX3BOX - 魔盒专题导航",
+        title: "JX3BOX - 魔盒资料片专题",
         entry: `src/pages/topic/main.js`,
         template: "public/pc.html",
         filename: `topic/index.html`,
@@ -20,7 +20,7 @@ topics.forEach((topic) => {
 
 const eventPages = {
     event: {
-        title: "JX3BOX - 魔盒专题导航",
+        title: "JX3BOX - 魔盒活动专题",
         entry: `src/pages/event/main.js`,
         template: "public/pc.html",
         filename: `event/index.html`,
@@ -31,7 +31,7 @@ events.forEach((event) => {
     eventPages[event.key] = {
         title: event.title + " » 魔盒（JX3BOX） - 一站式剑网3资源工具站",
         entry: `src/pages/event/${event.key}/index.js`,
-        template: "public/pc.html",
+        template: event.template || "public/pc.html",
         filename: `event/${event.key}/index.html`,
     };
 });

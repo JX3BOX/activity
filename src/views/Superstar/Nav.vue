@@ -62,7 +62,7 @@ export default {
             });
         },
         eventLink: function (val) {
-            return "/superstar/#/" + val;
+            return "/superstar/" + val;
         },
     },
 };

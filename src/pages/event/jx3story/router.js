@@ -5,6 +5,7 @@ const Index = () => import("./new/Index.vue");
 const Detail = () => import("./new/Detail.vue");
 
 const router = createRouter({
+    history: createWebHashHistory(),
     routes: [
         {
             path: "/",

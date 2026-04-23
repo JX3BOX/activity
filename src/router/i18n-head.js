@@ -1,5 +1,36 @@
 import { ref, watch } from "vue";
 import settings from "@/settings";
+import topicMap from "@/assets/data/topic/topic_map.json";
+import eventMap from "@/assets/data/event/event_map.json";
+
+const topicTitleMap = Object.freeze(
+    topicMap.reduce((acc, item) => {
+        if (item?.key && item?.title) {
+            acc[item.key] = item.title;
+        }
+        return acc;
+    }, {})
+);
+
+const eventTitleMap = Object.freeze(
+    eventMap.reduce((acc, item) => {
+        if (item?.key && item?.title) {
+            acc[item.key] = item.title;
+        }
+        return acc;
+    }, {})
+);
+
+function resolveMappedTitleByPathname(pathname) {
+    const path = String(pathname || "");
+    const topicMatch = path.match(/\/topic\/([^/]+)/);
+    if (topicMatch) return topicTitleMap[topicMatch[1]] || "";
+
+    const eventMatch = path.match(/\/event\/([^/]+)/);
+    if (eventMatch) return eventTitleMap[eventMatch[1]] || "";
+
+    return "";
+}
 
 function normalizeHtmlLang(locale) {
     if (!locale) return "zh-CN";
@@ -47,7 +78,9 @@ function buildHeadObjFromRoute(to, i18n) {
     const rawKeywords = rawKeywordsKey ? i18n.global.t(rawKeywordsKey) : "";
     const rawDescription = rawDescriptionKey ? i18n.global.t(rawDescriptionKey) : "";
 
-    const title = isMissingI18nValue(rawTitle, rawTitleKey) ? settings?.title : rawTitle;
+    const pathname = typeof window !== "undefined" ? window.location.pathname : "";
+    const fallbackTitle = resolveMappedTitleByPathname(pathname) || settings?.title;
+    const title = isMissingI18nValue(rawTitle, rawTitleKey) ? fallbackTitle : rawTitle;
     const keywords = isMissingI18nValue(rawKeywords, rawKeywordsKey) ? settings?.keywords : rawKeywords;
     const description = isMissingI18nValue(rawDescription, rawDescriptionKey) ? settings?.description : rawDescription;
 

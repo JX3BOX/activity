@@ -14,13 +14,12 @@
                 <h3>签约名单</h3>
             </div>
 
-            <a :href="item.link" target="_blank" class="m-content-item" v-for="(item, i) in users[active]" :key="i">
-                <div class="m-info" :class="{ sign: item.sign }">
-                    <user-avatar class="u-avatar" :src="item.avatar" :size="60" />
+            <a :href="getLink(item)" target="_blank" class="m-content-item" v-for="(item, i) in list" :key="i">
+                <div class="m-info" :class="{ sign: getUser(item).sign }">
+                    <user-avatar class="u-avatar" :src="getUser(item).avatar" :size="60" />
                     <div class="u-info">
-                        <h4>
-                            <span> {{ item.name }}</span>
-                        </h4>
+                        <span>{{ getName(item) }}</span>
+                        <p v-if="isDirectMode && item.desc" class="u-desc">{{ item.desc }}</p>
                     </div>
                 </div>
             </a>
@@ -33,7 +32,7 @@ import userAvatar from "@/components/event/avatar.vue";
 import { uniq } from "lodash";
 import { getUsers } from "@/service/event/topic";
 import { __Root } from "@/utils/config";
-import { showDate } from "@jx3box/jx3box-common/js/moment";
+
 export default {
     name: "authors",
     props: ["data"],
@@ -41,25 +40,39 @@ export default {
     data: function () {
         return {
             authors: {},
-            author_list: {},
             year: [],
             active: "",
             users: {},
             loading: false,
+            isDirectMode: false,
         };
     },
     watch: {
         data: {
             deep: true,
             immediate: true,
-            handler: async function (authors) {
-                if (authors && authors.length) {
+            handler: function (authors) {
+                if (!(authors && authors.length)) return;
+
+                this.isDirectMode = authors.some((item) => item.author && item.icon);
+
+                if (this.isDirectMode) {
+                    this.year = uniq(authors.map((item) => Number(item.icon)).filter(Boolean)).sort((a, b) => b - a);
+                    this.authors = authors.reduce((prev, cur) => {
+                        const year = Number(cur.icon);
+                        if (!year) return prev;
+                        if (!prev[year]) prev[year] = [];
+                        prev[year].push(cur);
+                        return prev;
+                    }, {});
+
+                    const list = uniq(authors.map((item) => item.author).filter(Boolean)).join(",");
+                    this.loadUsers(list);
+                } else {
                     this.year = uniq(authors.map((item) => item.title)).sort((a, b) => b - a);
                     this.authors = authors.reduce((prev, cur) => {
                         const { title, desc } = cur;
-                        if (!prev[title]) {
-                            prev[title] = "";
-                        }
+                        if (!prev[title]) prev[title] = "";
                         prev[title] = desc;
                         return prev;
                     }, {});
@@ -70,7 +83,7 @@ export default {
             immediate: true,
             handler: function (arr) {
                 if (arr.length) {
-                    this.active = this.year[0];
+                    this.active = this.queryYear || this.year[0];
                 }
             },
         },
@@ -82,33 +95,65 @@ export default {
         },
     },
     computed: {
+        list() {
+            if (this.isDirectMode) {
+                return this.authors[this.active] || [];
+            }
+            return this.users[this.active] || [];
+        },
         queryYear() {
             return ~~this.$route.query.year;
         },
     },
     methods: {
         async loadData(year) {
+            if (this.isDirectMode) return;
+
             const str = this.authors[year];
             if (str && !this.users[year]?.length) {
-
                 this.loading = true;
-                this.loadUser(str).then((data) => {
-                    this.$set(this.users, year, data || []);
-                }).catch(() => {
-                    
-                }).finally(() => {
+                this.loadUser(str)
+                    .then((data) => {
+                        this.users = {
+                            ...this.users,
+                            [year]: data || [],
+                        };
+                    })
+                    .catch(() => {})
+                    .finally(() => {
+                        this.loading = false;
+                    });
+            }
+        },
+        loadUsers(list) {
+            if (!list) return;
+
+            this.loading = true;
+            getUsers({ list })
+                .then((res) => {
+                    this.users = (res.data.data || []).reduce((acc, cur) => {
+                        acc[cur.ID] = {
+                            name: cur.display_name,
+                            avatar: cur.user_avatar,
+                            link: "/author/" + cur.ID,
+                            sign: cur.sign,
+                        };
+                        return acc;
+                    }, {});
+                })
+                .finally(() => {
                     this.loading = false;
                 });
-            }
         },
         async loadUser(list) {
             const res = await getUsers({ list });
             const id_list = list.split(",").map((item) => ~~item);
             const info_list = res.data.data || [];
-            let data = [];
-            for(let item of id_list){
-                for(let u of info_list){
-                    if(u.ID == item){
+            const data = [];
+
+            for (const item of id_list) {
+                for (const u of info_list) {
+                    if (u.ID == item) {
                         data.push({
                             author: u.ID,
                             name: u.display_name,
@@ -119,7 +164,17 @@ export default {
                     }
                 }
             }
+
             return data;
+        },
+        getUser(item) {
+            return this.users[item.author] || item;
+        },
+        getName(item) {
+            return this.getUser(item).name || item.title || "";
+        },
+        getLink(item) {
+            return this.getUser(item).link || item.link || `${__Root}author/${item.author || ""}`;
         },
     },
 };
@@ -149,6 +204,16 @@ export default {
                 background: rgba(0, 0, 0, 0.02);
                 .u-avatar {
                     flex-shrink: 0;
+                }
+                .u-info {
+                    // padding: 10px 0;
+                    overflow: hidden;
+                }
+                .u-desc {
+                    .fz(12px,20px);
+                    margin-top: 4px;
+                    color: rgba(0, 0, 0, 0.6);
+                    .break(2);
                 }
                 &.sign {
                     border-right: 4px solid #ba9624;

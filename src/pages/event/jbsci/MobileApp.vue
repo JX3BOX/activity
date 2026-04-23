@@ -168,7 +168,7 @@ export default {
                 });
                 const { slider, authors, year_groups, SCI, season, cover } = this.data;
                 this.slider = slider.map((item) => item.img) || [];
-                this.authors = year_groups;
+                this.authors = year_groups?.length ? year_groups : authors;
                 this.invited = authors;
                 this.SCI = SCI;
                 this.season = season;

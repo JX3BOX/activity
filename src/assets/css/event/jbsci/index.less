@@ -11,7 +11,7 @@ h4 {
     font-weight: 400;
 }
 .p-event {
-    .pt(64px);
+    .pt(@header-height);
 }
 .m-footer {
     padding: 0 20px;
@@ -22,11 +22,11 @@ h4 {
 }
 .p-event-content {
     .scrollbar(0);
-    min-height: calc(100vh - 64px - 70px); 
+    min-height: calc(100vh - 64px - 70px);
     box-sizing: border-box;
     background-color: #fff;
 
-    &.SLIDER { 
+    &.SLIDER {
         .m-main {
             width: 100%;
         }

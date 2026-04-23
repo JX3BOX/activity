@@ -1,8 +1,6 @@
 ﻿import { createRouter, createWebHashHistory } from "vue-router";
 
 const Index = () => import("./Index.vue");
-
-
 const routes = [{ name: "index", path: "/:year?", component: Index }];
 
 const router = createRouter({
@@ -10,11 +8,11 @@ const router = createRouter({
     routes,
 });
 
-const originalPush = VueRouter.prototype.push;
-VueRouter.prototype.push = function push(location) {
-    return originalPush.call(this, location).catch((err) => {
-        if (err.name !== "NavigationDuplicated") throw err;
+const originalPush = router.push.bind(router);
+router.push = (location) =>
+    originalPush(location).catch((err) => {
+        if (err?.name !== "NavigationDuplicated") throw err;
+        return err;
     });
-};
 
 export default router;

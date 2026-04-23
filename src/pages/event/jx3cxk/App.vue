@@ -3,7 +3,7 @@
     <div class="p-event" :class="'v-' + page_name">
         <CommonHeader :overlayEnable="true"></CommonHeader>
         <router-view></router-view>
-        <Footer darkMode></Footer>
+        <CommonFooter></CommonFooter>
     </div>
 </template>
 
