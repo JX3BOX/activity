@@ -6,12 +6,7 @@
             <p class="dev-nav__desc">仅在本地开发环境挂载，用于快速跳转到各业务入口。</p>
 
             <div class="dev-nav__list">
-                <a
-                    v-for="item in links"
-                    :key="item.path"
-                    class="dev-nav__item"
-                    :href="item.path"
-                >
+                <a v-for="item in links" :key="item.path" class="dev-nav__item" :href="item.path">
                     <span class="dev-nav__name">{{ item.name }}</span>
                     <span class="dev-nav__path">{{ item.path }}</span>
                 </a>
@@ -37,6 +32,11 @@ export default {
 };
 </script>
 
+<style>
+body {
+    margin: 0;
+}
+</style>
 <style scoped>
 .dev-nav {
     min-height: 100vh;
@@ -44,8 +44,7 @@ export default {
     align-items: center;
     justify-content: center;
     padding: 32px;
-    background:
-        radial-gradient(circle at top, rgba(196, 181, 253, 0.25), transparent 38%),
+    background: radial-gradient(circle at top, rgba(196, 181, 253, 0.25), transparent 38%),
         linear-gradient(135deg, #0f172a 0%, #111827 45%, #1f2937 100%);
 }
 
@@ -100,10 +99,7 @@ export default {
     color: inherit;
     text-decoration: none;
     background: rgba(255, 255, 255, 0.04);
-    transition:
-        transform 0.18s ease,
-        border-color 0.18s ease,
-        background-color 0.18s ease;
+    transition: transform 0.18s ease, border-color 0.18s ease, background-color 0.18s ease;
 }
 
 .dev-nav__item:hover {

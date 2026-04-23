@@ -4,7 +4,7 @@
         <div class="p-topic-container">
             <Index />
         </div>
-        <CommonFooter class="p-topic-footer"></CommonFooter>
+        <Footer class="p-topic-footer"></Footer>
     </div>
 </template>
 

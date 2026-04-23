@@ -16,7 +16,15 @@
                 <div class="u-list-client" v-if="client == 'origin'">
                     <span class="u-button u-std" @click="goStd"></span>
                 </div>
-                <div class="m-scroll" ref="scrollRef" @mousedown="onDragStart" @mousemove="onDragMove" @mouseup="onDragEnd" @mouseleave="onDragEnd">
+                <div
+                    class="m-scroll"
+                    ref="scrollRef"
+                    @mousedown="onDragStart"
+                    @mousemove="onDragMove"
+                    @mouseup="onDragEnd"
+                    @mouseleave="onDragEnd"
+                    @wheel.prevent="onWheelScroll"
+                >
                     <div
                         class="u-item p-animations3"
                         v-for="(item, i) in list"
@@ -62,6 +70,7 @@ export default {
             isDragging: false,
             dragStartX: 0,
             dragScrollLeft: 0,
+            snapTimer: null,
         };
     },
     computed: {
@@ -70,6 +79,9 @@ export default {
             let _list = this.client == "std" ? stdarr : origin;
             return _list;
         },
+    },
+    beforeUnmount() {
+        clearTimeout(this.snapTimer);
     },
     watch: {},
     methods: {
@@ -137,9 +149,59 @@ export default {
             e.preventDefault();
             const dx = e.pageX - this.dragStartX;
             this.$refs.scrollRef.scrollLeft = this.dragScrollLeft - dx;
+            this.scheduleSnap();
         },
         onDragEnd() {
             this.isDragging = false;
+            this.scheduleSnap(0);
+        },
+        onWheelScroll(e) {
+            const scrollRef = this.$refs.scrollRef;
+            if (!scrollRef) return;
+
+            const delta =
+                Math.abs(e.deltaX) > Math.abs(e.deltaY)
+                    ? e.deltaX
+                    : e.shiftKey
+                      ? e.deltaY
+                      : 0;
+
+            if (!delta) return;
+
+            scrollRef.scrollLeft += delta;
+            this.scheduleSnap();
+        },
+        scheduleSnap(delay = 120) {
+            clearTimeout(this.snapTimer);
+            this.snapTimer = setTimeout(() => {
+                this.snapToNearestItem();
+            }, delay);
+        },
+        snapToNearestItem() {
+            const scrollRef = this.$refs.scrollRef;
+            if (!scrollRef) return;
+
+            const items = Array.from(scrollRef.querySelectorAll(".u-item"));
+            if (!items.length) return;
+
+            const currentLeft = scrollRef.scrollLeft;
+            const target = items.reduce((nearest, item) => {
+                const distance = Math.abs(item.offsetLeft - currentLeft);
+                if (!nearest || distance < nearest.distance) {
+                    return {
+                        distance,
+                        left: item.offsetLeft,
+                    };
+                }
+                return nearest;
+            }, null);
+
+            if (!target) return;
+
+            scrollRef.scrollTo({
+                left: target.left,
+                behavior: "smooth",
+            });
         },
     },
 };
