@@ -23,7 +23,7 @@ import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 // 全局过滤器
 import * as filters from "@/utils/filters.js";
 
-import reporter from "@jx3box/jx3box-common/js/reporter";
+
 
 const app = createApp(App);
 app.use(router);
@@ -71,5 +71,5 @@ Object.keys(filters).forEach((key) => {
     app.config.globalProperties.$filters = filters;
 });
 
-reporter.install(app);
+
 app.mount("#app");

@@ -1,15 +1,8 @@
 import { createApp } from "vue";
-import { isMiniProgram, isApp } from "@jx3box/jx3box-common/js/utils";
+import { initTopicEnv } from "./setup";
 
-// 检测小程序环境并动态添加viewport元标签
-if (isMiniProgram() || isApp()) {
-    const viewportMeta = document.createElement("meta");
-    viewportMeta.name = "viewport";
-    viewportMeta.content = "width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=no";
-    document.head.appendChild(viewportMeta);
-
-    isApp() && localStorage.setItem("__env", "app");
-}
+// 初始化专题页环境
+initTopicEnv();
 
 import { createHead } from "@vueuse/head";
 import { createJx3boxUiI18n, getJx3boxUiAvailableLocales, install as JX3BOX_UI } from "@jx3box/jx3box-ui";
@@ -29,14 +22,8 @@ import zhTw from "element-plus/es/locale/lang/zh-tw";
 import vi from "element-plus/es/locale/lang/vi";
 import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 
-import reporter from "@jx3box/jx3box-common/js/reporter";
-
 // 导入两个组件
-import MobileApp from "./MobileApp.vue";
-import DesktopApp from "./App.vue";
-
-// 根据条件选择使用哪个组件
-const App = isMiniProgram() || isApp() ? MobileApp : DesktopApp;
+import App from "./App.vue";
 
 const app = createApp(App);
 
@@ -78,6 +65,6 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component);
 }
 
-reporter.install(app);
+
 
 app.mount("#app");

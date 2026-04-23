@@ -122,7 +122,7 @@ export default {
 	},
 	directives: {
 		animate: {
-			inserted: function (el, binding) {
+			mounted: function (el, binding) {
 				binding.addClass = () => {
 					const { top } = el.getBoundingClientRect();
 					const h = document.documentElement.clientHeight || document.body.clientHeight;
@@ -139,7 +139,7 @@ export default {
 				window.addEventListener("scroll", binding.addClass, true);
 				binding.addClass();
 			},
-			unbind: function (el, binding) {
+			unmounted: function (el, binding) {
 				if (binding.addClass) {
 					window.removeEventListener("scroll", binding.addClass);
 				}
@@ -187,7 +187,7 @@ export default {
 			}
 		},
 	},
-	
+
 	created: function () {},
 	mounted: function () {
 		this.init();

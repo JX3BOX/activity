@@ -383,7 +383,7 @@ export default {
     },
     directives: {
         animate: {
-            inserted: function (el, binding) {
+            mounted: function (el, binding) {
                 binding.addClass = () => {
                     const { top } = el.getBoundingClientRect();
                     const h = document.documentElement.clientHeight || document.body.clientHeight;
@@ -409,7 +409,7 @@ export default {
                 window.addEventListener("scroll", binding.addClass, true);
                 binding.addClass();
             },
-            unbind: function (el, binding) {
+            unmounted: function (el, binding) {
                 binding.addClass = () => {
                     const { top } = el.getBoundingClientRect();
                     const h = document.documentElement.clientHeight || document.body.clientHeight;
@@ -557,9 +557,7 @@ export default {
             if (zoom < 0.5) {
                 zoom = 0.5
             }
-            el[0].style = `zoom: ${zoom}; margin-top:${60/zoom}px`
-            const pt = document.getElementsByClassName('p-topic');
-            pt[0].style = 'min-width: 1920px'
+            el[0].style = `zoom: ${zoom};`
         },
         changeJq(jq) {
             this.currentJq = jq;
@@ -619,4 +617,3 @@ export default {
     }
 }
 </style>
-

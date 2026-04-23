@@ -1,189 +1,174 @@
 <template>
     <div class="m-index">
-        <div class="m-bashufengyun" ref="fullPage" :style="height">
-            <!-- 监控滚动 -->
-            <div
-                class="fullPageContainer"
-                ref="fullPageContainer"
-                @mousewheel="mouseWheelHandle"
-                @DOMMouseScroll="mouseWheelHandle"
-                @touchstart="handleTouchstart"
-                @touchend="handleTouchend"
-            >
-                <!-- 轮播 -->
-                <el-carousel
-                    class="m-carousel"
-                    direction="vertical"
-                    trigger="click"
-                    :autoplay="false"
-                    :height="carousel"
-                    ref="carousel"
-                    @change="change('carousel', $event)"
-                >
-                    <!-- 第一屏 -->
-                    <el-carousel-item name="0">
-                        <div class="u-one u-item">
-                            <img class="u-fire p-animation fadeIn" :src="`${img}home_01_fire.png`" />
-                            <img class="u-txt p-animation fadeIn" :src="`${img}home_01_txt.png`" />
+        <div class="m-bashufengyun" ref="fullPage">
+            <div class="m-page-list">
+                <!-- 第一屏 -->
+                <section class="m-page-section" :style="sectionStyle(0)">
+                    <div class="u-one u-item">
+                        <img class="u-fire p-animation fadeIn" :src="`${img}home_01_fire.png`" />
+                        <img class="u-txt p-animation fadeIn" :src="`${img}home_01_txt.png`" />
+                    </div>
+                </section>
+                <!-- 第二屏 -->
+                <section class="m-page-section" :style="sectionStyle(1)">
+                    <div class="u-two u-item">
+                        <div class="u-video" v-html="video"></div>
+                    </div>
+                </section>
+                <!-- 第三屏 -->
+                <section class="m-page-section" :style="sectionStyle(2)">
+                    <div class="u-two u-item">
+                        <div class="u-icon">
+                            <img src="https://img.jx3box.com/image/xf/10224.png" @click="change('two')" />
+                            <img src="https://img.jx3box.com/image/xf/10225.png" @click="change('two')" />
                         </div>
-                    </el-carousel-item>
-                    <!-- 第二屏 -->
-                    <el-carousel-item name="1">
-                        <div class="u-two u-item">
-                            <div class="u-video" v-html="video"></div>
-                        </div>
-                    </el-carousel-item>
-                    <!-- 第三屏 -->
-                    <el-carousel-item name="2">
-                        <div class="u-two u-item">
-                            <div class="u-icon">
-                                <img src="https://img.jx3box.com/image/xf/10224.png" @click="change('two')" />
-                                <img src="https://img.jx3box.com/image/xf/10225.png" @click="change('two')" />
-                            </div>
-                            <a
-                                href="https://origin.jx3box.com/bps/#/?subtype=%E6%83%8A%E7%BE%BD%E8%AF%80"
-                                target="_blank"
-                                class="u-link"
-                                v-show="two"
-                            >
-                                <img
-                                    :src="`${img}home_02_02.png`"
-                                    class="u-img"
-                                    :class="two ? 'p-animation fadeInRight' : ''"
-                            /></a>
-                            <a
-                                href="https://origin.jx3box.com/bps/#/?subtype=%E5%A4%A9%E7%BD%97%E8%AF%A1%E9%81%93"
-                                target="_blank"
-                                class="u-link"
-                                v-show="!two"
-                            >
-                                <img
-                                    :src="`${img}home_02_03.png`"
-                                    class="u-img"
-                                    :class="two ? '' : 'p-animation fadeInRight'"
-                                />
-                            </a>
+                        <a
+                            href="https://origin.jx3box.com/bps/#/?subtype=%E6%83%8A%E7%BE%BD%E8%AF%80"
+                            target="_blank"
+                            class="u-link"
+                            v-show="two"
+                        >
                             <img
-                                :src="`${img}home_02_people.png`"
-                                class="u-people p-animation fadeIn"
-                                :class="`u-people-1`"
+                                :src="`${img}home_02_02.png`"
+                                class="u-img"
+                                :class="two ? 'p-animation fadeInRight' : ''"
+                        /></a>
+                        <a
+                            href="https://origin.jx3box.com/bps/#/?subtype=%E5%A4%A9%E7%BD%97%E8%AF%A1%E9%81%93"
+                            target="_blank"
+                            class="u-link"
+                            v-show="!two"
+                        >
+                            <img
+                                :src="`${img}home_02_03.png`"
+                                class="u-img"
+                                :class="two ? '' : 'p-animation fadeInRight'"
                             />
+                        </a>
+                        <img
+                            :src="`${img}home_02_people.png`"
+                            class="u-people p-animation fadeIn"
+                            :class="`u-people-1`"
+                        />
+                    </div>
+                </section>
+                <!-- 第四屏 -->
+                <section class="m-page-section" :style="sectionStyle(3)">
+                    <div class="u-three u-item">
+                        <img :src="`${img}home_03_01.png`" class="u-bg p-animation fadeIn" />
+                        <img :src="`${img}home_03_txt.png`" class="u-txt p-animation fadeIn" />
+                    </div>
+                </section>
+                <!-- 第五屏 -->
+                <section class="m-page-section" :style="sectionStyle(4)">
+                    <EasySlider
+                        class="u-three m-slider"
+                        :height="sliderHeight"
+                        :autoplay="false"
+                        animation="fade"
+                        :touch="false"
+                        :indicators="false"
+                        v-model="threeIndex"
+                    >
+                        <EasySliderItem class="u-item" v-for="index in 4" :key="index">
+                            <div class="u-all">
+                                <img :src="`${img}home_03_0${index + 1}_num.png?num`" class="u-num" />
+                                <img
+                                    :src="`${img}home_03_0${index + 1}.png`"
+                                    :class="index ? 'p-animation fadeInRight' : ''"
+                                />
+                                <img
+                                    :src="`${img}home_03_0${index + 1}_people.png`"
+                                    class="u-people"
+                                    :class="index ? `u-people-${index + 1}  p-animation fadeInLeft` : ''"
+                                />
+                            </div>
+                        </EasySliderItem>
+                    </EasySlider>
+                </section>
+                <!-- 第六屏 -->
+                <section class="m-page-section" :style="sectionStyle(5)">
+                    <div class="u-four u-item">
+                        <img :src="`${img}home_04_01.png`" class="u-bg p-animation fadeIn" />
+                        <img :src="`${img}home_04_txt.png`" class="u-txt p-animation fadeIn" />
+                    </div>
+                </section>
+                <!-- 第七屏 -->
+                <section class="m-page-section" :style="sectionStyle(6)">
+                    <div class="u-four u-item">
+                        <img
+                            v-show="four == '0'"
+                            :src="`${img}home_04_02.png`"
+                            class="u-cont p-animation fadeIn"
+                            :class="`u-cont-2`"
+                        />
+                        <img
+                            v-show="four == '1'"
+                            :src="`${img}home_04_03.png`"
+                            class="u-cont p-animation fadeIn"
+                            :class="`u-cont-2`"
+                        />
+                        <img
+                            v-show="four == '2'"
+                            :src="`${img}home_04_04.png`"
+                            class="u-cont p-animation fadeIn"
+                            :class="`u-cont-2`"
+                        />
+
+                        <div class="u-icon">
+                            <span @click="change('four', '0')">副本介绍</span>
+                            <span @click="change('four', '1')">辽东双煞</span>
+                            <span @click="change('four', '2')">蛮人将帅</span>
                         </div>
-                    </el-carousel-item>
-                    <!-- 第四屏 -->
-                    <el-carousel-item name="3">
-                        <div class="u-three u-item">
-                            <img :src="`${img}home_03_01.png`" class="u-bg p-animation fadeIn" />
-                            <img :src="`${img}home_03_txt.png`" class="u-txt p-animation fadeIn" />
-                        </div>
-                    </el-carousel-item>
-                    <!-- 第五屏 -->
-                    <el-carousel-item name="4">
+                    </div>
+                </section>
+                <!-- 第八屏 -->
+                <section class="m-page-section" :style="sectionStyle(7)">
+                    <div class="u-five u-item">
+                        <img :src="`${img}home_05.png`" class="u-bg p-animation fadeIn" />
+                        <img :src="`${img}home_05_txt.png`" class="u-txt p-animation fadeIn" />
+                    </div>
+                </section>
+                <!-- 第九屏 -->
+                <section class="m-page-section" :style="sectionStyle(8)">
+                    <EasySlider
+                        class="u-five m-slider"
+                        :height="sliderHeight"
+                        :autoplay="false"
+                        animation="fade"
+                        :touch="false"
+                        :indicators="false"
+                        v-model="fiveIndex"
+                    >
+                        <EasySliderItem class="u-item" v-for="index in 5" :key="index">
+                            <img
+                                :src="`${img}home_05_0${index + 1}.png`"
+                                class="u-cont p-animation fadeIn"
+                                :class="`u-cont-${index + 1}`"
+                            />
+                        </EasySliderItem>
+                    </EasySlider>
+                </section>
+                <!-- 第十屏 -->
+                <section class="m-page-section" :style="sectionStyle(9)">
+                    <div class="u-six u-item">
                         <EasySlider
-                            class="u-three m-slider"
-                            :height="carousel"
-                            :autoplay="false"
+                            class="m-slider"
+                            :height="sliderHeight"
                             animation="fade"
                             :touch="false"
+                            :interval="5000"
                             :indicators="false"
-                            v-model="threeIndex"
+                            v-model="sixIndex"
                         >
-                            <EasySliderItem class="u-item" v-for="index in 4" :key="index">
-                                <div class="u-all">
-                                    <img :src="`${img}home_03_0${index + 1}_num.png?num`" class="u-num" />
-                                    <img
-                                        :src="`${img}home_03_0${index + 1}.png`"
-                                        :class="index ? 'p-animation fadeInRight' : ''"
-                                    />
-                                    <img
-                                        :src="`${img}home_03_0${index + 1}_people.png`"
-                                        class="u-people"
-                                        :class="index ? `u-people-${index + 1}  p-animation fadeInLeft` : ''"
-                                    />
-                                </div>
+                            <EasySliderItem class="u-item" v-for="(item, i) in sixImg" :key="i">
+                                <a :href="item.link" target="_blank" class="u-link">
+                                    <img :src="item.src" class="u-bg" />
+                                </a>
                             </EasySliderItem>
                         </EasySlider>
-                    </el-carousel-item>
-                    <!-- 第六屏 -->
-                    <el-carousel-item name="5">
-                        <div class="u-four u-item">
-                            <img :src="`${img}home_04_01.png`" class="u-bg p-animation fadeIn" />
-                            <img :src="`${img}home_04_txt.png`" class="u-txt p-animation fadeIn" /></div
-                    ></el-carousel-item>
-                    <!-- 第七屏 -->
-                    <el-carousel-item name="6">
-                        <div class="u-four u-item">
-                            <img
-                                v-show="four == '0'"
-                                :src="`${img}home_04_02.png`"
-                                class="u-cont p-animation fadeIn"
-                                :class="`u-cont-2`"
-                            />
-                            <img
-                                v-show="four == '1'"
-                                :src="`${img}home_04_03.png`"
-                                class="u-cont p-animation fadeIn"
-                                :class="`u-cont-2`"
-                            />
-                            <img
-                                v-show="four == '2'"
-                                :src="`${img}home_04_04.png`"
-                                class="u-cont p-animation fadeIn"
-                                :class="`u-cont-2`"
-                            />
-
-                            <div class="u-icon">
-                                <span @click="change('four', '0')">副本介绍</span>
-                                <span @click="change('four', '1')">辽东双煞</span>
-                                <span @click="change('four', '2')">蛮人将帅</span>
-                            </div>
-                        </div></el-carousel-item
-                    >
-                    <!-- 第八屏 -->
-                    <el-carousel-item name="7">
-                        <div class="u-five u-item">
-                            <img :src="`${img}home_05.png`" class="u-bg p-animation fadeIn" />
-                            <img :src="`${img}home_05_txt.png`" class="u-txt p-animation fadeIn" /></div
-                    ></el-carousel-item>
-                    <!-- 第九屏 -->
-                    <el-carousel-item name="8">
-                        <EasySlider
-                            class="u-five m-slider"
-                            :height="carousel"
-                            :autoplay="false"
-                            animation="fade"
-                            :touch="false"
-                            :indicators="false"
-                            v-model="fiveIndex"
-                        >
-                            <EasySliderItem class="u-item" v-for="index in 5" :key="index">
-                                <img
-                                    :src="`${img}home_05_0${index + 1}.png`"
-                                    class="u-cont p-animation fadeIn"
-                                    :class="`u-cont-${index + 1}`"
-                                />
-                            </EasySliderItem> </EasySlider
-                    ></el-carousel-item>
-                    <!-- 第十屏 -->
-                    <el-carousel-item name="9">
-                        <div class="u-six u-item">
-                            <EasySlider
-                                class="m-slider"
-                                :height="carousel"
-                                animation="fade"
-                                :touch="false"
-                                :interval="5000"
-                                :indicators="false"
-                                v-model="sixIndex"
-                            >
-                                <EasySliderItem class="u-item" v-for="(item, i) in sixImg" :key="i">
-                                    <a :href="item.link" target="_blank" class="u-link">
-                                        <img :src="item.src" class="u-bg" />
-                                    </a>
-                                </EasySliderItem>
-                            </EasySlider></div
-                    ></el-carousel-item>
-                </el-carousel>
+                    </div>
+                </section>
             </div>
         </div>
     </div>
@@ -213,27 +198,13 @@ export default {
                 },
             ],
 
-            current: 0,
-            isScrolling: false,
-            deltaY: 0,
             mobile: false,
-
             mobileHeight: "",
-            startTime: "",
-            startX: "",
-            startY: "",
         };
     },
     computed: {
-        height() {
-            return this.mobile
-                ? { height: this.mobileHeight }
-                : this.current == 0
-                ? { height: "1066px" }
-                : { height: "800px" };
-        },
-        carousel() {
-            return this.mobile ? this.mobileHeight : this.current == 0 ? "1066px" : "800px";
+        sliderHeight() {
+            return this.mobile ? this.mobileHeight : "800px";
         },
         img() {
             return __cdn + "design/topic/bashufengyun/";
@@ -243,96 +214,15 @@ export default {
         },
     },
     methods: {
-        // 控制切换间隔1.5秒
-        stop() {
-            this.isScrolling = true;
-            setTimeout(() => {
-                this.isScrolling = false;
-            }, 1500);
-        },
-        setActiveItem(i = this.current) {
-            this.$refs.carousel.setActiveItem(i);
-            this.stop();
-        },
-        // 往下切换
-        next() {
-            let len = 10; // 页面的个数
-            if (this.current + 1 <= len) {
-                this.current += 1;
-                this.setActiveItem();
+        sectionStyle(index) {
+            if (this.mobile) {
+                return { height: this.mobileHeight };
             }
+            return { height: index === 0 ? "1066px" : "800px" };
         },
-        // 往上切换
-        pre() {
-            if (this.current - 1 >= 0) {
-                this.current -= 1;
-                this.setActiveItem();
-            }
-        },
-        // 切换
         change(num, str) {
             if (num == "two") this.two = !this.two;
             if (num == "four") this.four = str;
-            if (num == "carousel") this.current = ~~str;
-        },
-        // 判断上下滚动
-        mouseWheelHandle(event) {
-            let evt = event || window.event;
-            if (evt.stopPropagation) {
-                evt.stopPropagation();
-            } else {
-                evt.returnValue = false;
-            }
-            if (this.isScrolling) return false;
-            let e = event.originalEvent || event;
-            this.deltaY = e.deltaY || e.detail;
-            if (this.deltaY > 0) {
-                this.next();
-            } else if (this.deltaY < 0) {
-                this.pre();
-            }
-        },
-        //屏幕滑动
-        //手指按下屏幕
-        handleTouchstart(event) {
-            this.startTime = Date.now();
-            this.startX = event.changedTouches[0].clientX;
-            this.startY = event.changedTouches[0].clientY;
-        },
-        //手指离开屏幕
-        handleTouchend(event) {
-            const endTime = Date.now();
-            const endX = event.changedTouches[0].clientX;
-            const endY = event.changedTouches[0].clientY;
-            //判断按下的时长
-            if (endTime - this.startTime < 200) {
-                if (event.target.tagName == "A" || event.target.tagName == "a") {
-                    event.preventDefault();
-                    return window.open(event.target.href, "_self");
-                }
-            }
-
-            if (endTime - this.startTime > 2000) {
-                return;
-            }
-            //滑动的方向
-            let direction = "";
-
-            if (Math.abs(endX - this.startX) > 10) {
-                if (Math.abs(endY - this.startY) > 100) {
-                    return;
-                } else {
-                    direction = endX - this.startX > 0 ? "right" : "left";
-                }
-            } else {
-                return;
-            }
-            //用户做了合法的滑动操作
-            if (direction === "right") {
-                this.next();
-            } else {
-                this.pre();
-            }
         },
     },
 
@@ -343,13 +233,6 @@ export default {
             this.mobile = true;
             this.mobileHeight = width + "px";
         }
-        document.addEventListener(
-            "touchmove",
-            function (ev) {
-                ev.preventDefault();
-            },
-            { passive: false }
-        );
     },
 };
 </script>

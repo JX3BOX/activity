@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="m-container">
         <!-- 主横幅 -->
         <section class="banner">
             <img class="banner__logo" :src="buildImgUrl('bg/banner__title.png')" alt="丝路风语" />
@@ -408,7 +408,7 @@ export default {
     },
     directives: {
         animate: {
-            inserted(el, binding) {
+            mounted(el, binding) {
                 binding.addClass = () => {
                     const { top } = el.getBoundingClientRect();
                     const h = document.documentElement.clientHeight || document.body.clientHeight;
@@ -424,7 +424,7 @@ export default {
                 window.addEventListener("scroll", binding.addClass, true);
                 binding.addClass();
             },
-            unbind(el, binding) {
+            unmounted(el, binding) {
                 if (binding.addClass) {
                     window.removeEventListener("scroll", binding.addClass);
                 }

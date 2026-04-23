@@ -1,4 +1,8 @@
 import { createApp } from "vue";
+import { initTopicEnv } from "../setup";
+
+initTopicEnv();
+
 import App from "./App.vue";
 import router from "./router.js";
 
@@ -20,7 +24,7 @@ import zhTw from "element-plus/es/locale/lang/zh-tw";
 import vi from "element-plus/es/locale/lang/vi";
 import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 
-import reporter from "@jx3box/jx3box-common/js/reporter";
+
 
 const app = createApp(App);
 app.use(router);
@@ -63,5 +67,5 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component);
 }
 
-reporter.install(app);
+
 app.mount("#app");

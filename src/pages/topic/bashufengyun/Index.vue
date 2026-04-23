@@ -24,12 +24,12 @@ export default {
     data() {
         return {
             moduleConfigs: [
-                { id: "one", component: "oneView", height: "1066px" },
-                { id: "two", component: "twoView", height: "800px" },
-                { id: "three", component: "threeView", height: "800px" },
-                { id: "four", component: "fourView", height: "800px" },
-                { id: "five", component: "fiveView", height: "800px" },
-                { id: "six", component: "sixView", height: "800px" },
+                { id: "one", component: "oneView", height: "100vh" },
+                { id: "two", component: "twoView", height: "100vh" },
+                { id: "three", component: "threeView", height: "100vh" },
+                { id: "four", component: "fourView", height: "100vh" },
+                { id: "five", component: "fiveView", height: "100vh" },
+                { id: "six", component: "sixView", height: "100vh" },
             ],
         };
     },

@@ -5,7 +5,7 @@ import "@jx3box/jx3box-common/css/normalize.css";
 
 import JX3BOX_UI from "@jx3box/jx3box-common-ui";
 import * as filters from "@/utils/filters.js";
-import reporter from "@jx3box/jx3box-common/js/reporter";
+
 import router from "./router.js";
 import App from "./App.vue";
 
@@ -18,5 +18,5 @@ Object.keys(filters).forEach((key) => {
 	app.config.globalProperties[key] = filters[key];
 });
 
-reporter.install(app);
+
 app.mount("#app");
