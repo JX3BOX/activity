@@ -36,7 +36,20 @@ events.forEach((event) => {
     };
 });
 
+const devPages =
+    process.env.NODE_ENV === "development"
+        ? {
+              devhome: {
+                  title: "JX3BOX - 本地导航测试页",
+                  entry: "src/pages/devhome/main.js",
+                  template: "public/index.html",
+                  filename: "index.html",
+              },
+          }
+        : {};
+
 const pages = {
+    ...devPages,
     rank: {
         title: "剑三秘境百强榜 - JX3BOX",
         entry: "src/pages/rank/rank/index.js",
