@@ -1,17 +1,11 @@
 <template>
-    <CommonHeader></CommonHeader>
-    <div class="m-rank-primary">
+    <default-layout>
         <div class="m-rank-join">
-            <div class="m-rank-header">
-                <a href="/rank" target="_blank">
-                    <img class="u-logo" :src="LOGO" />
-                </a>
-            </div>
-            <div class="m-rank-content" v-if="isLogin" v-loading="loading">
+            <div class="m-rank-join__content" v-if="isLogin" v-loading="loading">
                 <div class="m-join m-join-team">
                     <h1 class="m-join-title">报名入口</h1>
                     <div class="m-join-notice" v-html="notice"></div>
-                    <el-form class="m-join-form" ref="form" :model="form" label-width="80px" v-if="!loading && !status">
+                    <el-form class="m-join-form" ref="form" :model="form" label-width="80px" v-if="!loading && !status" size="large">
                         <el-form-item label="报名活动">
                             <el-select v-model="form.event_id" placeholder="请选择活动" no-data-text="暂无活动">
                                 <el-option
@@ -40,7 +34,7 @@
                         <el-form-item label="参赛宣言">
                             <el-input
                                 v-model="form.slogan"
-                                placeholder="为您的团队打CALL,将显示在游戏内"
+                                placeholder="为您的团队打CALL"
                                 :maxlength="20"
                                 show-word-limit
                             ></el-input>
@@ -69,19 +63,17 @@
                     <a href="/notice/32280" target="_blank"><i class="el-icon-info"></i> <b>点击查看百强活动细则</b></a>
                 </div>
             </div>
-            <div class="m-rank-content m-rank-null" v-else>
+            <div class="m-rank-join__content m-rank-join__null" v-else>
                 <p>你尚未登录</p>
-                <el-button type="primary" @click="goLogin">登录</el-button>
+                <el-button type="primary" @click="goLogin" size="large">登录</el-button>
             </div>
         </div>
-    </div>
-    <CommonFooter></CommonFooter>
-    <bindWxMp v-model="showBindWxMp" @update="onBindWxMpUpdate"></bindWxMp>
+        <bindWxMp v-model="showBindWxMp" @update="onBindWxMpUpdate"></bindWxMp>
+    </default-layout>
 </template>
 
 <script>
-import _ from "lodash";
-import PICS from "@/assets/js/pics.js";
+import DefaultLayout from "@/layouts/rank/DefaultLayout.vue";
 import { getEvents } from "@/service/rank/event.js";
 import { joinEvent, hasJoined } from "@/service/rank/join.js";
 import { getMyTeams } from "@/service/rank/team.js";
@@ -96,7 +88,6 @@ export default {
     props: [],
     data: function () {
         return {
-            LOGO: PICS.LOGO,
             form: {
                 event_id: "",
                 team_id: "",
@@ -272,6 +263,7 @@ export default {
         this.isLogin && this.init();
     },
     components: {
+        DefaultLayout,
         BindWxMp,
     },
 };

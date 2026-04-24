@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHashHistory } from "vue-router";
 
 const Info = () => import("@/views/Rank/Info.vue");
 const Rank = () => import("@/views/Rank/Rank.vue");
@@ -42,7 +42,7 @@ const routes = [
 ];
 
 const router = createRouter({
-    history: createWebHistory("/rank"),
+    history: createWebHashHistory(),
     routes,
 });
 

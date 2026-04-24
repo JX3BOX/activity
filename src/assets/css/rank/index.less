@@ -1,19 +1,6 @@
 .p-rank-index {
-    background: url("@{img}common/bg_back.png?12") center top repeat-x;
     padding: 0 20px 80px;
     position: relative;
-
-    &::after {
-        content: "";
-        display: block;
-        background-color: black;
-        position: fixed;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        z-index: -1;
-    }
 
     min-height: calc(100vh - 400px);
 }
@@ -24,12 +11,6 @@
     align-items: flex-start;
     justify-content: center;
     overflow: hidden;
-}
-
-.m-rank-index__logo {
-    display: block;
-    margin-top: 40px;
-    max-width: min(100%, 520px);
 }
 
 .m-rank-index__content {
@@ -145,11 +126,6 @@
 
     .m-rank-index__header {
         min-height: 220px;
-    }
-
-    .m-rank-index__logo {
-        margin-top: 24px;
-        max-width: min(100%, 320px);
     }
 
     .m-rank-index__list {

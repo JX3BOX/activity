@@ -1,9 +1,9 @@
 <template>
-    <div class="m-rank-container p-rank-default-layout">
+    <div class="m-rank-container p-rank-default-layout" :class="routeClass">
         <CommonHeader></CommonHeader>
-        <div class="m-rank-primary">
+        <div class="m-rank-main">
             <div class="m-rank-header">
-                <img class="m-rank-index__logo" :src="LOGO" />
+                <img class="m-rank-logo" :src="LOGO" />
             </div>
             <div class="m-rank-content">
                 <slot></slot>
@@ -23,7 +23,11 @@ export default {
             LOGO: PICS.LOGO,
         };
     },
-    computed: {},
+    computed: {
+        routeClass: function () {
+            return "p-rank-" + this.$route.name;
+        },
+    },
     methods: {},
     mounted: function () {},
     components: {},
@@ -48,11 +52,20 @@ export default {
         z-index: -1;
     }
 
-    .m-rank-header{
+    .m-rank-header {
         .x;
     }
-    .m-rank-index__logo{
-        margin:0 auto;
+    .m-rank-logo {
+        margin: 0 auto;
+        display: block;
+        margin-top: 40px;
+        max-width: min(100%, 520px);
+    }
+}
+@media screen and (max-width: @phone) {
+    .m-rank-logo {
+        margin-top: 24px;
+        max-width: min(100%, 320px);
     }
 }
 </style>
