@@ -186,6 +186,8 @@
     padding-bottom: @padding - 10px;
     .pl(100px + @logosize + @logopadding*2);
 
+    .smooth;
+
     &:hover {
         background: linear-gradient(90deg, rgba(38, 66, 89, 1) 0%, rgba(63, 88, 110, 1) 50%);
     }
@@ -196,7 +198,7 @@
         .pa;
         .x;
         .w(115px);
-        background: url("@{img}common/ranking_number_bg.svg");
+        background: url("@{img}image/rank/common/ranking_number_bg.svg");
         background-size: 100% 100%;
         left: 0;
         top: 0;
@@ -226,6 +228,7 @@
     .u-title {
         .flex;
         align-items: center;
+
         i {
             color: #eee;
             .mr(5px);
@@ -240,12 +243,12 @@
         .fz(24px, 24px);
         .bold;
 
-        &:hover {
-            // color: #f39;
-            // i {
-            //     color: #f39;
-            // }
-        }
+        // &:hover {
+        // color: #f39;
+        // i {
+        //     color: #f39;
+        // }
+        // }
 
         &.u-teamname-null {
             color: #aaa;
@@ -261,7 +264,8 @@
         }
         color: #fff;
         font-weight: bold;
-        .fz(12px);
+        .fz(12px,1.6);
+        letter-spacing: 1px;
     }
 
     .u-verified,
@@ -289,7 +293,7 @@
             display: block;
         }
         .u-time-fight {
-            color: white;
+            color: rgba(255, 255, 255, 0.5);
         }
     }
 
@@ -319,16 +323,21 @@
         }
     }
     .u-mount {
-        .size(24px);
         .y(top);
         .mr(2px);
+
+        .size(18px);
+        background-color: #496377;
+        border: 1px solid #1f68a7;
+        border-radius: 50%;
     }
 
     .u-member {
         .fz(12px);
         .mb(5px);
 
-        &-content {
+        .u-member-content {
+            padding: 2px 3px;
             .flex;
             align-items: center;
         }
@@ -340,10 +349,14 @@
         width: 97px;
         display: inline-block;
         vertical-align: middle;
+        &:hover {
+            color: #15fff0;
+            font-weight: 500;
+        }
     }
 
     .u-youngster {
-        padding: 0 10px;
+        padding: 5px 10px 10px;
         .u-chanlian,
         .u-heima,
         .u-wangzhe {
@@ -360,6 +373,14 @@
         .u-heima,
         .u-wangzhe {
             top: 5px;
+        }
+
+        .u-title {
+            .db;
+            .x;
+            .u-teamname {
+                margin-right: 0;
+            }
         }
     }
 }

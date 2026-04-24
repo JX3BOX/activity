@@ -1,7 +1,6 @@
 <template>
     <div class="m-rank-container" ref="appRef" :class="[id_cls, win_env, 'm-rank-bg-' + id]" :style="Bg">
         <CommonHeader></CommonHeader>
-
         <!-- <race-bg :class="'m-rank-bg-' + id"></race-bg> -->
         <div class="m-rank-primary">
             <div class="m-rank-race" v-if="id">

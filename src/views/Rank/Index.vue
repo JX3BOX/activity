@@ -1,31 +1,29 @@
 <template>
-    <div id="app" class="m-rank-container">
-        <CommonHeader></CommonHeader>
-        <div class="p-rank-index">
-            <div class="m-rank-index__header">
-                <img class="m-rank-index__logo" :src="LOGO" />
-            </div>
-            <div class="m-rank-index__content">
-                <ul v-if="data && data.length" class="m-rank-index__list">
-                    <li class="m-rank-index__item" v-for="(item, i) in data" :key="i">
-                        <a class="m-rank-index__link" :href="eventLink(item.slug)" target="_blank">
-                            <img class="m-rank-index__cover" :src="eventCover(item)" :alt="item.name" />
-                            <b class="m-rank-index__name">{{ item.name }}</b>
-                            <div class="m-rank-index__status">
-                                <span v-if="item.client" class="m-rank-index__tag" :class="item.client">{{
-                                    item.client == "std" ? "重制" : "缘起"
-                                }}</span>
-                                <i class="m-rank-index__state" :class="{ on: item.status }">{{
-                                    item.status ? "进行中" : "已结束"
-                                }}</i>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-            </div>
+    <CommonHeader></CommonHeader>
+    <div class="p-rank-index">
+        <div class="m-rank-index__header">
+            <img class="m-rank-index__logo" :src="LOGO" />
         </div>
-        <CommonFooter></CommonFooter>
+        <div class="m-rank-index__content">
+            <ul v-if="data && data.length" class="m-rank-index__list">
+                <li class="m-rank-index__item" v-for="(item, i) in data" :key="i">
+                    <a class="m-rank-index__link" :href="eventLink(item.slug)" target="_blank">
+                        <img class="m-rank-index__cover" :src="eventCover(item)" :alt="item.name" />
+                        <b class="m-rank-index__name">{{ item.name }}</b>
+                        <div class="m-rank-index__status">
+                            <span v-if="item.client" class="m-rank-index__tag" :class="item.client">{{
+                                item.client == "std" ? "重制" : "缘起"
+                            }}</span>
+                            <i class="m-rank-index__state" :class="{ on: item.status }">{{
+                                item.status ? "进行中" : "已结束"
+                            }}</i>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
+    <CommonFooter></CommonFooter>
 </template>
 
 <script>

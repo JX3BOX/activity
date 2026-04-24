@@ -21,7 +21,7 @@
         <!-- 名称 -->
         <div class="u-title">
             <a class="u-teamname" :href="teamLink(item.team_id)" target="_blank" v-if="item.team_id">
-                <i class="el-icon-link"></i>
+                <!-- <i class="el-icon-link"></i> -->
                 {{ item.team_name && item.team_name.slice(0, 6) }}
             </a>
             <span class="u-teamname u-teamname-null" v-else>未知</span>
