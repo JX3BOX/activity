@@ -62,7 +62,7 @@
                     <!-- 分割线 -->
                     <div class="u-team-line"></div>
                     <!-- 链接按钮 -->
-                    <div class="u-battle-jcl">
+                    <div class="u-battle">
                         <div class="u-two-link" v-if="item.jx3box_battle_id && item.jx3box_jcl_id">
                             <a :href="jclLink(item.jx3box_jcl_id)" target="_blank">
                                 <img :src="imgurl + 'JCL_2.png'" />

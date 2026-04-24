@@ -7,9 +7,9 @@
         element-loading-spinner="el-icon-loading"
         element-loading-background="rgba(0, 0, 0, 0.3)"
     >
-        <div class="m-rank-vote-title">
+        <!-- <div class="m-rank-vote-title">
             <img :src="superstar_title_img" />
-        </div>
+        </div> -->
         <!-- <div class="m-rank-vote-header">队伍中所有队员除坦克与治疗外全部为相同门派时，即符合门派天团要求。</div> -->
         <div class="m-race-superstar-rank">
             <div class="m-rank-top100">
@@ -37,7 +37,6 @@
                         <!-- 名称 -->
                         <div class="u-title">
                             <a class="u-teamname" :href="teamLink(item.team_id)" target="_blank">
-                                <i class="el-icon-link"></i>
                                 {{ item.team_name && item.team_name.slice(0, 6) }}
                             </a>
                             <span class="u-server">{{ item.team_server }}</span>
@@ -51,11 +50,11 @@
                         </div>
                         <!-- 时间 -->
                         <div class="u-time">
-                            <span class="u-time-finish">{{ showTime(item.created) }}</span>
                             <span class="u-time-fight">
                                 用时 :
                                 <b>{{ showTC(item.fight_time) }}</b>
                             </span>
+                            <span class="u-time-finish">{{ showTime(item.created) }}</span>
                         </div>
                         <!-- 队长 -->
                         <div class="u-leader" v-if="item.leaders">
@@ -68,14 +67,14 @@
                         <!-- 队员 -->
                         <el-row class="u-teammates" :gutter="10">
                             <el-col class="u-member" :span="i < 3 ? 8 : 4" v-for="(member, j) in item.members" :key="j">
-                                <div>
+                                <div class="u-member-content">
                                     <img loading="lazy" class="u-mount" :src="showMemberMount(member)" />
                                     <span class="u-username">{{ showMemberName(member) }}</span>
                                 </div>
                             </el-col>
                         </el-row>
                         <div
-                            class="u-battle-jcl"
+                            class="u-battle"
                             :class="['is-btn-No' + (i + 1), i > 2 ? 'is_other' : '']"
                             v-if="item.jx3box_battle_id || item.jx3box_jcl_id"
                         >
@@ -174,7 +173,7 @@ export default {
         },
         teamLogo: function (val, mode) {
             if (!val) return "";
-            return mode ? getThumbnail(val, 120, true) : getThumbnail(val, 88, true);
+            return mode ? getThumbnail(val, 240, true) : getThumbnail(val, 240, true);
         },
         loadData: function () {
             this.loading = true;

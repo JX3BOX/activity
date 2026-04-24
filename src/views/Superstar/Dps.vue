@@ -34,7 +34,7 @@
                         </div>
                         <div class="u-team-name" :title="item.team_name">{{ item.team_name }}</div>
                         <div class="u-team-data">
-                            <div class="u-battle-jcl" v-if="item.jx3box_battle_id || item.jx3box_jcl_id">
+                            <div class="u-battle" v-if="item.jx3box_battle_id || item.jx3box_jcl_id">
                                 <!-- 战斗数据 -->
                                 <a
                                     :href="battleLink(item.jx3box_battle_id)"

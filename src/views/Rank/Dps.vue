@@ -469,7 +469,7 @@ export default {
         },
         showTeamLogo: function (item) {
             if (item?.team_info?.logo) {
-                return getThumbnail(item?.team_info.logo, 88);
+                return getThumbnail(item?.team_info.logo, 240);
             }
             return require("@/assets/img/rank/misc/null.png");
         },

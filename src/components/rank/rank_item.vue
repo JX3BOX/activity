@@ -124,7 +124,7 @@ export default {
         },
         teamLogo: function (val, mode) {
             if (!val) return "";
-            return mode ? getThumbnail(val, 240, true) : getThumbnail(val, 176, true);
+            return mode ? getThumbnail(val, 240, true) : getThumbnail(val, 240, true);
         },
         teamLink: function (val) {
             return getLink("org", val);
