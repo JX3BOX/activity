@@ -1,30 +1,31 @@
 <template>
-    <div class="m-single">
-        <CommonHeader></CommonHeader>
-        <div class="m-kv">
-            <img :src="getCdnLink('design/rank/surprise/weal.svg')" alt="" />
-            <div class="u-img-bottom"></div>
-        </div>
-        <div class="m-content" v-loading="loading" :class="{ logs: logs.length }">
-            <el-row :gutter="20">
-                <el-col :span="logs.length ? 13 : 24">
+    <default-layout>
+        <div class="m-rank-surprise">
+            <div class="m-rank-surprise__main">
+                <div class="m-rank-surprise__header">
+                    <img :src="getCdnLink('design/rank/surprise/weal.svg')" alt="" />
+                    <div class="u-img-bottom"></div>
+                </div>
+
+                <div class="m-rank-surprise__content" v-loading="loading" :class="{ logs: logs.length }">
                     <div class="u-title">
                         <el-tag effect="dark" :type="data.status ? 'success' : 'info'" class="u-tag">{{
                             data.status ? "进行中" : "已结束"
-                        }}</el-tag
-                        >{{ data.name }}
+                        }}</el-tag>
+                        <span class="u-name">
+                            {{ data.name }}
+                        </span>
                     </div>
                     <div class="u-time">
                         申请时间： {{ showTime(data.start_at || data.created_at) }} ~
                         {{ showTime(data.end_at || data.created_at) }}
                     </div>
-                    <div class="m-single-info">
-                        <div class="u-info-title">申请条件</div>
+                    <div class="u-block">
+                        <div class="u-sub-title">申请条件</div>
                         <div v-html="data.desc"></div>
                     </div>
-
-                    <div class="m-single-info m-single-form">
-                        <div class="u-info-title">申请步骤</div>
+                    <div class="u-block">
+                        <div class="u-sub-title">申请步骤</div>
                         <p>
                             ① 一旦提交后不可再次更改信息，请务确认信息准确，由用户填写错误所带来的后果由用户自行承担。
                         </p>
@@ -35,7 +36,7 @@
                         <p>③ 申请提交后，会在7个工作日内进行处理，审核驳回后需重新填写正确的信息并提交进行审核。</p>
                         <p>④ 其它问题或异常请联系认证团长群（Q群：1048059072）管理人员。</p>
                     </div>
-                    <div class="u-box" v-if="data.status">
+                    <div class="u-block u-box" v-if="data.status">
                         <el-alert
                             v-if="team_id && alert_info"
                             :title="alert_info"
@@ -66,12 +67,16 @@
                             <img :src="getCdnLink('design/rank/surprise/submit.svg')" alt="" />
                         </div>
                     </div>
-
-                    <el-alert :title="`活动未开启或已结束`" type="info" :closable="false" show-icon v-else></el-alert>
-                </el-col>
-                <el-col :span="11" v-if="logs.length">
-                    <div class="m-apply-logs">
-                        <h4>申请记录</h4>
+                    <el-alert
+                        :title="`活动未开启或已结束`"
+                        type="info"
+                        :closable="false"
+                        show-icon
+                        class="u-alert"
+                        v-else
+                    ></el-alert>
+                    <div class="u-block u-logs" v-if="logs.length">
+                        <h4 class="u-sub-title">申请记录</h4>
                         <el-table
                             :data="logs"
                             style="width: 100%"
@@ -105,13 +110,14 @@
                                 </template>
                             </el-table-column>
                         </el-table>
-                    </div> </el-col
-            ></el-row>
+                    </div>
+                </div>
+            </div>
         </div>
-        <CommonFooter></CommonFooter>
-    </div>
+    </default-layout>
 </template>
 <script>
+import DefaultLayout from "@/layouts/rank/DefaultLayout.vue";
 import { getMyManageTeams, getApply, getApplyRecord, postApplyRecord, checkApply } from "@/service/rank/surprise.js";
 import { showTime } from "@jx3box/jx3box-common/js/moment.js";
 import User from "@jx3box/jx3box-common/js/user";
@@ -137,10 +143,10 @@ export default {
             extend: "",
         };
     },
-    components: { extend, tifu },
+    components: { DefaultLayout, extend, tifu },
     computed: {
         event_id() {
-            return ~~this.$store.state.id;
+            return ~~this.$route.params.id;
         },
         canSubmit() {
             return this.data.status && !this.alert_info && this.team_id;
@@ -248,5 +254,6 @@ export default {
 };
 </script>
 <style lang="less">
+@import "~@/assets/css/rank/surprise/app.less";
 @import "~@/assets/css/rank/surprise/single.less";
 </style>

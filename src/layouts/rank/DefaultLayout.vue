@@ -2,9 +2,9 @@
     <div class="m-rank-container p-rank-default-layout" :class="routeClass">
         <CommonHeader></CommonHeader>
         <div class="m-rank-main">
-            <div class="m-rank-header">
+            <a class="m-rank-header" href="/rank">
                 <img class="m-rank-logo" :src="LOGO" />
-            </div>
+            </a>
             <div class="m-rank-content">
                 <slot></slot>
             </div>
@@ -37,7 +37,7 @@ export default {
 <style lang="less">
 .p-rank-default-layout {
     background: url("@{img}image/rank/common/bg_back.png?12") center top repeat-x;
-    padding: 0 0 80px;
+    padding: 0;
     position: relative;
 
     &::after {
@@ -66,6 +66,12 @@ export default {
     .m-rank-logo {
         margin-top: 24px;
         max-width: min(100%, 320px);
+    }
+}
+
+.v-miniprogram{
+    .m-rank-logo{
+        .none;
     }
 }
 </style>
