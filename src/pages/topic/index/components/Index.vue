@@ -185,6 +185,25 @@ export default {
             if (!items.length) return;
 
             const currentLeft = scrollRef.scrollLeft;
+            const firstItemLeft = items[0].offsetLeft;
+            const maxScrollLeft = scrollRef.scrollWidth - scrollRef.clientWidth;
+
+            if (currentLeft <= firstItemLeft / 2) {
+                scrollRef.scrollTo({
+                    left: 0,
+                    behavior: "smooth",
+                });
+                return;
+            }
+
+            if (currentLeft >= maxScrollLeft - firstItemLeft / 2) {
+                scrollRef.scrollTo({
+                    left: maxScrollLeft,
+                    behavior: "smooth",
+                });
+                return;
+            }
+
             const target = items.reduce((nearest, item) => {
                 const distance = Math.abs(item.offsetLeft - currentLeft);
                 if (!nearest || distance < nearest.distance) {
