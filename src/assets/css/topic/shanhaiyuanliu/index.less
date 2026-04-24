@@ -1,8 +1,9 @@
 .m-index {
     max-width: 100%;
     min-width: 1280px;
-    margin-top:@header-height;
-    overflow: hidden;
+    margin-top: @header-height;
+    // overflow: hidden;
+
     .fade-enter-active,
     .fade-leave-active {
         transition: all 300ms ease-in-out;
@@ -279,47 +280,48 @@
             }
         }
     }
+
+
+    .m-block {
+        .h(calc(100vh - 123px));
+    }
 }
 
-.m-block{
-    .h(calc(100vh - 123px)) !important;
-}
+// @media screen and (orientation: portrait) {
+//     html {
+//         .size(100%);
+//         overflow: hidden;
+//     }
+//     body {
+//         .size(100%);
+//         overflow: hidden;
+//     }
 
-@media screen and (orientation: portrait) {
-    html {
-        .size(100%);
-        overflow: hidden;
-    }
-    body {
-        .size(100%);
-        overflow: hidden;
-    }
-
-    .p-topic {
-        .size(100%);
-        .pr;
-        #box {
-            .pa;
-            .lt(0);
-        }
-        .c-header,
-        .p-topic-footer {
-            .none;
-        }
-    }
-    .m-index {
-        .mt(0);
-        .size(100%);
-        .m-first {
-            background-image: url("@{kv_shanhayuanliu}KV/kv.jpg");
-            background-position: center;
-            background-size: cover;
-        }
-        .m-three {
-            -webkit-overflow-scrolling: touch;
-            .u-first-tip {
-                display: none;
-            }
-        }
-    }
-}
+//     .p-topic {
+//         .size(100%);
+//         .pr;
+//         #box {
+//             .pa;
+//             .lt(0);
+//         }
+//         .c-header,
+//         .p-topic-footer {
+//             .none;
+//         }
+//     }
+//     .m-index {
+//         .mt(0);
+//         .size(100%);
+//         .m-first {
+//             background-image: url("@{kv_shanhayuanliu}KV/kv.jpg");
+//             background-position: center;
+//             background-size: cover;
+//         }
+//         .m-three {
+//             -webkit-overflow-scrolling: touch;
+//             .u-first-tip {
+//                 display: none;
+//             }
+//         }
+//     }
+// }

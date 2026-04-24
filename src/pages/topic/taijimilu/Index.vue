@@ -109,13 +109,15 @@ export default {
             },
             unmounted: function (el, binding) {
                 if (binding.addClass) {
-                    window.removeEventListener("scroll", binding.addClass);
+                    window.removeEventListener("scroll", binding.addClass, true);
                 }
             },
         },
         timer: {
-            mounted: function (el, binding, vnode) {
-                let that = vnode.context;
+            mounted: function (el, binding) {
+                const that = binding.instance;
+                if (!that) return;
+
                 binding.addtimer = () => {
                     const { top } = el.getBoundingClientRect();
                     const h = document.documentElement.clientHeight || document.body.clientHeight;
@@ -137,10 +139,12 @@ export default {
                 window.addEventListener("scroll", binding.addtimer, true);
                 binding.addtimer();
             },
-            unmounted: function (el, binding, vnode) {
-                let that = vnode.context;
+            unmounted: function (el, binding) {
+                const that = binding.instance;
                 if (binding.addtimer) {
-                    window.removeEventListener("scroll", binding.addtimer);
+                    window.removeEventListener("scroll", binding.addtimer, true);
+                }
+                if (that && that.timer) {
                     clearInterval(that.timer);
                     that.timer = null;
                 }

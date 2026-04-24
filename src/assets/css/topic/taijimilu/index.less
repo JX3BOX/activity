@@ -1,45 +1,48 @@
 .m-index {
+    --page-width: max(100vw, 1280px);
+    --content-width: calc(var(--page-width) * 0.7);
     width: 100%;
     min-width: 1280px;
     max-width: 100%;
+    overflow-x: hidden;
     .first-screen {
         width: 100%;
-        height: 57.2917vw;
+        height: calc(var(--page-width) * 0.572917);
         display: block;
     }
     .optimization_reform {
         position: relative;
-        height: 54.1667vw;
+        height: calc(var(--page-width) * 0.541667);
         .bg {
             width: 100%;
             display: block;
-            height: 54.1667vw;
+            height: 100%;
         }
         .content {
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 70vw;
-            height: 44.5833vw;
-            margin-left: -35vw;
+            width: var(--content-width);
+            height: calc(var(--page-width) * 0.445833);
+            margin-left: calc(var(--content-width) * -0.5);
             position: absolute;
             top: 0;
             left: 50%;
             .title {
-                transform: translateY(15.625vw);
+                transform: translateY(calc(var(--page-width) * 0.15625));
                 opacity: 0;
-                width: 48.6979vw;
-                height: 15.6771vw;
+                width: calc(var(--content-width) * 0.6956842857);
+                height: calc(var(--page-width) * 0.156771);
             }
             .imgs {
                 width: 100%;
                 display: flex;
                 justify-content: space-between;
-                margin: 0.5208vw 0 1.5625vw;
+                margin: calc(var(--page-width) * 0.005208) 0 calc(var(--page-width) * 0.015625);
                 .img {
-                    width: 16.6667vw;
-                    height: 23.5938vw;
-                    transform: translateY(15.625vw);
+                    width: 23.8095714286%;
+                    height: calc(var(--page-width) * 0.235938);
+                    transform: translateY(calc(var(--page-width) * 0.15625));
                     opacity: 0;
                 }
                 .flowUp {
@@ -49,20 +52,20 @@
             .text {
                 color: #000;
                 font-family: "Microsoft YaHei";
-                font-size: 0.8333vw;
+                font-size: calc(var(--page-width) * 0.008333);
                 font-style: normal;
                 font-weight: 400;
-                line-height: 1.6667vw; /* 200% */
+                line-height: calc(var(--page-width) * 0.016667);
             }
         }
     }
     .secret_land {
         position: relative;
-        height: 62.5vw;
+        height: calc(var(--page-width) * 0.625);
         .bg {
             width: 100%;
             display: block;
-            height: 62.5vw;
+            height: 100%;
         }
         .content {
             display: flex;
@@ -73,47 +76,47 @@
             top: 0;
             left: 0;
             .title {
-                width: 48.6979vw;
-                height: 15.6771vw;
+                width: calc(var(--page-width) * 0.486979);
+                height: calc(var(--page-width) * 0.156771);
             }
             .introduce {
                 width: 100%;
                 display: flex;
-                height: 29.1667vw;
-                padding: 1.0417vw 0;
+                height: calc(var(--page-width) * 0.291667);
+                padding: calc(var(--page-width) * 0.010417) 0;
                 .img {
                     width: 50%;
                     height: 100%;
                 }
                 .text {
                     background: #222;
-                    padding: 1.0417vw;
+                    padding: calc(var(--page-width) * 0.010417);
                     .text-title {
                         color: #fff;
                         font-family: "Microsoft YaHei";
-                        font-size: 1.6667vw;
+                        font-size: calc(var(--page-width) * 0.016667);
                         font-style: normal;
                         font-weight: 700;
-                        line-height: 2.5vw; /* 150% */
-                        margin-bottom: 1.0417vw;
+                        line-height: calc(var(--page-width) * 0.025);
+                        margin-bottom: calc(var(--page-width) * 0.010417);
                     }
                     .text-content {
-                        max-height: 23.4375vw;
+                        max-height: calc(var(--page-width) * 0.234375);
                         overflow: scroll;
                         scrollbar-width: none;
                         color: #ededed;
                         font-family: "Microsoft YaHei";
-                        font-size: 0.9375vw;
+                        font-size: calc(var(--page-width) * 0.009375);
                         font-style: normal;
                         font-weight: 400;
-                        line-height: 1.4063vw; /* 171.429% */
+                        line-height: calc(var(--page-width) * 0.014063);
                     }
                 }
             }
             .button {
-                width: 5.9375vw;
-                height: 2.0833vw;
-                transform: translateY(13.0208vw);
+                width: calc(var(--page-width) * 0.059375);
+                height: calc(var(--page-width) * 0.020833);
+                transform: translateY(calc(var(--page-width) * 0.130208));
                 transition: filter 0.3s;
                 &:hover {
                     filter: brightness(150%);
@@ -123,7 +126,7 @@
     }
     .boss {
         width: 100%;
-        height: 55.625vw;
+        height: calc(var(--page-width) * 0.55625);
         position: relative;
         .bg-head {
             position: absolute;
@@ -131,7 +134,7 @@
             left: 0;
             width: 100%;
             display: block;
-            height: 8.9583vw;
+            height: calc(var(--page-width) * 0.089583);
             z-index: 10;
         }
         .bg-foot {
@@ -140,11 +143,10 @@
             left: 0;
             width: 100%;
             display: block;
-            height: 8.9583vw;
+            height: calc(var(--page-width) * 0.089583);
             z-index: 10;
         }
         .bg-content {
-            // transition: all 0.3s;
             opacity: 0;
             width: 100%;
             display: block;
@@ -153,7 +155,6 @@
             background-repeat: no-repeat;
         }
         .bg-boss {
-            // transition: all 0.3s;
             opacity: 0;
             position: absolute;
             bottom: 0;
@@ -167,25 +168,25 @@
         .boss-names {
             position: absolute;
             top: 50%;
-            left: 1.0417vw;
+            left: calc(var(--page-width) * 0.010417);
             color: #fff;
-            margin-top: -6.9792vw;
+            margin-top: calc(var(--page-width) * -0.069792);
             cursor: pointer;
             .boss-name {
                 font-family: "Microsoft YaHei";
-                font-size: 1.0938vw;
+                font-size: calc(var(--page-width) * 0.010938);
                 font-style: normal;
                 font-weight: 400;
-                line-height: 2.474vw; /* 225% */
+                line-height: calc(var(--page-width) * 0.02474);
                 transition: all 0.3s;
             }
             .isActive {
                 color: #fff;
                 font-family: "Microsoft YaHei";
-                font-size: 1.6667vw;
+                font-size: calc(var(--page-width) * 0.016667);
                 font-style: normal;
                 font-weight: 700;
-                line-height: 2.0833vw; /* 93.75% */
+                line-height: calc(var(--page-width) * 0.020833);
             }
         }
     }
@@ -210,7 +211,7 @@
     }
     @keyframes flowUp {
         0% {
-            transform: translateY(15.625vw);
+            transform: translateY(calc(var(--page-width) * 0.15625));
             opacity: 0;
         }
         100% {
