@@ -11,6 +11,8 @@
     border: 1px solid #ffedc6;
     color: #ffedc6;
     .r(4px);
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
     padding: 0 10px;
     a:hover {
         box-shadow: 0 1px 0 @color-link;
@@ -49,6 +51,7 @@
             .fz(18px);
             color: #707070;
         }
+        .smooth;
     }
 
     th {
@@ -61,13 +64,17 @@
         .bold;
     }
 
+    tr{
+        border-bottom:1px solid #5e7589;
+    }
+
     // tr th:first-child,tr td:first-child {
     //     border-radius: 10px 0 0 10px;
     // }
-    tr th:last-child,
-    tr td:last-child {
-        border-radius: 0 0 20px 0;
-    }
+    // tr th:last-child,
+    // tr td:last-child {
+    //     border-radius: 0 0 20px 0;
+    // }
     thead {
         th {
             color: #1e374d;
@@ -99,8 +106,8 @@
 
     .u-logo {
         .db;
-        .size(48px);
-        .r(48px);
+        .size(36px);
+        .r(36px);
         // .y;
     }
 

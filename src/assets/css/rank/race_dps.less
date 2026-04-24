@@ -67,7 +67,7 @@
             color: #eee;
         }
         a:hover {
-            color: #0cf;
+            color: @rank-light;
         }
 
         display: flex;
@@ -101,6 +101,7 @@
     }
 
     .u-mount {
+        .flex(y);
         img {
             .size(24px);
             .mr(2px);
@@ -110,6 +111,10 @@
     }
 
     .u-team {
+        .flex(y);
+        a {
+            .flex(y);
+        }
         img {
             .size(24px);
             .y;
@@ -121,16 +126,17 @@
     }
 
     .u-role {
+        .flex(y);
         img {
             .size(24px);
             .y;
             .mr(5px);
         }
         a {
-            text-decoration: underline;
-            color: #0cf;
+            .flex(y);
             &:hover {
-                color: lighten(#0cf, 10%);
+                color: @rank-light;
+                .underline(5px,solid,@rank-light);
             }
         }
         .nobreak;
@@ -175,6 +181,10 @@
         font-weight: normal;
         .fz(12px);
         .x;
+
+        .el-col > * {
+            .flex(y);
+        }
     }
 
     .u-more {

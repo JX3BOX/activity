@@ -27,7 +27,7 @@
         <img
             class="u-back-top"
             :class="{
-                conceal: showBackToTop,
+                conceal: !showBackToTop,
             }"
             :src="arrow"
             @click="scrollToTop"
@@ -55,6 +55,7 @@ export default {
             arrow: `${__cdn}design/rank/common/timeline_arrow.svg`,
             showBackToTop: false,
             id: "",
+            scrollTarget: null,
         };
     },
     computed: {
@@ -76,22 +77,55 @@ export default {
                 this.$store.state.race = res.data.data;
             });
         },
+        getScrollElement() {
+            const dom = this.$refs.appRef;
+            if (dom && dom.scrollHeight > dom.clientHeight) {
+                return dom;
+            }
+            return window;
+        },
+        getScrollTop() {
+            if (this.scrollTarget && this.scrollTarget !== window) {
+                return this.scrollTarget.scrollTop;
+            }
+            return window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+        },
+        updateBackToTop() {
+            this.showBackToTop = this.getScrollTop() >= 300;
+        },
         handleScroll() {
-            let _dom = this.$refs.appRef;
-            _dom.onscroll = () => {
-                this.showBackToTop = _dom.scrollTop < 300;
-            };
+            this.removeScrollListener();
+            this.scrollTarget = this.getScrollElement();
+            this.scrollTarget.addEventListener("scroll", this.updateBackToTop, { passive: true });
+            this.updateBackToTop();
+        },
+        removeScrollListener() {
+            if (!this.scrollTarget) return;
+            this.scrollTarget.removeEventListener("scroll", this.updateBackToTop);
+            this.scrollTarget = null;
         },
         scrollToTop() {
-            let _dom = this.$refs.appRef;
-            _dom.scrollTo({
+            const target = this.getScrollElement();
+            if (target === window) {
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth",
+                });
+                return;
+            }
+            target.scrollTo({
                 top: 0,
                 behavior: "smooth",
             });
         },
     },
     mounted() {
-        this.handleScroll();
+        this.$nextTick(() => {
+            this.handleScroll();
+        });
+    },
+    beforeUnmount() {
+        this.removeScrollListener();
     },
     watch: {
         $route: {
@@ -109,6 +143,9 @@ export default {
                     this.$store.state.id = this.id || 0;
                     this.init();
                 }
+                this.$nextTick(() => {
+                    this.handleScroll();
+                });
             },
         },
     },
