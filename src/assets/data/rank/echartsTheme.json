@@ -158,54 +158,42 @@
     },
     "map": {
         "itemStyle": {
-            "normal": {
-                "areaColor": "#eee",
-                "borderColor": "#444",
-                "borderWidth": 0.5
-            },
-            "emphasis": {
+            "areaColor": "#eee",
+            "borderColor": "#444",
+            "borderWidth": 0.5
+        },
+        "emphasis": {
+            "itemStyle": {
                 "areaColor": "rgba(255,215,0,0.8)",
                 "borderColor": "#444",
                 "borderWidth": 1
+            },
+            "label": {
+                "color": "rgb(100,0,0)"
             }
         },
         "label": {
-            "normal": {
-                "textStyle": {
-                    "color": "#000"
-                }
-            },
-            "emphasis": {
-                "textStyle": {
-                    "color": "rgb(100,0,0)"
-                }
-            }
+            "color": "#000"
         }
     },
     "geo": {
         "itemStyle": {
-            "normal": {
-                "areaColor": "#eee",
-                "borderColor": "#444",
-                "borderWidth": 0.5
-            },
-            "emphasis": {
+            "areaColor": "#eee",
+            "borderColor": "#444",
+            "borderWidth": 0.5
+        },
+        "emphasis": {
+            "itemStyle": {
                 "areaColor": "rgba(255,215,0,0.8)",
                 "borderColor": "#444",
                 "borderWidth": 1
+            },
+            "label": {
+                "color": "rgb(100,0,0)"
             }
         },
         "label": {
-            "normal": {
-                "textStyle": {
-                    "color": "#000"
-                }
-            },
-            "emphasis": {
-                "textStyle": {
-                    "color": "rgb(100,0,0)"
-                }
-            }
+            "color": "#000"
         }
     },
     "categoryAxis": {
@@ -223,9 +211,7 @@
         },
         "axisLabel": {
             "show": true,
-            "textStyle": {
-                "color": "#eeeeee"
-            }
+            "color": "#eeeeee"
         },
         "splitLine": {
             "show": false,
@@ -259,9 +245,7 @@
         },
         "axisLabel": {
             "show": true,
-            "textStyle": {
-                "color": "#eeeeee"
-            }
+            "color": "#eeeeee"
         },
         "splitLine": {
             "show": true,
@@ -295,9 +279,7 @@
         },
         "axisLabel": {
             "show": true,
-            "textStyle": {
-                "color": "#eeeeee"
-            }
+            "color": "#eeeeee"
         },
         "splitLine": {
             "show": false,
@@ -331,9 +313,7 @@
         },
         "axisLabel": {
             "show": true,
-            "textStyle": {
-                "color": "#eeeeee"
-            }
+            "color": "#eeeeee"
         },
         "splitLine": {
             "show": false,
@@ -354,10 +334,10 @@
     },
     "toolbox": {
         "iconStyle": {
-            "normal": {
-                "borderColor": "#999999"
-            },
-            "emphasis": {
+            "borderColor": "#999999"
+        },
+        "emphasis": {
+            "iconStyle": {
                 "borderColor": "#666666"
             }
         }
@@ -385,24 +365,25 @@
             "width": 1
         },
         "itemStyle": {
-            "normal": {
-                "color": "#dd6b66",
-                "borderWidth": 1
-            },
-            "emphasis": {
-                "color": "#a9334c"
-            }
+            "color": "#dd6b66",
+            "borderWidth": 1
         },
         "controlStyle": {
-            "normal": {
+            "color": "#eeeeee",
+            "borderColor": "#eeeeee",
+            "borderWidth": 0.5
+        },
+        "emphasis": {
+            "itemStyle": {
+                "color": "#a9334c"
+            },
+            "controlStyle": {
                 "color": "#eeeeee",
                 "borderColor": "#eeeeee",
                 "borderWidth": 0.5
             },
-            "emphasis": {
-                "color": "#eeeeee",
-                "borderColor": "#eeeeee",
-                "borderWidth": 0.5
+            "label": {
+                "color": "#eeeeee"
             }
         },
         "checkpointStyle": {
@@ -410,16 +391,7 @@
             "borderColor": "rgba(194,53,49,0.5)"
         },
         "label": {
-            "normal": {
-                "textStyle": {
-                    "color": "#eeeeee"
-                }
-            },
-            "emphasis": {
-                "textStyle": {
-                    "color": "#eeeeee"
-                }
-            }
+            "color": "#eeeeee"
         }
     },
     "visualMap": {

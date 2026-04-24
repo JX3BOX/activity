@@ -1,6 +1,6 @@
 <template>
     <div class="c-chart" :style="{ '--height': isSmall ? '600px' : '700px' }">
-        <v-chart :options="pieOption" theme="jx3box-dark" ref="chart" />
+        <v-chart :option="pieOption" theme="jx3box-dark" ref="chart" />
         <slot></slot>
     </div>
 </template>

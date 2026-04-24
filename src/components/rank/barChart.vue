@@ -1,6 +1,6 @@
 <template>
     <div class="c-chart" :style="{ '--height': height }">
-        <v-chart :options="barOption" theme="jx3box-dark" />
+        <v-chart :option="barOption" theme="jx3box-dark" />
         <slot></slot>
     </div>
 </template>
@@ -8,6 +8,24 @@
 <script>
 import colorData from "@jx3box/jx3box-data/data/xf/colors.json";
 const { colors_by_school_name, colors_by_mount_name } = colorData;
+const defaultBarColor = {
+    type: "linear",
+    x: 0,
+    y: 0,
+    x2: 0.4,
+    y2: 0,
+    colorStops: [
+        {
+            offset: 0,
+            color: "#dd6b6648",
+        },
+        {
+            offset: 1,
+            color: "#dd6b66",
+        },
+    ],
+    globalCoord: true,
+};
 export default {
     name: "barChart",
     components: {
@@ -89,9 +107,10 @@ export default {
                         itemStyle: {
                             color: this.isCustomColor
                                 ? (param) => {
-                                      return colors_by_school_name[param.name] || colors_by_mount_name[param.name];
+                                      const name = Array.isArray(param.data) ? param.data[1] : param.name;
+                                      return colors_by_school_name[name] || colors_by_mount_name[name] || defaultBarColor;
                                   }
-                                : "",
+                                : defaultBarColor,
                         },
                     },
                 ],

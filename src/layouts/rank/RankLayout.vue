@@ -39,6 +39,7 @@
 import PICS from "@/assets/js/pics.js";
 import race_header from "@/components/rank/race_header.vue";
 import { getEvent, getIdFromSlug } from "@/service/rank/event.js";
+import QRcode from "@jx3box/jx3box-ui/src/interact/QRcode.vue";
 import jx3box from "@jx3box/jx3box-common/data/jx3box.json";
 const { __cdn } = jx3box;
 import { isNumber } from "lodash";
@@ -150,6 +151,7 @@ export default {
     },
     components: {
         "race-header": race_header,
+        QRcode,
         // "race-bg": race_bg,
     },
 };
