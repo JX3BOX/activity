@@ -5,15 +5,13 @@
 </template>
 
 <script>
-import { isApp } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "Rank",
-    created() {
-        isApp() && localStorage.setItem("__env", "app");
-    },
+    created() {},
 };
 </script>
 
 <style lang="less">
+@import "~@/assets/css/rank/app.less";
 @import "~@/assets/css/rank/race.less";
 </style>

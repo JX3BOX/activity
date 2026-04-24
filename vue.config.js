@@ -53,19 +53,19 @@ const pages = {
     rank: {
         title: "剑三秘境百强榜 - JX3BOX",
         entry: "src/pages/rank/rank/index.js",
-        template: "public/rank.html",
+        template: "public/index.html",
         filename: "rank/index.html",
     },
     lover: {
         title: "剑三情缘杯 - JX3BOX",
         entry: "src/pages/rank/lover/index.js",
-        template: "public/lover.html",
+        template: "public/index.html",
         filename: "lover/index.html",
     },
     superstar: {
         title: "剑三门派天团 - JX3BOX",
         entry: "src/pages/rank/superstar/index.js",
-        template: "public/superstar.html",
+        template: "public/index.html",
         filename: "superstar/index.html",
     },
     ...topicPages,

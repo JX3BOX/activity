@@ -2,13 +2,21 @@
 html {
     min-width: 1280px;
 }
+.v-miniprogram {
+    .c-header,.c-footer,.c-footer--v4 {
+        .none;
+    }
+}
 body {
     background: linear-gradient(180deg, rgba(32, 51, 69, 1) 62%, rgba(84, 102, 120, 1) 100%);
 }
 
-body {
-    height: 100vh;
-}
+// body {
+//     height: 100vh;
+// }
+
+
+
 .m-rank-container,
 #m-rank-star {
     height: calc(100vh);
@@ -64,4 +72,19 @@ body {
 .m-rank-pop-wechat-tips {
     .x;
     color: #ff7600;
+}
+
+@media screen and (max-width: 1024px) {
+    html {
+        min-width: 0;
+    }
+
+    body {
+        overflow-x: hidden;
+    }
+
+    .m-rank-container,
+    #m-rank-star {
+        overflow-x: hidden;
+    }
 }
