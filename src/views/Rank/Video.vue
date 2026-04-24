@@ -30,16 +30,18 @@
                                 <a :href="teamLink(item.team_id)" target="_blank"
                                     ><img :src="liveAvatar(item.logo)" class="u-team-logo" loading="lazy"
                                 /></a>
-                                <div class="u-team">
-                                    <span class="u-label">团队 : </span>
-                                    <a class="u-team-name" :href="teamLink(item.team_id)" target="_blank">{{
-                                        item.name
-                                    }}</a>
-                                </div>
-                                <div class="u-room">
-                                    <a class="u-room-name" :href="item.url" target="_blank">
-                                        {{ item.title }}
-                                    </a>
+                                <div class="u-meta">
+                                    <div class="u-team">
+                                        <span class="u-label">团队 : </span>
+                                        <a class="u-team-name" :href="teamLink(item.team_id)" target="_blank">{{
+                                            item.name
+                                        }}</a>
+                                    </div>
+                                    <div class="u-room">
+                                        <a class="u-room-name" :href="item.url" target="_blank">
+                                            {{ item.title }}
+                                        </a>
+                                    </div>
                                 </div>
                                 <!-- <div class="u-op" v-if="isEditor">
                                     <el-button class="u-edit" type="primary" plain @click="edit(item)" icon="el-icon-edit-outline" size="mini">编辑</el-button>

@@ -46,12 +46,14 @@
                             <a class="u-video" :href="getTVlink(item.team.tv_type, item.team.tv)" target="_blank">
                                 <template v-if="item.team.tv_type == 'douyu'">
                                     <img
-                                        v-if="item.douyu.room_src"
+                                        v-if="hasLiveCover(item)"
                                         :src="item.douyu.room_src"
                                         class="u-live-cover"
                                         loading="lazy"
                                     />
-                                    <img v-else :src="teamLogo(item.team.logo)" class="u-live-null" loading="lazy" />
+                                    <div v-else class="u-live-fallback" :style="fallbackCoverStyle(item)">
+                                        <img :src="teamLogo(item.team.logo)" class="u-live-null" loading="lazy" />
+                                    </div>
                                     <i
                                         class="u-status"
                                         :class="{
@@ -65,29 +67,33 @@
                                     </i>
                                 </template>
                                 <template v-else>
-                                    <img :src="teamLogo(item.team.logo)" class="u-live-null" loading="lazy" />
+                                    <div class="u-live-fallback" :style="fallbackCoverStyle(item)">
+                                        <img :src="teamLogo(item.team.logo)" class="u-live-null" loading="lazy" />
+                                    </div>
                                     <i class="u-status"><i class="el-icon-warning-outline"></i> 未知</i>
                                 </template>
                             </a>
                             <div class="u-info">
                                 <img :src="liveAvatar(item.team.logo)" class="u-team-logo" loading="lazy" />
-                                <div class="u-team">
-                                    <span class="u-label">团队 : </span>
-                                    <a class="u-team-name" :href="teamLink(item.team.ID)" target="_blank">{{
-                                        item.team.name
-                                    }}</a>
-                                </div>
-                                <div class="u-room">
-                                    <a
-                                        class="u-room-name"
-                                        :href="getTVlink(item.team.tv_type, item.team.tv)"
-                                        target="_blank"
-                                    >
-                                        {{
-                                            (item.team.tv_type == "douyu" && item.douyu.room_name) ||
-                                            item.team.name + "的直播间"
-                                        }}
-                                    </a>
+                                <div class="u-meta">
+                                    <div class="u-team">
+                                        <span class="u-label">团队 : </span>
+                                        <a class="u-team-name" :href="teamLink(item.team.ID)" target="_blank">{{
+                                            item.team.name
+                                        }}</a>
+                                    </div>
+                                    <div class="u-room">
+                                        <a
+                                            class="u-room-name"
+                                            :href="getTVlink(item.team.tv_type, item.team.tv)"
+                                            target="_blank"
+                                        >
+                                            {{
+                                                (item.team.tv_type == "douyu" && item.douyu.room_name) ||
+                                                item.team.name + "的直播间"
+                                            }}
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -169,6 +175,9 @@ export default {
     },
     methods: {
         getTVlink,
+        hasLiveCover: function (item) {
+            return item.team.tv_type == "douyu" && item.douyu.room_src;
+        },
         loadData: function () {
             this.loading = true;
             getLives(this.id, this.params)
@@ -196,6 +205,11 @@ export default {
         },
         liveAvatar: function (val) {
             return val ? getThumbnail(val, 136, true) : default_avatar;
+        },
+        fallbackCoverStyle: function (item) {
+            return {
+                "--fallback-cover": `url(${this.teamLogo(item.team.logo)})`,
+            };
         },
         teamLink: function (val) {
             // return "/team/#/org/view/" + val;

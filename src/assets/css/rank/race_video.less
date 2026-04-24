@@ -15,6 +15,7 @@
     .u-extend {
         .pa;
         .rt(0, 20px);
+        .w(180px);
     }
     .u-addv {
         .pa;
@@ -64,15 +65,58 @@
         background-color: #222;
         .h(200px);
         .clip;
+        .pr;
 
         .u-live-cover {
             .size(100%);
+            object-fit: cover;
+        }
+
+        .u-live-fallback {
+            .size(100%);
+            .pr;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background:
+                linear-gradient(180deg, rgba(10, 18, 28, 0.2) 0%, rgba(10, 18, 28, 0.78) 100%),
+                radial-gradient(circle at center, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 58%),
+                #1a2029;
+
+            &::before,
+            &::after {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background-image: var(--fallback-cover);
+                background-position: center;
+                background-repeat: no-repeat;
+                pointer-events: none;
+            }
+
+            &::before {
+                background-size: cover;
+                filter: blur(28px) saturate(1.1);
+                transform: scale(1.18);
+                opacity: 0.68;
+            }
+
+            &::after {
+                background-size: 70%;
+                opacity: 0.18;
+                mix-blend-mode: screen;
+            }
         }
 
         .u-live-null {
-            .size(120px);
+            .size(104px);
             .db;
-            margin: 40px auto;
+            .pr;
+            z-index: 1;
+            border-radius: 14px;
+            box-shadow:
+                0 10px 28px rgba(0, 0, 0, 0.35),
+                0 0 0 1px rgba(255, 255, 255, 0.12);
         }
 
         transition: 0.1s ease-in-out;
@@ -80,11 +124,10 @@
             background-color: #111;
         }
 
-        .pr;
         .u-status {
             .pa;
             .rb(10px);
-            background-color: #0cf;
+            background-color: #222;
             color: #fff;
             .r(2px);
             font-style: normal;
@@ -123,7 +166,10 @@
 
     .u-info {
         background-color: #264259;
-        .clearfix;
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 12px 14px;
         .clip;
         a {
             color: #ffedc6;
@@ -134,28 +180,47 @@
     }
 
     .u-team-logo {
-        .fl;
-        .size(100px);
-        .mr(10px);
+        .size(76px);
+        flex: none;
+        border-radius: 10px;
+        object-fit: cover;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.24);
+    }
+
+    .u-meta {
+        min-width: 0;
+        flex: 1;
     }
 
     .u-team,
     .u-room {
-        .fz(24px, 1.3);
-        .nobreak;
+        min-width: 0;
     }
     .u-room {
         a {
-            font-size: 16px;
+            display: -webkit-box;
+            font-size: 14px;
+            line-height: 1.45;
             color: #fff;
-            opacity: 0.5;
+            opacity: 0.62;
+            white-space: normal;
+            word-break: break-word;
+            overflow: hidden;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
         }
     }
     .u-team {
-        .mt(5px);
+        .mb(4px);
+        line-height: 1.35;
     }
     .u-label {
-        color: #fff;
+        color: rgba(255, 255, 255, 0.72);
+        font-size: 14px;
+    }
+    .u-team-name {
+        font-size: 18px;
+        font-weight: 600;
     }
     .button-edit {
         position: absolute;
