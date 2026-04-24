@@ -1,12 +1,15 @@
-// 手动引入 ECharts 各模块来减小打包体积
-import "echarts/lib/chart/bar";
-import "echarts/lib/chart/pie";
-import "echarts/lib/component/tooltip";
-import "echarts/lib/component/markPoint";
-import "echarts/lib/component/markLine";
-import "echarts/lib/component/dataZoom";
-import "echarts/lib/component/legend";
-import "echarts/lib/component/title";
+import { use, registerTheme } from "echarts/core";
+import { BarChart, PieChart } from "echarts/charts";
+import {
+    TooltipComponent,
+    MarkPointComponent,
+    MarkLineComponent,
+    DataZoomComponent,
+    LegendComponent,
+    TitleComponent,
+    GridComponent,
+} from "echarts/components";
+import { CanvasRenderer } from "echarts/renderers";
 
 import jx3DarkTheme from "@/assets/data/rank/echartsTheme.json";
 
@@ -35,6 +38,20 @@ import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 
 import "@/assets/css/tailwind.css";
 
+use([
+    BarChart,
+    PieChart,
+    TooltipComponent,
+    MarkPointComponent,
+    MarkLineComponent,
+    DataZoomComponent,
+    LegendComponent,
+    TitleComponent,
+    GridComponent,
+    CanvasRenderer,
+]);
+registerTheme("jx3box-dark", jx3DarkTheme);
+
 const app = createApp(App);
 
 app.use(router);
@@ -42,7 +59,6 @@ app.use(store);
 
 import ECharts from "vue-echarts"; // 在 webpack 环境下指向 components/ECharts.vue
 app.component("v-chart", ECharts);
-// ECharts.registerTheme("jx3box-dark", jx3DarkTheme);
 import Katex from "@/utils/katex";
 app.directive("katex", Katex);
 

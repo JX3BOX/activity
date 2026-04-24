@@ -23,7 +23,6 @@
             <!-- 网页二维码 -->
             <QRcode class="u-mobile-qrcode" v="static" :s="100" />
         </div>
-
         <img
             class="u-back-top"
             :class="{

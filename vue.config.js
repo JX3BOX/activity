@@ -233,6 +233,7 @@ function buildEnvProxy() {
     };
 
     const serviceTargets = {
+        root: process.env.VUE_APP_ROOT_API || commonDomains.__Root,
         cms: process.env.VUE_APP_CMS_API || commonDomains.__cms,
         next: process.env.VUE_APP_NEXT_API || commonDomains.__next,
         team: process.env.VUE_APP_TEAM_API || commonDomains.__team,

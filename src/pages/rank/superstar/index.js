@@ -1,7 +1,8 @@
-// 手动引入 ECharts 各模块来减小打包体积
-import "echarts/lib/chart/pie";
-import "echarts/lib/component/legend";
-import "echarts/lib/component/tooltip";
+import { use, registerTheme } from "echarts/core";
+import { PieChart } from "echarts/charts";
+import { LegendComponent, TooltipComponent, TitleComponent } from "echarts/components";
+import { CanvasRenderer } from "echarts/renderers";
+import jx3DarkTheme from "@/assets/data/rank/echartsTheme.json";
 
 import { createApp } from "vue";
 import App from "./Superstar.vue";
@@ -27,6 +28,9 @@ import vi from "element-plus/es/locale/lang/vi";
 import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 
 import "@/assets/css/tailwind.css";
+
+use([PieChart, LegendComponent, TooltipComponent, TitleComponent, CanvasRenderer]);
+registerTheme("jx3box-dark", jx3DarkTheme);
 
 const app = createApp(App);
 

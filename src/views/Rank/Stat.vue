@@ -94,6 +94,7 @@ export default {
                 { name: "团长职业类型分布", type: "pie" },
             ], //图表名称与图表数据内保持一致，用于排序
             chartArr: [],
+            chartMap: {},
         };
     },
     computed: {
@@ -120,24 +121,27 @@ export default {
     methods: {
         changeBoss: function (val) {
             this.current_boss = val;
-            this.server = "";
+            this.chartArr = [];
+            this.chartMap = {};
 
-            if (this.stats["top10_achieve_team_count"][this.current_boss] == undefined) {
+            if (
+                !this.stats["top10_achieve_team_count"] ||
+                this.stats["top10_achieve_team_count"][this.current_boss] == undefined
+            ) {
                 return false;
             }
-            this.chartArr = [];
             for (let item = 1; item <= 15; ++item) {
                 eval(`this.doAna${item}()`);
             }
             let arr = [],
                 chartName = this.chartName;
             for (let i = 0; i < chartName.length; i++) {
-                if (this.chartArr[chartName[i].name]) {
-                    this.chartArr[chartName[i].name].chartType = chartName[i].type;
-                    arr.push(this.chartArr[chartName[i].name]);
+                if (this.chartMap[chartName[i].name]) {
+                    this.chartMap[chartName[i].name].chartType = chartName[i].type;
+                    arr.push(this.chartMap[chartName[i].name]);
                 }
             }
-            this.$set(this, "chartArr", arr);
+            this.chartArr = arr;
         },
 
         getschoolName(id) {
@@ -148,21 +152,35 @@ export default {
             }
             return "江湖";
         },
-        getStats() {
+        getStatsUrlList() {
+            const path = `data/analysis-dungeon-rank/output/event_${this.id}.json`;
+            const localUrl = realUrl(__Root, path);
+            const proxyPrefix = process.env.VUE_APP_PROXY_PREFIX || "/__proxy";
+            const proxyUrl = `${proxyPrefix}/root/${path}`;
+            const remoteRoot = (__Root || "").replace(/\/+$/, "");
+            const remoteUrl = `${remoteRoot}/${path}`;
+            return [...new Set([localUrl, proxyUrl, remoteUrl])];
+        },
+        async getStats() {
             this.loading = true;
-            return axios(realUrl(__Root, `data/analysis-dungeon-rank/output/event_${this.id}.json`), "GET", false)
-                .then((res) => {
-                    this.stats = res;
-                    // this.stats = event_5;
-                    this.changeBoss(this.current_boss);
-                })
-                .catch((err) => {
+            let stats = null;
+            const urls = this.getStatsUrlList();
+
+            for (const url of urls) {
+                try {
+                    stats = await axios(url, "GET", false);
+                    if (stats?.top10_achieve_team_count) break;
+                } catch (err) {
                     console.log(err);
-                    // this.$message.error("加载统计文件失败");
-                })
-                .finally(() => {
-                    this.loading = false;
-                });
+                }
+            }
+
+            if (stats?.top10_achieve_team_count) {
+                this.stats = stats;
+                this.changeBoss(this.current_boss);
+            }
+
+            this.loading = false;
         },
         doAna1() {
             // 1-区服-bar: 区服入榜团队数量,
@@ -181,7 +199,7 @@ export default {
             let servers = exist_servers?.map((server, i) => {
                 return [data[i], server];
             });
-            this.chartArr["区服入榜团队数量"] = {
+            this.chartMap["区服入榜团队数量"] = {
                 data: servers.reverse(),
                 title: "区服入榜团队数量",
             };
@@ -204,7 +222,7 @@ export default {
             let servers = exist_servers?.map((server, i) => {
                 return { value: data[i], name: _this.getschoolName(server) };
             });
-            this.chartArr["全门派出场率"] = { data: servers, title: "全门派出场率" };
+            this.chartMap["全门派出场率"] = { data: servers, title: "全门派出场率" };
         },
         doAna3() {
             // 3-全心法出场率-pie
@@ -225,7 +243,7 @@ export default {
             let servers = exist_servers?.map((server, i) => {
                 return { value: data[i], name: xfids[server] };
             });
-            this.chartArr["全心法出场率"] = { data: servers, title: "全心法出场率" };
+            this.chartMap["全心法出场率"] = { data: servers, title: "全心法出场率" };
         },
         doAna4() {
             // 4-Boss奶妈数量-pie
@@ -245,7 +263,7 @@ export default {
             let servers = item?.map((name, i) => {
                 return { value: data[i], name: name + "个" };
             });
-            this.chartArr["各团出场治疗心法数量"] = {
+            this.chartMap["各团出场治疗心法数量"] = {
                 data: servers,
                 title: "各团出场治疗心法数量",
                 isCustomColor: false,
@@ -269,7 +287,7 @@ export default {
             let servers = exist_servers?.map((server, i) => {
                 return { value: data[i], name: xfids[server] };
             });
-            this.chartArr["各治疗心法出场率"] = {
+            this.chartMap["各治疗心法出场率"] = {
                 data: servers,
                 title: "各治疗心法出场率",
                 position: "right",
@@ -295,7 +313,7 @@ export default {
             let servers = item?.map((name, i) => {
                 return { value: data[i], name: name + "个" };
             });
-            this.chartArr["各团出场防御心法数量"] = {
+            this.chartMap["各团出场防御心法数量"] = {
                 data: servers,
                 title: "各团出场防御心法数量",
                 isCustomColor: false,
@@ -321,7 +339,7 @@ export default {
             let servers = exist_servers?.map((server, i) => {
                 return { value: data[i], name: xfids[server] };
             });
-            this.chartArr["各防御心法出场率"] = {
+            this.chartMap["各防御心法出场率"] = {
                 data: servers,
                 title: "各防御心法出场率",
                 position: "right",
@@ -347,7 +365,7 @@ export default {
                 return { value: data[i], name: xfids[server] };
             });
 
-            this.chartArr["各输出心法出场率"] = {
+            this.chartMap["各输出心法出场率"] = {
                 data: servers,
                 title: "各输出心法出场率",
             };
@@ -375,7 +393,7 @@ export default {
                     return { value: data[i], name: name, itemStyle: { color: "rgb(0,204,255)" } };
                 }
             });
-            this.chartArr["内外功出场比例"] = {
+            this.chartMap["内外功出场比例"] = {
                 data: servers,
                 title: "内外功出场比例",
                 isCustomColor: false,
@@ -400,7 +418,7 @@ export default {
             let servers = item?.map((name, i) => {
                 return { value: data[i], name: name };
             });
-            this.chartArr["团长职业类型分布"] = {
+            this.chartMap["团长职业类型分布"] = {
                 data: servers,
                 title: "团长职业类型分布",
                 isCustomColor: false,
@@ -425,7 +443,7 @@ export default {
             let servers = exist_servers?.map((server, i) => {
                 return [data[i], server];
             });
-            this.chartArr["前十名区服分布"] = {
+            this.chartMap["前十名区服分布"] = {
                 data: servers.reverse(),
                 title: "前十名区服分布",
                 height: "450px",
@@ -451,7 +469,7 @@ export default {
                 // return [data[i], server];
                 return [parseInt(data[i]), xfids[server]];
             });
-            this.chartArr["各输出心法平均DPS"] = {
+            this.chartMap["各输出心法平均DPS"] = {
                 data: servers.reverse(),
                 title: "各输出心法平均DPS",
                 seriesName: "DPS",
@@ -483,14 +501,14 @@ export default {
                 }
             }
 
-            this.chartArr["内功心法伤害DPS"] = {
+            this.chartMap["内功心法伤害DPS"] = {
                 data: nei.reverse(),
                 title: "内功心法伤害DPS",
                 seriesName: "DPS",
                 // position:'left'
             };
 
-            this.chartArr["外功心法伤害DPS"] = {
+            this.chartMap["外功心法伤害DPS"] = {
                 data: wai.reverse(),
                 title: "外功心法伤害DPS",
                 seriesName: "DPS",
@@ -516,7 +534,7 @@ export default {
                 // return [data[i], server];
                 return [parseInt(data[i]), xfids[server]];
             });
-            this.chartArr["治疗心法平均HPS"] = {
+            this.chartMap["治疗心法平均HPS"] = {
                 data: servers.reverse(),
                 title: "治疗心法平均HPS",
                 seriesName: "HPS",
@@ -542,7 +560,7 @@ export default {
                 // return [data[i], server];
                 return [parseInt(data[i]), xfids[server]];
             });
-            this.chartArr["治疗心法平均治疗量"] = {
+            this.chartMap["治疗心法平均治疗量"] = {
                 data: servers.reverse(),
                 title: "治疗心法平均治疗量",
                 seriesName: "治疗量",
@@ -568,7 +586,7 @@ export default {
                 // return [data[i], server];
                 return [parseInt(data[i]), xfids[server]];
             });
-            this.chartArr["输出心法平均伤害量"] = {
+            this.chartMap["输出心法平均伤害量"] = {
                 data: servers.reverse(),
                 title: "输出心法平均伤害量",
                 seriesName: "伤害量",
