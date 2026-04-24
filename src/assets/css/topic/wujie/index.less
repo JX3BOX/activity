@@ -1,9 +1,15 @@
-.m-index {
-    .pr;
-    .w(100%);
-    .auto(x);
+.p-topic {
+    width: 100%;
+    margin: 0 auto;
+    overflow-x: hidden;
+}
 
-    width: 1908px;
+.m-index {
+    max-width: 1908px;
+    width: 100%;
+    .pr;
+    margin: 0 auto;
+    overflow: hidden;
 
     img {
         .db();
@@ -12,19 +18,35 @@
 
     .m-top {
         .mt(60px);
+        .u-kv {
+            width: 100%;
+            height: auto;
+        }
     }
 
     .m-excessive {
+        width: 100%;
         .pa;
         .flex;
         .z(3);
         top: 846px;
         overflow: hidden;
 
+        .u-img {
+            width: 50%;
+            height: auto;
+        }
+
         .u-img-line {
             .pa;
             .z(4);
             top: 173px;
+            width: 100%;
+
+            img {
+                width: 100%;
+                height: auto;
+            }
         }
     }
 
@@ -55,12 +77,28 @@
         .el-carousel__indicators {
             display: none;
         }
+        .el-carousel,
+        .el-carousel__container,
+        .el-carousel__item,
+        .el-carousel__item img {
+            width: 100%;
+            height: 100%;
+        }
+        .el-carousel__item img {
+            object-fit: cover;
+        }
     }
 
     .m-excessive2 {
+        width: 100%;
         .pa;
         .z(3);
         top: 1784px;
+
+        .u-img {
+            width: 100%;
+            height: auto;
+        }
     }
 
     .m-three {
@@ -112,8 +150,14 @@
     }
 
     .m-excessive3 {
+        width: 100%;
         .pa;
         top: 2960px;
+
+        .u-img {
+            width: 100%;
+            height: auto;
+        }
     }
 
     .m-four {

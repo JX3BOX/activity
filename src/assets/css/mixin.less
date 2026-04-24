@@ -1,0 +1,13 @@
+// 资料片专题小屏缩小公式
+
+.topic-build(@width) {
+    .topic-main {
+        width: @width;
+    }
+
+    @media screen and (max-width: @width) {
+        .topic-main {
+            zoom: calc(100vw / @width);
+        }
+    }
+}

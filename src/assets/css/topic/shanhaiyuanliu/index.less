@@ -1,8 +1,14 @@
 .m-index {
+    --page-width: max(100vw, 1280px);
+    --hero-height: calc(var(--page-width) * 0.5625);
+    --section-two-height: calc(var(--page-width) * 0.5625);
+    --section-three-height: calc(var(--page-width) * 0.625);
+    --section-four-height: calc(var(--page-width) * 0.443);
+    --section-five-height: calc(var(--page-width) * 0.5625);
     max-width: 100%;
     min-width: 1280px;
     margin-top: @header-height;
-    // overflow: hidden;
+    overflow-x: hidden;
 
     .fade-enter-active,
     .fade-leave-active {
@@ -19,7 +25,8 @@
     }
 
     .m-first {
-        .size(100%);
+        width: 100%;
+        height: var(--hero-height);
         position: relative;
         overflow: hidden;
         .flex;
@@ -36,11 +43,14 @@
         }
         .u-img {
             .pa;
-            .h(100%);
+            .lt(0);
+            .size(50%,100%);
+            object-fit: cover;
         }
     }
     .m-two {
-        .size(100%);
+        width: 100%;
+        height: var(--section-two-height);
         .pr;
         background-image: url("@{kv_shanhayuanliu}1/bg_1.jpg");
         background-size: cover;
@@ -110,7 +120,7 @@
                     }
                 }
                 .u-close {
-                    .w(10vw);
+                    .w(calc(var(--page-width) * 0.1));
                     &:hover {
                         background-color: rgba(0, 0, 0, 0.4);
                     }
@@ -120,7 +130,8 @@
     }
 
     .m-three {
-        .size(100%);
+        width: 100%;
+        height: var(--section-three-height);
         .pr;
         overflow: hidden;
         .u-icon-img {
@@ -154,7 +165,8 @@
         }
     }
     .m-four {
-        .size(100%);
+        width: 100%;
+        height: var(--section-four-height);
         .pr;
         background-position: center top;
         background-size: cover;
@@ -205,7 +217,8 @@
         }
     }
     .m-five {
-        .size(100%);
+        width: 100%;
+        height: var(--section-five-height);
         .flex;
         .flex(o);
         .pr;
@@ -227,13 +240,13 @@
                 aspect-ratio: 22/5;
                 flex-shrink: 0;
                 .u-img {
-                    .mb(1vw);
+                    .mb(calc(var(--page-width) * 0.01));
                     transition: opacity 0.3s ease;
                     user-select: none;
                 }
             }
             .u-line {
-                .h(10vw);
+                .h(calc(var(--page-width) * 0.1));
                 .w(4px);
                 background: #000;
             }
@@ -279,11 +292,6 @@
                 }
             }
         }
-    }
-
-
-    .m-block {
-        .h(calc(100vh - 123px));
     }
 }
 

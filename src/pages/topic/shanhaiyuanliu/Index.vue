@@ -232,9 +232,6 @@ export default {
             this.mIndexElement.addEventListener("wheel", this.handleWheel, { passive: false });
         }
 
-        // 在 mounted 中替换原有的 touchmove 监听器
-        document.addEventListener("touchmove", this.handleTouchMove, { passive: false });
-
         const width = document.documentElement.clientWidth;
         const height = document.documentElement.clientHeight;
         if (width < height) {
@@ -250,17 +247,6 @@ export default {
     },
     methods: {
         //屏幕滑动
-        // 新增方法：处理 touchmove 事件
-        handleTouchMove(ev) {
-            // 如果当前处于第3个区域，并且触摸的目标在 #three-box 或其子元素上，则允许滚动并不阻止切换
-            if (this.active === 3 && (ev.target.closest("#three-box") || ev.target.id === "three-box")) {
-                return; // 不阻止默认行为，允许滚动，也不触发页面切换
-            }
-
-            // 其他情况阻止默认行为
-            ev.preventDefault();
-        },
-
         //手指按下屏幕
         handleTouchstart(event) {
             this.startTime = Date.now();
