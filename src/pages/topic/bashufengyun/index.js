@@ -1,7 +1,7 @@
 import { createApp } from "vue";
-import { initTopicEnv } from "../setup";
 
-initTopicEnv();
+
+
 
 import App from "./App.vue";
 import router from "./router.js";

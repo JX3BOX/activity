@@ -4,12 +4,12 @@
         <div class="p-topic-container">
             <Index />
         </div>
-        <CommonFooter class="p-topic-footer"></CommonFooter>
+        <Footer class="p-topic-footer"></Footer>
     </div>
 </template>
 
 <script>
-import Index from "@/components/topic/index/Index.vue";
+import Index from "./components/Index.vue";
 export default {
     name: "App",
     components: { Index },

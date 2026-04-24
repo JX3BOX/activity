@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import Index from "@/components/topic/mobile/Index.vue";
+import Index from "./components/Mobile.vue";
 export default {
     name: "App",
     components: { Index },
@@ -18,7 +18,6 @@ export default {
 
 <style lang="less">
 @import "~@/assets/css/topic/app.less";
-
 .v-miniprogram {
     body {
         height: 100vh;
@@ -31,7 +30,7 @@ export default {
 
     .p-topic-container_mobile {
         height: 100vh;
-        background-color: #ffffff;
+        // background-color: #ffffff;
     }
 }
 </style>

@@ -139,7 +139,7 @@ export default {
 
     .p-topic-container_mobile {
         height: 100vh;
-        background-color: #ffffff;
+        // background-color: #ffffff;
     }
 }
 </style>

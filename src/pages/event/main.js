@@ -61,6 +61,8 @@ i18n.global.missingWarn = false;
 i18n.global.fallbackWarn = false;
 app.use(i18n);
 
+initRouterI18nHead(null, i18n, head);
+
 app.use(JX3BOX_UI);
 
 const elementLocaleMap = {
