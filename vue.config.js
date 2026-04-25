@@ -53,7 +53,7 @@ const pages = {
     rank: {
         title: "剑三秘境百强榜 - JX3BOX",
         entry: "src/pages/rank/rank/index.js",
-        template: "public/index.html",
+        template: "public/pc.html",
         filename: "rank/index.html",
     },
     lover: {

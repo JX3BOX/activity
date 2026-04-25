@@ -69,9 +69,9 @@ export default {
     }
 }
 
-.v-miniprogram{
-    .m-rank-logo{
-        .none;
-    }
-}
+// .v-miniprogram{
+//     .m-rank-logo{
+//         .none;
+//     }
+// }
 </style>
