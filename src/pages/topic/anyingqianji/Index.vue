@@ -1,9 +1,9 @@
 <template>
     <div class="m-container" :style="{ zoom: pageZoom }">
-        <img class="banner_kv" :src="buildImgUrl('KV/kv.jpg')" alt="丝路风语" />
+        <img class="banner_kv p-animation fadeInDown" :src="buildImgUrl('KV/kv.jpg')" alt="丝路风语" />
         <!-- P1 -->
         <section class="m-instance">
-            <img class="u-title" :src="buildImgUrl('1/tittle.png')" alt="" />
+            <img class="u-title p-animation" v-animate="'fadeInUp'" :src="buildImgUrl('1/tittle.png')" alt="" />
             <el-carousel
                 ref="p1Carousel"
                 height="746px"
@@ -16,7 +16,7 @@
                     <img :src="buildImgUrl(`1/${item}.jpg`)" />
                 </el-carousel-item>
             </el-carousel>
-            <div class="m-indicator">
+            <div class="m-indicator p-animation" v-animate="'fadeInUp'">
                 <div class="m-arrow" @click="prevSlide">
                     <img class="u-img" :src="buildImgUrl('1/arrow.svg')" alt="" />
                 </div>
@@ -38,8 +38,8 @@
         </section>
         <!-- P2 -->
         <section class="m-daily">
-            <img class="u-title" :src="buildImgUrl('2/tittle.png')" alt="" />
-            <div class="m-carousel-container">
+            <img class="u-title p-animation" v-animate="'fadeInUp'" :src="buildImgUrl('2/tittle.png')" alt="" />
+            <div class="m-carousel-container p-animation" v-animate="'fadeInUp'">
                 <svg
                     class="u-arrow u-arrow-left"
                     :class="{ dis: p2CurrentSlide === 0 }"
@@ -72,14 +72,14 @@
         </section>
         <!-- P3 -->
         <section class="m-conference">
-            <img class="u-top" :src="buildImgUrl('3/bg2.png')" alt="" />
-            <img class="u-title" :src="buildImgUrl('3/tittle.png')" alt="" />
-            <img class="u-bottom" :src="buildImgUrl('3/bg3.png')" alt="" />
+            <img class="u-top p-animation" v-animate="'fadeInDown'" :src="buildImgUrl('3/bg2.png')" alt="" />
+            <img class="u-title p-animation" v-animate="'fadeInUp'" :src="buildImgUrl('3/tittle.png')" alt="" />
+            <img class="u-bottom p-animation" v-animate="'fadeInUp'" :src="buildImgUrl('3/bg3.png')" alt="" />
         </section>
         <!-- P4 -->
         <section class="m-update">
-            <img class="u-title" :src="buildImgUrl('4/tittle.png')" alt="" />
-            <img class="u-content" :src="buildImgUrl('4/content.png')" alt="" />
+            <img class="u-title p-animation" v-animate="'fadeInUp'" :src="buildImgUrl('4/tittle.png')" alt="" />
+            <img class="u-content p-animation" v-animate="'fadeInUp'" :src="buildImgUrl('4/content.png')" alt="" />
             <img class="u-over" :src="buildImgUrl('4/over.png')" alt="" />
         </section>
     </div>
@@ -89,6 +89,31 @@
 export default {
     name: "Index",
     inject: ["__imgRoot"],
+    directives: {
+        animate: {
+            mounted: function (el, binding) {
+                binding.addClass = () => {
+                    const { top } = el.getBoundingClientRect();
+                    const h = document.documentElement.clientHeight || document.body.clientHeight;
+                    if (top < h) {
+                        if (el.className.indexOf(binding.value) == -1) {
+                            el.className = binding.value + " " + el.className;
+                        }
+                        if (binding.addClass) {
+                            window.removeEventListener("scroll", binding.addClass);
+                        }
+                    }
+                };
+                window.addEventListener("scroll", binding.addClass, true);
+                binding.addClass();
+            },
+            unmounted: function (el, binding) {
+                if (binding.addClass) {
+                    window.removeEventListener("scroll", binding.addClass);
+                }
+            },
+        },
+    },
     data() {
         return {
             currentSlide: 0,
