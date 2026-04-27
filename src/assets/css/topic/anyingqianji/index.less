@@ -1,0 +1,151 @@
+.m-container {
+    padding-top: @header-height;
+    max-width: 1920px;
+    margin: 0 auto;
+    transform-origin: top center;
+    img {
+        display: block;
+        pointer-events: none;
+    }
+    .banner_kv {
+        width: 100%;
+    }
+    .m-instance {
+        position: relative;
+        .u-title {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 2;
+        }
+        .u-bg {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 2;
+        }
+        .m-indicator {
+            position: absolute;
+            bottom: 209px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 11px;
+            .m-arrow {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 40px;
+                height: 40px;
+                cursor: pointer;
+                .u-img {
+                    width: 8px;
+                }
+                &.m-arrow-right {
+                    transform: rotate(180deg);
+                }
+            }
+            .m-select {
+                width: 41px;
+                height: 41px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                position: relative;
+                cursor: pointer;
+                .u-select-border {
+                    width: 100%;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    opacity: 0;
+                    transition: opacity 0.3s;
+                }
+                &.active .u-select-border {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+    .m-daily {
+        height: 383px;
+        background-image: url("@{kv_anyingqianji}2/bg.png");
+        background-size: 100% 100%;
+        padding-top: 64px;
+        .u-title {
+            width: 628px;
+            margin: 0 auto;
+        }
+        .m-carousel-container {
+            display: flex;
+            gap: 96px;
+            justify-content: center;
+            align-items: center;
+            margin-top: 48px;
+            .u-arrow {
+                width: 30px;
+                fill: #000;
+                cursor: pointer;
+                &.dis {
+                    fill: rgba(0, 0, 0, 0.2);
+                    cursor: not-allowed;
+                }
+            }
+            .u-arrow-left {
+                transform: rotate(180deg);
+            }
+            .u-carousel {
+                width: 367px;
+            }
+        }
+    }
+    .m-conference {
+        height: 912px;
+        background-image: url("@{kv_anyingqianji}3/bg1.jpg");
+        background-size: 100% 100%;
+        position: relative;
+        padding-top: 588px;
+        .u-top {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+        }
+        .u-bottom {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+        }
+        .u-title {
+            width: 964px;
+            margin: 0 auto;
+        }
+    }
+    .m-update {
+        height: 662px;
+        background-image: url("@{kv_anyingqianji}4/bg.jpg");
+        background-size: 100% 100%;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+        padding-top: 44px;
+        .u-title {
+            width: 718px;
+        }
+        .u-content {
+            width: 666px;
+        }
+        .u-over {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+    }
+}
