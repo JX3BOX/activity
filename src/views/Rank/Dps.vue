@@ -422,18 +422,16 @@ export default {
             }
         },
         loadMixRank() {
-            if (!this.allParams.aids) return false;
-            this.loading = true;
-            let { mount, aids, event_id } = this.allParams;
-            aids = aids.split(",").slice(0, 6).join(",");
-            getMixRank({ mount, aids, event_id })
-                .then((res) => {
-                    this.data = res.data?.data || [];
-                    this.data = Object.freeze(this.data);
-                })
-                .finally(() => {
-                    this.loading = false;
-                });
+            if (!this.allParams?.aids) return false;
+            this.loading = true; 
+            const RANK_MAP = { 1: 6, 2: 7, 3: 1, 4: 6, 6: 6, 7: 6, 9: 6, 21: 6 };
+            const { mount, aids, event_id } = this.allParams;
+            const limit = RANK_MAP[this.id] || 5;
+            const newAids = aids.split(",").slice(0, limit).join(","); 
+            getMixRank({ mount, aids: newAids, event_id })
+                .then((res) => (this.data = Object.freeze(res.data?.data || [])))
+                .catch(() => (this.data = Object.freeze([])))
+                .finally(() => (this.loading = false));
         },
         clickPop(item) {
             if (this.popItem?.role === item.role && this.showPop) return;
