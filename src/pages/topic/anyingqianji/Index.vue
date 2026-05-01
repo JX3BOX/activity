@@ -1,9 +1,9 @@
 <template>
     <div class="m-container" :style="{ zoom: pageZoom }">
-        <img class="banner_kv p-animation fadeInDown" :src="buildImgUrl('KV/kv.jpg')" alt="丝路风语" />
+        <img class="banner_kv p-animation fadeIn" :src="buildImgUrl('KV/kv.jpg')" alt="暗影千机" />
         <!-- P1 -->
         <section class="m-instance">
-            <img class="u-title p-animation" v-animate="'fadeInUp'" :src="buildImgUrl('1/tittle.png')" alt="" />
+            <img class="u-title p-animation" v-animate="'fadeIn'" :src="buildImgUrl('1/tittle.png')" alt="" />
             <el-carousel
                 ref="p1Carousel"
                 height="746px"
@@ -52,8 +52,8 @@
                     ref="p2Carousel"
                     class="u-carousel"
                     :loop="false"
-                    height="150px"
-                    autoplay
+                    :autoplay="false"
+                    height="150px" 
                     indicator-position="none"
                     arrow="never"
                     @change="onP2CarouselChange"
