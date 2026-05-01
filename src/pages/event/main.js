@@ -19,14 +19,18 @@ import zhTw from "element-plus/es/locale/lang/zh-tw";
 import vi from "element-plus/es/locale/lang/vi";
 import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 
-if (isApp()) {
+const isMobileContainer = isMiniProgram() || isApp();
+
+if (isMobileContainer) {
     const viewportMeta = document.querySelector('meta[name="viewport"]') || document.createElement("meta");
     viewportMeta.name = "viewport";
-    viewportMeta.content = "width=1280, user-scalable=no";
+    viewportMeta.content = "width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=no";
 
     if (!viewportMeta.parentNode) {
         document.head.appendChild(viewportMeta);
     }
+
+    document.documentElement.classList.add("v-miniprogram");
 }
 
 // 导入两个组件

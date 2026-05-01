@@ -317,8 +317,117 @@ body{
         height: auto;
     }
 }
-.v-miniprogram{
-    .m-navigation{
-        padding-top:0;
+.v-miniprogram {
+    body {
+        min-width: 0;
+        overflow-x: hidden;
+    }
+
+    #app,
+    .p-event,
+    .p-event-container {
+        width: 100%;
+        min-width: 0;
+        overflow-x: hidden;
+    }
+
+    .m-navigation {
+        padding-top: 0;
+        overflow: hidden;
+
+        .wp {
+            width: 100%;
+            max-width: none;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .m-wp-title {
+            // height: 82px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            .h(auto);
+
+            .u-wp-bg {
+                left: 0;
+                width: 100%;
+                height: 42px;
+                border-top-width: 42px;
+                border-left-width: 28px;
+                border-right-width: 28px;
+                .none;
+                height: 0;
+            }
+
+            .u-wp-img {
+                width: 100%;
+                // max-width: 38vw;
+                height: auto;
+            }
+        }
+    }
+
+    .m-dot,
+    .m-footer {
+        display: none;
+    }
+
+    .m-new-list {
+        width: calc(100vw - 24px);
+        height: auto;
+        min-height: 0;
+        margin: 0 auto 32px;
+        padding: 20px 18px 28px;
+        overflow: visible;
+        border-radius: 18px;
+        box-shadow: 0 0 0 6px #000;
+    }
+
+    .m-new-list .m-new-list-item {
+        margin-bottom: 44px;
+
+        .u-month {
+            margin-bottom: 14px;
+            font-size: 16px;
+            line-height: 24px;
+        }
+
+        .m-month-list {
+            gap: 34px;
+
+            &.isSpecial {
+                flex-direction: column;
+                gap: 34px;
+            }
+
+            .u-item {
+                min-width: 0;
+                height: auto;
+                margin-bottom: 26px;
+                flex: 0 0 100%;
+                border-radius: 14px;
+
+                .u-img {
+                    width: 100%;
+                    height: auto;
+                    aspect-ratio: 704 / 180;
+                    border-radius: 14px;
+                    box-shadow: 0 0 0 2px #000;
+                }
+
+                .m-name {
+                    left: 50%;
+                    bottom: -34px;
+                    width: 220px;
+                    max-width: 68vw;
+                    height: 22px;
+                    margin-left: 0;
+                    transform: translateX(-50%);
+                    font-size: 11px;
+                    line-height: 22px;
+                }
+            }
+        }
     }
 }

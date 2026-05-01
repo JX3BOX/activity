@@ -1,5 +1,5 @@
 <template>
-    <div class="p-event">
+    <div class="p-event" :class="{ 'v-miniprogram': isMobileContainer }">
         <CommonHeader></CommonHeader>
         <div class="p-event-container">
             <div class="m-navigation">
@@ -88,6 +88,9 @@ export default {
         },
         isShort() {
             return this.list.length <= 4;
+        },
+        isMobileContainer() {
+            return isMiniProgram() || isApp();
         },
     },
     created() {
