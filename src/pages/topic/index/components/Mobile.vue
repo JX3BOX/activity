@@ -229,15 +229,15 @@ export default {
             }
         }
     }
-    @media screen and (max-width: @ip5) {
+    @media screen and (max-width: @phone) {
         .p-topic-container {
             .m-navigation {
                 .m-list {
                     .m-content {
                         .m-scroll {
-                            zoom: 0.9;
-                            width: calc(100vw / 0.9);
-                            max-width: calc(100vw / 0.9);
+                            zoom: 0.8;
+                            width: calc(100vw / 0.8);
+                            max-width: calc(100vw / 0.8);
                         }
                     }
                 }
