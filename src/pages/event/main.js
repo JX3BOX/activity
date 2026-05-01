@@ -19,6 +19,15 @@ import zhTw from "element-plus/es/locale/lang/zh-tw";
 import vi from "element-plus/es/locale/lang/vi";
 import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 
+if (isApp()) {
+    const viewportMeta = document.querySelector('meta[name="viewport"]') || document.createElement("meta");
+    viewportMeta.name = "viewport";
+    viewportMeta.content = "width=1280, user-scalable=no";
+
+    if (!viewportMeta.parentNode) {
+        document.head.appendChild(viewportMeta);
+    }
+}
 
 // 导入两个组件
 // import MobileApp from "./index/MobileApp.vue";
