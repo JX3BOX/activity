@@ -18,12 +18,15 @@ export default {
 
 <style lang="less">
 @import "~@/assets/css/topic/app.less";
-.v-miniprogram {
-    body {
-        height: 100vh;
-        width: 100vw;
-    }
+html.v-miniprogram,
+html.v-miniprogram body,
+html.v-miniprogram #app {
+    width: 100vw;
+    min-width: 0;
+    overflow: hidden;
+}
 
+.v-miniprogram {
     .c-header {
         display: none;
     }

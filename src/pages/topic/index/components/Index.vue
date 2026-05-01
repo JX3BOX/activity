@@ -90,7 +90,7 @@ export default {
             setTimeout(() => {
                 this.listShow = "show fadeIn";
                 this.$nextTick(() => {
-                    this.$refs.scrollRef.scrollTo(this.$refs.scrollRef.clientWidth, 0);
+                    this.scrollToClientStart();
                 });
             }, 500);
         },
@@ -98,6 +98,9 @@ export default {
             this.client = "origin";
             setTimeout(() => {
                 this.listShow = "show fadeIn";
+                this.$nextTick(() => {
+                    this.scrollToClientStart();
+                });
             }, 500);
         },
         goList(type) {
@@ -114,11 +117,9 @@ export default {
             }
             setTimeout(() => {
                 this.listShow = "show fadeIn";
-                if (this.client == "std") {
-                    this.$nextTick(() => {
-                        this.$refs.scrollRef.scrollTo(this.$refs.scrollRef.clientWidth, 0);
-                    });
-                }
+                this.$nextTick(() => {
+                    this.scrollToClientStart();
+                });
             }, 500);
         },
         goFirst() {
@@ -138,6 +139,19 @@ export default {
         showImg(key) {
             if (!key) key = "normal";
             return __cdn + "design/topic/index/" + key + ".png";
+        },
+        scrollToClientStart(behavior = "auto") {
+            const scrollRef = this.$refs.scrollRef;
+            if (!scrollRef) return;
+
+            const maxScrollLeft = scrollRef.scrollWidth - scrollRef.clientWidth;
+            const left = this.client == "std" ? maxScrollLeft : 0;
+
+            scrollRef.scrollTo({
+                left,
+                top: 0,
+                behavior,
+            });
         },
         onDragStart(e) {
             this.isDragging = true;
