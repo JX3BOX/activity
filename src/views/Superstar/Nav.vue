@@ -1,18 +1,32 @@
 <template>
     <div class="p-superstar-nav">
         <div class="m-logo">
-            <img :src="imgurl + 'nav/1.png'" style="height: 183px" />
+            <img :src="getCdnLink('design/event/superstar/title.png')" />
         </div>
+
+        <img class="u-fire" :src="getCdnLink('design/event/superstar/fire.png')" />
+
+        <img class="u-figure-left" :src="getCdnLink('design/event/superstar/l.png')" />
+        <img class="u-figure-right" :src="getCdnLink('design/event/superstar/r.png')" />
 
         <!-- 入场券列表 -->
         <div class="m-list">
             <div class="u-item" v-for="(item, i) in data" :key="i">
                 <a :href="eventLink(item.slug)" target="_blank">
-                    <!-- <img :src="imgurl + 'nav/sort-1-bg.png'" height="130" /> -->
-                    <div class="u-nav-img"><img :src="item.banner_pc" height="158" /></div>
-
-                    <div class="u-btn">
-                        <img :src="imgurl + 'nav/' + (item.status ? 'rc.png' : 'hg.png')" height="50" />
+                    <div
+                        class="u-nav-img"
+                        :style="{
+                            backgroundImage: `url(${item.banner_pc})`,
+                        }"
+                    >
+                        <div
+                            class="u-nav-status"
+                            :class="{
+                                'u-nav-status-active': item.status,
+                            }"
+                        >
+                            {{ item.status ? "进行中" : "已结束" }}
+                        </div>
                     </div>
                 </a>
             </div>
@@ -22,6 +36,7 @@
 
 <script>
 import { getEvents } from "@/service/rank/event.js";
+import { getCdnLink } from "@/utils";
 export default {
     components: {},
     data() {
@@ -50,6 +65,7 @@ export default {
         this.loadData();
     },
     methods: {
+        getCdnLink,
         loadData: function () {
             getEvents(this.params).then((res) => {
                 let arr = [],
