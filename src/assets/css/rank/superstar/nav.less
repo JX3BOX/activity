@@ -22,8 +22,8 @@
 }
 
 .p-superstar-nav {
-    margin-top: @header-height;
-    height: calc(100vh - @header-height);
+    padding: @header-height 0 80px;
+    min-height: 100vh;
     box-sizing: border-box;
     background-image: url("@{superstar_nav}bg.jpg");
     background-size: cover;
@@ -33,7 +33,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+    overflow-x: hidden;
 
     .m-logo {
         flex-shrink: 0;
@@ -73,24 +73,23 @@
         position: relative;
         z-index: 3;
         margin-top: 98px;
-        width: 58.8%;
+        width: 980px;
+        max-width: calc(100% - 40px);
         overflow-y: auto;
-        font-size: 0;
+        display: grid;
+        grid-template-columns: repeat(3, 300px);
+        justify-content: center;
+        justify-items: center;
+        align-content: start;
+        gap: 24px;
         .scrollbarStyle();
 
         .u-item {
-            display: inline-block;
-            width: calc((100% - 80px) / 3);
-            margin-right: 40px;
-            margin-bottom: 40px;
-            vertical-align: top;
-            font-size: 16px;
-            aspect-ratio: 350 / 225;
+            width: 100%;
+            max-width: 300px;
+            aspect-ratio: 5 / 3;
             border: 1px solid transparent;
             transition: border 0.3s ease-in-out;
-            &:nth-child(3n) {
-                margin-right: 0;
-            }
 
             &:hover {
                 border: 1px solid #ffcf48;
@@ -124,12 +123,25 @@
 
 @media (max-width: 1024px) {
     .p-superstar-nav {
+        justify-content: flex-start;
+        padding-bottom: 48px;
+
         .m-logo {
-            width: 60%;
+            position: relative;
+            z-index: 3;
+            width: min(60%, 320px);
+            padding-top: 40px;
         }
 
         .m-list {
-            width: 90%;
+            flex: 0 0 auto;
+            width: calc(100% - 32px);
+            max-width: 640px;
+            margin-top: 32px;
+            overflow-y: visible;
+            grid-template-columns: repeat(2, minmax(0, 300px));
+            justify-content: center;
+            gap: 16px;
 
             .u-item {
                 a {
@@ -141,6 +153,31 @@
                     }
                 }
             }
+        }
+    }
+}
+
+@media (max-width: 520px) {
+    .p-superstar-nav {
+        padding-bottom: 40px;
+
+        .m-logo {
+            width: min(76%, 280px);
+            padding-top: 24px;
+        }
+
+        .u-fire,
+        .u-figure-left,
+        .u-figure-right {
+            opacity: 0.45;
+        }
+
+        .m-list {
+            width: calc(100% - 24px);
+            max-width: 300px;
+            margin-top: 24px;
+            grid-template-columns: minmax(0, 300px);
+            gap: 14px;
         }
     }
 }
