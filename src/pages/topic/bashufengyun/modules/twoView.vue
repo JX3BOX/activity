@@ -1,43 +1,13 @@
 <template>
-    <div class="m-two" :style="{ minHeight: height }">
-        <div class="m-stack">
-            <section class="u-item u-item-1">
-                <img
-                    :src="`${img}home_02_01.png`"
-                    class="u-img p-animation"
-                    :class="index == 1 ? 'fadeInRight' : 'bounceIn'"
-                />
-                <img
-                    :src="`${img}home_02_people.png`"
-                    class="u-people p-animation fadeIn"
-                    :class="`u-people-${index + 1}`"
-                />
-            </section>
-            <section class="u-item u-item-2">
-                <div class="u-video" v-html="video"></div>
-                <img
-                    :src="`${img}home_02_people.png`"
-                    class="u-people p-animation fadeIn"
-                    :class="`u-people-${index + 2}`"
-                />
-            </section>
-            <section class="u-item u-item-3">
-                <div class="u-icon">
-                    <img src="https://img.jx3box.com/image/xf/10224.png" />
-                    <img src="https://img.jx3box.com/image/xf/10225.png" />
-                </div>
-                <a href="http://" target="_blank">
-                    <img :src="`${img}home_02_02.png`" class="u-img p-animation fadeInRight" />
-                </a>
-                <a href="http://" target="_blank">
-                    <img :src="`${img}home_02_03.png`" class="u-img u-img-alt p-animation fadeInRight" />
-                </a>
-                <img
-                    :src="`${img}home_02_people.png`"
-                    class="u-people p-animation fadeIn"
-                    :class="`u-people-${index + 3}`"
-                />
-            </section>
+    <div class="m-two">
+        <div>
+            <img :src="`${img}title2.png`" class="u-title p-animation" v-animate="'fadeInLeft'" />
+            <div class="u-text p-animation" v-animate="'fadeInLeft'">
+                全新门派「唐门」来袭！<br />唐门善使l弩箭和机关进行远距离战斗，<br />双心法分别拥有强大的单体爆发和群体输出能力。
+            </div>
+            <div class="u-video p-animation" v-animate="'fadeInLeft'" v-html="video"></div>
+
+            <img :src="`${img}tangmen1.png`" class="u-img p-animation" v-animate="'fadeInRight'" />
         </div>
     </div>
 </template>
@@ -45,6 +15,31 @@
 export default {
     name: "twoView",
     props: ["moduleData"],
+    directives: {
+        animate: {
+            mounted: function (el, binding) {
+                binding.addClass = () => {
+                    const { top } = el.getBoundingClientRect();
+                    const h = document.documentElement.clientHeight || document.body.clientHeight;
+                    if (top < h) {
+                        if (el.className.indexOf(binding.value) == -1) {
+                            el.className = binding.value + " " + el.className;
+                        }
+                        if (binding.addClass) {
+                            window.removeEventListener("scroll", binding.addClass);
+                        }
+                    }
+                };
+                window.addEventListener("scroll", binding.addClass, true);
+                binding.addClass();
+            },
+            unmounted: function (el, binding) {
+                if (binding.addClass) {
+                    window.removeEventListener("scroll", binding.addClass);
+                }
+            },
+        },
+    },
     computed: {
         img() {
             return this.moduleData.img;
@@ -63,65 +58,41 @@ export default {
 </script>
 <style lang="less">
 .m-two {
-    background-image: url("@{kv_bashufengyun}home_02_bg.png");
+    background-image: url("@{kv_bashufengyun}bg2.jpg");
+    height: 872px;
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
-    .m-stack {
-        .w(100%);
-        .u-item {
-            .pr;
-            min-height: 800px;
-            .flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            .u-icon {
-                .pa;
-                .z(3);
-                .lt(50%,120px);
-                .w(260px);
-                .flex;
-                .ml(-100px);
-                align-items: center;
-                justify-content: space-between;
-                img {
-                    .size(68px);
-                    cursor: pointer;
-                    transition: 0.2s ease;
-                    &:hover {
-                        transform: scale(1.25);
-                    }
-                }
-            }
-            .u-people {
-                .pa;
-                .lb(50%,0);
-                .z(-1);
-                &.u-people-1 {
-                    .ml(-896px);
-                }
-                &.u-people-2 {
-                    .ml(-260px);
-                }
-                &.u-people-3 {
-                    .ml(-260px);
-                }
-            }
-            .u-video {
-                .size(80%);
-                box-sizing: border-box;
-                iframe,
-                video {
-                    .size(100%);
-                }
-            }
-            .u-img-alt {
-                .pa;
-                .lb(50%, 90px);
-                margin-left: 60px;
-            }
+    padding-left: 373px;
+    position: relative;
+    overflow: hidden;
+    .u-title {
+        width: 385px;
+    }
+    .u-text {
+        color: #fff;
+        text-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
+        font-size: 20px;
+        line-height: 30px;
+    }
+    .u-video {
+        width: 640px;
+        height: 360px;
+        margin-top: 71px;
+        position: relative;
+        z-index: 1;
+        iframe {
+            width: 100%;
+            height: 100%;
         }
+    }
+    .u-img {
+        width: 1771px;
+        height: 1456px;
+        position: absolute;
+        top: 0;
+        left: 551px;
+        z-index: 0;
     }
 }
 </style>

@@ -1,19 +1,24 @@
 <template>
-    <div class="m-five" :style="{ minHeight: height }">
+    <div class="m-five">
+        <img :src="`${img}title5-1.png`" class="u-title-1 p-animation" v-animate="'fadeInDown'" />
+        <img :src="`${img}title5-2.png`" class="u-title-2 p-animation" v-animate="'fadeInDown'" />
         <div class="m-stack">
-            <section class="u-item" v-for="slideIndex in 6" :key="slideIndex">
-                <template v-if="slideIndex == 1">
-                    <img :src="`${img}home_05.png`" class="u-img p-animation fadeIn" />
-                    <img :src="`${img}home_05_txt.png`" class="u-txt p-animation fadeIn" />
-                </template>
-                <template v-else>
-                    <img
-                        :src="`${img}home_05_0${slideIndex}.png`"
-                        class="u-cont p-animation fadeIn"
-                        :class="`u-cont-${slideIndex}`"
-                    />
-                </template>
-            </section>
+            <img :src="`${img}v1.png`" class="u-arrow p-animation fadeIn" :class="{ 'is-disabled': currentIndex === 0 }" @click="onPrev" />
+            <el-carousel
+                ref="carousel"
+                class="u-carousel"
+                :autoplay="false"
+                :loop="false"
+                height="756px"
+                indicator-position="none"
+                arrow="never"
+                @change="onCarouselChange"
+            >
+                <el-carousel-item v-for="item in 4" :key="item">
+                    <img :src="`${img}boss5-${item}.png`" class="p-animation fadeIn" />
+                </el-carousel-item>
+            </el-carousel>
+            <img :src="`${img}v2.png`" class="u-arrow p-animation fadeIn" :class="{ 'is-disabled': currentIndex === 3 }" @click="onNext" />
         </div>
     </div>
 </template>
@@ -21,61 +26,88 @@
 export default {
     name: "fiveView",
     props: ["moduleData"],
+    directives: {
+        animate: {
+            mounted: function (el, binding) {
+                binding.addClass = () => {
+                    const { top } = el.getBoundingClientRect();
+                    const h = document.documentElement.clientHeight || document.body.clientHeight;
+                    if (top < h) {
+                        if (el.className.indexOf(binding.value) == -1) {
+                            el.className = binding.value + " " + el.className;
+                        }
+                        if (binding.addClass) {
+                            window.removeEventListener("scroll", binding.addClass);
+                        }
+                    }
+                };
+                window.addEventListener("scroll", binding.addClass, true);
+                binding.addClass();
+            },
+            unmounted: function (el, binding) {
+                if (binding.addClass) {
+                    window.removeEventListener("scroll", binding.addClass);
+                }
+            },
+        },
+    },
+    data() {
+        return {
+            currentIndex: 0,
+        };
+    },
+    methods: {
+        onCarouselChange(index) {
+            this.currentIndex = index;
+        },
+        onPrev() {
+            if (this.currentIndex > 0) {
+                this.$refs.carousel.prev();
+            }
+        },
+        onNext() {
+            if (this.currentIndex < 3) {
+                this.$refs.carousel.next();
+            }
+        },
+    },
     computed: {
         img() {
             return this.moduleData.img;
-        },
-        height() {
-            return this.moduleData.height;
         },
     },
 };
 </script>
 <style lang="less">
 .m-five {
-    min-height: 800px;
-    background-image: url("@{kv_bashufengyun}home_05_bg.png");
+    height: 1227px;
+    background-image: url("@{kv_bashufengyun}bg5.jpg");
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
+    padding-top: 172px;
+    .u-title-1 {
+        width: 330px;
+        margin: 0 auto;
+    }
+    .u-title-2 {
+        width: 528px;
+        margin: 0 auto;
+        animation-delay: 0.3s;
+    }
     .m-stack {
-        .w(100%);
-        .u-item {
-            .pr;
-            min-height: 800px;
-            overflow: hidden;
-            .u-img {
-                height: 100%;
-            }
-            .u-txt {
-                .pa;
-                .lt(50%);
-                margin: -400px 0 0 -999px;
-            }
-            .u-num {
-                .pa;
-                .lt(0);
-                .z(-2);
-            }
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .u-carousel {
+            width: 1515px;
         }
-        .u-cont {
-            .pa;
-            .lt(50%);
-            .z(-1);
-            &.u-cont-2 {
-                margin: -172px 0 0 -540px;
-            }
-            &.u-cont-3 {
-                margin: -330px 0 0 -420px;
-            }
-            &.u-cont-4 {
-                margin: -333px 0 0 -405px;
-            }
-            &.u-cont-5 {
-                margin: -335px 0 0 -440px;
-            }
-            &.u-cont-6 {
-                margin: -335px 0 0 -467px;
+        .u-arrow{
+            width: 104px;
+            cursor: pointer;
+            &.is-disabled {
+                opacity: 0.3 !important;
+                cursor: not-allowed;
             }
         }
     }

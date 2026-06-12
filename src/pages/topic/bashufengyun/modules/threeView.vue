@@ -1,21 +1,18 @@
 <template>
-    <div class="m-three" :style="{ minHeight: height }">
+    <div class="m-three">
+        <img :src="`${img}title3.png`" class="u-title p-animation" v-animate="'fadeInDown'" />
+        <img :src="`${img}tangmen0.png`" class="u-title-bg p-animation fadeIn" />
         <div class="m-stack">
-            <section class="u-item" v-for="slideIndex in 5" :key="slideIndex">
-                <template v-if="slideIndex == 1">
-                    <img :src="`${img}home_03_0${slideIndex}.png`" class="u-img p-animation fadeIn" />
-                    <img :src="`${img}home_03_txt.png`" class="u-txt p-animation fadeIn" />
-                </template>
-                <template v-else>
-                    <img :src="`${img}home_03_0${slideIndex}_num.png`" class="u-num p-animation fadeIn" />
-                    <img :src="`${img}home_03_0${slideIndex}.png`" class="p-animation fadeInRight" />
-                    <img
-                        :src="`${img}home_03_0${slideIndex}_people.png`"
-                        class="u-people p-animation fadeInLeft"
-                        :class="`u-people-${slideIndex}`"
-                    />
-                </template>
-            </section>
+            <div class="u-item u-left">
+                <img :src="`${img}tangmen2.png`" class="u-img p-animation fadeIn" />
+                <img :src="`${img}xinfa1-a.png`" class="u-img-a p-animation" v-animate="'fadeInLeft'" />
+                <img :src="`${img}xinfa1-b.png`" class="u-img-b p-animation fadeIn" />
+            </div>
+            <div class="u-item u-right">
+                <img :src="`${img}tangmrn3.png`" class="u-img p-animation fadeIn" />
+                <img :src="`${img}xinfa2-a.png`" class="u-img-a p-animation" v-animate="'fadeInRight'" />
+                <img :src="`${img}xinfa2-b.png`" class="u-img-b p-animation fadeIn" />
+            </div>
         </div>
     </div>
 </template>
@@ -23,12 +20,34 @@
 export default {
     name: "threeView",
     props: ["moduleData"],
+    directives: {
+        animate: {
+            mounted: function (el, binding) {
+                binding.addClass = () => {
+                    const { top } = el.getBoundingClientRect();
+                    const h = document.documentElement.clientHeight || document.body.clientHeight;
+                    if (top < h) {
+                        if (el.className.indexOf(binding.value) == -1) {
+                            el.className = binding.value + " " + el.className;
+                        }
+                        if (binding.addClass) {
+                            window.removeEventListener("scroll", binding.addClass);
+                        }
+                    }
+                };
+                window.addEventListener("scroll", binding.addClass, true);
+                binding.addClass();
+            },
+            unmounted: function (el, binding) {
+                if (binding.addClass) {
+                    window.removeEventListener("scroll", binding.addClass);
+                }
+            },
+        },
+    },
     computed: {
         img() {
             return this.moduleData.img;
-        },
-        height() {
-            return this.moduleData.height;
         },
     },
 };
@@ -36,45 +55,66 @@ export default {
 <style lang="less">
 .m-three {
     min-height: 800px;
-    background-image: url("@{kv_bashufengyun}home_03_bg.png");
+    background-image: url("@{kv_bashufengyun}bg3.jpg");
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
+    position: relative;
+    padding-top: 102px;
+    .u-title {
+        width: 500px;
+        margin: 0 auto;
+        z-index: 1;
+        position: relative;
+    }
+    .u-title-bg {
+        position: absolute;
+        top: 36px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 706px;
+        z-index: 0;
+    }
     .m-stack {
-        .w(100%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 131px;
+        padding-bottom: 81px;
         .u-item {
-            .pr;
-            min-height: 800px;
-            overflow: hidden;
-            .u-txt {
-                .pa;
-                .lt(50%);
-                margin: -135px 0 0 -475px;
-            }
-            .u-num {
-                .pa;
-                .lt(0);
-                .z(-2);
-            }
+            position: relative;
             .u-img {
-                height: 100%;
+                width: 755px;
+                animation-duration: 1s;
             }
-        }
-        .u-people {
-            .pa;
-            .lt(50%);
-            .z(-1);
-            &.u-people-2 {
-                margin: -400px 0 0 -648px;
+            &.u-left {
+                .u-img-a {
+                    position: absolute;
+                    width: 304px;
+                    top: 16px;
+                    right: 159px;
+                }
+                .u-img-b {
+                    position: absolute;
+                    top: -19px;
+                    left: -284px;
+                    width: 600px;
+                }
             }
-            &.u-people-3 {
-                margin: -328px 0 0 -618px;
-            }
-            &.u-people-4 {
-                margin: -308px 0 0 -618px;
-            }
-            &.u-people-5 {
-                margin: -328px 0 0 -568px;
+            &.u-right {
+                margin-left: -160px;
+                .u-img-a {
+                    position: absolute;
+                    width: 304px;
+                    top: 16px;
+                    left: 143px;
+                }
+                .u-img-b {
+                    position: absolute;
+                    top: -19px;
+                    right: -268px;
+                    width: 600px;
+                }
             }
         }
     }
