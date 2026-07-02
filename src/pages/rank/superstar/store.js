@@ -2,9 +2,10 @@ import { createStore } from "vuex";
 
 let store = {
     state: {
-        id : '',
-        race : "",
-        achieves : [],
+        id: '',
+        race: "",
+        achieves: [],
+        bossID: ""
     },
     mutations: {
     },

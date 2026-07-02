@@ -21,6 +21,9 @@ const PICS = {
     bossIcon: function (id) {
         return __cdn + `design/rank/boss/${id}.png`;
     },
+    superBoss: function (id) {
+        return __cdn + `design/event/superstar/Boss/${id}.png`;
+    },
 };
 
 export default PICS;

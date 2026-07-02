@@ -23,5 +23,5 @@ export default {
 </script>
 
 <style lang="less">
-@import "~@/assets/css/rank/superstar/index.less";
+@import "~@/assets/css/rank/superstar/index2.less";
 </style>

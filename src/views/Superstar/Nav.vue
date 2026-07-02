@@ -3,9 +3,7 @@
         <div class="m-logo">
             <img :src="getCdnLink('design/event/superstar/title.png')" />
         </div>
-
         <img class="u-fire" :src="getCdnLink('design/event/superstar/fire.png')" />
-
         <img class="u-figure-left" :src="getCdnLink('design/event/superstar/l.png')" />
         <img class="u-figure-right" :src="getCdnLink('design/event/superstar/r.png')" />
 

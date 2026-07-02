@@ -1,0 +1,510 @@
+.p-superstar {
+    .pr;
+    background-image: url("@{superstar_nav}bg.jpg");
+}
+@font-face {
+    font-family: "ALIMAMASHUHEITI";
+    src: url("../../../font/ALIMAMASHUHEITI.OTF") format("opentype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "youshebiaotihei";
+    src: url("../../../font/youshebiaotihei.ttf") format("opentype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "SourceHanSans";
+    src: url("../../../font/SourceHanSans.otf") format("opentype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "youshebiaotihei";
+    src: url("../../../font/youshebiaotihei.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+// kv
+.m-superstar-info {
+    width: 100%;
+    .m-superstar-kv-title {
+        .pr;
+        .flex;
+        .clip;
+        padding: 230px 0 330px 0;
+        height: 970px;
+        .u-title {
+            margin: auto auto 340px auto;
+            height: 400px;
+        }
+        .u-character {
+            .pa;
+            &.u-lr {
+                .lt(0);
+                .w(548px);
+            }
+            &.u-rl {
+                .rt(0);
+                .w(635px);
+            }
+        }
+        &::after {
+            content: "";
+            .pa;
+            .lt(0);
+            .rb(0);
+            .z(1);
+            background: linear-gradient(to bottom, transparent 60%, rgba(0, 0, 0, 0.7) 100%);
+            pointer-events: none;
+        }
+    }
+}
+// tab
+.m-superstar-main {
+    .pr;
+    .z(2);
+    .u-menu {
+        .flex;
+        .mt(-340px);
+        justify-content: center;
+        align-items: center;
+        gap: 24px;
+        padding: 112px 0 100px 0;
+        font-family: "ALIMAMASHUHEITI";
+        .u-menu-item {
+            .size(230px,56px);
+            .x;
+            .lh(56px);
+            .fz(30px);
+            user-select: none;
+            font-weight: 400;
+            color: #820d0d;
+            background: url("@{superstar_nav}tab-inact.png") no-repeat center center;
+            background-size: 100% 100%;
+            &.active {
+                color: #ffeece;
+                background: url("@{superstar_nav}tab-act.png") no-repeat center center;
+                background-size: 100% 100%;
+            }
+            &.no-enable {
+                filter: grayscale(1) brightness(0.6);
+                cursor: not-allowed;
+                pointer-events: none;
+            }
+        }
+    }
+    .m-sign-up {
+        .auto(x);
+    }
+}
+// 报名
+.m-superstar-join {
+    .pr;
+    .flex;
+    .auto(x);
+    .size(1920px,1116px);
+    justify-content: center;
+    background: url("@{superstar_nav}bg02.png") no-repeat center center;
+    background-size: 100% 100%;
+    padding: 130px 456px 266px 456px;
+    box-sizing: border-box;
+    .u-title-btn {
+        .pa;
+        .size(300px,74px);
+        .x;
+        .fz(36px,74px);
+        .lt(50%,20px);
+        .ml(-150px);
+        color: #ffeece;
+        font-family: "ALIMAMASHUHEITI";
+        background: url("@{superstar_nav}title-bg.png") no-repeat center center;
+        background-size: 100% 100%;
+    }
+    .m-content {
+        padding: 24px;
+        box-sizing: border-box;
+        background-color: rgba(255, 251, 240, 0.5);
+        .m-join-notice {
+            .fz(18px,34px);
+            border: 1px dotted #820d0d;
+            padding: 24px;
+            box-sizing: border-box;
+        }
+        .m-join-form {
+            .mt(64px);
+            .el-form-item__label {
+                .bold;
+                .fz(20px,34px);
+                color: #820d0d;
+            }
+        }
+        .u-btns {
+            .flex;
+            .mt(60px);
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            gap: 60px;
+            .u-btn {
+                .pointer;
+                .db;
+                .x;
+                .fz(48px,82px);
+                .size(500px,82px);
+                .r(5px);
+                color: #ffffff;
+                font-family: "youshebiaotihei";
+                background: linear-gradient(90deg, #d43030 0%, #ff5733 100%);
+                &.disabled {
+                    background: linear-gradient(90deg, #b0b0b0 0%, #d0d0d0 100%);
+                    color: #e0e0e0;
+                    user-select: none;
+                    pointer-events: none;
+                }
+            }
+        }
+        .m-join-done {
+            .flex;
+            .x;
+            .mt(60px);
+            .fz(28px,70px);
+            flex-direction: column;
+            font-family: "ALIMAMASHUHEITI";
+
+            .u-status-title {
+                .fz(48px,60px);
+                .mb(30px);
+                font-family: "youshebiaotihei";
+                &.u-orange {
+                    color: #f37b1d;
+                }
+                &.u-refuse {
+                    color: red;
+                }
+            }
+        }
+    }
+}
+
+// 内容介绍
+.m-introduce {
+    .auto(x);
+    .pt(100px);
+    .pr;
+    .mb(200px);
+    box-sizing: border-box;
+    .u-content {
+        .pr;
+        .w(100%);
+        background: url("@{superstar_nav}bg01-2.png") center center;
+        background-size: 1920px auto;
+        box-sizing: border-box;
+    }
+    .u-bg-top {
+        .pa;
+        .lt(50%,0);
+        .w(100%);
+        .z(2);
+        .ml(-960px);
+        width: 1920px;
+    }
+    .u-bg-bottom {
+        .pa;
+        .lb(50%,-240px);
+        .w(100%);
+        .z(2);
+        .ml(-960px);
+        width: 1920px;
+        background-position: center 500px;
+    }
+    .u-info {
+        .pr;
+        .z(3);
+        .auto(x);
+        box-sizing: border-box;
+        width: 1120px;
+    }
+}
+
+// boss
+.m-superstar-boss {
+    .flex;
+    .auto(x);
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+    .u-boss {
+        .pr;
+        .pointer;
+        .size(210px);
+        .r(50%);
+        flex-shrink: 0;
+        background: url("@{superstar_nav}boss-inact.png") center center;
+        background-size: 100% 100%;
+        user-select: none;
+        img {
+            pointer-events: none;
+        }
+        &.active {
+            background: url("@{superstar_nav}boss-act.png") center center;
+            background-size: 100% 100%;
+        }
+        .u-boss-name {
+            .pa;
+            .dbi;
+            .lb(50%,0);
+            .r(99px);
+            .fz(24px,34px);
+            padding: 0 32px;
+            transform: translateX(-50%);
+            padding: 0 20px;
+            background: linear-gradient(180deg, #990000 0%, #d95027 100%);
+            border: 4px solid #ffeece;
+            color: #fff;
+            white-space: nowrap;
+        }
+    }
+}
+
+// 排名
+.m-sort-null {
+    .x;
+    .mt(15vh);
+    color: #252328;
+    min-height: 30vh;
+}
+.m-super-list {
+    .auto(x);
+    max-width: 1200px;
+    color: #000;
+    font-family: "SourceHanSans";
+    .u-sort-box {
+        .flex;
+        padding: 120px 0 36px 0;
+        .u-sort-item {
+            .pr;
+            .size(403px,756px);
+            background-image: url("@{superstar_nav}bg03-1.png");
+            background-size: 100% auto;
+
+            &.u-sort-item-2 {
+                order: -1;
+            }
+
+            .u-sort-number {
+                .pa;
+                .size(82px,103px);
+                .lt(50%,-19px);
+                transform: translateX(-50%);
+                img {
+                    .size(100%);
+                }
+            }
+            &.u-sort-item-1 .u-sort-number {
+                .size(94px,120px);
+                top: -29px;
+            }
+            .u-team-info {
+                .flex;
+                .pt(120px);
+                .fz(12px,12px);
+                justify-content: center;
+                flex-direction: column;
+                align-items: center;
+                gap: 6px;
+                .u-team-icon {
+                    .size(114px);
+                    background-color: #fff;
+                }
+                .u-team-name {
+                    .bold;
+                    .mt(36px);
+                    .fz(24px,24px);
+                }
+                .u-team-update {
+                    color: rgba(56, 56, 56, 0.5);
+                }
+                .u-team-time {
+                    .bold;
+                    .fz(18px,18px);
+                    span {
+                        color: #820d0d;
+                    }
+                }
+            }
+            //团队列表
+            .u-team-list {
+                .mt(40px);
+                padding: 0 28px;
+
+                .u-team-leader {
+                    .flex;
+                    .bold;
+                    .fz(16px,24px);
+                    align-items: center;
+                    justify-content: center;
+                }
+                .u-team-member {
+                    .flex;
+                    .mt(12px);
+                    flex-wrap: wrap;
+                    align-items: center;
+
+                    .u-team-member-item {
+                        .flex;
+                        .fz(12px,16px);
+                        align-items: center;
+                        width: calc(100% / 3);
+                        margin-bottom: 12px;
+                        span {
+                            .break(1);
+                        }
+                    }
+                }
+            }
+
+            .u-battle {
+                .w(350px);
+                margin: 18px auto 0 auto;
+                img {
+                    &:hover {
+                        box-shadow: 0 0 10px 0px #f5cba440;
+                    }
+                }
+                .u-two-link {
+                    .flex;
+                    gap: 20px;
+                    justify-content: space-between;
+                }
+            }
+        }
+    }
+    .u-sort-other-item {
+        .pr;
+        .flex;
+        .mb(20px);
+        .size(1220px,242px);
+        align-items: center;
+        background: url("@{superstar_nav}bg03-2.png") no-repeat center center;
+        background-size: 100% 100%;
+        padding: 10px 30px 10px 10px;
+        box-sizing: border-box;
+
+        .u-sort-number {
+            .x;
+            .w(60px);
+            .fz(42px);
+            flex-shrink: 0;
+            font-family: "youshebiaotihei";
+            color: #ffeece;
+        }
+        .u-team-list {
+            .flex;
+            .clip;
+            gap: 36px;
+            height: 100%;
+            padding: 36px 0 10px 30px;
+            box-sizing: border-box;
+            .u-team-info {
+                .flex;
+                flex-shrink: 0;
+                flex-direction: column;
+                align-items: center;
+                gap: 6px;
+
+                .u-team-img {
+                    .size(114px);
+                    background-color: #fff;
+                }
+                .u-team-name {
+                    .bold;
+                    .break(1);
+                    .fz(20px,24px);
+                }
+                .u-team-serve {
+                    .fz(12px,12px);
+                }
+            }
+            .u-team-people {
+                .pr;
+                flex: 1;
+                .u-team-leader {
+                    .flex;
+                    .fz(20px,24px);
+                    align-items: center;
+                }
+                .u-team-member {
+                    .flex;
+                    .mt(24px);
+                    flex-wrap: wrap;
+                    gap: 12px;
+                    .u-team-member-item {
+                        .flex;
+                        .fz(12px,12px);
+                        gap: 2px;
+                        width: calc((100% - 60px) / 6);
+                        align-items: center;
+                        span {
+                            .break(1);
+                        }
+                    }
+                }
+            }
+            .u-team-other-btn {
+                .pa;
+                z-index: 3;
+                right: 210px;
+                .flex;
+                justify-content: space-between;
+                gap: 10px;
+                img {
+                    &:hover {
+                        box-shadow: 0 0 10px 0px #f5cba440;
+                    }
+                }
+                .u-jcl-battle-link {
+                    .dbi;
+                    .w(100px);
+                    img {
+                        .w(100%);
+                    }
+                }
+            }
+            .u-team-time-box {
+                .pa;
+                .z(1);
+                .rt(0,-20px);
+                .flex;
+                gap: 16px;
+                justify-content: flex-end;
+                .u-tag{
+                    .size(153px,34px);
+                }
+                .u-team-time {
+                    .bold;
+                    b {
+                        color: #820d0d;
+                    }
+                    .u-time {
+                        .x(right);
+                        .mt(6px);
+                        .fz(12px,12px);
+                        font-weight:normal;
+                        color: rgba(56, 56, 56, 0.5);
+                    }
+                }
+            }
+        }
+    }
+}
+
+// 数据分析
+
+// 视频

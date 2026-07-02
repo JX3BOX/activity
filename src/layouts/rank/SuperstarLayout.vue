@@ -1,21 +1,23 @@
 <template>
     <div class="m-superstar-info">
-        <div class="m-superstar-kv-title"><img :src="imgurl + 'kv/kv-title.png'" /></div>
+        <div class="m-superstar-kv-title">
+            <img class="u-title" :src="imgurl + 'title.png'" />
+            <img class="u-lr u-character" :src="imgurl + 'lr.png'" />
+            <img class="u-rl u-character" :src="imgurl + 'rl.png'" />
+        </div>
         <!-- 活动主体部分 -->
         <div class="m-superstar-main">
             <div class="u-menu">
-                <div
+                <router-link
                     v-for="(item, index) in menu"
                     :key="item.key"
+                    :to="link(item.key)"
                     class="u-menu-item"
-                    :class="[item.noEnable ? 'no-enable' : '', index == menuActive ? 'actived' : '']"
+                    :class="{ active: index == menuActive, 'no-enable': item.noEnable }"
                     @click="menuClick(item, index)"
                 >
-                    <router-link :to="link(item.key)" v-if="!item.noEnable">
-                        <img :src="imgurl + (index == menuActive ? item.active : item.img)"
-                    /></router-link>
-                    <img :src="imgurl + (index == menuActive ? item.active : item.img)" v-else />
-                </div>
+                    {{ item.name }}
+                </router-link>
             </div>
             <router-view></router-view>
         </div>
@@ -26,41 +28,27 @@
 import jx3boxData from "@jx3box/jx3box-common/data/jx3box.json";
 const { __cdn } = jx3boxData;
 import { getEvent, getIdFromSlug } from "@/service/rank/event.js";
+import { getMenu } from "@jx3box/jx3box-common/js/system";
 import { isNumber } from "lodash";
 export default {
     name: "SuperstarInfo",
     components: {},
     data: function () {
         return {
-            imgurl: __cdn + "design/rank/menpaitiantuan/",
+            imgurl: __cdn + "design/event/superstar/",
             menu: [
-                {
-                    name: "活动介绍",
-                    img: "biaoqianye/hdjs.png",
-                    active: "biaoqianye/hdjs-active.png",
-                    key: "introduce",
-                },
-                { name: "报名", img: "biaoqianye/bm.jpg", active: "biaoqianye/bm-active.jpg", key: "join" },
-                { name: "天团榜", img: "biaoqianye/ttb.jpg", active: "biaoqianye/ttb-active.jpg", key: "list" },
-                {
-                    name: "数据榜",
-                    img: "biaoqianye/sjb.jpg",
-                    active: "biaoqianye/sjb-active.jpg",
-                    key: "dps",
-                },
-                {
-                    name: "视频集锦",
-                    img: "biaoqianye/spjj.jpg",
-                    active: "biaoqianye/spjj-active.jpg",
-                    key: "video",
-                },
+                { name: "活动介绍", key: "introduce", noEnable: false },
+                { name: "报名", key: "join", noEnable: false },
+                { name: "天团榜", key: "list", noEnable: false },
+                { name: "数据榜", key: "dps", noEnable: false },
+                { name: "视频集锦", key: "video", noEnable: false },
             ],
             menuActive: 0,
             id: "",
         };
     },
     watch: {
-        "$route": {
+        $route: {
             deep: true,
             immediate: true,
             async handler(val) {
@@ -75,8 +63,8 @@ export default {
                     this.$store.state.id = this.id || 0;
                     this.init();
                 }
-            }
-        }
+            },
+        },
     },
     created() {
         let i = this.menu.findIndex((item) => item.key == this.$route.name);
@@ -90,16 +78,26 @@ export default {
             if (item.noEnable) return;
             this.menuActive = index;
         },
-        init: function () {
+        async init() {
+            const RANK_MAP = await this.getBossMap();
             getEvent(this.id).then((res) => {
                 this.data = res.data.data;
-                this.$store.state.achieves = res.data.data.boss_map;
+                const bossMap = res.data.data.boss_map;
+                this.$store.state.achieves = bossMap.slice(0, RANK_MAP[this.id] || 5);
                 this.$store.state.race = res.data.data;
             });
+        },
+        async getBossMap() {
+            const res = await getMenu("rank_boss_limit");
+            const bossMap = res.reduce((acc, item) => {
+                acc[item.session] = Number(item.number);
+                return acc;
+            }, {});
+            return bossMap;
         },
     },
 };
 </script>
 <style lang="less" scoped>
-@import "~@/assets/css/rank/superstar/index.less";
+@import "~@/assets/css/rank/superstar/index2.less";
 </style>

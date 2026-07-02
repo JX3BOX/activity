@@ -227,6 +227,7 @@ const { mount_group } = mountData;
 import server_std from "@jx3box/jx3box-data/data/server/server_cn";
 import { getMountDpsRace, getMixRank } from "@/service/rank/race";
 import { cloneDeep, uniqBy } from "lodash";
+import { getMenu } from "@jx3box/jx3box-common/js/system";
 import rank_item from "@/components/rank/rank_item.vue";
 import rank_boss from "@/components/rank/rank_boss.vue";
 
@@ -421,17 +422,30 @@ export default {
                 return item._dhps;
             }
         },
-        loadMixRank() {
+        async loadMixRank() {
             if (!this.allParams?.aids) return false;
-            this.loading = true; 
-            const RANK_MAP = { 1: 6, 2: 7, 3: 1, 4: 6, 6: 6, 7: 6, 9: 6, 21: 6 };
-            const { mount, aids, event_id } = this.allParams;
-            const limit = RANK_MAP[this.id] || 5;
-            const newAids = aids.split(",").slice(0, limit).join(","); 
-            getMixRank({ mount, aids: newAids, event_id })
-                .then((res) => (this.data = Object.freeze(res.data?.data || [])))
-                .catch(() => (this.data = Object.freeze([])))
-                .finally(() => (this.loading = false));
+            this.loading = true;
+            try {
+                const RANK_MAP = await this.getBossMap();
+                const { mount, aids, event_id } = this.allParams;
+                const limit = RANK_MAP[this.id] || 5;
+                const newAids = aids.split(",").slice(0, limit).join(",");
+
+                const res = await getMixRank({ mount, aids: newAids, event_id });
+                this.data = Object.freeze(res.data?.data || []);
+            } catch {
+                this.data = Object.freeze([]);
+            } finally {
+                this.loading = false;
+            }
+        },
+        async getBossMap() {
+            const res = await getMenu("rank_boss_limit");
+            const bossMap = res.reduce((acc, item) => {
+                acc[item.session] = Number(item.number);
+                return acc;
+            }, {});
+            return bossMap;
         },
         clickPop(item) {
             if (this.popItem?.role === item.role && this.showPop) return;
