@@ -104,6 +104,15 @@
         .auto(x);
     }
 }
+
+.m-null {
+    .x;
+    .mt(100px);
+    .mb(10vh);
+    .auto(x);
+    max-width: 1200px;
+    color: #252328;
+}
 // 报名
 .m-superstar-join {
     .pr;
@@ -196,20 +205,20 @@
 // 内容介绍
 .m-introduce {
     .auto(x);
-    .pt(100px);
     .pr;
     .mb(200px);
     box-sizing: border-box;
     .u-content {
         .pr;
         .w(100%);
+        .mt(100px);
         background: url("@{superstar_nav}bg01-2.png") center center;
         background-size: 1920px auto;
         box-sizing: border-box;
     }
     .u-bg-top {
         .pa;
-        .lt(50%,0);
+        .lt(50%,-100px);
         .w(100%);
         .z(2);
         .ml(-960px);
@@ -274,12 +283,6 @@
 }
 
 // 排名
-.m-sort-null {
-    .x;
-    .mt(15vh);
-    color: #252328;
-    min-height: 30vh;
-}
 .m-super-list {
     .auto(x);
     max-width: 1200px;
@@ -506,6 +509,103 @@
 }
 
 // 数据分析
+.m-superstar-dps {
+    .pr;
+    .auto(x);
+    max-width: 1200px;
+    .m-boss-fixed {
+        .pa;
+        .flex;
+        .x;
+        .w(80px);
+        .lt(-130px,20px);
+        background: linear-gradient(0deg, #990000 0%, #d95027 100%);
+        flex-direction: column;
+        padding: 10px;
+        gap: 10px;
+        box-sizing: border-box;
+        .u-boss-item {
+            .pointer;
+            .w(60px);
+            padding: 5px;
+            box-sizing: border-box;
+            background: #ffeece;
+            border: 1px dashed #ffeece;
+            img {
+                .w(50px);
+            }
+            &:hover {
+                background-color: #820d0d;
+                border: 1px dashed #ffeece;
+            }
+            &.on {
+                border: 1px solid #ffeece;
+                background: #820d0d;
+            }
+        }
+    }
+}
+.m-dps-content {
+    .pb(200px);
+    h2 {
+        .flex;
+        .mt(120px);
+        justify-content: center;
+
+        .u-title {
+            .flex;
+            .h(68px);
+            .r(8px);
+            .fz(48px,68px);
+            align-items: center;
+            font-family: "youshebiaotihei";
+            color: #ffeece;
+            background: linear-gradient(180deg, #820d0d 0%, #d13838 100%);
+            padding: 0 80px;
+        }
+        .u-flower {
+            .size(30px);
+            margin: 0 20px;
+        }
+    }
+    .m-tab {
+        .flex;
+        .mt(50px);
+        justify-content: center;
+        gap: 24px;
+        .u-tab {
+            .pointer;
+            .fz(32px,40px);
+            .r(99px);
+            padding: 0 100px;
+            color: #ffeece;
+            background-color: #000;
+            border: 4px solid #ffeece;
+            &.on {
+                color: #ffeece;
+                background-color: #820d0d;
+            }
+        }
+    }
+    .m-box {
+        .mt(50px);
+        .size(1200px,560px);
+        &.m-box-left {
+            background: url("@{superstar_nav}dps-left.png") no-repeat top center;
+            background-size: 100% auto;
+        }
+        &.m-box-right {
+            background: url("@{superstar_nav}dps-right.png") no-repeat top center;
+            background-size: 100% auto;
+        }
+    }
+    .m-box-none {
+        .mt(50px);
+        .size(1200px,560px);
+        background: url("@{superstar_nav}bg4-3.png") no-repeat top center;
+        background-size: 100% auto;
+    }
+}
 
 // 视频
 .m-superstar-video {
@@ -540,12 +640,6 @@
                 padding: 0 18px;
             }
         }
-    }
-    .m-video-null {
-        .x;
-        .mt(10vh);
-        color: #252328;
-        min-height: 30vh;
     }
     .m-video-list {
         .flex;

@@ -1,13 +1,8 @@
 <template>
-    <div
-        v-loading="loading"
-        element-loading-text="加载中..."
-        element-loading-spinner="el-icon-loading"
-        element-loading-background="rgba(0, 0, 0, 0.3)"
-    >
+    <div v-loading.fullscreen="loading">
         <superstar-boss :boss="bossList"></superstar-boss>
-        <div class="m-sort-null" v-if="!origin_data || origin_data.length == 0">
-            <i class="el-icon-warning-outline"></i> 暂时还没有任何记录
+        <div class="m-null" v-if="!origin_data || origin_data.length == 0">
+            <img :src="imgUrl + 'null.png'" />
         </div>
         <div class="m-super-list" v-else>
             <!-- 前三排名 -->
@@ -148,10 +143,10 @@ export default {
         };
     },
     computed: {
-        id: function () {
+        id() {
             return this.$store.state.id;
         },
-        threeData: function () {
+        threeData() {
             let d = cloneDeep(this.origin_data || []),
                 data = [];
             if (d.length > 3) {
@@ -177,7 +172,7 @@ export default {
             });
             return data;
         },
-        data: function () {
+        data() {
             let d = cloneDeep(this.origin_data || []),
                 data = [];
             if (d.length > 3) data = d.splice(3, d.length);
@@ -199,35 +194,35 @@ export default {
             });
             return data;
         },
-        aid: function () {
+        aid() {
             return this.$store.state.race.superstar;
         },
-        achieves: function () {
+        achieves() {
             return this.$store.state.achieves || [];
         },
-        bossID: function () {
+        bossID() {
             return this.$store.state.bossID;
         },
-        bossList: function () {
+        bossList() {
             let dict = {};
             this.achieves.forEach((item) => {
                 dict[item.achievement_id] = item.name;
             });
             return dict;
         },
-        span: function () {
+        span() {
             return ~~(24 / Object.keys(this.bossList).length + 1);
         },
     },
     watch: {
         bossID: {
             immediate: true,
-            handler: function (val) {
+            handler(val) {
                 val && this.loadData();
             },
         },
         "$route.query": {
-            handler: function (val) {
+            handler(val) {
                 if (val.aid) {
                     this.$store.state.bossID = val.aid;
                 }
@@ -236,7 +231,7 @@ export default {
         },
         achieves: {
             immediate: true,
-            handler: function () {
+            handler() {
                 if (!!~~this.$route.query.aid) {
                     this.$store.state.bossID = this.$route.query.aid;
                 } else {
@@ -253,14 +248,14 @@ export default {
         battleLink(id) {
             return "/battle/#/combat/" + id;
         },
-        getRankImg: function (num) {
+        getRankImg(num) {
             return __imgPath + "image/rank/common/rank_" + num + ".png";
         },
-        teamLogo: function (val) {
+        teamLogo(val) {
             if (!val) return "";
             return getThumbnail(val, 120, true);
         },
-        loadData: function () {
+        loadData() {
             if (!this.bossID) {
                 return;
             }
@@ -273,33 +268,33 @@ export default {
                     this.loading = false;
                 });
         },
-        teamLink: function (val) {
+        teamLink(val) {
             return getLink("org", val);
         },
-        showTime: function (val) {
+        showTime(val) {
             return showTime(new Date(val * 1000));
         },
-        showTC: function (val) {
+        showTC(val) {
             let s = val / 1000;
             return ~~(s / 60) + "分" + ~~(s % 60) + "秒";
         },
-        showMemberMount: function (member) {
+        showMemberMount(member) {
             let mount = (member && member[1]) || 0;
             let mountIcon = __imgPath + "image/xf/" + mount + ".png";
             return mountIcon;
         },
-        showMemberName: function (member) {
+        showMemberName(member) {
             return (member && member[0].slice(0, 12)) || "未知";
         },
-        showLeaderMount: function (mount) {
+        showLeaderMount(mount) {
             let mountIcon = __imgPath + "image/xf/" + mount + ".png";
             return mountIcon;
         },
-        showLeaderName: function (name) {
+        showLeaderName(name) {
             return (name && name.slice(0, 12)) || "未知";
         },
 
-        bossIcon: function (val) {
+        bossIcon(val) {
             return PICS.bossIcon(val);
         },
         handleImgError(e) {

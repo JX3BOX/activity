@@ -1,12 +1,5 @@
 <template>
-    <!-- 通关视频 -->
-    <div
-        class="m-superstar-video"
-        v-loading="loading"
-        element-loading-text="加载中..."
-        element-loading-spinner="el-icon-loading"
-        element-loading-background="rgba(0, 0, 0, 0.3)"
-    >
+    <div class="m-superstar-video" v-loading.fullscreen="loading">
         <div class="m-video-boss">
             <div class="u-boss" :class="current_boss == '' ? 'active' : ''" @click="current_boss = ''">
                 <span>全部视频</span>
@@ -51,21 +44,22 @@
                     </el-pagination>
                 </div>
             </template>
-            <div class="m-video-null" v-else><i class="el-icon-warning-outline"></i> 没有找到相关条目</div>
+            <div class="m-null" v-else><img :src="imgUrl + 'null.png'" /></div>
         </div>
     </div>
 </template>
 
 <script>
 import PICS from "@/assets/js/pics.js";
-import { __imgPath } from "@/utils/config";
+import { __imgPath,__cdn } from "@/utils/config";
 import { getVideos } from "@/service/rank/video.js";
 import { default_avatar } from "@/utils/config";
 import { getThumbnail, getLink } from "@jx3box/jx3box-common/js/utils";
 import { filter } from "lodash";
 export default {
-    data: function () {
+    data() {
         return {
+            imgUrl: __cdn + "design/event/superstar/",
             video_title_img: __imgPath + "image/rank/common/videos.png",
             data: [],
             per: 36,
@@ -85,20 +79,20 @@ export default {
         };
     },
     computed: {
-        id: function () {
+        id() {
             return this.$store.state.id;
         },
-        params: function () {
+        params() {
             return {
                 pageSize: this.per,
                 pageIndex: this.page,
                 aid: this.current_boss,
             };
         },
-        achieves: function () {
+        achieves() {
             return this.$store.state.achieves || [];
         },
-        bossList: function () {
+        bossList() {
             let dict = {};
             console.log(this.achieves);
             this.achieves.forEach((item) => {
@@ -117,7 +111,7 @@ export default {
             this.page = 1;
             this.loadData();
         },
-        loadData: function () {
+        loadData() {
             this.loading = true;
             getVideos(this.id, this.params)
                 .then((res) => {
@@ -132,10 +126,10 @@ export default {
                 });
         },
 
-        liveAvatar: function (val) {
+        liveAvatar(val) {
             return val ? getThumbnail(val, 136, true) : default_avatar;
         },
-        teamLink: function (val) {
+        teamLink(val) {
             return getLink("org", val);
         },
         videoCover: function (aid) {
@@ -145,13 +139,13 @@ export default {
     watch: {
         params: {
             deep: true,
-            handler: function () {
+            handler() {
                 this.loadData();
             },
         },
     },
 
-    created: function () {
+    created() {
         this.loadData();
     },
 };

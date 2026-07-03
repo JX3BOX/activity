@@ -76,19 +76,15 @@
     </div>
 </template>
 
-<script>
-import _ from "lodash";
-
+<script> 
 import { getEvents } from "@/service/rank/event.js";
 import { joinEvent, hasJoined } from "@/service/rank/join.js";
 import { getMyTeams } from "@/service/rank/team.js";
-import User from "@jx3box/jx3box-common/js/user.js";
 import { getBreadcrumb } from "@jx3box/jx3box-common/js/system";
-export default {
-    components: {},
+import User from "@jx3box/jx3box-common/js/user.js";
+export default { 
     data() {
-        return {
-            imgurl: "https://img.jx3box.com/topic/menpaitiantuan/",
+        return { 
             form: {
                 event_id: "",
                 team_id: "",
@@ -101,8 +97,7 @@ export default {
             audit_status: 0, //审核状态
             statusText: [
                 { name: "待审核", class: "u-orange" },
-                { name: "已报名", class: "" },
-                // {name:'已拒绝',class:'u-refuse'},
+                { name: "已报名", class: "" }, 
             ],
             joined_team_name: "",
 
@@ -120,13 +115,13 @@ export default {
         };
     },
     computed: {
-        ready: function () {
+        ready() {
             return this.form.event_id && this.form.team_id && this.form.slogan && !this.status && !this.processing;
         },
-        event_id: function () {
+        event_id() {
             return this.form.event_id;
         },
-        team_name: function () {
+        team_name() {
             let team_id = this.form.team_id;
             let team_name = "";
             for (let team of this.teams) {
@@ -139,8 +134,8 @@ export default {
         },
     },
     methods: {
-        submit: function () {
-            this.$alert("报名后资料将不可再更改，更多咨询请联系认证团长Q群【1048059072】", "消息", {
+        submit() {
+            this.$alert("报名后资料将不可再更改，更多咨询请联系认证团长Q群【915477780】", "消息", {
                 confirmButtonText: "确定",
                 callback: (action) => {
                     if (action == "confirm") {
@@ -163,32 +158,30 @@ export default {
                 },
             });
         },
-        updateTeam: function () {
+        updateTeam() {
             this.teams.forEach((item) => {
                 if (item.ID == this.form.team_id) {
                     this.result.eventRecord.name = item.name;
                 }
             });
         },
-        loadEvents: function () {
+        async loadEvents() {
             // 获取开放的活动事件
-            return getEvents({
+            const res = await getEvents({
                 status: 1,
-            }).then((res) => {
-                this.events = res.data.data.list || [];
-                this.form.event_id = this.events[0].ID || this.event_id;
-                this.$forceUpdate();
             });
+            this.events = res.data.data.list || [];
+            this.form.event_id = this.events[0].ID || this.event_id;
+            this.$forceUpdate();
         },
-        loadTeams: function () {
+        async loadTeams() {
             // 获取当前用户拥有的团队
-            return getMyTeams().then((res) => {
-                this.teams = res.data.data.list || [];
-                this.form.team_id = this.team_id;
-                this.$forceUpdate();
-            });
+            const res = await getMyTeams();
+            this.teams = res.data.data.list || [];
+            this.form.team_id = this.team_id;
+            this.$forceUpdate();
         },
-        checkJoin: function () {
+        checkJoin() {
             this.form.event_id &&
                 hasJoined(this.form.event_id).then((res) => {
                     this.result = res.data.data;
@@ -203,15 +196,15 @@ export default {
                     this.loading = false;
                 });
         },
-        goLogin: function () {
+        goLogin() {
             User.toLogin();
         },
-        loadNotice: function () {
+        loadNotice() {
             getBreadcrumb("rank-join").then((data) => {
                 this.notice = data;
             });
         },
-        init: function () {
+        init() {
             this.loadEvents();
             this.loadTeams();
             this.loadNotice();
@@ -222,9 +215,8 @@ export default {
             this.checkJoin();
         },
     },
-    created: function () {
+    created() {
         this.isLogin && this.init();
-    },
-    components: {},
+    }, 
 };
 </script>

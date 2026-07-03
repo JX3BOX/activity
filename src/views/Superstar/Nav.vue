@@ -10,7 +10,7 @@
         <!-- 入场券列表 -->
         <div class="m-list">
             <div class="u-item" v-for="(item, i) in data" :key="i">
-                <a :href="eventLink(item.slug)" target="_blank">
+                <a :href="eventLink(item.ID)" target="_blank">
                     <div
                         class="u-nav-img"
                         :style="{
@@ -39,7 +39,6 @@ export default {
     components: {},
     data() {
         return {
-            imgurl: "https://img.jx3box.com/topic/menpaitiantuan/",
             active: 0,
             page: 1,
             per: 20,
@@ -47,7 +46,7 @@ export default {
         };
     },
     computed: {
-        params: function () {
+        params() {
             return {
                 pageIndex: this.page,
                 pageSize: this.per,
@@ -55,27 +54,27 @@ export default {
         },
     },
     watch: {
-        params: function () {
+        params() {
             this.loadData();
         },
     },
-    mounted: function () {
+    mounted() {
         this.loadData();
     },
     methods: {
         getCdnLink,
-        loadData: function () {
+        loadData() {
             getEvents(this.params).then((res) => {
                 let arr = [],
                     data = res.data.data.list;
                 data.forEach((item) => {
                     if (item.superstar != 0) arr.push(item);
                 });
-                this.data = arr;
+                this.data = arr; 
                 this.active = arr.length - 1 || 0;
             });
         },
-        eventLink: function (val) {
+        eventLink(val) {
             return "/superstar/" + val;
         },
     },
