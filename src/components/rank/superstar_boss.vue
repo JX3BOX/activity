@@ -7,7 +7,7 @@
             :key="aid"
             @click="changeBoss(aid)"
         >
-            <img :src="bossIcon(aid)" :alt="boss.name" @error="handleImgError" />
+            <img :src="bossIcon(aid)" :alt="label" @error="handleImgError" />
             <span class="u-boss-name">{{ label }}</span>
         </div>
     </div>

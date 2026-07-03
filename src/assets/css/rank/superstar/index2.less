@@ -484,7 +484,7 @@
                 .flex;
                 gap: 16px;
                 justify-content: flex-end;
-                .u-tag{
+                .u-tag {
                     .size(153px,34px);
                 }
                 .u-team-time {
@@ -496,7 +496,7 @@
                         .x(right);
                         .mt(6px);
                         .fz(12px,12px);
-                        font-weight:normal;
+                        font-weight: normal;
                         color: rgba(56, 56, 56, 0.5);
                     }
                 }
@@ -508,3 +508,98 @@
 // 数据分析
 
 // 视频
+.m-superstar-video {
+    max-width: 1200px;
+    .auto(x);
+    .m-video-boss {
+        .flex;
+        gap: 28px;
+        font-family: "SourceHanSans";
+        .u-boss {
+            .bold;
+            .pointer;
+            .flex;
+            .fz(24px,64px);
+            .nobreak;
+            align-items: center;
+            box-sizing: border-box;
+            height: 64px;
+            border-radius: 0px 0px 16px 0px;
+            background: #ffeece;
+            color: #820d0d;
+            user-select: none;
+            border: 3px solid #ffeece;
+            &.active {
+                color: #ffeece;
+                background: linear-gradient(90deg, #8c1b1b 0%, #a83422 100%);
+            }
+            .u-img {
+                .size(58px);
+            }
+            span {
+                padding: 0 18px;
+            }
+        }
+    }
+    .m-video-null {
+        .x;
+        .mt(10vh);
+        color: #252328;
+        min-height: 30vh;
+    }
+    .m-video-list {
+        .flex;
+        .mt(80px);
+        flex-wrap: wrap;
+        gap: 16px;
+        .m-video-item {
+            .mb(48px);
+            box-sizing: border-box;
+            padding: 10px;
+            width: calc((100% - 32px) / 3);
+            background: linear-gradient(180deg, #ffeece 0%, #fce3d2 100%);
+            .u-video {
+                .pr;
+                .db;
+                border: 1px dashed #820d0d;
+                padding: 10px;
+                box-sizing: border-box;
+                .u-player {
+                    .pa;
+                    .lt(50%);
+                    transform: translate(-50%, -50%);
+                }
+                .u-cover {
+                    .size(100%);
+                }
+            }
+            .u-info {
+                .flex;
+                .mt(16px);
+                gap: 16px;
+                .u-team-logo {
+                    .size(64px);
+                    .r(3px);
+                }
+                .u-team-right {
+                    .flex;
+                    padding: 4px 0;
+                    box-sizing: border-box;
+                    flex-direction: column;
+                    justify-content: space-between;
+                }
+                .u-team {
+                    .bold;
+                    .break(1);
+                    .fz(24px,24px);
+                    font-family: "SourceHanSans";
+                }
+                .u-room {
+                    .fz(18px,18px);
+                    .break(1);
+                    color: #820d0d;
+                }
+            }
+        }
+    }
+}

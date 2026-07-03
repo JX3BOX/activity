@@ -8,65 +8,48 @@
         element-loading-background="rgba(0, 0, 0, 0.3)"
     >
         <div class="m-video-boss">
+            <div class="u-boss" :class="current_boss == '' ? 'active' : ''" @click="current_boss = ''">
+                <span>全部视频</span>
+            </div>
             <div
                 class="u-boss"
-                :class="bossId == aid ? 'active' : ''"
-                v-for="(label, aid) of boss"
+                :class="current_boss == aid ? 'active' : ''"
+                v-for="(label, aid) of bossList"
                 :key="aid"
                 @click="changeBoss(aid)"
             >
-                <img :src="bossIcon(aid)" :alt="boss.name" @error="handleImgError" />
-                <span class="u-boss-name">{{ label }}</span>
+                <img class="u-img" :src="bossIcon(aid)" :alt="label" @error="handleImgError" />
+                <span>{{ label }}</span>
             </div>
         </div>
 
-        <div class="m-rank-video-content">
+        <div class="m-video-content">
             <template v-if="data && data.length">
-                <el-row class="m-rank-video-list" :gutter="20">
-                    <el-col
-                        :span="8"
-                        v-for="(item, i) in data"
-                        :key="i"
-                        v-show="!current_boss || item.aid == current_boss"
-                    >
-                        <div class="m-rank-video-item">
-                            <a class="u-video" :href="item.url" target="_blank">
-                                <img :src="videoCover(item.aid)" class="u-live-cover" loading="lazy" />
-                                <i class="u-player">
-                                    <img svg-inline src="@/assets/img/rank/play.svg" />
-                                </i>
-                            </a>
-                            <div class="u-info">
-                                <a :href="teamLink(item.team_id)" target="_blank"
-                                    ><img :src="liveAvatar(item.logo)" class="u-team-logo" loading="lazy"
-                                /></a>
-                                <div class="u-team-right">
-                                    <div class="u-team">
-                                        <span class="u-label">团队 : </span>
-                                        <a class="u-team-name" :href="teamLink(item.team_id)" target="_blank">{{
-                                            item.name
-                                        }}</a>
-                                    </div>
-                                    <div class="u-room">
-                                        <a class="u-room-name" :href="item.url" target="_blank">
-                                            {{ item.title }}
-                                        </a>
-                                    </div>
-                                </div>
+                <div class="m-video-list">
+                    <div class="m-video-item" v-for="(item, index) of data" :key="index">
+                        <a class="u-video" :href="item.url" target="_blank">
+                            <img :src="videoCover(item.aid)" class="u-cover" />
+                            <img class="u-player" svg-inline src="@/assets/img/rank/play.svg" />
+                        </a>
+                        <a class="u-info" :href="teamLink(item.team_id)" target="_blank">
+                            <img :src="liveAvatar(item.logo)" class="u-team-logo" loading="lazy" />
+                            <div class="u-team-right">
+                                <div class="u-team">团队 : {{ item.name }}</div>
+                                <div class="u-room">{{ item.title }}</div>
                             </div>
-                        </div>
-                    </el-col>
-                </el-row>
-                <el-pagination
-                    class="m-rank-video-pages m-archive-pages"
-                    background
-                    layout="total, prev, pager, next,jumper"
-                    :hide-on-single-page="true"
-                    :page-size="per"
-                    :total="total"
-                    v-model:current-page="page"
-                >
-                </el-pagination>
+                        </a>
+                    </div>
+                    <el-pagination
+                        class="m-rank-video-pages m-archive-pages"
+                        background
+                        layout="total, prev, pager, next,jumper"
+                        :hide-on-single-page="true"
+                        :page-size="per"
+                        :total="total"
+                        v-model:current-page="page"
+                    >
+                    </el-pagination>
+                </div>
             </template>
             <div class="m-video-null" v-else><i class="el-icon-warning-outline"></i> 没有找到相关条目</div>
         </div>
@@ -74,13 +57,13 @@
 </template>
 
 <script>
+import PICS from "@/assets/js/pics.js";
 import { __imgPath } from "@/utils/config";
 import { getVideos } from "@/service/rank/video.js";
 import { default_avatar } from "@/utils/config";
-import { getThumbnail, getLink } from "@jx3box/jx3box-common/js/utils"; 
-import { cloneDeep, filter } from "lodash";
+import { getThumbnail, getLink } from "@jx3box/jx3box-common/js/utils";
+import { filter } from "lodash";
 export default {
-   
     data: function () {
         return {
             video_title_img: __imgPath + "image/rank/common/videos.png",
@@ -117,14 +100,19 @@ export default {
         },
         bossList: function () {
             let dict = {};
+            console.log(this.achieves);
             this.achieves.forEach((item) => {
-                dict[item.achievement_id] = item.name;
+                dict[item.achievement_id] = item?.name;
             });
             return dict;
         },
     },
     methods: {
+        bossIcon(val) {
+            return PICS.bossIcon(val);
+        },
         changeBoss(val) {
+            console.log(val);
             this.current_boss = val == "all" ? "" : val;
             this.page = 1;
             this.loadData();
@@ -148,7 +136,6 @@ export default {
             return val ? getThumbnail(val, 136, true) : default_avatar;
         },
         teamLink: function (val) {
-            // return "/team/#/org/view/" + val;
             return getLink("org", val);
         },
         videoCover: function (aid) {
@@ -169,7 +156,3 @@ export default {
     },
 };
 </script>
-
-<style lang="less">
-@import "~@/assets/css/rank/superstar/video.less";
-</style>
