@@ -69,22 +69,22 @@
                 </div>
                 <div class="u-no-login" v-else>
                     <p>你尚未登录</p>
-                    <el-button type="primary" @click="goLogin">登录</el-button>
+                    <div class="u-btns"><span class="u-btn" @click="goLogin">立即登录</span></div>
                 </div>
             </div>
         </div>
     </div>
 </template>
 
-<script> 
+<script>
 import { getEvents } from "@/service/rank/event.js";
 import { joinEvent, hasJoined } from "@/service/rank/join.js";
 import { getMyTeams } from "@/service/rank/team.js";
 import { getBreadcrumb } from "@jx3box/jx3box-common/js/system";
 import User from "@jx3box/jx3box-common/js/user.js";
-export default { 
+export default {
     data() {
-        return { 
+        return {
             form: {
                 event_id: "",
                 team_id: "",
@@ -97,7 +97,7 @@ export default {
             audit_status: 0, //审核状态
             statusText: [
                 { name: "待审核", class: "u-orange" },
-                { name: "已报名", class: "" }, 
+                { name: "已报名", class: "" },
             ],
             joined_team_name: "",
 
@@ -217,6 +217,6 @@ export default {
     },
     created() {
         this.isLogin && this.init();
-    }, 
+    },
 };
 </script>
