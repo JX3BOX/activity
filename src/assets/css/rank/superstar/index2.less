@@ -34,6 +34,8 @@
 // kv
 .m-superstar-info {
     width: 100%;
+    max-width: 1920px;
+    .clip;
     .m-superstar-kv-title {
         .pr;
         .flex;
@@ -102,6 +104,8 @@
     }
     .m-sign-up {
         .auto(x);
+        width: 100%;
+        max-width: 1920px;
     }
 }
 
@@ -118,7 +122,10 @@
     .pr;
     .flex;
     .auto(x);
-    .size(1920px,1116px);
+    width: 100%;
+    max-width: 1920px;
+    min-height: 800px;
+    max-height: 1116px;
     justify-content: center;
     background: url("@{superstar_nav}bg02.png") no-repeat center center;
     background-size: 100% 100%;
@@ -142,7 +149,7 @@
         height: 100%;
         flex-direction: column;
         align-items: center;
-        justify-content: center; 
+        justify-content: center;
         font-family: "ALIMAMASHUHEITI";
     }
     .u-btns {
@@ -217,14 +224,14 @@
 .m-introduce {
     .pr;
     .auto(x);
-    .mb(300px);
+    .mb(400px);
     box-sizing: border-box;
 
     .u-content {
         .pr;
         .auto(x);
         .mt(150px);
-        min-width: 1200px;
+        max-width: 1920px;
         box-sizing: border-box;
     }
     .u-bg {
@@ -304,6 +311,7 @@
 // 排名
 .m-super-list {
     .auto(x);
+    .mb(150px);
     max-width: 1200px;
     color: #000;
     font-family: "SourceHanSans";
@@ -617,6 +625,9 @@
         &.m-box-right {
             background: url("@{superstar_nav}dps-right.png") no-repeat top center;
             background-size: 100% auto;
+            .m-info {
+                order: 2;
+            }
         }
         .m-info {
             .flex;
@@ -655,21 +666,44 @@
         background-size: 100% auto;
     }
     .m-rank-list {
-        margin: 30px auto;
         .size(840px,480px);
+        margin: 30px auto;
         overflow: auto;
         .u-rank-item {
             .flex;
+            .lh(54px);
+            padding: 0 20px;
             align-items: center;
             gap: 18px;
+            border-bottom: 1px dashed #a17c57;
             .u-logo {
                 .size(32px);
+                flex-shrink: 0;
+            }
+            .u-sort {
+                .fz(20px);
+                font-family: "ALIMAMASHUHEITI";
+                color: #820d0d;
+                flex-shrink: 0;
             }
             &.active {
                 background-color: #fff;
             }
             .u-number {
+                .fz(20px);
+                font-family: "SourceHanSans";
                 flex-shrink: 0;
+            }
+            .u-name {
+                .fz(20px,32px);
+                padding: 0 20px;
+                box-sizing: border-box;
+                color: #ffeece;
+                text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                flex: 0 1 auto;
             }
         }
     }
@@ -679,6 +713,7 @@
 .m-superstar-video {
     max-width: 1200px;
     .auto(x);
+    .mb(150px);
     .m-video-boss {
         .flex;
         gap: 28px;

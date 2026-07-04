@@ -33,7 +33,7 @@
                             v-for="(tab, tabIdx) in options"
                             :key="tabIdx"
                             :class="['u-tab', { on: tab.value == item.active }]"
-                            @click="item.active = tab.value"
+                            @click="onTabChange(item, tab.value)"
                             >{{ tab.name }}</span
                         >
                     </div>
@@ -175,8 +175,7 @@
                                         fit="fill"
                                     ></el-image>
                                     <img v-else :src="teamLogo(row.team_logo, 160)" @error="handleImgError" />
-                                </div>
-                                <div class="u-line"></div>
+                                </div> 
                                 <div
                                     class="u-name"
                                     :style="{
@@ -205,9 +204,8 @@
 
 <script>
 import { __imgPath, __cdn } from "@/utils/config";
-import { getTop100 } from "@/service/rank/superstar.js";
+import { getTop100, getDps } from "@/service/rank/superstar.js";
 import { getEvents } from "@/service/rank/event.js";
-
 import { showTime } from "@jx3box/jx3box-common/js/moment";
 import { getThumbnail } from "@jx3box/jx3box-common/js/utils";
 import PICS from "@/assets/js/pics.js";
@@ -248,36 +246,36 @@ export default {
                     curItem: {},
                     key: "clearSpeed",
                 },
-                // {
-                //     title: "四维数据统计（团队）",
-                //     type: true,
-                //     bg: "right",
-                //     data: [],
-                //     active: 0,
-                //     activeId: null,
-                //     curItem: {},
-                //     key: "team",
-                // },
-                // {
-                //     title: "四维数据统计（心法·平均）",
-                //     type: true,
-                //     bg: "none",
-                //     data: [],
-                //     active: 0,
-                //     activeId: null,
-                //     curItem: {},
-                //     key: "xf",
-                // },
-                // {
-                //     title: "四维数据统计（个人）",
-                //     type: true,
-                //     bg: "left",
-                //     data: [],
-                //     active: 0,
-                //     activeId: null,
-                //     curItem: {},
-                //     key: "player",
-                // },
+                {
+                    title: "四维数据统计（团队）",
+                    type: true,
+                    bg: "right",
+                    data: [],
+                    active: 0,
+                    activeId: null,
+                    curItem: {},
+                    key: "team",
+                },
+                {
+                    title: "四维数据统计（心法·平均）",
+                    type: true,
+                    bg: "none",
+                    data: [],
+                    active: 0,
+                    activeId: null,
+                    curItem: {},
+                    key: "xf",
+                },
+                {
+                    title: "四维数据统计（个人）",
+                    type: true,
+                    bg: "left",
+                    data: [],
+                    active: 0,
+                    activeId: null,
+                    curItem: {},
+                    key: "player",
+                },
             ],
         };
     },
@@ -359,13 +357,43 @@ export default {
             getTop100(this.achieve_id, this.id)
                 .then((res) => {
                     this.origin_data = res.data.data || [];
-                    this.dataList.forEach((item, i) => {
-                        this.initItem(item);
-                    });
+                    this.getDpsData();
                 })
                 .finally(() => {
                     this.loading = false;
                 });
+        },
+        getDpsData() {
+            getEvents({ superstar: 1 }).then((res) => {
+                let arr = [],
+                    data = res.data.data.list;
+                data.forEach((item) => {
+                    if (item.superstar != 0) arr.push(item);
+                });
+                let id = this.id;
+                let index = arr.reverse().findIndex((item) => {
+                    return item.ID == id;
+                });
+                getDps(index + 1).then((data) => {
+                    let res = data.data;
+                    let key = this.bossList[this.achieve_id];
+                    let bossData = res[key.indexOf("&") == -1 ? key : key.split("&")[0]];
+                    let sortByTeam = [],
+                        sortByForce = [],
+                        sortByPlayer = [];
+                    this.options.forEach((item) => {
+                        sortByTeam.push(bossData[item.key]?.sortByTeam || []);
+                        sortByForce.push(bossData[item.key]?.sortByForce || []);
+                        sortByPlayer.push(bossData[item.key]?.sortByPlayer || []);
+                    });
+                    this.sortByTeam = sortByTeam;
+                    this.sortByForce = sortByForce;
+                    this.sortByPlayer = sortByPlayer;
+                    this.dataList.forEach((item) => {
+                        this.initItem(item);
+                    });
+                });
+            });
         },
         // 根据 key 初始化对应区块数据
         initItem(listItem) {
@@ -437,6 +465,11 @@ export default {
             listItem.activeId = listItem.key === "player" ? arr[0]?.playerName || null : arr[0]?.ID || null;
             console.log(listItem);
         },
+        // tab 切换
+        onTabChange(listItem, value) {
+            listItem.active = value;
+            this.initItem(listItem);
+        },
         // 点击排行项
         onItemClick(listItem, row) {
             listItem.curItem = row;
@@ -463,7 +496,8 @@ export default {
             // listItem.type === 'player' → 心法颜色
             if (listItem.type === "player") {
                 let xfname = xfmap[row.xfId] || "通用";
-                return colors_by_mount_name[xfname] || "#fff";
+                let color = colors_by_mount_name[xfname] || "#fff";
+                return `linear-gradient(to right, ${color}, ${color}80)`;
             }
             let colors = [
                 "#c3c5c1",
@@ -499,10 +533,8 @@ export default {
                 "#6bb7f2",
                 "#ffde7b",
             ];
-            if (index > colors.length) {
-                return colors[(index + 1) % colors.length];
-            }
-            return colors[index];
+            let color = index > colors.length ? colors[(index + 1) % colors.length] : colors[index];
+            return `linear-gradient(to right, ${color}, ${color}4d)`;
         },
         // xfItem 专用：心法颜色
         showXfMountColor(val) {
@@ -525,8 +557,8 @@ export default {
             } else if (listItem.type) {
                 max = data[0]?.[this.options[listItem.active]?.key] || 0;
             } else {
-                // 团队通关速度 - fight_time 越小越好，取最小值作为最大宽度基准
-                max = data[0]?.fight_time || 0;
+                // 团队通关速度 - fight_time 越大越慢，最后一名值最大
+                max = data[data.length - 1]?.fight_time || 0;
             }
             if (max == 0) {
                 let num = 368 / data.length;
@@ -538,7 +570,8 @@ export default {
                     : listItem.type
                     ? row[this.options[listItem.active]?.key]
                     : row.fight_time;
-            return (val / max).toFixed(4) * 580 + "px";
+            // 容器 840px - 序号(~30px) - logo(32px) - 数值(~100px) - gap*3(54px) ≈ 624px 可用
+            return (val / max).toFixed(4) * 620 + "px";
         },
         showTime(val) {
             return showTime(new Date(val * 1000));
