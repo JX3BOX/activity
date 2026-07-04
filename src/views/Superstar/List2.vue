@@ -9,7 +9,12 @@
             <div class="u-sort-box">
                 <div
                     class="u-sort-item"
-                    :class="'u-sort-item-' + (i + 1)"
+                    :class="[
+                        'u-sort-item-' + (i + 1),
+                        { battle: item.jx3box_battle_id },
+                        { jcl: item.jx3box_jcl_id },
+                        { all: item.jx3box_battle_id && item.jx3box_jcl_id },
+                    ]"
                     v-for="(item, i) in threeData || []"
                     :key="i"
                 >
@@ -49,16 +54,10 @@
                     </div>
 
                     <!-- 链接按钮 -->
+
                     <div class="u-battle">
-                        <div class="u-two-link" v-if="item.jx3box_battle_id && item.jx3box_jcl_id">
-                            <a :href="jclLink(item.jx3box_jcl_id)" target="_blank"> </a>
-                            <a :href="battleLink(item.jx3box_battle_id)" target="_blank"> </a>
-                        </div>
-                        <div v-else>
-                            <a :href="jclLink(item.jx3box_jcl_id)" target="_blank" v-if="item.jx3box_jcl_id"> </a>
-                            <a :href="battleLink(item.jx3box_battle_id)" target="_blank" v-if="item.jx3box_battle_id">
-                            </a>
-                        </div>
+                        <a :href="jclLink(item.jx3box_jcl_id)" target="_blank" v-if="item.jx3box_jcl_id"> </a>
+                        <a :href="battleLink(item.jx3box_battle_id)" target="_blank" v-if="item.jx3box_battle_id"> </a>
                     </div>
                 </div>
             </div>

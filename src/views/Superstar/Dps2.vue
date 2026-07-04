@@ -38,102 +38,58 @@
                         >
                     </div>
                     <div class="m-box-none" v-if="item.bg === 'none'">
-                        <!-- <div class="u-team-box_item u-xf u-center-green">
-                            <div class="u-team-rank_left">
-                                <div
-                                    class="u-team-rank_itemNo"
-                                    v-for="(row, rowIdx) in item.data"
-                                    :key="rowIdx + 'rank'"
-                                >
-                                    <div class="u-sort">{{ row.forceName }}</div>
-                                    <div class="u-logo">
-                                        <el-image :src="showMount(row.xfId)" fit="fill"></el-image>
-                                    </div>
-                                    <div class="u-line"></div>
-                                    <div
-                                        class="u-name"
-                                        :style="{
-                                            background: showXfMountColor(row.xfId),
-                                            width: getXfBarWidth(row.dps),
-                                        }"
-                                    >
-                                        {{ row.forceName }}
-                                    </div>
-                                    <div class="u-number">{{ row.dps || 0 }}</div>
+                        <div class="m-xf-list">
+                            <div class="u-xf-item" v-for="(row, rowIdx) in item.data" :key="rowIdx + 'rank'">
+                                <div class="u-sort">{{ row.forceName }}</div>
+                                <div class="u-logo">
+                                    <el-image :src="showMount(row.xfId)" fit="fill"></el-image>
                                 </div>
+                                <div class="u-line"></div>
+                                <div
+                                    class="u-name"
+                                    :style="{
+                                        background: showXfMountColor(row.xfId),
+                                        width: getXfBarWidth(row.dps, row.forceName),
+                                    }"
+                                >
+                                    {{ row.forceName }}
+                                </div>
+                                <div class="u-number">{{ row.dps || 0 }}</div>
                             </div>
-                        </div> -->
+                        </div>
                     </div>
                     <div class="m-box" :class="`m-box-${item.bg}`" v-else>
                         <!-- 详细信息 -->
                         <div class="m-info">
-                            <img class="u-img" :src="teamLogo(item.curItem.team_logo, 158)" @error="handleImgError" />
-                            <div class="u-name">{{ item.curItem.team_name }}</div>
-                            <div class="u-server">
-                                @{{ item.curItem.team_server }} {{ showTime(item.curItem.created) }}
+                            <img
+                                class="u-img"
+                                v-if="item.key === 'player'"
+                                :src="showMount(item.curItem.xfId)"
+                                @error="handleImgError"
+                            />
+                            <img
+                                class="u-img"
+                                v-else
+                                :src="teamLogo(item.curItem.team_logo, 158)"
+                                @error="handleImgError"
+                            />
+                            <div class="u-name">
+                                {{ item.key === "player" ? item.curItem.playerName : item.curItem.team_name }}
                             </div>
+                            <div class="u-server">@{{ item.curItem.team_server }}</div>
                             <div class="u-time">
                                 <template v-if="!item.type"
                                     >战斗用时:<span>{{ showTC(item.curItem.fight_time) }}</span></template
                                 >
+                                <template v-else-if="item.key === 'player'"
+                                    >{{ options[item.active]?.name || "-" }}:<span>{{ item.curItem.dps || 0 }}</span>
+                                </template>
                                 <template v-else
                                     >{{ options[item.active]?.name || "-" }}:<span>{{
                                         item.curItem[options[item.active]?.key] || 0
                                     }}</span>
                                 </template>
                             </div>
-                            <!-- <div
-                                class="u-team-btn"
-                                :class="{ two: item.curItem.jx3box_jcl_id && item.curItem.jx3box_battle_id }"
-                            >
-                                <a
-                                    :href="jclLink(item.curItem.jx3box_jcl_id)"
-                                    target="_blank"
-                                    class="u-jcl-battle-link"
-                                    v-if="item.curItem.jx3box_jcl_id"
-                                >
-                                    <img :src="imgUrl + 'dps-jcl.png'" />
-                                </a>
-                                <a
-                                    :href="battleLink(item.curItem.jx3box_battle_id)"
-                                    target="_blank"
-                                    class="u-jcl-battle-link"
-                                    v-if="item.curItem.jx3box_battle_id"
-                                >
-                                    <img :src="imgUrl + 'dps-battle.png'" />
-                                </a>
-                            </div> -->
-                        </div>
-                        <!-- 列表 -->
-                        <!-- <div class="u-team-info_bg u-team-info" v-else>
-                            <div class="u-team-logo xf">
-                                <el-image
-                                    :src="showMountSvg(item.curItem.xfId)"
-                                    fit="fill"
-                                    v-if="item.curItem.xfId"
-                                ></el-image>
-                            </div>
-                            <div class="u-team-member">
-                                <div class="u-player-name">{{ item.curItem.playerName }}</div>
-                                <div class="u-team-info_item">
-                                    <span>所属团队：</span>
-                                    <el-image
-                                        v-if="item.curItem.team_logo"
-                                        :src="teamLogo(item.curItem.team_logo, 24)"
-                                        fit="fill"
-                                    ></el-image>
-                                    <img loading="lazy" src="@/assets/img/rank/misc/null.png" width="24" v-else />
-                                    <span>&nbsp;&nbsp;{{ item.curItem.team_name }}</span>
-                                </div>
-                            </div>
-                            <div class="u-team-server">
-                                {{ item.curItem.team_server }} {{ showTime(item.curItem.created) }}
-                            </div>
-                            <div class="u-team-time">
-                                {{ options[item.active]?.name || "-" }}&nbsp;:&nbsp;<span>{{
-                                    item.curItem.dps || 0
-                                }}</span>
-                            </div>
                             <div
                                 class="u-team-btn"
                                 :class="{ two: item.curItem.jx3box_jcl_id && item.curItem.jx3box_battle_id }"
@@ -141,7 +97,7 @@
                                 <a
                                     :href="jclLink(item.curItem.jx3box_jcl_id)"
                                     target="_blank"
-                                    class="u-jcl-battle-link"
+                                    class="u-icon"
                                     v-if="item.curItem.jx3box_jcl_id"
                                 >
                                     <img :src="imgUrl + 'dps-jcl.png'" />
@@ -149,19 +105,19 @@
                                 <a
                                     :href="battleLink(item.curItem.jx3box_battle_id)"
                                     target="_blank"
-                                    class="u-jcl-battle-link"
+                                    class="u-icon"
                                     v-if="item.curItem.jx3box_battle_id"
                                 >
                                     <img :src="imgUrl + 'dps-battle.png'" />
                                 </a>
                             </div>
-                        </div> -->
+                        </div>
                         <!-- 排行列表 -->
                         <div class="m-rank-list">
                             <div
                                 class="u-rank-item"
                                 :class="{
-                                    active: item.activeId == (item.type === 'player' ? row.playerName : row.ID),
+                                    active: item.activeId == (item.key === 'player' ? row.playerName : row.ID),
                                 }"
                                 v-for="(row, rowIdx) in item.data"
                                 :key="rowIdx + 'rank'"
@@ -175,9 +131,10 @@
                                         fit="fill"
                                     ></el-image>
                                     <img v-else :src="teamLogo(row.team_logo, 160)" @error="handleImgError" />
-                                </div> 
+                                </div>
                                 <div
                                     class="u-name"
+                                    :class="{ 'is-player': item.key === 'player' }"
                                     :style="{
                                         background: showMountColor(rowIdx, row, item),
                                         width: getBarWidth(row, rowIdx, item),
@@ -204,12 +161,10 @@
 
 <script>
 import { __imgPath, __cdn } from "@/utils/config";
-import { getTop100, getDps } from "@/service/rank/superstar.js";
-import { getEvents } from "@/service/rank/event.js";
+import { getTop100 } from "@/service/rank/superstar.js";
 import { showTime } from "@jx3box/jx3box-common/js/moment";
 import { getThumbnail } from "@jx3box/jx3box-common/js/utils";
 import PICS from "@/assets/js/pics.js";
-import xf from "@jx3box/jx3box-data/data/xf/xf.json";
 import colorData from "@jx3box/jx3box-data/data/xf/colors.json";
 const { colors_by_mount_name } = colorData;
 import { orderBy } from "lodash";
@@ -230,9 +185,7 @@ export default {
                 { name: "承伤", icon: "", value: 2, key: "beDamage" },
                 { name: "承疗", icon: "", value: 3, key: "beHeal" },
             ],
-            sortByTeam: [],
-            sortByForce: [],
-            sortByPlayer: [],
+
             showBossFixed: false,
             bossFixedTop: 0,
             dataList: [
@@ -357,113 +310,34 @@ export default {
             getTop100(this.achieve_id, this.id)
                 .then((res) => {
                     this.origin_data = res.data.data || [];
-                    this.getDpsData();
+                    this.dataList.forEach((item) => {
+                        this.initItem(item);
+                    });
                 })
                 .finally(() => {
                     this.loading = false;
                 });
-        },
-        getDpsData() {
-            getEvents({ superstar: 1 }).then((res) => {
-                let arr = [],
-                    data = res.data.data.list;
-                data.forEach((item) => {
-                    if (item.superstar != 0) arr.push(item);
-                });
-                let id = this.id;
-                let index = arr.reverse().findIndex((item) => {
-                    return item.ID == id;
-                });
-                getDps(index + 1).then((data) => {
-                    let res = data.data;
-                    let key = this.bossList[this.achieve_id];
-                    let bossData = res[key.indexOf("&") == -1 ? key : key.split("&")[0]];
-                    let sortByTeam = [],
-                        sortByForce = [],
-                        sortByPlayer = [];
-                    this.options.forEach((item) => {
-                        sortByTeam.push(bossData[item.key]?.sortByTeam || []);
-                        sortByForce.push(bossData[item.key]?.sortByForce || []);
-                        sortByPlayer.push(bossData[item.key]?.sortByPlayer || []);
-                    });
-                    this.sortByTeam = sortByTeam;
-                    this.sortByForce = sortByForce;
-                    this.sortByPlayer = sortByPlayer;
-                    this.dataList.forEach((item) => {
-                        this.initItem(item);
-                    });
-                });
-            });
         },
         // 根据 key 初始化对应区块数据
         initItem(listItem) {
             let arr = [];
             if (listItem.key === "clearSpeed") {
                 arr = orderBy(this.origin_data, ["fight_time"], ["aes"]);
-                console.log(arr);
+                // 过滤掉 fight_time 为 0 的
+                arr = arr.filter((item) => item.fight_time > 0);
             } else if (listItem.key === "team") {
-                if (!this.sortByTeam.length) return;
-                let raw = this.sortByTeam[listItem.active] || [];
-                let key = this.options[listItem.active].key;
-                raw.forEach((item) => {
-                    arr.push(
-                        Object.assign(
-                            {
-                                team_name: item.team,
-                                team_server: item.server,
-                                fight_time: item.timeDuring * 1000,
-                                created: item.timeBegin,
-                                ID: item.team_id,
-                            },
-                            item
-                        )
-                    );
-                });
-                arr = orderBy(arr, [key], ["desc"]);
+                // getDps 已废弃，团队四维数据暂无数据源
+                arr = [];
             } else if (listItem.key === "xf") {
-                if (!this.sortByForce.length) return;
-                let raw = this.sortByForce[listItem.active];
-                if (!raw) return;
-                raw.forEach((item) => {
-                    for (let k in xf) {
-                        if (xf[k].force == item.forceId) {
-                            item.xfId = xf[k].id;
-                            break;
-                        }
-                    }
-                });
-                arr = orderBy(raw, ["dps"], ["desc"]);
+                // getDps 已废弃，心法四维数据暂无数据源
+                arr = [];
             } else if (listItem.key === "player") {
-                if (!this.sortByPlayer.length) return;
-                let raw = this.sortByPlayer[listItem.active] || [];
-                raw.forEach((item) => {
-                    let xfid = 0;
-                    for (let k in xf) {
-                        if (xf[k].force == item.forceId) {
-                            xfid = xf[k].id;
-                            break;
-                        }
-                    }
-                    arr.push(
-                        Object.assign(
-                            {
-                                team_name: item.team,
-                                team_server: item.server,
-                                fight_time: item.timeDuring * 1000,
-                                created: item.timeBegin,
-                                ID: item.team_id,
-                                xfId: xfid,
-                            },
-                            item
-                        )
-                    );
-                });
-                arr = orderBy(arr, ["dps"], ["desc"]);
+                // getDps 已废弃，个人四维数据暂无数据源
+                arr = [];
             }
             listItem.data = arr;
             listItem.curItem = arr[0] || {};
             listItem.activeId = listItem.key === "player" ? arr[0]?.playerName || null : arr[0]?.ID || null;
-            console.log(listItem);
         },
         // tab 切换
         onTabChange(listItem, value) {
@@ -493,8 +367,7 @@ export default {
             return __cdn + "design/vector/mount/" + mount + ".svg";
         },
         showMountColor(index, row, listItem) {
-            // listItem.type === 'player' → 心法颜色
-            if (listItem.type === "player") {
+            if (listItem.key === "player") {
                 let xfname = xfmap[row.xfId] || "通用";
                 let color = colors_by_mount_name[xfname] || "#fff";
                 return `linear-gradient(to right, ${color}, ${color}80)`;
@@ -542,17 +415,28 @@ export default {
             return colors_by_mount_name[xfname] || "#fff";
         },
         // xfItem 专用：柱状图宽度
-        getXfBarWidth(dps) {
+        getXfBarWidth(dps, forceName) {
             let xfItem = this.dataList.find((item) => item.key === "xf");
             let xfData = xfItem?.data || [];
             let max = xfData[0]?.dps || 0;
             if (max == 0) return "0px";
-            return (dps / max).toFixed(4) * 750 + "px";
+            let width = (dps / max).toFixed(4) * 750;
+            // 计算统一最小宽度，确保所有心法名称完整显示
+            if (xfItem._xfMinW === undefined && xfData.length) {
+                let maxTextLen = 0;
+                xfData.forEach((r) => {
+                    let len = this.getTextWidth(r.forceName || "");
+                    if (len > maxTextLen) maxTextLen = len;
+                });
+                xfItem._xfMinW = maxTextLen + 40;
+            }
+            width = Math.max(width, xfItem._xfMinW || 0);
+            return width + "px";
         },
         getBarWidth(row, i, listItem) {
             let data = listItem.data;
             let max = 0;
-            if (listItem.type === "player") {
+            if (listItem.key === "player") {
                 max = data[0]?.dps || 0;
             } else if (listItem.type) {
                 max = data[0]?.[this.options[listItem.active]?.key] || 0;
@@ -565,16 +449,52 @@ export default {
                 return 198 + i * num + "px";
             }
             let val =
-                listItem.type === "player"
+                listItem.key === "player"
                     ? row.dps
                     : listItem.type
                     ? row[this.options[listItem.active]?.key]
                     : row.fight_time;
             // 容器 840px - 序号(~30px) - logo(32px) - 数值(~100px) - gap*3(54px) ≈ 624px 可用
-            return (val / max).toFixed(4) * 620 + "px";
+            let width = (val / max).toFixed(4) * 620;
+            // 计算统一最小宽度：取所有条目中最长文本的宽度，确保所有名字完整显示且不破坏排序
+            let cacheKey = "_minW_" + listItem.key + (listItem.type ? "_" + listItem.active : "");
+            if (listItem[cacheKey] === undefined) {
+                let maxTextLen = 0;
+                data.forEach((r) => {
+                    let text = "";
+                    if (listItem.key === "player") {
+                        text = r.playerName || "";
+                    } else if (!listItem.type) {
+                        text = (r.team_name || "") + "@" + (r.team_server || "");
+                    } else {
+                        text = (r.team_name || "") + "@" + (r.team_server || "");
+                    }
+                    let len = this.getTextWidth(text);
+                    if (len > maxTextLen) {
+                        maxTextLen = len;
+                    }
+                });
+                // padding 40px + 文本宽度
+                listItem[cacheKey] = maxTextLen + 40;
+            }
+            width = Math.max(width, listItem[cacheKey]);
+            return width + "px";
         },
         showTime(val) {
             return showTime(new Date(val * 1000));
+        },
+        // 估算文本像素宽度（中文约20px，英文/数字约10px）
+        getTextWidth(text) {
+            let width = 0;
+            for (let i = 0; i < text.length; i++) {
+                let code = text.charCodeAt(i);
+                if (code > 127) {
+                    width += 20; // 中文字符
+                } else {
+                    width += 10; // 英文/数字
+                }
+            }
+            return width;
         },
         showTC(val) {
             let s = val / 1000;
