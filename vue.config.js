@@ -39,13 +39,13 @@ events.forEach((event) => {
 const devPages =
     process.env.NODE_ENV === "development"
         ? {
-              devhome: {
-                  title: "JX3BOX - 本地导航测试页",
-                  entry: "src/pages/devhome/main.js",
-                  template: "public/index.html",
-                  filename: "index.html",
-              },
-          }
+            devhome: {
+                title: "JX3BOX - 本地导航测试页",
+                entry: "src/pages/devhome/main.js",
+                template: "public/index.html",
+                filename: "index.html",
+            },
+        }
         : {};
 
 const pages = {
@@ -65,7 +65,7 @@ const pages = {
     superstar: {
         title: "剑三门派天团 - JX3BOX",
         entry: "src/pages/rank/superstar/index.js",
-        template: "public/index.html",
+        template: "public/pc.html",
         filename: "superstar/index.html",
     },
     ...topicPages,
@@ -84,8 +84,8 @@ module.exports = {
     publicPath: process.env.BUILD_PREVIEW
         ? "/" + process.env.APP_NAME
         : process.env.NODE_ENV === "development"
-        ? "/"
-        : process.env.STATIC_PATH + "/" + process.env.APP_NAME,
+            ? "/"
+            : process.env.STATIC_PATH + "/" + process.env.APP_NAME,
 
     //🌈多页面配置，详见 https://cli.vuejs.org/zh/config/#pages
     pages: pages,
@@ -175,7 +175,7 @@ module.exports = {
 // 注入全局样式资源（变量、mixin 等）
 // 本地css/var.less、mixin.less会覆盖node_modules里的同名文件，方便定制化
 // 注意此类文件都是变量和mixin函数，不要写全局样式，否则可能会被重复注入多次
-function addStyleResource(rule) {
+function addStyleResource (rule) {
     var preload_styles = [];
     preload_styles.push(
         path.resolve(__dirname, "./node_modules/csslab/base.less"),
@@ -192,7 +192,7 @@ function addStyleResource(rule) {
     });
 }
 
-function normalizeTarget(value) {
+function normalizeTarget (value) {
     if (!value) return "";
     const trimmed = String(value).trim();
     if (!trimmed) return "";
@@ -200,11 +200,11 @@ function normalizeTarget(value) {
     return `https://${trimmed.replace(/^\/+/, "")}`;
 }
 
-function escapeRegExp(str) {
+function escapeRegExp (str) {
     return String(str).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
-function buildEnvProxy() {
+function buildEnvProxy () {
     const nodeEnv = String(process.env.NODE_ENV || "").toLowerCase();
     if (nodeEnv && nodeEnv !== "development") return {};
 

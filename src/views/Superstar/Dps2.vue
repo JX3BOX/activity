@@ -161,13 +161,15 @@
 
 <script>
 import { __imgPath, __cdn } from "@/utils/config";
-import { getTop100 } from "@/service/rank/superstar.js";
+import { getTop100, getDps } from "@/service/rank/superstar.js";
+import { getEvents } from "@/service/rank/event.js";
 import { showTime } from "@jx3box/jx3box-common/js/moment";
 import { getThumbnail } from "@jx3box/jx3box-common/js/utils";
 import PICS from "@/assets/js/pics.js";
 import colorData from "@jx3box/jx3box-data/data/xf/colors.json";
 const { colors_by_mount_name } = colorData;
 import { orderBy } from "lodash";
+import xf from "@jx3box/jx3box-data/data/xf/xf.json";
 import xfmap from "@jx3box/jx3box-data/data/xf/xfid.json";
 import SuperstarBoss from "@/components/rank/superstar_boss.vue";
 
@@ -185,7 +187,9 @@ export default {
                 { name: "承伤", icon: "", value: 2, key: "beDamage" },
                 { name: "承疗", icon: "", value: 3, key: "beHeal" },
             ],
-
+            sortByTeam: [],
+            sortByForce: [],
+            sortByPlayer: [],
             showBossFixed: false,
             bossFixedTop: 0,
             dataList: [
@@ -310,13 +314,69 @@ export default {
             getTop100(this.achieve_id, this.id)
                 .then((res) => {
                     this.origin_data = res.data.data || [];
-                    this.dataList.forEach((item) => {
-                        this.initItem(item);
-                    });
+                    this.getDpsData();
                 })
                 .finally(() => {
                     this.loading = false;
                 });
+        },
+        getDpsData() {
+            getEvents({ superstar: 1 }).then((res) => {
+                let arr = [],
+                    data = res.data.data.list;
+                data.forEach((item) => {
+                    if (item.superstar != 0) arr.push(item);
+                });
+                let id = this.id;
+                let index = arr.reverse().findIndex((item) => {
+                    return item.ID == id;
+                });
+                getDps(index + 1)
+                    .then((data) => {
+                        let res = data.data;
+                        if (!res) {
+                            console.warn("getDps 返回数据为空");
+                            this.resetDataList();
+                            return;
+                        }
+                        let key = this.bossList[this.achieve_id];
+                        let bossData = res[key.indexOf("&") == -1 ? key : key.split("&")[0]];
+                        if (!bossData) {
+                            console.warn(`getDps 中未找到 key 为 ${key} 的boss数据`);
+                            this.resetDataList();
+                            return;
+                        }
+                        let sortByTeam = [],
+                            sortByForce = [],
+                            sortByPlayer = [];
+                        this.options.forEach((item) => {
+                            sortByTeam.push(bossData[item.key]?.sortByTeam || []);
+                            sortByForce.push(bossData[item.key]?.sortByForce || []);
+                            sortByPlayer.push(bossData[item.key]?.sortByPlayer || []);
+                        });
+                        this.sortByTeam = sortByTeam;
+                        this.sortByForce = sortByForce;
+                        this.sortByPlayer = sortByPlayer;
+                        this.dataList.forEach((item) => {
+                            this.initItem(item);
+                        });
+                    })
+                    .catch((err) => {
+                        console.warn("getDps 请求失败:", err);
+                        this.resetDataList();
+                    });
+            });
+        },
+        // 当 getDps 数据不存在时，重置 dataList
+        resetDataList() {
+            this.sortByTeam = [];
+            this.sortByForce = [];
+            this.sortByPlayer = [];
+            this.dataList.forEach((item) => {
+                item.data = [];
+                item.curItem = {};
+                item.activeId = null;
+            });
         },
         // 根据 key 初始化对应区块数据
         initItem(listItem) {
@@ -326,14 +386,69 @@ export default {
                 // 过滤掉 fight_time 为 0 的
                 arr = arr.filter((item) => item.fight_time > 0);
             } else if (listItem.key === "team") {
-                // getDps 已废弃，团队四维数据暂无数据源
-                arr = [];
+                if (!this.sortByTeam.length) return;
+                let raw = this.sortByTeam[listItem.active] || [];
+                let key = this.options[listItem.active].key;
+                raw.forEach((item) => {
+                    arr.push(
+                        Object.assign(
+                            {
+                                team_name: item.team,
+                                team_server: item.server,
+                                fight_time: item.timeDuring * 1000,
+                                created: item.timeBegin,
+                                ID: item.team_id,
+                            },
+                            item
+                        )
+                    );
+                });
+                arr = orderBy(arr, [key], ["desc"]);
+                // 过滤掉当前维度值为 0 的
+                arr = arr.filter((item) => item[key] > 0);
             } else if (listItem.key === "xf") {
-                // getDps 已废弃，心法四维数据暂无数据源
-                arr = [];
+                if (!this.sortByForce.length) return;
+                let raw = this.sortByForce[listItem.active];
+                if (!raw) return;
+                raw.forEach((item) => {
+                    for (let k in xf) {
+                        if (xf[k].force == item.forceId) {
+                            item.xfId = xf[k].id;
+                            break;
+                        }
+                    }
+                });
+                arr = orderBy(raw, ["dps"], ["desc"]);
+                // 过滤掉 dps 为 0 的
+                arr = arr.filter((item) => item.dps > 0);
             } else if (listItem.key === "player") {
-                // getDps 已废弃，个人四维数据暂无数据源
-                arr = [];
+                if (!this.sortByPlayer.length) return;
+                let raw = this.sortByPlayer[listItem.active] || [];
+                raw.forEach((item) => {
+                    let xfid = 0;
+                    for (let k in xf) {
+                        if (xf[k].force == item.forceId) {
+                            xfid = xf[k].id;
+                            break;
+                        }
+                    }
+                    arr.push(
+                        Object.assign(
+                            {
+                                team_name: item.team,
+                                team_server: item.server,
+                                fight_time: item.timeDuring * 1000,
+                                created: item.timeBegin,
+                                ID: item.team_id,
+                                xfId: xfid,
+                            },
+                            item
+                        )
+                    );
+                });
+                arr = orderBy(arr, ["dps"], ["desc"]);
+                // 过滤掉 dps 为 0 的
+                arr = arr.filter((item) => item.dps > 0);
             }
             listItem.data = arr;
             listItem.curItem = arr[0] || {};
@@ -506,3 +621,4 @@ export default {
     },
 };
 </script>
+

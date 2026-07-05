@@ -123,8 +123,9 @@
 
 @media (max-width: 1024px) {
     .p-superstar-nav {
+        min-height: auto;
         justify-content: flex-start;
-        padding-bottom: 48px;
+        .pb(100px);
 
         .m-logo {
             position: relative;
@@ -137,11 +138,11 @@
             flex: 0 0 auto;
             width: calc(100% - 32px);
             max-width: 640px;
-            margin-top: 32px;
+            margin-top: 100px;
             overflow-y: visible;
             grid-template-columns: repeat(2, minmax(0, 300px));
             justify-content: center;
-            gap: 16px;
+            gap: 30px;
 
             .u-item {
                 a {

@@ -43,6 +43,7 @@
         padding: 230px 0 330px 0;
         height: 970px;
         .u-title {
+            .z(2);
             margin: auto auto 340px auto;
             height: 400px;
         }
@@ -418,9 +419,9 @@
                 .pointer;
                 .lb(0,12px);
                 .size(100%,60px);
-                a{
+                a {
                     .db;
-                    flex:1;
+                    flex: 1;
                 }
             }
         }
@@ -860,6 +861,53 @@
                     .break(1);
                     color: #820d0d;
                 }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 980px) {
+    .m-superstar-info .m-superstar-kv-title,
+    .m-sign-up,
+    .m-superstar-boss,
+    .m-super-list,
+    .m-video-boss,
+    .m-tab,
+    .u-character,
+    .m-superstar-kv-title .u-title {
+        zoom: 0.8;
+    }
+
+    .m-dps-content {
+        h2 {
+            display: flex;
+            margin-top: 120px;
+            justify-content: center;
+            .u-title {
+                display: flex;
+                height: 68px;
+                border-radius: 8px;
+                font-size: 48px;
+                line-height: 68px;
+                align-items: center;
+                font-family: "youshebiaotihei";
+                color: #ffeece;
+                background: linear-gradient(180deg, #820d0d 0%, #d13838 100%);
+                padding: 0 80px;
+            }
+            .u-flower {
+                width: 30px;
+                height: 30px;
+                margin: 0 20px;
+            }
+        }
+
+        .m-dps-box {
+            .m-box {
+                zoom: 0.8;
+            }
+            .m-box-none {
+                zoom: 0.8;
             }
         }
     }
