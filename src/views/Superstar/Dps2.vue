@@ -321,51 +321,43 @@ export default {
                 });
         },
         getDpsData() {
-            getEvents({ superstar: 1 }).then((res) => {
-                let arr = [],
-                    data = res.data.data.list;
-                data.forEach((item) => {
-                    if (item.superstar != 0) arr.push(item);
-                });
-                let id = this.id;
-                let index = arr.reverse().findIndex((item) => {
-                    return item.ID == id;
-                });
-                getDps(index + 1)
-                    .then((data) => {
-                        let res = data.data;
-                        if (!res) {
-                            console.warn("getDps 返回数据为空");
-                            this.resetDataList();
-                            return;
-                        }
-                        let key = this.bossList[this.achieve_id];
-                        let bossData = res[key.indexOf("&") == -1 ? key : key.split("&")[0]];
-                        if (!bossData) {
-                            console.warn(`getDps 中未找到 key 为 ${key} 的boss数据`);
-                            this.resetDataList();
-                            return;
-                        }
-                        let sortByTeam = [],
-                            sortByForce = [],
-                            sortByPlayer = [];
-                        this.options.forEach((item) => {
-                            sortByTeam.push(bossData[item.key]?.sortByTeam || []);
-                            sortByForce.push(bossData[item.key]?.sortByForce || []);
-                            sortByPlayer.push(bossData[item.key]?.sortByPlayer || []);
-                        });
-                        this.sortByTeam = sortByTeam;
-                        this.sortByForce = sortByForce;
-                        this.sortByPlayer = sortByPlayer;
-                        this.dataList.forEach((item) => {
-                            this.initItem(item);
-                        });
-                    })
-                    .catch((err) => {
-                        console.warn("getDps 请求失败:", err);
+            const ids = {
+                8: 3,
+            };
+            getDps(ids[this.id])
+                .then((data) => {
+                    let res = data.data;
+                    if (!res) {
+                        console.warn("getDps 返回数据为空");
                         this.resetDataList();
+                        return;
+                    }
+                    let key = this.bossList[this.achieve_id];
+                    let bossData = res[key.indexOf("&") == -1 ? key : key.split("&")[0]];
+                    if (!bossData) {
+                        console.warn(`getDps 中未找到 key 为 ${key} 的boss数据`);
+                        this.resetDataList();
+                        return;
+                    }
+                    let sortByTeam = [],
+                        sortByForce = [],
+                        sortByPlayer = [];
+                    this.options.forEach((item) => {
+                        sortByTeam.push(bossData[item.key]?.sortByTeam || []);
+                        sortByForce.push(bossData[item.key]?.sortByForce || []);
+                        sortByPlayer.push(bossData[item.key]?.sortByPlayer || []);
                     });
-            });
+                    this.sortByTeam = sortByTeam;
+                    this.sortByForce = sortByForce;
+                    this.sortByPlayer = sortByPlayer;
+                    this.dataList.forEach((item) => {
+                        this.initItem(item);
+                    });
+                })
+                .catch((err) => {
+                    console.warn("getDps 请求失败:", err);
+                    this.resetDataList();
+                });
         },
         // 当 getDps 数据不存在时，重置 dataList
         resetDataList() {
@@ -621,4 +613,3 @@ export default {
     },
 };
 </script>
-

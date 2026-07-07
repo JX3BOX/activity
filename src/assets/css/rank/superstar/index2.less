@@ -33,13 +33,12 @@
 
 // kv
 .m-superstar-info {
+    .auto(x);
     width: 100%;
     max-width: 1920px;
-    .clip;
     .m-superstar-kv-title {
         .pr;
         .flex;
-        .clip;
         padding: 230px 0 330px 0;
         height: 970px;
         .u-title {
@@ -50,20 +49,21 @@
         .u-character {
             .pa;
             &.u-lr {
-                .lt(0);
+                .lb(0);
                 .w(548px);
             }
             &.u-rl {
-                .rt(0);
+                .rb(0);
                 .w(635px);
             }
         }
         &::after {
             content: "";
             .pa;
-            .lt(0);
-            .rb(0);
+            .lb(50%,0);
+            .size(200%,100%);
             .z(1);
+            transform: translateX(-50%);
             background: linear-gradient(to bottom, transparent 60%, rgba(0, 0, 0, 0.7) 100%);
             pointer-events: none;
         }
@@ -693,9 +693,11 @@
         padding: 50px;
         box-sizing: border-box;
         .m-xf-list {
+            .scrollbar;
             .size(100%);
             box-sizing: border-box;
             overflow: auto;
+
             .u-xf-item {
                 .flex;
                 .lh(54px);
@@ -730,9 +732,12 @@
         }
     }
     .m-rank-list {
+        .scrollbar;
         .size(840px,480px);
         margin: 30px auto;
-        overflow: auto;
+        overflow-y: auto;
+        overflow-x: hidden;
+        scrollbar-gutter: stable;
         .u-rank-item {
             .pointer;
             .flex;
