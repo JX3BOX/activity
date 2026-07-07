@@ -1,16 +1,10 @@
 <template>
     <div class="m-introduce">
         <template v-if="superstar_desc">
-            <div class="u-content">
-                <div class="u-info" v-html="superstar_desc"></div>
-                <div class="u-bg">
-                    <div class="u-top"></div>
-                    <div class="u-bottom"></div>
-                </div>
-            </div>
-
-            <!-- <img :src="imgUrl + 'wzk-01-1.png'" class="u-bg-top" />
-            <img :src="imgUrl + 'wzk-01-3.png'" class="u-bg-bottom" /> -->
+            <div class="u-info" v-html="superstar_desc"></div>
+            <div class="u-bg"></div>
+            <div class="u-top"></div>
+            <div class="u-bottom"></div>
         </template>
         <div class="m-null" v-else><img :src="imgUrl + 'null.png'" /></div>
     </div>

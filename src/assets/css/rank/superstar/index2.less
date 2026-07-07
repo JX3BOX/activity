@@ -30,6 +30,16 @@
     font-style: normal;
     font-display: swap;
 }
+#app {
+    background-color: #120a0b;
+}
+
+.p-superstar {
+    .clip;
+    .auto(x);
+    width: 100%;
+    max-width: 1920px;
+}
 
 // kv
 .m-superstar-info {
@@ -126,7 +136,6 @@
     width: 100%;
     max-width: 1920px;
     min-height: 800px;
-    max-height: 1116px;
     justify-content: center;
     background: url("@{superstar_nav}bg02.png") no-repeat center center;
     background-size: 100% 100%;
@@ -201,8 +210,8 @@
         .m-join-done {
             .flex;
             .x;
-            .mt(60px);
             .fz(28px,70px);
+            margin: 60px 0;
             flex-direction: column;
             font-family: "ALIMAMASHUHEITI";
 
@@ -225,39 +234,38 @@
 .m-introduce {
     .pr;
     .auto(x);
+    .mt(150px);
     .mb(400px);
     box-sizing: border-box;
+    max-width: 1920px;
+    padding: 100px 0;
 
-    .u-content {
-        .pr;
-        .auto(x);
-        .mt(150px);
-        max-width: 1920px;
-        box-sizing: border-box;
-    }
     .u-bg {
         .pa;
-        .size(calc(100% + 200px));
-        .lt(-100px);
-        min-height: 1200px;
+        .lt(50%,0);
+        width: calc(100% + 200px);
+        height: 100%;
+        transform: translateX(-50%);
         background: url("@{superstar_nav}wzk-01-2.png") repeat-y center top;
-        background-size: 1500px auto;
-        .u-top {
-            .pa;
-            .z(1);
-            .lt(0,-80px);
-            .size(100%,540px);
-            background: url("@{superstar_nav}wzk-01-1.png") no-repeat center top;
-            background-size: 1500px auto;
-        }
-        .u-bottom {
-            .pa;
-            .z(1);
-            .lb(0,-100px);
-            .size(100%,600px);
-            background: url("@{superstar_nav}wzk-01-3.png") no-repeat center bottom;
-            background-size: 1500px auto;
-        }
+        background-size: 1920px auto;
+    }
+    .u-top {
+        .pa;
+        .z(1);
+        .lt(50%,-100px);
+        .size(calc(100% + 200px), 740px);
+        transform: translateX(-50%);
+        background: url("@{superstar_nav}wzk-01-1.png") no-repeat center top;
+        background-size: 1920px auto;
+    }
+    .u-bottom {
+        .pa;
+        .z(1);
+        .lb(50%, -100px);
+        .size(calc(100% + 200px), 840px);
+        transform: translateX(-50%);
+        background: url("@{superstar_nav}wzk-01-3.png") no-repeat center bottom;
+        background-size: 1920px auto;
     }
 
     .u-info {
@@ -265,7 +273,7 @@
         .z(3);
         .auto(x);
         box-sizing: border-box;
-        width: 1000px;
+        width: 1200px;
     }
 }
 
@@ -881,6 +889,24 @@
     .u-character,
     .m-superstar-kv-title .u-title {
         zoom: 0.8;
+    }
+
+    .m-superstar-join {
+        padding: 130px 0 266px 0;
+        .m-content {
+            width: 50%;
+        }
+    }
+    .m-introduce {
+        padding: 50px 0;
+        .u-info {
+            width: 80%;
+        }
+        .u-bg,
+        .u-top,
+        .u-bottom {
+            background-size: 100% auto;
+        }
     }
 
     .m-dps-content {
