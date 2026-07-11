@@ -154,7 +154,7 @@
 </template>
 
 <script>
-import { __imgPath, __cdn } from "@/utils/config";
+import { __imgPath, __cdn, __Root } from "@/utils/config";
 import xf from "@jx3box/jx3box-data/data/xf/xf.json";
 import { showTime } from "@jx3box/jx3box-common/js/moment";
 import { getThumbnail, getLink } from "@jx3box/jx3box-common/js/utils";
@@ -270,10 +270,10 @@ export default {
             }
         },
         jclLink(id) {
-            return `/jcl/view?id=${id}`;
+            return __Root + `jcl/view?id=${id}`;
         },
         battleLink(id) {
-            return "/battle/#/combat/" + id;
+            return __Root + "battle/combat/" + id;
         },
 
         teamLogo: function (val, size = 40) {
@@ -337,10 +337,9 @@ export default {
             }
         },
         getBarWidth(dps, i) {
-
             let max = this.type ? (this.type == 2 ? this.data[0].dps : this.data[0][this.options[this.active].key]) : 0;
             if (max == 0) {
-                let num=368 / this.data.length;
+                let num = 368 / this.data.length;
                 return 198 + i * num + "px";
             }
             return (dps / max).toFixed(4) * 580 + "px";

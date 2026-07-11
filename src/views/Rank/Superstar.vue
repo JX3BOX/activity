@@ -107,7 +107,7 @@
 </template>
 
 <script>
-import { __imgPath } from "@/utils/config";
+import { __imgPath,__Root } from "@/utils/config";
 import { getTop100 } from "@/service/rank/superstar.js";
 import { getThumbnail, getLink } from "@jx3box/jx3box-common/js/utils";
 import { default_avatar } from "@/utils/config";
@@ -163,10 +163,10 @@ export default {
     },
     methods: {
         jclLink(id) {
-            return `/jcl/view?id=${id}`;
+            return __Root + `jcl/view?id=${id}`;
         },
         battleLink(id) {
-            return "/battle/#/combat/" + id;
+            return __Root + "battle/combat/" + id;
         },
         getRankImg: function (num) {
             return __imgPath + "image/rank/common/rank_" + num + ".png";

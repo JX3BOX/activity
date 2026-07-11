@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import { __imgPath } from "@/utils/config";
+import { __imgPath, __Root } from "@/utils/config";
 import { getTop100, getBattleOrJcl } from "@/service/rank/superstar.js";
 import { getThumbnail, getLink } from "@jx3box/jx3box-common/js/utils";
 import PICS from "@/assets/js/pics.js";
@@ -135,10 +135,10 @@ export default {
             });
         },
         jclLink(id) {
-            return `/jcl/view?id=${id}`;
+            return __Root + `jcl/view?id=${id}`;
         },
         battleLink(id) {
-            return "/battle/#/combat/" + id;
+            return __Root + "battle/combat/" + id;
         },
         bossIcon: function (val) {
             return PICS.bossIcon(val);
