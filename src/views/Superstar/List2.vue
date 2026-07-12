@@ -214,8 +214,7 @@ export default {
         },
     },
     watch: {
-        bossID: {
-            immediate: true,
+        bossID: { 
             handler(val) {
                 val && this.loadData();
             },

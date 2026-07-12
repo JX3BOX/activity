@@ -256,7 +256,6 @@ export default {
     },
     watch: {
         achieve_id: {
-            immediate: true,
             handler: function (val) {
                 val && this.loadData();
             },
