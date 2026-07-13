@@ -78,23 +78,6 @@ export default {
             if (item.noEnable) return;
             this.menuActive = index;
         },
-        // async init() {
-        //     const RANK_MAP = await this.getBossMap();
-        //     getEvent(this.id).then((res) => {
-        //         this.data = res.data.data;
-        //         const bossMap = res.data.data.boss_map;
-        //         this.$store.state.achieves = bossMap.slice(0, RANK_MAP[this.id] || 5);
-        //         this.$store.state.race = res.data.data;
-        //     });
-        // },
-        // async getBossMap() {
-        //     const res = await getMenu("rank_boss_limit");
-        //     const bossMap = res.reduce((acc, item) => {
-        //         acc[item.session] = Number(item.number);
-        //         return acc;
-        //     }, {});
-        //     return bossMap;
-        // },
         init() {
             getEvent(this.id).then(async (res) => {
                 this.data = res.data.data;
@@ -109,13 +92,12 @@ export default {
             const bossMap = res.reduce((acc, cur) => {
                 const bosses = cur.boss.split(",");
                 const names = cur.boss_name.split(",");
-                acc[cur.event_id] = {};
+                acc[cur.event_id] = [];
                 bosses.forEach((bossId, index) => {
-                    acc[cur.event_id][index] = { name: names[index], achievement_id: ~~bossId, event_id: this.id } || {};
+                    acc[cur.event_id].push({ name: names[index], achievement_id: ~~bossId, event_id: this.id });
                 });
                 return acc;
             }, {});
-
             return bossMap;
         },
     },

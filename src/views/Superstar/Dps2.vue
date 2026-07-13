@@ -321,10 +321,7 @@ export default {
                 });
         },
         getDpsData() {
-            const ids = {
-                8: 3,
-            };
-            getDps(ids[this.id])
+            getDps(this.id)
                 .then((data) => {
                     let res = data.data;
                     if (!res) {
