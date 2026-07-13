@@ -155,7 +155,7 @@
 </template>
 
 <script>
-import { __imgPath } from "@/utils/config";
+import { __imgPath,__Root } from "@/utils/config";
 import { cloneDeep } from "lodash";
 import { getTop100 } from "@/service/rank/superstar.js";
 import { showTime } from "@jx3box/jx3box-common/js/moment";
@@ -279,10 +279,10 @@ export default {
             });
         },
         jclLink(id) {
-            return `/jcl/view?id=${id}`;
+            return __Root+ `jcl/view?id=${id}`;
         },
         battleLink(id) {
-            return "/battle/#/combat/" + id;
+            return __Root+ "battle/combat/" + id;
         },
         getRankImg: function (num) {
             return __imgPath + "image/rank/common/rank_" + num + ".png";

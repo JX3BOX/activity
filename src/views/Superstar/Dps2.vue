@@ -160,7 +160,7 @@
 </template>
 
 <script>
-import { __imgPath, __cdn } from "@/utils/config";
+import { __imgPath, __cdn, __Root } from "@/utils/config";
 import { getTop100, getDps } from "@/service/rank/superstar.js";
 import { getEvents } from "@/service/rank/event.js";
 import { showTime } from "@jx3box/jx3box-common/js/moment";
@@ -257,7 +257,6 @@ export default {
     },
     watch: {
         achieve_id: {
-            immediate: true,
             handler: function (val) {
                 val && this.loadData();
             },
@@ -459,10 +458,10 @@ export default {
         },
         // === 从 item.vue 合并的方法 ===
         jclLink(id) {
-            return `/jcl/view?id=${id}`;
+            return __Root + `jcl/view?id=${id}`;
         },
         battleLink(id) {
-            return "/battle/#/combat/" + id;
+            return __Root + "battle/combat/" + id;
         },
         teamLogo(val, size = 40) {
             if (!val) return "";

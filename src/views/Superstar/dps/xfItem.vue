@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { __imgPath, __cdn } from "@/utils/config";
+import { __imgPath, __cdn, __Root } from "@/utils/config";
 import xf from "@jx3box/jx3box-data/data/xf/xf.json";
 import { showTime } from "@jx3box/jx3box-common/js/moment";
 import { getThumbnail, getLink, showMountIcon } from "@jx3box/jx3box-common/js/utils";
@@ -112,10 +112,10 @@ export default {
             this.data = orderBy(res, ["dps"], ["desc"]);
         },
         jclLink(id) {
-            return `/jcl/view?id=${id}`;
+            return __Root + `jcl/view?id=${id}`;
         },
         battleLink(id) {
-            return "/battle/#/combat/" + id;
+            return __Root + "battle/combat/" + id;
         },
         showMount: function (mount) {
             let mountIcon = __imgPath + "image/xf/" + mount + ".png";

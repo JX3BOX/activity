@@ -220,7 +220,7 @@
 import xfmap from "@jx3box/jx3box-data/data/xf/xfid.json";
 import colorData from "@jx3box/jx3box-data/data/xf/colors.json";
 const { colors_by_mount_name } = colorData;
-import { __imgPath } from "@/utils/config";
+import { __imgPath, __Root } from "@/utils/config";
 import { authorLink, getLink, getThumbnail, showAvatar } from "@jx3box/jx3box-common/js/utils";
 import mountData from "@jx3box/jx3box-data/data/xf/mount_group.json";
 const { mount_group } = mountData;
@@ -347,10 +347,10 @@ export default {
     },
     methods: {
         jclLink(id) {
-            return `/jcl/view?id=${id}`;
+            return __Root + `jcl/view?id=${id}`;
         },
         battleLink(id) {
-            return "/battle/#/combat/" + id;
+            return __Root + "battle/combat/" + id;
         },
         // 路由
         changeMount: function (val) {
