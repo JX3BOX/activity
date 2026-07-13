@@ -138,7 +138,9 @@ export default {
         return {
             imgUrl: __cdn + "design/event/superstar/",
             loading: false,
+            achieve_id: "", //boss成就ID
             origin_data: [],
+            dataLoaded: false, // 标记 loadData 是否至少执行过一次
         };
     },
     computed: {
@@ -199,9 +201,6 @@ export default {
         achieves() {
             return this.$store.state.achieves || [];
         },
-        bossID() {
-            return this.$store.state.bossID;
-        },
         bossList() {
             let dict = {};
             this.achieves.forEach((item) => {
@@ -214,15 +213,20 @@ export default {
         },
     },
     watch: {
-        bossID: { 
+        achieve_id: {
             handler(val) {
-                val && this.loadData();
+                // 同步 store 中的 bossID，确保 SuperstarBoss 组件 active 状态一致
+                this.$store.state.bossID = val;
+                if (val && Object.keys(this.bossList).length) {
+                    this.dataLoaded = true;
+                    this.loadData();
+                }
             },
         },
         "$route.query": {
             handler(val) {
                 if (val.aid) {
-                    this.$store.state.bossID = val.aid;
+                    this.achieve_id = val.aid;
                 }
             },
             immediate: true,
@@ -231,10 +235,17 @@ export default {
             immediate: true,
             handler() {
                 if (!!~~this.$route.query.aid) {
-                    this.$store.state.bossID = this.$route.query.aid;
+                    this.achieve_id = this.$route.query.aid;
                 } else {
-                    const keys = Object.keys(this.bossList);
-                    this.$store.state.bossID = keys[0] || "";
+                    this.achieve_id = Object.keys(this.bossList)[0] || "";
+                }
+            },
+        },
+        bossList: {
+            handler(val) { 
+                if (this.achieve_id && Object.keys(val).length && !this.dataLoaded) {
+                    this.dataLoaded = true;
+                    this.loadData();
                 }
             },
         },
@@ -253,18 +264,18 @@ export default {
             if (!val) return "";
             return getThumbnail(val, 120, true);
         },
-        loadData() {
-            if (!this.bossID) {
-                return;
-            }
+        async loadData() {
+            if (!this.achieve_id) return;
             this.loading = true;
-            getTop100(this.bossID, this.id)
-                .then((res) => {
-                    this.origin_data = res.data.data || [];
-                })
-                .finally(() => {
-                    this.loading = false;
-                });
+            try {
+                const res = await getTop100(this.achieve_id, this.id);
+                this.origin_data = res.data.data || [];
+            } catch (err) {
+                console.warn("getTop100 请求失败:", err);
+                this.origin_data = [];
+            } finally {
+                this.loading = false;
+            }
         },
         teamLink(val) {
             return getLink("org", val);
