@@ -248,6 +248,7 @@ export default {
         },
         bossList: function () {
             let dict = {};
+            console.log( this.achieves)
             this.achieves.forEach((item) => {
                 dict[item.achievement_id] = item.name;
             });
