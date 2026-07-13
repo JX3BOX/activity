@@ -40,7 +40,7 @@
                     <div class="m-box-none" v-if="item.bg === 'none'">
                         <div class="m-xf-list">
                             <div class="u-xf-item" v-for="(row, rowIdx) in item.data" :key="rowIdx + 'rank'">
-                                <div class="u-sort">{{ row.forceName }}</div>
+                                <div class="u-sort">{{ row.forceName || "未知" }}</div>
                                 <div class="u-logo">
                                     <el-image :src="showMount(row.xfId)" fit="fill"></el-image>
                                 </div>
@@ -52,7 +52,7 @@
                                         width: getXfBarWidth(row.dps, row.forceName),
                                     }"
                                 >
-                                    {{ row.forceName }}
+                                    {{ row.forceName || "未知" }}
                                 </div>
                                 <div class="u-number">{{ row.dps || 0 }}</div>
                             </div>
@@ -73,7 +73,7 @@
                                 :src="teamLogo(item.curItem.team_logo, 158)"
                                 @error="handleImgError"
                             />
-                            <div class="u-name">
+                            <div class="u-name" :class="item.key == 'player' ? 'player' : ''">
                                 {{ item.key === "player" ? item.curItem.playerName : item.curItem.team_name }}
                             </div>
                             <div class="u-server">@{{ item.curItem.team_server }}</div>
@@ -134,7 +134,7 @@
                                 </div>
                                 <div
                                     class="u-name"
-                                    :class="{ 'is-player': item.key === 'player' }"
+                                    :class="item.key == 'player' ? 'player' : ''"
                                     :style="{
                                         background: showMountColor(rowIdx, row, item),
                                         width: getBarWidth(row, rowIdx, item),
@@ -181,6 +181,7 @@ export default {
             loading: false,
             achieve_id: "", //boss成就ID
             origin_data: [],
+            dataLoaded: false, // 标记 loadData 是否至少执行过一次
             options: [
                 { name: "输出", icon: "", value: 0, key: "damage" },
                 { name: "治疗", icon: "", value: 1, key: "heal" },
@@ -248,7 +249,7 @@ export default {
         },
         bossList: function () {
             let dict = {};
-            console.log( this.achieves)
+            console.log(this.achieves);
             this.achieves.forEach((item) => {
                 dict[item.achievement_id] = item.name;
             });
@@ -258,7 +259,12 @@ export default {
     watch: {
         achieve_id: {
             handler: function (val) {
-                val && this.loadData();
+                // 同步 store 中的 bossID，确保 SuperstarBoss 组件 active 状态一致
+                this.$store.state.bossID = val;
+                if (val && Object.keys(this.bossList).length) {
+                    this.dataLoaded = true;
+                    this.loadData();
+                }
             },
         },
         "$route.query": {
@@ -276,6 +282,14 @@ export default {
                     this.achieve_id = this.$route.query.aid;
                 } else {
                     this.achieve_id = Object.keys(this.bossList)[0] || "";
+                }
+            },
+        },
+        bossList: {
+            handler: function (val) {
+                if (this.achieve_id && Object.keys(val).length && !this.dataLoaded) {
+                    this.dataLoaded = true;
+                    this.loadData();
                 }
             },
         },
@@ -301,6 +315,7 @@ export default {
         },
         changeBoss: function (val) {
             this.achieve_id = val;
+            this.$store.state.bossID = val;
             this.$router.push({
                 query: {
                     aid: val,
@@ -311,17 +326,26 @@ export default {
         loadData: function () {
             if (!this.achieve_id) return;
             this.loading = true;
-            getTop100(this.achieve_id, this.id)
+            const p1 = getTop100(this.achieve_id, this.id)
                 .then((res) => {
                     this.origin_data = res.data.data || [];
-                    this.getDpsData();
                 })
-                .finally(() => {
-                    this.loading = false;
+                .then(() => {
+                    // getTop100 完成后刷新依赖 origin_data 的 clearSpeed 区块
+                    const clearItem = this.dataList.find((item) => item.key === "clearSpeed");
+                    if (clearItem) this.initItem(clearItem);
+                })
+                .catch((err) => {
+                    console.warn("getTop100 请求失败:", err);
+                    this.origin_data = [];
                 });
+            const p2 = this.getDpsData();
+            Promise.all([p1, p2]).finally(() => {
+                this.loading = false;
+            });
         },
         getDpsData() {
-            getDps(this.id)
+            return getDps(this.id)
                 .then((data) => {
                     let res = data.data;
                     if (!res) {
@@ -421,18 +445,17 @@ export default {
                             break;
                         }
                     }
+                    const playerName = item.playerName.split("·");
                     arr.push(
-                        Object.assign(
-                            {
-                                team_name: item.team,
-                                team_server: item.server,
-                                fight_time: item.timeDuring * 1000,
-                                created: item.timeBegin,
-                                ID: item.team_id,
-                                xfId: xfid,
-                            },
-                            item
-                        )
+                        Object.assign(item, {
+                            playerName: playerName[0],
+                            team_name: item.team,
+                            team_server: playerName[1] ? playerName[1] : item.server,
+                            fight_time: item.timeDuring * 1000,
+                            created: item.timeBegin,
+                            ID: item.team_id,
+                            xfId: xfid,
+                        })
                     );
                 });
                 arr = orderBy(arr, ["dps"], ["desc"]);
@@ -529,7 +552,7 @@ export default {
             if (xfItem._xfMinW === undefined && xfData.length) {
                 let maxTextLen = 0;
                 xfData.forEach((r) => {
-                    let len = this.getTextWidth(r.forceName || "");
+                    let len = this.getTextWidth(r.forceName || "未知");
                     if (len > maxTextLen) maxTextLen = len;
                 });
                 xfItem._xfMinW = maxTextLen + 40;
@@ -558,8 +581,8 @@ export default {
                     : listItem.type
                     ? row[this.options[listItem.active]?.key]
                     : row.fight_time;
-            // 容器 840px - 序号(~30px) - logo(32px) - 数值(~100px) - gap*3(54px) ≈ 624px 可用
-            let width = (val / max).toFixed(4) * 620;
+            // 容器 840px - 序号(~30px) - logo(32px) - 数值(~100px) - gap*3(54px) - padding(56px) - 滚动条(15px) ≈ 553px 可用
+            let width = (val / max).toFixed(4) * 550;
             // 计算统一最小宽度：取所有条目中最长文本的宽度，确保所有名字完整显示且不破坏排序
             let cacheKey = "_minW_" + listItem.key + (listItem.type ? "_" + listItem.active : "");
             if (listItem[cacheKey] === undefined) {

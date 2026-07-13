@@ -115,6 +115,7 @@
     }
     .m-sign-up {
         .auto(x);
+        .mt(-50px);
         width: 100%;
         max-width: 1920px;
     }
@@ -135,8 +136,8 @@
     max-width: 1920px;
     min-height: 800px;
     justify-content: center;
-    background: url("@{superstar_nav}bg02.png") no-repeat center center;
-    background-size: 100% 100%;
+    background: url("@{superstar_nav}bg02.png") no-repeat top center;
+    background-size: cover;
     padding: 130px 456px 266px 456px;
     box-sizing: border-box;
     .u-title-btn {
@@ -190,6 +191,10 @@
         padding: 24px;
         box-sizing: border-box;
         background-color: rgba(255, 251, 240, 0.5);
+        .m-join {
+            // 保持最小高度，防止数据加载完成后高度变化导致背景图拉伸下沉
+            min-height: 400px;
+        }
         .m-join-notice {
             .fz(18px,34px);
             border: 1px dotted #820d0d;
@@ -676,7 +681,7 @@
                 .fz(24px,32px);
                 color: #ffeece;
                 &.player {
-                    .fz(18px,32px);
+                    .fz(20px,32px);
                 }
             }
             .u-server {
@@ -747,7 +752,7 @@
             .pointer;
             .flex;
             .lh(54px);
-            padding: 0 20px;
+            padding: 0 36px 0 20px;
             align-items: center;
             gap: 18px;
             border-bottom: 1px dashed #a17c57;
@@ -770,6 +775,8 @@
                 .fz(20px);
                 font-family: "SourceHanSans";
                 flex-shrink: 0;
+                min-width: 60px;
+                text-align: right;
             }
             .u-name {
                 .fz(20px,32px);
@@ -879,13 +886,15 @@
 @media screen and (max-width: 980px) {
     .m-superstar-info .m-superstar-kv-title,
     .m-sign-up,
-    .m-superstar-boss,
     .m-super-list,
     .m-video-boss,
     .m-tab,
     .u-character,
     .m-superstar-kv-title .u-title {
         zoom: 0.8;
+    }
+    .m-superstar-boss {
+        zoom: 0.7;
     }
 
     .m-superstar-join {
