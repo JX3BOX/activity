@@ -70,12 +70,12 @@ export default {
                 data.forEach((item) => {
                     if (item.superstar != 0) arr.push(item);
                 });
-                this.data = arr; 
+                this.data = arr;
                 this.active = arr.length - 1 || 0;
             });
         },
         eventLink(val) {
-            return "/superstar/" + val;
+            return "/superstar/" + val + "/list";
         },
     },
 };
