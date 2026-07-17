@@ -1,6 +1,7 @@
 <template>
     <div class="m-superstar-info">
         <div class="m-superstar-kv-title">
+            <router-link class="u-back" :to="{ name: 'nav' }"><img :src="imgurl + 'history.png'" /></router-link>
             <img class="u-title" :src="imgurl + 'title.png'" />
             <img class="u-lr u-character" :src="imgurl + 'lr.png'" />
             <img class="u-rl u-character" :src="imgurl + 'rl.png'" />
