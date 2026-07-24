@@ -1,6 +1,7 @@
 import { createStore } from "vuex";
 import { getBreadcrumb } from "@jx3box/jx3box-common/js/system";
 import { getLoverEvents, getLoverEvent, getLoverRelationNet, getMyJoinRecord } from "@/service/rank/lover";
+import { getV2Context, getV2Event } from "@/service/rank/lover-v2";
 import User from "@jx3box/jx3box-common/js/user";
 import { uniqBy } from "lodash";
 
@@ -19,7 +20,15 @@ let store = {
         slug: "",
 
         lover_net: "",
+        lover_net_error: null,
         join_record: "",
+
+        v2_event: null,
+        v2_event_loading: false,
+        v2_context: null,
+        v2_context_loading: false,
+        v2_context_loaded: false,
+        v2_context_error: null,
     },
     getters: {
         defaultEventSlug: (state) => {
@@ -44,6 +53,14 @@ let store = {
             state.loverId = ID;
         },
         SET_SLUG: (state, slug) => {
+            if (state.slug !== slug) {
+                state.event = "";
+                state.join_record = "";
+                state.v2_event = null;
+                state.v2_context = null;
+                state.v2_context_loaded = false;
+                state.v2_context_error = null;
+            }
             state.slug = slug;
         },
         SET_MY_JOIN: (state, data) => {
@@ -54,6 +71,17 @@ let store = {
         },
         SET_EVENT: (state, data) => {
             state.event = data;
+        },
+        SET_V2_EVENT: (state, data) => {
+            state.v2_event = data;
+        },
+        SET_V2_CONTEXT: (state, data) => {
+            state.v2_context = data;
+            state.v2_context_loaded = true;
+            state.v2_context_error = null;
+        },
+        SET_V2_CONTEXT_ERROR: (state, error) => {
+            state.v2_context_error = error;
         },
     },
     actions: {
@@ -74,15 +102,23 @@ let store = {
             commit("SET_DEFAULT_LOVER_ID", res);
             console.log("默认活动加载完毕");
         },
-        async loadLoverRelationNet({ state }) {
-            if (lover_net_loading || state.lover_net) return; // 如果已经加载过，则不再加载
+        async loadLoverRelationNet({ state }, { force = false } = {}) {
+            if (lover_net_loading || (!force && state.lover_net)) return; // 如果已经加载过，则不再加载
             if (!User.isLogin()) return; // 未登录不查询
             lover_net_loading = true;
-            const members_resp = await getLoverRelationNet();
-            const info = members_resp.data?.data;
-            info.members = uniqBy(info.members, "user_info.id"); // 去重
-            state.lover_net = info;
-            console.log("当前情缘关系加载完毕");
+            state.lover_net_error = null;
+            try {
+                const members_resp = await getLoverRelationNet();
+                const info = members_resp.data?.data || {};
+                info.members = uniqBy(Array.isArray(info.members) ? info.members : [], "user_info.id"); // 去重
+                state.lover_net = info;
+                console.log("当前情缘关系加载完毕");
+            } catch (error) {
+                state.lover_net_error = error;
+                console.error("情缘关系暂时无法加载:", error);
+            } finally {
+                lover_net_loading = false;
+            }
         },
         async loadEvent({ commit, state, getters }, { slug } = {}) {
             if (state.events_loading) return;
@@ -99,6 +135,39 @@ let store = {
                 console.error("加载活动失败:", error);
             } finally {
                 state.event_loading = false;
+            }
+        },
+        async loadV2Event({ commit, state, getters }, { force = false } = {}) {
+            const eventId = getters.currentEventId;
+            if (!eventId || state.v2_event_loading) return;
+            if (!force && Number(state.v2_event?.id) === Number(eventId)) return;
+            state.v2_event_loading = true;
+            try {
+                const res = await getV2Event(eventId);
+                commit("SET_V2_EVENT", res.data.data);
+            } finally {
+                state.v2_event_loading = false;
+            }
+        },
+        async loadV2Context({ commit, state, getters }, { force = false } = {}) {
+            if (!User.isLogin()) {
+                commit("SET_V2_CONTEXT", null);
+                return;
+            }
+            const eventId = getters.currentEventId;
+            if (!eventId || state.v2_context_loading) return;
+            if (!force && state.v2_context_loaded) return;
+            state.v2_context_loading = true;
+            commit("SET_V2_CONTEXT_ERROR", null);
+            try {
+                const res = await getV2Context(eventId);
+                commit("SET_V2_CONTEXT", res.data.data);
+            } catch (error) {
+                // 保留上一次成功状态并允许重试，避免瞬时网络错误被误判成“未报名”。
+                commit("SET_V2_CONTEXT_ERROR", error);
+                throw error;
+            } finally {
+                state.v2_context_loading = false;
             }
         },
         async loadJoinRecord({ state, getters }, { force } = {}) {

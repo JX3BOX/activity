@@ -279,6 +279,7 @@ function buildEnvProxy () {
         pay: process.env.VUE_APP_PAY_API || commonDomains.__pay,
         lua: process.env.VUE_APP_LUA_API || commonDomains.__lua,
         node: process.env.VUE_APP_NODE_API || commonDomains.__node,
+        lover: process.env.VUE_APP_LOVER_API || "http://127.0.0.1:7104",
         helper: process.env.VUE_APP_HELPER_API || commonDomains.__helperUrl,
         gs: process.env.VUE_APP_GS_API || "https://gs.jx3box.com",
     };

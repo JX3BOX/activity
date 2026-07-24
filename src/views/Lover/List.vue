@@ -9,9 +9,14 @@
                 <div
                     class="m-item"
                     v-for="(event, index) in events"
-                    :key="index"
+                    :key="event.id || event.slug || index"
                     :style="itemStyle(event)"
+                    role="button"
+                    tabindex="0"
+                    :aria-label="eventAriaLabel(event)"
                     @click="goEvent(event)"
+                    @keyup.enter="goEvent(event)"
+                    @keyup.space.prevent="goEvent(event)"
                 ></div>
             </div>
         </div>
@@ -20,6 +25,7 @@
 
 <script>
 import jx3boxData from "@jx3box/jx3box-common/data/jx3box.json";
+import { isLoverV2Event } from "@/utils/lover-v2";
 const { __cdn: cdnLink } = jx3boxData;
 export default {
     name: "LoverEventList",
@@ -41,13 +47,15 @@ export default {
     },
     methods: {
         itemStyle(event) {
-            return {
-                backgroundImage: `url(${event.banner})`,
-            };
+            const banner = event?.banner?.trim();
+            return banner ? { backgroundImage: `url(${JSON.stringify(banner)})` } : {};
+        },
+        eventAriaLabel(event) {
+            return `进入${event.name || "情缘杯"}活动`;
         },
         goEvent(event) {
             this.$router.push({
-                name: "info",
+                name: isLoverV2Event(event) ? "v2-info" : "info",
                 params: { slug: event.slug },
             });
         },
@@ -107,6 +115,8 @@ export default {
     .m-item {
         .size(600px, 160px);
 
+        background-color: #5c382f;
+        background-image: linear-gradient(135deg, #754b40 0%, #5c382f 48%, #38231f 100%);
         background-clip: border-box;
         background-size: cover;
         background-position: center;
@@ -115,11 +125,16 @@ export default {
 
         border: 1px solid rgba(255, 177, 94, 1);
         box-sizing: border-box;
+        transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
 
         &:hover {
             box-shadow: 0px 0px 20px rgba(255, 177, 94, 0.5);
             transform: scale(1.02);
-            transition: all 0.3s ease-in-out;
+        }
+
+        &:focus-visible {
+            outline: 2px solid #ffe0ac;
+            outline-offset: 4px;
         }
     }
 
