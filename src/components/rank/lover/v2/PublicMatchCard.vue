@@ -14,7 +14,7 @@
             <div class="u-team-side is-right"><TeamIdentity :team="match.team2" compact /></div>
         </div>
         <div class="u-footer">
-            <span>房间 {{ match.room_no || "待公布" }}</span>
+            <span v-if="match.remark">{{ match.remark }}</span>
             <span v-if="match.status === 'finished'">{{ resultLabel }}</span>
             <span v-else>{{ readyLabel }}</span>
         </div>

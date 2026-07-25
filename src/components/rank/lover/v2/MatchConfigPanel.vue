@@ -3,7 +3,7 @@
         <div class="u-head">
             <div>
                 <h3>本队赛前配装</h3>
-                <p>每位队员分别确认自己的本场配装；队长检查五人均已提交后，再统一锁定。</p>
+                <p>队员可提交本人配装；队长也可协助本队成员读取并保存，再统一锁定。</p>
             </div>
             <div class="u-head-status">
                 <el-progress type="circle" :width="58" :percentage="progress" :stroke-width="5" />
@@ -11,7 +11,9 @@
                     <el-tag :type="record?.status === 'locked' ? 'success' : 'warning'">
                         {{ record?.status === "locked" ? "本队已锁定" : `${submittedCount}/${memberForms.length} 人已提交` }}
                     </el-tag>
-                    <el-button link type="primary" :loading="refreshing" @click="$emit('refresh')">刷新状态</el-button>
+                    <el-button class="u-refresh" plain size="small" :loading="refreshing" @click="$emit('refresh')">
+                        刷新状态
+                    </el-button>
                 </div>
             </div>
         </div>
@@ -29,8 +31,8 @@
             type="info"
             :closable="false"
             show-icon
-            title="请由每位队员登录后提交自己的配装"
-            description="队长可以检查全队完成情况，但不能代替其他队员读取或修改私人配装。"
+            title="队员可自行提交，队长也可协助本队成员"
+            description="普通队员只能维护本人本场配装；队长可以选择任一队员，读取其公开方案并代为保存本场快照。"
         />
 
         <div class="m-config-body">
@@ -57,12 +59,14 @@
                 <div class="u-selected-head">
                     <UserIdentity :user="selectedMember" :show-meta="false" />
                     <el-tag v-if="isOwnMember(selectedMember)" effect="plain">我的配装</el-tag>
+                    <el-tag v-else-if="isCaptain" type="warning" effect="plain">队长代填</el-tag>
                 </div>
                 <PzSnapshotEditor
                     :key="selectedMember.user_id"
                     :snapshot="selectedMember.pz_snapshot"
                     :member-name="memberName(selectedMember)"
                     :can-edit="canEditMember(selectedMember)"
+                    :disabled-description="updateDisabledReason"
                     :loading="loading"
                     @submit="saveMemberSnapshot(selectedMember, $event)"
                 />
@@ -106,6 +110,7 @@ export default {
         isCaptain: { type: Boolean, default: false },
         canUpdate: { type: Boolean, default: false },
         canLock: { type: Boolean, default: false },
+        updateDisabledReason: { type: String, default: "" },
         loading: { type: Boolean, default: false },
         refreshing: { type: Boolean, default: false },
     },
@@ -192,7 +197,7 @@ export default {
             return Number(member?.user_id) === Number(this.currentUid);
         },
         canEditMember(member) {
-            return this.canUpdate && this.record?.status !== "locked" && this.isOwnMember(member);
+            return this.canUpdate && this.record?.status !== "locked" && (this.isOwnMember(member) || this.isCaptain);
         },
         saveMemberSnapshot(member, pzSnapshot) {
             this.$emit("save-member", {
@@ -240,6 +245,19 @@ export default {
     align-items: center;
     flex-direction: column;
     gap: 4px;
+}
+
+.u-refresh {
+    border-color: #c99476;
+    background: #fff7e8;
+    color: #7f4438;
+
+    &:hover,
+    &:focus {
+        border-color: #9f5144;
+        background: #f6e4ce;
+        color: #6f352d;
+    }
 }
 
 .m-config-body {

@@ -29,7 +29,9 @@
                             <el-button
                                 v-if="actions.includes('team.invite')"
                                 type="primary"
-                                @click="$router.push({ name: 'v2-mate-hall', params: { slug }, query: { hall: 'team' } })"
+                                @click="
+                                    $router.push({ name: 'v2-mate-hall', params: { slug }, query: { hall: 'team' } })
+                                "
                             >
                                 邀请搭子队
                             </el-button>
@@ -41,14 +43,14 @@
                                 开启独狼盲盒
                             </el-button>
                             <el-button
-                                v-if="actions.includes('unit.dissolve') && context?.unit?.type === 'mate'"
+                                v-if="currentMateUnitCanLeave"
                                 type="danger"
                                 plain
-                                :loading="actionLoading === 'dissolve'"
+                                :loading="removingUnitId === Number(context.unit.id)"
                                 :disabled="Boolean(actionLoading)"
-                                @click="confirmDissolve"
+                                @click="confirmRemoveUnit(context.unit)"
                             >
-                                解散搭子队
+                                搭子队退出战队
                             </el-button>
                         </div>
                     </div>
@@ -72,7 +74,8 @@
                     />
                     <TeamRoster
                         :team="myTeam"
-                        :removable-unit-ids="removableUnitIds"
+                        :solo-draw-enabled="Boolean(context?.solo_draw_enabled)"
+                        :removable-unit-ids="rosterRemovableUnitIds"
                         :removing-unit-id="removingUnitId"
                         @remove-unit="confirmRemoveUnit"
                     />
@@ -153,7 +156,7 @@
 
 <script>
 import User from "@jx3box/jx3box-common/js/user.js";
-import { dissolveUnit, getTeams, removeTeamUnit } from "@/service/rank/lover-v2";
+import { getTeams, removeTeamUnit } from "@/service/rank/lover-v2";
 import LoverV2Layout from "@/layouts/lover/LoverV2Layout.vue";
 import CompetitionConsole from "@/components/rank/lover/v2/CompetitionConsole.vue";
 import EmptyState from "@/components/rank/lover/v2/EmptyState.vue";
@@ -161,7 +164,6 @@ import FeatureBadge from "@/components/rank/lover/v2/FeatureBadge.vue";
 import PublicTeamCard from "@/components/rank/lover/v2/PublicTeamCard.vue";
 import TeamIdentity from "@/components/rank/lover/v2/TeamIdentity.vue";
 import TeamRoster from "@/components/rank/lover/v2/TeamRoster.vue";
-import { getErrorMessage } from "@/utils/lover-v2";
 
 export default {
     name: "LoverV2Team",
@@ -181,6 +183,7 @@ export default {
             teamsLoaded: false,
             publicTeams: { list: [], count: 0, page: 1, pageSize: 6 },
             actionLoading: "",
+            pollingTimer: null,
         };
     },
     computed: {
@@ -208,6 +211,12 @@ export default {
         removableUnitIds() {
             return (this.context?.removable_unit_ids || []).map(Number);
         },
+        rosterRemovableUnitIds() {
+            return this.context?.unit?.type === "mate" ? [] : this.removableUnitIds;
+        },
+        currentMateUnitCanLeave() {
+            return this.context?.unit?.type === "mate" && this.removableUnitIds.includes(Number(this.context.unit.id));
+        },
         myMatches() {
             return (this.context?.participant_matches || []).map((item) => ({
                 ...item.match,
@@ -230,7 +239,8 @@ export default {
         },
         noTeamDescription() {
             if (!this.context?.registration) return "完成报名并通过审核后，组队进度会显示在这里。";
-            if (this.context.registration.status !== "approved") return "请留意审核结果；如被退回，可以直接修改原报名重新提交。";
+            if (this.context.registration.status !== "approved")
+                return "请留意审核结果；如被退回，可以直接修改原报名重新提交。";
             if (this.context.registration.type === "mate" && !this.context.unit)
                 return "搭子大厅只公开职责和性格标签，不会公开你的联系方式。";
             if (this.context.unit?.type === "mate") return "情缘队长可以从第二个邀请大厅看到你们完整的两人搭子队。";
@@ -248,12 +258,20 @@ export default {
             immediate: true,
         },
     },
+    mounted() {
+        this.pollingTimer = window.setInterval(() => this.refreshContext(), 15000);
+    },
+    beforeUnmount() {
+        window.clearInterval(this.pollingTimer);
+    },
     methods: {
         handleTabChange(tabName) {
             if (tabName === "public" && !this.teamsLoaded) this.loadTeams();
         },
         async refreshContext() {
-            await this.$store.dispatch("loadV2Context", { force: true });
+            await this.$store.dispatch("loadV2Context", { force: true }).catch((error) => {
+                console.error("[LoverV2Team.refreshContext]", error);
+            });
         },
         async loadTeams() {
             if (!this.eventId) return;
@@ -265,6 +283,8 @@ export default {
                 });
                 this.publicTeams = { ...this.publicTeams, ...res.data.data, pageSize: res.data.data.page_size };
                 this.teamsLoaded = true;
+            } catch (error) {
+                console.error("[LoverV2Team.loadTeams]", error);
             } finally {
                 this.teamsLoading = false;
             }
@@ -278,36 +298,26 @@ export default {
         goTimeline(team) {
             this.$router.push({ name: "v2-timeline", params: { slug: this.slug, teamId: team.id } });
         },
-        async confirmDissolve() {
-            if (this.actionLoading) return;
-            this.actionLoading = "dissolve";
-            try {
-                await this.$confirm("解散后旧邀请不会恢复，你和当前搭子会重新回到可配对状态。确定继续吗？", "解散搭子队", {
-                    type: "warning",
-                    confirmButtonText: "确认解散",
-                });
-                await dissolveUnit(this.eventId, this.context.unit.id);
-                await this.refreshContext();
-                this.$message.success("搭子队已解散");
-            } catch (error) {
-                if (error !== "cancel") this.$message.error(getErrorMessage(error));
-            } finally {
-                this.actionLoading = "";
-            }
-        },
         async confirmRemoveUnit(unit) {
             if (this.actionLoading || !this.removableUnitIds.includes(Number(unit.id))) return;
+            const confirmed = await this.$confirm(
+                "退出后会保留两人的搭子关系和报名资料，完整搭子队可继续接受其他战队邀请；当前战队会回到组队中。确定继续吗？",
+                "搭子队退出战队",
+                {
+                    type: "warning",
+                    confirmButtonText: "确认退出",
+                }
+            )
+                .then(() => true)
+                .catch(() => false);
+            if (!confirmed) return;
             this.actionLoading = `remove-${unit.id}`;
             try {
-                await this.$confirm("解除后战队会回到组队中，历史邀请不会自动恢复。确定继续吗？", "解除战队归属", {
-                    type: "warning",
-                    confirmButtonText: "确认解除",
-                });
                 await removeTeamUnit(this.eventId, this.myTeam.id, unit.id);
                 await Promise.all([this.refreshContext(), this.loadTeams()]);
-                this.$message.success("战队阵容已更新");
+                this.$message.success("搭子队已退出当前战队，两人搭子关系保持不变");
             } catch (error) {
-                if (error !== "cancel") this.$message.error(getErrorMessage(error));
+                console.error("[LoverV2Team.confirmRemoveUnit]", error);
             } finally {
                 this.actionLoading = "";
             }

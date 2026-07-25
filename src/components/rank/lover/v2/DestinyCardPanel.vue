@@ -12,28 +12,44 @@
                 抽取天命签
             </el-button>
         </div>
-        <div v-if="draws.length" class="m-cards">
-            <article v-for="draw in draws" :key="draw.id" class="u-card">
-                <el-image v-if="draw.card?.img" class="u-card-img" :src="draw.card.img" fit="cover" />
-                <FeatureBadge v-else name="destiny-card" small />
-                <div>
-                    <el-tag size="small" effect="plain">{{ teamName(draw.team_id) }}</el-tag>
-                    <h4>{{ draw.card?.name || "天命签" }}</h4>
-                    <p>{{ draw.card?.desc || "签面效果等待公布" }}</p>
+        <div class="m-team-groups">
+            <section v-for="group in teamGroups" :key="group.team.id" class="u-team-group">
+                <header class="u-team-head">
+                    <span>{{ group.side }}队天命签</span>
+                    <strong>{{ group.team.name }}</strong>
+                </header>
+                <div class="m-team-cards">
+                    <article
+                        v-for="slot in group.slots"
+                        :key="`${group.team.id}-${slot.index}`"
+                        class="u-card"
+                        :class="{ 'is-empty': !slot.draw }"
+                    >
+                        <el-image
+                            class="u-card-img"
+                            :src="slot.draw?.card?.img || cardBackImg"
+                            fit="contain"
+                            :alt="slot.draw?.card?.name || `${group.team.name}待抽取的天命签`"
+                        />
+                        <div class="u-card-copy">
+                            <span class="u-draw-no">第 {{ slot.index + 1 }} 签</span>
+                            <h4>{{ slot.draw?.card?.name || "等待揭签" }}</h4>
+                            <p>{{ slot.draw?.card?.desc || "本队尚未抽取这一签" }}</p>
+                        </div>
+                    </article>
                 </div>
-            </article>
+            </section>
         </div>
-        <EmptyState v-else icon="destiny-card" description="本场还没有公开的天命签结果" compact />
     </section>
 </template>
 
 <script>
-import EmptyState from "./EmptyState.vue";
+import jx3boxData from "@jx3box/jx3box-common/data/jx3box.json";
 import FeatureBadge from "./FeatureBadge.vue";
 
 export default {
     name: "LoverV2DestinyCardPanel",
-    components: { EmptyState, FeatureBadge },
+    components: { FeatureBadge },
     emits: ["draw"],
     props: {
         draws: { type: Array, default: () => [] },
@@ -41,9 +57,26 @@ export default {
         canDraw: { type: Boolean, default: false },
         loading: { type: Boolean, default: false },
     },
-    methods: {
-        teamName(teamId) {
-            return Number(teamId) === Number(this.match.team1?.id) ? this.match.team1?.name : this.match.team2?.name;
+    data: function () {
+        return {
+            cardBackImg: `${jx3boxData.__cdn}design/event/lover/q0.png`,
+        };
+    },
+    computed: {
+        teamGroups() {
+            return [
+                { side: "A", team: this.match.team1 || {} },
+                { side: "B", team: this.match.team2 || {} },
+            ].map((group) => {
+                const teamDraws = this.draws
+                    .filter((draw) => Number(draw.team_id) === Number(group.team.id))
+                    .sort((left, right) => Number(left.draw_no || left.id) - Number(right.draw_no || right.id))
+                    .slice(0, 2);
+                return {
+                    ...group,
+                    slots: [0, 1].map((index) => ({ index, draw: teamDraws[index] || null })),
+                };
+            });
         },
     },
 };
@@ -77,40 +110,105 @@ export default {
     }
 }
 
-.m-cards {
+.m-team-groups {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+    margin-top: 18px;
+}
+
+.u-team-group {
+    min-width: 0;
+    padding: 18px;
+    border: 1px solid #e6d2c4;
+    border-radius: 13px;
+    background: rgba(255, 250, 243, 0.68);
+}
+
+.u-team-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #ead8cc;
+    color: #8e6258;
+
+    span {
+        font-size: 13px;
+        letter-spacing: 0.12em;
+    }
+
+    strong {
+        overflow: hidden;
+        color: #57352f;
+        font-size: 16px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
+.m-team-cards {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 14px;
-    margin-top: 18px;
 }
 
 .u-card {
     display: flex;
     align-items: center;
-    gap: 14px;
-    padding: 16px;
-    border: 1px solid #e6d2c4;
+    min-width: 0;
+    flex-direction: column;
+    padding: 16px 12px;
+    border: 1px solid #ead8cc;
     border-radius: 11px;
-    background: linear-gradient(135deg, #fffaf3, #f7e8d9);
+    background: linear-gradient(155deg, #fffdf8, #f8eadb);
+    text-align: center;
 
     .u-card-img {
-        width: 72px;
-        height: 72px;
-        flex: 0 0 auto;
-        border-radius: 9px;
+        width: min(100%, 128px);
+        aspect-ratio: 2 / 5;
+        border-radius: 8px;
+        filter: drop-shadow(0 8px 12px rgba(93, 49, 40, 0.14));
     }
 
     h4 {
-        margin: 7px 0 5px;
+        margin: 7px 0 6px;
         color: #633b33;
-        font-size: 17px;
+        font-size: 18px;
     }
 
     p {
         margin: 0;
         color: #8f736b;
-        font-size: 13px;
-        line-height: 1.6;
+        font-size: 12px;
+        line-height: 1.7;
+    }
+
+    &.is-empty {
+        .u-card-img {
+            opacity: 0.62;
+            filter: sepia(0.15) drop-shadow(0 8px 12px rgba(93, 49, 40, 0.1));
+        }
+    }
+}
+
+.u-card-copy {
+    width: 100%;
+    margin-top: 12px;
+}
+
+.u-draw-no {
+    display: block;
+    color: #aa7a6b;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+}
+
+@media screen and (max-width: 980px) {
+    .m-team-groups {
+        grid-template-columns: 1fr;
     }
 }
 
@@ -120,8 +218,20 @@ export default {
         flex-direction: column;
     }
 
-    .m-cards {
-        grid-template-columns: 1fr;
+    .u-team-group {
+        padding: 14px;
+    }
+
+    .m-team-cards {
+        gap: 10px;
+    }
+
+    .u-card {
+        padding: 12px 8px;
+
+        .u-card-img {
+            width: min(100%, 104px);
+        }
     }
 }
 </style>

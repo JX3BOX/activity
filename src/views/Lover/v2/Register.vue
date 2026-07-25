@@ -95,7 +95,7 @@ import FeatureBadge from "@/components/rank/lover/v2/FeatureBadge.vue";
 import RegistrationForm from "@/components/rank/lover/v2/RegistrationForm.vue";
 import RegistrationStatusCard from "@/components/rank/lover/v2/RegistrationStatusCard.vue";
 import RegistrationTypeCard from "@/components/rank/lover/v2/RegistrationTypeCard.vue";
-import { getErrorMessage, phaseMap } from "@/utils/lover-v2";
+import { phaseMap } from "@/utils/lover-v2";
 
 export default {
     name: "LoverV2Register",
@@ -187,7 +187,9 @@ export default {
                 .then((res) => {
                     this.profile = res.data?.data || {};
                 })
-                .catch(() => null);
+                .catch((error) => {
+                    console.error("[LoverV2Register.loadProfile]", error);
+                });
         }
     },
     methods: {
@@ -198,7 +200,9 @@ export default {
             await this.$store.dispatch("loadV2Context", { force: true });
         },
         async reloadLoverNet() {
-            await this.$store.dispatch("loadLoverRelationNet", { force: true });
+            await this.$store.dispatch("loadLoverRelationNet", { force: true }).catch((error) => {
+                console.error("[LoverV2Register.reloadLoverNet]", error);
+            });
         },
         async submitRegistration(payload) {
             if (!this.registration && !this.canCreate) {
@@ -214,32 +218,32 @@ export default {
                 this.editing = false;
                 this.$message.success(wasEditing ? "报名资料已更新" : "报名已提交，请等待审核");
             } catch (error) {
+                console.error("[LoverV2Register.submitRegistration]", error);
                 const code = Number(error?.data?.code ?? error?.response?.data?.code);
-                if (code === 4505) {
-                    this.mateCardResetKey += 1;
-                    this.$message.error("搭子问卷数据已失效，请重新完成问卷后再提交报名");
-                } else {
-                    this.$message.error(getErrorMessage(error));
-                }
+                // 4505 除了由请求层统一提示，还要求清除失效问卷并允许用户重新填写。
+                if (code === 4505) this.mateCardResetKey += 1;
             } finally {
                 this.submitting = false;
             }
         },
         async confirmCancel() {
             if (this.submitting) return;
+            const confirmed = await this.$confirm(
+                "取消后会释放当前参赛占用，并作废与本次报名相关的邀请或组队关系。确定继续吗？",
+                "取消本次报名",
+                { type: "warning", confirmButtonText: "确认取消", cancelButtonText: "保留报名" }
+            )
+                .then(() => true)
+                .catch(() => false);
+            if (!confirmed) return;
+            this.submitting = true;
             try {
-                await this.$confirm(
-                    "取消后会释放当前参赛占用，并作废与本次报名相关的邀请或组队关系。确定继续吗？",
-                    "取消本次报名",
-                    { type: "warning", confirmButtonText: "确认取消", cancelButtonText: "保留报名" }
-                );
-                this.submitting = true;
                 await cancelRegistration(this.eventId, this.registration.id);
                 await this.refreshContext();
                 this.editing = false;
                 this.$message.success("报名已取消，你可以重新选择身份");
             } catch (error) {
-                if (error !== "cancel") this.$message.error(getErrorMessage(error));
+                console.error("[LoverV2Register.confirmCancel]", error);
             } finally {
                 this.submitting = false;
             }

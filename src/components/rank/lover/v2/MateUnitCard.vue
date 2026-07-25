@@ -1,36 +1,53 @@
 <template>
     <article class="c-lover-unit-card m-lover-v2-panel">
-        <div class="u-head">
-            <div>
+        <div class="u-card-head">
+            <div class="u-team-copy">
+                <span>搭子队伍</span>
                 <strong>{{ memberNames }}</strong>
-                <span>{{ captainName }} 发起的搭子队</span>
+                <small>{{ captainName }} 发起</small>
             </div>
-            <el-tag type="success" effect="plain">两人已集结</el-tag>
+            <el-tag class="u-status" :class="{ 'is-invited': isInvited }" effect="plain">
+                {{ isInvited ? "已发出邀请" : "两人已集结" }}
+            </el-tag>
         </div>
-        <div class="m-members">
+        <div class="m-member-summary">
             <div v-for="member in unit.members" :key="member.user_id" class="u-member">
-                <UserIdentity :user="member" />
-                <IntroductionText :text="member.introduction" compact />
+                <UserIdentity :user="member" compact :show-meta="false" :show-captain="false" />
+                <div class="u-member-meta">
+                    <span>
+                        MMR
+                        <strong>{{ peakScore(member) }}</strong>
+                    </span>
+                    <el-tag size="small" :type="member.combat_role === 'healer' ? 'success' : 'danger'" effect="light">
+                        {{ combatRoleMap[member.combat_role] || "职责未填" }}
+                    </el-tag>
+                </div>
             </div>
         </div>
-        <el-button type="primary" plain :loading="loading" :disabled="disabled" @click="$emit('invite', unit)">
-            邀请加入四人阵容
-        </el-button>
+        <div class="u-card-actions">
+            <span>{{
+                isInvited ? "当前队伍已经邀请过，正在等待搭子队长处理" : "查看两位成员的完整资料后发出邀请"
+            }}</span>
+            <el-button class="u-view-button" type="primary" @click="$emit('view', unit)">
+                {{ isInvited ? "已邀请 · 查看成员" : "查看成员并邀请" }}
+            </el-button>
+        </div>
     </article>
 </template>
 
 <script>
-import IntroductionText from "./IntroductionText.vue";
 import UserIdentity from "./UserIdentity.vue";
+import { combatRoleMap } from "@/utils/lover-v2";
 
 export default {
     name: "LoverV2MateUnitCard",
-    components: { IntroductionText, UserIdentity },
-    emits: ["invite"],
+    components: { UserIdentity },
+    emits: ["view"],
     props: {
         unit: { type: Object, required: true },
-        disabled: { type: Boolean, default: false },
-        loading: { type: Boolean, default: false },
+    },
+    data: function () {
+        return { combatRoleMap };
     },
     computed: {
         captainName() {
@@ -40,6 +57,16 @@ export default {
             const names = (this.unit.members || []).map((member) => member.display_name).filter(Boolean);
             return names.length ? names.join(" · ") : "已集结搭子队";
         },
+        isInvited() {
+            return Boolean(this.unit.viewer?.pending_invitations?.length);
+        },
+    },
+    methods: {
+        peakScore(member) {
+            if (member?.arena_peak_score == null) return "--";
+            const score = Number(member.arena_peak_score);
+            return Number.isFinite(score) ? Math.round(score) : "--";
+        },
     },
 };
 </script>
@@ -47,50 +74,135 @@ export default {
 <style scoped lang="less">
 .c-lover-unit-card {
     display: flex;
-    min-height: 220px;
+    min-height: 280px;
     flex-direction: column;
-    gap: 16px;
+    gap: 18px;
     padding: 20px;
+    color: #654842;
+
+    .u-view-button.el-button {
+        width: 100%;
+        border-color: #8d4036;
+        background: linear-gradient(180deg, #a24d41, #7d342d);
+        box-shadow: inset 0 0 0 1px rgba(255, 226, 190, 0.2);
+        color: #fff8ea;
+
+        &:hover,
+        &:focus {
+            border-color: #b86b58;
+            background: linear-gradient(180deg, #b65b4d, #8b3c34);
+            color: #fffdf6;
+        }
+    }
 }
 
-.u-head {
+.u-card-head {
     display: flex;
+    min-width: 0;
     align-items: flex-start;
     justify-content: space-between;
-    gap: 12px;
+    gap: 16px;
+}
 
+.u-team-copy {
+    min-width: 0;
+
+    span,
     strong,
-    span {
+    small {
         display: block;
     }
 
-    strong {
-        color: #57352f;
-        font-size: 16px;
+    span {
+        margin-bottom: 5px;
+        color: #a27963;
+        font-size: 11px;
+        letter-spacing: 0.12em;
     }
 
-    span {
-        margin-top: 4px;
-        color: #a08881;
+    strong {
+        overflow: hidden;
+        color: #57352f;
+        font-family: "ZCOOL XiaoWei", "STSong", serif;
+        font-size: 18px;
+        font-weight: 400;
+        letter-spacing: 0.04em;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    small {
+        margin-top: 6px;
+        color: #9b8179;
         font-size: 12px;
     }
 }
 
-.m-members {
+.u-status {
+    flex: 0 0 auto;
+    border-color: rgba(150, 93, 68, 0.34);
+    background: rgba(244, 226, 198, 0.7);
+    color: #7b4b3e;
+
+    &.is-invited {
+        border-color: rgba(140, 65, 53, 0.42);
+        background: rgba(162, 77, 65, 0.12);
+        color: #8c4138;
+    }
+}
+
+.m-member-summary {
     display: grid;
-    flex: 1;
-    gap: 12px;
+    gap: 10px;
 }
 
 .u-member {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 13px;
+    border-left: 3px solid rgba(166, 77, 61, 0.42);
+    background: linear-gradient(90deg, rgba(244, 218, 191, 0.32), transparent 78%), rgba(255, 249, 238, 0.7);
+    box-shadow: inset 0 0 0 1px rgba(180, 122, 98, 0.08);
+
+    :deep(.c-lover-user) {
+        min-width: 0;
+        flex: 1;
+    }
+}
+
+.u-member-meta {
+    display: grid;
+    flex: 0 0 auto;
+    justify-items: end;
+    gap: 6px;
+
+    > span {
+        color: #a18479;
+        font-size: 10px;
+        letter-spacing: 0.06em;
+
+        strong {
+            margin-left: 4px;
+            color: #765049;
+            font-size: 13px;
+            letter-spacing: 0;
+        }
+    }
+}
+
+.u-card-actions {
     display: grid;
     gap: 9px;
-    padding-bottom: 12px;
-    border-bottom: 1px dashed #ead9cf;
+    margin-top: auto;
 
-    &:last-child {
-        padding-bottom: 0;
-        border-bottom: 0;
+    > span {
+        color: #9a7d74;
+        font-size: 11px;
+        line-height: 1.5;
+        text-align: center;
     }
 }
 </style>

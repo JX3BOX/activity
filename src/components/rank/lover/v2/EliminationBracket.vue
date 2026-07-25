@@ -316,7 +316,7 @@ export default {
             if (slot.match.status === "finished" && winner?.raw?.name) return `${winner.raw.name} 获胜`;
             const namedTeams = slot.teams.filter((team) => team.id);
             if (namedTeams.length < 2) return "轮空席位，晋级结果待确认";
-            return slot.match.room_no ? `房间 ${slot.match.room_no}` : "战斗房间待公布";
+            return slot.match.remark || "";
         },
         openMatch(node) {
             this.$emit("open-match", node.match);
@@ -431,7 +431,7 @@ export default {
                             <b>{{ team.gameWins }}</b>
                         </div>
                         <footer>
-                            <span>{{ slotFooter(node.slot) }}</span>
+                            <span v-if="slotFooter(node.slot)">{{ slotFooter(node.slot) }}</span>
                             <time>{{ node.slot.timeLabel }}</time>
                         </footer>
                         <div v-if="node.flowTargets.length" class="u-flow-targets">

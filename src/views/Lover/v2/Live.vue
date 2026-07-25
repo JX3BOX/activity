@@ -42,8 +42,21 @@
                         <img class="u-team-logo" :src="teamLogo(item.images?.[0])" alt="" />
                         <strong class="u-team-name">{{ item.team_name }}</strong>
                         <div class="u-teammates">
-                            <span v-for="user in uniqBy(item.teammeta_user_list, 'id')" :key="user.id" class="u-teammate">
-                                <el-avatar :size="20" :src="showAvatar(user.avatar || defaultAvatar)" />
+                            <span
+                                v-for="user in uniqBy(item.teammeta_user_list, 'id')"
+                                :key="user.id"
+                                class="u-teammate"
+                            >
+                                <a
+                                    class="u-avatar-link"
+                                    :href="`https://www.jx3box.com/author/${user.id}`"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    :aria-label="`在新标签页查看 ${user.display_name} 的个人主页`"
+                                    @click.stop
+                                >
+                                    <el-avatar :size="20" :src="showAvatar(user.avatar || defaultAvatar)" />
+                                </a>
                                 {{ user.display_name }}
                             </span>
                         </div>
@@ -108,7 +121,8 @@ export default {
             try {
                 const res = await getSelectedList(this.eventId);
                 this.list = res.data.data.list || [];
-            } catch (_error) {
+            } catch (error) {
+                console.error("[LoverV2Live.loadData]", error);
                 this.list = [];
             }
         },
@@ -256,6 +270,17 @@ export default {
         display: inline-flex;
         align-items: center;
         gap: 4px;
+    }
+
+    .u-avatar-link {
+        display: inline-flex;
+        border-radius: 50%;
+        outline: none;
+
+        &:hover,
+        &:focus-visible {
+            box-shadow: 0 0 0 2px rgba(236, 194, 145, 0.46);
+        }
     }
 
     .u-slogan {

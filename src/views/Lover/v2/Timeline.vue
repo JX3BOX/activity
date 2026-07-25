@@ -112,7 +112,8 @@ export default {
                         id: this.teamId,
                         name: "参赛战队",
                     };
-            } catch {
+            } catch (error) {
+                console.error("[LoverV2Timeline.load]", error);
                 this.loadError = true;
             } finally {
                 this.loading = false;

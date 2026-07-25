@@ -113,6 +113,8 @@ export default {
                     ? queryStage
                     : String(getPreferredStageId(this.stages));
                 await this.loadActiveStage();
+            } catch (error) {
+                console.error("[LoverV2Schedule.loadStages]", error);
             } finally {
                 this.loading = false;
             }
@@ -134,6 +136,8 @@ export default {
                 if (syncQuery) {
                     this.$router.replace({ query: { ...this.$route.query, schedule: this.activeStageId } });
                 }
+            } catch (error) {
+                console.error("[LoverV2Schedule.loadActiveStage]", error);
             } finally {
                 this.loading = false;
             }

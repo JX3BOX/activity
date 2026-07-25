@@ -6,6 +6,7 @@
         width="min(1180px, calc(100vw - 32px))"
         align-center
         destroy-on-close
+        :fullscreen="questionnaireFullscreen"
         :close-on-click-modal="false"
         @open="onOpen"
         @closed="$emit('closed')"
@@ -24,12 +25,6 @@
             show-icon
             title="搭子问卷地址配置无效"
             :description="configurationError"
-        />
-        <el-result
-            v-else-if="completed"
-            icon="success"
-            title="问卷数据已接收"
-            :sub-title="`将在 ${closeCountdown} 秒后返回报名页，请稍候……`"
         />
         <template v-else>
             <el-alert
@@ -72,11 +67,9 @@ export default {
     data: function () {
         return {
             loading: true,
-            completed: false,
             messageHandled: false,
             messageError: "",
-            closeCountdown: 2,
-            closeTimer: null,
+            questionnaireFullscreen: false,
         };
     },
     computed: {
@@ -110,21 +103,22 @@ export default {
         },
     },
     mounted() {
+        this.onViewportChange();
+        window.addEventListener("resize", this.onViewportChange);
         window.addEventListener("message", this.onMessage);
     },
     beforeUnmount() {
+        window.removeEventListener("resize", this.onViewportChange);
         window.removeEventListener("message", this.onMessage);
-        window.clearInterval(this.closeTimer);
     },
     methods: {
+        onViewportChange() {
+            this.questionnaireFullscreen = window.innerWidth <= 760;
+        },
         onOpen() {
             this.loading = true;
-            this.completed = false;
             this.messageHandled = false;
             this.messageError = "";
-            this.closeCountdown = 2;
-            window.clearInterval(this.closeTimer);
-            this.closeTimer = null;
         },
         onFrameLoad() {
             this.loading = false;
@@ -146,10 +140,9 @@ export default {
             try {
                 const mateCardData = this.toMateCardData(message.data);
                 this.messageHandled = true;
-                this.completed = true;
                 this.messageError = "";
                 this.$emit("completed", mateCardData);
-                this.startCloseCountdown();
+                this.dialogVisible = false;
             } catch (error) {
                 this.messageError = error.message || "返回数据格式不正确，请在问卷中重新确认开始匹配。";
             }
@@ -178,16 +171,6 @@ export default {
                 variables,
                 judgment: typeof data.judgmentText === "string" ? data.judgmentText : null,
             };
-        },
-        startCloseCountdown() {
-            window.clearInterval(this.closeTimer);
-            this.closeTimer = window.setInterval(() => {
-                this.closeCountdown -= 1;
-                if (this.closeCountdown > 0) return;
-                window.clearInterval(this.closeTimer);
-                this.closeTimer = null;
-                this.dialogVisible = false;
-            }, 1000);
         },
     },
 };
@@ -232,6 +215,21 @@ export default {
 }
 
 @media screen and (max-width: 760px) {
+    .m-lover-v2-mate-card-dialog.is-fullscreen {
+        display: flex;
+        flex-direction: column;
+
+        :deep(.el-dialog__header) {
+            flex: none;
+        }
+
+        :deep(.el-dialog__body) {
+            flex: 1;
+            min-height: 0;
+            padding: 12px;
+        }
+    }
+
     .u-dialog-head {
         align-items: flex-start;
         flex-direction: column;
@@ -239,11 +237,12 @@ export default {
     }
 
     .m-iframe-wrap {
-        min-height: calc(100vh - 150px);
+        min-height: calc(100dvh - 112px);
+        border-radius: 0;
     }
 
     .u-questionnaire-frame {
-        height: calc(100vh - 150px);
+        height: calc(100dvh - 112px);
     }
 }
 </style>

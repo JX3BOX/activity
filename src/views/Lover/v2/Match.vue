@@ -3,7 +3,7 @@
         <section class="m-lover-v2-page-title">
             <div>
                 <h2>战斗详情</h2>
-                <p>这里可以查看双方战队、房间、小局结果、配装确认状态、天命签与赛事记录。</p>
+                <p>这里可以查看双方战队、对战安排、小局结果、配装确认状态、天命签与赛事记录。</p>
             </div>
             <el-button @click="$router.push({ name: 'v2-schedule', params: { slug } })">返回赛事进程</el-button>
         </section>
@@ -40,7 +40,7 @@
                             <span v-if="hasMatchPoints">本场积分 {{ matchPointsLabel }}</span>
                             <span v-if="winner">{{ winner.name }} 获胜</span>
                             <span v-else-if="match.status === 'finished'">{{ matchResultLabel }}</span>
-                            <span v-else>房间 {{ match.room_no || "待公布" }}</span>
+                            <span v-else>{{ matchArrangementLabel }}</span>
                         </div>
                         <article class="u-side is-right">
                             <TeamIdentity :team="match.team2" show-slogan />
@@ -60,8 +60,8 @@
                             </el-tag>
                         </article>
                     </div>
-                    <div class="m-room-info">
-                        <div><span>比赛房间</span><strong>{{ match.room_no || "等待运营公布" }}</strong></div>
+                    <div class="m-match-info">
+                        <div v-if="match.remark" class="u-match-remark"><strong>{{ match.remark }}</strong></div>
                         <div><span>配置截止</span><strong>{{ formatDateTime(match.config_deadline_at) }}</strong></div>
                         <div><span>开始时间</span><strong>{{ formatDateTime(match.scheduled_at) }}</strong></div>
                         <el-button
@@ -123,6 +123,7 @@
                     :is-captain="isCaptain"
                     :can-update="canConfigUpdate"
                     :can-lock="canConfigLock"
+                    :update-disabled-reason="configUpdateDisabledReason"
                     :loading="actionLoading.startsWith('config')"
                     :refreshing="configLoading"
                     @save-member="saveMemberConfig"
@@ -185,8 +186,14 @@
                     :draws="match.card_draws || []"
                     :match="match"
                     :can-draw="canCardDraw"
-                    :loading="actionLoading === 'card'"
                     @draw="drawDestinyCard"
+                />
+                <DestinyCardDrawDialog
+                    v-model="cardDialogVisible"
+                    :event-id="eventId"
+                    :match-id="matchId"
+                    :team-name="myTeam?.name || ''"
+                    @drawn="handleCardDrawn"
                 />
 
                 <section class="m-match-section m-lover-v2-panel m-match-logs">
@@ -216,7 +223,6 @@
 <script>
 import User from "@jx3box/jx3box-common/js/user.js";
 import {
-    drawCard,
     getMatch,
     getMatchTeamConfig,
     lockMatchTeamConfig,
@@ -224,18 +230,20 @@ import {
     setMatchReady,
 } from "@/service/rank/lover-v2";
 import LoverV2Layout from "@/layouts/lover/LoverV2Layout.vue";
+import DestinyCardDrawDialog from "@/components/rank/lover/v2/DestinyCardDrawDialog.vue";
 import DestinyCardPanel from "@/components/rank/lover/v2/DestinyCardPanel.vue";
 import EmptyState from "@/components/rank/lover/v2/EmptyState.vue";
 import FeatureBadge from "@/components/rank/lover/v2/FeatureBadge.vue";
 import MatchConfigPanel from "@/components/rank/lover/v2/MatchConfigPanel.vue";
 import TeamIdentity from "@/components/rank/lover/v2/TeamIdentity.vue";
 import UserIdentity from "@/components/rank/lover/v2/UserIdentity.vue";
-import { formatDateTime, getErrorMessage, matchStatusMap } from "@/utils/lover-v2";
+import { formatDateTime, matchStatusMap } from "@/utils/lover-v2";
 
 export default {
     name: "LoverV2Match",
     components: {
         LoverV2Layout,
+        DestinyCardDrawDialog,
         DestinyCardPanel,
         EmptyState,
         FeatureBadge,
@@ -252,6 +260,7 @@ export default {
             configLoading: false,
             configLoadError: false,
             actionLoading: "",
+            cardDialogVisible: false,
             contextPollingTimer: null,
         };
     },
@@ -324,6 +333,9 @@ export default {
             const team2Points = this.match?.team2_points == null ? "—" : this.match.team2_points;
             return `${team1Points} : ${team2Points}`;
         },
+        matchArrangementLabel() {
+            return this.match?.remark || "对战安排待公布";
+        },
         matchStatusType() {
             return { draft: "info", scheduled: "warning", ready: "success", running: "danger", finished: "info" }[
                 this.match?.status
@@ -348,6 +360,17 @@ export default {
                 this.matchActions.includes("match.config.update") &&
                 this.match?.status !== "finished"
             );
+        },
+        configUpdateDisabledReason() {
+            if (this.canConfigUpdate) return "";
+            if (this.ownConfig?.status === "locked") return "本队本场配装已经锁定，如需调整请联系赛事运营解锁";
+            if (this.match?.config_deadline_at && new Date() >= new Date(this.match.config_deadline_at)) {
+                return `配装提交已于 ${formatDateTime(this.match.config_deadline_at)} 截止`;
+            }
+            if (this.match?.status === "running") return "本场对战已经开始，不能继续修改赛前配装";
+            if (this.match?.status === "finished") return "本场对战已经结束，不能继续修改赛前配装";
+            if (this.match?.status === "cancelled") return "本场对战已经取消，不能提交赛前配装";
+            return "当前赛事阶段暂未开放本场配装提交";
         },
         canConfigLock() {
             return this.isCaptain && this.matchActions.includes("match.config.lock");
@@ -383,7 +406,9 @@ export default {
     },
     mounted() {
         this.contextPollingTimer = window.setInterval(() => {
-            this.$store.dispatch("loadV2Context", { force: true }).catch(() => null);
+            this.$store.dispatch("loadV2Context", { force: true }).catch((error) => {
+                console.error("[LoverV2Match.contextPolling]", error);
+            });
         }, 15000);
     },
     beforeUnmount() {
@@ -414,6 +439,8 @@ export default {
                 match.stage = participantMatch?.stage || match.stage;
                 this.match = match;
                 await this.loadConfigs();
+            } catch (error) {
+                console.error("[LoverV2Match.load]", error);
             } finally {
                 this.loading = false;
             }
@@ -434,6 +461,7 @@ export default {
                 const res = await getMatchTeamConfig(this.eventId, this.matchId);
                 this.configRecords = res.data.data || [];
             } catch (error) {
+                console.error("[LoverV2Match.loadConfigs]", error);
                 this.configRecords = [];
                 this.configLoadError = true;
             } finally {
@@ -458,10 +486,6 @@ export default {
             const teamId = this.match[`team${side}`]?.id;
             if (!game.winner_team_id) return "待确认";
             return Number(game.winner_team_id) === Number(teamId) ? "胜" : "负";
-        },
-        async reconcileUncertainWrite() {
-            await this.$store.dispatch("loadV2Context", { force: true }).catch(() => null);
-            await this.load().catch(() => null);
         },
         publicConfigRecord(teamId) {
             return this.match?.configs?.find((record) => Number(record.team_id) === Number(teamId)) || null;
@@ -491,8 +515,7 @@ export default {
                 await this.reloadMatchContext();
                 this.$message.success(this.ownReady ? "本队已确认就绪" : "本队已取消就绪");
             } catch (error) {
-                await this.reconcileUncertainWrite();
-                this.$message.error(getErrorMessage(error));
+                console.error("[LoverV2Match.toggleReady]", error);
             } finally {
                 this.actionLoading = "";
             }
@@ -503,52 +526,48 @@ export default {
             try {
                 await saveMatchMemberConfig(this.eventId, this.matchId, member);
                 await this.reloadMatchContext();
-                this.$message.success("你的本场配装已保存");
+                this.$message.success(
+                    Number(member.user_id) === Number(this.currentUid) ? "你的本场配装已保存" : "已为该队员保存本场配装"
+                );
             } catch (error) {
-                await this.reconcileUncertainWrite();
-                this.$message.error(getErrorMessage(error, "成员配置保存失败，请稍后重试"));
+                console.error("[LoverV2Match.saveMemberConfig]", error);
             } finally {
                 this.actionLoading = "";
             }
         },
         async lockConfig() {
             if (this.actionLoading || this.configLoadError) return;
-            try {
-                await this.$confirm("锁定后队员不能再修改本场配装；双方都锁定后，对手可以查看完整内容。", "锁定本队配装", {
+            const confirmed = await this.$confirm(
+                "锁定后队员不能再修改本场配装；双方都锁定后，对手可以查看完整内容。",
+                "锁定本队配装",
+                {
                     type: "warning",
                     confirmButtonText: "确认锁定",
-                });
-                this.actionLoading = "config-lock";
+                }
+            )
+                .then(() => true)
+                .catch(() => false);
+            if (!confirmed) return;
+            this.actionLoading = "config-lock";
+            try {
                 await lockMatchTeamConfig(this.eventId, this.matchId);
                 await this.reloadMatchContext();
                 this.$message.success("本队本场配装已锁定");
             } catch (error) {
-                if (error !== "cancel") {
-                    await this.reconcileUncertainWrite();
-                    this.$message.error(getErrorMessage(error));
-                }
+                console.error("[LoverV2Match.lockConfig]", error);
             } finally {
                 this.actionLoading = "";
             }
         },
-        async drawDestinyCard() {
+        drawDestinyCard() {
             if (this.actionLoading) return;
+            this.cardDialogVisible = true;
+        },
+        async handleCardDrawn() {
             try {
-                await this.$confirm("抽取结果由系统按本段赛程规则随机决定，不能指定卡片。确定抽取吗？", "抽取天命签", {
-                    type: "warning",
-                    confirmButtonText: "确认抽取",
-                });
-                this.actionLoading = "card";
-                await drawCard(this.eventId, this.matchId);
                 await this.reloadMatchContext();
-                this.$message.success("天命签已抽取并公开");
             } catch (error) {
-                if (error !== "cancel") {
-                    await this.reconcileUncertainWrite();
-                    this.$message.error(getErrorMessage(error));
-                }
-            } finally {
-                this.actionLoading = "";
+                console.error("[LoverV2Match.handleCardDrawn]", error);
             }
         },
     },
@@ -626,7 +645,7 @@ export default {
     }
 }
 
-.m-room-info {
+.m-match-info {
     display: grid;
     grid-template-columns: repeat(3, 1fr) auto;
     align-items: center;
@@ -650,6 +669,10 @@ export default {
         margin-top: 4px;
         color: #61403a;
         font-size: 14px;
+    }
+
+    .u-match-remark strong {
+        margin-top: 0;
     }
 }
 
@@ -723,7 +746,7 @@ export default {
         grid-template-columns: 1fr;
     }
 
-    .m-room-info {
+    .m-match-info {
         grid-template-columns: repeat(2, 1fr);
     }
 }
@@ -736,7 +759,7 @@ export default {
 
     .m-side-members,
     .m-config-status,
-    .m-room-info {
+    .m-match-info {
         grid-template-columns: 1fr;
     }
 }

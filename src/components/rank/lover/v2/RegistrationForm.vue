@@ -132,41 +132,6 @@
                     />
                     <p class="u-introduction-tip">审核通过后会展示在组队大厅，方便其他侠士在邀请前了解你。</p>
                 </el-form-item>
-                <el-alert
-                    v-if="selectedType === 'mate'"
-                    class="m-mate-questionnaire"
-                    :type="form.mate_card_data ? 'success' : 'warning'"
-                    :closable="false"
-                    show-icon
-                >
-                    <template #title>
-                        {{ form.mate_card_data ? "搭子问卷已完成" : "提交搭子报名之前，需要先完成搭子问卷" }}
-                    </template>
-                    <template #default>
-                        <div class="u-questionnaire-content">
-                            <div>
-                                <p v-if="form.mate_card_data">
-                                    已收到 {{ mateCardRoleName }} 的问卷结果。提交报名后，搭子大厅会据此计算双方契合度。
-                                </p>
-                                <p v-else>问卷会在当前页面内打开，不会单独保存；完成后将与报名资料一次提交。</p>
-                                <div v-if="form.mate_card_data" class="u-questionnaire-tags">
-                                    <el-tag v-if="form.mate_card_data.variables?.mbti" effect="plain">
-                                        {{ form.mate_card_data.variables.mbti }}
-                                    </el-tag>
-                                    <el-tag v-if="form.mate_card_data.variables?.zodiac" effect="plain">
-                                        {{ form.mate_card_data.variables.zodiac }}
-                                    </el-tag>
-                                    <el-tag v-if="form.mate_card_data.variables?.server" effect="plain">
-                                        {{ form.mate_card_data.variables.server }}
-                                    </el-tag>
-                                </div>
-                            </div>
-                            <el-button type="primary" plain @click="openQuestionnaire">
-                                {{ form.mate_card_data ? "重新填写问卷" : "开始填写问卷" }}
-                            </el-button>
-                        </div>
-                    </template>
-                </el-alert>
             </template>
 
             <el-divider>仅运营审核可见的联系方式</el-divider>
@@ -316,12 +281,7 @@ export default {
             }
             return `当前读取到 ${this.relationMembers.length} 名有效成员，情缘报名必须恰好由两名成员组成，请先修正关系网。`;
         },
-        mateCardRoleName() {
-            const mateCard = this.form.mate_card_data;
-            return mateCard?.profile?.gameName || mateCard?.profile?.nickName || "当前角色";
-        },
         submitButtonText() {
-            if (this.selectedType === "mate" && !this.form.mate_card_data) return "完成问卷并提交报名";
             return this.isEditing ? "保存并重新提交审核" : "提交报名";
         },
     },
@@ -435,17 +395,14 @@ export default {
             }
             this.$emit("submit", payload);
         },
-        openQuestionnaire() {
-            this.pendingPayload = null;
-            this.questionnaireVisible = true;
-        },
         onQuestionnaireCompleted(mateCardData) {
             this.form.mate_card_data = mateCardData;
-            if (this.pendingPayload) this.pendingPayload.mate_card_data = mateCardData;
+            if (!this.pendingPayload) return;
+            this.pendingPayload.mate_card_data = mateCardData;
+            this.$emit("submit", this.pendingPayload);
+            this.pendingPayload = null;
         },
         onQuestionnaireClosed() {
-            if (!this.pendingPayload?.mate_card_data) return;
-            this.$emit("submit", this.pendingPayload);
             this.pendingPayload = null;
         },
         onLogoUploaded(urls) {
@@ -565,29 +522,6 @@ export default {
     line-height: 1.6;
 }
 
-.m-mate-questionnaire {
-    margin-top: 18px;
-}
-
-.u-questionnaire-content {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 18px;
-
-    p {
-        margin: 0;
-        line-height: 1.7;
-    }
-}
-
-.u-questionnaire-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 7px;
-    margin-top: 9px;
-}
-
 @media screen and (max-width: 760px) {
     .c-lover-registration-form {
         padding: 20px;
@@ -596,11 +530,6 @@ export default {
     .m-member-grid,
     .u-member-fields {
         grid-template-columns: 1fr;
-    }
-
-    .u-questionnaire-content {
-        align-items: stretch;
-        flex-direction: column;
     }
 }
 </style>

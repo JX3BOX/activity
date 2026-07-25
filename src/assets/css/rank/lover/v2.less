@@ -11,6 +11,328 @@ body {
     background: #4b2826 url("~@/assets/img/lover/v2/page-bg.webp") center top / 1920px auto repeat-y;
 }
 
+html.is-lover-v2,
+html.is-lover-v2 * {
+    scrollbar-color: rgba(255, 255, 255, 0.78) transparent;
+    scrollbar-width: thin;
+}
+
+html.is-lover-v2,
+html.is-lover-v2 body {
+    height: 100%;
+    overflow: hidden;
+}
+
+html.is-lover-v2::-webkit-scrollbar,
+html.is-lover-v2 body::-webkit-scrollbar,
+html.is-lover-v2 *::-webkit-scrollbar {
+    width: 9px;
+    height: 9px;
+}
+
+html.is-lover-v2::-webkit-scrollbar-track,
+html.is-lover-v2 body::-webkit-scrollbar-track,
+html.is-lover-v2 *::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+html.is-lover-v2::-webkit-scrollbar-thumb,
+html.is-lover-v2 body::-webkit-scrollbar-thumb,
+html.is-lover-v2 *::-webkit-scrollbar-thumb {
+    min-height: 36px;
+    border: 2px solid transparent;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.72);
+    background-clip: padding-box;
+}
+
+html.is-lover-v2::-webkit-scrollbar-thumb:hover,
+html.is-lover-v2 body::-webkit-scrollbar-thumb:hover,
+html.is-lover-v2 *::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.92);
+    background-clip: padding-box;
+}
+
+html.is-lover-v2 {
+    .el-overlay {
+        background: rgba(35, 16, 16, 0.66);
+        backdrop-filter: blur(3px);
+    }
+
+    .el-dialog,
+    .el-message-box {
+        overflow: hidden;
+        border: 1px solid #b68a63;
+        border-radius: 2px;
+        outline: 4px solid rgba(86, 42, 34, 0.24);
+        outline-offset: 4px;
+        background:
+            linear-gradient(rgba(250, 240, 222, 0.98), rgba(243, 225, 199, 0.98)),
+            #f5e6d0;
+        box-shadow: 0 24px 70px rgba(31, 12, 11, 0.46), inset 0 0 46px rgba(131, 73, 49, 0.09);
+        color: #4c302b;
+    }
+
+    .el-dialog.is-fullscreen {
+        border: 0;
+        outline: 0;
+        border-radius: 0;
+    }
+
+    .el-dialog__header,
+    .el-message-box__header {
+        margin: 0;
+        padding: 22px 26px 18px;
+        border-bottom: 1px solid rgba(126, 70, 54, 0.22);
+        background: linear-gradient(90deg, rgba(222, 191, 151, 0.22), transparent 64%);
+    }
+
+    .el-dialog__title,
+    .el-message-box__title {
+        color: #5d3832;
+        font-family: "ZCOOL XiaoWei", "STSong", serif;
+        font-size: 21px;
+        letter-spacing: 0.08em;
+    }
+
+    .el-dialog__headerbtn,
+    .el-message-box__headerbtn {
+        top: 13px;
+        right: 15px;
+    }
+
+    .el-dialog__close,
+    .el-message-box__close {
+        color: #79433a;
+        font-size: 21px;
+        transition:
+            color 0.2s ease,
+            transform 0.2s ease;
+    }
+
+    .el-dialog__headerbtn:hover .el-dialog__close,
+    .el-message-box__headerbtn:hover .el-message-box__close {
+        color: #a3483e;
+        transform: rotate(8deg);
+    }
+
+    .el-dialog__body {
+        padding: 18px 26px 26px;
+        color: #684b43;
+    }
+
+    .el-dialog__footer {
+        padding: 0 26px 24px;
+    }
+
+    .el-message-box {
+        width: min(460px, calc(100vw - 32px));
+        padding: 0;
+    }
+
+    .el-message-box__content {
+        padding: 24px 26px 18px;
+        color: #684b43;
+        line-height: 1.7;
+    }
+
+    .el-message-box__status + .el-message-box__message {
+        padding-left: 34px;
+    }
+
+    .el-message-box__status {
+        color: #9a5b45;
+        font-size: 23px !important;
+    }
+
+    .el-message-box__btns {
+        gap: 10px;
+        padding: 0 26px 24px;
+    }
+
+    .el-dialog .el-button,
+    .el-message-box .el-button {
+        border-color: rgba(126, 70, 54, 0.3);
+        border-radius: 2px;
+        background: rgba(255, 249, 238, 0.74);
+        color: #69453e;
+        font-weight: 600;
+    }
+
+    .el-dialog .el-button:hover,
+    .el-message-box .el-button:hover {
+        border-color: #a46655;
+        background: rgba(247, 229, 205, 0.92);
+        color: #7f342f;
+    }
+
+    .el-dialog .el-button--primary,
+    .el-message-box .el-button--primary {
+        border-color: #6d2b27;
+        background: linear-gradient(180deg, #9b493f, #7b302b);
+        color: #fff7ea;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+
+    .el-dialog .el-button--primary:hover,
+    .el-message-box .el-button--primary:hover {
+        border-color: #7b302b;
+        background: linear-gradient(180deg, #ab554a, #873832);
+        color: #fff;
+    }
+
+    .el-alert {
+        --el-alert-padding: 12px 16px;
+        --el-alert-border-radius-base: 2px;
+        --lover-alert-accent: #8d5a49;
+        --lover-alert-bg: rgba(250, 240, 222, 0.96);
+        --lover-alert-text: #68453d;
+        border: 1px solid rgba(123, 72, 58, 0.24);
+        border-left: 3px solid var(--lover-alert-accent);
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.42), transparent 58%), var(--lover-alert-bg);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.58), 0 4px 14px rgba(84, 42, 34, 0.06);
+        color: var(--lover-alert-text);
+    }
+
+    .el-alert--primary {
+        --lover-alert-accent: #873a33;
+        --lover-alert-bg: rgba(247, 230, 216, 0.96);
+        --lover-alert-text: #72342f;
+    }
+
+    .el-alert--success {
+        --lover-alert-accent: #68784b;
+        --lover-alert-bg: rgba(237, 239, 216, 0.96);
+        --lover-alert-text: #52603c;
+    }
+
+    .el-alert--info {
+        --lover-alert-accent: #8a7167;
+        --lover-alert-bg: rgba(241, 231, 218, 0.96);
+        --lover-alert-text: #69554d;
+    }
+
+    .el-alert--warning {
+        --lover-alert-accent: #b17a3f;
+        --lover-alert-bg: rgba(249, 235, 205, 0.96);
+        --lover-alert-text: #7b552d;
+    }
+
+    .el-alert--error {
+        --lover-alert-accent: #a3483e;
+        --lover-alert-bg: rgba(248, 226, 213, 0.96);
+        --lover-alert-text: #853b34;
+    }
+
+    .el-alert .el-alert__icon {
+        color: var(--lover-alert-accent);
+    }
+
+    .el-alert .el-alert__title {
+        color: var(--lover-alert-text);
+        font-weight: 600;
+        letter-spacing: 0.02em;
+    }
+
+    .el-alert.is-light .el-alert__description,
+    .el-alert.is-dark .el-alert__description {
+        color: var(--lover-alert-text);
+        line-height: 1.65;
+    }
+
+    .el-alert.is-light .el-alert__close-btn,
+    .el-alert.is-dark .el-alert__close-btn {
+        color: var(--lover-alert-accent);
+    }
+
+    .el-message {
+        --el-message-padding: 12px 18px;
+        --lover-message-accent: #8d5a49;
+        --lover-message-bg: rgba(250, 240, 222, 0.97);
+        --lover-message-text: #68453d;
+        border: 1px solid rgba(123, 72, 58, 0.28);
+        border-left: 3px solid var(--lover-message-accent);
+        border-radius: 2px;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.48), transparent 62%), var(--lover-message-bg);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.62), 0 8px 24px rgba(61, 27, 23, 0.2);
+        backdrop-filter: blur(4px);
+    }
+
+    .el-message--primary {
+        --lover-message-accent: #873a33;
+        --lover-message-bg: rgba(247, 230, 216, 0.97);
+        --lover-message-text: #72342f;
+    }
+
+    .el-message--success {
+        --lover-message-accent: #9a6f43;
+        --lover-message-bg: rgba(247, 235, 211, 0.97);
+        --lover-message-text: #704d31;
+    }
+
+    .el-message--info {
+        --lover-message-accent: #8a7167;
+        --lover-message-bg: rgba(241, 231, 218, 0.97);
+        --lover-message-text: #69554d;
+    }
+
+    .el-message--warning {
+        --lover-message-accent: #ad7335;
+        --lover-message-bg: rgba(249, 235, 205, 0.97);
+        --lover-message-text: #79502a;
+    }
+
+    .el-message--error {
+        --lover-message-accent: #a3483e;
+        --lover-message-bg: rgba(248, 226, 213, 0.97);
+        --lover-message-text: #853b34;
+    }
+
+    .el-message .el-message__icon,
+    .el-message .el-message__closeBtn {
+        color: var(--lover-message-accent);
+    }
+
+    .el-message .el-message__content {
+        color: var(--lover-message-text);
+        font-weight: 600;
+        line-height: 1.5;
+        letter-spacing: 0.02em;
+    }
+
+    .el-loading-mask {
+        background: radial-gradient(
+                circle at center,
+                rgba(255, 250, 239, 0.96),
+                rgba(245, 229, 205, 0.88) 58%,
+                rgba(226, 197, 164, 0.78)
+            ),
+            rgba(245, 232, 212, 0.86);
+        backdrop-filter: blur(2px);
+    }
+
+    .el-loading-spinner .circular {
+        box-sizing: border-box;
+        width: 48px;
+        height: 48px;
+        padding: 8px;
+        border: 1px solid rgba(157, 96, 70, 0.32);
+        border-radius: 50%;
+        background: rgba(255, 247, 231, 0.82);
+        box-shadow: 0 5px 16px rgba(88, 42, 34, 0.14), inset 0 0 0 3px rgba(183, 134, 94, 0.08);
+    }
+
+    .el-loading-spinner .path {
+        stroke: #873a33;
+        stroke-width: 3;
+    }
+
+    .el-loading-spinner .el-loading-text,
+    .el-loading-spinner i {
+        color: #72342f;
+    }
+}
+
 .p-lover-v2 {
     --el-color-primary: #873a33;
     --el-color-primary-light-3: #ad6b60;
@@ -26,7 +348,9 @@ body {
     --lover-gold: #b7865e;
     --lover-line: rgba(123, 72, 58, 0.28);
     --lover-paper: #f5e8d4;
-    min-height: 100vh;
+    height: 100vh;
+    min-height: 0;
+    overflow: hidden;
     color: var(--lover-ink);
     background:
         linear-gradient(90deg, rgba(48, 19, 18, 0.15), transparent 20%, transparent 80%, rgba(48, 19, 18, 0.15)),
@@ -77,6 +401,7 @@ body {
     }
 
     .el-table {
+        --el-fill-color-lighter: rgba(226, 196, 156, 0.2);
         --el-table-border-color: rgba(129, 82, 67, 0.2);
         --el-table-header-bg-color: rgba(231, 210, 181, 0.5);
         --el-table-row-hover-bg-color: rgba(245, 228, 203, 0.55);
@@ -88,6 +413,30 @@ body {
     .el-pagination {
         --el-pagination-button-bg-color: rgba(255, 249, 237, 0.78);
         --el-pagination-hover-color: var(--lover-red);
+    }
+}
+
+.m-lover-v2-scroll-container {
+    height: calc(100vh - 60px);
+    margin-top: 60px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    scrollbar-color: rgba(111, 55, 47, 0.72) rgba(82, 37, 34, 0.12);
+    scrollbar-gutter: stable;
+
+    &::-webkit-scrollbar-track {
+        background: rgba(82, 37, 34, 0.12);
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: rgba(111, 55, 47, 0.72);
+        background-clip: padding-box;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background: rgba(91, 39, 34, 0.88);
+        background-clip: padding-box;
     }
 }
 
@@ -454,6 +803,7 @@ body {
 
 .m-lover-v2-panel {
     position: relative;
+    margin-bottom: 1rem;
     box-sizing: border-box;
     border: 1px solid rgba(130, 75, 59, 0.34);
     border-radius: 2px;
@@ -494,43 +844,13 @@ body {
     margin-top: 28px;
 }
 
-.m-lover-v2-history-modal {
+.m-lover-v2-history-modal,
+.m-lover-v2-unit-modal {
     background: rgba(35, 16, 16, 0.66);
     backdrop-filter: blur(2px);
 }
 
 .m-lover-v2-history-dialog.el-dialog {
-    overflow: hidden;
-    border: 1px solid #b68a63;
-    border-radius: 2px;
-    outline: 4px solid rgba(86, 42, 34, 0.24);
-    outline-offset: 4px;
-    background:
-        linear-gradient(rgba(250, 240, 222, 0.98), rgba(243, 225, 199, 0.98)),
-        #f5e6d0;
-    box-shadow: 0 24px 70px rgba(31, 12, 11, 0.46), inset 0 0 46px rgba(131, 73, 49, 0.09);
-
-    .el-dialog__header {
-        margin: 0;
-        padding: 22px 26px 18px;
-        border-bottom: 1px solid rgba(126, 70, 54, 0.22);
-        background: linear-gradient(90deg, rgba(222, 191, 151, 0.22), transparent 64%);
-    }
-
-    .el-dialog__headerbtn {
-        top: 13px;
-        right: 15px;
-    }
-
-    .el-dialog__close {
-        color: #79433a;
-        font-size: 21px;
-    }
-
-    .el-dialog__body {
-        padding: 18px 26px 26px;
-    }
-
     .el-tabs__header {
         margin-bottom: 16px;
     }

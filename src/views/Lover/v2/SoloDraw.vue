@@ -19,15 +19,16 @@
                 <div class="u-team">
                     <TeamIdentity :team="team" show-slogan />
                     <el-tag :type="canDraw ? 'success' : 'info'">
-                        {{ canDraw ? "仍有独狼名额待抽取" : "当前没有可抽取名额" }}
+                        {{ drawStatusText }}
                     </el-tag>
                 </div>
                 <div class="u-draw-visual" :class="{ 'is-drawing': drawing }">
                     <FeatureBadge name="solo-draw" />
                     <div>
-                        <h3>{{ resultMember ? "独狼侠士已加入战队" : "开启属于你们的最后一块拼图" }}</h3>
+                        <h3>{{ drawTitle }}</h3>
                         <p v-if="resultMember">抽取结果已写入权威阵容，刷新页面也不会改变。</p>
-                        <p v-else>点击后立即发起真实抽取；提交期间不会重复请求，也不会在网络失败时伪造结果。</p>
+                        <p v-else-if="!soloDrawEnabled">运营将在开幕式统一开启，页面会自动刷新当前状态。</p>
+                        <p v-else>点击后立即抽取。</p>
                     </div>
                 </div>
                 <div v-if="resultMember" class="u-result">
@@ -42,7 +43,7 @@
                         :disabled="!canDraw"
                         @click="confirmDraw"
                     >
-                        {{ drawing ? "正在安全随机抽取" : "开启独狼盲盒" }}
+                        {{ drawButtonText }}
                     </el-button>
                 </div>
             </section>
@@ -85,7 +86,7 @@ import FeatureBadge from "@/components/rank/lover/v2/FeatureBadge.vue";
 import IntroductionText from "@/components/rank/lover/v2/IntroductionText.vue";
 import TeamIdentity from "@/components/rank/lover/v2/TeamIdentity.vue";
 import UserIdentity from "@/components/rank/lover/v2/UserIdentity.vue";
-import { formatDateTime, getErrorMessage } from "@/utils/lover-v2";
+import { formatDateTime } from "@/utils/lover-v2";
 
 export default {
     name: "LoverV2SoloDraw",
@@ -96,6 +97,7 @@ export default {
             historyLoading: false,
             draws: { list: [], count: 0, page: 1, pageSize: 20 },
             resultUnitId: null,
+            pollingTimer: null,
         };
     },
     computed: {
@@ -114,8 +116,24 @@ export default {
         slug() {
             return this.$store.state.slug;
         },
+        soloDrawEnabled() {
+            return Boolean(this.context?.solo_draw_enabled);
+        },
         canDraw() {
             return !this.contextError && (this.context?.actions?.includes("solo.draw") || false);
+        },
+        drawStatusText() {
+            if (!this.soloDrawEnabled) return "运营尚未开启独狼盲盒";
+            return this.canDraw ? "仍有独狼名额待抽取" : "当前没有可抽取名额";
+        },
+        drawTitle() {
+            if (this.resultMember) return "独狼侠士已加入战队";
+            if (!this.soloDrawEnabled) return "静候开幕式开启独狼盲盒";
+            return "开启属于你们的最后一块拼图";
+        },
+        drawButtonText() {
+            if (this.drawing) return "正在安全随机抽取";
+            return this.soloDrawEnabled ? "开启独狼盲盒" : "等待运营开启";
         },
         resultMember() {
             if (!this.resultUnitId) return null;
@@ -133,6 +151,16 @@ export default {
             immediate: true,
         },
     },
+    mounted() {
+        this.pollingTimer = window.setInterval(() => {
+            this.$store.dispatch("loadV2Context", { force: true }).catch((error) => {
+                console.error("[LoverV2SoloDraw.contextPolling]", error);
+            });
+        }, 15000);
+    },
+    beforeUnmount() {
+        window.clearInterval(this.pollingTimer);
+    },
     methods: {
         formatDateTime,
         async loadDraws() {
@@ -144,6 +172,8 @@ export default {
                     page_size: this.draws.pageSize,
                 });
                 this.draws = { ...this.draws, ...res.data.data, pageSize: res.data.data.page_size };
+            } catch (error) {
+                console.error("[LoverV2SoloDraw.loadDraws]", error);
             } finally {
                 this.historyLoading = false;
             }
@@ -155,13 +185,17 @@ export default {
                 ?.members?.[0];
         },
         async confirmDraw() {
+            if (!this.canDraw) return;
+            const confirmed = await this.$confirm(
+                "抽取会立即占用一名符合当前阵容限制的独狼候选，队长不能自行重抽。确定开启吗？",
+                "开启独狼盲盒",
+                { type: "warning", confirmButtonText: "确认抽取", cancelButtonText: "再等等" }
+            )
+                .then(() => true)
+                .catch(() => false);
+            if (!confirmed) return;
+            this.drawing = true;
             try {
-                await this.$confirm(
-                    "抽取会立即占用一名符合当前阵容限制的独狼候选，队长不能自行重抽。确定开启吗？",
-                    "开启独狼盲盒",
-                    { type: "warning", confirmButtonText: "确认抽取", cancelButtonText: "再等等" }
-                );
-                this.drawing = true;
                 const res = await drawSolo(this.eventId, this.team.id);
                 this.resultUnitId = res.data.data.selected_unit_id;
                 await Promise.all([
@@ -171,7 +205,7 @@ export default {
                 await this.loadDraws();
                 this.$message.success("独狼抽取完成，成员已加入战队");
             } catch (error) {
-                if (error !== "cancel") this.$message.error(getErrorMessage(error));
+                console.error("[LoverV2SoloDraw.confirmDraw]", error);
             } finally {
                 this.drawing = false;
             }

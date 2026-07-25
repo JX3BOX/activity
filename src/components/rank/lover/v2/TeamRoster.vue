@@ -5,7 +5,7 @@
                 <strong>{{ team.member_count || team.members?.length || 0 }} / {{ expectedMemberCount }} 人</strong>
                 <span>当前治疗 {{ team.healer_count || 0 }} 人</span>
             </div>
-            <el-tag :type="formationTagType" size="large">
+            <el-tag class="u-formation-status" :type="formationTagType" size="large">
                 {{ formationStatusMap[team.formation_status] || team.formation_status }}
             </el-tag>
         </div>
@@ -34,12 +34,11 @@
                                 :disabled="removingUnitId !== null"
                                 @click="$emit('remove-unit', unit)"
                             >
-                                解除归属
+                                移出战队
                             </el-button>
                         </div>
                         <div v-for="member in unit.members" :key="member.user_id" class="u-unit-member">
-                            <UserIdentity :user="member" compact />
-                            <IntroductionText v-if="member.introduction" :text="member.introduction" compact />
+                            <UserIdentity :user="member" compact :show-captain="unit.type === 'lover'" />
                         </div>
                     </div>
                 </div>
@@ -54,19 +53,16 @@
 
 <script>
 import FeatureBadge from "./FeatureBadge.vue";
-import IntroductionText from "./IntroductionText.vue";
 import UserIdentity from "./UserIdentity.vue";
-import {
-    formationStatusMap,
-    registrationTypeMap,
-} from "@/utils/lover-v2";
+import { formationStatusMap, registrationTypeMap } from "@/utils/lover-v2";
 
 export default {
     name: "LoverV2TeamRoster",
-    components: { FeatureBadge, IntroductionText, UserIdentity },
+    components: { FeatureBadge, UserIdentity },
     emits: ["remove-unit"],
     props: {
         team: { type: Object, required: true },
+        soloDrawEnabled: { type: Boolean, default: false },
         removableUnitIds: { type: Array, default: () => [] },
         removingUnitId: { type: [Number, String], default: null },
     },
@@ -105,7 +101,7 @@ export default {
             return {
                 lover: "情缘核心尚未建立",
                 mate: "去组队大厅邀请完整搭子队",
-                solo: "由情缘队长开启独狼盲盒",
+                solo: this.soloDrawEnabled ? "由情缘队长开启独狼盲盒" : "等待运营开启独狼盲盒",
             }[type];
         },
     },
@@ -136,6 +132,13 @@ export default {
         color: #9a817a;
         font-size: 13px;
     }
+}
+
+.u-formation-status.el-tag {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
 }
 
 .m-slots {

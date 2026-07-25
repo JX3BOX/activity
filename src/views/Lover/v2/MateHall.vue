@@ -67,14 +67,7 @@
                     />
                 </template>
                 <template v-else>
-                    <MateUnitCard
-                        v-for="item in hall.list"
-                        :key="item.id"
-                        :unit="item"
-                        :loading="sendingId === item.id"
-                        :disabled="!canTeamInvite || sendingId !== null"
-                        @invite="inviteUnit"
-                    />
+                    <MateUnitCard v-for="item in hall.list" :key="item.id" :unit="item" @view="openUnitDetail" />
                 </template>
             </div>
             <EmptyState
@@ -114,7 +107,10 @@
             </div>
         </section>
 
-        <section v-else-if="registrationType === 'solo' && registrationApproved" class="m-role-guide is-solo m-lover-v2-panel">
+        <section
+            v-else-if="registrationType === 'solo' && registrationApproved"
+            class="m-role-guide is-solo m-lover-v2-panel"
+        >
             <FeatureBadge name="solo" />
             <div class="u-role-copy">
                 <span class="u-eyebrow">独狼侠士 · 静候天命</span>
@@ -168,7 +164,10 @@
                 <span class="u-eyebrow">{{ isLogin ? "尚未报名 · 先行登记" : "尚未登录 · 先识身份" }}</span>
                 <h3>{{ isLogin ? "完成报名后，这里会显示你的组队入口" : "登录并报名后，再来这里寻找队友" }}</h3>
                 <p>不同身份有不同的组队方式，这里只会展示与你当前报名身份有关的内容。</p>
-                <el-button type="primary" @click="$router.push({ name: 'v2-register', params: { slug: $route.params.slug } })">
+                <el-button
+                    type="primary"
+                    @click="$router.push({ name: 'v2-register', params: { slug: $route.params.slug } })"
+                >
                     前往报名参赛
                 </el-button>
             </div>
@@ -206,8 +205,12 @@
                                 v-if="historyDirection === 'outgoing' && scope.row.type === 'team_join'"
                                 class="m-history-members"
                             >
-                                <div v-for="member in historyUnitMembers(scope.row)" :key="member.user_id">
-                                    <UserIdentity :user="member" compact :show-meta="false" />
+                                <div
+                                    v-for="member in historyUnitMembers(scope.row)"
+                                    :key="member.user_id"
+                                    class="u-history-member-card"
+                                >
+                                    <UserIdentity :user="member" compact :show-meta="false" :show-captain="false" />
                                     <IntroductionText :text="member.introduction" compact plain />
                                 </div>
                                 <span v-if="!historyUnitMembers(scope.row).length" class="u-history-muted">
@@ -231,7 +234,9 @@
                         </template>
                     </el-table-column>
                     <el-table-column label="状态" width="110">
-                        <template #default="scope">{{ invitationStatusMap[scope.row.status] || scope.row.status }}</template>
+                        <template #default="scope">{{
+                            invitationStatusMap[scope.row.status] || scope.row.status
+                        }}</template>
                     </el-table-column>
                     <el-table-column label="时间" width="150">
                         <template #default="scope">{{ formatDateTime(scope.row.created_at) }}</template>
@@ -254,6 +259,16 @@
                 />
             </div>
         </el-dialog>
+
+        <MateUnitDetailDialog
+            v-if="selectedUnit"
+            v-model="unitDetailVisible"
+            :unit="selectedUnit"
+            :loading="sendingId === selectedUnit.id"
+            :disabled="!canTeamInvite"
+            @invite="inviteUnit"
+            @closed="clearUnitDetail"
+        />
     </LoverV2Layout>
 </template>
 
@@ -276,6 +291,7 @@ import InvitationInbox from "@/components/rank/lover/v2/InvitationInbox.vue";
 import IntroductionText from "@/components/rank/lover/v2/IntroductionText.vue";
 import MateRegistrationCard from "@/components/rank/lover/v2/MateRegistrationCard.vue";
 import MateUnitCard from "@/components/rank/lover/v2/MateUnitCard.vue";
+import MateUnitDetailDialog from "@/components/rank/lover/v2/MateUnitDetailDialog.vue";
 import TeamIdentity from "@/components/rank/lover/v2/TeamIdentity.vue";
 import UserIdentity from "@/components/rank/lover/v2/UserIdentity.vue";
 import { formatDateTime } from "@/utils/lover-v2";
@@ -290,6 +306,7 @@ export default {
         IntroductionText,
         MateRegistrationCard,
         MateUnitCard,
+        MateUnitDetailDialog,
         TeamIdentity,
         UserIdentity,
     },
@@ -309,6 +326,8 @@ export default {
             historyLoading: false,
             unitActionLoading: false,
             history: { list: [], count: 0, page: 1, pageSize: 20 },
+            unitDetailVisible: false,
+            selectedUnit: null,
             invitationStatusMap: {
                 pending: "等待处理",
                 accepted: "已接受",
@@ -347,12 +366,7 @@ export default {
             return Boolean(this.context?.registration?.mate_card_data);
         },
         hallKind() {
-            if (
-                this.registrationType === "mate" &&
-                this.hasMateCard &&
-                !this.context?.unit &&
-                !this.context?.team
-            ) {
+            if (this.registrationType === "mate" && this.hasMateCard && !this.context?.unit && !this.context?.team) {
                 return "mate";
             }
             if (!this.registrationApproved) return "";
@@ -363,9 +377,7 @@ export default {
             return `${this.eventId}:${this.hallKind}`;
         },
         hallCanInvite() {
-            return this.hallKind === "mate"
-                ? this.registrationApproved && this.cooldown === 0
-                : this.canTeamInvite;
+            return this.hallKind === "mate" ? this.registrationApproved && this.cooldown === 0 : this.canTeamInvite;
         },
         hallPermissionText() {
             if (this.hallKind === "mate") {
@@ -387,7 +399,8 @@ export default {
                     ? "按双方问卷匹配出的契合度，寻一位合拍的搭子结伴。"
                     : "报名审核期间也可以先查看问卷匹配结果；审核通过后才能发出邀请。";
             }
-            if (this.context?.registration && !this.registrationApproved) return "报名通过审核后，这里会出现与你身份对应的组队方式。";
+            if (this.context?.registration && !this.registrationApproved)
+                return "报名通过审核后，这里会出现与你身份对应的组队方式。";
             if (this.registrationType === "mate") return "请先返回报名页完成搭子问卷，再来查看契合度匹配结果。";
             if (this.registrationType === "lover") return "为你们的情缘队伍寻一支合拍的两人搭子队，共赴四人阵容。";
             return this.isLogin
@@ -399,6 +412,7 @@ export default {
                 !this.contextError &&
                 this.isLogin &&
                 this.registrationApproved &&
+                !this.context?.team &&
                 (this.registrationType === "mate" || Boolean(this.context?.invitations?.length))
             );
         },
@@ -412,25 +426,36 @@ export default {
         },
         joinedTeamTitle() {
             if (this.registrationType === "solo") return "缘分已经揭晓，你已加入五人战队";
-            if (this.registrationType === "mate") return "你们已经携手加入五人战队";
+            if (this.registrationType === "mate") {
+                return this.context?.team?.formation_status === "building"
+                    ? "你们已经携手加入四人阵容"
+                    : "你们已经携手加入五人战队";
+            }
             return this.context?.team?.formation_status === "locked" ? "五人阵容已经锁定" : "你们的战队已经集结成形";
         },
         joinedTeamDescription() {
             if (this.context?.team?.formation_status === "locked") {
                 return "组队已经完成，后续请在竞赛控制台查看战斗安排，并按时完成就绪与配装上报。";
             }
+            if (this.registrationType === "mate" && this.context?.team?.formation_status === "building") {
+                return "情缘双人组与你们的搭子队已组成四人阵容，等待独狼补齐第五位队友；前往战队页面可查看当前阵容或让搭子队整体退出。";
+            }
             return "无需继续在大厅寻找队友；前往战队页面即可查看当前阵容与接下来的集结进度。";
         },
         registrationStatusLabel() {
-            return {
-                pending_review: "等待审核",
-                rejected: "需要修改",
-                draft: "尚未提交",
-            }[this.context?.registration?.status] || "尚未通过";
+            return (
+                {
+                    pending_review: "等待审核",
+                    rejected: "需要修改",
+                    draft: "尚未提交",
+                }[this.context?.registration?.status] || "尚未通过"
+            );
         },
         registrationStatusTitle() {
             if (this.context?.registration?.status === "draft") return "报名资料还没有提交";
-            return this.context?.registration?.status === "rejected" ? "报名资料需要修改后重新提交" : "报名正在等待审核";
+            return this.context?.registration?.status === "rejected"
+                ? "报名资料需要修改后重新提交"
+                : "报名正在等待审核";
         },
         registrationStatusDescription() {
             if (this.context?.registration?.status === "draft") {
@@ -461,7 +486,9 @@ export default {
         formatDateTime,
         async refreshContext() {
             if (!this.isLogin) return;
-            await this.$store.dispatch("loadV2Context", { force: true }).catch(() => null);
+            await this.$store.dispatch("loadV2Context", { force: true }).catch((error) => {
+                console.error("[LoverV2MateHall.refreshContext]", error);
+            });
         },
         async loadCurrentHall() {
             if (!this.eventId || !this.hallKind) {
@@ -476,7 +503,8 @@ export default {
                 const res = await getter(this.eventId, { page: this.hall.page, page_size: this.hall.pageSize });
                 this.hall = { ...this.hall, ...res.data.data, pageSize: res.data.data.page_size };
                 if (this.hallKind === "mate") this.syncCooldownFromHall(this.hall.list);
-            } catch (_error) {
+            } catch (error) {
+                console.error("[LoverV2MateHall.loadCurrentHall]", error);
                 this.hall.list = [];
                 this.hall.count = 0;
                 this.hallUnavailable = true;
@@ -510,7 +538,8 @@ export default {
                 this.startCooldown();
                 await Promise.all([this.refreshContext(), this.loadCurrentHall()]);
                 this.$message.success("搭子邀请已发出，对方接受后会自动组成两人队");
-            } catch (_error) {
+            } catch (error) {
+                console.error("[LoverV2MateHall.inviteMate]", error);
                 // 请求错误由统一拦截器展示。
             } finally {
                 this.sendingId = null;
@@ -521,13 +550,22 @@ export default {
             this.sendingId = unit.id;
             try {
                 await sendTeamInvitation(this.eventId, this.context.team.id, unit.id);
-                await this.refreshContext();
+                await Promise.all([this.refreshContext(), this.loadCurrentHall()]);
+                this.unitDetailVisible = false;
                 this.$message.success("组队邀请已发出，等待搭子队长确认");
-            } catch (_error) {
+            } catch (error) {
+                console.error("[LoverV2MateHall.inviteUnit]", error);
                 // 请求错误由统一拦截器展示。
             } finally {
                 this.sendingId = null;
             }
+        },
+        openUnitDetail(unit) {
+            this.selectedUnit = unit;
+            this.unitDetailVisible = true;
+        },
+        clearUnitDetail() {
+            this.selectedUnit = null;
         },
         async confirmDissolve() {
             if (this.unitActionLoading || !this.actions.includes("unit.dissolve")) return;
@@ -541,7 +579,9 @@ export default {
                 await dissolveUnit(this.eventId, this.context.unit.id);
                 await this.refreshContext();
                 this.$message.success("搭子队已解散，可以重新寻找合拍的搭子");
-            } catch (_error) {
+            } catch (error) {
+                if (error !== "cancel" && error !== "close")
+                    console.error("[LoverV2MateHall.confirmDissolve]", error);
                 // 取消确认无需提示，请求错误由统一拦截器展示。
             } finally {
                 this.unitActionLoading = false;
@@ -562,7 +602,9 @@ export default {
                 }
                 await Promise.all([this.refreshContext(), this.loadCurrentHall()]);
                 this.$message.success(action === "accept" ? "邀请已接受，组队状态已刷新" : "已拒绝邀请");
-            } catch (_error) {
+            } catch (error) {
+                if (error !== "cancel" && error !== "close")
+                    console.error("[LoverV2MateHall.handleInvitation]", error);
                 // 取消确认无需提示，请求错误由统一拦截器展示。
             } finally {
                 this.invitationLoadingId = null;
@@ -579,7 +621,8 @@ export default {
                     page_size: this.history.pageSize,
                 });
                 this.history = { ...this.history, ...res.data.data, pageSize: res.data.data.page_size };
-            } catch (_error) {
+            } catch (error) {
+                console.error("[LoverV2MateHall.loadHistory]", error);
                 // 请求错误由统一拦截器展示。
             } finally {
                 this.historyLoading = false;
@@ -590,13 +633,15 @@ export default {
         },
         historyMember(invitation) {
             const summary = this.historySummary(invitation);
-            return summary?.member || {
-                user_id:
-                    this.historyDirection === "incoming"
-                        ? invitation.sender_uid
-                        : invitation.target_summary?.member?.user_id,
-                display_name: this.historyDirection === "incoming" ? "邀请方侠士" : "受邀侠士",
-            };
+            return (
+                summary?.member || {
+                    user_id:
+                        this.historyDirection === "incoming"
+                            ? invitation.sender_uid
+                            : invitation.target_summary?.member?.user_id,
+                    display_name: this.historyDirection === "incoming" ? "邀请方侠士" : "受邀侠士",
+                }
+            );
         },
         historyUnitMembers(invitation) {
             return invitation.target_summary?.members || [];
@@ -660,8 +705,7 @@ export default {
     padding: 42px 48px;
 
     &.is-solo {
-        background:
-            radial-gradient(circle at 18% 50%, rgba(152, 92, 66, 0.13), transparent 28%),
+        background: radial-gradient(circle at 18% 50%, rgba(152, 92, 66, 0.13), transparent 28%),
             linear-gradient(135deg, rgba(255, 252, 241, 0.96), rgba(241, 221, 191, 0.9));
     }
 }
@@ -709,22 +753,24 @@ export default {
     gap: 16px;
 }
 
-.m-history-members,
 .m-history-member {
     display: grid;
     gap: 9px;
 }
 
-.m-history-members > div {
+.m-history-members {
     display: grid;
-    gap: 6px;
-    padding-bottom: 8px;
-    border-bottom: 1px dashed #ead9cf;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
 
-    &:last-child {
-        padding-bottom: 0;
-        border-bottom: 0;
-    }
+.u-history-member-card {
+    display: grid;
+    min-width: 0;
+    gap: 7px;
+    padding: 10px;
+    border-left: 2px solid rgba(150, 78, 61, 0.35);
+    background: rgba(250, 238, 215, 0.62);
 }
 
 .u-history-muted {
@@ -794,6 +840,10 @@ export default {
         align-items: flex-start;
         flex-direction: column;
         gap: 4px;
+    }
+
+    .m-history-members {
+        grid-template-columns: 1fr;
     }
 }
 </style>

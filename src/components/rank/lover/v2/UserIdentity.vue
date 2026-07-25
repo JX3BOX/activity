@@ -1,6 +1,17 @@
 <template>
     <div class="c-lover-user" :class="{ 'is-compact': compact }">
-        <el-avatar class="u-avatar" :size="compact ? 36 : 46" :src="avatar" />
+        <a
+            v-if="profileUrl"
+            class="u-avatar-link"
+            :href="profileUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            :aria-label="`在新标签页查看 ${displayName} 的个人主页`"
+            @click.stop
+        >
+            <el-avatar class="u-avatar" :size="compact ? 36 : 46" :src="avatar" />
+        </a>
+        <el-avatar v-else class="u-avatar" :size="compact ? 36 : 46" :src="avatar" />
         <div class="u-main">
             <div class="u-name-row">
                 <span class="u-name">{{ displayName }}</span>
@@ -76,6 +87,9 @@ export default {
         avatar() {
             return showAvatar(this.user?.avatar || "https://cdn.jx3box.com/image/common/avatar.png");
         },
+        profileUrl() {
+            return this.userId ? `https://www.jx3box.com/author/${encodeURIComponent(this.userId)}` : "";
+        },
     },
     methods: {
         async copyUid() {
@@ -94,10 +108,28 @@ export default {
     align-items: center;
     gap: 12px;
 
+    .u-avatar-link {
+        display: inline-flex;
+        flex: 0 0 auto;
+        border-radius: 50%;
+        outline: none;
+
+        &:focus-visible {
+            box-shadow: 0 0 0 2px rgba(135, 58, 51, 0.44);
+        }
+
+        &:hover .u-avatar {
+            border-color: rgba(135, 58, 51, 0.62);
+            box-shadow: 0 3px 10px rgba(91, 43, 36, 0.18);
+            transform: translateY(-1px);
+        }
+    }
+
     .u-avatar {
         flex: 0 0 auto;
         border: 1px solid rgba(143, 86, 72, 0.2);
         background: #f1e4da;
+        transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
     }
 
     .u-main {

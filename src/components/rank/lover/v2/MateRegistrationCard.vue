@@ -1,10 +1,15 @@
 <template>
     <article class="c-lover-mate-card m-lover-v2-panel">
         <div class="u-card-head">
-            <UserIdentity :user="member" :show-captain="false" />
-            <div class="u-match-score">
-                <strong>{{ matchScore }}</strong>
-                <span>契合度</span>
+            <UserIdentity :user="member" :show-captain="false" :show-meta="false" />
+            <div class="u-player-meta">
+                <div class="u-mmr">
+                    <span>MMR</span>
+                    <strong>{{ peakScore }}</strong>
+                </div>
+                <el-tag size="small" :type="member?.combat_role === 'healer' ? 'success' : 'danger'" effect="light">
+                    {{ combatRoleText }}
+                </el-tag>
             </div>
         </div>
         <div class="u-tags">
@@ -18,24 +23,34 @@
             <span>江湖兴趣</span>
             <em v-for="item in mateCard.interests" :key="item">{{ item }}</em>
         </div>
-        <blockquote v-if="mateCard.judgment" class="u-judgment">{{ mateCard.judgment }}</blockquote>
-        <IntroductionText :text="registration.introduction" />
+        <div class="u-profile-copy" :class="{ 'has-judgment': mateCard.judgment }">
+            <blockquote v-if="mateCard.judgment" class="u-judgment">{{ mateCard.judgment }}</blockquote>
+            <IntroductionText :text="registration.introduction" plain />
+        </div>
         <p v-if="hasIncomingInvitation" class="u-incoming-tip">对方已经向你发出邀请，可在页面上方的邀请箱处理。</p>
-        <el-button
-            type="primary"
-            plain
-            :loading="loading"
-            :disabled="invitationDisabled"
-            @click="$emit('invite', registration)"
-        >
-            {{ invitationButtonText }}
-        </el-button>
+        <div class="u-card-actions">
+            <div class="u-match-score" :aria-label="`契合度 ${matchScore} 分`">
+                <span>契合度</span>
+                <strong>{{ matchScore }}</strong>
+                <small>分</small>
+            </div>
+            <el-button
+                class="u-invite-button"
+                type="primary"
+                :loading="loading"
+                :disabled="invitationDisabled"
+                @click="$emit('invite', registration)"
+            >
+                {{ invitationButtonText }}
+            </el-button>
+        </div>
     </article>
 </template>
 
 <script>
 import IntroductionText from "./IntroductionText.vue";
 import UserIdentity from "./UserIdentity.vue";
+import { combatRoleMap } from "@/utils/lover-v2";
 
 export default {
     name: "LoverV2MateRegistrationCard",
@@ -58,6 +73,14 @@ export default {
             const score = Number(this.registration.match_score);
             return Number.isFinite(score) ? Math.round(score) : "--";
         },
+        peakScore() {
+            if (this.member?.arena_peak_score == null) return "--";
+            const score = Number(this.member?.arena_peak_score);
+            return Number.isFinite(score) ? Math.round(score) : "--";
+        },
+        combatRoleText() {
+            return combatRoleMap[this.member?.combat_role] || "职责未填";
+        },
         viewer() {
             return this.registration.viewer || null;
         },
@@ -77,12 +100,7 @@ export default {
             return Boolean(this.viewer?.actions?.includes("mate.invite"));
         },
         invitationDisabled() {
-            return (
-                this.disabled ||
-                this.effectiveCooldown > 0 ||
-                this.hasOutgoingInvitation ||
-                !this.viewerCanInvite
-            );
+            return this.disabled || this.effectiveCooldown > 0 || this.hasOutgoingInvitation || !this.viewerCanInvite;
         },
         invitationButtonText() {
             if (this.hasOutgoingInvitation) return "已发出邀请";
@@ -104,17 +122,27 @@ export default {
     padding: 20px;
     color: #654842;
 
-    > .el-button {
-        margin-top: auto;
-        --el-button-text-color: #7d352f;
-        --el-button-bg-color: rgba(255, 249, 237, 0.92);
-        --el-button-border-color: #a75a4e;
-        --el-button-hover-text-color: #fff4df;
-        --el-button-hover-bg-color: #8b3c34;
-        --el-button-hover-border-color: #8b3c34;
-        --el-button-disabled-text-color: #a68d86;
-        --el-button-disabled-bg-color: rgba(239, 225, 204, 0.72);
-        --el-button-disabled-border-color: rgba(151, 112, 99, 0.28);
+    .u-invite-button.el-button {
+        width: 100%;
+        border-color: #8d4036;
+        background: linear-gradient(180deg, #a24d41, #7d342d);
+        box-shadow: inset 0 0 0 1px rgba(255, 226, 190, 0.2);
+        color: #fff8ea;
+
+        &:not(.is-disabled):hover,
+        &:not(.is-disabled):focus {
+            border-color: #b86b58;
+            background: linear-gradient(180deg, #b65b4d, #8b3c34);
+            color: #fffdf6;
+        }
+
+        &.is-disabled {
+            border-color: rgba(151, 112, 99, 0.32);
+            background: rgba(239, 225, 204, 0.78);
+            box-shadow: none;
+            color: #826a63;
+            opacity: 1;
+        }
     }
 
     .u-tags {
@@ -138,32 +166,63 @@ export default {
 
 .u-card-head {
     display: flex;
-    align-items: flex-start;
+    min-width: 0;
+    align-items: center;
     justify-content: space-between;
-    gap: 12px;
+    gap: 16px;
+
+    :deep(.c-lover-user) {
+        min-width: 0;
+        flex: 1;
+    }
 }
 
-.u-match-score {
+.u-player-meta {
     display: grid;
-    min-width: 58px;
-    place-items: center;
-    padding: 8px 10px;
-    border: 1px solid rgba(155, 81, 67, 0.32);
-    border-radius: 10px;
-    background: linear-gradient(145deg, rgba(255, 249, 235, 0.96), rgba(243, 220, 199, 0.8));
+    flex: 0 0 auto;
+    justify-items: end;
+    gap: 7px;
 
-    strong {
-        color: #8b3c34;
-        font-family: "ZCOOL XiaoWei", "STSong", serif;
-        font-size: 25px;
-        font-weight: 400;
-        line-height: 1;
+    .u-mmr {
+        display: flex;
+        align-items: baseline;
+        gap: 6px;
+
+        span {
+            color: #a18479;
+            font-size: 10px;
+            letter-spacing: 0.08em;
+        }
+
+        strong {
+            color: #765049;
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1;
+        }
+    }
+}
+
+.u-profile-copy {
+    padding: 12px 14px;
+    border-left: 3px solid rgba(166, 77, 61, 0.58);
+    background: linear-gradient(90deg, rgba(244, 218, 191, 0.34), transparent 72%), rgba(255, 249, 238, 0.78);
+    box-shadow: inset 0 0 0 1px rgba(180, 122, 98, 0.08);
+
+    :deep(.c-lover-introduction.is-plain) {
+        display: block;
+
+        .u-label {
+            margin-bottom: 4px;
+            color: #9a6659;
+            font-weight: 600;
+        }
     }
 
-    span {
-        margin-top: 4px;
-        color: #a27e72;
-        font-size: 11px;
+    &.has-judgment :deep(.c-lover-introduction.is-plain) {
+        margin-top: 10px;
+        padding-top: 9px;
+        border-top: 1px dashed rgba(163, 99, 80, 0.24);
     }
 }
 
@@ -190,13 +249,53 @@ export default {
 
 .u-judgment {
     margin: 0;
-    padding: 10px 13px;
-    border-left: 3px solid rgba(148, 75, 64, 0.45);
-    background: rgba(255, 249, 238, 0.76);
-    color: #80635b;
+    padding: 0;
+    color: #9b4438;
     font-family: "ZCOOL XiaoWei", "STSong", serif;
     font-size: 14px;
     line-height: 1.75;
+}
+
+.u-card-actions {
+    display: grid;
+    gap: 10px;
+    margin-top: auto;
+}
+
+.u-match-score {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 12px;
+    background: linear-gradient(90deg, transparent, rgba(174, 102, 75, 0.12), transparent);
+
+    &::before,
+    &::after {
+        width: 42px;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(151, 83, 65, 0.42));
+        content: "";
+    }
+
+    &::after {
+        background: linear-gradient(90deg, rgba(151, 83, 65, 0.42), transparent);
+    }
+
+    span,
+    small {
+        color: #9a7469;
+        font-size: 11px;
+        letter-spacing: 0.08em;
+    }
+
+    strong {
+        color: #8b3c34;
+        font-family: "ZCOOL XiaoWei", "STSong", serif;
+        font-size: 28px;
+        font-weight: 400;
+        line-height: 1;
+    }
 }
 
 .u-incoming-tip {

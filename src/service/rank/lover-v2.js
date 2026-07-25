@@ -27,7 +27,7 @@ export const updateRegistration = (eventId, id, data) =>
 export const cancelRegistration = (eventId, id) => request().delete(`${base(eventId)}/registrations/${id}`);
 
 export const getMateHall = (eventId, params) => request().get(`${base(eventId)}/mate-hall`, { params });
-export const getMateUnitHall = (eventId, params) => publicRequest().get(`${base(eventId)}/mate-unit-hall`, { params });
+export const getMateUnitHall = (eventId, params) => request().get(`${base(eventId)}/mate-unit-hall`, { params });
 export const getInvitations = (eventId, params) => request().get(`${base(eventId)}/invitations/me`, { params });
 export const sendMateInvitation = (eventId, registrationId) =>
     request().post(`${base(eventId)}/mate-invitations`, { target_registration_id: registrationId });
@@ -88,6 +88,20 @@ export const saveMatchMemberConfig = (eventId, matchId, member) =>
 export const lockMatchTeamConfig = (eventId, matchId) =>
     request().post(`${base(eventId)}/matches/${matchId}/team-config/lock`, {});
 
+export const getEventCards = (eventId, params) => publicRequest().get(`${base(eventId)}/cards`, { params });
+export const getAllEventCards = async (eventId) => {
+    const pageSize = 100;
+    const firstRes = await getEventCards(eventId, { page: 1, page_size: pageSize });
+    const firstPage = firstRes.data.data;
+    const totalPages = Math.ceil(Number(firstPage.count || 0) / Number(firstPage.page_size || pageSize));
+    if (totalPages <= 1) return firstPage.list || [];
+    const rest = await Promise.all(
+        Array.from({ length: totalPages - 1 }, (_, index) =>
+            getEventCards(eventId, { page: index + 2, page_size: pageSize })
+        )
+    );
+    return [firstRes, ...rest].flatMap((res) => res.data.data.list || []);
+};
 export const getCardDraws = (eventId, matchId, params) =>
     publicRequest().get(`${base(eventId)}/matches/${matchId}/card-draws`, { params });
 export const drawCard = (eventId, matchId) => request().post(`${base(eventId)}/matches/${matchId}/card-draws`, {});

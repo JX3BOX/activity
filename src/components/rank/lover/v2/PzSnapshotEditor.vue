@@ -57,7 +57,7 @@
 import { getPz } from "@/service/rank/pz";
 import { __Root } from "@/utils/config";
 import { buildPzSnapshot, parsePzId } from "@/utils/lover-v2-pz";
-import { formatDateTime, getErrorMessage } from "@/utils/lover-v2";
+import { formatDateTime } from "@/utils/lover-v2";
 import EmptyState from "./EmptyState.vue";
 import PzSnapshotFrame from "./PzSnapshotFrame.vue";
 
@@ -69,6 +69,7 @@ export default {
         snapshot: { type: Object, default: null },
         memberName: { type: String, default: "队员" },
         canEdit: { type: Boolean, default: false },
+        disabledDescription: { type: String, default: "" },
         loading: { type: Boolean, default: false },
     },
     data: function () {
@@ -84,7 +85,8 @@ export default {
             return this.candidate || this.snapshot;
         },
         emptyDescription() {
-            return this.canEdit ? "请先读取你的魔盒配装方案" : "这位队员还没有提交本场配装";
+            if (this.canEdit) return "请先读取你的魔盒配装方案";
+            return this.disabledDescription || "这位队员还没有提交本场配装";
         },
         sourceUrl() {
             const id = this.previewSnapshot?.source?.id;
@@ -119,11 +121,19 @@ export default {
             try {
                 const res = await getPz(id);
                 const schema = res?.data?.data;
-                if (!schema) throw new Error(res?.data?.msg || "没有读取到该配装，请确认它存在且你有查看权限");
-                this.candidate = buildPzSnapshot(schema, id);
+                if (!schema) {
+                    this.errorMessage = "没有读取到该配装，请确认它存在且你有查看权限";
+                    return;
+                }
+                try {
+                    this.candidate = buildPzSnapshot(schema, id);
+                } catch (error) {
+                    console.error("[LoverV2PzSnapshotEditor.buildSnapshot]", error);
+                    this.errorMessage = error?.message || "配装数据格式无效，请更换一份配装";
+                }
             } catch (error) {
+                console.error("[LoverV2PzSnapshotEditor.loadSource]", error);
                 this.candidate = null;
-                this.errorMessage = getErrorMessage(error, "配装读取失败，请确认它存在且你有查看权限");
             } finally {
                 this.reading = false;
             }

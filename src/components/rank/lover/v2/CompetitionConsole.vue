@@ -21,8 +21,8 @@
                     <strong>{{ match.team1_game_wins }} : {{ match.team2_game_wins }}</strong>
                     <TeamIdentity :team="opponent(match)" compact />
                 </div>
-                <div class="u-room">
-                    <span>房间 {{ match.room_no || "待公布" }}</span>
+                <div class="u-note">
+                    <span v-if="match.remark">{{ match.remark }}</span>
                     <span>{{ readyLabel(match) }}</span>
                 </div>
                 <el-button type="primary" @click="$emit('open-match', match)">
@@ -113,7 +113,7 @@ export default {
 }
 
 .u-time,
-.u-room {
+.u-note {
     display: flex;
     flex-direction: column;
     gap: 5px;
