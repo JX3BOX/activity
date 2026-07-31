@@ -152,14 +152,7 @@ export default {
                 throw new Error("问卷返回的数据结构不完整，请重新确认开始匹配。");
             }
             const variables = data.variables;
-            if (typeof data.tuilanId !== "string" || !/^\d+$/.test(data.tuilanId)) {
-                throw new Error("问卷返回的推栏号无效，请返回问卷重新填写。");
-            }
-            if (String(variables.tuilan_id) !== data.tuilanId) {
-                throw new Error("问卷身份信息不一致，请返回问卷重新填写。");
-            }
-
-            const tuilanId = data.tuilanId;
+            const tuilanId = typeof data.tuilanId === "string" ? data.tuilanId.trim() : "";
             return {
                 tuilanId,
                 profile: {

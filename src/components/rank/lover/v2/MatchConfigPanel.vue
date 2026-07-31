@@ -66,6 +66,7 @@
                     :snapshot="selectedMember.pz_snapshot"
                     :member-name="memberName(selectedMember)"
                     :can-edit="canEditMember(selectedMember)"
+                    :restrictions="selectedRestrictions"
                     :disabled-description="updateDisabledReason"
                     :loading="loading"
                     @submit="saveMemberSnapshot(selectedMember, $event)"
@@ -110,6 +111,7 @@ export default {
         isCaptain: { type: Boolean, default: false },
         canUpdate: { type: Boolean, default: false },
         canLock: { type: Boolean, default: false },
+        restrictions: { type: Object, default: () => ({}) },
         updateDisabledReason: { type: String, default: "" },
         loading: { type: Boolean, default: false },
         refreshing: { type: Boolean, default: false },
@@ -140,6 +142,9 @@ export default {
         allSubmitted() {
             if (this.record?.progress?.complete != null) return Boolean(this.record.progress.complete);
             return Boolean(this.memberForms.length) && this.missingMembers.length === 0;
+        },
+        selectedRestrictions() {
+            return this.restrictions?.[Number(this.selectedUid)] || [];
         },
     },
     watch: {

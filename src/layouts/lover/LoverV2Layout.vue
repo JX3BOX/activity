@@ -1,7 +1,7 @@
 <template>
     <div class="p-lover-v2">
         <CommonHeader></CommonHeader>
-        <div class="m-lover-v2-scroll-container">
+        <div ref="scrollContainer" class="m-lover-v2-scroll-container">
             <header class="m-lover-v2-hero">
                 <div class="m-lover-v2-hero__content wp">
                     <div class="u-title-panel">
@@ -17,8 +17,10 @@
                     </div>
 
                     <div class="m-lover-v2-title-lockup" aria-hidden="true">
-                        <img :src="titleImage" alt="" />
-                        <span class="u-title-season">第二季</span>
+                        <img class="u-title-glow" :src="titleBackgroundImage" alt="" />
+                        <img class="u-title-main" :src="titleImage" alt="" />
+                        <img class="u-title-sub-glow" :src="titleBackgroundImage" alt="" />
+                        <img class="u-title-sub" :src="titleSecondImage" alt="" />
                     </div>
                 </div>
                 <nav class="m-lover-v2-nav" aria-label="情缘杯页面导航">
@@ -29,6 +31,7 @@
                             class="u-nav-item"
                             :class="{ active: activeMenu === item.route }"
                             :to="{ name: item.route, params: { slug } }"
+                            @click="rememberScrollPosition"
                         >
                             {{ item.label }}
                             <span v-if="item.route === 'v2-mate-hall' && invitationCount" class="u-count">
@@ -56,23 +59,25 @@
 
 <script>
 import { formatDateTime, phaseMap } from "@/utils/lover-v2";
-import fallbackHero from "@/assets/img/lover/v2/hero-v5.webp";
-import titleImage from "@/assets/img/lover/v2/title.webp";
-
-const cssUrl = (value) => `url(${JSON.stringify(value)})`;
+const assetRoot = "https://cdn.jx3box.com/design/event/lover/v2/";
+let retainedScrollTop = 0;
 
 export default {
     name: "LoverV2Layout",
     data: function () {
         return {
             phaseMap,
-            titleImage,
+            titleImage: `${assetRoot}title.webp`,
+            titleSecondImage: `${assetRoot}title2.webp`,
+            titleBackgroundImage: `${assetRoot}title-bg.webp`,
             menus: [
                 { label: "活动首页", route: "v2-info" },
                 { label: "报名参赛", route: "v2-register" },
+                { label: "匿名江湖笺", route: "v2-stories" },
                 { label: "组队大厅", route: "v2-mate-hall" },
                 { label: "我的战队", route: "v2-team" },
                 { label: "赛事进程", route: "v2-schedule" },
+                { label: "江湖榜单", route: "v2-leaderboard" },
                 { label: "在线直播", route: "v2-live" },
             ],
         };
@@ -101,12 +106,20 @@ export default {
     },
     mounted() {
         document.documentElement.classList.add("is-lover-v2");
+        this.$nextTick(() => {
+            requestAnimationFrame(() => {
+                if (this.$refs.scrollContainer) this.$refs.scrollContainer.scrollTop = retainedScrollTop;
+            });
+        });
     },
     beforeUnmount() {
         document.documentElement.classList.remove("is-lover-v2");
     },
     methods: {
         formatDateTime,
+        rememberScrollPosition() {
+            retainedScrollTop = this.$refs.scrollContainer?.scrollTop || 0;
+        },
         async retryContext() {
             await this.$store.dispatch("loadV2Context", { force: true }).catch((error) => {
                 console.error("[LoverV2Layout.retryContext]", error);

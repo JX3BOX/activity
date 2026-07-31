@@ -22,6 +22,8 @@ const V2Schedule = () => import("@/views/Lover/v2/Schedule.vue");
 const V2Live = () => import("@/views/Lover/v2/Live.vue");
 const V2Match = () => import("@/views/Lover/v2/Match.vue");
 const V2Timeline = () => import("@/views/Lover/v2/Timeline.vue");
+const V2Leaderboard = () => import("@/views/Lover/v2/Leaderboard.vue");
+const V2Stories = () => import("@/views/Lover/v2/Stories.vue");
 
 const routes = [
     { name: "list", path: "/", component: List },
@@ -42,6 +44,13 @@ const routes = [
     { name: "v2-schedule", path: "/:slug/v2/schedule", component: V2Schedule, meta: { loverV2: true } },
     { name: "v2-live", path: "/:slug/v2/live", component: V2Live, meta: { loverV2: true } },
     {
+        name: "v2-leaderboard",
+        path: "/:slug/v2/leaderboards",
+        component: V2Leaderboard,
+        meta: { loverV2: true },
+    },
+    { name: "v2-stories", path: "/:slug/v2/stories", component: V2Stories, meta: { loverV2: true } },
+    {
         name: "v2-match",
         path: "/:slug/v2/matches/:matchId",
         component: V2Match,
@@ -60,7 +69,21 @@ const router = createRouter({
     routes,
 });
 
-router.beforeEach(async (to) => {
+router.beforeEach(async (to, from) => {
+    const isSameV2Event =
+        to.meta.loverV2 &&
+        from.meta.loverV2 &&
+        to.params.slug === from.params.slug;
+    if (isSameV2Event) {
+        // 同一届赛事的页签切换不依赖重新取数；业务动作完成后由对应页面主动刷新权限快照。
+        if (to.name === "v2-register") {
+            store.dispatch("loadLoverRelationNet").catch((error) => {
+                console.error("[lover-router.loadLoverRelationNet]", error);
+            });
+        }
+        return true;
+    }
+
     await Promise.all([store.dispatch("loadDefaultEventId"), store.dispatch("loadEvents")]);
     // 访问列表不需要 slug，也不预加载登录态资源。
     if (to.name === "list") return true;
@@ -81,8 +104,8 @@ router.beforeEach(async (to) => {
         if (!to.meta.loverV2) return { name: "v2-info", params: { slug: currentEvent.slug } };
         await store.dispatch("loadV2Event");
         if (to.name === "v2-register") await store.dispatch("loadLoverRelationNet");
-        // 每次进入 v2 页面都刷新后端权限快照，避免赛程发布、截止或锁定后继续沿用旧 actions。
-        await store.dispatch("loadV2Context", { force: true }).catch(() => null);
+        // 首次进入时等待权限快照；V2 内部切页复用已有快照，避免导航被网络请求阻塞。
+        await store.dispatch("loadV2Context").catch(() => null);
         return true;
     }
 

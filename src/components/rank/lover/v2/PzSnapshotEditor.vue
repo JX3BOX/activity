@@ -36,7 +36,19 @@
                     <el-tag :type="candidate ? 'warning' : 'success'">{{ candidate ? "待确认" : "已提交" }}</el-tag>
                 </div>
             </div>
-            <PzSnapshotFrame :schema="previewSnapshot.schema" :title="`${memberName}的本场配装`" />
+            <div v-if="restrictions.length" class="m-card-restrictions">
+                <strong>本场天命签限制</strong>
+                <ul>
+                    <li v-for="restriction in restrictions" :key="`${restriction.draw_id}-${restriction.kind}`">
+                        {{ restrictionLabel(restriction) }}
+                    </li>
+                </ul>
+            </div>
+            <PzSnapshotFrame
+                :schema="previewSnapshot.schema"
+                :restrictions="restrictions"
+                :title="`${memberName}的本场配装`"
+            />
             <div v-if="candidate" class="u-submit">
                 <el-alert
                     title="当前只是预览，点击确认后才会替换你在本场战斗中的配装记录。"
@@ -71,6 +83,7 @@ export default {
         canEdit: { type: Boolean, default: false },
         disabledDescription: { type: String, default: "" },
         loading: { type: Boolean, default: false },
+        restrictions: { type: Array, default: () => [] },
     },
     data: function () {
         return {
@@ -106,6 +119,17 @@ export default {
     },
     methods: {
         formatDateTime,
+        restrictionLabel(restriction) {
+            const labels = {
+                disable_talent: "禁用奇穴",
+                disable_equip_slot: "禁用装备部位",
+                disable_skill: "禁用技能",
+                remove_restriction: "解除限制",
+                none: "指定目标",
+            };
+            const values = (restriction.values || []).join("、");
+            return `${restriction.card_name}：${labels[restriction.kind] || "签面效果"}${values ? `（${values}）` : ""}`;
+        },
         async loadSource() {
             if (this.reading || this.loading) return;
             this.errorMessage = "";
@@ -160,6 +184,20 @@ export default {
 
 .m-source-form .el-alert {
     margin-top: 10px;
+}
+
+.m-card-restrictions {
+    margin-bottom: 12px;
+    padding: 12px 14px;
+    border: 1px solid #d59a7c;
+    border-radius: 9px;
+    background: #fff0e5;
+    color: #7d4035;
+
+    ul {
+        margin: 7px 0 0;
+        padding-left: 20px;
+    }
 }
 
 .u-preview-head {

@@ -31,6 +31,8 @@
                 />
             </div>
 
+            <LiveChat v-if="eventId" :event-id="Number(eventId)" />
+
             <h3 class="u-page-title is-player-title">选手直播间</h3>
             <div v-if="list.length" class="m-player-list">
                 <article v-for="item in list" :key="item.id" class="m-player-item">
@@ -79,10 +81,11 @@ import { getThumbnail, showAvatar } from "@jx3box/jx3box-common/js/utils";
 import { __imgPath } from "@/utils/config";
 import { default_avatar as defaultAvatar } from "@/utils/config";
 import LoverV2Layout from "@/layouts/lover/LoverV2Layout.vue";
+import LiveChat from "@/components/rank/lover/v2/LiveChat.vue";
 
 export default {
     name: "LoverV2Live",
-    components: { LoverV2Layout },
+    components: { LoverV2Layout, LiveChat },
     data: function () {
         return {
             defaultAvatar,

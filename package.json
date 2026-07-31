@@ -52,6 +52,7 @@
         "lodash": "^4.17.21",
         "lottie-web": "^5.13.0",
         "mitt": "^3.0.1",
+        "mqtt": "^5.15.2",
         "pinia": "^3.0.3",
         "qrcode.vue": "^3.3.4",
         "sortablejs": "^1.15.0",

@@ -104,8 +104,46 @@
                     <EmptyState v-else description="尚未记录小局结果" compact />
                 </section>
 
+                <DestinyCardPanel
+                    v-if="cardRequired"
+                    class="m-match-section"
+                    :draws="match.card_draws || []"
+                    :match="match"
+                    :can-draw="canCardDraw"
+                    :can-use="canCardUse"
+                    :own-team-id="Number(myTeam?.id || 0)"
+                    :draw-count-per-team="drawCountPerTeam"
+                    @draw="drawDestinyCard"
+                    @use="openCardUse"
+                />
+                <DestinyCardDrawDialog
+                    v-model="cardDialogVisible"
+                    :event-id="eventId"
+                    :match-id="matchId"
+                    :team-name="myTeam?.name || ''"
+                    @drawn="handleCardDrawn"
+                />
+                <DestinyCardUseDialog
+                    v-model="cardUseDialogVisible"
+                    :event-id="eventId"
+                    :match-id="matchId"
+                    :draw="selectedCardDraw"
+                    :match="match"
+                    @used="handleCardDrawn"
+                />
                 <section
-                    v-if="isParticipant && configLoadError"
+                    v-if="cardRequired && !canShowConfig"
+                    class="m-match-section m-lover-v2-panel m-card-flow-waiting"
+                >
+                    <FeatureBadge name="match-config" small />
+                    <div>
+                        <h3>赛前配装将在天命签使用完毕后开放</h3>
+                        <p>{{ cardFlowHint }}</p>
+                    </div>
+                </section>
+
+                <section
+                    v-if="isParticipant && canShowConfig && configLoadError"
                     class="m-match-section m-lover-v2-panel m-config-load-error"
                 >
                     <div>
@@ -115,7 +153,7 @@
                     <el-button type="primary" plain :loading="configLoading" @click="loadConfigs">重新加载配置</el-button>
                 </section>
                 <MatchConfigPanel
-                    v-else-if="isParticipant"
+                    v-else-if="isParticipant && canShowConfig"
                     class="m-match-section"
                     :team="myTeam"
                     :record="ownConfig"
@@ -123,6 +161,7 @@
                     :is-captain="isCaptain"
                     :can-update="canConfigUpdate"
                     :can-lock="canConfigLock"
+                    :restrictions="match.card_restrictions || {}"
                     :update-disabled-reason="configUpdateDisabledReason"
                     :loading="actionLoading.startsWith('config')"
                     :refreshing="configLoading"
@@ -130,7 +169,7 @@
                     @lock="lockConfig"
                     @refresh="loadConfigs"
                 />
-                <section v-else class="m-match-section m-lover-v2-panel m-public-config">
+                <section v-else-if="!isParticipant && canShowConfig" class="m-match-section m-lover-v2-panel m-public-config">
                     <div class="u-section-head">
                         <div>
                             <h3>双方赛前配装</h3>
@@ -181,21 +220,6 @@
                     </el-table>
                 </section>
 
-                <DestinyCardPanel
-                    class="m-match-section"
-                    :draws="match.card_draws || []"
-                    :match="match"
-                    :can-draw="canCardDraw"
-                    @draw="drawDestinyCard"
-                />
-                <DestinyCardDrawDialog
-                    v-model="cardDialogVisible"
-                    :event-id="eventId"
-                    :match-id="matchId"
-                    :team-name="myTeam?.name || ''"
-                    @drawn="handleCardDrawn"
-                />
-
                 <section class="m-match-section m-lover-v2-panel m-match-logs">
                     <div class="u-section-head">
                         <div>
@@ -232,6 +256,7 @@ import {
 import LoverV2Layout from "@/layouts/lover/LoverV2Layout.vue";
 import DestinyCardDrawDialog from "@/components/rank/lover/v2/DestinyCardDrawDialog.vue";
 import DestinyCardPanel from "@/components/rank/lover/v2/DestinyCardPanel.vue";
+import DestinyCardUseDialog from "@/components/rank/lover/v2/DestinyCardUseDialog.vue";
 import EmptyState from "@/components/rank/lover/v2/EmptyState.vue";
 import FeatureBadge from "@/components/rank/lover/v2/FeatureBadge.vue";
 import MatchConfigPanel from "@/components/rank/lover/v2/MatchConfigPanel.vue";
@@ -245,6 +270,7 @@ export default {
         LoverV2Layout,
         DestinyCardDrawDialog,
         DestinyCardPanel,
+        DestinyCardUseDialog,
         EmptyState,
         FeatureBadge,
         MatchConfigPanel,
@@ -261,6 +287,8 @@ export default {
             configLoadError: false,
             actionLoading: "",
             cardDialogVisible: false,
+            cardUseDialogVisible: false,
+            selectedCardDraw: null,
             contextPollingTimer: null,
         };
     },
@@ -381,6 +409,55 @@ export default {
                 this.matchActions.includes("card.draw") &&
                 ["scheduled", "ready", "running"].includes(this.match?.status)
             );
+        },
+        canCardUse() {
+            return this.isCaptain && this.matchActions.includes("card.use");
+        },
+        cardState() {
+            return this.match?.card_state || this.participantMatch?.card_state || "not_required";
+        },
+        cardRule() {
+            return this.match?.card_rule || this.participantMatch?.stage?.card_rule || null;
+        },
+        cardRequired() {
+            return this.cardRule?.enabled === true && Number(this.cardRule.draw_count_per_team) > 0;
+        },
+        drawCountPerTeam() {
+            return this.cardRequired ? Number(this.cardRule.draw_count_per_team) : 0;
+        },
+        canShowConfig() {
+            return ["completed", "not_required"].includes(this.cardState);
+        },
+        cardFlowHint() {
+            const teams = [this.match?.team1, this.match?.team2].filter((team) => team?.id);
+            const draws = this.match?.card_draws || [];
+            if (this.cardState === "drawing") {
+                const pending = teams
+                    .map((team) => ({
+                        team,
+                        count:
+                            this.drawCountPerTeam -
+                            draws.filter((draw) => Number(draw.team_id) === Number(team.id)).length,
+                    }))
+                    .filter((item) => item.count > 0)
+                    .map((item) => `${item.team.name || `战队 #${item.team.id}`}还需抽取 ${item.count} 张`);
+                return `${pending.join("；") || "双方仍需完成抽签"}。双方全部抽取并使用后开放赛前配装。`;
+            }
+            if (this.cardState === "selecting_targets") {
+                const pending = teams
+                    .map((team) => ({
+                        team,
+                        count: draws.filter(
+                            (draw) =>
+                                Number(draw.team_id) === Number(team.id) &&
+                                !Array.isArray(draw.target_payload?.selections)
+                        ).length,
+                    }))
+                    .filter((item) => item.count > 0)
+                    .map((item) => `${item.team.name || `战队 #${item.team.id}`}还有 ${item.count} 张等待使用`);
+                return `${pending.join("；") || "仍有天命签等待选择生效目标"}。全部完成后开放赛前配装。`;
+            }
+            return "天命签流程尚未完成，请稍后刷新。";
         },
         ownConfig() {
             return this.configRecords.find((record) => Number(record.team_id) === Number(this.myTeam?.id)) || null;
@@ -563,6 +640,11 @@ export default {
             if (this.actionLoading) return;
             this.cardDialogVisible = true;
         },
+        openCardUse(draw) {
+            if (!this.canCardUse || this.actionLoading) return;
+            this.selectedCardDraw = draw;
+            this.cardUseDialogVisible = true;
+        },
         async handleCardDrawn() {
             try {
                 await this.reloadMatchContext();
@@ -696,6 +778,33 @@ export default {
         margin: 0;
         color: #987f78;
         font-size: 13px;
+    }
+}
+
+.m-card-flow-waiting {
+    display: flex;
+    min-height: 180px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 14px;
+    text-align: center;
+
+    > div {
+        max-width: 680px;
+    }
+
+    h3 {
+        margin: 0 0 7px;
+        color: #713932;
+        font-size: 20px;
+    }
+
+    p {
+        margin: 0;
+        color: #987f78;
+        font-size: 13px;
+        line-height: 1.7;
     }
 }
 

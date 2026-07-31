@@ -70,6 +70,25 @@
                         <p>可选。建议上传正方形图片；新图片上传后会替换当前队徽。</p>
                     </div>
                 </el-form-item>
+
+                <el-divider>匿名江湖笺（必填）</el-divider>
+                <el-alert
+                    class="u-story-alert"
+                    type="info"
+                    :closable="false"
+                    show-icon
+                    title="审核通过后将匿名公开展示"
+                    description="页面不会展示你们的 UID、昵称、关系网或战队信息。可直接在编辑器内插入图片、音频或视频。"
+                />
+                <el-form-item class="u-story-alert-form-item">
+                    <Tinymce
+                        v-model="form.story.content"
+                        :height="420"
+                        :attachment-enable="true"
+                        :resource-enable="false"
+                    />
+                    <p class="u-story-tip">请至少填写一段文字或插入一项媒体内容。</p>
+                </el-form-item>
             </template>
 
             <template v-else>
@@ -173,13 +192,14 @@
 
 <script>
 import UploadImage from "@jx3box/jx3box-ui/src/comment/Upload.vue";
+import Tinymce from "@jx3box/jx3box-editor/src/Tinymce";
 import MateCardQuestionnaire from "./MateCardQuestionnaire.vue";
 import UserIdentity from "./UserIdentity.vue";
 import { registrationTypeMap } from "@/utils/lover-v2";
 
 export default {
     name: "LoverV2RegistrationForm",
-    components: { MateCardQuestionnaire, UploadImage, UserIdentity },
+    components: { MateCardQuestionnaire, Tinymce, UploadImage, UserIdentity },
     emits: ["submit", "cancel-edit"],
     props: {
         selectedType: { type: String, required: true },
@@ -206,6 +226,7 @@ export default {
                 constellation: "",
                 introduction: "",
                 mate_card_data: null,
+                story: { content: "" },
                 members: [],
             },
             rules: {
@@ -329,6 +350,9 @@ export default {
                 constellation: source.constellation || "",
                 introduction: source.introduction || "",
                 mate_card_data: source.mate_card_data || null,
+                story: {
+                    content: source.story?.content || "",
+                },
                 members: [],
             };
             this.initializeMembers();
@@ -369,6 +393,13 @@ export default {
                           constellation: this.form.constellation || null,
                       }),
                 ...(isLover ? {} : { introduction: this.form.introduction.trim() || null }),
+                ...(isLover
+                    ? {
+                          story: {
+                              content: this.form.story.content.trim() || null,
+                          },
+                      }
+                    : {}),
                 members: this.form.members.map((member) => ({
                     user_id: Number(member.user_id),
                     combat_role: member.combat_role,
@@ -381,19 +412,16 @@ export default {
             const valid = await this.$refs.form.validate().catch(() => false);
             if (!valid) return;
             const payload = this.buildPayload();
+            if (this.selectedType === "lover" && !this.hasMeaningfulStoryContent(payload.story.content)) {
+                this.$message.warning("请填写匿名内容，或在编辑器中插入图片、音频、视频");
+                return;
+            }
             if (this.selectedType === "mate" && !payload.mate_card_data) {
                 this.pendingPayload = payload;
                 this.questionnaireVisible = true;
                 return;
             }
-            const uploader = this.$refs.logoUpload;
-            if (this.selectedType === "lover" && uploader?.fileList?.length) {
-                this.pendingPayload = payload;
-                this.uploadLoading = true;
-                uploader.upload();
-                return;
-            }
-            this.$emit("submit", payload);
+            this.uploadLogoOrSubmit(payload);
         },
         onQuestionnaireCompleted(mateCardData) {
             this.form.mate_card_data = mateCardData;
@@ -413,6 +441,25 @@ export default {
             }
             this.$emit("submit", this.pendingPayload || this.buildPayload());
             this.pendingPayload = null;
+        },
+        uploadLogoOrSubmit(payload) {
+            const uploader = this.$refs.logoUpload;
+            if (this.selectedType === "lover" && uploader?.fileList?.length) {
+                this.pendingPayload = payload;
+                this.uploadLoading = true;
+                uploader.upload();
+                return;
+            }
+            this.uploadLoading = false;
+            this.$emit("submit", payload);
+        },
+        hasMeaningfulStoryContent(content) {
+            if (typeof content !== "string") return false;
+            const text = content
+                .replace(/<[^>]*>/g, "")
+                .replace(/&nbsp;|&#160;/gi, "")
+                .trim();
+            return Boolean(text || /<(img|audio|video|iframe)\b/i.test(content));
         },
         onUploadError() {
             this.uploadLoading = false;
@@ -520,6 +567,23 @@ export default {
     color: #a18a83;
     font-size: 12px;
     line-height: 1.6;
+}
+
+.u-story-alert {
+    margin-bottom: 18px;
+}
+
+.u-story-tip {
+    width: 100%;
+    margin: 8px 0 0;
+    color: #a18a83;
+    font-size: 12px;
+}
+
+.u-story-alert-form-item  {
+    :deep(.c-jx3box-emotion-item) {
+        width: unset;
+    }
 }
 
 @media screen and (max-width: 760px) {

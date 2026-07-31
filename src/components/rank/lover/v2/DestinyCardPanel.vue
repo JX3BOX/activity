@@ -35,6 +35,25 @@
                             <span class="u-draw-no">第 {{ slot.index + 1 }} 签</span>
                             <h4>{{ slot.draw?.card?.name || "等待揭签" }}</h4>
                             <p>{{ slot.draw?.card?.desc || "本队尚未抽取这一签" }}</p>
+                            <template v-if="slot.draw">
+                                <el-button
+                                    v-if="canUseDraw(slot.draw)"
+                                    class="u-use"
+                                    type="primary"
+                                    size="small"
+                                    @click="$emit('use', slot.draw)"
+                                >
+                                    选择目标并使用
+                                </el-button>
+                                <el-tag
+                                    v-else
+                                    class="u-use"
+                                    :type="isUsed(slot.draw) ? 'success' : 'warning'"
+                                    effect="plain"
+                                >
+                                    {{ isUsed(slot.draw) ? "已经生效" : "等待本队队长使用" }}
+                                </el-tag>
+                            </template>
                         </div>
                     </article>
                 </div>
@@ -50,11 +69,14 @@ import FeatureBadge from "./FeatureBadge.vue";
 export default {
     name: "LoverV2DestinyCardPanel",
     components: { FeatureBadge },
-    emits: ["draw"],
+    emits: ["draw", "use"],
     props: {
         draws: { type: Array, default: () => [] },
         match: { type: Object, required: true },
         canDraw: { type: Boolean, default: false },
+        canUse: { type: Boolean, default: false },
+        ownTeamId: { type: Number, default: 0 },
+        drawCountPerTeam: { type: Number, default: 0 },
         loading: { type: Boolean, default: false },
     },
     data: function () {
@@ -74,9 +96,20 @@ export default {
                     .slice(0, 2);
                 return {
                     ...group,
-                    slots: [0, 1].map((index) => ({ index, draw: teamDraws[index] || null })),
+                    slots: Array.from({ length: Math.max(0, this.drawCountPerTeam) }, (_, index) => ({
+                        index,
+                        draw: teamDraws[index] || null,
+                    })),
                 };
             });
+        },
+    },
+    methods: {
+        isUsed(draw) {
+            return Array.isArray(draw?.target_payload?.selections);
+        },
+        canUseDraw(draw) {
+            return this.canUse && Number(draw?.team_id) === Number(this.ownTeamId) && !this.isUsed(draw);
         },
     },
 };
@@ -204,6 +237,10 @@ export default {
     color: #aa7a6b;
     font-size: 11px;
     letter-spacing: 0.12em;
+}
+
+.u-use {
+    margin-top: 12px;
 }
 
 @media screen and (max-width: 980px) {

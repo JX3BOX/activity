@@ -442,11 +442,13 @@ html.is-lover-v2 {
 
 .m-lover-v2-hero {
     position: relative;
-    height: clamp(650px, 44vw, 840px);
+    height: min(997px, calc(100vh - 60px));
+    min-height: 720px;
     overflow: hidden;
-    background-color: #351b1b;
-    background-image: url("~@/assets/img/lover/v2/hero-v5.webp");
+    background-color: #a62e20;
+    background-image: url("https://cdn.jx3box.com/design/event/lover/v2/bg.webp");
     background-position: center top;
+    background-repeat: no-repeat;
     background-size: cover;
 
     &::before,
@@ -459,17 +461,15 @@ html.is-lover-v2 {
 
     &::before {
         inset: 0;
-        background:
-            linear-gradient(90deg, rgba(27, 10, 12, 0.34) 0%, rgba(34, 13, 15, 0.12) 31%, transparent 54%),
-            linear-gradient(180deg, rgba(29, 11, 13, 0.1), transparent 42%);
+        background: linear-gradient(90deg, rgba(255, 225, 169, 0.16) 0%, transparent 48%);
     }
 
     &::after {
         right: 0;
         bottom: 0;
         left: 0;
-        height: 188px;
-        background: linear-gradient(180deg, transparent, rgba(56, 23, 23, 0.7) 48%, #3b1c1d 100%);
+        height: 150px;
+        background: linear-gradient(180deg, transparent, rgba(64, 18, 17, 0.34) 48%, rgba(54, 18, 19, 0.78));
     }
 }
 
@@ -478,16 +478,15 @@ html.is-lover-v2 {
     z-index: 2;
     height: 100%;
     box-sizing: border-box;
-    padding-top: clamp(92px, 8vw, 148px);
-    color: #fff3de;
+    padding-top: clamp(86px, 8vw, 148px);
+    color: #6d1714;
 
     .u-title-panel {
         position: relative;
         box-sizing: border-box;
-        width: min(390px, 34vw);
+        width: min(420px, 36vw);
         padding: 5px 14px 8px 26px;
-        border-left: 1px solid rgba(231, 187, 125, 0.72);
-        text-shadow: 0 2px 14px rgba(25, 7, 9, 0.82);
+        border-left: 2px solid rgba(117, 20, 17, 0.78);
 
         &::before {
             content: "";
@@ -496,15 +495,15 @@ html.is-lover-v2 {
             left: -4px;
             width: 7px;
             height: 7px;
-            border: 1px solid #d8ab76;
-            background: #6a382f;
+            border: 1px solid #8f251e;
+            background: #f2c87d;
             transform: rotate(45deg);
         }
     }
 
     .u-kicker {
         margin: 0 0 18px;
-        color: #e8c28b;
+        color: #7b241d;
         font-size: 13px;
         letter-spacing: 0.22em;
     }
@@ -512,11 +511,11 @@ html.is-lover-v2 {
     .u-event-heading {
         display: block;
         max-width: 330px;
-        color: #ffe8c7;
+        color: #751513;
         font-family: "ZCOOL XiaoWei", "STSong", serif;
-        font-size: clamp(26px, 2.3vw, 36px);
-        font-weight: 400;
-        line-height: 1.42;
+        font-size: clamp(31px, 2.6vw, 42px);
+        font-weight: 700;
+        line-height: 1.22;
         letter-spacing: 0.08em;
     }
 
@@ -527,7 +526,7 @@ html.is-lover-v2 {
         margin: 18px 0 20px;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 2;
-        color: rgba(255, 239, 215, 0.78);
+        color: rgba(104, 34, 27, 0.84);
         font-size: 13px;
         line-height: 1.85;
     }
@@ -536,32 +535,47 @@ html.is-lover-v2 {
 .m-lover-v2-title-lockup {
     position: absolute;
     z-index: 4;
-    bottom: 64px;
-    left: 51%;
-    width: clamp(470px, 34vw, 640px);
+    bottom: 72px;
+    left: 50%;
+    width: clamp(560px, 38vw, 730px);
     pointer-events: none;
     transform: translateX(-50%);
 
     img {
+        position: absolute;
         display: block;
-        width: 100%;
         height: auto;
-        filter: drop-shadow(0 12px 22px rgba(28, 7, 9, 0.34));
     }
 
-    .u-title-season {
-        position: absolute;
-        top: 42%;
-        right: 8%;
-        padding: 5px 7px 4px;
-        border: 1px solid rgba(255, 221, 171, 0.7);
-        background: rgba(127, 43, 37, 0.9);
-        box-shadow: 0 4px 14px rgba(36, 9, 10, 0.32), inset 0 0 0 2px rgba(255, 222, 174, 0.12);
-        color: #ffe6be;
-        font-family: "ZCOOL XiaoWei", "STSong", serif;
-        font-size: 12px;
-        letter-spacing: 0.14em;
-        transform: rotate(-4deg);
+    .u-title-glow {
+        z-index: 0;
+        top: 50%;
+        left: 50%;
+        width: 105%;
+        opacity: 0.62;
+        transform: translate(-50%, -54%);
+    }
+
+    .u-title-main {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        filter: drop-shadow(0 12px 22px rgba(97, 25, 15, 0.26));
+    }
+
+    .u-title-sub {
+        z-index: 2;
+        top: -4%;
+        right: -8%;
+        width: 24%;
+    }
+
+    .u-title-sub-glow {
+        z-index: 1;
+        top: -13%;
+        right: -14%;
+        width: 37%;
+        opacity: 0.72;
     }
 }
 
@@ -581,13 +595,13 @@ html.is-lover-v2 {
     align-items: flex-start;
     flex-direction: column;
     gap: 8px;
-    color: rgba(255, 241, 220, 0.82);
+    color: rgba(104, 34, 27, 0.88);
     font-size: 12px;
 
     .el-tag {
-        border-color: #bd775e;
-        background: rgba(119, 43, 36, 0.88);
-        color: #ffe5bf;
+        border-color: #8b3027;
+        background: linear-gradient(180deg, #9c2f24, #751913);
+        color: #ffe8bd;
     }
 
     .u-date {
@@ -597,7 +611,7 @@ html.is-lover-v2 {
     }
 
     small {
-        color: #d7ad7e;
+        color: #8f4a38;
         font-size: 11px;
         letter-spacing: 0.08em;
     }
@@ -625,7 +639,7 @@ html.is-lover-v2 {
 
 .m-lover-v2-nav__inner {
     display: grid;
-    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-template-columns: repeat(8, minmax(0, 1fr));
     gap: 9px;
     overflow-x: auto;
     padding: 31px 0 12px;
@@ -639,10 +653,9 @@ html.is-lover-v2 {
     align-items: center;
     justify-content: center;
     padding: 0 14px;
-    border: 1px solid rgba(226, 186, 136, 0.2);
-    background: linear-gradient(180deg, rgba(91, 38, 35, 0.34), rgba(53, 22, 23, 0.62));
+    border: 0;
+    background: transparent url("https://cdn.jx3box.com/design/event/lover/v2/button.webp") center / 100% 100% no-repeat;
     color: #e9c49a;
-    clip-path: polygon(9px 0, calc(100% - 9px) 0, 100% 9px, 100% calc(100% - 9px), calc(100% - 9px) 100%, 9px 100%, 0 calc(100% - 9px), 0 9px);
     font-family: "ZCOOL XiaoWei", "STSong", serif;
     font-size: clamp(14px, 1.3vw, 17px);
     font-weight: 700;
@@ -651,33 +664,10 @@ html.is-lover-v2 {
     text-decoration: none;
     transition: 0.18s ease;
 
-    &::before,
-    &::after {
-        content: "";
-        position: absolute;
-        top: 8px;
-        bottom: 8px;
-        width: 1px;
-        background: linear-gradient(180deg, transparent, rgba(230, 187, 132, 0.6), transparent);
-    }
-
-    &::before {
-        left: 8px;
-    }
-
-    &::after {
-        right: 8px;
-    }
-
     &:hover,
     &.active {
-        border-color: rgba(255, 226, 184, 0.74);
-        background: linear-gradient(180deg, rgba(255, 242, 217, 0.98), rgba(224, 188, 139, 0.98));
+        background-image: url("https://cdn.jx3box.com/design/event/lover/v2/button-act.webp");
         color: #6f2e2a;
-    }
-
-    &.active {
-        box-shadow: 0 0 0 2px rgba(255, 249, 229, 0.44) inset, 0 8px 22px rgba(47, 18, 17, 0.2);
     }
 
     .u-count {

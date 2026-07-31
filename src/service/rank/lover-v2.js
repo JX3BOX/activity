@@ -105,6 +105,17 @@ export const getAllEventCards = async (eventId) => {
 export const getCardDraws = (eventId, matchId, params) =>
     publicRequest().get(`${base(eventId)}/matches/${matchId}/card-draws`, { params });
 export const drawCard = (eventId, matchId) => request().post(`${base(eventId)}/matches/${matchId}/card-draws`, {});
+export const useCard = (eventId, matchId, drawId, selections) =>
+    request().post(`${base(eventId)}/matches/${matchId}/card-draws/${drawId}/use`, { selections });
 export const getTeamTimeline = (eventId, teamId, params) =>
     publicRequest().get(`${base(eventId)}/teams/${teamId}/timeline`, { params });
 export const getMyLogs = (eventId, params) => request().get(`${base(eventId)}/logs/me`, { params });
+
+export const getLeaderboards = (eventId, params) =>
+    publicRequest().get(`${base(eventId)}/leaderboards`, { params });
+export const getLeaderboardEntries = (eventId, leaderboardKey, params) =>
+    publicRequest().get(`${base(eventId)}/leaderboards/${leaderboardKey}/entries`, { params });
+
+export const getStories = (eventId, params) => request({ mute: true }).get(`${base(eventId)}/stories`, { params });
+export const likeStory = (eventId, storyId) => request().put(`${base(eventId)}/stories/${storyId}/like`);
+export const unlikeStory = (eventId, storyId) => request().delete(`${base(eventId)}/stories/${storyId}/like`);

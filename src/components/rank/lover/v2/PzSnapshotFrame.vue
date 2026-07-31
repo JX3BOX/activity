@@ -21,6 +21,7 @@ export default {
     name: "LoverV2PzSnapshotFrame",
     props: {
         schema: { type: Object, required: true },
+        restrictions: { type: Array, default: () => [] },
         title: { type: String, default: "本场配装预览" },
     },
     data: function () {
@@ -45,6 +46,12 @@ export default {
     },
     watch: {
         schema: {
+            deep: true,
+            handler() {
+                this.sendSchema();
+            },
+        },
+        restrictions: {
             deep: true,
             handler() {
                 this.sendSchema();
@@ -81,6 +88,7 @@ export default {
                     type: "jx3box:pz-iframe-render",
                     version: MESSAGE_VERSION,
                     schema: JSON.parse(JSON.stringify(this.schema)),
+                    restrictions: JSON.parse(JSON.stringify(this.restrictions)),
                 },
                 this.iframeOrigin
             );
