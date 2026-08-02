@@ -15,6 +15,7 @@
             :loading-action="invitationLoadingAction"
             @accept="handleInvitation($event, 'accept')"
             @reject="handleInvitation($event, 'reject')"
+            @view-mate-card="openInvitationMateCard"
         />
 
         <section v-if="contextError" class="m-role-guide m-lover-v2-panel">
@@ -64,6 +65,7 @@
                         :cooldown="cooldown"
                         :disabled="sendingId !== null"
                         @invite="inviteMate"
+                        @view="openMateCard"
                     />
                 </template>
                 <template v-else>
@@ -173,6 +175,31 @@
             </div>
         </section>
 
+        <section v-if="canPreviewIndividuals" class="m-hall-panel m-lover-v2-panel">
+            <div class="u-hall-explain">
+                <div>
+                    <h3>随缘看看个人搭子</h3>
+                    <p>这里随机展示尚未配对、已经通过审核的搭子，仅供预览名片，不提供邀请操作。</p>
+                </div>
+                <el-button :loading="previewLoading" @click="refreshPreview">换一批</el-button>
+            </div>
+            <div v-loading="previewLoading" class="m-card-grid">
+                <MateRegistrationCard
+                    v-for="item in previewHall.list"
+                    :key="item.id"
+                    :registration="item"
+                    preview
+                    @view="openMateCard"
+                />
+            </div>
+            <EmptyState
+                v-if="!previewLoading && !previewHall.list.length"
+                icon="mate"
+                title="暂时没有可预览的个人搭子"
+                description="新的个人搭子通过审核后会出现在这里。"
+            />
+        </section>
+
         <el-dialog
             v-model="historyVisible"
             class="m-lover-v2-history-dialog"
@@ -230,6 +257,12 @@
                                     :show-captain="scope.row.type !== 'mate_pair'"
                                 />
                                 <IntroductionText :text="historyMember(scope.row).introduction" compact plain />
+                                <el-button
+                                    v-if="scope.row.type === 'mate_pair'"
+                                    text
+                                    type="primary"
+                                    @click="openHistoryMateCard(scope.row)"
+                                >查看名片</el-button>
                             </div>
                         </template>
                     </el-table-column>
@@ -269,6 +302,7 @@
             @invite="inviteUnit"
             @closed="clearUnitDetail"
         />
+        <MateCardDetailDialog v-model="mateCardVisible" :registration="selectedMateRegistration" />
     </LoverV2Layout>
 </template>
 
@@ -290,6 +324,7 @@ import FeatureBadge from "@/components/rank/lover/v2/FeatureBadge.vue";
 import InvitationInbox from "@/components/rank/lover/v2/InvitationInbox.vue";
 import IntroductionText from "@/components/rank/lover/v2/IntroductionText.vue";
 import MateRegistrationCard from "@/components/rank/lover/v2/MateRegistrationCard.vue";
+import MateCardDetailDialog from "@/components/rank/lover/v2/MateCardDetailDialog.vue";
 import MateUnitCard from "@/components/rank/lover/v2/MateUnitCard.vue";
 import MateUnitDetailDialog from "@/components/rank/lover/v2/MateUnitDetailDialog.vue";
 import TeamIdentity from "@/components/rank/lover/v2/TeamIdentity.vue";
@@ -305,6 +340,7 @@ export default {
         InvitationInbox,
         IntroductionText,
         MateRegistrationCard,
+        MateCardDetailDialog,
         MateUnitCard,
         MateUnitDetailDialog,
         TeamIdentity,
@@ -328,6 +364,11 @@ export default {
             history: { list: [], count: 0, page: 1, pageSize: 20 },
             unitDetailVisible: false,
             selectedUnit: null,
+            previewLoading: false,
+            previewSeed: "default",
+            previewHall: { list: [], count: 0 },
+            mateCardVisible: false,
+            selectedMateRegistration: null,
             invitationStatusMap: {
                 pending: "等待处理",
                 accepted: "已接受",
@@ -375,6 +416,11 @@ export default {
         },
         hallRequestKey() {
             return `${this.eventId}:${this.hallKind}`;
+        },
+        canPreviewIndividuals() {
+            if (!this.registrationApproved || this.contextError) return false;
+            if (this.registrationType === "lover") return this.context?.team?.formation_status === "building";
+            return this.registrationType === "mate" && Boolean(this.context?.unit) && !this.context?.team;
         },
         hallCanInvite() {
             return this.hallKind === "mate" ? this.registrationApproved && this.cooldown === 0 : this.canTeamInvite;
@@ -474,6 +520,13 @@ export default {
             },
             immediate: true,
         },
+        canPreviewIndividuals: {
+            immediate: true,
+            handler(value) {
+                if (value) this.loadPreview();
+                else this.previewHall = { list: [], count: 0 };
+            },
+        },
     },
     mounted() {
         this.pollingTimer = window.setInterval(() => this.refreshContext(), 15000);
@@ -512,6 +565,40 @@ export default {
             } finally {
                 this.hallLoading = false;
             }
+        },
+        refreshPreview() {
+            this.previewSeed = `${Date.now()}-${Math.random()}`;
+            this.loadPreview();
+        },
+        async loadPreview() {
+            if (!this.eventId || !this.canPreviewIndividuals) return;
+            this.previewLoading = true;
+            try {
+                const res = await getMateHall(this.eventId, {
+                    mode: "preview",
+                    seed: this.previewSeed,
+                    page: 1,
+                    page_size: 6,
+                });
+                this.previewHall = res.data.data;
+            } catch (error) {
+                console.error("[LoverV2MateHall.loadPreview]", error);
+                this.previewHall = { list: [], count: 0 };
+            } finally {
+                this.previewLoading = false;
+            }
+        },
+        openMateCard(registration) {
+            this.selectedMateRegistration = registration;
+            this.mateCardVisible = true;
+        },
+        openInvitationMateCard(invitation) {
+            const summary = invitation.sender_summary;
+            this.openMateCard({ members: summary?.member ? [summary.member] : [], mate_card: summary?.mate_card || null });
+        },
+        openHistoryMateCard(invitation) {
+            const summary = this.historySummary(invitation);
+            this.openMateCard({ members: summary?.member ? [summary.member] : [], mate_card: summary?.mate_card || null });
         },
         syncCooldownFromHall(list) {
             const retryAfter = Math.max(0, ...list.map((item) => Number(item.viewer?.retry_after) || 0));

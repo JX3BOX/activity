@@ -22,12 +22,12 @@
                     <article v-for="(member, index) in form.members" :key="member.user_id" class="u-member-card">
                         <UserIdentity :user="member" :show-meta="false" />
                         <div class="u-member-fields">
-                            <el-form-item
-                                label="参赛职责"
-                                :prop="`members.${index}.combat_role`"
-                                :rules="[{ required: true, message: '请选择参赛职责', trigger: 'change' }]"
-                            >
-                                <el-segmented v-model="member.combat_role" :options="roleOptions" />
+                            <el-form-item label="参赛心法" :prop="`members.${index}.mount_id`" :rules="mountRules">
+                                <XinfaSelector
+                                    v-model="member.mount_id"
+                                    :client="client"
+                                    @change-role="member.combat_role = $event"
+                                />
                             </el-form-item>
                             <el-form-item label="历史最高竞技场分">
                                 <el-input-number
@@ -89,18 +89,26 @@
                     />
                     <p class="u-story-tip">请至少填写一段文字或插入一项媒体内容。</p>
                 </el-form-item>
+                <el-form-item label="匿名江湖笺封面">
+                    <StoryCoverUpload
+                        ref="coverUpload"
+                        v-model="form.story.cover"
+                        @finish="onCoverUploaded"
+                        @error="onUploadError"
+                    />
+                </el-form-item>
             </template>
 
             <template v-else>
                 <article v-if="form.members[0]" class="u-member-card is-single">
                     <UserIdentity :user="form.members[0]" :show-meta="false" />
                     <div class="u-member-fields">
-                        <el-form-item
-                            label="参赛职责"
-                            prop="members.0.combat_role"
-                            :rules="[{ required: true, message: '请选择参赛职责', trigger: 'change' }]"
-                        >
-                            <el-segmented v-model="form.members[0].combat_role" :options="roleOptions" />
+                        <el-form-item label="参赛心法" prop="members.0.mount_id" :rules="mountRules">
+                            <XinfaSelector
+                                v-model="form.members[0].mount_id"
+                                :client="client"
+                                @change-role="form.members[0].combat_role = $event"
+                            />
                         </el-form-item>
                         <el-form-item label="历史最高竞技场分">
                             <el-input-number
@@ -195,11 +203,14 @@ import UploadImage from "@jx3box/jx3box-ui/src/comment/Upload.vue";
 import Tinymce from "@jx3box/jx3box-editor/src/Tinymce";
 import MateCardQuestionnaire from "./MateCardQuestionnaire.vue";
 import UserIdentity from "./UserIdentity.vue";
+import StoryCoverUpload from "./StoryCoverUpload.vue";
+import XinfaSelector from "./XinfaSelector.vue";
 import { registrationTypeMap } from "@/utils/lover-v2";
+import { getCombatRole, getXinfaByName } from "@/utils/lover-v2-xf";
 
 export default {
     name: "LoverV2RegistrationForm",
-    components: { MateCardQuestionnaire, Tinymce, UploadImage, UserIdentity },
+    components: { MateCardQuestionnaire, StoryCoverUpload, Tinymce, UploadImage, UserIdentity, XinfaSelector },
     emits: ["submit", "cancel-edit"],
     props: {
         selectedType: { type: String, required: true },
@@ -209,6 +220,7 @@ export default {
         profile: { type: Object, default: () => ({}) },
         submitting: { type: Boolean, default: false },
         mateCardResetKey: { type: Number, default: 0 },
+        client: { type: String, default: "std" },
     },
     data: function () {
         return {
@@ -226,17 +238,13 @@ export default {
                 constellation: "",
                 introduction: "",
                 mate_card_data: null,
-                story: { content: "" },
+                story: { content: "", cover: null },
                 members: [],
             },
             rules: {
                 team_name: [{ required: true, message: "请输入战队名称", trigger: "blur" }],
                 qq: [{ required: true, message: "请填写联系 QQ", trigger: "blur" }],
             },
-            roleOptions: [
-                { label: "输出", value: "dps" },
-                { label: "治疗", value: "healer" },
-            ],
             mbtiOptions: [
                 "INTJ",
                 "INTP",
@@ -287,7 +295,8 @@ export default {
                     user_id: Number(member.user_id ?? member.user_info?.id),
                     display_name: member.user_info?.display_name || member.display_name || null,
                     avatar: member.user_info?.avatar || member.avatar || null,
-                    combat_role: "dps",
+                    mount_id: null,
+                    combat_role: null,
                     arena_peak_score: null,
                     is_captain: Number(member.user_id) === Number(this.currentUser.user_id),
                 }))
@@ -304,6 +313,10 @@ export default {
         },
         submitButtonText() {
             return this.isEditing ? "保存并重新提交审核" : "提交报名";
+        },
+        mountRules() {
+            if (this.selectedType === "mate" && !this.form.mate_card_data) return [];
+            return [{ required: true, message: "请选择参赛心法", trigger: "change" }];
         },
     },
     watch: {
@@ -352,6 +365,7 @@ export default {
                 mate_card_data: source.mate_card_data || null,
                 story: {
                     content: source.story?.content || "",
+                    cover: source.story?.cover || null,
                 },
                 members: [],
             };
@@ -369,7 +383,8 @@ export default {
             this.form.members = [
                 {
                     ...this.currentUser,
-                    combat_role: "dps",
+                    mount_id: null,
+                    combat_role: null,
                     arena_peak_score: null,
                     is_captain: true,
                 },
@@ -397,11 +412,13 @@ export default {
                     ? {
                           story: {
                               content: this.form.story.content.trim() || null,
+                              cover: this.form.story.cover || null,
                           },
                       }
                     : {}),
                 members: this.form.members.map((member) => ({
                     user_id: Number(member.user_id),
+                    mount_id: member.mount_id == null ? null : Number(member.mount_id),
                     combat_role: member.combat_role,
                     arena_peak_score: member.arena_peak_score == null ? null : Number(member.arena_peak_score),
                 })),
@@ -421,12 +438,25 @@ export default {
                 this.questionnaireVisible = true;
                 return;
             }
-            this.uploadLogoOrSubmit(payload);
+            this.uploadCoverOrContinue(payload);
         },
         onQuestionnaireCompleted(mateCardData) {
             this.form.mate_card_data = mateCardData;
             if (!this.pendingPayload) return;
             this.pendingPayload.mate_card_data = mateCardData;
+            const member = this.form.members[0];
+            if (!member.mount_id) {
+                const xinfa = getXinfaByName(mateCardData?.variables?.mindset, this.client);
+                if (!xinfa) {
+                    this.pendingPayload = null;
+                    this.$message.error("问卷心法无法识别，请手动选择参赛心法后重新提交");
+                    return;
+                }
+                member.mount_id = xinfa.id;
+                member.combat_role = getCombatRole(xinfa.id);
+            }
+            this.pendingPayload.members[0].mount_id = Number(member.mount_id);
+            this.pendingPayload.members[0].combat_role = member.combat_role;
             this.$emit("submit", this.pendingPayload);
             this.pendingPayload = null;
         },
@@ -441,6 +471,21 @@ export default {
             }
             this.$emit("submit", this.pendingPayload || this.buildPayload());
             this.pendingPayload = null;
+        },
+        onCoverUploaded(url) {
+            this.uploadLoading = false;
+            this.form.story.cover = url;
+            this.pendingPayload.story.cover = url;
+            this.uploadLogoOrSubmit(this.pendingPayload);
+        },
+        uploadCoverOrContinue(payload) {
+            if (this.selectedType === "lover" && this.$refs.coverUpload?.hasPending) {
+                this.pendingPayload = payload;
+                this.uploadLoading = true;
+                this.$refs.coverUpload.upload();
+                return;
+            }
+            this.uploadLogoOrSubmit(payload);
         },
         uploadLogoOrSubmit(payload) {
             const uploader = this.$refs.logoUpload;

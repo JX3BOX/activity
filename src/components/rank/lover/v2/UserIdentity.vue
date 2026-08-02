@@ -29,21 +29,26 @@
             </button>
             <span v-else-if="showUid && userId" class="u-id is-static">UID {{ userId }}</span>
         </div>
-        <div v-if="showMeta" class="u-meta">
-            <el-tag size="small" :type="user?.combat_role === 'healer' ? 'success' : 'danger'" effect="light">
-                {{ combatRoleMap[user?.combat_role] || "职责未填" }}
-            </el-tag>
-            <span v-if="showScore && user?.arena_peak_score != null">最高 {{ user.arena_peak_score }} 分</span>
+        <div v-if="showMeta || user?.mount_id || showMountName" class="u-meta">
+            <XinfaBadge
+                v-if="user?.mount_id || showMountName"
+                :mount-id="user.mount_id"
+                :compact="compact && !showMountName"
+            />
+            <template v-if="showMeta">
+                <span v-if="showScore && user?.arena_peak_score != null">最高 {{ user.arena_peak_score }} 分</span>
+            </template>
         </div>
     </div>
 </template>
 
 <script>
 import { showAvatar } from "@jx3box/jx3box-common/js/utils";
-import { combatRoleMap } from "@/utils/lover-v2";
+import XinfaBadge from "./XinfaBadge.vue";
 
 export default {
     name: "LoverV2UserIdentity",
+    components: { XinfaBadge },
     props: {
         user: {
             type: Object,
@@ -69,13 +74,14 @@ export default {
             type: Boolean,
             default: true,
         },
+        showMountName: {
+            type: Boolean,
+            default: false,
+        },
         uidCopyable: {
             type: Boolean,
             default: true,
         },
-    },
-    data: function () {
-        return { combatRoleMap };
     },
     computed: {
         userId() {

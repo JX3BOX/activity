@@ -11,15 +11,12 @@
         </div>
         <div class="m-members">
             <div v-for="member in team.members" :key="member.user_id" class="u-member">
-                <UserIdentity :user="member" compact :show-meta="false" />
-                <span>
-                    {{ combatRoleMap[member.combat_role] || "职责未填" }}
-                    <template v-if="member.arena_peak_score != null"> · 最高 {{ member.arena_peak_score }} 分</template>
-                </span>
+                <UserIdentity :user="member" compact :show-meta="false" show-mount-name />
+                <span v-if="member.arena_peak_score != null">最高 {{ member.arena_peak_score }} 分</span>
             </div>
         </div>
         <div class="u-footer">
-            <span>{{ team.member_count }} 名成员 · {{ team.healer_count }} 名治疗</span>
+            <span>{{ team.member_count }} 名成员</span>
             <el-button text type="primary" @click="$emit('timeline', team)">查看赛事足迹</el-button>
         </div>
     </article>
@@ -28,7 +25,7 @@
 <script>
 import TeamIdentity from "./TeamIdentity.vue";
 import UserIdentity from "./UserIdentity.vue";
-import { combatRoleMap, competitionStatusMap, formationStatusMap } from "@/utils/lover-v2";
+import { competitionStatusMap, formationStatusMap } from "@/utils/lover-v2";
 
 export default {
     name: "LoverV2PublicTeamCard",
@@ -36,7 +33,7 @@ export default {
     emits: ["timeline"],
     props: { team: { type: Object, required: true } },
     data: function () {
-        return { combatRoleMap, competitionStatusMap, formationStatusMap };
+        return { competitionStatusMap, formationStatusMap };
     },
 };
 </script>

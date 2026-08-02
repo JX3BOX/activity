@@ -7,9 +7,6 @@
                     <span>MMR</span>
                     <strong>{{ peakScore }}</strong>
                 </div>
-                <el-tag size="small" :type="member?.combat_role === 'healer' ? 'success' : 'danger'" effect="light">
-                    {{ combatRoleText }}
-                </el-tag>
             </div>
         </div>
         <div class="u-tags">
@@ -29,12 +26,14 @@
         </div>
         <p v-if="hasIncomingInvitation" class="u-incoming-tip">对方已经向你发出邀请，可在页面上方的邀请箱处理。</p>
         <div class="u-card-actions">
-            <div class="u-match-score" :aria-label="`契合度 ${matchScore} 分`">
+            <div v-if="!preview" class="u-match-score" :aria-label="`契合度 ${matchScore} 分`">
                 <span>契合度</span>
                 <strong>{{ matchScore }}</strong>
                 <small>分</small>
             </div>
+            <el-button plain @click="$emit('view', registration)">查看名片</el-button>
             <el-button
+                v-if="!preview"
                 class="u-invite-button"
                 type="primary"
                 :loading="loading"
@@ -50,17 +49,17 @@
 <script>
 import IntroductionText from "./IntroductionText.vue";
 import UserIdentity from "./UserIdentity.vue";
-import { combatRoleMap } from "@/utils/lover-v2";
 
 export default {
     name: "LoverV2MateRegistrationCard",
     components: { IntroductionText, UserIdentity },
-    emits: ["invite"],
+    emits: ["invite", "view"],
     props: {
         registration: { type: Object, required: true },
         disabled: { type: Boolean, default: false },
         loading: { type: Boolean, default: false },
         cooldown: { type: Number, default: 0 },
+        preview: { type: Boolean, default: false },
     },
     computed: {
         member() {
@@ -77,9 +76,6 @@ export default {
             if (this.member?.arena_peak_score == null) return "--";
             const score = Number(this.member?.arena_peak_score);
             return Number.isFinite(score) ? Math.round(score) : "--";
-        },
-        combatRoleText() {
-            return combatRoleMap[this.member?.combat_role] || "职责未填";
         },
         viewer() {
             return this.registration.viewer || null;
@@ -258,8 +254,22 @@ export default {
 
 .u-card-actions {
     display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px;
     margin-top: auto;
+
+    > .u-match-score {
+        grid-column: 1 / -1;
+    }
+
+    > .el-button {
+        width: 100%;
+        margin: 0 !important;
+    }
+
+    > .el-button:only-child {
+        grid-column: 1 / -1;
+    }
 }
 
 .u-match-score {

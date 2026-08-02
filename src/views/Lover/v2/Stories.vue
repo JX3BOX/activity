@@ -171,8 +171,9 @@ export default {
     },
     methods: {
         normalizeStory(item) {
+            const content = String(item.content || "");
             const container = document.createElement("div");
-            container.innerHTML = String(item.content || "");
+            container.innerHTML = content;
             const images = Array.from(container.querySelectorAll("img"));
             const cover = images.find(
                 (image) => !image.classList.contains("t-emotion") && !image.classList.contains("e-jx3-emotion-img")
@@ -193,7 +194,8 @@ export default {
 
             return {
                 ...item,
-                cover: coverUrl,
+                content,
+                cover: item.cover || coverUrl,
                 preview_content: buildStoryPreview(container),
             };
         },

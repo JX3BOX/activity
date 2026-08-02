@@ -36,6 +36,20 @@
                 </div>
                 <div class="u-actions">
                     <el-button
+                        v-if="invitation.type === 'team_join' && invitation.sender_summary"
+                        plain
+                        @click="openTeam(invitation.sender_summary)"
+                    >
+                        查看情缘队资料
+                    </el-button>
+                    <el-button
+                        v-if="invitation.type === 'mate_pair' && invitation.sender_summary?.mate_card"
+                        plain
+                        @click="$emit('view-mate-card', invitation)"
+                    >
+                        查看名片
+                    </el-button>
+                    <el-button
                         :loading="loadingId === invitation.id && loadingAction === 'reject'"
                         :disabled="loadingId !== null || !invitation.can_reject"
                         @click="$emit('reject', invitation)"
@@ -58,6 +72,18 @@
             <h4>暂时没有新的邀约</h4>
             <p>有新的组队邀请时，这里会自动更新。慢慢等一封江湖来信吧。</p>
         </div>
+        <el-dialog
+            v-model="teamVisible"
+            class="m-lover-v2-team-invitation-dialog"
+            width="min(760px, calc(100vw - 32px))"
+            align-center
+        >
+            <template #header><strong>情缘队资料</strong></template>
+            <TeamIdentity :team="selectedTeam" show-slogan />
+            <div class="m-team-members">
+                <UserIdentity v-for="member in selectedTeam?.members || []" :key="member.user_id" :user="member" />
+            </div>
+        </el-dialog>
     </section>
 </template>
 
@@ -72,9 +98,9 @@ import invitationEmptyImage from "@/assets/img/lover/v2/invitation-empty.webp";
 export default {
     name: "LoverV2InvitationInbox",
     components: { FeatureBadge, IntroductionText, TeamIdentity, UserIdentity },
-    emits: ["accept", "reject"],
+    emits: ["accept", "reject", "view-mate-card"],
     data: function () {
-        return { invitationEmptyImage };
+        return { invitationEmptyImage, teamVisible: false, selectedTeam: null };
     },
     props: {
         invitations: { type: Array, default: () => [] },
@@ -91,6 +117,10 @@ export default {
                     display_name: "邀请方侠士",
                 }
             );
+        },
+        openTeam(team) {
+            this.selectedTeam = team;
+            this.teamVisible = true;
         },
     },
 };
@@ -189,6 +219,16 @@ export default {
 .u-actions {
     display: flex;
     flex: 0 0 auto;
+}
+
+.m-team-members {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 20px;
+    padding: 16px;
+    border-radius: 12px;
+    background: #fffaf5;
 }
 
 @media screen and (max-width: 720px) {

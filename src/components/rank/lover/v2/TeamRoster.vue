@@ -3,7 +3,7 @@
         <div class="u-summary">
             <div>
                 <strong>{{ team.member_count || team.members?.length || 0 }} / {{ expectedMemberCount }} 人</strong>
-                <span>当前治疗 {{ team.healer_count || 0 }} 人</span>
+                <span>心法以成员当前报名资料为准</span>
             </div>
             <el-tag class="u-formation-status" :type="formationTagType" size="large">
                 {{ formationStatusMap[team.formation_status] || team.formation_status }}

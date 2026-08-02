@@ -59,6 +59,7 @@
                     :lover-net="$store.state.lover_net"
                     :current-user="currentUser"
                     :profile="profile"
+                    :client="event?.client || 'std'"
                     :submitting="submitting"
                     :mate-card-reset-key="mateCardResetKey"
                     @submit="submitRegistration"

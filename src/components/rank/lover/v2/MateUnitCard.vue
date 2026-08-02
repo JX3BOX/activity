@@ -12,15 +12,18 @@
         </div>
         <div class="m-member-summary">
             <div v-for="member in unit.members" :key="member.user_id" class="u-member">
-                <UserIdentity :user="member" compact :show-meta="false" :show-captain="false" />
+                <UserIdentity
+                    :user="member"
+                    compact
+                    :show-meta="false"
+                    :show-captain="false"
+                    show-mount-name
+                />
                 <div class="u-member-meta">
                     <span>
                         MMR
                         <strong>{{ peakScore(member) }}</strong>
                     </span>
-                    <el-tag size="small" :type="member.combat_role === 'healer' ? 'success' : 'danger'" effect="light">
-                        {{ combatRoleMap[member.combat_role] || "职责未填" }}
-                    </el-tag>
                 </div>
             </div>
         </div>
@@ -37,7 +40,6 @@
 
 <script>
 import UserIdentity from "./UserIdentity.vue";
-import { combatRoleMap } from "@/utils/lover-v2";
 
 export default {
     name: "LoverV2MateUnitCard",
@@ -45,9 +47,6 @@ export default {
     emits: ["view"],
     props: {
         unit: { type: Object, required: true },
-    },
-    data: function () {
-        return { combatRoleMap };
     },
     computed: {
         captainName() {
