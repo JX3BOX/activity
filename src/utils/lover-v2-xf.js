@@ -6,6 +6,7 @@ const xinfas = Object.values(xf).map((item) => ({ ...item, id: Number(item.id) }
 
 export function getXinfaOptions(client = "std") {
     return xinfas
+        .filter((item) => item.id > 0 && item.name !== "通用")
         .filter((item) => !client || item.client?.includes("all") || item.client?.includes(client))
         .sort((left, right) => left.school - right.school || left.id - right.id);
 }
