@@ -54,8 +54,7 @@ export default {
             handler: function (authors) {
                 if (!(authors && authors.length)) return;
 
-                this.isDirectMode = authors.some((item) => item.author && item.icon);
-
+                this.isDirectMode = authors.some((item) => item.author && item.icon); 
                 if (this.isDirectMode) {
                     this.year = uniq(authors.map((item) => Number(item.icon)).filter(Boolean)).sort((a, b) => b - a);
                     this.authors = authors.reduce((prev, cur) => {
@@ -75,7 +74,7 @@ export default {
                         if (!prev[title]) prev[title] = "";
                         prev[title] = desc;
                         return prev;
-                    }, {});
+                    }, {}); 
                 }
             },
         },
@@ -146,11 +145,16 @@ export default {
                 });
         },
         async loadUser(list) {
-            const res = await getUsers({ list });
-            const id_list = list.split(",").map((item) => ~~item);
-            const info_list = res.data.data || [];
-            const data = [];
+            const id_list = list.split(",").map((item) => ~~item).filter(Boolean); 
+            const CHUNK = 50;
+            const info_list = [];
+            for (let i = 0; i < id_list.length; i += CHUNK) {
+                const chunk = id_list.slice(i, i + CHUNK).join(",");
+                const res = await getUsers({ list: chunk });
+                info_list.push(...(res.data.data || []));
+            }
 
+            const data = [];
             for (const item of id_list) {
                 for (const u of info_list) {
                     if (u.ID == item) {
@@ -161,6 +165,7 @@ export default {
                             link: "/author/" + u.ID,
                             sign: u.sign,
                         });
+                        break;
                     }
                 }
             }

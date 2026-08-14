@@ -117,7 +117,7 @@ export default {
                 this.invited = authors;
                 this.SCI = SCI;
                 this.season = season;
-                this.cover = cover;
+                this.cover = cover; 
             });
         },
         closeMark() {
