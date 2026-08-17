@@ -129,6 +129,7 @@
                     :match-id="matchId"
                     :draw="selectedCardDraw"
                     :match="match"
+                    :client="$store.state.v2_event?.client || 'std'"
                     @used="handleCardDrawn"
                 />
                 <section

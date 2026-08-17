@@ -57,7 +57,16 @@
                 <div v-if="requirement.effect.value_count" class="m-subject-values">
                     <div v-for="userId in forms[index].user_ids" :key="userId" class="u-subject-value">
                         <span>{{ memberName(memberById(userId)) }}</span>
+                        <TalentValueSelector
+                            v-if="requirement.effect.kind === 'disable_talent_exact'"
+                            :model-value="forms[index].values[userId]"
+                            :member="memberById(userId)"
+                            :client="client"
+                            :limit="requirement.effect.value_count"
+                            @update:model-value="forms[index].values[userId] = $event"
+                        />
                         <el-select
+                            v-else
                             v-model="forms[index].values[userId]"
                             multiple
                             collapse-tags
@@ -86,9 +95,11 @@
 <script>
 import { showAvatar } from "@jx3box/jx3box-common/js/utils";
 import { useCard } from "@/service/rank/lover-v2";
+import TalentValueSelector from "./TalentValueSelector.vue";
 
 export default {
     name: "LoverV2DestinyCardUseDialog",
+    components: { TalentValueSelector },
     emits: ["update:modelValue", "used"],
     props: {
         modelValue: { type: Boolean, default: false },
@@ -96,6 +107,7 @@ export default {
         matchId: { type: Number, required: true },
         draw: { type: Object, default: null },
         match: { type: Object, required: true },
+        client: { type: String, default: "std" },
     },
     data: function () {
         return {
@@ -128,7 +140,8 @@ export default {
             const side = requirement.target === "self" ? "我方" : "敌方";
             const effects = {
                 none: "作为签面目标",
-                disable_talent: "禁用奇穴",
+                disable_talent: "禁用某层奇穴",
+                disable_talent_exact: "禁用具体奇穴",
                 disable_equip_slot: "禁用装备部位",
                 disable_skill: "禁用技能",
                 remove_restriction: "解除限制",

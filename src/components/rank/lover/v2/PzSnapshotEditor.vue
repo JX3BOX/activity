@@ -44,19 +44,32 @@
                     </li>
                 </ul>
             </div>
+            <PzLocalAdjustment
+                v-if="canEdit"
+                :key="adjustmentKey"
+                :snapshot="previewSnapshot"
+                :restrictions="restrictions"
+                @change="handleAdjustmentChange"
+                @state-change="handleAdjustmentState"
+            />
             <PzSnapshotFrame
                 :schema="previewSnapshot.schema"
-                :restrictions="restrictions"
+                :restrictions="frameRestrictions"
                 :title="`${memberName}的本场配装`"
             />
             <div v-if="candidate" class="u-submit">
                 <el-alert
-                    title="当前只是预览，点击确认后才会替换你在本场战斗中的配装记录。"
-                    type="warning"
+                    :title="submitNotice"
+                    :type="submitBlockedReason ? 'error' : 'warning'"
                     :closable="false"
                     show-icon
                 />
-                <el-button type="primary" :loading="loading" @click="$emit('submit', candidate)">
+                <el-button
+                    type="primary"
+                    :loading="loading || adjustmentPending"
+                    :disabled="Boolean(submitBlockedReason)"
+                    @click="$emit('submit', candidate)"
+                >
                     确认并提交本场配装
                 </el-button>
             </div>
@@ -71,11 +84,12 @@ import { __Root } from "@/utils/config";
 import { buildPzSnapshot, parsePzId } from "@/utils/lover-v2-pz";
 import { formatDateTime } from "@/utils/lover-v2";
 import EmptyState from "./EmptyState.vue";
+import PzLocalAdjustment from "./PzLocalAdjustment.vue";
 import PzSnapshotFrame from "./PzSnapshotFrame.vue";
 
 export default {
     name: "LoverV2PzSnapshotEditor",
-    components: { EmptyState, PzSnapshotFrame },
+    components: { EmptyState, PzLocalAdjustment, PzSnapshotFrame },
     emits: ["submit"],
     props: {
         snapshot: { type: Object, default: null },
@@ -91,6 +105,8 @@ export default {
             candidate: null,
             reading: false,
             errorMessage: "",
+            adjustmentPending: false,
+            adjustmentError: "",
         };
     },
     computed: {
@@ -105,6 +121,27 @@ export default {
             const id = this.previewSnapshot?.source?.id;
             return id ? `${String(__Root).replace(/\/?$/, "/")}pz/view/${id}` : "";
         },
+        frameRestrictions() {
+            return this.restrictions.filter((restriction) => restriction.kind !== "disable_talent_exact");
+        },
+        adjustmentKey() {
+            const source = this.previewSnapshot?.source || {};
+            return `${source.id || 0}:${source.updated_at || ""}:${this.candidate ? "draft" : "saved"}`;
+        },
+        exactConflicts() {
+            return this.exactTalentConflicts(this.previewSnapshot);
+        },
+        submitBlockedReason() {
+            if (this.adjustmentPending) return "正在重新计算调整后的配装，请稍候";
+            if (this.adjustmentError) return this.adjustmentError;
+            if (this.exactConflicts.length) {
+                return `当前仍使用被封奇穴「${this.exactConflicts.map((talent) => talent.name).join("、")}」，请先调整奇穴`;
+            }
+            return "";
+        },
+        submitNotice() {
+            return this.submitBlockedReason || "当前只是预览，点击确认后才会替换你在本场战斗中的配装记录。";
+        },
     },
     watch: {
         snapshot: {
@@ -113,6 +150,8 @@ export default {
             handler(value) {
                 this.candidate = null;
                 this.errorMessage = "";
+                this.adjustmentPending = false;
+                this.adjustmentError = "";
                 this.sourceInput = value?.source?.id ? String(value.source.id) : "";
             },
         },
@@ -121,14 +160,35 @@ export default {
         formatDateTime,
         restrictionLabel(restriction) {
             const labels = {
-                disable_talent: "禁用奇穴",
+                disable_talent: "禁用某层奇穴",
+                disable_talent_exact: "禁用具体奇穴",
                 disable_equip_slot: "禁用装备部位",
                 disable_skill: "禁用技能",
                 remove_restriction: "解除限制",
                 none: "指定目标",
             };
-            const values = (restriction.values || []).join("、");
+            const values = (restriction.values || [])
+                .map((value) => (value && typeof value === "object" ? value.name : value))
+                .join("、");
             return `${restriction.card_name}：${labels[restriction.kind] || "签面效果"}${values ? `（${values}）` : ""}`;
+        },
+        exactTalentConflicts(snapshot) {
+            const selectedIds = new Set(
+                (snapshot?.schema?.talent_pzcode || []).map((talent) => Number(talent?.id)).filter(Boolean)
+            );
+            return this.restrictions
+                .filter((restriction) => restriction.kind === "disable_talent_exact")
+                .flatMap((restriction) => restriction.values || [])
+                .filter((talent) => selectedIds.has(Number(talent?.id)));
+        },
+        handleAdjustmentChange(snapshot) {
+            this.candidate = snapshot;
+            this.adjustmentPending = false;
+            this.adjustmentError = "";
+        },
+        handleAdjustmentState(state) {
+            this.adjustmentPending = Boolean(state?.pending);
+            this.adjustmentError = state?.error || "";
         },
         async loadSource() {
             if (this.reading || this.loading) return;
@@ -150,7 +210,8 @@ export default {
                     return;
                 }
                 try {
-                    this.candidate = buildPzSnapshot(schema, id);
+                    const candidate = buildPzSnapshot(schema, id);
+                    this.candidate = candidate;
                 } catch (error) {
                     console.error("[LoverV2PzSnapshotEditor.buildSnapshot]", error);
                     this.errorMessage = error?.message || "配装数据格式无效，请更换一份配装";
