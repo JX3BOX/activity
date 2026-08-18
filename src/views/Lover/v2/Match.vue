@@ -151,7 +151,7 @@
                         <h3>本队赛前配装暂时无法读取</h3>
                         <p>为避免用空白内容覆盖已有配装，配置编辑已经暂停。重新加载成功后才能继续填写。</p>
                     </div>
-                    <el-button type="primary" plain :loading="configLoading" @click="loadConfigs">重新加载配置</el-button>
+                    <el-button type="primary" plain :loading="configLoading" @click="loadConfigs()">重新加载配置</el-button>
                 </section>
                 <MatchConfigPanel
                     v-else-if="isParticipant && canShowConfig"
@@ -168,7 +168,7 @@
                     :refreshing="configLoading"
                     @save-member="saveMemberConfig"
                     @lock="lockConfig"
-                    @refresh="loadConfigs"
+                    @refresh="loadConfigs()"
                 />
                 <section v-else-if="!isParticipant && canShowConfig" class="m-match-section m-lover-v2-panel m-public-config">
                     <div class="u-section-head">
@@ -263,10 +263,13 @@ import FeatureBadge from "@/components/rank/lover/v2/FeatureBadge.vue";
 import MatchConfigPanel from "@/components/rank/lover/v2/MatchConfigPanel.vue";
 import TeamIdentity from "@/components/rank/lover/v2/TeamIdentity.vue";
 import UserIdentity from "@/components/rank/lover/v2/UserIdentity.vue";
+import autoRefreshMixin from "@/mixins/lover-v2-auto-refresh";
 import { formatDateTime, matchStatusMap } from "@/utils/lover-v2";
 
 export default {
     name: "LoverV2Match",
+    mixins: [autoRefreshMixin],
+    autoRefreshInterval: 5000,
     components: {
         LoverV2Layout,
         DestinyCardDrawDialog,
@@ -290,7 +293,6 @@ export default {
             cardDialogVisible: false,
             cardUseDialogVisible: false,
             selectedCardDraw: null,
-            contextPollingTimer: null,
         };
     },
     computed: {
@@ -482,27 +484,19 @@ export default {
             if (value && !this.ownConfig?.progress?.complete && !this.configLoading) this.loadConfigs();
         },
     },
-    mounted() {
-        this.contextPollingTimer = window.setInterval(() => {
-            this.$store.dispatch("loadV2Context", { force: true }).catch((error) => {
-                console.error("[LoverV2Match.contextPolling]", error);
-            });
-        }, 15000);
-    },
-    beforeUnmount() {
-        window.clearInterval(this.contextPollingTimer);
-    },
     methods: {
         formatDateTime,
-        async load() {
+        async load(background = false) {
             if (!this.eventId || !this.matchId) return;
-            this.loading = true;
+            if (!background) this.loading = true;
             try {
                 const participantMatch = this.participantMatch;
                 // 锁定配置后本场可能立即从可操作列表移除；当前页保留已授权读取过的草稿摘要，避免把成功操作误报成 404。
                 const privateMatch = participantMatch?.match || (this.match?.status === "draft" ? this.match : null);
                 const isPrivateDraft = privateMatch?.status === "draft";
-                const matchRes = isPrivateDraft ? null : await getMatch(this.eventId, this.matchId);
+                const matchRes = isPrivateDraft
+                    ? null
+                    : await getMatch(this.eventId, this.matchId, { mute: background });
                 const match = matchRes?.data?.data || privateMatch;
                 if (!match) return;
                 if (participantMatch?.own_team) {
@@ -516,35 +510,41 @@ export default {
                 }
                 match.stage = participantMatch?.stage || match.stage;
                 this.match = match;
-                await this.loadConfigs();
+                await this.loadConfigs(background);
             } catch (error) {
                 console.error("[LoverV2Match.load]", error);
             } finally {
-                this.loading = false;
+                if (!background) this.loading = false;
             }
         },
-        async reloadMatchContext() {
-            await this.$store.dispatch("loadV2Context", { force: true });
-            await this.load();
+        async reloadMatchContext(background = false) {
+            await this.$store.dispatch("loadV2Context", { force: true, background });
+            await this.load(background);
         },
-        async loadConfigs() {
+        async loadConfigs(background = false) {
             if (!this.isParticipant) {
                 this.configRecords = [];
                 this.configLoadError = false;
                 return;
             }
-            this.configLoading = true;
-            this.configLoadError = false;
+            if (!background) this.configLoading = true;
+            if (!background) this.configLoadError = false;
             try {
-                const res = await getMatchTeamConfig(this.eventId, this.matchId);
+                const res = await getMatchTeamConfig(this.eventId, this.matchId, { mute: background });
                 this.configRecords = res.data.data || [];
+                this.configLoadError = false;
             } catch (error) {
                 console.error("[LoverV2Match.loadConfigs]", error);
-                this.configRecords = [];
-                this.configLoadError = true;
+                if (!background) {
+                    this.configRecords = [];
+                    this.configLoadError = true;
+                }
             } finally {
-                this.configLoading = false;
+                if (!background) this.configLoading = false;
             }
+        },
+        async refreshPollingData() {
+            await this.reloadMatchContext(true);
         },
         gameResultLabel(game) {
             if (Number(game.winner_team_id) === Number(this.match.team1?.id)) return `${this.match.team1.name} 获胜`;

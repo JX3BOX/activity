@@ -80,7 +80,7 @@
             <FeatureBadge name="lover" />
             <h3>个人报名状态暂时无法读取</h3>
             <p>重新加载成功前，不会把网络问题误显示成“尚未报名”。</p>
-            <el-button type="primary" :loading="$store.state.v2_context_loading" @click="refreshContext">
+            <el-button type="primary" :loading="$store.state.v2_context_loading" @click="refreshContext()">
                 重新加载报名状态
             </el-button>
         </div>
@@ -94,12 +94,15 @@ import { cancelRegistration, createRegistration, updateRegistration } from "@/se
 import LoverV2Layout from "@/layouts/lover/LoverV2Layout.vue";
 import FeatureBadge from "@/components/rank/lover/v2/FeatureBadge.vue";
 import RegistrationForm from "@/components/rank/lover/v2/RegistrationForm.vue";
+import autoRefreshMixin from "@/mixins/lover-v2-auto-refresh";
 import RegistrationStatusCard from "@/components/rank/lover/v2/RegistrationStatusCard.vue";
 import RegistrationTypeCard from "@/components/rank/lover/v2/RegistrationTypeCard.vue";
 import { phaseMap } from "@/utils/lover-v2";
 
 export default {
     name: "LoverV2Register",
+    mixins: [autoRefreshMixin],
+    autoRefreshInterval: 8000,
     components: {
         LoverV2Layout,
         FeatureBadge,
@@ -199,6 +202,10 @@ export default {
         },
         async refreshContext() {
             await this.$store.dispatch("loadV2Context", { force: true });
+        },
+        async refreshPollingData() {
+            if (!this.isLogin || this.editing || this.submitting) return;
+            await this.$store.dispatch("loadV2Context", { force: true, background: true });
         },
         async reloadLoverNet() {
             await this.$store.dispatch("loadLoverRelationNet", { force: true }).catch((error) => {

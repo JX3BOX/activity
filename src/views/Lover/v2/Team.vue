@@ -16,7 +16,7 @@
                     <div>
                         <h3>个人战队状态暂时无法读取</h3>
                         <p>重新加载成功前，不会显示可能已经过期的组队与战斗操作。</p>
-                        <el-button type="primary" :loading="$store.state.v2_context_loading" @click="refreshContext">
+                        <el-button type="primary" :loading="$store.state.v2_context_loading" @click="refreshContext()">
                             重新加载个人状态
                         </el-button>
                     </div>
@@ -145,7 +145,7 @@
                             :page-size="publicTeams.pageSize"
                             :total="publicTeams.count"
                             layout="prev, pager, next"
-                            @current-change="loadTeams"
+                            @current-change="loadTeams()"
                         />
                     </div>
                 </section>
@@ -164,9 +164,12 @@ import FeatureBadge from "@/components/rank/lover/v2/FeatureBadge.vue";
 import PublicTeamCard from "@/components/rank/lover/v2/PublicTeamCard.vue";
 import TeamIdentity from "@/components/rank/lover/v2/TeamIdentity.vue";
 import TeamRoster from "@/components/rank/lover/v2/TeamRoster.vue";
+import autoRefreshMixin from "@/mixins/lover-v2-auto-refresh";
 
 export default {
     name: "LoverV2Team",
+    mixins: [autoRefreshMixin],
+    autoRefreshInterval: 5000,
     components: {
         LoverV2Layout,
         CompetitionConsole,
@@ -183,7 +186,6 @@ export default {
             teamsLoaded: false,
             publicTeams: { list: [], count: 0, page: 1, pageSize: 6 },
             actionLoading: "",
-            pollingTimer: null,
         };
     },
     computed: {
@@ -258,35 +260,37 @@ export default {
             immediate: true,
         },
     },
-    mounted() {
-        this.pollingTimer = window.setInterval(() => this.refreshContext(), 15000);
-    },
-    beforeUnmount() {
-        window.clearInterval(this.pollingTimer);
-    },
     methods: {
         handleTabChange(tabName) {
             if (tabName === "public" && !this.teamsLoaded) this.loadTeams();
         },
-        async refreshContext() {
-            await this.$store.dispatch("loadV2Context", { force: true }).catch((error) => {
+        async refreshContext(background = false) {
+            await this.$store.dispatch("loadV2Context", { force: true, background }).catch((error) => {
                 console.error("[LoverV2Team.refreshContext]", error);
             });
         },
-        async loadTeams() {
+        async refreshPollingData() {
+            await this.refreshContext(true);
+            if (this.activeTab === "public" && this.teamsLoaded) await this.loadTeams(true);
+        },
+        async loadTeams(background = false) {
             if (!this.eventId) return;
-            this.teamsLoading = true;
+            if (!background) this.teamsLoading = true;
             try {
-                const res = await getTeams(this.eventId, {
-                    page: this.publicTeams.page,
-                    page_size: this.publicTeams.pageSize,
-                });
+                const res = await getTeams(
+                    this.eventId,
+                    {
+                        page: this.publicTeams.page,
+                        page_size: this.publicTeams.pageSize,
+                    },
+                    { mute: background }
+                );
                 this.publicTeams = { ...this.publicTeams, ...res.data.data, pageSize: res.data.data.page_size };
                 this.teamsLoaded = true;
             } catch (error) {
                 console.error("[LoverV2Team.loadTeams]", error);
             } finally {
-                this.teamsLoading = false;
+                if (!background) this.teamsLoading = false;
             }
         },
         openMatch(match) {

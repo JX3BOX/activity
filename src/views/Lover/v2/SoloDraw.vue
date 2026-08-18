@@ -54,7 +54,7 @@
                         <h3>本队抽取记录</h3>
                         <p>记录只展示已经公开且仍有效的抽取结果，不公开完整候选池。</p>
                     </div>
-                    <el-button text @click="loadDraws">刷新</el-button>
+                    <el-button text @click="loadDraws()">刷新</el-button>
                 </div>
                 <el-table v-loading="historyLoading" :data="draws.list" stripe>
                     <el-table-column label="顺序" width="90">
@@ -87,9 +87,12 @@ import IntroductionText from "@/components/rank/lover/v2/IntroductionText.vue";
 import TeamIdentity from "@/components/rank/lover/v2/TeamIdentity.vue";
 import UserIdentity from "@/components/rank/lover/v2/UserIdentity.vue";
 import { formatDateTime } from "@/utils/lover-v2";
+import autoRefreshMixin from "@/mixins/lover-v2-auto-refresh";
 
 export default {
     name: "LoverV2SoloDraw",
+    mixins: [autoRefreshMixin],
+    autoRefreshInterval: 8000,
     components: { LoverV2Layout, FeatureBadge, IntroductionText, TeamIdentity, UserIdentity },
     data: function () {
         return {
@@ -97,7 +100,6 @@ export default {
             historyLoading: false,
             draws: { list: [], count: 0, page: 1, pageSize: 20 },
             resultUnitId: null,
-            pollingTimer: null,
         };
     },
     computed: {
@@ -151,31 +153,30 @@ export default {
             immediate: true,
         },
     },
-    mounted() {
-        this.pollingTimer = window.setInterval(() => {
-            this.$store.dispatch("loadV2Context", { force: true }).catch((error) => {
-                console.error("[LoverV2SoloDraw.contextPolling]", error);
-            });
-        }, 15000);
-    },
-    beforeUnmount() {
-        window.clearInterval(this.pollingTimer);
-    },
     methods: {
         formatDateTime,
-        async loadDraws() {
+        async refreshPollingData() {
+            await this.$store.dispatch("loadV2Context", { force: true, background: true });
+            await this.loadDraws(true);
+        },
+        async loadDraws(background = false) {
             if (!this.team?.id) return;
-            this.historyLoading = true;
+            if (!background) this.historyLoading = true;
             try {
-                const res = await getSoloDraws(this.eventId, this.team.id, {
-                    page: 1,
-                    page_size: this.draws.pageSize,
-                });
+                const res = await getSoloDraws(
+                    this.eventId,
+                    this.team.id,
+                    {
+                        page: 1,
+                        page_size: this.draws.pageSize,
+                    },
+                    { mute: background }
+                );
                 this.draws = { ...this.draws, ...res.data.data, pageSize: res.data.data.page_size };
             } catch (error) {
                 console.error("[LoverV2SoloDraw.loadDraws]", error);
             } finally {
-                this.historyLoading = false;
+                if (!background) this.historyLoading = false;
             }
         },
         memberForDraw(draw) {

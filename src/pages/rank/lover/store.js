@@ -149,7 +149,7 @@ let store = {
                 state.v2_event_loading = false;
             }
         },
-        async loadV2Context({ commit, state, getters }, { force = false } = {}) {
+        async loadV2Context({ commit, state, getters }, { force = false, background = false } = {}) {
             if (!User.isLogin()) {
                 commit("SET_V2_CONTEXT", null);
                 return;
@@ -158,13 +158,13 @@ let store = {
             if (!eventId || state.v2_context_loading) return;
             if (!force && state.v2_context_loaded) return;
             state.v2_context_loading = true;
-            commit("SET_V2_CONTEXT_ERROR", null);
+            if (!background) commit("SET_V2_CONTEXT_ERROR", null);
             try {
                 const res = await getV2Context(eventId);
                 commit("SET_V2_CONTEXT", res.data.data);
             } catch (error) {
                 // 保留上一次成功状态并允许重试，避免瞬时网络错误被误判成“未报名”。
-                commit("SET_V2_CONTEXT_ERROR", error);
+                if (!background || !state.v2_context) commit("SET_V2_CONTEXT_ERROR", error);
                 throw error;
             } finally {
                 state.v2_context_loading = false;

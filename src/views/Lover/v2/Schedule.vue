@@ -5,7 +5,7 @@
                 <h2>赛事进程</h2>
                 <p>循环赛查看分组、人工积分与公开战斗；淘汰赛按轮次查看签表和晋级结果。</p>
             </div>
-            <el-button :loading="loading" @click="loadStages">刷新赛程</el-button>
+            <el-button :loading="loading" @click="loadStages()">刷新赛程</el-button>
         </section>
 
         <section v-if="stages.length" class="m-schedule-shell m-lover-v2-panel">
@@ -60,10 +60,13 @@ import CompetitionStageSteps from "@/components/rank/lover/v2/CompetitionStageSt
 import EliminationBracket from "@/components/rank/lover/v2/EliminationBracket.vue";
 import EmptyState from "@/components/rank/lover/v2/EmptyState.vue";
 import RoundRobinBoard from "@/components/rank/lover/v2/RoundRobinBoard.vue";
+import autoRefreshMixin from "@/mixins/lover-v2-auto-refresh";
 import { formatDateTime, getPreferredStageId, stageTypeMap } from "@/utils/lover-v2";
 
 export default {
     name: "LoverV2Schedule",
+    mixins: [autoRefreshMixin],
+    autoRefreshInterval: 8000,
     components: { LoverV2Layout, CompetitionStageSteps, EliminationBracket, EmptyState, RoundRobinBoard },
     data: function () {
         return {
@@ -102,34 +105,41 @@ export default {
             this.activeStageId = nextStageId;
             this.loadActiveStage(true);
         },
-        async loadStages() {
+        async loadStages(background = false) {
             if (!this.eventId) return;
-            this.loading = true;
+            if (!background) this.loading = true;
             try {
-                const res = await getStages(this.eventId, { page: 1, page_size: 100 });
+                const res = await getStages(
+                    this.eventId,
+                    { page: 1, page_size: 100 },
+                    { mute: background }
+                );
                 this.stages = res.data.data.list || [];
                 const queryStage = String(this.$route.query.schedule || "");
-                this.activeStageId = this.stages.some((stage) => String(stage.id) === queryStage)
-                    ? queryStage
-                    : String(getPreferredStageId(this.stages));
-                await this.loadActiveStage();
+                const currentStage = String(this.activeStageId || "");
+                this.activeStageId = this.stages.some((stage) => String(stage.id) === currentStage)
+                    ? currentStage
+                    : this.stages.some((stage) => String(stage.id) === queryStage)
+                      ? queryStage
+                      : String(getPreferredStageId(this.stages));
+                await this.loadActiveStage(false, background);
             } catch (error) {
                 console.error("[LoverV2Schedule.loadStages]", error);
             } finally {
-                this.loading = false;
+                if (!background) this.loading = false;
             }
         },
-        async loadActiveStage(syncQuery = false) {
+        async loadActiveStage(syncQuery = false, background = false) {
             if (!this.eventId || !this.activeStageId) {
                 this.stageDetail = null;
                 this.matches = [];
                 return;
             }
-            this.loading = true;
+            if (!background) this.loading = true;
             try {
                 const [detailRes, matches] = await Promise.all([
-                    getStage(this.eventId, this.activeStageId),
-                    getAllStageMatches(this.eventId, this.activeStageId),
+                    getStage(this.eventId, this.activeStageId, { mute: background }),
+                    getAllStageMatches(this.eventId, this.activeStageId, { mute: background }),
                 ]);
                 this.stageDetail = detailRes.data.data;
                 this.matches = matches;
@@ -139,8 +149,11 @@ export default {
             } catch (error) {
                 console.error("[LoverV2Schedule.loadActiveStage]", error);
             } finally {
-                this.loading = false;
+                if (!background) this.loading = false;
             }
+        },
+        async refreshPollingData() {
+            await this.loadStages(true);
         },
         openMatch(match) {
             this.$router.push({ name: "v2-match", params: { slug: this.slug, matchId: match.id } });

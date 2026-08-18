@@ -107,6 +107,7 @@ export default {
             errorMessage: "",
             adjustmentPending: false,
             adjustmentError: "",
+            syncedSnapshotSignature: "",
         };
     },
     computed: {
@@ -148,6 +149,9 @@ export default {
             immediate: true,
             deep: true,
             handler(value) {
+                const signature = JSON.stringify(value || null);
+                if (signature === this.syncedSnapshotSignature) return;
+                this.syncedSnapshotSignature = signature;
                 this.candidate = null;
                 this.errorMessage = "";
                 this.adjustmentPending = false;

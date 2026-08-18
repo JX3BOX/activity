@@ -24,7 +24,7 @@
                 <span class="u-eyebrow">个人状态 · 暂未读取</span>
                 <h3>暂时无法判断你该进入哪一种组队方式</h3>
                 <p>请先重新加载个人参赛状态；在状态恢复前，这里不会把你误当作未报名或展示错误的邀请入口。</p>
-                <el-button type="primary" :loading="$store.state.v2_context_loading" @click="refreshContext">
+                <el-button type="primary" :loading="$store.state.v2_context_loading" @click="refreshContext()">
                     重新加载个人状态
                 </el-button>
             </div>
@@ -89,7 +89,7 @@
                     :page-size="hall.pageSize"
                     :total="hall.count"
                     layout="prev, pager, next"
-                    @current-change="loadCurrentHall"
+                    @current-change="loadCurrentHall()"
                 />
             </div>
         </section>
@@ -330,9 +330,12 @@ import MateUnitDetailDialog from "@/components/rank/lover/v2/MateUnitDetailDialo
 import TeamIdentity from "@/components/rank/lover/v2/TeamIdentity.vue";
 import UserIdentity from "@/components/rank/lover/v2/UserIdentity.vue";
 import { formatDateTime } from "@/utils/lover-v2";
+import autoRefreshMixin from "@/mixins/lover-v2-auto-refresh";
 
 export default {
     name: "LoverV2MateHall",
+    mixins: [autoRefreshMixin],
+    autoRefreshInterval: 8000,
     components: {
         LoverV2Layout,
         EmptyState,
@@ -354,7 +357,6 @@ export default {
             sendingId: null,
             cooldown: 0,
             cooldownTimer: null,
-            pollingTimer: null,
             invitationLoadingId: null,
             invitationLoadingAction: "",
             historyVisible: false,
@@ -528,42 +530,51 @@ export default {
             },
         },
     },
-    mounted() {
-        this.pollingTimer = window.setInterval(() => this.refreshContext(), 15000);
-    },
     beforeUnmount() {
-        window.clearInterval(this.pollingTimer);
         window.clearInterval(this.cooldownTimer);
     },
     methods: {
         formatDateTime,
-        async refreshContext() {
+        async refreshContext(background = false) {
             if (!this.isLogin) return;
-            await this.$store.dispatch("loadV2Context", { force: true }).catch((error) => {
+            await this.$store.dispatch("loadV2Context", { force: true, background }).catch((error) => {
                 console.error("[LoverV2MateHall.refreshContext]", error);
             });
         },
-        async loadCurrentHall() {
+        async refreshPollingData() {
+            await this.refreshContext(true);
+            if (this.hallKind) await this.loadCurrentHall(true);
+        },
+        async loadCurrentHall(background = false) {
             if (!this.eventId || !this.hallKind) {
                 this.hall = { ...this.hall, list: [], count: 0, page: 1 };
                 this.hallUnavailable = false;
                 return;
             }
-            this.hallLoading = true;
-            this.hallUnavailable = false;
+            if (!background) {
+                this.hallLoading = true;
+                this.hallUnavailable = false;
+            }
             try {
                 const getter = this.hallKind === "mate" ? getMateHall : getMateUnitHall;
-                const res = await getter(this.eventId, { page: this.hall.page, page_size: this.hall.pageSize });
+                const res = await getter(
+                    this.eventId,
+                    { page: this.hall.page, page_size: this.hall.pageSize },
+                    { mute: background }
+                );
                 this.hall = { ...this.hall, ...res.data.data, pageSize: res.data.data.page_size };
+                this.hallUnavailable = false;
                 if (this.hallKind === "mate") this.syncCooldownFromHall(this.hall.list);
             } catch (error) {
                 console.error("[LoverV2MateHall.loadCurrentHall]", error);
-                this.hall.list = [];
-                this.hall.count = 0;
-                this.hallUnavailable = true;
+                if (!background) {
+                    this.hall.list = [];
+                    this.hall.count = 0;
+                    this.hallUnavailable = true;
+                }
                 // 请求错误由统一拦截器展示，页面只维护失败状态，避免重复提示。
             } finally {
-                this.hallLoading = false;
+                if (!background) this.hallLoading = false;
             }
         },
         refreshPreview() {

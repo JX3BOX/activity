@@ -26,8 +26,10 @@ export const updateRegistration = (eventId, id, data) =>
     request().put(`${base(eventId)}/registrations/${id}`, data);
 export const cancelRegistration = (eventId, id) => request().delete(`${base(eventId)}/registrations/${id}`);
 
-export const getMateHall = (eventId, params) => request().get(`${base(eventId)}/mate-hall`, { params });
-export const getMateUnitHall = (eventId, params) => request().get(`${base(eventId)}/mate-unit-hall`, { params });
+export const getMateHall = (eventId, params, options = {}) =>
+    request(options).get(`${base(eventId)}/mate-hall`, { params });
+export const getMateUnitHall = (eventId, params, options = {}) =>
+    request(options).get(`${base(eventId)}/mate-unit-hall`, { params });
 export const getInvitations = (eventId, params) => request().get(`${base(eventId)}/invitations/me`, { params });
 export const sendMateInvitation = (eventId, registrationId) =>
     request().post(`${base(eventId)}/mate-invitations`, { target_registration_id: registrationId });
@@ -40,7 +42,8 @@ export const rejectInvitation = (eventId, invitationId) =>
 export const dissolveUnit = (eventId, unitId) => request().delete(`${base(eventId)}/units/${unitId}`);
 
 export const getMyTeam = (eventId) => request().get(`${base(eventId)}/teams/me`);
-export const getTeams = (eventId, params) => publicRequest().get(`${base(eventId)}/teams`, { params });
+export const getTeams = (eventId, params, options = {}) =>
+    publicRequest(options).get(`${base(eventId)}/teams`, { params });
 export const getAllTeams = async (eventId) => {
     const pageSize = 100;
     const firstRes = await getTeams(eventId, { page: 1, page_size: pageSize });
@@ -57,32 +60,35 @@ export const getAllTeams = async (eventId) => {
 export const removeTeamUnit = (eventId, teamId, unitId) =>
     request().delete(`${base(eventId)}/teams/${teamId}/units/${unitId}`);
 export const drawSolo = (eventId, teamId) => request().post(`${base(eventId)}/teams/${teamId}/solo-draws`, {});
-export const getSoloDraws = (eventId, teamId, params) =>
-    request().get(`${base(eventId)}/teams/${teamId}/solo-draws`, { params });
+export const getSoloDraws = (eventId, teamId, params, options = {}) =>
+    request(options).get(`${base(eventId)}/teams/${teamId}/solo-draws`, { params });
 
-export const getStages = (eventId, params) => publicRequest().get(`${base(eventId)}/stages`, { params });
-export const getStage = (eventId, stageId) => publicRequest().get(`${base(eventId)}/stages/${stageId}`);
-export const getMatches = (eventId, stageId, params) =>
-    publicRequest().get(`${base(eventId)}/stages/${stageId}/matches`, { params });
-export const getAllStageMatches = async (eventId, stageId) => {
+export const getStages = (eventId, params, options = {}) =>
+    publicRequest(options).get(`${base(eventId)}/stages`, { params });
+export const getStage = (eventId, stageId, options = {}) =>
+    publicRequest(options).get(`${base(eventId)}/stages/${stageId}`);
+export const getMatches = (eventId, stageId, params, options = {}) =>
+    publicRequest(options).get(`${base(eventId)}/stages/${stageId}/matches`, { params });
+export const getAllStageMatches = async (eventId, stageId, options = {}) => {
     const pageSize = 100;
-    const firstRes = await getMatches(eventId, stageId, { page: 1, page_size: pageSize });
+    const firstRes = await getMatches(eventId, stageId, { page: 1, page_size: pageSize }, options);
     const firstPage = firstRes.data.data;
     const totalPages = Math.ceil(Number(firstPage.count || 0) / Number(firstPage.page_size || pageSize));
     if (totalPages <= 1) return firstPage.list || [];
     const rest = await Promise.all(
         Array.from({ length: totalPages - 1 }, (_, index) =>
-            getMatches(eventId, stageId, { page: index + 2, page_size: pageSize })
+            getMatches(eventId, stageId, { page: index + 2, page_size: pageSize }, options)
         )
     );
     return [firstRes, ...rest].flatMap((res) => res.data.data.list || []);
 };
-export const getMatch = (eventId, matchId) => publicRequest().get(`${base(eventId)}/matches/${matchId}`);
+export const getMatch = (eventId, matchId, options = {}) =>
+    publicRequest(options).get(`${base(eventId)}/matches/${matchId}`);
 export const setMatchReady = (eventId, matchId, ready) =>
     request().post(`${base(eventId)}/matches/${matchId}/ready`, { ready });
 
-export const getMatchTeamConfig = (eventId, matchId) =>
-    request().get(`${base(eventId)}/matches/${matchId}/team-config`);
+export const getMatchTeamConfig = (eventId, matchId, options = {}) =>
+    request(options).get(`${base(eventId)}/matches/${matchId}/team-config`);
 export const saveMatchMemberConfig = (eventId, matchId, member) =>
     request().put(`${base(eventId)}/matches/${matchId}/team-config/member`, { member });
 export const lockMatchTeamConfig = (eventId, matchId) =>
