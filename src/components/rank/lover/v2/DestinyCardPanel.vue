@@ -53,6 +53,13 @@
                                 >
                                     {{ isUsed(slot.draw) ? "已经生效" : "等待本队队长使用" }}
                                 </el-tag>
+                                <div v-if="slot.usage.length" class="m-use-details">
+                                    <strong class="u-use-title">生效明细</strong>
+                                    <div v-for="detail in slot.usage" :key="detail.key" class="u-use-detail">
+                                        <span class="u-use-target">{{ detail.target }}</span>
+                                        <span class="u-use-effect">{{ detail.effect }}</span>
+                                    </div>
+                                </div>
                             </template>
                         </div>
                     </article>
@@ -64,7 +71,18 @@
 
 <script>
 import jx3boxData from "@jx3box/jx3box-common/data/jx3box.json";
+import { PZ_EQUIPMENT_SLOTS } from "@/utils/lover-v2-pz";
 import FeatureBadge from "./FeatureBadge.vue";
+
+const EQUIPMENT_SLOT_LABELS = new Map(PZ_EQUIPMENT_SLOTS.map((slot) => [slot.value, slot.label]));
+const EFFECT_LABELS = Object.freeze({
+    none: "作为签面目标",
+    disable_talent: "禁用奇穴",
+    disable_talent_exact: "禁用具体奇穴",
+    disable_equip_slot: "禁用装备部位",
+    disable_skill: "禁用技能",
+    remove_restriction: "解除限制",
+});
 
 export default {
     name: "LoverV2DestinyCardPanel",
@@ -96,10 +114,10 @@ export default {
                     .slice(0, 2);
                 return {
                     ...group,
-                    slots: Array.from({ length: Math.max(0, this.drawCountPerTeam) }, (_, index) => ({
-                        index,
-                        draw: teamDraws[index] || null,
-                    })),
+                    slots: Array.from({ length: Math.max(0, this.drawCountPerTeam) }, (_, index) => {
+                        const draw = teamDraws[index] || null;
+                        return { index, draw, usage: draw ? this.useDetails(draw) : [] };
+                    }),
                 };
             });
         },
@@ -110,6 +128,59 @@ export default {
         },
         canUseDraw(draw) {
             return this.canUse && Number(draw?.team_id) === Number(this.ownTeamId) && !this.isUsed(draw);
+        },
+        memberLabel(userId) {
+            const member = [...(this.match.team1?.members || []), ...(this.match.team2?.members || [])].find(
+                (item) => Number(item.user_id) === Number(userId)
+            );
+            const name = member?.display_name || member?.name || member?.nickname;
+            return name ? `${name}（UID ${userId}）` : `UID ${userId}`;
+        },
+        effectValueLabel(requirement, value) {
+            if (value && typeof value === "object") {
+                const name = value.name || `奇穴 #${value.id}`;
+                const tier = Number(value.tier);
+                return Number.isInteger(tier) && tier > 0 ? `${name}（第 ${tier} 层）` : name;
+            }
+            const option = (requirement.effect?.options || []).find((item) => item.value === value);
+            if (option?.label) return option.label;
+            if (requirement.effect?.kind === "disable_equip_slot") {
+                return EQUIPMENT_SLOT_LABELS.get(String(value)) || String(value);
+            }
+            return String(value);
+        },
+        effectLabel(requirement, subject) {
+            const effect = requirement.effect || {};
+            const label = EFFECT_LABELS[effect.kind] || effect.kind || "应用签面效果";
+            const values = (subject?.values || []).map((value) => this.effectValueLabel(requirement, value));
+            return values.length ? `${label}：${values.join("、")}` : label;
+        },
+        useDetails(draw) {
+            if (!this.isUsed(draw)) return [];
+            const requirements = draw.target_payload?.requirements || [];
+            if (!requirements.length) {
+                return [{ key: `${draw.id}-automatic`, target: "无需选择目标", effect: "抽取后自动生效" }];
+            }
+            return requirements.flatMap((requirement, requirementIndex) => {
+                const side = requirement.target === "self" ? "本方" : "对方";
+                const selection = draw.target_payload.selections.find(
+                    (item) => Number(item.requirement_index) === requirementIndex
+                );
+                if (!selection?.subjects?.length) {
+                    return [
+                        {
+                            key: `${draw.id}-${requirementIndex}-skipped`,
+                            target: `${side}未选择目标`,
+                            effect: "可选效果已跳过",
+                        },
+                    ];
+                }
+                return selection.subjects.map((subject, subjectIndex) => ({
+                    key: `${draw.id}-${requirementIndex}-${subject.user_id}-${subjectIndex}`,
+                    target: `${side} · ${this.memberLabel(subject.user_id)}`,
+                    effect: this.effectLabel(requirement, subject),
+                }));
+            });
         },
     },
 };
@@ -241,6 +312,47 @@ export default {
 
 .u-use {
     margin-top: 12px;
+}
+
+.m-use-details {
+    margin-top: 12px;
+    padding: 10px;
+    border: 1px solid #e2c8b8;
+    border-radius: 8px;
+    background: rgba(255, 250, 242, 0.9);
+    text-align: left;
+}
+
+.u-use-title,
+.u-use-target,
+.u-use-effect {
+    display: block;
+}
+
+.u-use-title {
+    margin-bottom: 7px;
+    color: #6f443b;
+    font-size: 12px;
+}
+
+.u-use-detail + .u-use-detail {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px dashed #e4d1c5;
+}
+
+.u-use-target {
+    color: #8b6259;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.u-use-effect {
+    margin-top: 2px;
+    color: #a14439;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.5;
 }
 
 @media screen and (max-width: 980px) {

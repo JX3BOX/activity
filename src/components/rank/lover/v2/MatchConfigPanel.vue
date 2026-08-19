@@ -3,7 +3,7 @@
         <div class="u-head">
             <div>
                 <h3>本队赛前配装</h3>
-                <p>队员可提交本人配装；队长也可协助本队成员读取并保存，再统一锁定。</p>
+                <p>配装和奇穴为可选赛前记录，不提交也可以正常就绪和完成比赛。</p>
             </div>
             <div class="u-head-status">
                 <el-progress type="circle" :width="58" :percentage="progress" :stroke-width="5" />
@@ -31,8 +31,8 @@
             type="info"
             :closable="false"
             show-icon
-            title="队员可自行提交，队长也可协助本队成员"
-            description="普通队员只能维护本人本场配装；队长可以选择任一队员，读取其公开方案并代为保存本场快照。"
+            title="按需提交，不影响比赛流程"
+            description="普通队员可以维护本人本场配装，队长也可协助代填；未提交成员不会阻塞本队就绪或赛果结算。"
         />
 
         <div class="m-config-body">
@@ -77,10 +77,10 @@
         <el-alert
             v-if="isCaptain && record?.status !== 'locked' && missingMembers.length"
             class="u-missing"
-            type="warning"
+            type="info"
             :closable="false"
-            :title="`还需等待：${missingNames}`"
-            description="所有队员都提交后才能锁定本队本场配装。"
+            :title="`尚未提交可选配装：${missingNames}`"
+            description="这些成员可以直接跳过；如需锁定并向对手公开整队配装，则仍需先补全所有成员。"
         />
         <div v-if="isCaptain && canLock" class="u-actions">
             <el-button

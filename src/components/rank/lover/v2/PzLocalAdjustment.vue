@@ -65,6 +65,7 @@
 import JX3_QIXUE from "@jx3box/jx3box-talent";
 import "@jx3box/jx3box-talent/talent.css";
 import $ from "jquery";
+import { markRaw } from "vue";
 import { __Root } from "@/utils/config";
 import {
     applyEquipmentRemoval,
@@ -172,7 +173,7 @@ export default {
                     client: "std",
                 };
                 if (this.talentCode.version) options.version = this.talentCode.version;
-                this.driver = await new JX3_QIXUE(options);
+                this.driver = markRaw(await new JX3_QIXUE(options));
             } catch (error) {
                 console.error("[LoverV2PzLocalAdjustment.initializeTalent]", error);
                 this.errorMessage = "奇穴模拟器加载失败，装备仍可调整；请稍后重试奇穴修改";

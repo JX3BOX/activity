@@ -22,6 +22,7 @@
             :closable="false"
             show-icon
         />
+        <el-alert v-if="errorMessage" class="u-submit-error" :title="errorMessage" type="error" :closable="false" show-icon />
         <div v-if="formsReady" class="m-requirements">
             <section v-for="(requirement, index) in requirements" :key="index" class="u-requirement">
                 <header>
@@ -113,6 +114,7 @@ export default {
         return {
             forms: [],
             loading: false,
+            errorMessage: "",
         };
     },
     computed: {
@@ -132,9 +134,11 @@ export default {
     methods: {
         initialize() {
             this.forms = this.requirements.map(() => ({ user_ids: [], values: {} }));
+            this.errorMessage = "";
         },
         reset() {
             this.forms = [];
+            this.errorMessage = "";
         },
         requirementTitle(requirement) {
             const side = requirement.target === "self" ? "我方" : "敌方";
@@ -241,6 +245,11 @@ export default {
                 this.$message.success("天命签已生效");
             } catch (error) {
                 console.error("[LoverV2DestinyCardUseDialog.submit]", error);
+                this.errorMessage =
+                    error?.response?.data?.msg ||
+                    error?.data?.msg ||
+                    error?.message ||
+                    "天命签使用失败，请刷新本场状态后重试";
             } finally {
                 this.loading = false;
             }

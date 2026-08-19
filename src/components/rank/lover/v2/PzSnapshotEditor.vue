@@ -186,7 +186,11 @@ export default {
                 .filter((talent) => selectedIds.has(Number(talent?.id)));
         },
         handleAdjustmentChange(snapshot) {
-            this.candidate = snapshot;
+            // 服务端时间与哈希由本次提交重新生成，重新编辑已保存快照时不能把旧权威字段带回请求。
+            const candidate = JSON.parse(JSON.stringify(snapshot));
+            delete candidate.captured_at;
+            delete candidate.sha256;
+            this.candidate = candidate;
             this.adjustmentPending = false;
             this.adjustmentError = "";
         },
@@ -223,6 +227,11 @@ export default {
             } catch (error) {
                 console.error("[LoverV2PzSnapshotEditor.loadSource]", error);
                 this.candidate = null;
+                this.errorMessage =
+                    error?.response?.data?.msg ||
+                    error?.data?.msg ||
+                    error?.message ||
+                    "读取配装失败，请确认方案存在且当前账号有查看权限";
             } finally {
                 this.reading = false;
             }

@@ -68,6 +68,10 @@
                     <h3>{{ drawingTitle }}</h3>
                     <p>{{ drawingDescription }}</p>
                 </template>
+                <template v-else-if="errorMessage">
+                    <h3>本次抽签未完成</h3>
+                    <p class="u-error-copy">{{ errorMessage }}</p>
+                </template>
                 <template v-else>
                     <h3>请队长开启本场天命签</h3>
                     <p>签面会依次亮相、翻回并交错洗牌；最终结果只由赛事服务随机决定。</p>
@@ -117,6 +121,7 @@ export default {
             cardsLoadFailed: false,
             phase: "idle",
             drawing: false,
+            errorMessage: "",
             animationPlaying: false,
             enableFlipperAnimation: false,
             enableMoveAnimation: false,
@@ -201,6 +206,7 @@ export default {
             if (this.drawing) return;
             this.resetAnimation();
             this.result = null;
+            this.errorMessage = "";
         },
         resetAnimation() {
             this.phase = "idle";
@@ -285,6 +291,7 @@ export default {
             if (this.drawing || this.result || !this.cards.length) return;
             this.drawing = true;
             this.result = null;
+            this.errorMessage = "";
             try {
                 let response;
                 let requestError;
@@ -312,6 +319,8 @@ export default {
             } catch (error) {
                 console.error("[LoverV2DestinyCardDrawDialog.performDraw]", error);
                 this.resetAnimation();
+                const data = error?.data || error?.response?.data;
+                this.errorMessage = data?.msg || "抽取天命签失败，请稍后重试或联系赛事运营";
             } finally {
                 this.drawing = false;
             }

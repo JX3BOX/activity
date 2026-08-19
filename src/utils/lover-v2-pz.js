@@ -149,9 +149,12 @@ export const buildPzJbbb = (pzSnapshot) => {
 export const mergeCalculatedPzSnapshot = (pzSnapshot, calculatedSchema) => {
     const next = clone(pzSnapshot);
     const calculated = clone(calculatedSchema || {});
-    for (const field of ["snapshot", "overview", "attrs", "talent_pzcode", "weapon_mode", "is_tertiary"]) {
+    for (const field of ["snapshot", "overview", "talent_pzcode", "weapon_mode", "is_tertiary"]) {
         if (calculated[field] !== undefined) next.schema[field] = calculated[field];
     }
+    // attrs 是 iframe 的内部计算中间量，包含大量高精度浮点数，不属于比赛快照合同且会导致 MySQL JSON
+    // 归一化前后的整份 schema 哈希不稳定；对外展示只需要 overview。
+    delete next.schema.attrs;
     next.schema.client = "std";
     return next;
 };

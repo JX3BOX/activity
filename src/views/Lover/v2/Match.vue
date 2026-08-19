@@ -3,7 +3,7 @@
         <section class="m-lover-v2-page-title">
             <div>
                 <h2>战斗详情</h2>
-                <p>这里可以查看双方战队、对战安排、小局结果、配装确认状态、天命签与赛事记录。</p>
+                <p>这里可以查看双方战队、对战安排、小局结果、可选配装、天命签与赛事记录。</p>
             </div>
             <el-button @click="$router.push({ name: 'v2-schedule', params: { slug } })">返回赛事进程</el-button>
         </section>
@@ -62,7 +62,9 @@
                     </div>
                     <div class="m-match-info">
                         <div v-if="match.remark" class="u-match-remark"><strong>{{ match.remark }}</strong></div>
-                        <div><span>配置截止</span><strong>{{ formatDateTime(match.config_deadline_at) }}</strong></div>
+                        <div v-if="showOwnConfigPanel">
+                            <span>可选配装截止</span><strong>{{ formatDateTime(match.config_deadline_at) }}</strong>
+                        </div>
                         <div><span>开始时间</span><strong>{{ formatDateTime(match.scheduled_at) }}</strong></div>
                         <el-button
                             v-if="canReady"
@@ -133,7 +135,7 @@
                     @used="handleCardDrawn"
                 />
                 <section
-                    v-if="cardRequired && !canShowConfig"
+                    v-if="showOwnConfigPanel && cardRequired && !canShowConfig"
                     class="m-match-section m-lover-v2-panel m-card-flow-waiting"
                 >
                     <FeatureBadge name="match-config" small />
@@ -144,7 +146,7 @@
                 </section>
 
                 <section
-                    v-if="isParticipant && canShowConfig && configLoadError"
+                    v-if="showOwnConfigPanel && isParticipant && canShowConfig && configLoadError"
                     class="m-match-section m-lover-v2-panel m-config-load-error"
                 >
                     <div>
@@ -154,7 +156,7 @@
                     <el-button type="primary" plain :loading="configLoading" @click="loadConfigs()">重新加载配置</el-button>
                 </section>
                 <MatchConfigPanel
-                    v-else-if="isParticipant && canShowConfig"
+                    v-else-if="showOwnConfigPanel && isParticipant && canShowConfig"
                     class="m-match-section"
                     :team="myTeam"
                     :record="ownConfig"
@@ -289,6 +291,7 @@ export default {
             configRecords: [],
             configLoading: false,
             configLoadError: false,
+            showOwnConfigPanel: false,
             actionLoading: "",
             cardDialogVisible: false,
             cardUseDialogVisible: false,
@@ -380,7 +383,6 @@ export default {
         },
         canReady() {
             return (
-                this.isCaptain &&
                 this.matchActions.includes("match.ready") &&
                 ["scheduled", "ready"].includes(this.match?.status)
             );
@@ -408,13 +410,12 @@ export default {
         },
         canCardDraw() {
             return (
-                this.isCaptain &&
                 this.matchActions.includes("card.draw") &&
                 ["scheduled", "ready", "running"].includes(this.match?.status)
             );
         },
         canCardUse() {
-            return this.isCaptain && this.matchActions.includes("card.use");
+            return this.matchActions.includes("card.use");
         },
         cardState() {
             return this.match?.card_state || this.participantMatch?.card_state || "not_required";
@@ -481,7 +482,8 @@ export default {
             immediate: true,
         },
         canConfigLock(value) {
-            if (value && !this.ownConfig?.progress?.complete && !this.configLoading) this.loadConfigs();
+            if (this.showOwnConfigPanel && value && !this.ownConfig?.progress?.complete && !this.configLoading)
+                this.loadConfigs();
         },
     },
     methods: {
@@ -594,6 +596,9 @@ export default {
                 this.$message.success(this.ownReady ? "本队已确认就绪" : "本队已取消就绪");
             } catch (error) {
                 console.error("[LoverV2Match.toggleReady]", error);
+                this.$message.error(
+                    error?.response?.data?.msg || error?.data?.msg || error?.message || "提交就绪状态失败，请刷新后重试"
+                );
             } finally {
                 this.actionLoading = "";
             }
@@ -609,6 +614,12 @@ export default {
                 );
             } catch (error) {
                 console.error("[LoverV2Match.saveMemberConfig]", error);
+                this.$message.error(
+                    error?.response?.data?.msg ||
+                        error?.data?.msg ||
+                        error?.message ||
+                        "本场配装保存失败，请检查配装内容后重试"
+                );
             } finally {
                 this.actionLoading = "";
             }
@@ -633,6 +644,9 @@ export default {
                 this.$message.success("本队本场配装已锁定");
             } catch (error) {
                 console.error("[LoverV2Match.lockConfig]", error);
+                this.$message.error(
+                    error?.response?.data?.msg || error?.data?.msg || error?.message || "锁定本场配装失败，请刷新后重试"
+                );
             } finally {
                 this.actionLoading = "";
             }
