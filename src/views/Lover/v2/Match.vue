@@ -296,6 +296,7 @@ export default {
             cardDialogVisible: false,
             cardUseDialogVisible: false,
             selectedCardDraw: null,
+            contextRefreshCounter: 0,
         };
     },
     computed: {
@@ -546,7 +547,14 @@ export default {
             }
         },
         async refreshPollingData() {
-            await this.reloadMatchContext(true);
+            // 公开比赛状态和本队配置每次都需要刷新；昂贵的 /me 上下文只需低频同步动作权限。
+            this.contextRefreshCounter += 1;
+            if (this.contextRefreshCounter >= 4) {
+                this.contextRefreshCounter = 0;
+                await this.reloadMatchContext(true);
+                return;
+            }
+            await this.load(true);
         },
         gameResultLabel(game) {
             if (Number(game.winner_team_id) === Number(this.match.team1?.id)) return `${this.match.team1.name} 获胜`;

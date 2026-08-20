@@ -542,8 +542,9 @@ export default {
             });
         },
         async refreshPollingData() {
-            await this.refreshContext(true);
-            if (this.hallKind) await this.loadCurrentHall(true);
+            const jobs = [this.refreshContext(true)];
+            if (this.hallKind) jobs.push(this.loadCurrentHall(true));
+            await Promise.all(jobs);
         },
         async loadCurrentHall(background = false) {
             if (!this.eventId || !this.hallKind) {

@@ -270,8 +270,9 @@ export default {
             });
         },
         async refreshPollingData() {
-            await this.refreshContext(true);
-            if (this.activeTab === "public" && this.teamsLoaded) await this.loadTeams(true);
+            const jobs = [this.refreshContext(true)];
+            if (this.activeTab === "public" && this.teamsLoaded) jobs.push(this.loadTeams(true));
+            await Promise.all(jobs);
         },
         async loadTeams(background = false) {
             if (!this.eventId) return;

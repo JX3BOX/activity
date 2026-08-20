@@ -156,8 +156,9 @@ export default {
     methods: {
         formatDateTime,
         async refreshPollingData() {
-            await this.$store.dispatch("loadV2Context", { force: true, background: true });
-            await this.loadDraws(true);
+            const jobs = [this.$store.dispatch("loadV2Context", { force: true, background: true })];
+            if (this.team?.id) jobs.push(this.loadDraws(true));
+            await Promise.all(jobs);
         },
         async loadDraws(background = false) {
             if (!this.team?.id) return;
