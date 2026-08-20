@@ -20,15 +20,20 @@
                         <article class="u-side">
                             <TeamIdentity :team="match.team1" show-slogan />
                             <div class="m-side-members">
-                                <UserIdentity
+                                <div
                                     v-for="member in match.team1?.members || []"
                                     :key="member.user_id"
-                                    :user="member"
-                                    compact
-                                    :show-captain="false"
-                                    :show-uid="false"
-                                    :show-score="false"
-                                />
+                                    class="u-side-member"
+                                >
+                                    <UserIdentity
+                                        :user="member"
+                                        compact
+                                        :show-captain="false"
+                                        :show-uid="false"
+                                        :show-score="false"
+                                    />
+                                    <el-tag v-if="member.unit_type === 'lover'" size="small" effect="plain">情缘</el-tag>
+                                </div>
                             </div>
                             <el-tag :type="match.team1_ready_at ? 'success' : 'info'" effect="plain">
                                 {{ match.team1_ready_at ? "已就绪" : "尚未就绪" }}
@@ -45,15 +50,20 @@
                         <article class="u-side is-right">
                             <TeamIdentity :team="match.team2" show-slogan />
                             <div class="m-side-members">
-                                <UserIdentity
+                                <div
                                     v-for="member in match.team2?.members || []"
                                     :key="member.user_id"
-                                    :user="member"
-                                    compact
-                                    :show-captain="false"
-                                    :show-uid="false"
-                                    :show-score="false"
-                                />
+                                    class="u-side-member"
+                                >
+                                    <UserIdentity
+                                        :user="member"
+                                        compact
+                                        :show-captain="false"
+                                        :show-uid="false"
+                                        :show-score="false"
+                                    />
+                                    <el-tag v-if="member.unit_type === 'lover'" size="small" effect="plain">情缘</el-tag>
+                                </div>
                             </div>
                             <el-tag :type="match.team2_ready_at ? 'success' : 'info'" effect="plain">
                                 {{ match.team2_ready_at ? "已就绪" : "尚未就绪" }}
@@ -723,6 +733,17 @@ export default {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px;
     margin-top: 16px;
+}
+
+.u-side-member {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 6px;
+
+    :deep(.c-lover-user) {
+        flex: 1;
+    }
 }
 
 .u-score {

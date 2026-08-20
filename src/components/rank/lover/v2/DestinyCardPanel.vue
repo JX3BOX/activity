@@ -57,6 +57,10 @@
                                     <strong class="u-use-title">生效明细</strong>
                                     <div v-for="detail in slot.usage" :key="detail.key" class="u-use-detail">
                                         <span class="u-use-target">{{ detail.target }}</span>
+                                        <span v-if="detail.mountId !== undefined" class="u-use-xinfa">
+                                            <span>心法</span>
+                                            <XinfaBadge :mount-id="detail.mountId" />
+                                        </span>
                                         <span class="u-use-effect">{{ detail.effect }}</span>
                                     </div>
                                 </div>
@@ -73,6 +77,7 @@
 import jx3boxData from "@jx3box/jx3box-common/data/jx3box.json";
 import { PZ_EQUIPMENT_SLOTS } from "@/utils/lover-v2-pz";
 import FeatureBadge from "./FeatureBadge.vue";
+import XinfaBadge from "./XinfaBadge.vue";
 
 const EQUIPMENT_SLOT_LABELS = new Map(PZ_EQUIPMENT_SLOTS.map((slot) => [slot.value, slot.label]));
 const EFFECT_LABELS = Object.freeze({
@@ -86,7 +91,7 @@ const EFFECT_LABELS = Object.freeze({
 
 export default {
     name: "LoverV2DestinyCardPanel",
-    components: { FeatureBadge },
+    components: { FeatureBadge, XinfaBadge },
     emits: ["draw", "use"],
     props: {
         draws: { type: Array, default: () => [] },
@@ -129,10 +134,13 @@ export default {
         canUseDraw(draw) {
             return this.canUse && Number(draw?.team_id) === Number(this.ownTeamId) && !this.isUsed(draw);
         },
-        memberLabel(userId) {
-            const member = [...(this.match.team1?.members || []), ...(this.match.team2?.members || [])].find(
+        member(userId) {
+            return [...(this.match.team1?.members || []), ...(this.match.team2?.members || [])].find(
                 (item) => Number(item.user_id) === Number(userId)
             );
+        },
+        memberLabel(userId) {
+            const member = this.member(userId);
             const name = member?.display_name || member?.name || member?.nickname;
             return name ? `${name}（UID ${userId}）` : `UID ${userId}`;
         },
@@ -178,6 +186,7 @@ export default {
                 return selection.subjects.map((subject, subjectIndex) => ({
                     key: `${draw.id}-${requirementIndex}-${subject.user_id}-${subjectIndex}`,
                     target: `${side} · ${this.memberLabel(subject.user_id)}`,
+                    mountId: this.member(subject.user_id)?.mount_id ?? null,
                     effect: this.effectLabel(requirement, subject),
                 }));
             });
@@ -345,6 +354,15 @@ export default {
     color: #8b6259;
     font-size: 12px;
     line-height: 1.5;
+}
+
+.u-use-xinfa {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+    color: #8b6259;
+    font-size: 12px;
 }
 
 .u-use-effect {
