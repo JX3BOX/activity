@@ -1,5 +1,14 @@
 <template>
-    <el-dialog fullscreen :visible="modelValue" custom-class="m-year-change-dialog" close-on-press-escape @close="onClose" :show-close="false">
+    <el-dialog
+        fullscreen
+        :model-value="dialogVisible"
+        @update:model-value="dialogVisible = $event"
+        custom-class="m-year-change-dialog"
+        close-on-press-escape
+        @close="onClose"
+        :show-close="false"
+        style="background: transparent;"    
+    >
         <div class="m-year-container">
             <div class="m-year-cards">
                 <div
@@ -10,11 +19,7 @@
                     @click="selectYear(item)"
                 >
                     <div class="u-year-chinese">
-                        <div
-                            class="u-chinese-char"
-                        >
-                            {{ getYearInChinese(item.year).join('') }}届
-                        </div>
+                        <div class="u-chinese-char">{{ getYearInChinese(item.year).join("") }}届</div>
                     </div>
                     <div class="u-year-number">{{ item.year }}</div>
                 </div>
@@ -31,29 +36,39 @@ export default {
     props: {
         modelValue: {
             type: Boolean,
-            default: false
+            default: false,
         },
         years: {
             type: Array,
             default: () => [],
         },
     },
-    emits: ['update:modelValue', 'year-selected'],
+    emits: ["update:modelValue", "year-selected"],
     model: {
-        prop: 'modelValue',
-        event: 'update:modelValue'
+        prop: "modelValue",
+        event: "update:modelValue",
     },
     data() {
         return {
             color,
-        }
+        };
+    },
+    computed: {
+        dialogVisible: {
+            get() {
+                return this.modelValue;
+            },
+            set(val) {
+                this.$emit("update:modelValue", val);
+            },
+        },
     },
     methods: {
         onClose() {
-            this.$emit('update:modelValue', false);
+            this.$emit("update:modelValue", false);
         },
         selectYear(item) {
-            this.$emit('year-selected', item);
+            this.$emit("year-selected", item);
             this.onClose();
         },
         getCardStyle(item, index) {
@@ -70,8 +85,8 @@ export default {
             });
             return res;
         },
-    }
-}
+    },
+};
 </script>
 
 <style lang="less">
@@ -82,7 +97,7 @@ export default {
     .el-dialog__body {
         padding: 0;
         height: 100vh;
-        background-color: rgba(0, 0, 0, 0.9);
+        background-color: transparent;
         .flex;
         align-items: center;
         justify-content: center;
