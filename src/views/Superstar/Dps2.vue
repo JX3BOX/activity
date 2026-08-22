@@ -42,13 +42,13 @@
                             <div class="u-xf-item" v-for="(row, rowIdx) in item.data" :key="rowIdx + 'rank'">
                                 <div class="u-sort">{{ row.forceName || "未知" }}</div>
                                 <div class="u-logo">
-                                    <el-image :src="showMount(row.xfId)" fit="fill"></el-image>
+                                    <el-image :src="showSchoolIcon(row.forceId)" fit="fill"></el-image>
                                 </div>
                                 <div class="u-line"></div>
                                 <div
                                     class="u-name"
                                     :style="{
-                                        background: showXfMountColor(row.xfId),
+                                        background: showForceColor(row.forceId),
                                         width: getXfBarWidth(row.dps, row.forceName),
                                     }"
                                 >
@@ -64,7 +64,7 @@
                             <img
                                 class="u-img"
                                 v-if="item.key === 'player'"
-                                :src="showMount(item.curItem.xfId)"
+                                :src="showSchoolIcon(item.curItem.forceId)"
                                 @error="handleImgError"
                             />
                             <img
@@ -127,7 +127,7 @@
                                 <div class="u-logo">
                                     <el-image
                                         v-if="item.key === 'player'"
-                                        :src="showMount(row.xfId)"
+                                        :src="showSchoolIcon(row.forceId)"
                                         fit="fill"
                                     ></el-image>
                                     <img v-else :src="teamLogo(row.team_logo, 160)" @error="handleImgError" />
@@ -167,11 +167,16 @@ import { showTime } from "@jx3box/jx3box-common/js/moment";
 import { getThumbnail } from "@jx3box/jx3box-common/js/utils";
 import PICS from "@/assets/js/pics.js";
 import colorData from "@jx3box/jx3box-data/data/xf/colors.json";
-const { colors_by_mount_name } = colorData;
+const { colors_by_school_name } = colorData;
 import { orderBy } from "lodash";
-import xf from "@jx3box/jx3box-data/data/xf/xf.json";
-import xfmap from "@jx3box/jx3box-data/data/xf/xfid.json";
+import forceIds from "@jx3box/jx3box-data/data/xf/forceid.json";
+import schoolData from "@jx3box/jx3box-data/data/xf/school.json";
 import SuperstarBoss from "@/components/rank/superstar_boss.vue";
+
+const schoolIdByForce = Object.values(schoolData).reduce((result, item) => {
+    result[item.force_id] = item.school_id;
+    return result;
+}, {});
 
 export default {
     components: { SuperstarBoss },
@@ -215,7 +220,7 @@ export default {
                     key: "team",
                 },
                 {
-                    title: "四维数据统计（心法·平均）",
+                    title: "四维数据统计（门派·平均）",
                     type: true,
                     bg: "none",
                     data: [],
@@ -423,14 +428,6 @@ export default {
                 if (!this.sortByForce.length) return;
                 let raw = this.sortByForce[listItem.active];
                 if (!raw) return;
-                raw.forEach((item) => {
-                    for (let k in xf) {
-                        if (xf[k].force == item.forceId) {
-                            item.xfId = xf[k].id;
-                            break;
-                        }
-                    }
-                });
                 arr = orderBy(raw, ["dps"], ["desc"]);
                 // 过滤掉 dps 为 0 的
                 arr = arr.filter((item) => item.dps > 0);
@@ -438,13 +435,6 @@ export default {
                 if (!this.sortByPlayer.length) return;
                 let raw = this.sortByPlayer[listItem.active] || [];
                 raw.forEach((item) => {
-                    let xfid = 0;
-                    for (let k in xf) {
-                        if (xf[k].force == item.forceId) {
-                            xfid = xf[k].id;
-                            break;
-                        }
-                    }
                     const playerName = item.playerName.split("·");
                     arr.push(
                         Object.assign(item, {
@@ -454,7 +444,6 @@ export default {
                             fight_time: item.timeDuring * 1000,
                             created: item.timeBegin,
                             ID: item.team_id,
-                            xfId: xfid,
                         })
                     );
                 });
@@ -487,16 +476,12 @@ export default {
             if (!val) return "";
             return getThumbnail(val, size, true);
         },
-        showMount(mount) {
-            return __imgPath + "image/xf/" + mount + ".png";
-        },
-        showMountSvg(mount) {
-            return __cdn + "design/vector/mount/" + mount + ".svg";
+        showSchoolIcon(forceId) {
+            return __imgPath + "image/school/" + (schoolIdByForce[forceId] || 0) + ".png";
         },
         showMountColor(index, row, listItem) {
             if (listItem.key === "player") {
-                let xfname = xfmap[row.xfId] || "通用";
-                let color = colors_by_mount_name[xfname] || "#fff";
+                let color = this.showForceColor(row.forceId);
                 return `linear-gradient(to right, ${color}, ${color}80)`;
             }
             let colors = [
@@ -536,10 +521,10 @@ export default {
             let color = index > colors.length ? colors[(index + 1) % colors.length] : colors[index];
             return `linear-gradient(to right, ${color}, ${color}4d)`;
         },
-        // xfItem 专用：心法颜色
-        showXfMountColor(val) {
-            let xfname = xfmap[val] || "通用";
-            return colors_by_mount_name[xfname] || "#fff";
+        // 门派统计使用门派颜色，避免在只有 forceId 时猜测心法颜色
+        showForceColor(forceId) {
+            let forceName = forceIds[forceId] || "江湖";
+            return colors_by_school_name[forceName] || colors_by_school_name["江湖"] || "#fff";
         },
         // xfItem 专用：柱状图宽度
         getXfBarWidth(dps, forceName) {
