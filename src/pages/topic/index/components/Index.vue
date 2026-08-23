@@ -52,9 +52,8 @@
     </div>
 </template>
 <script>
-import topicData from "@/assets/data/topic/topic.json";
-const { std, origin } = topicData;
 import jx3boxData from "@jx3box/jx3box-common/data/jx3box.json";
+import { getPvxTopics } from "@/service/topic";
 const { __cdn } = jx3boxData;
 export default {
     name: "Index",
@@ -71,20 +70,40 @@ export default {
             dragStartX: 0,
             dragScrollLeft: 0,
             snapTimer: null,
+            topics: {
+                std: [],
+                origin: [],
+            },
         };
     },
     computed: {
         list() {
-            let stdarr = JSON.parse(JSON.stringify(std)).reverse();
-            let _list = this.client == "std" ? stdarr : origin;
-            return _list;
+            const list = this.topics[this.client] || [];
+            return this.client == "std" ? list.slice().reverse() : list;
         },
+    },
+    created() {
+        this.loadTopics();
     },
     beforeUnmount() {
         clearTimeout(this.snapTimer);
     },
     watch: {},
     methods: {
+        loadTopics() {
+            getPvxTopics()
+                .then((res) => {
+                    const data = res?.data?.data || {};
+                    ["std", "origin"].forEach((client) => {
+                        this.topics[client] = (data[client] || []).filter(
+                            (item) => item.status === undefined || Number(item.status) === 1
+                        );
+                    });
+                })
+                .catch(() => {
+                    this.topics = { std: [], origin: [] };
+                });
+        },
         goStd() {
             this.client = "std";
             setTimeout(() => {

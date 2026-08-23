@@ -9,6 +9,10 @@ function getTopic(topic) {
     });
 }
 
+function getPvxTopics() {
+    return $cms({ mute: true }).get("/api/cms/pvx/topic");
+}
+
 function getFbRank(id, server = "") {
     return $team({ mute: true }).get(`/api/team/race/achieve/${id}/top100?server=${server}&event_id=1`);
 }
@@ -28,4 +32,4 @@ function getHonorApi(eventName, params) {
     // 0 正确 非0 错误
     return $team().post(`/api/team/website/events/${eventName}/collect-rewards`, params);
 }
-export { getTopic, getFbRank, getToken, getHonorApi, getRoles, getAllMyRoles };
+export { getTopic, getPvxTopics, getFbRank, getToken, getHonorApi, getRoles, getAllMyRoles };

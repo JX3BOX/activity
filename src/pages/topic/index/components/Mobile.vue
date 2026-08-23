@@ -41,10 +41,9 @@
 </template>
 
 <script>
-import topicData from "@/assets/data/topic/topic.json";
 import jx3boxData from "@jx3box/jx3box-common/data/jx3box.json";
+import { getPvxTopics } from "@/service/topic";
 
-const { std, origin } = topicData;
 const { __cdn } = jx3boxData;
 
 function resolveClientFromUrl() {
@@ -74,6 +73,7 @@ export default {
             hasInteracted: false,
             dragStartX: 0,
             dragScrollLeft: 0,
+            topics: [],
         };
     },
     computed: {
@@ -81,12 +81,12 @@ export default {
             return this.currentClient || "std";
         },
         list() {
-            const stdList = JSON.parse(JSON.stringify(std)).reverse();
-            return this.client === "std" ? stdList : origin;
+            return this.client === "std" ? this.topics.slice().reverse() : this.topics;
         },
     },
     created() {
         document.title = this.currentClient === "origin" ? "缘起" : "重制/无界";
+        this.loadTopics();
     },
     mounted() {
         this.$nextTick(this.resetInitialPosition);
@@ -96,6 +96,19 @@ export default {
         window.removeEventListener("resize", this.onResize);
     },
     methods: {
+        loadTopics() {
+            getPvxTopics()
+                .then((res) => {
+                    const data = res?.data?.data || {};
+                    this.topics = (data[this.client] || []).filter(
+                        (item) => item.status === undefined || Number(item.status) === 1
+                    );
+                    this.$nextTick(this.resetInitialPosition);
+                })
+                .catch(() => {
+                    this.topics = [];
+                });
+        },
         showImg(key) {
             if (!key) key = "normal";
             return __cdn + "design/topic/index/" + key + ".png";
