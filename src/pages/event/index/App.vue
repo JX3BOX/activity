@@ -31,15 +31,8 @@
                     </div>
                     <div class="m-new-list" v-show="isNewEvent">
                         <div class="m-new-list-item" v-for="(item, i) in monthList" :key="i">
-                            <div class="u-month" v-if="item.month">{{ item.month }}月</div>
-                            <div class="u-month" v-else>特殊活动</div>
-                            <div
-                                class="m-month-list"
-                                :class="{
-                                    isSingle: item.single,
-                                    isSpecial: !item.month,
-                                }"
-                            >
+                            <div class="u-month">{{ item.title }}</div>
+                            <div class="m-month-list" :class="{ 'is-special': item.isSpecial }">
                                 <a
                                     class="u-item"
                                     target="_blank"
@@ -64,9 +57,10 @@
 
 <script>
 import { __cdn, __imgPath, __Root } from "@/utils/config";
-import data from "@/assets/data/event/index.json";
 import { isApp, isMiniProgram } from "@jx3box/jx3box-common/js/utils";
 import wx from "weixin-js-sdk";
+import dayjs from "dayjs";
+import { getPvxEvents } from "@/service/event/event";
 export default {
     name: "App",
     data: function () {
@@ -108,21 +102,58 @@ export default {
             this.show = false;
             this.name = "";
         },
-        load() {
-            const { list, vertical } = data;
-            this.list = list;
-            this.monthList = vertical.reduce((acc, item) => {
-                const month = acc.find((m) => m.month === item.month);
-                if (month) {
-                    month.list.push(item);
-                    if (item.single) {
-                        month.single = true;
-                    }
-                } else {
-                    acc.push({ month: item.month, list: [item], single: item.single });
+        async load() {
+            try {
+                const res = await getPvxEvents();
+                const raw = res && res.data && res.data.data;
+                const list = Array.isArray(raw) ? raw : raw && Array.isArray(raw.list) ? raw.list : [];
+                const activities = list
+                    .filter((item) => item && item.start_time)
+                    .map((item) => ({
+                        ...item,
+                        month: String(dayjs(item.start_time).month() + 1),
+                        img: this.resolveCover(item.poster),
+                    }))
+                    .sort((a, b) => {
+                        const sortDiff = this.getSortValue(a.sort) - this.getSortValue(b.sort);
+                        if (sortDiff !== 0) return sortDiff;
+                        return dayjs(a.start_time).valueOf() - dayjs(b.start_time).valueOf();
+                    });
+
+                this.list = activities;
+                this.monthList = this.groupActivities(activities);
+            } catch (e) {
+                this.list = [];
+                this.monthList = [];
+            }
+        },
+        getSortValue(value) {
+            const num = Number(value);
+            return Number.isFinite(num) ? num : 9999;
+        },
+        groupActivities(activities) {
+            const special = [];
+            const groups = new Map();
+
+            activities.forEach((item) => {
+                if (["special", "sepcial"].includes(String(item.type).toLowerCase())) {
+                    special.push(item);
+                    return;
                 }
-                return acc;
-            }, []);
+
+                const title = item.group || "其他活动";
+                if (!groups.has(title)) groups.set(title, []);
+                groups.get(title).push(item);
+            });
+
+            const result = special.length ? [{ title: "特殊活动", list: special, isSpecial: true }] : [];
+            groups.forEach((list, title) => result.push({ title, list }));
+            return result;
+        },
+        resolveCover(cover) {
+            if (!cover) return "";
+            if (/^https?:\/\//i.test(cover)) return cover.replace(/^http:/i, "https:");
+            return `${__cdn}${String(cover).replace(/^\//, "")}`;
         },
         change() {
             this.isNewEvent = !this.isNewEvent;

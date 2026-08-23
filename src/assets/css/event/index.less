@@ -229,13 +229,11 @@
         .m-month-list {
             .flex;
             flex-direction: column;
-            // flex-wrap: wrap;
             gap: 50px;
 
-            &.isSpecial {
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: space-between;
+            &.is-special {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
             }
 
             .u-item {
@@ -244,8 +242,6 @@
                 .r(30px);
                 .h(180px);
                 .mb(50px);
-                flex: 1;
-                min-width: 350px;
 
                 .u-img {
                     .r(30px);
@@ -266,10 +262,6 @@
                     .h(30px);
                     .ml(-170px);
                 }
-            }
-
-            &.isSingle {
-                flex-direction: column;
             }
         }
     }
