@@ -1,30 +1,21 @@
 <template>
     <!-- 中秋诗词专题页 -->
-    <div class="p-event midAutumn" :class="'v-' + page_name" v-loading="loading">
-        <CommonHeader :overlayEnable="true"></CommonHeader>
-        <!-- <router-view></router-view> -->
-        <router-view v-if="!loading" v-slot="{ Component }">
-            <transition name="fade" mode="out-in">
-                <component :is="Component" class="c-midAutumn" :years="years" />
-            </transition>
-        </router-view>
+    <div class="p-event midAutumn" :class="'v-' + page_name">
+        <router-view></router-view>
     </div>
 </template>
 
 <script>
+import { __cdn } from "@/utils/config";
 import { postStat } from "@jx3box/jx3box-common/js/stat";
-import { __imgPath } from "@/utils/config";
 import { getBreadcrumb } from "@jx3box/jx3box-common/js/system";
 export default {
     name: "App",
     data: function () {
-        return {
-            years: [],
-            loading: false,
-        };
+        return {};
     },
     provide: {
-        __imgRoot: __imgPath + "topic/midAutumn/",
+        __imgRoot: __cdn + "design/event/mid_autumn/"
     },
     computed: {
         page_name: function () {

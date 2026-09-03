@@ -1,6 +1,8 @@
 import { createApp } from "vue";
 import App from "./App.vue";
+import AppIndex from "./AppIndex.vue";
 import router from "./router.js";
+import { isApp, applyAppEnv } from "@/utils/env";
 
 import { createHead } from "@vueuse/head";
 import { createJx3boxUiI18n, getJx3boxUiAvailableLocales, install as JX3BOX_UI } from "@jx3box/jx3box-ui";
@@ -25,7 +27,9 @@ import * as filters from "@/utils/filters.js";
 
 
 
-const app = createApp(App);
+applyAppEnv();
+
+const app = createApp(isApp() ? AppIndex : App);
 app.use(router);
 
 const head = createHead();
@@ -63,7 +67,9 @@ app.use(ElementPlus, {
 });
 
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
-    app.component(key, component);
+    if (!app.component(key)) {
+        app.component(key, component);
+    }
 }
 
 // 注册全局过滤器
