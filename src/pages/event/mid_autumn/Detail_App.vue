@@ -228,7 +228,7 @@ export default {
     }
     .m-main {
         flex: 1;
-        padding: 3vw 2vw;
+        padding: 2vw 1vw;
         min-height: 0;
         overflow-y: auto;
         overscroll-behavior: contain;
@@ -237,7 +237,7 @@ export default {
 
     .m-content {
         box-sizing: border-box;
-        padding: 10vw 2vw 0 2vw;
+        padding: 4vw 2vw 2vw;
         border-radius: 2vw;
         border: 1px solid #6d411a;
         min-height: 50vh;
@@ -271,6 +271,67 @@ export default {
         img {
             max-width: 100%;
             height: auto;
+        }
+
+        // 收紧 v-html 富文本默认间距，避免 CMS 文章自带大 margin/padding
+        p,
+        div,
+        ul,
+        ol,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            margin: 0 0 0.6em 0;
+        }
+        p {
+            text-indent: 0 !important;
+        }
+        ul,
+        ol {
+            padding-left: 1.2em;
+        }
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    // 移动端：收掉 CMS 文章自带的桌面级大 padding / 多列网格
+    // 文章用 inline style，必须用 !important 才能覆盖
+    @media (max-width: 768px) {
+        .m-content {
+            section {
+                padding: 36px 16px !important;
+            }
+            // 多列网格 → 单列，并收窄间距
+            [style*="grid-template-columns"] {
+                grid-template-columns: 1fr !important;
+                gap: 18px !important;
+            }
+            // 单列后去掉竖向分隔线（带 border-left 的网格项）
+            [style*="border-left"] {
+                border-left: 0 !important;
+                padding-left: 0 !important;
+            }
+            // 横向卡片间距收窄
+            [style*="gap: 24px"] {
+                gap: 14px !important;
+            }
+            // 大卡片内边距（桌面 68px 72px / 38px 36px / 34px 36px / 28px 30px）
+            [style*="68px 72px"] {
+                padding: 30px 20px !important;
+            }
+            [style*="38px 36px"] {
+                padding: 24px 18px !important;
+            }
+            [style*="34px 36px"] {
+                padding: 24px 18px !important;
+            }
+            [style*="28px 30px"] {
+                padding: 22px 18px !important;
+            }
         }
     }
 }

@@ -49,7 +49,7 @@ export default {
 .m-year-mask {
     position: fixed;
     inset: 0;
-    z-index: 99;
+    z-index: 999;
     font-family: "Songti SC", "STSong", "Noto Serif CJK SC", "Source Han Serif SC", "SimSun", serif;
     display: flex;
     align-items: center;

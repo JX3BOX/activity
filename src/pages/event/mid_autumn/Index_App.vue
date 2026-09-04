@@ -94,7 +94,7 @@ export default {
         right: 0;
         bottom: 0;
         z-index: 10;
-        padding-bottom: 6.5vw;
+        padding-bottom: calc(6.5vw + env(safe-area-inset-bottom));
         box-sizing: border-box;
         display: flex;
         align-items: center;

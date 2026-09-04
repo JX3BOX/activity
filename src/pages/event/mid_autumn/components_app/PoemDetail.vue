@@ -340,7 +340,7 @@ export default {
 
     .m-detail-footer {
         flex-shrink: 0;
-        padding: 3vw 4vw calc(3vw + env(safe-area-inset-bottom));
+        padding: 3vw 4vw calc(8vw + env(safe-area-inset-bottom));
         border-radius: 6vw 6vw 0 0;
         background: #fdfbf6;
         box-shadow: 0px -4px 4px 0px #00000040;

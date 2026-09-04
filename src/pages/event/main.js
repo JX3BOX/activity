@@ -24,7 +24,7 @@ const isMobileContainer = isMiniProgram() || isApp();
 if (isMobileContainer) {
     const viewportMeta = document.querySelector('meta[name="viewport"]') || document.createElement("meta");
     viewportMeta.name = "viewport";
-    viewportMeta.content = "width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=no";
+    viewportMeta.content = "width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover";
 
     if (!viewportMeta.parentNode) {
         document.head.appendChild(viewportMeta);
