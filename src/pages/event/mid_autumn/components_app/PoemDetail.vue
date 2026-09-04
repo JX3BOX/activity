@@ -30,7 +30,8 @@
             </div>
             <div class="m-detail-footer">
                 <div class="u-vote-btn" :class="{ voted: isVoted }" @click="toVote">
-                    <template v-if="!isVoted">♡ 投票支持</template>
+                    <img class="u-heart" :src="`${__imgRoot}${year}/phone/heart${isVoted ? 2 : 1}.png`" />
+                    <template v-if="!isVoted">投票支持</template>
                     <template v-else>已投票</template>
                     <span class="u-count">{{ poem.amount || 0 }}</span>
                 </div>
@@ -348,7 +349,7 @@ export default {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 2vw;
+            gap: 5vw;
             padding: 3.5vw 0;
             border-radius: 8vw;
             font-size: 4.5vw;
@@ -360,9 +361,12 @@ export default {
             .u-count {
                 font-size: 4.5vw;
             }
+            .u-heart {
+                width: 5vw;
+            }
 
             &.voted {
-                background: #9a9a9a;
+                filter: grayscale(1);
             }
         }
 
