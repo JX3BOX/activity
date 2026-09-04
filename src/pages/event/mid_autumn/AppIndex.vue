@@ -1,5 +1,4 @@
 <template>
-    <!-- 中秋诗词专题页 -->
     <div class="p-event midAutumn" :class="'v-' + page_name">
         <router-view></router-view>
     </div>
@@ -8,14 +7,13 @@
 <script>
 import { __cdn } from "@/utils/config";
 import { postStat } from "@jx3box/jx3box-common/js/stat";
-import { getBreadcrumb } from "@jx3box/jx3box-common/js/system";
 export default {
-    name: "App",
+    name: "AppIndex",
     data: function () {
         return {};
     },
     provide: {
-        __imgRoot: __cdn + "design/event/mid_autumn/"
+        __imgRoot: __cdn + "design/event/mid_autumn/",
     },
     computed: {
         page_name: function () {
@@ -24,21 +22,8 @@ export default {
     },
     created: function () {
         postStat("event", "midAutumn");
-
-        this.init();
     },
-    methods: {
-        init() {
-            this.loading = true;
-            getBreadcrumb("mid_autumn_map")
-                .then((res) => {
-                    this.years = JSON.parse(res);
-                })
-                .finally(() => {
-                    this.loading = false;
-                });
-        },
-    },
+    methods: {},
 };
 </script>
 <style lang="less">

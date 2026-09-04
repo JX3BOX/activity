@@ -3,17 +3,47 @@
  * 供 src/pages/event 下各活动项目复用（判断是否为 App 内嵌环境）
  */
 
+const ENV_KEY = "__env";
+const APP_VALUE = "app";
+
+/**
+ * 解析当前 url 上的参数（query + hash 中的 query）
+ * 本项目使用 hash 路由，__env=app 常被拼在 `#/` 之后（如 /event/xxx/#/?__env=app），
+ * 此时 window.location.search 为空，必须一并解析 hash 部分，否则 app 环境判断失效。
+ * @returns {URLSearchParams}
+ */
+function getUrlParams() {
+    if (typeof window === "undefined") return new URLSearchParams();
+    const search = window.location.search || "";
+    const hash = window.location.hash || "";
+    const hashQuery = hash.includes("?") ? hash.slice(hash.indexOf("?") + 1) : "";
+    return new URLSearchParams([search, hashQuery].filter(Boolean).join("&"));
+}
+
 /**
  * 判断当前环境是否为 app
- * 1. url 包含 __env=app
+ * 1. url（含 hash 路由里的 query）包含 __env=app
  * 2. 或 localStorage 中 __env === "app"
  * @returns {boolean}
  */
 export function isApp() {
-    return (
-        new URLSearchParams(window.location.search).get("__env") === "app" ||
-        localStorage.getItem("__env") === "app"
-    );
+    return getUrlParams().get(ENV_KEY) === APP_VALUE || localStorage.getItem(ENV_KEY) === APP_VALUE;
+}
+
+/**
+ * 把 url 上的 __env 同步进 localStorage
+ * hash 路由下站内跳转（如 / -> /index 重定向）可能丢掉 query，
+ * 同步后刷新/跳转仍能保持 app 环境。
+ * 显式传入非 app 的值（如 __env=web）时清除缓存标记。
+ */
+export function syncAppEnv() {
+    if (typeof window === "undefined") return;
+    const env = getUrlParams().get(ENV_KEY);
+    if (env === APP_VALUE) {
+        localStorage.setItem(ENV_KEY, APP_VALUE);
+    } else if (env) {
+        localStorage.removeItem(ENV_KEY);
+    }
 }
 
 /**

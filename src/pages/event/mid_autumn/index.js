@@ -2,7 +2,7 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import AppIndex from "./AppIndex.vue";
 import router from "./router.js";
-import { isApp, applyAppEnv } from "@/utils/env";
+import { isApp, syncAppEnv, applyAppEnv } from "@/utils/env";
 
 import { createHead } from "@vueuse/head";
 import { createJx3boxUiI18n, getJx3boxUiAvailableLocales, install as JX3BOX_UI } from "@jx3box/jx3box-ui";
@@ -27,6 +27,8 @@ import * as filters from "@/utils/filters.js";
 
 
 
+// 先把 url 上的 __env 落库，再做环境判断（hash 路由跳转可能丢 query）
+syncAppEnv();
 applyAppEnv();
 
 const app = createApp(isApp() ? AppIndex : App);

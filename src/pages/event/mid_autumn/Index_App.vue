@@ -1,7 +1,7 @@
 <template>
     <div
         class="p-event-midAutumn_app"
-        v-loading="loading"
+        v-loading="yearsLoading"
         :style="{ backgroundImage: `url('${imgRoot}${year}/phone/bg1.jpg')` }"
     >
         <div class="m-app-menu">
@@ -19,33 +19,21 @@
             <div class="u-year">· {{ year }} ·</div>
         </div>
 
-        <transition name="fade">
-            <div v-if="showYears" class="m-year-mask" @click.self="showYears = false">
-                <ul class="m-year-pop">
-                    <li
-                        v-for="y in years"
-                        :key="y.year"
-                        :class="{ active: y.year == year }"
-                        @click="selectYear(y.year)"
-                    >
-                        {{ y.year }}
-                    </li>
-                </ul>
-            </div>
-        </transition>
+        <YearPopup v-model:visible="showYears" :years="years" :year="year" @select="selectYear" />
     </div>
 </template>
 
 <script>
 import { __cdn } from "@/utils/config";
-import { getBreadcrumb } from "@jx3box/jx3box-common/js/system";
+import YearPopup from "./components_app/YearPopup.vue";
+import yearsMixin from "./mixins/years.js";
+
 export default {
     name: "AppIndex",
+    mixins: [yearsMixin],
+    components: { YearPopup },
     data: function () {
         return {
-            years: [],
-            loading: false,
-            year: "2026",
             showYears: false,
             menu: [
                 {
@@ -74,32 +62,18 @@ export default {
         },
         page_name: function () {
             return this.$route.name;
+        }, 
+        year() {
+            return this.currentYear;
         },
-    },
-    created: function () {
-        this.init();
     },
     methods: {
         onClickItem(item) {
             if (item.key === "years") {
                 this.showYears = true;
             } else {
-                this.$router.push({ name: "info", query: { year: this.year, tab: item.key, __env: "app" } });
+                this.$router.push({ name: "list", query: { year: this.year, tab: item.key, __env: "app" } });
             }
-        },
-        selectYear(y) {
-            this.year = y;
-            this.showYears = false;
-        },
-        init() {
-            this.loading = true;
-            getBreadcrumb("mid_autumn_map")
-                .then((res) => {
-                    this.years = JSON.parse(res);
-                })
-                .finally(() => {
-                    this.loading = false;
-                });
         },
     },
 };
@@ -110,6 +84,7 @@ export default {
     width: 100%;
     max-width: 100vw;
     min-height: 100vh;
+    font-family: "Songti SC", "STSong", "Noto Serif CJK SC", "Source Han Serif SC", "SimSun", serif;
     overflow: hidden;
     background-size: cover;
 
@@ -148,39 +123,6 @@ export default {
             color: #fdf0cd;
             font-weight: 500;
             letter-spacing: 1vw;
-        }
-    }
-    .m-year-mask {
-        position: fixed;
-        inset: 0;
-        z-index: 99;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: rgba(0, 0, 0, 0.6);
-        .m-year-pop {
-            width: 80.8vw;
-            max-height: 70vh;
-            overflow-y: auto;
-            padding: 4vw;
-            border-radius: 3vw;
-            background: #2a1d12;
-            box-sizing: border-box;
-            li {
-                height: 14vw;
-                line-height: 14vw;
-                text-align: center;
-                font-size: 5.33vw;
-                color: #fdf0cd;
-                border-bottom: 1px solid rgba(253, 240, 205, 0.15);
-                &.active {
-                    color: #ffd479;
-                    font-weight: 600;
-                }
-                &:last-child {
-                    border: 0;
-                }
-            }
         }
     }
 }

@@ -11,9 +11,10 @@ const EmptyView = { render: () => null };
 
 const routes = isApp() ?
     [
-        { name: "index", path: "/", redirect: "/index" },
+        // 重定向时保留 query，避免 __env=app 在跳转中丢失
+        { name: "index", path: "/", redirect: (to) => ({ path: "/index", query: to.query }) },
         { name: "index-app", path: "/index", component: Index_App },
-        { name: "info", path: "/info", component: Info },
+        { name: "list", path: "/list", component: Info },
     ] :
     [
         { name: "index", path: "/", component: Index },
