@@ -5,7 +5,7 @@
             <div class="u-empty-title">广采珠玉，以待成章</div>
             <div class="u-empty-desc">
                 <p>作品收集中，侠士可按照活动介绍中参赛方式</p>
-                <p>前往 魔盒网站 - 茶馆论坛 处提交作品~</p>
+                <p>前往 <a href="https://www.jx3box.com/community" target="_blank" rel="noopener noreferrer">魔盒网站 - 茶馆论坛</a> 处提交作品~</p>
             </div>
         </div>
         <div class="u-list" v-else>
@@ -239,6 +239,10 @@ export default {
 
             p {
                 margin: 0;
+            }
+            a {
+                color: #b08236;
+                text-decoration: underline;
             }
         }
     }
