@@ -23,7 +23,10 @@
 
             <div class="m-title-box">
                 <img class="u-title" :src="title" alt=""/>
-                <div class="u-year" @click.stop="onYearChange">{{ yearInChinese }}届 <img class="u-year-switch" src="~@/assets/img/event/switch_touchbar_mid.svg" alt=""></div>
+                <div class="u-year" @click.stop="onYearChange">
+                    <img class="u-year-switch" src="~@/assets/img/event/switch_touchbar_mid.svg" alt="" />
+                    <span class="u-year-text">{{ yearInChinese }}届</span>
+                </div>
             </div>
         </div>
 

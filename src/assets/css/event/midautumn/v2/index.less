@@ -33,19 +33,27 @@
             right: 50px;
             top: 360px;
             transform: translate(-50%, -50%);
+            .flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
             color: #f3eaba;
             font-size: 20px;
             font-weight: bold;
-            letter-spacing: 8px;
-
-            writing-mode: vertical-rl;
-            text-orientation: upright;
             .pointer;
         }
 
+        .u-year-text {
+            letter-spacing: 8px;
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+        }
+
         .u-year-switch {
-            .pr;
-            top: -25px;
+            display: block;
+            flex: none;
+            width: 20px;
+            height: 20px;
         }
     }
 }
@@ -77,15 +85,29 @@
         padding: 124px 240px 40px 124px;
     }
 }
+@media screen and (max-width: 1440px) {
+    .p-event-midAutumn {
+        .m-title-box {
+            .u-title {
+                width: auto;
+                max-width: 420px;
+                height: calc(100vh - @header-height - 32px);
+                max-height: 728px;
+            }
+
+            .u-year {
+                left: 86.7%;
+                right: auto;
+                top: 34.7%;
+            }
+        }
+    }
+}
 @media screen and(max-width:@ipad) {
     .p-event-midAutumn {
         .m-box {
             .flex;
             justify-content: center;
-            .u-title {
-                .w(420px);
-                height: auto;
-            }
         }
     }
     .p-midautumn-detail {
