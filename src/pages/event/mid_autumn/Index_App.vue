@@ -1,6 +1,7 @@
 <template>
     <div
         class="p-event-midAutumn_app"
+        :class="{ 'is-android': isAndroid }"
         v-loading="yearsLoading"
         :style="{ backgroundImage: `url('${imgRoot}${year}/phone/bg1.jpg')` }"
     >
@@ -35,6 +36,7 @@ export default {
     data: function () {
         return {
             showYears: false,
+            isAndroid: typeof navigator !== "undefined" && /Android/i.test(navigator.userAgent),
             menu: [
                 {
                     key: "info",
@@ -124,6 +126,10 @@ export default {
             font-weight: 500;
             letter-spacing: 1vw;
         }
+    }
+
+    &.is-android .m-app-menu {
+        padding-bottom: calc(4vw + max(env(safe-area-inset-bottom, 0px), 48px));
     }
 }
 </style>

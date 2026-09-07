@@ -20,3 +20,16 @@ export function onAvatarError(e) {
     e.target.src = DEFAULT_AVATAR;
     e.target.onerror = null;
 }
+
+const IMAGE_URL_RE = /https?:\/\/[^"']*\.(?:jpg|jpeg|gif|png)/gi;
+
+/**
+ * 将诗词正文整理为非空文本行，并移除正文中混入的图片地址。
+ * PC 列表、App 列表和 App 详情共用。
+ */
+export function getPoemTextLines(value) {
+    return String(value || "")
+        .split(/\n/)
+        .map((line) => line.replace(IMAGE_URL_RE, "").trim())
+        .filter(Boolean);
+}

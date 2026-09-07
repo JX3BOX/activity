@@ -7,10 +7,13 @@
         close-on-press-escape
         @close="onClose"
         :show-close="false"
-        style="background: transparent;"    
+        style="background: transparent;"
     >
-        <div class="m-year-container">
-            <div class="m-year-cards">
+        <div class="m-year-container" @click.self="onClose">
+            <button class="u-year-close" type="button" aria-label="关闭年份选择" @click="onClose">
+                <el-icon><Close /></el-icon>
+            </button>
+            <div class="m-year-cards" @click.stop>
                 <div
                     class="m-year-card"
                     v-for="(item, index) in years"
@@ -105,11 +108,44 @@ export default {
 }
 
 .m-year-container {
-    width: 100%;
-    height: 100%;
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
     .flex;
     align-items: center;
     justify-content: center;
+}
+
+.u-year-close {
+    position: fixed;
+    top: 28px;
+    right: 32px;
+    z-index: 1;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, 0.68);
+    border-radius: 50%;
+    color: #fff;
+    background: rgba(13, 20, 32, 0.88);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.48), 0 0 0 1px rgba(0, 0, 0, 0.12);
+    backdrop-filter: blur(6px);
+    cursor: pointer;
+    .flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+
+    .el-icon {
+        font-size: 24px;
+    }
+
+    &:hover {
+        background: rgba(37, 48, 66, 0.96);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.56), 0 0 0 1px rgba(255, 255, 255, 0.12);
+        transform: rotate(90deg);
+    }
 }
 
 .m-year-cards {
@@ -168,6 +204,11 @@ export default {
 }
 
 @media (max-width: 768px) {
+    .u-year-close {
+        top: 16px;
+        right: 16px;
+    }
+
     .m-year-cards {
         flex-direction: column;
         gap: 30px;

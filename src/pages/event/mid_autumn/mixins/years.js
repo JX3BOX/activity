@@ -21,7 +21,8 @@ export default {
 
             try {
                 const res = await getBreadcrumb("mid_autumn_map");
-                this.years = JSON.parse(res).reverse();
+                const years = JSON.parse(res);
+                this.years = this.$options.yearsDescending === false ? years : years.reverse();
             } catch {
                 this.years = [];
             }

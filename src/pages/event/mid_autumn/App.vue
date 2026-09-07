@@ -1,9 +1,9 @@
 <template>
     <!-- 中秋诗词专题页 -->
-    <div class="p-event midAutumn" :class="'v-' + page_name" v-loading="loading">
+    <div class="p-event midAutumn" :class="'v-' + page_name" v-loading="yearsLoading">
         <CommonHeader :overlayEnable="true"></CommonHeader>
         <!-- <router-view></router-view> -->
-        <router-view v-if="!loading" v-slot="{ Component }">
+        <router-view v-if="!yearsLoading" v-slot="{ Component }">
             <transition name="fade" mode="out-in">
                 <component :is="Component" class="c-midAutumn" :years="years" />
             </transition>
@@ -14,15 +14,11 @@
 <script>
 import { postStat } from "@jx3box/jx3box-common/js/stat";
 import { __imgPath } from "@/utils/config";
-import { getBreadcrumb } from "@jx3box/jx3box-common/js/system";
+import yearsMixin from "./mixins/years";
 export default {
     name: "App",
-    data: function () {
-        return {
-            years: [],
-            loading: false,
-        };
-    },
+    mixins: [yearsMixin],
+    yearsDescending: false,
     provide: {
         __imgRoot: __imgPath + "topic/midAutumn/",
     },
@@ -33,20 +29,6 @@ export default {
     },
     created: function () {
         postStat("event", "midAutumn");
-
-        this.init();
-    },
-    methods: {
-        init() {
-            this.loading = true;
-            getBreadcrumb("mid_autumn_map")
-                .then((res) => {
-                    this.years = JSON.parse(res);
-                })
-                .finally(() => {
-                    this.loading = false;
-                });
-        },
     },
 };
 </script>
@@ -54,10 +36,11 @@ export default {
 @import "~@/assets/css/event/common/animation.less";
 @import "~@/assets/css/event/midautumn/font.less";
 .c-midAutumn {
+    width: 100%;
+    min-width: 0;
     font-family: "LXGWWenKaiMono-Regular", Arial, sans-serif;
     background-color: rgba(23, 36, 58, 0.95);
     transition: all 1s ease;
-    min-width: 1366px;
 }
 .fade-enter-from,
 .fade-leave-to {
@@ -66,10 +49,5 @@ export default {
 .fade-enter-active,
 .fade-leave-active {
     transition: opacity 1s ease;
-}
-@media screen and (max-width: @ipad) {
-    .c-midAutumn {
-        min-width: 500px;
-    }
 }
 </style>

@@ -30,13 +30,13 @@
 </template>
 
 <script>
-import { getProgramDetail } from "@/service/event/vote";
-import { cloneDeep, shuffle } from "lodash";
 import PoemDetail from "./PoemDetail.vue";
-import { normalizeAvatar, onAvatarError } from "./poemCommon";
+import poemsMixin from "../mixins/poems";
+import { getPoemTextLines, onAvatarError } from "./poemCommon";
 
 export default {
     name: "PoemApp",
+    mixins: [poemsMixin],
     inject: ["__imgRoot"],
     components: { PoemDetail },
     props: {
@@ -51,8 +51,6 @@ export default {
     },
     data() {
         return {
-            list: [],
-            loading: false,
             showDetail: false,
             detailIndex: 0,
         };
@@ -66,35 +64,8 @@ export default {
             return this.years.find((item) => item.year == year)?.vote_id || 0;
         },
     },
-    watch: {
-        voteId: {
-            handler: function (id) {
-                this.list = [];
-                if (!id) {
-                    return;
-                }
-                this.load(id);
-            },
-            immediate: true,
-        },
-    },
     methods: {
         onAvatarError,
-        load(id) {
-            this.loading = true;
-            getProgramDetail(id)
-                .then((res) => {
-                    this.list = shuffle(res?.data?.data?.vote_items || []).map((item) => {
-                        const info = item.user_info || (item.user_info = {});
-                        // 字段兼容 vote 接口（avatar）与用户接口（user_avatar），空值由 showAvatar 返回官方默认头像
-                        info.avatar = normalizeAvatar(info.avatar || info.user_avatar);
-                        return item;
-                    });
-                })
-                .finally(() => {
-                    this.loading = false;
-                });
-        },
         // 翻阅：打开详情弹层并定位到当前作品
         openPoem(item) {
             const i = this.list.findIndex((e) => e.id == item.id);
@@ -102,29 +73,8 @@ export default {
             this.showDetail = true;
         },
         getContentPreview(val) {
-            const lines = this.getText(val || "", 1);
-            const first = (lines[0] || "").trim();
+            const first = getPoemTextLines(val)[0] || "";
             return first.length > 16 ? first.substring(0, 16) + "…" : first;
-        },
-        getText(val, type) {
-            let str = cloneDeep(val);
-            let splitArr = str.split(/\n/);
-            let arr = [];
-            splitArr.forEach((item) => {
-                if (item) {
-                    let regex = /https?:\/\/[^"']*\.(?:jpg|jpeg|gif|png)/gi;
-                    var imageUrls = item.match(regex);
-                    if (imageUrls) {
-                        imageUrls.forEach((element) => {
-                            if (type == 1) {
-                                item = item.replace(element, "");
-                            }
-                        });
-                    }
-                    arr.push(item);
-                }
-            });
-            return arr;
         },
     },
 };

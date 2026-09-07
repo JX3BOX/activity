@@ -3,6 +3,7 @@
         <div
             v-if="visible && poem"
             class="m-poem-detail_app"
+            :class="{ 'is-android': isAndroid }"
             :style="{ backgroundImage: imgPrefix ? `url('${imgPrefix}bg3.jpg')` : '' }"
         >
             <!-- 顶部：返回 + 标题 -->
@@ -53,7 +54,7 @@
 import User from "@jx3box/jx3box-common/js/user";
 import dayjs from "dayjs";
 import { vote, getMyVote } from "@/service/event/vote";
-import { onAvatarError } from "./poemCommon";
+import { getPoemTextLines, onAvatarError } from "./poemCommon";
 
 export default {
     name: "PoemDetailApp",
@@ -87,6 +88,7 @@ export default {
             myVote: [],
             lastVoteTime: 0,
             voting: false,
+            isAndroid: typeof navigator !== "undefined" && /Android/i.test(navigator.userAgent),
         };
     },
     computed: {
@@ -181,7 +183,7 @@ export default {
             const MAX_CHARS = 15;
             const lines = [];
 
-            this.getText(val || "", 1).forEach((raw) => {
+            getPoemTextLines(val).forEach((raw) => {
                 const text = raw.trim();
                 if (!text) {
                     return;
@@ -201,25 +203,6 @@ export default {
                 }
             });
             return lines;
-        },
-        getText(val, type) {
-            let splitArr = String(val).split(/\n/);
-            let arr = [];
-            splitArr.forEach((item) => {
-                if (item) {
-                    let regex = /https?:\/\/[^"']*\.(?:jpg|jpeg|gif|png)/gi;
-                    var imageUrls = item.match(regex);
-                    if (imageUrls) {
-                        imageUrls.forEach((element) => {
-                            if (type == 1) {
-                                item = item.replace(element, "");
-                            }
-                        });
-                    }
-                    arr.push(item);
-                }
-            });
-            return arr;
         },
     },
 };
@@ -406,6 +389,10 @@ export default {
                 }
             }
         }
+    }
+
+    &.is-android .m-detail-footer {
+        padding-bottom: calc(4vw + max(env(safe-area-inset-bottom, 0px), 48px));
     }
 }
 </style>

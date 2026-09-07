@@ -25,7 +25,7 @@
         <!-- 内容区域 -->
         <div class="m-main">
             <transition name="fade" mode="out-in">
-                <div class="m-content" v-if="currentTab === 'intro'" v-html="data"></div>
+                <div class="m-content" v-if="currentTab === 'intro'" v-html="articleHtml"></div>
                 <Poem v-else-if="currentTab === 'poem'" :years="years" :year="year"></Poem>
             </transition>
         </div>
@@ -38,28 +38,12 @@
 <script>
 import YearPopup from "./components_app/YearPopup.vue";
 import yearsMixin from "./mixins/years.js";
+import articleMixin from "./mixins/article.js";
 import Poem from "./components_app/Poem.vue";
-import { getArticle } from "@jx3box/jx3box-common/js/system";
-
-const FORBIDDEN_TAGS = [
-    "script",
-    "style",
-    "iframe",
-    "object",
-    "embed",
-    "link",
-    "meta",
-    "base",
-    "form",
-    "input",
-    "button",
-    "textarea",
-];
-const UNSAFE_PROTOCOL = /^(javascript|vbscript|data:text\/html):/i;
 
 export default {
     name: "DetailApp",
-    mixins: [yearsMixin],
+    mixins: [yearsMixin, articleMixin],
     inject: ["__imgRoot"],
     components: { YearPopup, Poem },
     data() {
@@ -79,9 +63,6 @@ export default {
                     name: "往届活动",
                 },
             ],
-            data: "",
-            // 记录最后一次请求的文章 id，用于丢弃过期响应
-            latestId: 0,
         };
     },
     computed: {
@@ -95,21 +76,8 @@ export default {
             const tab = this.$route.query.tab;
             return this.tabs.some((item) => item.key === tab) ? tab : this.tabs[0].key;
         },
-        introId() {
+        articleId() {
             return this.years.find((item) => item.year == this.year)?.intro_id || 0;
-        },
-    },
-    watch: {
-        introId: {
-            handler: function (id) {
-                // 先清空，避免切换到一个没有介绍文章的年份时残留上一年内容
-                this.data = "";
-                if (!id) {
-                    return;
-                }
-                this.loadArticle(id);
-            },
-            immediate: true,
         },
     },
     methods: {
@@ -123,46 +91,6 @@ export default {
                 if (item.key === this.currentTab) return;
                 this.$router.push({ name: "list", query: { ...this.$route.query, tab: item.key } });
             }
-        },
-        loadArticle(id) {
-            this.latestId = id;
-            getArticle(id)
-                .then((data) => {
-                    if (this.latestId !== id) {
-                        return;
-                    }
-                    this.data = this.sanitize(data);
-                })
-                .catch(() => {
-                    if (this.latestId === id) {
-                        this.data = "";
-                    }
-                });
-        },
-        sanitize(html) {
-            if (!html) {
-                return "";
-            }
-            const doc = new DOMParser().parseFromString(String(html), "text/html");
-            const walk = (parent) => {
-                Array.from(parent.children).forEach((el) => {
-                    if (FORBIDDEN_TAGS.includes(el.tagName.toLowerCase())) {
-                        el.remove();
-                        return;
-                    }
-                    Array.from(el.attributes).forEach(({ name, value }) => {
-                        if (
-                            name.toLowerCase().startsWith("on") ||
-                            UNSAFE_PROTOCOL.test((value || "").replace(/\s+/g, ""))
-                        ) {
-                            el.removeAttribute(name);
-                        }
-                    });
-                    walk(el);
-                });
-            };
-            walk(doc.body);
-            return doc.body.innerHTML;
         },
         selectYear(year) {
             this.pickedYear = year;

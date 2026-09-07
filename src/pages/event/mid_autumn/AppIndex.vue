@@ -30,10 +30,11 @@ export default {
 @import "~@/assets/css/event/common/animation.less";
 @import "~@/assets/css/event/midautumn/font.less";
 .c-midAutumn {
+    width: 100%;
+    min-width: 0;
     font-family: "LXGWWenKaiMono-Regular", Arial, sans-serif;
     background-color: rgba(23, 36, 58, 0.95);
     transition: all 1s ease;
-    min-width: 1366px;
 }
 .fade-enter-from,
 .fade-leave-to {
@@ -42,10 +43,5 @@ export default {
 .fade-enter-active,
 .fade-leave-active {
     transition: opacity 1s ease;
-}
-@media screen and (max-width: @ipad) {
-    .c-midAutumn {
-        min-width: 500px;
-    }
 }
 </style>

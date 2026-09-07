@@ -1,5 +1,5 @@
 <template>
-    <div class="c-midAutumn-appreciate" v-loading="loading">
+    <div class="c-midAutumn-appreciate">
         <div class="u-empty" v-if="!list.length && !loading">
             作品收集中，侠士可按照活动介绍中参赛方式前往魔盒网站茶馆论坛处提交作品~
             <div class="u-item">
@@ -8,7 +8,26 @@
         </div>
         <!-- 诗词区域 -->
         <div class="u-list">
+            <template v-if="loading">
+                <div
+                    class="u-item u-skeleton"
+                    v-for="i in 8"
+                    :key="`skeleton-${i}`"
+                    :style="{ 'background-color': getColorStyle(i - 1) }"
+                    aria-hidden="true"
+                >
+                    <span class="u-skeleton-author">
+                        <i v-for="char in 8" :key="char"></i>
+                    </span>
+                    <span class="u-skeleton-content">
+                        <span class="u-skeleton-column" v-for="column in 5" :key="column">
+                            <i v-for="char in 8 + ((column + i) % 4)" :key="char"></i>
+                        </span>
+                    </span>
+                </div>
+            </template>
             <div
+                v-else
                 class="u-item"
                 v-for="(item, i) in list"
                 :key="i"
@@ -30,7 +49,7 @@
                     </span>
                 </div>
                 <div class="u-right">
-                    <span v-for="(item2, i2) in getText(item.content, 1)" :key="i2">
+                    <span v-for="(item2, i2) in getPoemTextLines(item.content)" :key="i2">
                         <div v-if="i2 < 6">
                             <span v-if="i2 < 5" class="u-text"
                                 >{{ item2.length > 16 ? item2.substring(0, 16) : item2 }}
@@ -49,112 +68,32 @@
 
 <script>
 import color from "@/assets/data/event/color.json";
-import { getProgramDetail, getVoteJudges } from "@/service/event/vote";
-import { __cdn, __Root } from "@/utils/config";
-import { cloneDeep, shuffle } from "lodash";
+import poemsMixin from "../mixins/poems";
+import { getPoemTextLines } from "../components_app/poemCommon";
 export default {
-    components: {},
+    mixins: [poemsMixin],
     props: {
         years: {
             type: Array,
             default: () => [],
         },
     },
-    data() {
-        return {
-            poemData: null,
-            showPoem: false,
-            achieve_id: null,
-            select_id: null,
-            list: [],
-            tips: "",
-            loading: false,
-
-            judges: {},
-
-            id: 0,
-        };
-    },
     computed: {
         year() {
             return this.$route.params.year || new Date().getFullYear();
         },
-    },
-    mounted() {
-        this.loadJudges();
-
-        this.id = this.years.find((item) => item.year == this.year)?.vote_id || 0;
-        this.load();
+        voteId() {
+            return this.years.find((item) => item.year == this.year)?.vote_id || 0;
+        },
     },
     methods: {
-        load() {
-            if (!this.id) {
-                return;
-            }
-            this.loading = true;
-            getProgramDetail(this.id).then((res) => {
-                this.list = shuffle(res.data.data.vote_items || []);
-                this.loading = false;
-            });
-        },
-        loadJudges() {
-            getVoteJudges().then((res) => {
-                const _res = res || [];
-                this.judges = _res
-                    .filter((item) => item.status)
-                    .reduce((acc, cur) => {
-                        if (!acc[cur.remark]) {
-                            acc[cur.remark] = [];
-                        }
-                        acc[cur.remark].push(cur);
-                        return acc;
-                    }, {});
-            });
-        },
+        getPoemTextLines,
         getUserAndTitle(item) {
             return (item.user_info?.display_name || "") + ("︽" + item.title + "︾");
-        },
-        /**
-         * 根据诗词标题截取
-         *1 个字 截取1，2 截取12，3 截取23，4-99截取34
-         */
-        getTipsText(title) {
-            let text = title?.match(/[\u4e00-\u9fa5]/g) || [];
-
-            if (text.length == 3) {
-                this.tips = text[1] + text[2];
-            } else if (text.length > 3) {
-                this.tips = text[2] + text[3];
-            } else {
-                this.tips = title;
-            }
         },
         symbolJudge(item) {
             let symbol = item.substring(0, 16).substring(item.substring(0, 16).length - 1);
             return ["！", "？", "。", "，", "︽", "︾"].includes(symbol);
-        },
-        getText(val, type) {
-            let str = cloneDeep(val);
-            let splitArr = str.split(/\n/);
-            let arr = [];
-            splitArr.forEach((item, i) => {
-                if (item) {
-                    let regex = /https?:\/\/[^"']*\.(?:jpg|jpeg|gif|png)/gi;
-                    var imageUrls = item.match(regex);
-                    if (imageUrls) {
-                        imageUrls.forEach((element) => {
-                            if (type == 1) {
-                                item = item.replace(element, "");
-                            } else {
-                                let imgStr = `<img src="${element}" alt="" />`;
-                                item = item.replace(element, imgStr);
-                            }
-                        });
-                    }
-                    arr.push(item);
-                }
-            });
-            return arr;
         },
         getColorStyle(i) {
             let colors = color.color;
@@ -165,7 +104,7 @@ export default {
                 name: "poem",
                 params: { year: this.year },
                 query: { id: item.id },
-            })
+            });
         },
     },
 };

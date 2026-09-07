@@ -3,7 +3,7 @@
         <div class="u-bg" :style="bgStyle">
             <Nav :poemName="poemData?.title || ''" @navChange="back" :years="years"></Nav>
             <div class="u-main-box">
-                <transition name="fade" mode="out-in">
+                <transition name="content-fade" mode="out-in">
                     <Introduce v-if="achieve_id === 'intro'" :years="years"></Introduce>
                     <Poem v-else-if="achieve_id === 'poem'" :years="years" @poem="poem" @back="back"></Poem>
                 </transition>
@@ -69,4 +69,14 @@ export default {
 
 <style lang="less">
 @import "~@/assets/css/event/midautumn/v2/index.less";
+
+.content-fade-enter-from,
+.content-fade-leave-to {
+    opacity: 0;
+}
+
+.content-fade-enter-active,
+.content-fade-leave-active {
+    transition: opacity 0.18s ease;
+}
 </style>
