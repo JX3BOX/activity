@@ -57,10 +57,10 @@ export default {
                 {
                     id: "general",
                     productId: 384,
-                    title: "通用兑换",
+                    title: "通用积分兑换",
                     description: "苍生铸世·体服激活码×1",
                     pointsText: "1000",
-                    tags: ["任意身份", "每人限购1次"],
+                    tags: ["魔盒注册用户", "每人限兑1次"],
                     buttonText: "兑换",
                     remark: "体服激活码通用兑换",
                     product: {},
@@ -72,11 +72,11 @@ export default {
                 {
                     id: "level",
                     productId: 385,
-                    title: "等级专属兑换",
+                    title: "骨灰玩家兑换",
                     description: "苍生铸世·体服激活码×1",
                     originalPointsText: "1000",
                     pointsText: "500",
-                    tags: ["等级专属", "每人限购1次"],
+                    tags: ["魔盒Lv4+级用户", "每人限兑1次"],
                     buttonText: "兑换",
                     remark: "体服激活码等级专属兑换",
                     discount: true,
@@ -94,7 +94,7 @@ export default {
                     description: "苍生铸世·体服激活码×1",
                     originalPointsText: "1000",
                     pointsText: "500",
-                    tags: ["高级版会员", "每人限购1次"],
+                    tags: ["魔盒PRO会员", "每人限兑1次"],
                     buttonText: "兑换",
                     remark: "体服激活码会员专属兑换",
                     discount: true,
@@ -216,7 +216,7 @@ export default {
             const messages = [];
             if (!info.config) messages.push("商品兑换配置异常");
             if (!info.level) messages.push(`需要达到 Lv.${info.requiredLevel || "-"}`);
-            if (!info.vip) messages.push("仅限高级版会员兑换");
+            if (!info.vip) messages.push("仅限魔盒PRO会员兑换");
             if (!info.points) messages.push(`积分不足，需要 ${Number(item.product.price_points) || 0} 积分`);
             if (!info.time) messages.push("当前不在活动兑换时间内");
             if (!info.stock) messages.push("商品库存不足");
@@ -257,7 +257,7 @@ export default {
 
             if (item.redeemed || this.hasBought(item.product)) {
                 item.redeemed = true;
-                return this.$message.warning("该商品每人限购一次，你已经兑换过了");
+                return this.$message.warning("该商品每人限兑1次，你已经兑换过了");
             }
 
             const canBuyInfo = this.getCanBuyInfo(item);
@@ -294,7 +294,7 @@ export default {
                 const info = this.getErrorInfo(error);
                 if (info.code === OWNED_MALL_ITEM_CODE) {
                     item.redeemed = true;
-                    return this.$alert(info.message || "该商品每人限购一次，你已经兑换过了", "兑换失败", {
+                    return this.$alert(info.message || "该商品每人限兑1次，你已经兑换过了", "兑换失败", {
                         type: "warning",
                         confirmButtonText: "知道了",
                     });
@@ -350,6 +350,22 @@ body {
     width: 33.1%;
     flex-direction: column;
     gap: clamp(7px, 0.7292vw, 28px);
+    transform: scale(0.94);
+    transform-origin: top center;
+}
+
+@media screen and (min-width: 768px) and (min-aspect-ratio: 4 / 5) {
+    .p-redeem {
+        padding-top: 24px;
+        box-sizing: border-box;
+        background-position: center 24px;
+        background-size: 100% calc(100% - 24px);
+    }
+
+    .m-redeem-stage {
+        min-height: calc(100vh - 24px);
+        min-height: calc(100dvh - 24px);
+    }
 }
 
 @media screen and (min-width: 1281px) {

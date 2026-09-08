@@ -186,9 +186,9 @@ export default {
         min-width: 0;
         margin: 0;
         overflow: hidden;
-        font-size: clamp(20px, 2vw, 52px);
-        font-weight: 700;
-        line-height: 1;
+        font-size: clamp(17px, 1.62vw, 42px);
+        font-weight: 600;
+        line-height: 1.15;
         text-overflow: ellipsis;
         white-space: nowrap;
     }
@@ -212,14 +212,15 @@ export default {
 
     .u-points-original {
         color: rgba(68, 51, 59, 0.38);
-        font-size: clamp(11px, 0.9vw, 23px);
+        font-size: clamp(10px, 0.82vw, 21px);
         line-height: 0.9;
         text-decoration: line-through;
     }
 
     .u-points-value {
         display: block;
-        font-size: clamp(18px, 1.85vw, 48px);
+        font-size: clamp(17px, 1.7vw, 44px);
+        font-weight: 700;
         line-height: 0.95;
     }
 
@@ -237,8 +238,9 @@ export default {
     .u-description {
         margin: 2.6% 0 0;
         overflow: hidden;
-        font-size: clamp(12px, 1vw, 26px);
-        line-height: 1.2;
+        color: #69565e;
+        font-size: clamp(11px, 0.88vw, 23px);
+        line-height: 1.35;
         text-overflow: ellipsis;
         white-space: nowrap;
     }
@@ -253,11 +255,12 @@ export default {
     }
 
     .u-tag {
-        padding: 0.08em 0.48em 0.12em;
-        border: 1px solid currentColor;
+        padding: 0.2em 0.48em 0.24em;
+        border: 1px solid rgba(119, 91, 67, 0.45);
         border-radius: 0.42em;
-        color: #45333c;
-        font-size: clamp(10px, 0.82vw, 32px);
+        color: #705640;
+        background-color: rgba(255, 242, 216, 0.28);
+        font-size: clamp(10px, 0.75vw, 29px);
         line-height: 1.25;
         white-space: nowrap;
     }
@@ -277,7 +280,7 @@ export default {
         background-position: center;
         background-repeat: no-repeat;
         background-size: 100% 100%;
-        font-size: clamp(16px, 1.55vw, 40px);
+        font-size: clamp(15px, 1.4vw, 36px);
         font-weight: 700;
         line-height: 1;
         white-space: nowrap;
@@ -341,15 +344,15 @@ export default {
         filter: drop-shadow(0 5px 12px rgba(71, 39, 19, 0.2));
 
         .u-title {
-            font-size: clamp(16px, 5vw, 24px);
+            font-size: clamp(14px, 4.1vw, 21px);
         }
 
         .u-points-value {
-            font-size: clamp(16px, 5.7vw, 30px);
+            font-size: clamp(15px, 5.2vw, 28px);
         }
 
         .u-points-original {
-            font-size: clamp(9px, 3vw, 15px);
+            font-size: clamp(9px, 2.75vw, 14px);
         }
 
         .u-points-icon {
@@ -357,11 +360,11 @@ export default {
         }
 
         .u-description {
-            font-size: clamp(10px, 3.25vw, 17px);
+            font-size: clamp(10px, 2.85vw, 15px);
         }
 
         .u-tag {
-            font-size: clamp(8px, 2.6vw, 14px);
+            font-size: clamp(8px, 2.4vw, 13px);
         }
 
         .m-tags {
@@ -373,7 +376,7 @@ export default {
         }
 
         .u-redeem-button {
-            font-size: clamp(12px, 3.9vw, 20px);
+            font-size: clamp(12px, 3.5vw, 18px);
         }
     }
 }
