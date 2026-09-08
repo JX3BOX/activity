@@ -359,6 +359,36 @@
 
 }
 
+.c-midAutumn-appreciate.is-poem-detail {
+    .pr;
+    justify-content: center;
+
+    .m-poem-main {
+        flex: 0 1 800px;
+        text-align: center;
+
+        .u-detail-link {
+            .r(8px);
+            .pointer;
+            width: 250px;
+            margin: 0 auto;
+            padding: 4px 12px;
+            box-sizing: border-box;
+            background: #FFEE69;
+            color: #A74B11;
+            font-size: 14px;
+        }
+    }
+
+    .m-judges {
+        .pa;
+        right: 0;
+        top: 50%;
+        width: 250px;
+        transform: translateY(-50%);
+    }
+}
+
 @keyframes poem-skeleton-shimmer {
     to {
         transform: translateX(100%);
@@ -392,5 +422,18 @@
     .c-midAutumn-appreciate {
         flex-direction: column;
         align-items: center;
+    }
+
+    .c-midAutumn-appreciate.is-poem-detail {
+        .m-poem-main {
+            width: 100%;
+            flex-basis: auto;
+        }
+
+        .m-judges {
+            .ps;
+            width: 250px;
+            transform: none;
+        }
     }
 }

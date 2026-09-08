@@ -1,17 +1,22 @@
 <template>
-    <main class="p-redeem" :style="backgroundAssets">
-        <div class="m-redeem-stage">
-            <section class="m-redeem-list" aria-label="体服激活码兑换列表">
-                <RedeemCard
-                    v-for="item in exchangeList"
-                    :key="item.id"
-                    :item="item"
-                    :asset-root="assetRoot"
-                    @redeem="handleRedeem"
-                />
-            </section>
-        </div>
-    </main>
+    <div class="p-redeem-page">
+        <CommonHeader :overlayEnable="true"></CommonHeader>
+        <main class="p-redeem" :style="backgroundAssets">
+            <div class="m-redeem-stage">
+                <section class="m-redeem-list" aria-label="体服激活码兑换列表">
+                    <RedeemCard
+                        v-for="item in exchangeList"
+                        :key="item.id"
+                        :item="item"
+                        :asset-root="assetRoot"
+                        :assets="cardAssets"
+                        @redeem="handleRedeem"
+                    />
+                </section>
+            </div>
+        </main>
+        <CommonFooter></CommonFooter>
+    </div>
 </template>
 
 <script>
@@ -23,6 +28,16 @@ import RedeemCard from "./RedeemCard.vue";
 
 const OWNED_MALL_ITEM_CODE = 42105;
 
+// 卡片素材配置。可填写 assetRoot 下的文件名，也可填写完整 URL。
+const REDEEM_CARD_ASSETS = {
+    cardBackground: "card_bg.png", // 整张卡片背景（不含任何文字）
+    productImage: "card.png", // 左侧兑换物品
+    pointsIcon: "bell.png", // 积分数字后的货币单位图
+    buttonDefault: "btn_default.png", // 按钮常态
+    buttonActive: "btn_active.png", // 按钮悬停、聚焦和按下状态
+    buttonDisabled: "btn_disabled.png", // 按钮不可用、加载中和已兑换状态
+};
+
 export default {
     name: "RedeemApp",
     components: {
@@ -32,6 +47,7 @@ export default {
         const isLogin = User.isLogin();
         return {
             assetRoot: `${__cdn}design/event/redeem/`,
+            cardAssets: REDEEM_CARD_ASSETS,
             isLogin,
             asset: {},
             assetLoading: isLogin,
@@ -41,8 +57,11 @@ export default {
                 {
                     id: "general",
                     productId: 384,
-                    card: "card01.png",
                     title: "通用兑换",
+                    description: "苍生铸世·体服激活码×1",
+                    pointsText: "1000",
+                    tags: ["任意身份", "每人限购1次"],
+                    buttonText: "兑换",
                     remark: "体服激活码通用兑换",
                     product: {},
                     loading: true,
@@ -53,10 +72,15 @@ export default {
                 {
                     id: "level",
                     productId: 385,
-                    card: "card02.png",
                     title: "等级专属兑换",
+                    description: "苍生铸世·体服激活码×1",
+                    originalPointsText: "1000",
+                    pointsText: "500",
+                    tags: ["等级专属", "每人限购1次"],
+                    buttonText: "兑换",
                     remark: "体服激活码等级专属兑换",
                     discount: true,
+                    discountText: "5.0折",
                     product: {},
                     loading: true,
                     submitting: false,
@@ -66,10 +90,15 @@ export default {
                 {
                     id: "member",
                     productId: 386,
-                    card: "card03.png",
                     title: "会员专属兑换",
+                    description: "苍生铸世·体服激活码×1",
+                    originalPointsText: "1000",
+                    pointsText: "500",
+                    tags: ["高级版会员", "每人限购1次"],
+                    buttonText: "兑换",
                     remark: "体服激活码会员专属兑换",
                     discount: true,
+                    discountText: "5.0折",
                     product: {},
                     loading: true,
                     submitting: false,
@@ -315,12 +344,12 @@ body {
 
 .m-redeem-list {
     position: absolute;
-    top: 24.07%;
-    left: 55.21%;
+    top: 24.26%;
+    left: 54.95%;
     display: flex;
     width: 33.1%;
     flex-direction: column;
-    gap: 4.4%;
+    gap: clamp(7px, 0.7292vw, 28px);
 }
 
 @media screen and (min-width: 1281px) {
@@ -362,6 +391,8 @@ body {
 
 @media screen and (max-width: 767px), screen and (max-aspect-ratio: 4 / 5) {
     .p-redeem {
+        --redeem-mobile-header-height: 60px;
+
         display: block;
         min-height: 100vh;
         min-height: 100dvh;
@@ -369,7 +400,7 @@ body {
         overflow: hidden;
         background-color: #e8c783;
         background-image: var(--redeem-bg-720);
-        background-position: center top;
+        background-position: center var(--redeem-mobile-header-height);
         background-size: 100% auto;
     }
 
@@ -377,16 +408,16 @@ body {
         width: 100%;
         min-height: 100vh;
         min-height: 100dvh;
-        padding: max(250px, 50vw) 16px 36px;
+        padding: calc(max(220px, 58vw) + var(--redeem-mobile-header-height)) 16px 36px;
         box-sizing: border-box;
 
         &::before {
             position: absolute;
-            top: 28vw;
+            top: calc(44vw + var(--redeem-mobile-header-height));
             right: 0;
             bottom: 0;
             left: 0;
-            background: linear-gradient(to bottom, transparent, rgba(238, 210, 158, 0.84) 24vw, #e8c783 62vw);
+            background: linear-gradient(to bottom, transparent, rgba(238, 210, 158, 0.84) 14vw, #e8c783 36vw);
             content: "";
             pointer-events: none;
         }
@@ -407,7 +438,7 @@ body {
 
 @media screen and (max-width: 480px) {
     .m-redeem-stage {
-        padding: max(220px, 54vw) 10px 24px;
+        padding: calc(max(210px, 58vw) + var(--redeem-mobile-header-height)) 10px 24px;
     }
 }
 </style>

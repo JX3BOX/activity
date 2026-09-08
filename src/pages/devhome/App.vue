@@ -23,6 +23,7 @@ export default {
             links: [
                 { name: "资料片专题", path: "/topic" },
                 { name: "活动专题", path: "/event" },
+                { name: "体服激活码兑换", path: "/event/redeem/" },
                 { name: "百强榜", path: "/rank" },
                 { name: "情缘杯", path: "/lover" },
                 { name: "门派天团", path: "/superstar" },

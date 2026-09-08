@@ -3,7 +3,7 @@
         <div class="u-bg" :style="bgStyle">
             <Nav :poemName="poemData?.title || ''" @navChange="back" :years="years"></Nav>
             <div class="u-main-box">
-                <div class="c-midAutumn-appreciate">
+                <div class="c-midAutumn-appreciate is-poem-detail">
                     <transition name="fade" mode="out-in" v-if="poemData">
                         <div class="m-poem-main">
                             <div class="u-back" @click="back"><i class="el-icon-arrow-left"></i></div>
@@ -25,25 +25,14 @@
                                     v-html="item"
                                 ></div>
                             </div>
+                            <div class="u-detail-link" v-if="poemData?.sub_title" @click="onDetailClick">查看原帖</div>
                             <div class="u-title-tips">
                                 {{ tips }}
                             </div>
                         </div>
                     </transition>
                     <div class="m-judges">
-                        <div class="m-qrcode">
-                            <img class="u-img" :src="`${getPic('design/miniprogram/midautumn/code-bg.png?1')}`" alt="" />
-                            <img class="u-qrcode" :src="qrcode" alt="" />
-                        </div>
                         <div class="m-list">
-                            <div class="m-tips">
-                                <img class="u-icon" :src="`${getPic('design/miniprogram/midautumn/mdi_vote.svg')}`" alt="" />
-                                <div class="u-tips">
-                                    <div class="u-title">微信扫月亮参与投票↗</div>
-                                    <div class="u-desc">有机会赢取故宫中秋好礼！</div>
-                                </div>
-                            </div>
-                            <div class="m-tips m-detail" v-if="poemData?.sub_title" @click="onDetailClick">查看原帖</div>
                             <template v-if="poemData?.id && judges[poemData.id] && judges[poemData.id].length">
                                 <img :src="`${getPic('design/miniprogram/midautumn/judges.png')}`" class="u-judges" />
                                 <div class="m-scrollbar">
@@ -72,7 +61,7 @@
 <script>
 import color from "@/assets/data/event/color.json";
 import Nav from "./components/nav.vue";
-import { getProgramItem, getVoteJudges, getVoteItemQrcode } from "@/service/event/vote";
+import { getProgramItem, getVoteJudges } from "@/service/event/vote";
 import { __cdn } from "@/utils/config";
 import { cloneDeep } from "lodash";
 export default {
@@ -88,7 +77,6 @@ export default {
             poemData: null,
 
             tips: "注：图片仅为展示效果，非最终获奖作品",
-            qrcode: "",
             bgStyle: null,
             judges: {}
         }
@@ -121,14 +109,6 @@ export default {
             }
             getProgramItem(this.id, this.poem_id).then((res) => {
                 this.poemData = res.data.data;
-
-                getVoteItemQrcode(this.poemData.id, {
-                    page: "pages/midautumn/poem/poem",
-                    program_id: this.poemData.program_id,
-                }).then((res) => {
-                    const cdn = __cdn.replace(/\/+$/, "");
-                    this.qrcode = `${cdn}${res.data.data}?123`;
-                });
             });
 
             // this.getRandomColor();
