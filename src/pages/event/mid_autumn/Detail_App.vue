@@ -25,10 +25,10 @@
         </div>
 
         <!-- 内容区域 -->
-        <div class="m-main" :class="{ 'is-intro': currentTab === 'intro' }">
+        <div class="m-main" :class="{ 'is-intro': currentTab === 'intro' || poemDetailVisible }">
             <transition name="tab-content-fade" mode="out-in">
                 <div class="m-content" v-if="currentTab === 'intro'" v-html="articleHtml"></div>
-                <Poem v-else-if="currentTab === 'poem'" :years="years" :year="year"></Poem>
+                <Poem v-else-if="currentTab === 'poem'" :years="years" :year="year" @detail-change="poemDetailVisible = $event"></Poem>
             </transition>
         </div>
 
@@ -51,6 +51,7 @@ export default {
     data() {
         return {
             showYears: false,
+            poemDetailVisible: false,
             tabs: [
                 {
                     key: "intro",
@@ -83,6 +84,11 @@ export default {
         },
         articleId() {
             return this.years.find((item) => item.year == this.year)?.intro_id || 0;
+        },
+    },
+    watch: {
+        currentTab() {
+            this.poemDetailVisible = false;
         },
     },
     methods: {

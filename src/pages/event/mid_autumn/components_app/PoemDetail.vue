@@ -1,21 +1,15 @@
 <template>
-    <transition name="fade">
         <div
             v-if="visible && poem"
             ref="detail"
             class="m-poem-detail_app"
             :class="{ 'is-android': isAndroid }"
-            :style="{ backgroundImage: imgPrefix ? `url('${imgPrefix}bg3.jpg')` : '' }"
         >
             <!-- 顶部：返回 + 标题 -->
             <transition name="poem-toast">
                 <div v-if="toastMessage" class="u-poem-toast" role="status" aria-live="polite">{{ toastMessage }}</div>
             </transition>
             <div class="m-detail-header">
-                <button class="u-back" type="button" @click="close">
-                    <span class="u-back-arrow" aria-hidden="true"></span>
-                    <span class="u-title">返回诗集</span>
-                </button>
                 <div class="u-header-nav">
                     <button class="u-page-btn" type="button" :disabled="!hasPrev" aria-label="上一篇" @click="prev">
                         <svg class="u-page-arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 6 L9 12 L15 18" /></svg>
@@ -59,9 +53,12 @@
                     <template v-else>已投票</template>
                     <span class="u-count">{{ poem.amount || 0 }}</span>
                 </div>
+                <button class="u-back" type="button" @click="close">
+                    <span class="u-back-arrow" aria-hidden="true"></span>
+                    <span class="u-title">返回诗集</span>
+                </button>
             </div>
         </div>
-    </transition>
 </template>
 
 <script>
@@ -164,7 +161,8 @@ export default {
         current() {
             this.voteAnimating = false;
             this.$nextTick(() => {
-                if (this.$refs.detail) this.$refs.detail.scrollTop = 0;
+                const container = this.$refs.detail?.closest(".m-main");
+                if (container) container.scrollTop = 0;
             });
         },
     },
@@ -342,31 +340,27 @@ export default {
         opacity: 0;
     }
     touch-action: pan-y;
-    position: fixed;
-    inset: 0;
-    z-index: 100;
+    position: relative;
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    -webkit-overflow-scrolling: touch;
-    background: #050a20;
-    background-size: 100% auto;
-    background-repeat: no-repeat;
+    background: transparent;
 
     .m-detail-header {
-        flex-shrink: 0;
-        display: flex;
-        align-items: center;
-        padding: calc(1.25rem + env(safe-area-inset-top, 0rem)) 1rem 0.75rem;
+        position: absolute;
+        top: 4rem;
+        left: 1rem;
+        right: 1rem;
+        transform: translateY(-50%);
+        z-index: 2;
+        pointer-events: none;
 
         .u-header-nav {
             display: flex;
-            gap: 0.5rem;
-            margin-left: auto;
+            justify-content: space-between;
         }
 
         .u-page-btn {
+            pointer-events: auto;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -375,8 +369,8 @@ export default {
             padding: 0;
             border: 0.0625rem solid rgba(239, 211, 146, 0.5);
             border-radius: 50%;
-            background: linear-gradient(110deg, rgba(239, 211, 146, 0.16), rgba(20, 29, 35, 0.6));
-            color: #fdf0cd;
+            background: linear-gradient(110deg, rgba(239, 211, 146, 0.25), rgba(221, 203, 165, 0.16));
+            color: #795829;
             cursor: pointer;
             transition: background-color 0.18s ease, opacity 0.18s ease;
 
@@ -407,19 +401,25 @@ export default {
             stroke-linejoin: round;
         }
 
+    }
+
         .u-back {
+            width: 100%;
+            box-sizing: border-box;
+            margin: 1rem auto 0;
             display: flex;
+            justify-content: center;
             align-items: center;
             gap: 0.625rem;
             padding: 0.5rem 0.875rem;
             border: 0.0625rem solid rgba(239, 211, 146, 0.5);
             border-radius: 2rem;
-            background: linear-gradient(110deg, rgba(239, 211, 146, 0.16), rgba(20, 29, 35, 0.6));
+            background: linear-gradient(110deg, rgba(239, 211, 146, 0.25), rgba(221, 203, 165, 0.16));
             box-shadow: inset 0 0.0625rem 0 rgba(255, 243, 207, 0.12), 0 0.125rem 0.5rem rgba(0, 0, 0, 0.12);
             backdrop-filter: blur(0.375rem);
             font-family: inherit;
             cursor: pointer;
-            color: #fdf0cd;
+            color: #795829;
             transition: background-color 0.18s ease, border-color 0.18s ease;
 
             &:active {
@@ -446,22 +446,20 @@ export default {
             line-height: 1.5;
             letter-spacing: 0.0625rem;
         }
-    }
-
     .m-detail-main {
         flex-shrink: 0;
-        padding: 2vw 4vw 3vw;
+        padding: 0 1rem 0.75rem;
 
         .m-poem-card {
             box-sizing: border-box;
-            padding: 8vw 6vw;
-            border-radius: 4vw;
-            background: linear-gradient(180deg, #fdfbf7 0%, #f2eadc 100%);
+            padding: 3rem 1.5rem 2rem;
+            background: transparent;
 
             .u-flower {
                 text-align: center;
                 margin-bottom: 2rem;
                 img {
+                    display: block;
                     width: 2rem;
                     height: 2rem;
                     .auto(x);
@@ -524,6 +522,14 @@ export default {
     }
 
     .m-detail-footer {
+        .u-back,
+        .u-vote-btn {
+            width: 100%;
+            height: 3rem;
+            box-sizing: border-box;
+            padding: 0 1rem;
+            border-radius: 2rem;
+        }
         flex-shrink: 0;
         padding: 3vw 4vw calc(8vw + env(safe-area-inset-bottom));
 
@@ -532,8 +538,6 @@ export default {
             align-items: center;
             justify-content: center;
             gap: 5vw;
-            padding: 3.5vw 0;
-            border-radius: 8vw;
             font-size: 4.5vw;
             font-weight: 500;
             color: #fff;
