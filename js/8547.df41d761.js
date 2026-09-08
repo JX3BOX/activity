@@ -1,0 +1,4 @@
+"use strict";(self["webpackChunkactivity"]=self["webpackChunkactivity"]||[]).push([[8547],{8547(e,s,t){t.r(s);var c=t(33711);
+/*!
+ * (C) Ionic http://ionicframework.com - MIT License
+ */const l=()=>":host{scroll-snap-align:center;scroll-snap-stop:always;-ms-flex-negative:0;flex-shrink:0;width:100%;min-height:1px;overflow-y:scroll;scrollbar-width:none;-ms-overflow-style:none;}:host::-webkit-scrollbar{display:none}",n=class{constructor(e){(0,c.r)(this,e)}render(){return(0,c.h)(c.d,{key:"665f41a854621f898eaf7ba9a49e77cc9326501e"},(0,c.h)("slot",{key:"635aa57fbf6167dcd36fe8dc5dfc1c313637ac04"}))}};n.style=l(),t.d(s,["ion_segment_content",0,n])}}]);
