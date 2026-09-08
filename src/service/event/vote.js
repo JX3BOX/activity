@@ -17,8 +17,8 @@ export function getMyVote(id) {
     return $next().get(`/api/next2/vote-program/program/${id}/my-vote-history`);
 }
 // 投票
-export function vote(id, data) {
-    return $next().post(`/api/next2/vote-program/program/${id}/vote`, data);
+export function vote(id, data, options = {}) {
+    return $next(options).post(`/api/next2/vote-program/program/${id}/vote`, data);
 }
 
 export function getVoteItemQrcode(id, params) {

@@ -3,7 +3,7 @@
         <div class="u-empty" v-if="!list.length && !loading">
             作品收集中，侠士可按照活动介绍中参赛方式前往魔盒网站茶馆论坛处提交作品~
             <div class="u-item">
-                <a href="/community?category=诗词" target="_blank">快速前往 <i class="el-icon-right"></i></a>
+                <a href="/community?category=story" target="_blank">快速前往 <i class="el-icon-right"></i></a>
             </div>
         </div>
         <!-- 诗词区域 -->

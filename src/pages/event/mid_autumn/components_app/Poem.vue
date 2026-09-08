@@ -8,8 +8,8 @@
                 <p>前往 <a href="https://www.jx3box.com/community" target="_blank" rel="noopener noreferrer">魔盒网站 - 茶馆论坛</a> 处提交作品~</p>
             </div>
         </div>
-        <div class="u-list" v-else>
-            <div class="u-item" v-for="item in list" :key="item.id">
+        <div class="u-list" v-else v-show="!showDetail">
+            <div class="u-item" v-for="item in list" :key="item.id" role="button" tabindex="0" @click="openPoem(item)" @keydown.enter="openPoem(item)" @keydown.space.prevent="openPoem(item)">
                 <div class="u-header">
                     <img class="u-avatar" :src="item.user_info?.avatar" alt="" @error="onAvatarError" />
                     <div class="u-info">
@@ -19,7 +19,7 @@
                 </div>
                 <div class="u-body">
                     <p class="u-content">{{ getContentPreview(item.content) }}</p>
-                    <div class="u-btn" @click="openPoem(item)">
+                    <div class="u-btn">
                         <img :src="`${imgPrefix}flower2.png`" /><span>翻阅</span>
                     </div>
                 </div>
@@ -39,6 +39,7 @@ export default {
     mixins: [poemsMixin],
     inject: ["__imgRoot"],
     components: { PoemDetail },
+    emits: ["detail-change"],
     props: {
         years: {
             type: Array,
@@ -53,6 +54,7 @@ export default {
         return {
             showDetail: false,
             detailIndex: 0,
+            listScrollTop: 0,
         };
     },
     computed: {
@@ -64,10 +66,24 @@ export default {
             return this.years.find((item) => item.year == year)?.vote_id || 0;
         },
     },
+    watch: {
+        showDetail(visible) {
+            this.$emit("detail-change", visible);
+            this.$nextTick(() => {
+                const container = this.$el.closest(".m-main");
+                if (container) container.scrollTop = visible ? 0 : this.listScrollTop;
+            });
+        },
+        year() {
+            this.listScrollTop = 0;
+            this.showDetail = false;
+        },
+    },
     methods: {
         onAvatarError,
-        // 翻阅：打开详情弹层并定位到当前作品
+        // 翻阅：在内容区域展示当前作品
         openPoem(item) {
+            this.listScrollTop = this.$el.closest(".m-main")?.scrollTop || 0;
             const i = this.list.findIndex((e) => e.id == item.id);
             this.detailIndex = i > -1 ? i : 0;
             this.showDetail = true;
@@ -87,8 +103,10 @@ export default {
         display: flex;
         flex-direction: column;
         gap: 3vw;
+        padding-inline: 0.75rem;
     }
     .u-item {
+        cursor: pointer;
         background: linear-gradient(180deg, #fdfbf7 0%, #f2eadc 100%);
         border-radius: 4px;
         padding: 4vw 4vw 3vw;

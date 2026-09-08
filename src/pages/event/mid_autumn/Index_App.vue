@@ -17,8 +17,8 @@
                 <span>{{ item.name }}</span>
                 <img :src="`${imgRoot}${year}/phone/flower1.png`" />
             </div>
-            <div class="u-year">· {{ year }} ·</div>
         </div>
+        <div class="u-year" role="button" tabindex="0" aria-label="选择活动年份" @click="showYears = true" @keydown.enter="showYears = true" @keydown.space.prevent="showYears = true">· {{ year }} ·</div>
 
         <YearPopup v-model:visible="showYears" :years="years" :year="year" @select="selectYear" />
     </div>
@@ -39,16 +39,8 @@ export default {
             isAndroid: typeof navigator !== "undefined" && /Android/i.test(navigator.userAgent),
             menu: [
                 {
-                    key: "info",
-                    name: "活动介绍",
-                },
-                {
                     key: "poem",
                     name: "诗词赏鉴",
-                },
-                {
-                    key: "years",
-                    name: "往届活动",
                 },
             ],
         };
@@ -71,17 +63,19 @@ export default {
     },
     methods: {
         onClickItem(item) {
-            if (item.key === "years") {
-                this.showYears = true;
-            } else {
-                this.$router.push({ name: "list", query: { year: this.year, tab: item.key, __env: "app" } });
-            }
+            this.$router.replace({ name: "list", query: { ...this.$route.query, year: this.year, tab: item.key, __env: "app" } });
         },
     },
 };
 </script>
 
 <style scoped lang="less">
+@keyframes mid-autumn-flower-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 .p-event-midAutumn_app {
     width: 100%;
     max-width: 100vw;
@@ -92,44 +86,81 @@ export default {
 
     .m-app-menu {
         position: fixed;
-        left: 0;
-        right: 0;
-        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: calc(6rem + env(safe-area-inset-bottom, 0rem));
         z-index: 10;
-        padding-bottom: calc(6.5vw + env(safe-area-inset-bottom));
         box-sizing: border-box;
         display: flex;
         align-items: center;
         flex-direction: column;
-        gap: 6.5vw;
+        gap: 0.75rem;
         justify-content: flex-end;
         .u-menu-item {
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 5.33vw;
-            width: 80.8vw;
-            height: 14vw;
-            line-height: 14vw;
+            font-size: 1rem;
+            width: 11rem;
+            height: 3rem;
+            line-height: 3rem;
+            border-radius: 0.375rem;
+            overflow: hidden;
+            cursor: pointer;
             background-size: 100% 100%;
-            gap: 5vw;
+            gap: 0.625rem;
             img {
-                width: 6.5vw;
-                height: 6.5vw;
+                width: 1rem;
+                height: 1rem;
+                animation: mid-autumn-flower-spin 12s linear infinite;
             }
         }
+    }
         .u-year {
-            font-size: 5.33vw;
-            height: 16vw;
-            line-height: 16vw;
+            cursor: pointer;
+            position: fixed;
+            left: 50%;
+            width: 12rem;
+            transform: translateX(-50%);
+            bottom: calc(2rem + env(safe-area-inset-bottom, 0rem));
+            text-align: center;
+            font-size: 1rem;
+            line-height: 2rem;
             color: #fdf0cd;
             font-weight: 500;
-            letter-spacing: 1vw;
+            letter-spacing: 0.25rem;
+            padding: 0.375rem 0;
+            background: linear-gradient(90deg, transparent 0%, rgba(224, 188, 112, 0.08) 20%, rgba(244, 215, 151, 0.24) 50%, rgba(224, 188, 112, 0.08) 80%, transparent 100%);
+            text-shadow: 0 0 0.5rem rgba(244, 215, 151, 0.45);
+
+            &::before,
+            &::after {
+                content: "";
+                position: absolute;
+                left: 0;
+                right: 0;
+                height: 0.0625rem;
+                pointer-events: none;
+                background: linear-gradient(90deg, transparent, #efd392, #fff1c7, #efd392, transparent);
+                filter: drop-shadow(0 0 0.1875rem rgba(255, 220, 142, 0.9)) drop-shadow(0 0 0.375rem rgba(239, 195, 101, 0.6));
+            }
+
+            &::before {
+                top: 0;
+            }
+
+            &::after {
+                bottom: 0;
+            }
         }
-    }
 
     &.is-android .m-app-menu {
-        padding-bottom: calc(4vw + max(env(safe-area-inset-bottom, 0px), 48px));
+        bottom: calc(6rem + max(env(safe-area-inset-bottom, 0rem), 3rem));
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .p-event-midAutumn_app .m-app-menu .u-menu-item img {
+        animation: none;
     }
 }
 </style>
