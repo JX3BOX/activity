@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="u-list" v-else>
-            <div class="u-item" v-for="item in list" :key="item.id">
+            <div class="u-item" v-for="item in list" :key="item.id" role="button" tabindex="0" @click="openPoem(item)" @keydown.enter="openPoem(item)" @keydown.space.prevent="openPoem(item)">
                 <div class="u-header">
                     <img class="u-avatar" :src="item.user_info?.avatar" alt="" @error="onAvatarError" />
                     <div class="u-info">
@@ -19,7 +19,7 @@
                 </div>
                 <div class="u-body">
                     <p class="u-content">{{ getContentPreview(item.content) }}</p>
-                    <div class="u-btn" @click="openPoem(item)">
+                    <div class="u-btn">
                         <img :src="`${imgPrefix}flower2.png`" /><span>翻阅</span>
                     </div>
                 </div>
@@ -87,8 +87,10 @@ export default {
         display: flex;
         flex-direction: column;
         gap: 3vw;
+        padding-inline: 0.75rem;
     }
     .u-item {
+        cursor: pointer;
         background: linear-gradient(180deg, #fdfbf7 0%, #f2eadc 100%);
         border-radius: 4px;
         padding: 4vw 4vw 3vw;

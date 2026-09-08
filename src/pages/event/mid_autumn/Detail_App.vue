@@ -1,9 +1,11 @@
 <template>
-    <div class="p-midautumn-detail_app" :style="{ backgroundImage: imgPrefix ? `url('${imgPrefix}bg2.jpg')` : '' }">
+    <div class="p-midautumn-detail_app" :style="{ backgroundImage: imgPrefix ? `url('${imgPrefix}bg2.jpg')` : '', '--tab-active-background': tabActiveBackground }">
         <div class="m-app-header">
-            <div class="m-back" @click="onBack">
-                <span class="u-back-arrow"></span>
-            </div>
+            <button class="u-year-switch" type="button" aria-label="切换活动年份" @click="showYears = true">
+                <img v-if="imgPrefix" :src="`${imgPrefix}flower1.png`" alt="" />
+                <span>{{ year }}</span>
+                <span class="u-year-chevron" aria-hidden="true"></span>
+            </button>
             <div class="m-tabs">
                 <div
                     class="u-tab-item"
@@ -12,19 +14,19 @@
                     :class="{ active: currentTab === item.key }"
                     @click="onClickTab(item)"
                     :style="{
-                        backgroundImage: imgPrefix
-                            ? `url('${imgPrefix}button2.${currentTab === item.key ? 1 : 2}.jpg')`
+                        backgroundImage: imgPrefix && currentTab !== item.key
+                            ? `url('${imgPrefix}button2.2.jpg')`
                             : '',
                     }"
                 >
-                    {{ item.name }}
+                    <span class="u-tab-label">{{ item.name }}</span>
                 </div>
             </div>
         </div>
 
         <!-- 内容区域 -->
-        <div class="m-main">
-            <transition name="fade" mode="out-in">
+        <div class="m-main" :class="{ 'is-intro': currentTab === 'intro' }">
+            <transition name="tab-content-fade" mode="out-in">
                 <div class="m-content" v-if="currentTab === 'intro'" v-html="articleHtml"></div>
                 <Poem v-else-if="currentTab === 'poem'" :years="years" :year="year"></Poem>
             </transition>
@@ -58,14 +60,17 @@ export default {
                     key: "poem",
                     name: "诗词赏鉴",
                 },
-                {
-                    key: "years",
-                    name: "往届活动",
-                },
             ],
         };
     },
     computed: {
+        tabActiveBackground() {
+            const themes = {
+                2025: "linear-gradient(125deg, #343d7a 0%, #242c5b 55%, #151b3f 100%)",
+                2026: "linear-gradient(125deg, #244e54 0%, #15383f 55%, #0c2731 100%)",
+            };
+            return themes[this.year] || "linear-gradient(125deg, #394451 0%, #29333f 55%, #1a2430 100%)";
+        },
         year() {
             return this.$route.query.year || this.currentYear;
         }, 
@@ -81,16 +86,9 @@ export default {
         },
     },
     methods: {
-        onBack() {
-            this.$router.push({ name: "index", query: { __env: "app" } });
-        },
         onClickTab(item) {
-            if (item.key === "years") {
-                return (this.showYears = true);
-            } else {
-                if (item.key === this.currentTab) return;
-                this.$router.push({ name: "list", query: { ...this.$route.query, tab: item.key } });
-            }
+            if (item.key === this.currentTab) return;
+            this.$router.replace({ name: "list", query: { ...this.$route.query, tab: item.key } });
         },
         selectYear(year) {
             this.pickedYear = year;
@@ -104,6 +102,16 @@ export default {
 </script>
 
 <style lang="less">
+.tab-content-fade-enter-from,
+.tab-content-fade-leave-to {
+    opacity: 0;
+}
+
+.tab-content-fade-enter-active,
+.tab-content-fade-leave-active {
+    transition: opacity 0.18s ease;
+}
+
 .p-midautumn-detail_app {
     height: 100dvh;
     display: flex;
@@ -114,21 +122,57 @@ export default {
     background-color: #050a20;
     font-family: "Songti SC", "STSong", "Noto Serif CJK SC", "Source Han Serif SC", "SimSun", serif;
     .m-app-header {
+        position: relative;
         flex-shrink: 0;
+        padding-top: 6.5rem;
 
-        .m-back {
+        .u-year-switch {
+            position: absolute;
+            top: 0.75rem;
+            left: 0.75rem;
             display: flex;
             align-items: center;
-            padding: 18vw 4vw 3vw 6vw;
+            gap: 0.375rem;
+            padding: 0.25rem 0.625rem;
+            border: 0.0625rem solid rgba(239, 211, 146, 0.5);
+            border-radius: 2rem;
+            background: linear-gradient(110deg, rgba(239, 211, 146, 0.2), rgba(15, 31, 40, 0.65));
+            box-shadow: inset 0 0.0625rem 0 rgba(255, 243, 207, 0.12), 0 0.125rem 0.5rem rgba(0, 0, 0, 0.16);
+            backdrop-filter: blur(0.375rem);
+            color: #fdf0cd;
+            font-family: inherit;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            letter-spacing: 0.125rem;
+            text-shadow: 0 0.0625rem 0.25rem rgba(0, 0, 0, 0.5);
             cursor: pointer;
-            color: #fff;
+            transition: background-color 0.18s ease, border-color 0.18s ease;
 
-            .u-back-arrow {
-                width: 4vw;
-                height: 4vw;
-                border-left: 1vw solid currentColor;
-                border-bottom: 1vw solid currentColor;
+            &:active {
+                background-color: rgba(239, 211, 146, 0.2);
+                border-color: #efd392;
+            }
+
+            &:focus-visible {
+                outline: 0.125rem solid #efd392;
+                outline-offset: 0.1875rem;
+            }
+
+            img {
+                width: 0.875rem;
+                height: 0.875rem;
+                animation: mid-autumn-year-flower-spin 12s linear infinite;
+            }
+
+            .u-year-chevron {
+                width: 0.3125rem;
+                height: 0.3125rem;
+                margin-left: 0.125rem;
+                margin-top: -0.1875rem;
+                border-right: 0.0625rem solid currentColor;
+                border-bottom: 0.0625rem solid currentColor;
                 transform: rotate(45deg);
+                opacity: 0.8;
             }
         }
 
@@ -136,40 +180,68 @@ export default {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 3vw;
-            padding: 2vw;
-            margin-top: 18vw;
+            gap: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            margin-top: 4.5rem;
 
             .u-tab-item {
+                position: relative;
                 flex: 1;
+                min-width: 0;
                 text-align: center;
-                padding: 1.5vw 0;
+                padding: 0.375rem 0;
+                box-sizing: border-box;
+                border: 0.0625rem solid rgba(205, 169, 99, 0.65);
+                border-radius: 0.5rem;
+                overflow: hidden;
+                font-size: 1rem;
+                line-height: 1.5;
+                white-space: nowrap;
                 cursor: pointer;
                 background-size: 100% 100%;
                 color: #6d411a;
+                box-shadow: 0 0.0625rem 0.1875rem rgba(5, 10, 32, 0.16);
+                transition: color 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+
+                .u-tab-label {
+                    position: relative;
+                    z-index: 1;
+                }
 
                 &.active {
-                    color: #fff;
+                    color: #fff8e6;
+                    background: var(--tab-active-background);
+                    font-weight: 600;
+                    border-color: #e4c587;
+                    box-shadow: inset 0 0 0 0.0625rem rgba(255, 239, 199, 0.2), 0 0.125rem 0.375rem rgba(5, 10, 32, 0.24);
+
+                    .u-tab-label {
+                        text-shadow: 0 0.0625rem 0.25rem rgba(4, 22, 29, 0.5);
+                    }
                 }
             }
         }
     }
     .m-main {
         flex: 1;
-        padding: 2vw 1vw;
         min-height: 0;
         overflow-y: auto;
         overscroll-behavior: contain;
         -webkit-overflow-scrolling: touch;
+        padding: 0.5rem 0.25rem;
+
+        &.is-intro {
+            margin: 0.5rem 0.25rem 0;
+            padding: 0;
+            border-radius: 50rem 50rem 0 0 / 3.5rem 3.5rem 0 0;
+            background: linear-gradient(180deg, #fdfbf7 0%, #f2eadc 100%);
+        }
     }
 
     .m-content {
         box-sizing: border-box;
-        padding: 4vw 2vw 2vw;
-        border-radius: 2vw;
-        border: 1px solid #6d411a;
+        padding: 4rem 0.75rem 0.75rem;
         min-height: 50vh;
-        background: linear-gradient(180deg, #fdfbf7 0%, #f2eadc 100%);
         font-size: 3.6vw;
         line-height: 1.8;
         color: #333;
@@ -261,6 +333,18 @@ export default {
                 padding: 22px 18px !important;
             }
         }
+    }
+}
+@keyframes mid-autumn-year-flower-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .p-midautumn-detail_app .m-app-header .u-year-switch img {
+        animation: none;
     }
 }
 </style>

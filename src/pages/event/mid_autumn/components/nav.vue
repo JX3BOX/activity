@@ -38,7 +38,6 @@
                 <div class="u-select-poem" v-show="poemName">《{{ poemName }}》</div>
             </div>
         </div>
-        <img class="u-qrcode" src="@/assets/img/event/mid_autumn_qrcode.png" alt="" />
         <YearChange v-model="showDialog" :years="years" @year-selected="onYearSelected"></YearChange>
     </div>
 </template>
