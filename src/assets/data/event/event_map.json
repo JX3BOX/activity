@@ -66,6 +66,11 @@
         "key": "jx3dat",
         "title": "数据大师赛",
         "template":"public/pc.html"
+    },
+    {
+        "key": "redeem",
+        "title": "体服激活码兑换",
+        "template": "public/pc.html"
     }
 
 ]
