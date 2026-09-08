@@ -26,32 +26,33 @@
                                 ></div>
                             </div>
                             <div class="u-detail-link" v-if="poemData?.sub_title" @click="onDetailClick">查看原帖</div>
+                            <div
+                                class="m-judges"
+                                v-if="poemData?.id && judges[poemData.id] && judges[poemData.id].length"
+                            >
+                                <div class="m-list">
+                                    <img :src="`${getPic('design/miniprogram/midautumn/judges.png')}`" class="u-judges" />
+                                    <div class="m-scrollbar">
+                                        <div class="m-item" v-for="(item, i) in judges[poemData.id]" :key="item.id">
+                                            <div class="m-user">
+                                                <img :src="`${getPic('design/miniprogram/midautumn/avatar.png')}`" class="u-avatar" />
+                                                <div class="u-name">
+                                                    <span>{{ `评委${i + 1}` }}</span>
+                                                    <span class="u-value">魔盒诗词大会</span>
+                                                </div>
+                                            </div>
+                                            <div class="m-content" :style="bgStyle">
+                                                <span v-html="item.description"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="u-title-tips">
                                 {{ tips }}
                             </div>
                         </div>
                     </transition>
-                    <div class="m-judges">
-                        <div class="m-list">
-                            <template v-if="poemData?.id && judges[poemData.id] && judges[poemData.id].length">
-                                <img :src="`${getPic('design/miniprogram/midautumn/judges.png')}`" class="u-judges" />
-                                <div class="m-scrollbar">
-                                    <div class="m-item" v-for="(item, i) in judges[poemData.id]" :key="item.id">
-                                        <div class="m-user">
-                                            <img :src="`${getPic('design/miniprogram/midautumn/avatar.png')}`" class="u-avatar" />
-                                            <div class="u-name">
-                                                <span>{{ `评委${i + 1}` }}</span>
-                                                <span class="u-value">魔盒诗词大会</span>
-                                            </div>
-                                        </div>
-                                        <div class="m-content" :style="bgStyle">
-                                            <span v-html="item.description"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </template>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
