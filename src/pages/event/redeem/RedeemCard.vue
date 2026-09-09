@@ -7,7 +7,9 @@
             'is-unavailable': item.unavailable,
         }"
     >
-        <span v-if="item.discount" class="u-discount">{{ item.discountText }}</span>
+        <span v-if="stockCount !== null" class="u-stock" :class="{ 'is-empty': stockCount === 0 }">
+            剩余数量 {{ stockCount }}
+        </span>
         <span class="u-card-background" :style="imageStyle(resolvedAssets.cardBackground)" aria-hidden="true"></span>
         <span class="u-product-image" :style="imageStyle(resolvedAssets.productImage)" aria-hidden="true"></span>
         <div class="m-card-copy">
@@ -80,6 +82,13 @@ export default {
         buttonLabel() {
             return this.item.buttonText || "兑换";
         },
+        stockCount() {
+            const stock = this.item.product?.stock;
+            if (stock === undefined || stock === null || stock === "") return null;
+
+            const count = Number(stock);
+            return Number.isFinite(count) ? Math.max(0, count) : null;
+        },
     },
     methods: {
         resolveAsset(source) {
@@ -141,27 +150,31 @@ export default {
         transform-origin: center;
     }
 
-    .u-discount {
+    .u-stock {
         position: absolute;
         z-index: 2;
         top: -4.91%;
         left: 0;
         display: flex;
-        width: 18.96%;
+        width: 21.5%;
         height: 17%;
         align-items: center;
         box-sizing: border-box;
-        padding: 0 2.2%;
+        padding: 0 2.4%;
         clip-path: polygon(0 0, 86% 0, 100% 50%, 86% 100%, 0 100%);
-        color: #fff;
-        background: #d90800;
-        font-size: clamp(11px, 1.15vw, 30px);
-        font-style: italic;
-        font-weight: 800;
+        color: #6d482d;
+        background: linear-gradient(90deg, #ffd96b 0%, #ffe98b 72%, #ffd859 100%);
+        font-size: clamp(10px, 0.9vw, 23px);
+        font-weight: 700;
         line-height: 1;
         white-space: nowrap;
-        text-shadow: 0 1px 2px rgba(92, 0, 0, 0.36);
+        filter: drop-shadow(0 2px 2px rgba(90, 54, 21, 0.18));
         user-select: none;
+
+        &.is-empty {
+            color: #fff;
+            background: linear-gradient(90deg, #cf4b42 0%, #e16b60 72%, #c94039 100%);
+        }
     }
 
     .m-card-copy {
@@ -371,8 +384,9 @@ export default {
             bottom: 5px;
         }
 
-        .u-discount {
-            font-size: clamp(11px, 3.2vw, 16px);
+        .u-stock {
+            width: 24%;
+            font-size: clamp(9px, 2.6vw, 13px);
         }
 
         .u-redeem-button {
