@@ -1,5 +1,5 @@
 <template>
-    <div class="p-midautumn-detail_app" :style="{ backgroundImage: imgPrefix ? `url('${imgPrefix}bg2.jpg')` : '', '--tab-active-background': tabActiveBackground }">
+    <div class="p-midautumn-detail_app" :style="{ ...buttonThemeStyle, backgroundImage: imgPrefix ? `url('${imgPrefix}bg2.jpg')` : '' }">
         <div class="m-app-header">
             <button class="u-year-switch" type="button" aria-label="切换活动年份" @click="showYears = true">
                 <img v-if="imgPrefix" :src="`${imgPrefix}flower1.png`" alt="" />
@@ -13,11 +13,6 @@
                     :key="item.key"
                     :class="{ active: currentTab === item.key }"
                     @click="onClickTab(item)"
-                    :style="{
-                        backgroundImage: imgPrefix && currentTab !== item.key
-                            ? `url('${imgPrefix}button2.2.jpg')`
-                            : '',
-                    }"
                 >
                     <span class="u-tab-label">{{ item.name }}</span>
                 </div>
@@ -40,12 +35,13 @@
 <script>
 import YearPopup from "./components_app/YearPopup.vue";
 import yearsMixin from "./mixins/years.js";
+import buttonThemeMixin from "./mixins/buttonTheme.js";
 import articleMixin from "./mixins/article.js";
 import Poem from "./components_app/Poem.vue";
 
 export default {
     name: "DetailApp",
-    mixins: [yearsMixin, articleMixin],
+    mixins: [yearsMixin, articleMixin, buttonThemeMixin],
     inject: ["__imgRoot"],
     components: { YearPopup, Poem },
     data() {
@@ -65,13 +61,6 @@ export default {
         };
     },
     computed: {
-        tabActiveBackground() {
-            const themes = {
-                2025: "linear-gradient(125deg, #343d7a 0%, #242c5b 55%, #151b3f 100%)",
-                2026: "linear-gradient(125deg, #244e54 0%, #15383f 55%, #0c2731 100%)",
-            };
-            return themes[this.year] || "linear-gradient(125deg, #394451 0%, #29333f 55%, #1a2430 100%)";
-        },
         year() {
             return this.$route.query.year || this.currentYear;
         }, 
@@ -197,32 +186,42 @@ export default {
                 text-align: center;
                 padding: 0.375rem 0;
                 box-sizing: border-box;
-                border: 0.0625rem solid rgba(205, 169, 99, 0.65);
-                border-radius: 0.5rem;
                 overflow: hidden;
                 font-size: 1rem;
                 line-height: 1.5;
                 white-space: nowrap;
                 cursor: pointer;
-                background-size: 100% 100%;
-                color: #6d411a;
-                box-shadow: 0 0.0625rem 0.1875rem rgba(5, 10, 32, 0.16);
-                transition: color 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+                color: #fff8e6;
+                transition: color 0.18s ease;
+
+                &::before {
+                    content: "";
+                    position: absolute;
+                    inset: 0;
+                    background-image: var(--tab-inactive-background);
+                    background-size: 100% 100%;
+                    background-repeat: no-repeat;
+                    filter: var(--tab-inactive-filter);
+                    pointer-events: none;
+                }
 
                 .u-tab-label {
                     position: relative;
                     z-index: 1;
+                    text-shadow: 0 0.0625rem 0.25rem rgba(4, 22, 29, 0.5);
                 }
 
                 &.active {
-                    color: #fff8e6;
-                    background: var(--tab-active-background);
+                    color: #6d411a;
                     font-weight: 600;
-                    border-color: #e4c587;
-                    box-shadow: inset 0 0 0 0.0625rem rgba(255, 239, 199, 0.2), 0 0.125rem 0.375rem rgba(5, 10, 32, 0.24);
+
+                    &::before {
+                        background-image: var(--tab-active-background);
+                        filter: none;
+                    }
 
                     .u-tab-label {
-                        text-shadow: 0 0.0625rem 0.25rem rgba(4, 22, 29, 0.5);
+                        text-shadow: none;
                     }
                 }
             }

@@ -3,7 +3,7 @@
         class="p-event-midAutumn_app"
         :class="{ 'is-android': isAndroid }"
         v-loading="yearsLoading"
-        :style="{ backgroundImage: `url('${imgRoot}${year}/phone/bg1.jpg')` }"
+        :style="{ ...buttonThemeStyle, backgroundImage: `url('${imgRoot}${year}/phone/bg1.jpg')` }"
     >
         <div class="m-app-menu">
             <div
@@ -11,7 +11,6 @@
                 v-for="item in menu"
                 :key="item.key"
                 @click="onClickItem(item)"
-                :style="{ backgroundImage: `url('${imgRoot}${year}/phone/button1.jpg')` }"
             >
                 <img :src="`${imgRoot}${year}/phone/flower1.png`" />
                 <span>{{ item.name }}</span>
@@ -28,10 +27,11 @@
 import { __cdn } from "@/utils/config";
 import YearPopup from "./components_app/YearPopup.vue";
 import yearsMixin from "./mixins/years.js";
+import buttonThemeMixin from "./mixins/buttonTheme.js";
 
 export default {
     name: "AppIndex",
-    mixins: [yearsMixin],
+    mixins: [yearsMixin, buttonThemeMixin],
     components: { YearPopup },
     data: function () {
         return {
@@ -97,6 +97,7 @@ export default {
         gap: 0.75rem;
         justify-content: flex-end;
         .u-menu-item {
+            position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -107,8 +108,21 @@ export default {
             border-radius: 0.375rem;
             overflow: hidden;
             cursor: pointer;
-            background-size: 100% 100%;
             gap: 0.625rem;
+            &::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background-image: var(--home-button-background);
+                background-size: 100% 100%;
+                background-repeat: no-repeat;
+                pointer-events: none;
+            }
+            span,
+            img {
+                position: relative;
+                z-index: 1;
+            }
             img {
                 width: 1rem;
                 height: 1rem;
