@@ -325,8 +325,8 @@ body {
 .p-redeem {
     position: relative;
     width: 100%;
-    min-height: 100vh;
-    min-height: 100dvh;
+    min-height: max(100vh, 56.25vw);
+    min-height: max(100dvh, 56.25vw);
     overflow: hidden;
     background-color: #7b4f2f;
     background-image: var(--redeem-bg-720);
@@ -338,8 +338,8 @@ body {
 .m-redeem-stage {
     position: relative;
     width: 100%;
-    min-height: 100vh;
-    min-height: 100dvh;
+    min-height: max(100vh, 56.25vw);
+    min-height: max(100dvh, 56.25vw);
 }
 
 .m-redeem-list {
@@ -363,8 +363,8 @@ body {
     }
 
     .m-redeem-stage {
-        min-height: calc(100vh - 24px);
-        min-height: calc(100dvh - 24px);
+        min-height: max(calc(100vh - 24px), 56.25vw);
+        min-height: max(calc(100dvh - 24px), 56.25vw);
     }
 }
 
