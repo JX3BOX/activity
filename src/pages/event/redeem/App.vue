@@ -4,6 +4,12 @@
         <main class="p-redeem" :style="backgroundAssets">
             <div class="m-redeem-stage">
                 <section class="m-redeem-list" aria-label="体服激活码兑换列表">
+                    <nav class="m-redeem-toolbar" aria-label="卡密工具栏">
+                        <span>兑换后可前往卡密中心查看</span>
+                        <a href="/dashboard/card?tab=virtual&page=1" target="_blank" rel="noopener noreferrer">
+                            我的卡密中心 <span aria-hidden="true">↗</span>
+                        </a>
+                    </nav>
                     <RedeemCard
                         v-for="item in exchangeList"
                         :key="item.id"
@@ -15,6 +21,15 @@
                 </section>
             </div>
         </main>
+        <RedeemDialog
+            v-model="redeemDialog.visible"
+            :state="redeemDialog.state"
+            :message="redeemDialog.message"
+            :item="redeemDialog.item"
+            :preview="!!previewMode"
+            @confirm="confirmRedeem"
+            @preview="previewDialog"
+        />
         <CommonFooter></CommonFooter>
     </div>
 </template>
@@ -25,6 +40,7 @@ import User from "@jx3box/jx3box-common/js/user";
 import { __cdn } from "@/utils/config";
 import { createRedeemOrder, getRedeemItem, payRedeemOrder } from "@/service/event/redeem";
 import RedeemCard from "./RedeemCard.vue";
+import RedeemDialog from "./RedeemDialog.vue";
 
 const OWNED_MALL_ITEM_CODE = 42105;
 
@@ -42,10 +58,15 @@ export default {
     name: "RedeemApp",
     components: {
         RedeemCard,
+        RedeemDialog,
     },
     data() {
         const isLogin = User.isLogin();
         return {
+            previewMode: process.env.NODE_ENV === "development"
+                ? ({ success: "success", failure: "error", confirm: "confirm" }[new URLSearchParams(window.location.search).get("mock")] || "")
+                : "",
+            redeemDialog: { visible: false, state: "confirm", message: "", item: null },
             assetRoot: `${__cdn}design/event/redeem/`,
             cardAssets: REDEEM_CARD_ASSETS,
             isLogin,
@@ -109,9 +130,18 @@ export default {
         };
     },
     created() {
-        postStat("event", "redeem");
+        if (!this.previewMode) postStat("event", "redeem");
     },
     mounted() {
+        if (this.previewMode) {
+            this.exchangeList.forEach((item) => {
+                item.loading = false;
+                item.product = { id: item.productId, stock: 30, price_points: Number(item.pointsText) };
+            });
+            this.assetLoading = false;
+            this.previewDialog(this.previewMode);
+            return;
+        }
         this.loadProducts();
         if (this.isLogin) this.assetPromise = this.loadAsset();
     },
@@ -136,7 +166,7 @@ export default {
             } catch (error) {
                 this.asset = {};
                 this.assetLoadError = this.getErrorMessage(error, "用户资产加载失败，请稍后重试");
-                this.$message.error(this.assetLoadError);
+                // 错误在兑换弹窗中展示，避免与兑换结果叠加提示。
             } finally {
                 this.assetLoading = false;
             }
@@ -220,7 +250,7 @@ export default {
             if (!info.points) messages.push(`积分不足，需要 ${Number(item.product.price_points) || 0} 积分`);
             if (!info.time) messages.push("当前不在活动兑换时间内");
             if (!info.stock) messages.push("商品库存不足");
-            return messages.join("<br />") || "当前暂不满足兑换条件";
+            return messages.join("\n") || "当前暂不满足兑换条件";
         },
         getErrorInfo(error) {
             const data = error?.response?.data || error?.data || {};
@@ -232,74 +262,63 @@ export default {
         getErrorMessage(error, fallback) {
             return this.getErrorInfo(error).message || fallback;
         },
+        setRedeemState(state, message = "") {
+            this.redeemDialog.state = state;
+            this.redeemDialog.message = message;
+        },
+        previewDialog(state) {
+            if (!this.previewMode) return;
+            const item = this.redeemDialog.item || this.exchangeList[0];
+            this.redeemDialog.item = item;
+            this.redeemDialog.visible = true;
+            item.redeemed = state === "success";
+            this.setRedeemState(state, state === "error" ? "当前积分不足，暂时无法兑换。请确认积分余额后再试。" : "");
+        },
         async handleRedeem(item) {
-            if (!this.isLogin) return User.toLogin();
-            if (item.submitting) return;
+            if (["checking", "submitting"].includes(this.redeemDialog.state) || item.submitting) return;
+            if (!this.previewMode && !this.isLogin) return User.toLogin();
+            this.redeemDialog = { visible: true, state: "checking", message: "", item };
+            if (this.previewMode) return this.previewDialog("confirm");
 
             if (this.assetLoading && this.assetPromise) await this.assetPromise;
-            if (this.assetLoadError) {
-                return this.$alert(this.assetLoadError, "暂时无法兑换", {
-                    type: "warning",
-                    confirmButtonText: "知道了",
-                });
-            }
-
+            if (this.assetLoadError) return this.setRedeemState("error", this.assetLoadError);
             if (!item.product.id) {
                 try {
                     await this.loadProduct(item);
                 } catch (error) {
-                    return this.$alert(this.getErrorMessage(error, "商品信息暂不可用，请稍后重试"), "暂时无法兑换", {
-                        type: "warning",
-                        confirmButtonText: "知道了",
-                    });
+                    return this.setRedeemState("error", this.getErrorMessage(error, "商品信息暂不可用，请稍后重试"));
                 }
             }
-
             if (item.redeemed || this.hasBought(item.product)) {
                 item.redeemed = true;
-                return this.$message.warning("该商品每人限兑1次，你已经兑换过了");
+                return this.setRedeemState("error", "该商品每人限兑1次，你已经兑换过了。可前往卡密中心查看。");
             }
-
-            const canBuyInfo = this.getCanBuyInfo(item);
-            if (!canBuyInfo.canBuy) {
-                return this.$alert(this.getRequirementMessage(item, canBuyInfo), "暂时无法兑换", {
-                    type: "warning",
-                    confirmButtonText: "知道了",
-                    dangerouslyUseHTMLString: true,
-                });
-            }
-
-            const points = Number(item.product.price_points) || 0;
+            const info = this.getCanBuyInfo(item);
+            if (!info.canBuy) return this.setRedeemState("error", this.getRequirementMessage(item, info));
+            this.setRedeemState("confirm");
+        },
+        async confirmRedeem() {
+            if (this.redeemDialog.state !== "confirm") return;
+            const item = this.redeemDialog.item;
+            this.setRedeemState("submitting");
+            item.submitting = true;
             try {
-                await this.$confirm(`确认使用 ${points} 积分兑换${item.title}吗？`, "确认兑换", {
-                    type: "warning",
-                    confirmButtonText: "确认兑换",
-                    cancelButtonText: "取消",
-                });
-                item.submitting = true;
+                if (this.previewMode) {
+                    await new Promise((resolve) => setTimeout(resolve, 700));
+                    return this.previewDialog("success");
+                }
                 const orderResponse = await createRedeemOrder(item.productId, item.remark);
                 const orderId = orderResponse.data?.data?.id;
                 if (!orderId) throw new Error("订单创建失败，请稍后重试");
-
                 await payRedeemOrder(orderId);
                 item.redeemed = true;
+                this.setRedeemState("success");
                 await Promise.allSettled([this.loadAsset(), this.loadProduct(item)]);
                 item.redeemed = true;
-                this.$notify.success({
-                    title: "兑换成功",
-                    message: "体服激活码已发放，请前往个人中心的订单记录查看",
-                });
             } catch (error) {
-                if (error === "cancel" || error === "close") return;
                 const info = this.getErrorInfo(error);
-                if (info.code === OWNED_MALL_ITEM_CODE) {
-                    item.redeemed = true;
-                    return this.$alert(info.message || "该商品每人限兑1次，你已经兑换过了", "兑换失败", {
-                        type: "warning",
-                        confirmButtonText: "知道了",
-                    });
-                }
-                this.$message.error(info.message || "兑换失败，请稍后重试");
+                if (info.code === OWNED_MALL_ITEM_CODE) item.redeemed = true;
+                this.setRedeemState("error", info.message || "兑换结果暂时无法确认，请先到卡密中心查看是否到账，再稍后重试。");
             } finally {
                 item.submitting = false;
             }
@@ -318,28 +337,30 @@ body,
     margin: 0;
 }
 
-body {
-    overflow-x: hidden;
+.p-redeem-page .c-header .u-pop {
+    box-sizing: border-box;
 }
 
 .p-redeem {
-    position: relative;
     width: 100%;
-    min-height: max(100vh, 56.25vw);
-    min-height: max(100dvh, 56.25vw);
-    overflow: hidden;
+    padding-top: 24px;
+    box-sizing: border-box;
+    overflow-x: auto;
     background-color: #7b4f2f;
-    background-image: var(--redeem-bg-720);
-    background-position: center;
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
 }
 
+// 背景和兑换卡片共用 16:9 画布。填满视口高度时保持比例，宽度不足则横向滚动。
 .m-redeem-stage {
     position: relative;
-    width: 100%;
-    min-height: max(100vh, 56.25vw);
-    min-height: max(100dvh, 56.25vw);
+    width: max(1280px, 100%, calc((100vh - 24px) * 16 / 9));
+    width: max(1280px, 100%, calc((100dvh - 24px) * 16 / 9));
+    aspect-ratio: 16 / 9;
+    container-type: inline-size;
+    background-color: #7b4f2f;
+    background-image: var(--redeem-bg-2k);
+    background-position: center;
+    background-size: 100% auto;
+    background-repeat: no-repeat;
 }
 
 .m-redeem-list {
@@ -349,112 +370,48 @@ body {
     display: flex;
     width: 33.1%;
     flex-direction: column;
-    gap: clamp(7px, 0.7292vw, 28px);
+    gap: 0.7292cqw;
     transform: scale(0.94);
     transform-origin: top center;
 }
 
-@media screen and (min-width: 768px) and (min-aspect-ratio: 4 / 5) {
-    .p-redeem {
-        padding-top: 24px;
-        box-sizing: border-box;
-        background-position: center 24px;
-        background-size: 100% calc(100% - 24px);
-    }
+.m-redeem-toolbar {
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.8cqw;
+    padding: 0.25cqw 0.65cqw;
+    border: 1px solid rgba(255, 231, 181, 0.45);
+    border-radius: 0.25cqw;
+    color: #fff2d4;
+    background: rgba(91, 56, 30, 0.6);
+    font-size: 0.75cqw;
+    line-height: 1.5;
+    white-space: nowrap;
+    margin-bottom:0.5rem;
 
-    .m-redeem-stage {
-        min-height: max(calc(100vh - 24px), 56.25vw);
-        min-height: max(calc(100dvh - 24px), 56.25vw);
-    }
-}
+    a {
+        flex: none;
+        color: #fff2d4;
+        font-weight: 700;
+        text-decoration: none;
 
-@media screen and (min-width: 1281px) {
-    .p-redeem {
-        background-image: var(--redeem-bg-small);
-    }
-}
+        &:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
 
-@media screen and (min-width: 1367px) {
-    .p-redeem {
-        background-image: var(--redeem-bg-1080);
-    }
-}
-
-@media screen and (min-width: 1921px) {
-    .p-redeem {
-        background-image: var(--redeem-bg-2k);
-    }
-}
-
-@media screen and (min-width: 2561px) {
-    .p-redeem {
-        background-image: var(--redeem-bg-4k);
-    }
-}
-
-// 高 DPI 桌面按实际像素密度提升素材档位，避免 Retina 屏幕发虚。
-@media screen and (min-width: 768px) and (max-width: 1280px) and (min-resolution: 1.5dppx) {
-    .p-redeem {
-        background-image: var(--redeem-bg-2k);
-    }
-}
-
-@media screen and (min-width: 1281px) and (min-resolution: 1.5dppx) {
-    .p-redeem {
-        background-image: var(--redeem-bg-4k);
-    }
-}
-
-@media screen and (max-width: 767px), screen and (max-aspect-ratio: 4 / 5) {
-    .p-redeem {
-        --redeem-mobile-header-height: 60px;
-
-        display: block;
-        min-height: 100vh;
-        min-height: 100dvh;
-        padding: 0;
-        overflow: hidden;
-        background-color: #e8c783;
-        background-image: var(--redeem-bg-720);
-        background-position: center var(--redeem-mobile-header-height);
-        background-size: 100% auto;
-    }
-
-    .m-redeem-stage {
-        width: 100%;
-        min-height: 100vh;
-        min-height: 100dvh;
-        padding: calc(max(220px, 58vw) + var(--redeem-mobile-header-height)) 16px 36px;
-        box-sizing: border-box;
-
-        &::before {
-            position: absolute;
-            top: calc(44vw + var(--redeem-mobile-header-height));
-            right: 0;
-            bottom: 0;
-            left: 0;
-            background: linear-gradient(to bottom, transparent, rgba(238, 210, 158, 0.84) 14vw, #e8c783 36vw);
-            content: "";
-            pointer-events: none;
+        &:focus-visible {
+            outline: 2px solid #ffe39a;
+            outline-offset: 3px;
         }
     }
-
-    .m-redeem-list {
-        position: relative;
-        top: auto;
-        left: auto;
-        right: auto;
-        width: min(100%, 635.5px);
-        margin: 0 auto;
-        gap: clamp(10px, 2.5vw, 18px);
-        // 卡片 PNG 右侧透明留白比左侧多 18px，补偿可见内容的视觉中心。
-        transform: translateX(0.71%);
-    }
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (min-width: 2561px), screen and (min-resolution: 1.5dppx) {
     .m-redeem-stage {
-        padding: calc(max(210px, 58vw) + var(--redeem-mobile-header-height)) 10px 24px;
+        background-image: var(--redeem-bg-4k);
     }
 }
 </style>

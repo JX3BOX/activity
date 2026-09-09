@@ -80,6 +80,7 @@ export default {
             };
         },
         buttonLabel() {
+            if (this.item.redeemed) return "已兑换";
             return this.item.buttonText || "兑换";
         },
         stockCount() {
@@ -116,6 +117,7 @@ export default {
     aspect-ratio: 1271 / 407;
     flex: none;
     box-sizing: border-box;
+    container-type: inline-size;
     transform: translateZ(0);
     transform-origin: center;
     transition: transform 220ms ease, filter 220ms ease;
@@ -164,7 +166,7 @@ export default {
         clip-path: polygon(0 0, 86% 0, 100% 50%, 86% 100%, 0 100%);
         color: #6d482d;
         background: linear-gradient(90deg, #ffd96b 0%, #ffe98b 72%, #ffd859 100%);
-        font-size: clamp(10px, 0.9vw, 23px);
+        font-size: 2.72cqw;
         font-weight: 700;
         line-height: 1;
         white-space: nowrap;
@@ -199,7 +201,7 @@ export default {
         min-width: 0;
         margin: 0;
         overflow: hidden;
-        font-size: clamp(17px, 1.62vw, 42px);
+        font-size: 4.89cqw;
         font-weight: 600;
         line-height: 1.15;
         text-overflow: ellipsis;
@@ -210,7 +212,7 @@ export default {
         display: flex;
         flex: none;
         align-items: center;
-        gap: clamp(4px, 0.45vw, 12px);
+        gap: 1.36cqw;
     }
 
     .m-points-values {
@@ -225,20 +227,20 @@ export default {
 
     .u-points-original {
         color: rgba(68, 51, 59, 0.38);
-        font-size: clamp(10px, 0.82vw, 21px);
+        font-size: 2.48cqw;
         line-height: 0.9;
         text-decoration: line-through;
     }
 
     .u-points-value {
         display: block;
-        font-size: clamp(17px, 1.7vw, 44px);
+        font-size: 5.14cqw;
         font-weight: 700;
         line-height: 0.95;
     }
 
     .u-points-icon {
-        width: clamp(20px, 2.4vw, 62px);
+        width: 7.25cqw;
         aspect-ratio: 1;
     }
 
@@ -252,7 +254,7 @@ export default {
         margin: 2.6% 0 0;
         overflow: hidden;
         color: #69565e;
-        font-size: clamp(11px, 0.88vw, 23px);
+        font-size: 2.66cqw;
         line-height: 1.35;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -260,11 +262,11 @@ export default {
 
     .m-tags {
         position: absolute;
-        bottom: 18px;
+        bottom: 12%;
         left: 1%;
         display: flex;
         max-width: 66%;
-        gap: clamp(4px, 0.48vw, 24px);
+        gap: 1cqw;
     }
 
     .u-tag {
@@ -273,7 +275,7 @@ export default {
         border-radius: 0.42em;
         color: #705640;
         background-color: rgba(255, 242, 216, 0.28);
-        font-size: clamp(10px, 0.75vw, 29px);
+        font-size: 2.27cqw;
         line-height: 1.25;
         white-space: nowrap;
     }
@@ -293,7 +295,7 @@ export default {
         background-position: center;
         background-repeat: no-repeat;
         background-size: 100% 100%;
-        font-size: clamp(15px, 1.4vw, 36px);
+        font-size: 4.23cqw;
         font-weight: 700;
         line-height: 1;
         white-space: nowrap;
@@ -349,49 +351,6 @@ export default {
         z-index: 3;
         transform: scale(1.04);
         filter: drop-shadow(0 12px 18px rgba(71, 39, 19, 0.24));
-    }
-}
-
-@media screen and (max-width: 767px), screen and (max-aspect-ratio: 4 / 5) {
-    .m-redeem-card {
-        filter: drop-shadow(0 5px 12px rgba(71, 39, 19, 0.2));
-
-        .u-title {
-            font-size: clamp(14px, 4.1vw, 21px);
-        }
-
-        .u-points-value {
-            font-size: clamp(15px, 5.2vw, 28px);
-        }
-
-        .u-points-original {
-            font-size: clamp(9px, 2.75vw, 14px);
-        }
-
-        .u-points-icon {
-            width: clamp(18px, 6.8vw, 34px);
-        }
-
-        .u-description {
-            font-size: clamp(10px, 2.85vw, 15px);
-        }
-
-        .u-tag {
-            font-size: clamp(8px, 2.4vw, 13px);
-        }
-
-        .m-tags {
-            bottom: 5px;
-        }
-
-        .u-stock {
-            width: 24%;
-            font-size: clamp(9px, 2.6vw, 13px);
-        }
-
-        .u-redeem-button {
-            font-size: clamp(12px, 3.5vw, 18px);
-        }
     }
 }
 
