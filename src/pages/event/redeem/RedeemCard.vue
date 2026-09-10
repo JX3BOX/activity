@@ -153,17 +153,26 @@ export default {
     }
 
     .u-stock {
+        --stock-arrow-width: 2.8cqw;
         position: absolute;
         z-index: 2;
         top: -4.91%;
         left: 0;
         display: flex;
-        width: 21.5%;
+        width: max-content;
+        min-width: 21.5%;
         height: 17%;
         align-items: center;
         box-sizing: border-box;
-        padding: 0 2.4%;
-        clip-path: polygon(0 0, 86% 0, 100% 50%, 86% 100%, 0 100%);
+        padding: 0 calc(2.4cqw + var(--stock-arrow-width)) 0 2.4cqw;
+        // 箭头宽度不随文字长度增加，完整数字位于裁切区域之前。
+        clip-path: polygon(
+            0 0,
+            calc(100% - var(--stock-arrow-width)) 0,
+            100% 50%,
+            calc(100% - var(--stock-arrow-width)) 100%,
+            0 100%
+        );
         color: #6d482d;
         background: linear-gradient(90deg, #ffd96b 0%, #ffe98b 72%, #ffd859 100%);
         font-size: 2.72cqw;
@@ -360,6 +369,35 @@ export default {
 
         .u-redeem-button {
             transition: none;
+        }
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .m-redeem-card {
+        .u-stock {
+            font-size: 10px;
+        }
+
+        .u-description {
+            // 跟随卡片宽度缩放，避免 320px 下固定字号挤占标签区域。
+            font-size: min(11px, 2.66cqw);
+        }
+
+        .m-tags {
+            // 缩放后仍限制在文案区域左侧 66%，给右侧兑换按钮留位。
+            max-width: 82.5%;
+            gap: 0.6cqw;
+            transform: scale(0.8);
+            transform-origin: left bottom;
+        }
+
+        .u-tag {
+            font-size: 9px;
+        }
+
+        .u-redeem-button {
+            font-size: 15px;
         }
     }
 }

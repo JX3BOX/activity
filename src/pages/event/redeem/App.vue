@@ -3,6 +3,13 @@
         <CommonHeader :overlayEnable="true"></CommonHeader>
         <main class="p-redeem" :style="backgroundAssets">
             <div class="m-redeem-stage">
+                <h1 class="m-redeem-title">
+                    <span class="u-redeem-title-text">体服激活码兑换</span>
+                </h1>
+                <div class="u-redeem-title-line" aria-hidden="true"></div>
+                <div class="m-redeem-box-layer" aria-hidden="true">
+                    <div class="u-redeem-box"></div>
+                </div>
                 <section class="m-redeem-list" aria-label="体服激活码兑换列表">
                     <nav class="m-redeem-toolbar" aria-label="卡密工具栏">
                         <span>兑换后可前往卡密中心查看</span>
@@ -43,11 +50,17 @@ import RedeemCard from "./RedeemCard.vue";
 import RedeemDialog from "./RedeemDialog.vue";
 
 const OWNED_MALL_ITEM_CODE = 42105;
+const REDEEM_CDN_ROOT = `${__cdn}design/event/redeem/`;
+// 缩放和格式转换依赖 CDN 透传处理参数，并按参数区分缓存。
+const cdnImage = (filename, width, quality = 82) =>
+    `url("${REDEEM_CDN_ROOT}${filename}?x-oss-process=image/resize,w_${width}/quality,Q_${quality}/format,webp")`;
+const responsiveBackground = (filename, width, retinaWidth) =>
+    `image-set(${cdnImage(filename, width)} 1x, ${cdnImage(filename, retinaWidth)} 2x)`;
 
 // 卡片素材配置。可填写 assetRoot 下的文件名，也可填写完整 URL。
 const REDEEM_CARD_ASSETS = {
     cardBackground: "card_bg.png", // 整张卡片背景（不含任何文字）
-    productImage: "card.png", // 左侧兑换物品
+    productImage: `${REDEEM_CDN_ROOT}card.png?x-oss-process=image/resize,w_640/quality,Q_88/format,webp`, // 左侧兑换物品
     pointsIcon: "bell.png", // 积分数字后的货币单位图
     buttonDefault: "btn_default.png", // 按钮常态
     buttonActive: "btn_active.png", // 按钮悬停、聚焦和按下状态
@@ -147,13 +160,14 @@ export default {
     },
     computed: {
         backgroundAssets() {
-            const background = (filename) => `url(${this.assetRoot}${filename})`;
             return {
-                "--redeem-bg-720": background("bg-1280x720.jpg"),
-                "--redeem-bg-small": background("bg-1366x768.jpg"),
-                "--redeem-bg-1080": background("bg-1920x1080.jpg"),
-                "--redeem-bg-2k": background("bg-2560x1440.jpg"),
-                "--redeem-bg-4k": background("bg-3840x2160.jpg"),
+                "--redeem-bg-mobile": responsiveBackground("bg.jpg", 640, 1280),
+                "--redeem-bg-desktop": responsiveBackground("bg.jpg", 1280, 2560),
+                "--redeem-bg-large": responsiveBackground("bg.jpg", 1920, 3840),
+                "--redeem-box-mobile": responsiveBackground("box.png", 640, 1280),
+                "--redeem-box-desktop": responsiveBackground("box.png", 1600, 3200),
+                "--redeem-title": `url("${this.assetRoot}dbt.png")`,
+                "--redeem-title-line": `url("${this.assetRoot}xian.png")`,
             };
         },
     },
@@ -351,20 +365,85 @@ body,
 
 // 背景和兑换卡片共用 16:9 画布。填满视口高度时保持比例，宽度不足则横向滚动。
 .m-redeem-stage {
+    // 列表中心 71.5%，扣除缩放后卡片右侧留白的一半：33.1% × .94 × 1.575% / 2。
+    --redeem-content-center: 71.255%;
     position: relative;
     width: max(1280px, 100%, calc((100vh - 24px) * 16 / 9));
     width: max(1280px, 100%, calc((100dvh - 24px) * 16 / 9));
     aspect-ratio: 16 / 9;
     container-type: inline-size;
     background-color: #7b4f2f;
-    background-image: var(--redeem-bg-2k);
+    background-image: var(--redeem-bg-desktop);
     background-position: center;
     background-size: 100% auto;
     background-repeat: no-repeat;
 }
 
+.m-redeem-title {
+    position: absolute;
+    z-index: 2;
+    top: 8.8%;
+    left: var(--redeem-content-center);
+    width: 33.1%;
+    transform: translateX(-50%);
+    aspect-ratio: 1441 / 274;
+    margin: 0;
+    background-image: var(--redeem-title);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.u-redeem-title-text {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+.u-redeem-title-line {
+    position: absolute;
+    z-index: 2;
+    top: 18.5%;
+    left: var(--redeem-content-center);
+    width: 27%;
+    transform: translateX(-50%);
+    aspect-ratio: 1006 / 80;
+    background-image: var(--redeem-title-line);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+// 仅限制装饰素材的溢出，不裁切卡片悬浮效果和焦点轮廓。
+.m-redeem-box-layer {
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.u-redeem-box {
+    position: absolute;
+    z-index: 1;
+    // PNG 左侧包含大块透明留白，按可见礼盒而非图片边框对齐线上构图。
+    top: 12%;
+    left: -21%;
+    width: 84%;
+    aspect-ratio: 3202 / 2191;
+    background-image: var(--redeem-box-desktop);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    pointer-events: none;
+}
+
 .m-redeem-list {
     position: absolute;
+    z-index: 2;
     top: 24.26%;
     left: 54.95%;
     display: flex;
@@ -378,6 +457,8 @@ body,
 .m-redeem-toolbar {
     display: flex;
     flex: none;
+    // card_bg.png 右侧约 20 / 1270 为留白，对齐卡片可见边缘。
+    margin-right: 1.575%;
     align-items: center;
     justify-content: space-between;
     gap: 0.8cqw;
@@ -409,9 +490,88 @@ body,
     }
 }
 
-@media screen and (min-width: 2561px), screen and (min-resolution: 1.5dppx) {
+@media screen and (min-width: 1600px) {
     .m-redeem-stage {
-        background-image: var(--redeem-bg-4k);
+        background-image: var(--redeem-bg-large);
     }
 }
+
+@media screen and (max-width: 1279px) {
+    .p-redeem {
+        padding-top: 60px;
+        overflow-x: hidden;
+    }
+
+    .m-redeem-stage {
+        width: 100%;
+        min-height: calc(100vh - 60px);
+        min-height: calc(100dvh - 60px);
+        aspect-ratio: auto;
+        box-sizing: border-box;
+        padding: 28px 12px 48px;
+        background-image: var(--redeem-bg-mobile);
+        background-position: center top;
+        background-size: cover;
+    }
+
+    .m-redeem-title {
+        position: relative;
+        top: auto;
+        left: auto;
+        width: min(92%, 680px);
+        margin: 0 auto;
+        transform: none;
+    }
+
+    .u-redeem-title-line {
+        position: relative;
+        top: auto;
+        left: auto;
+        width: min(88%, 620px);
+        margin: 4px auto 18px;
+        transform: none;
+    }
+
+    .m-redeem-box-layer {
+        display: contents;
+    }
+
+    .u-redeem-box {
+        position: relative;
+        top: auto;
+        left: auto;
+        width: min(82%, 520px);
+        margin: -16px auto -42px;
+        // 礼盒主体中心约在原图宽度的 62.5%，补偿左侧透明留白。
+        transform: translateX(-12.5%);
+        background-image: var(--redeem-box-mobile);
+    }
+
+    .m-redeem-list {
+        position: relative;
+        top: auto;
+        left: auto;
+        width: min(100%, 680px);
+        margin: 0 auto;
+        gap: 12px;
+        transform: none;
+    }
+
+    .m-redeem-toolbar {
+        gap: 8px;
+        padding: 8px 10px;
+        border-radius: 4px;
+        margin-bottom: 4px;
+        font-size: 12px;
+        white-space: nowrap;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .m-redeem-stage {
+        padding-right: 8px;
+        padding-left: 8px;
+    }
+}
+
 </style>
