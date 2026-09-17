@@ -24,7 +24,8 @@ const routes = [
     {
         name: "detail",
         path: "/:id",
-        redirect: { name: "rank" },
+        // 显式保留入口参数，避免 App 环境标记在详情重定向时丢失。
+        redirect: (to) => ({ name: "rank", params: to.params, query: to.query, hash: to.hash }),
         component: () => import("@/layouts/rank/RankLayout.vue"),
         children: [
             { name: "info", path: "/:id/info", component: Info },

@@ -66,3 +66,12 @@ export function applyAppEnv() {
 
     document.documentElement.classList.add("v-app");
 }
+
+/**
+ * 初始化 App 内嵌环境。
+ * 各页面入口应在 createApp 前调用，避免重复维护同步和注入顺序。
+ */
+export function initAppEnv() {
+    syncAppEnv();
+    applyAppEnv();
+}

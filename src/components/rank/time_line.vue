@@ -3,21 +3,28 @@
         <h2>活动时间线</h2>
         <div class="m-time-line-box">
             <img
+                v-show="!isApp"
                 class="u-arr u-arr-left"
-                :class="{
-                    'u-arr__hide': !currentIndex,
-                }"
+                :class="{ 'u-arr__hide': !currentIndex }"
                 @click="scroll('left')"
                 :src="arrow"
             />
-            <div class="m-timeline">
+            <div
+                class="m-timeline"
+                @touchstart="onDragStart"
+                @touchmove="onDragMove"
+                @touchend="onDragEnd"
+                @mousedown="onDragStart"
+                @mousemove="onDragMove"
+                @mouseup="onDragEnd"
+                @mouseleave="onDragEnd"
+            >
                 <ul ref="timeline" :style="{ left: listLeft + 'px' }" v-html="html"></ul>
             </div>
             <img
+                v-show="!isApp"
                 class="u-arr u-arr-right"
-                :class="{
-                    'u-arr__hide': currentIndex == totalDay,
-                }"
+                :class="{ 'u-arr__hide': currentIndex == totalDay }"
                 @click="scroll('right')"
                 :src="arrow"
             />
@@ -38,10 +45,18 @@ export default {
     data: function () {
         return {
             listLeft: 0,
+            dragging: false,
+            startX: 0,
+            startLeft: 0,
             currentIndex: 0,
             totalDay: 0,
             arrow: `${__imgPath}image/rank/common/timeline_arrow.svg`,
         };
+    },
+    computed: {
+        isApp() {
+            return localStorage.getItem("__env") == "app";
+        },
     },
     watch: {
         html: {
@@ -77,18 +92,15 @@ export default {
                         if (nearestIndex !== -1) {
                             const nearestLi = liElements[nearestIndex];
                             nearestLi.classList.add("nearest");
-                            const progressDiv = document.createElement("div");
-                            progressDiv.classList.add("progress"); // 添加 class
-                            progressDiv.textContent = `当前进度`;
-                            nearestLi.appendChild(progressDiv);
                         }
                         if (hasReachedToday) {
                             for (let i = nearestIndex + 1; i < liElements.length; i++) {
                                 liElements[i].classList.add("after-today");
                             }
                         }
-                        this.totalDay = totalDays - 1;
                         this.setLiPosition(true);
+                        this.totalDay = liElements.length - 1;
+                        if (!this.isApp) this.currentIndex = Math.max(0, nearestIndex);
                     });
             },
         },
@@ -97,49 +109,78 @@ export default {
         setLiPosition(firstLoad) {
             const list = this.$refs.timeline;
             const liElements = list.querySelectorAll("li");
-            let left = 0;
+            let left = this.isApp ? 50 : 0;
+            const width = this.isApp ? 24 : 34;
             for (let i = 0; i < liElements.length; i++) {
                 const li = liElements[i];
                 li.style.left = left + "px";
-                left += li.offsetWidth + 34;
-                if (!firstLoad) {
-                    if (i === this.currentIndex) {
-                        this.listLeft = -li.offsetLeft;
-                    }
+                left += li.offsetWidth + width;
+                if (!firstLoad && i === this.currentIndex) {
+                    const containerWidth = list.offsetWidth;
+                    const nodeRight = li.offsetLeft + li.offsetWidth;
+                    let target = -li.offsetLeft;
+                    const maxScroll = -(nodeRight - containerWidth);
+                    if (target < maxScroll) target = maxScroll;
+                    this.listLeft = target;
+                }
+            }
+            if (firstLoad) {
+                if (this.isApp) {
+                    // app 模式：最后一个节点贴右侧边缘
+                    this.alignLastRight();
                 } else {
-                    if (li.classList[0] == "nearest") {
-                        this.initTreatment(li);
-                    }
+                    const nearest = list.querySelector("li.nearest");
+                    nearest && this.initTreatment(nearest);
                 }
             }
         },
         initTreatment(dom) {
             const parentWidth = this.$refs.timeline.offsetWidth;
             const liOffsetLeft = dom.offsetLeft;
-            const offsetLeft = parentWidth / 2 - liOffsetLeft - dom.offsetWidth / 2;
-            this.listLeft = offsetLeft;
-            this.$nextTick(() => {
-                const list = this.$refs.timeline;
-                const liElements = list.querySelectorAll("li");
-                for (let i = 0; i < liElements.length; i++) {
-                    if (-this.listLeft >= liElements[i].offsetLeft && -this.listLeft <= liElements[i + 1].offsetLeft) {
-                        this.currentIndex = i + 1;
-                        // 如果需要左侧保持不裁剪，增加下面代码
-                        // this.listLeft = -liElements[i].offsetLeft;
-                    }
-                }
-            });
+            this.listLeft = parentWidth / 2 - liOffsetLeft - dom.offsetWidth / 2;
+        },
+        alignLastRight() {
+            const list = this.$refs.timeline;
+            const liElements = list.querySelectorAll("li");
+            const last = liElements[liElements.length - 1];
+            if (!last) return;
+            const offset = last.offsetLeft + last.offsetWidth - list.offsetWidth;
+            this.listLeft = Math.min(0, -offset - 50);
+        },
+        scrollBounds() {
+            const list = this.$refs.timeline;
+            const liElements = list.querySelectorAll("li");
+            const last = liElements[liElements.length - 1];
+            if (!last) return { min: 0, max: 0 };
+            const min = -Math.max(0, last.offsetLeft + last.offsetWidth - list.offsetWidth + 50);
+            return { min, max: 0 };
+        },
+        onDragStart(e) {
+            if (!this.isApp) return;
+            this.dragging = true;
+            this.startX = e.touches ? e.touches[0].clientX : e.clientX;
+            this.startLeft = this.listLeft;
+        },
+        onDragMove(e) {
+            if (!this.dragging) return;
+            const x = e.touches ? e.touches[0].clientX : e.clientX;
+            const delta = x - this.startX;
+            const { min, max } = this.scrollBounds();
+            this.listLeft = Math.max(min, Math.min(max, this.startLeft + delta));
+            if (e.cancelable) e.preventDefault();
+        },
+        onDragEnd() {
+            this.dragging = false;
         },
         scroll(direction) {
             const list = this.$refs.timeline;
-            const li = list.querySelector("li");
-            if (!li) return;
+            if (!list) return;
             if (direction === "left") {
                 this.currentIndex = Math.max(0, this.currentIndex - 1);
             } else if (direction === "right") {
-                this.currentIndex = Math.min(this.currentIndex + 1, list.children.length - 1);
+                this.currentIndex = Math.min(this.currentIndex + 1, this.totalDay);
             }
-            this.setLiPosition();
+            this.setLiPosition(false);
         },
     },
 };
@@ -163,7 +204,7 @@ export default {
         .mb(50px);
         gap: 10px;
         align-items: center;
-        padding: 0 20px;
+        padding: 0 44px;
         box-sizing: border-box;
         .m-timeline {
             .clip;
@@ -173,24 +214,6 @@ export default {
             padding: 57px 10px 0 10px;
             box-sizing: border-box;
             align-items: center;
-
-            .progress {
-                position: absolute;
-                .fz(18px);
-                top: -30px;
-                color: white;
-                font-weight: bold;
-                &::after {
-                    content: "";
-                    .pa;
-                    .size(107px,6px);
-                    bottom: 40px;
-                    left: 50%;
-                    transform: translateX(-50%);
-                    border-radius: 3px;
-                    background-color: #feecc5;
-                }
-            }
         }
 
         ul {
@@ -280,27 +303,26 @@ export default {
         }
     }
     .u-arr {
-        // .pa;
+        .pa;
         .pointer;
         .size(35px);
         .z(9);
-        .mt(57px);
-        bottom: 0;
+        top: 50%;
+        transform: translateY(-50%);
         transition: 0.2s all;
         &.u-arr-left {
-            left: -45px;
+            left: 4px;
         }
         &.u-arr-right {
-            right: -45px;
-            transform: rotate(180deg);
+            right: 4px;
         }
         &:hover {
             filter: brightness(110%);
         }
-
         &.u-arr__hide {
             opacity: 0;
             cursor: initial;
+            pointer-events: none;
         }
     }
 }

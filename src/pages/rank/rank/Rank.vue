@@ -14,4 +14,6 @@ export default {
 <style lang="less">
 @import "~@/assets/css/rank/app.less";
 @import "~@/assets/css/rank/race.less";
+// 必须最后加载：App 仅覆盖视觉，不维护第二套页面结构。
+@import "~@/assets/css/rank/app-mode.less";
 </style>

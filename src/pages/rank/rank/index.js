@@ -15,6 +15,7 @@ import jx3DarkTheme from "@/assets/data/rank/echartsTheme.json";
 
 import { createApp } from "vue";
 import App from "./Rank.vue";
+import { initAppEnv } from "@/utils/env";
 
 import router from "./router";
 import store from "./store";
@@ -51,6 +52,8 @@ use([
     CanvasRenderer,
 ]);
 registerTheme("jx3box-dark", jx3DarkTheme);
+
+initAppEnv();
 
 const app = createApp(App);
 
