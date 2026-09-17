@@ -9,6 +9,8 @@
 
     body {
         overflow-x: hidden;
+        // app 模式取消 body 由深变浅的渐变，统一纯色背景
+        background: #203345;
     }
     .c-header,
     .c-footer,
@@ -111,11 +113,12 @@
 
     .m-rank-content {
         min-height: 0;
+        margin: 0;
         padding-bottom: calc(24px + env(safe-area-inset-bottom));
         // 活动介绍页
         .m-rank-info {
             margin-top: 0;
-            padding:20px 10px;
+            padding: 20px 10px;
             background: none;
             border-top: none;
             .fz(15px, 1.9);
@@ -134,8 +137,8 @@
                 &::before {
                     content: "";
                     .clip;
-                    width: 2px;
-                    height: 18px;
+                    width: 3px;
+                    height: 16px;
                     background-color: #ffedc6;
                     border-radius: 2px;
                 }
@@ -241,6 +244,78 @@
                             margin-top: 30px;
                         }
                     }
+                }
+            }
+        }
+        // 开荒直播
+        .m-rank-video {
+            margin: 10px 0;
+            .m-rank-video-title,
+            .m-rank-video-live,
+            .m-rank-video-pages {
+                .none;
+            }
+
+            .m-rank-video-content {
+                margin-top: 12px;
+            }
+
+            .m-rank-video-list {
+                padding: 0 15px;
+                .el-col-8 {
+                    width: 50%;
+                    flex: 0 0 50%;
+                    max-width: 50%;  
+                    padding:0 5px !important;
+                }
+            }
+            .m-rank-video-item {
+                margin-bottom: 10px;
+                border-radius: 6px;
+                overflow: hidden;
+                .u-video {
+                    height: 100px;
+                    .u-live-null {
+                        .size(50px);
+                        border-radius: 8px;
+                        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+                    }
+                    .u-player {
+                        .size(40px);
+                        .lt(50%, 50%);
+                    }
+                }
+                .u-status {
+                    right: 3px;
+                    bottom: 3px;
+                    font-size: 10px;
+                    line-height: 1;
+                    padding: 3px 6px;
+                    border-radius: 4px;
+                    background-color: rgba(0, 0, 0, 0.55);
+                    &.on {
+                        background-color: #49c10f;
+                    }
+                }
+                .u-info {
+                    align-items: center;
+                    gap: 8px;
+                    padding: 8px;
+                    background-color: #31525f;
+                }
+                .u-team-logo {
+                    .size(40px);
+                    border-radius: 6px;
+                    box-shadow: none;
+                }
+                .u-label {
+                    font-size: 12px;
+                }
+                .u-team-name {
+                    font-size: 13px;
+                }
+                .u-room a {
+                    font-size: 11px;
                 }
             }
         }

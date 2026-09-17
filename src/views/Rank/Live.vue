@@ -10,7 +10,7 @@
         <div class="m-rank-video-title">
             <img :src="video_title_img" class="u-title-img" />
             <div class="u-extend">
-                <el-select class="u-server" v-model="server" placeholder="请选择服务器" size="mini">
+                <el-select class="u-server" v-model="server" placeholder="请选择服务器" size="small">
                     <el-option key="all" label="全部" value=""></el-option>
                     <el-option v-for="item in servers" :key="item" :label="item" :value="item"></el-option>
                 </el-select>

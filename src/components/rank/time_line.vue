@@ -109,7 +109,7 @@ export default {
         setLiPosition(firstLoad) {
             const list = this.$refs.timeline;
             const liElements = list.querySelectorAll("li");
-            let left = this.isApp ? 50 : 0;
+            let left = this.isApp ? 16 : 0;
             const width = this.isApp ? 24 : 34;
             for (let i = 0; i < liElements.length; i++) {
                 const li = liElements[i];
@@ -145,14 +145,14 @@ export default {
             const last = liElements[liElements.length - 1];
             if (!last) return;
             const offset = last.offsetLeft + last.offsetWidth - list.offsetWidth;
-            this.listLeft = Math.min(0, -offset - 50);
+            this.listLeft = Math.min(0, -offset - 16);
         },
         scrollBounds() {
             const list = this.$refs.timeline;
             const liElements = list.querySelectorAll("li");
             const last = liElements[liElements.length - 1];
             if (!last) return { min: 0, max: 0 };
-            const min = -Math.max(0, last.offsetLeft + last.offsetWidth - list.offsetWidth + 50);
+            const min = -Math.max(0, last.offsetLeft + last.offsetWidth - list.offsetWidth + 16);
             return { min, max: 0 };
         },
         onDragStart(e) {

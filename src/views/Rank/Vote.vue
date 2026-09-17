@@ -26,7 +26,7 @@
                         </el-popover>
                     </th>
                     <th>
-                        <el-select class="u-server u-select" v-model="server" placeholder="选择服务器" size="mini">
+                        <el-select class="u-server u-select" v-model="server" placeholder="选择服务器" size="small">
                             <el-option key="all" label="全部服务器" value=""> </el-option>
                             <el-option v-for="item in servers" :key="item" :label="item" :value="item"> </el-option>
                         </el-select>
