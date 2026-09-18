@@ -126,6 +126,16 @@ export default {
         }
         this.getStats();
     },
+    watch: {
+        // 切换上方版本（id）时重新拉取统计数据
+        id: function () {
+            this.current_boss = "all";
+            this.stats = {};
+            this.chartArr = [];
+            this.chartMap = {};
+            this.getStats();
+        },
+    },
     methods: {
         changeBoss: function (val) {
             this.current_boss = val;

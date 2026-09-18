@@ -108,7 +108,7 @@
 </template>
 
 <script>
-import { __imgPath } from "@/utils/config";
+import { __imgPath, __cdn } from "@/utils/config";
 import { getVideos, deleteVideo, addVideo, updateVideo } from "@/service/rank/video.js";
 import { default_avatar } from "@/utils/config";
 import { getThumbnail, getLink } from "@jx3box/jx3box-common/js/utils";
@@ -246,7 +246,7 @@ export default {
             return getLink("org", val);
         },
         videoCover: function (aid) {
-            return __imgPath + `image/rank/videos/${aid}.png`;
+            return __cdn + `design/rank/videos/${aid}.png`;
         },
     },
     watch: {
@@ -255,6 +255,12 @@ export default {
             handler: function () {
                 this.loadData();
             },
+        },
+        // 切换上方版本（id）时重新拉取视频数据
+        id: function () {
+            this.current_boss = "";
+            this.page = 1;
+            this.loadData();
         },
     },
 
