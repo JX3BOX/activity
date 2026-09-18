@@ -6,17 +6,8 @@
         v-loading="loading"
         element-loading-background="rgba(0, 0, 0, 0.3)"
     >
-        <!-- <div class="m-rank-vote-title">
-            <img :src="vote_title_img" />
-        </div> -->
         <div class="m-rank-vote-header" v-html="vote_note" v-if="vote_note"></div>
-        <vote-item-app
-            v-if="isAppMode"
-            :data="data"
-            :team-name="team_name"
-            :server="server"
-            :vote-team="voteTeam"
-        />
+        <vote-item-app v-if="isAppMode" :data="data" :team-name="team_name" :server="server" :vote-team="voteTeam" />
         <table v-else class="m-rank-vote-table">
             <thead>
                 <tr>
@@ -33,7 +24,7 @@
                     </th>
                     <th>
                         <span v-if="isAppMode">服务器</span>
-                        <el-select v-else class="u-server u-select" v-model="server" placeholder="选择服务器" size="small">
+                        <el-select v-else class="u-server u-select" v-model="server" placeholder="选择服务器">
                             <el-option key="all" label="全部服务器" value=""> </el-option>
                             <el-option v-for="item in servers" :key="item" :label="item" :value="item"> </el-option>
                         </el-select>

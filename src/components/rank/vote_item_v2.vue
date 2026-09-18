@@ -11,7 +11,8 @@
             </td>
             <td>
                 <a class="u-name" :href="teamLink(item.team_id)" target="_blank">{{ item.name }}</a>
-                <span class="u-slogan u-slogan--app">{{ item.slogan }}</span>
+                <!-- 宣言仅 app 模式在团队名下显示，PC 有独立的"团长&宣言"列 -->
+                <span class="u-slogan u-slogan--app" v-if="isAppMode">{{ item.slogan }}</span>
             </td>
             <td>
                 <span class="u-server">{{ item.server }}</span>
@@ -52,6 +53,7 @@ import { doVote } from "@/service/rank/vote.js";
 import { getUserInfo } from "@/service/rank/awards";
 import BindWxMp from "@/components/rank/misc/bind_wx_mp.vue";
 import { getConfig } from "@jx3box/jx3box-common/js/system";
+import { isApp } from "@/utils/env";
 export default {
     name: "voteItemV2",
     props: ["data", "team_name", "server", "voteTeam"],
@@ -71,6 +73,9 @@ export default {
     computed: {
         id: function () {
             return ~~this.$store.state.id;
+        },
+        isAppMode() {
+            return isApp() || document.documentElement.classList.contains("v-app");
         },
         list: function () {
             return this.data;

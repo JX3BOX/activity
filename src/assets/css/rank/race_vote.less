@@ -37,19 +37,20 @@
 
 .m-rank-vote-table {
     .w(100%);
-    border-spacing: 0 22px;
+    // 紧凑表格：行间无缝，用分隔线区分（设计稿样式，有无 vote-note 提示条均一致）
+    border-spacing: 0;
+    margin-top: 20px;
 
     th,
     td {
-        background-color: #264259;
-        .h(60px);
-        .lh(60px);
-        color: #707070;
+        background-color: #2d4a63;
+        .h(56px);
+        color: #fff;
         .x;
         .nobreak;
         .el-icon-search {
             .fz(18px);
-            color: #707070;
+            color: #1e374d;
         }
         .smooth;
     }
@@ -64,42 +65,49 @@
         .bold;
     }
 
-    tr {
-        border-bottom: 1px solid #5e7589;
-    }
-
-    // tr th:first-child,tr td:first-child {
-    //     border-radius: 10px 0 0 10px;
-    // }
-    // tr th:last-child,
-    // tr td:last-child {
-    //     border-radius: 0 0 20px 0;
-    // }
     thead {
         th {
+            .h(50px);
             color: #1e374d;
-            background-color: #ffedc6;
+            background-color: #f8e7c5;
+            font-weight: 700;
+            &:first-child {
+                border-radius: 8px 0 0 0;
+            }
             &:last-child {
-                border-radius: 0 0 0 0;
+                border-radius: 0 8px 0 0;
             }
         }
     }
 
+    tbody {
+        td {
+            border-bottom: 1px solid #21374b;
+        }
+        tr:last-child td {
+            border-bottom: 0;
+        }
+    }
+
+    // 人气列与参与投票列各自独立成列，内容居中，间距由列宽形成
+    th:nth-last-child(2),
+    td:nth-last-child(2) {
+        width: 15%;
+    }
+    th:last-child,
+    td:last-child {
+        width: 17%;
+    }
+
     tbody tr:hover td {
-        background-color: #415e75;
-        // color: #FFEDC6;
-        // .u-name{
-        //     color:#ff0 !important;
-        // }
+        background-color: #3a5a75;
     }
 
     .u-ranking {
         .db;
-        .size(55px,57px);
-        background: url("@{img}vote/vote_rank_bg.png") no-repeat 0 0;
-        background-size: 100% auto;
-        .fz(20px,70px);
+        .fz(18px, 56px);
         color: #fff;
+        .bold;
         .auto(x);
         .x;
     }
@@ -115,27 +123,25 @@
         color: #ffedc6;
     }
 
+    .u-server {
+        color: #ffedc6;
+    }
+
     .u-vote {
-        .size(108px,45px);
+        .size(96px,40px);
         .db;
         position: relative;
         overflow: hidden;
-        background: linear-gradient(180deg, #fff7d9 0%, #f6d18d 52%, #d19a48 100%);
-        border: 1px solid #f6deb0;
-        border-radius: 14px 14px 18px 18px;
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.92), inset 0 -2px 0 rgba(121, 63, 14, 0.18),
-            0 10px 18px rgba(20, 30, 45, 0.18);
-        transform: translateY(0);
-        transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease, border-color 0.2s ease;
+        // 设计稿：浅米灰胶囊按钮
+        background: linear-gradient(180deg, #f2ecdf 0%, #ded4c3 100%);
+        border: 1px solid #e0d7c8;
+        border-radius: 20px;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        transition: filter 0.2s ease, transform 0.2s ease;
         &:hover {
-            filter: brightness(1.03) saturate(115%);
-            border-color: #ffe7b5;
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.96), inset 0 -2px 0 rgba(121, 63, 14, 0.22),
-                0 14px 24px rgba(20, 30, 45, 0.22);
-            transform: translateY(-2px);
+            filter: brightness(1.03);
         }
         &:active {
-            box-shadow: inset 0 2px 6px rgba(121, 63, 14, 0.18), 0 6px 12px rgba(20, 30, 45, 0.16);
             transform: translateY(1px);
         }
 
@@ -151,56 +157,44 @@
             .flex;
             align-items: center;
             justify-content: center;
-            .fz(18px, 45px);
+            .fz(16px, 40px);
             font-weight: 700;
             letter-spacing: 2px;
-            color: #6f2a16;
-            text-shadow: 0 1px 0 rgba(255, 255, 255, 0.45);
-        }
-
-        &::after {
-            content: "";
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 0;
-            height: 14px;
-            border-radius: 999px;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0));
-            pointer-events: none;
+            color: #5c5344;
         }
 
         &.disabled {
-            background: linear-gradient(180deg, #ebe7dd 0%, #d9d1c4 100%);
-            border-color: #dad3c7;
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72);
-            filter: none;
+            background: linear-gradient(180deg, #e7e2d8 0%, #d2cabd 100%);
+            border-color: #d5cdc0;
             cursor: default;
-            transform: none;
 
             &::before {
-                color: #8a8377;
-                text-shadow: none;
+                color: #9a9285;
             }
         }
     }
 
     .u-vote-wapper {
         > div {
-            .size(108px, 45px);
+            .size(96px, 40px);
             .flex;
             align-items: center;
             justify-content: center;
             .auto(x);
-            border-radius: 14px 14px 18px 18px;
+            border-radius: 20px;
             background: linear-gradient(180deg, #efe7d8 0%, #d3c6b1 100%);
             border: 1px solid #ddd0bc;
             box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72);
-            .fz(16px, 45px);
+            .fz(16px, 40px);
             font-weight: 700;
             letter-spacing: 2px;
             color: #7f7669;
         }
+    }
+
+    // 表头服务器下拉（设计稿为较宽的白色选择框）
+    .u-select {
+        width: 150px;
     }
 
     .u-search-team {
