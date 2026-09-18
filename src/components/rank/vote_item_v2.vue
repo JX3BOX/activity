@@ -11,6 +11,7 @@
             </td>
             <td>
                 <a class="u-name" :href="teamLink(item.team_id)" target="_blank">{{ item.name }}</a>
+                <span class="u-slogan u-slogan--app">{{ item.slogan }}</span>
             </td>
             <td>
                 <span class="u-server">{{ item.server }}</span>
@@ -35,7 +36,7 @@
                     @click="vote(item)"
                     :disabled="item.clicked || !event_status || !canVote"
                 ></button>
-                <div v-else>已投票</div>
+                <div v-else>已支持</div>
             </td>
         </tr>
         <bindWxMp v-model="showBindWxMp" @update="onBindWxMpUpdate"></bindWxMp>

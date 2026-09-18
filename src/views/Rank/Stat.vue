@@ -3,8 +3,6 @@
     <div
         class="m-rank-stat"
         v-loading="loading"
-        element-loading-text="加载中..."
-        element-loading-spinner="el-icon-loading"
         element-loading-background="rgba(0, 0, 0, 0.3)"
     >
         <!-- Boss导航 -->
@@ -28,7 +26,9 @@
                     :title="item.title"
                     :seriesName="item.seriesName"
                     :height="item.height"
+                    :app-mode="isAppMode"
                     :class="{
+                        'chart-bar': true,
                         'chart-left': item.position === 'left',
                         'chart-right': item.position === 'right',
                     }"
@@ -41,7 +41,9 @@
                     :title="item.title"
                     :isCustomColor="item.isCustomColor === undefined ? true : item.isCustomColor"
                     :isSmall="item.position !== undefined"
+                    :app-mode="isAppMode"
                     :class="{
+                        'chart-pie': true,
                         'chart-left': item.position === 'left',
                         'chart-right': item.position === 'right',
                     }"
@@ -61,6 +63,7 @@ import { __Root } from "@/utils/config";
 import BarChart from "@/components/rank/barChart.vue";
 import PieChart from "@/components/rank/pieChart.vue";
 import rank_boss from "@/components/rank/rank_boss.vue";
+import { isApp } from "@/utils/env";
 
 export default {
     name: "Stat",
@@ -112,6 +115,9 @@ export default {
                 dict[item.achievement_id] = item.name;
             });
             return dict;
+        },
+        isAppMode() {
+            return isApp() || document.documentElement.classList.contains("v-app");
         },
     },
     mounted() {

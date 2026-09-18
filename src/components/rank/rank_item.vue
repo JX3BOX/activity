@@ -1,5 +1,5 @@
 <template>
-    <div class="m-rank-top100-item" :class="showIndex ? 'is-No' + (i + 1) : ''">
+    <div class="m-rank-top100-item" :class="showIndex ? 'is-No' + (i + 1) : ''" @click="openDetail">
         <!-- 排名 -->
         <div v-if="showIndex" class="u-ranking" :class="'is-Top' + (i + 1)" @click="copy(item.team_name)">
             <i class="u-pic">
@@ -68,9 +68,11 @@
 <script>
 import { __imgPath, __cdn } from "@/utils/config";
 import { getThumbnail, getLink } from "@jx3box/jx3box-common/js/utils";
+import { isApp } from "@/utils/env";
 import { showTime } from "@jx3box/jx3box-common/js/moment";
 export default {
     name: "rank-item",
+    emits: ["detail"],
     props: {
         i: {
             type: [String, Number],
@@ -152,7 +154,19 @@ export default {
             return (name && name.slice(0, 12)) || "未知";
         },
         copy(text) {
+            if (isApp()) return;
             navigator.clipboard.writeText(text);
+        },
+        openDetail(event) {
+            // app 模式下点击整行任意位置都跳转到团队页，不再走默认链接/复制
+            if (isApp()) {
+                event.preventDefault();
+                event.stopPropagation();
+                this.$emit("detail", this.item);
+                return;
+            }
+            if (event.target.closest("a")) return;
+            this.$emit("detail", this.item);
         },
     },
 };

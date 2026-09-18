@@ -5,6 +5,27 @@
             <img class="u-boss" :src="boss_img_url" v-if="id" />
             <img class="u-logo" :src="LOGO" />
             <img class="u-version" :src="version_img_url" v-if="id" />
+            <div v-if="isAppMode" class="u-version-switch">
+                <AppSelectDrawer
+                    title="切换版本"
+                    :model-value="String(id)"
+                    :options="versionOptions"
+                    @select="changeVersion"
+                >
+                    <template #default="{ open }">
+                        <div
+                            class="u-version-select"
+                            role="button"
+                            tabindex="0"
+                            @keydown.enter="open"
+                            @keydown.space.prevent="open"
+                        >
+                            <span class="u-version-name">{{ currentVersionName }}</span>
+                            <img class="u-version-change-icon" :src="changeIcon" alt="切换版本" />
+                        </div>
+                    </template>
+                </AppSelectDrawer>
+            </div>
         </div>
 
         <!-- 举办单位 -->
@@ -53,7 +74,7 @@
         </div>
 
         <!-- 启用的模块 -->
-        <race-tab :data="data" />
+        <race-tab v-if="$route.name !== 'team-detail'" :data="data" />
 
         <!-- 公众号二维码 -->
         <!-- <img  :src="qrcode_img_url" /> -->
@@ -68,12 +89,18 @@ import PICS from "@/assets/js/pics.js";
 import tabs from "./race_tab.vue";
 import { __imgPath, __ossMirror } from "@/utils/config";
 import QrcodeVue from "qrcode.vue";
+import AppSelectDrawer from "@/components/common/AppSelectDrawer.vue";
+import { getEvents } from "@/service/rank/event.js";
+import { isApp } from "@/utils/env";
+
 export default {
     props: ["data"],
     data: function () {
         return {
             LOGO: PICS.LOGO,
             qrcode_img_url: __imgPath + "image/rank/common/boxqrcode.png",
+            changeIcon: "https://cdn.jx3box.com/design/rank/common/change.svg",
+            versions: [],
         };
     },
     computed: {
@@ -98,16 +125,53 @@ export default {
         value() {
             return "https://www.jx3box.com/rank/race/#/" + this.id + "/rank";
         },
+        isAppMode() {
+            return isApp();
+        },
+        versionOptions() {
+            const eventMap = new Map();
+            [...this.versions, this.data].forEach((item) => {
+                const value = this.eventId(item);
+                if (value) eventMap.set(String(value), this.eventName(item));
+            });
+            return Array.from(eventMap, ([value, label]) => ({ value, label }));
+        },
+        currentVersionName() {
+            return this.eventName(this.data) || this.versionOptions.find((item) => item.value === String(this.id))?.label || "选择版本";
+        },
     },
     methods: {
         logos: function (val) {
             return PICS.logos(val);
         },
+        eventId(item) {
+            return item && (item.ID || item.id);
+        },
+        eventName(item) {
+            return item && (item.name || item.title || item.version || item.slug);
+        },
+        loadVersions() {
+            getEvents({ pageIndex: 1, pageSize: 100 }).then((res) => {
+                this.versions = res.data.data.list || [];
+            });
+        },
+        changeVersion(id) {
+            if (String(id) === String(this.id)) return;
+            this.$router.push({
+                name: this.$route.name,
+                params: { ...this.$route.params, id },
+                // Boss、服务器等筛选参数不跨版本继承。
+                query: {},
+            });
+        },
     },
-    mounted: function () {},
+    mounted: function () {
+        if (this.isAppMode) this.loadVersions();
+    },
     components: {
         "race-tab": tabs,
         QrcodeVue,
+        AppSelectDrawer,
     },
 };
 </script>

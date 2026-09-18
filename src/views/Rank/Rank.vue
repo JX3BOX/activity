@@ -3,8 +3,6 @@
     <div
         class="m-rank-rank"
         v-loading="loading"
-        element-loading-text="加载中..."
-        element-loading-spinner="el-icon-loading"
         element-loading-background="rgba(0, 0, 0, 0.3)"
     >
         <div class="m-rank-filter">
@@ -83,6 +81,7 @@
                     :item="item"
                     :newbie="newbie"
                     :isLastBoss="isLastBoss"
+                    @detail="openTeamDetail"
                 ></rank-item>
             </div>
 
@@ -250,6 +249,14 @@ export default {
                     ...this.$route.query,
                     server: val,
                 },
+            });
+        },
+        openTeamDetail(item) {
+            if (!item?.team_id) return;
+            this.$router.push({
+                name: "team-detail",
+                params: { id: this.id, teamId: item.team_id },
+                query: { aid: this.achieve_id, source: "rank" },
             });
         },
         loadData: async function () {

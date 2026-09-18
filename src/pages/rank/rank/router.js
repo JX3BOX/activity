@@ -14,6 +14,7 @@ const Join = () => import("@/views/Rank/Join.vue");
 const Index = () => import("@/views/Rank/Index.vue");
 const SurpriseList = () => import("@/views/Rank/SurpriseList.vue");
 const SurpriseSingle = () => import("@/views/Rank/SurpriseSingle.vue");
+const TeamDetail = () => import("@/views/Rank/TeamDetail.vue");
 
 const routes = [
     // 当前活动进程，开赛后修改为Rank
@@ -38,6 +39,7 @@ const routes = [
             { name: "stat", path: "/:id/stat", component: Stat },
             { name: "superstar", path: "/:id/superstar", component: Superstar },
             { name: "awards", path: "/:id/awards", component: Awards },
+            { name: "team-detail", path: "/:id/team/:teamId", component: TeamDetail },
         ],
     },
 ];

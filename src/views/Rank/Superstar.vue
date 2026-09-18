@@ -2,9 +2,8 @@
     <!-- 天团榜 -->
     <div
         class="m-race-superstar"
+        :class="{ 'm-rank-rank': isAppMode }"
         v-loading="loading"
-        element-loading-text="加载中..."
-        element-loading-spinner="el-icon-loading"
         element-loading-background="rgba(0, 0, 0, 0.3)"
     >
         <!-- <div class="m-rank-vote-title">
@@ -15,7 +14,7 @@
             <div class="m-rank-top100">
                 <!-- A.列表不为空 -->
                 <div class="m-rank-top100-list" v-if="data && data.length">
-                    <div class="m-rank-top100-item" v-for="(item, i) in data" :key="i" :class="'is-No' + (i + 1)">
+                    <div class="m-rank-top100-item" v-for="(item, i) in data" :key="i" :class="'is-No' + (i + 1)" @click="openTeamDetail(item, $event)">
                         <!-- 排名 -->
                         <div class="u-ranking" :class="'is-Top' + (i + 1)">
                             <i class="u-pic">
@@ -112,6 +111,7 @@ import { getTop100 } from "@/service/rank/superstar.js";
 import { getThumbnail, getLink } from "@jx3box/jx3box-common/js/utils";
 import { default_avatar } from "@/utils/config";
 import { showTime } from "@jx3box/jx3box-common/js/moment";
+import { isApp } from "@/utils/env";
 export default {
     name: "Superstar",
     props: [],
@@ -151,6 +151,9 @@ export default {
         },
         aid: function () {
             return this.$store.state.race.superstar;
+        },
+        isAppMode() {
+            return isApp() || document.documentElement.classList.contains("v-app");
         },
     },
     watch: {
@@ -209,6 +212,14 @@ export default {
         },
         showLeaderName: function (name) {
             return (name && name.slice(0, 12)) || "未知";
+        },
+        openTeamDetail(item, event) {
+            if (event.target.closest("a") || !item?.team_id) return;
+            this.$router.push({
+                name: "team-detail",
+                params: { id: this.id, teamId: item.team_id },
+                query: { aid: this.aid, source: "superstar" },
+            });
         },
     },
 };

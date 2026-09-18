@@ -1,5 +1,5 @@
 <template>
-    <div class="c-chart" :style="{ '--height': height }">
+    <div class="c-chart" :class="{ 'is-app-chart': appMode }" :style="{ '--height': chartHeight }">
         <v-chart :option="barOption" theme="jx3box-dark" />
         <slot></slot>
     </div>
@@ -56,6 +56,10 @@ export default {
             type: String,
             default: "团队数量",
         },
+        appMode: {
+            type: Boolean,
+            default: false,
+        },
     },
     watch: {
         data(newVal, oldVal) {
@@ -77,6 +81,7 @@ export default {
                 title: {
                     show: true,
                     text: `${this.title}统计图`,
+                    textStyle: { fontSize: this.appMode ? 14 : 18 },
                 },
                 tooltip: {
                     trigger: "axis",
@@ -86,8 +91,10 @@ export default {
                 },
                 grid: {
                     left: "3%",
-                    right: "4%",
-                    bottom: "3%",
+                    // App 保持完整绘图区，不能为数值标签预留过大的右侧空白。
+                    right: this.appMode ? "0%" : "4%",
+                    bottom: this.appMode ? "6%" : "3%",
+                    top: this.appMode ? "14%" : undefined,
                     containLabel: true,
                 },
                 xAxis: {
@@ -95,15 +102,32 @@ export default {
                     boundaryGap: [0, 0.01],
                     position: "top",
                     minInterval: 1,
+                    splitNumber: this.appMode ? 4 : undefined,
+                    axisLabel: { fontSize: this.appMode ? 10 : 12 },
                 },
                 yAxis: {
                     type: "category",
+                    axisLabel: { fontSize: this.appMode ? 10 : 12 },
                 },
                 series: [
                     {
                         name: this.seriesName,
                         type: "bar",
                         data: this.data,
+                        barMaxWidth: this.appMode ? 22 : undefined,
+                        barCategoryGap: this.appMode ? "20%" : undefined,
+                        label: this.appMode
+                            ? {
+                                  show: true,
+                                  position: "insideRight",
+                                  color: "#fff",
+                                  fontSize: 11,
+                                  formatter: (params) => {
+                                      const value = Array.isArray(params.value) ? params.value[0] : params.value;
+                                      return Number(value).toLocaleString();
+                                  },
+                              }
+                            : undefined,
                         itemStyle: {
                             color: this.isCustomColor
                                 ? (param) => {
@@ -118,6 +142,11 @@ export default {
         };
     },
     computed: {
+        chartHeight() {
+            if (!this.appMode) return this.height;
+            // 每条数据至少保留 20px 的纵向空间，保证柱体和内部数值清晰可读。
+            return `${Math.max(300, (this.data?.length || 0) * 20 + 90)}px`;
+        },
         isName() {
             return false;
         },

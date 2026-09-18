@@ -29,28 +29,25 @@
             <div class="m-awards-th">获奖人</div>
             <div class="m-awards-th">备注</div>
         </div>
-        <div class="m-awards-list" v-for="(item, index) in list" :key="index">
+        <div class="m-awards-list" v-for="(item, index) in validList" :key="index">
             <div class="m-awards-td">
                 <div class="u-number">{{ index + 1 }}</div>
             </div>
-            <template v-if="item.name">
-                <div class="m-awards-td">
-                    <div class="u-name">{{ item.name || "" }}</div>
-                </div>
-                <div class="m-awards-td">
-                    <div class="m-break">{{ item.gift || "" }}</div>
-                </div>
-                <div class="m-awards-td">
-                    <div class="m-break" v-katex="options">{{ item.target }}</div>
-                </div>
-                <div class="m-awards-td">
-                    <div class="u-name">{{ item.prizewinner || "待定" }}</div>
-                </div>
-                <div class="m-awards-td">
-                    <div v-if="item.name" class="u-btn" :class="!item.remark && 'is-disabled'"></div>
-                </div>
-            </template>
-            <div v-else class="m-awards-td u-no-data">虚位以待</div>
+            <div class="m-awards-td">
+                <div class="u-name">{{ item.name || "" }}</div>
+            </div>
+            <div class="m-awards-td">
+                <div class="m-break">{{ item.gift || "" }}</div>
+            </div>
+            <div class="m-awards-td">
+                <div class="m-break" v-katex="options">{{ item.target }}</div>
+            </div>
+            <div class="m-awards-td" :class="{ 'is-pending': !item.prizewinner }">
+                <div class="u-name">{{ item.prizewinner || "待定" }}</div>
+            </div>
+            <div class="m-awards-td">
+                <div v-if="item.name" class="u-btn" :class="!item.remark && 'is-disabled'"></div>
+            </div>
         </div>
     </div>
 </template>
@@ -58,6 +55,7 @@
 <script>
 import { getGifts } from "@/service/rank/awards";
 import {getCdnLink} from "@/utils";
+import { isApp } from "@/utils/env";
 export default {
     name: "Awards",
     components: {},
@@ -73,6 +71,13 @@ export default {
             },
             list: [],
         };
+    },
+    computed: {
+        // 仅 app 端过滤无数据项（虚位以待）；PC 端保留全部 100 行占位
+        validList() {
+            if (!isApp()) return this.list;
+            return this.list.filter((item) => item && item.name);
+        },
     },
     methods: {
         getList() {

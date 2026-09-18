@@ -1,5 +1,5 @@
 <template>
-    <div class="c-chart" :style="{ '--height': isSmall ? '600px' : '700px' }">
+    <div class="c-chart" :class="{ 'is-app-chart': appMode }" :style="{ '--height': chartHeight }">
         <v-chart :option="pieOption" theme="jx3box-dark" ref="chart" />
         <slot></slot>
     </div>
@@ -34,6 +34,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        appMode: {
+            type: Boolean,
+            default: false,
+        },
     },
     watch: {
         data(newVal, oldVal) {
@@ -55,31 +59,54 @@ export default {
                 title: {
                     text: `${this.title}统计图`,
                     left: "center",
+                    top: this.appMode ? 14 : "auto",
+                    textStyle: { fontSize: this.appMode ? 14 : 18 },
                 },
                 tooltip: {
                     trigger: "item",
                     formatter: "{a} <br/>{b} : {c} ({d}%)",
                 },
                 legend: {
-                    type: "plain",
+                    type: this.appMode && this.data?.length > 8 ? "scroll" : "plain",
                     orient: "horizontal",
                     left: "center",
                     top: "bottom",
+                    bottom: this.appMode ? 10 : "auto",
                     data: this.data?.map((item) => item["name"]),
                     icon: "circle",
+                    itemGap: this.appMode ? 8 : 10,
+                    textStyle: { fontSize: this.appMode ? 10 : 12 },
                 },
                 series: [
                     {
                         name: this.title,
                         type: "pie",
                         data: this.data,
-                        radius: this.isSmall ? "67%" : "75%",
-                        label: this.isSmall
+                        radius: this.appMode ? (this.isSmall ? "56%" : "62%") : this.isSmall ? "67%" : "75%",
+                        center: this.appMode ? ["50%", "50%"] : undefined,
+                        label: this.appMode
+                            ? {
+                                  // 保留扇区文字，以较小字号并由 ECharts 自动避让重叠。
+                                  show: true,
+                                  fontSize: 9,
+                                  formatter: "{b}\n{d}%",
+                              }
+                            : this.isSmall
                             ? {
                                   fontSize: 12,
                                   formatter: "{b}\n{d}%",
                               }
                             : {},
+                        labelLine: this.appMode
+                            ? {
+                                  show: true,
+                              }
+                            : undefined,
+                        labelLayout: this.appMode
+                            ? {
+                                  hideOverlap: true,
+                              }
+                            : undefined,
                         emphasis: {
                             itemStyle: {
                                 shadowBlur: 10,
@@ -100,6 +127,11 @@ export default {
         };
     },
     computed: {
+        chartHeight() {
+            if (!this.appMode) return this.isSmall ? "600px" : "700px";
+            // 给标题与底部图例预留固定区域，避免数据标签贴边。
+            return this.isSmall ? "270px" : "320px";
+        },
         isName() {
             return false;
         },
