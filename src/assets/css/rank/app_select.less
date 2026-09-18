@@ -1,0 +1,33 @@
+// App 模式下的通用单项选择触发器：心法、首领、服务器共用。
+.rank-app-select(@gap: 8px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: @gap;
+    width: 100%;
+    height: 34px;
+    padding: 0 12px;
+    color: #ffedc6;
+    background-color: #2e3740;
+    border: 1px solid #ffedc6;
+    border-radius: 999px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.rank-app-select-icon() {
+    flex: none;
+    .size(20px);
+    object-fit: contain;
+}
+
+.rank-app-select-name() {
+    min-width: 0;
+    overflow: hidden;
+    color: #ffedc6;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 34px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

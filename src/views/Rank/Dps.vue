@@ -7,34 +7,69 @@
         element-loading-spinner="el-icon-loading"
         element-loading-background="rgba(0, 0, 0, 0.3)"
     >
-        <!-- <div class="m-rank-vote-title">
-            <img :src="dps_title_img" />
-        </div> -->
-        <!-- TODO: -->
-        <!-- <div class="m-rank-vote-header"></div> -->
-        <!-- Boss导航 -->
-        <rank-boss :data="bossList" :aid="aid" @update="changeBoss" />
-        <!-- 心法导航 -->
-        <div class="m-rank-dps-xf">
-            <ul>
-                <li
-                    class="u-mount"
-                    :class="{ on: xfid == mount }"
-                    v-for="(label, xfid) in xfmap"
-                    :key="'xf-' + xfid"
-                    @click="changeMount(xfid)"
+        <div class="m-rank-filter">
+            <!-- App 端将服务器筛选与心法、Boss 统一放在顶部 -->
+            <div v-if="isAppMode" class="m-rank-server m-rank-server--app">
+                <AppSelectDrawer
+                    title="选择服务器"
+                    :model-value="server"
+                    :options="serverOptions"
+                    @select="changeServer"
                 >
-                    <img :src="showMountIcon(xfid)" :title="label" />
-                </li>
-            </ul>
+                    <template #default="{ open }">
+                        <div
+                            class="u-server-select"
+                            role="button"
+                            tabindex="0"
+                            @keydown.enter="open"
+                            @keydown.space.prevent="open"
+                        >
+                            <i class="u-icon" aria-hidden="true"></i>
+                            <span class="u-server-select-name">{{ server }}</span>
+                        </div>
+                    </template>
+                </AppSelectDrawer>
+            </div>
+            <!-- Boss导航 -->
+            <rank-boss :data="bossList" :aid="aid" @update="changeBoss" />
+            <!-- 心法导航 -->
+            <div v-if="isAppMode" class="m-rank-dps-xf m-rank-dps-xf--app">
+                <AppSelectDrawer title="选择心法" :model-value="mount" :options="xfOptions" @select="changeMount">
+                    <template #default="{ open }">
+                        <div
+                            class="u-mount-select"
+                            role="button"
+                            tabindex="0"
+                            @keydown.enter="open"
+                            @keydown.space.prevent="open"
+                        >
+                            <img class="u-icon" :src="showMountIcon(mount)" :alt="showMountLabel(mount)" />
+                            <span class="u-value">{{ showMountLabel(mount) }}</span>
+                        </div>
+                    </template>
+                </AppSelectDrawer>
+            </div>
+            <div v-else class="m-rank-dps-xf">
+                <ul>
+                    <li
+                        class="u-mount"
+                        :class="{ on: xfid == mount }"
+                        v-for="(label, xfid) in xfmap"
+                        :key="'xf-' + xfid"
+                        @click="changeMount(xfid)"
+                    >
+                        <img :src="showMountIcon(xfid)" :title="label" />
+                    </li>
+                </ul>
+            </div>
         </div>
         <!-- 数据列表 -->
         <div class="m-rank-dps-list" v-if="list.length">
             <el-row class="u-item u-head" :gutter="20">
-                <el-col :span="1"><div class="u-ranking">排名</div></el-col>
-                <el-col :span="2">
+                <el-col class="u-col-ranking" :span="1"><div class="u-ranking">排名</div></el-col>
+                <el-col class="u-col-mount" :span="2">
                     <div class="u-mount">
-                        <span v-if="~~mount">心法</span>
+                        <span v-if="isAppMode || ~~mount">心法</span>
                         <el-dropdown trigger="click" v-else>
                             <span class="el-dropdown-link">
                                 {{ ~~filterMount ? xfmap[filterMount] : "全部心法"
@@ -59,9 +94,10 @@
                         </el-dropdown>
                     </div>
                 </el-col>
-                <el-col :span="2">
+                <el-col class="u-col-server" :span="2">
                     <div class="u-server">
-                        <el-dropdown trigger="click">
+                        <span v-if="isAppMode">服务器</span>
+                        <el-dropdown v-else trigger="click">
                             <span class="el-dropdown-link">
                                 {{ server }}<i class="el-icon-arrow-down el-icon--right"></i>
                             </span>
@@ -84,11 +120,11 @@
                         </el-dropdown>
                     </div>
                 </el-col>
-                <el-col :span="3"><div class="u-team">来自团队</div></el-col>
-                <el-col :span="4"><div class="u-role">角色名</div></el-col>
-                <el-col :span="4"><div class="u-dps">DPS/HPS</div></el-col>
-                <el-col :span="2"><div class="u-achievement">成就点数</div></el-col>
-                <el-col :span="6"><div class="u-more">击杀详情</div></el-col>
+                <el-col class="u-col-team" :span="3"><div class="u-team">来自团队</div></el-col>
+                <el-col class="u-col-role" :span="4"><div class="u-role">角色名</div></el-col>
+                <el-col class="u-col-dps" :span="4"><div class="u-dps">DPS/HPS</div></el-col>
+                <el-col class="u-col-achievement" :span="2"><div class="u-achievement">成就点数</div></el-col>
+                <el-col class="u-col-more" :span="6"><div class="u-more">击杀详情</div></el-col>
             </el-row>
             <template v-for="(item, i) in list" :key="i">
                 <el-row
@@ -99,25 +135,25 @@
                         (filterMount === '0' ? true : item.mount == filterMount)
                     "
                 >
-                    <el-col :span="1"
+                    <el-col class="u-col-ranking" :span="1"
                         ><div class="u-ranking">{{ i + 1 }}</div></el-col
                     >
-                    <el-col :span="2"
+                    <el-col class="u-col-mount" :span="2"
                         ><div class="u-mount" :style="{ color: showMountColor(item.mount) }">
                             <img :src="showMountIcon(item.mount)" />{{ showMountLabel(item.mount) }}
                         </div></el-col
                     >
-                    <el-col :span="2"
+                    <el-col class="u-col-server" :span="2"
                         ><div class="u-server">{{ item.server }}</div></el-col
                     >
-                    <el-col :span="3">
+                    <el-col class="u-col-team" :span="3">
                         <div class="u-team">
                             <a :href="showTeamLink(item.team_id)" target="_blank" v-if="item.team_id"
                                 ><img :src="showTeamLogo(item)" /><span>{{ showTeamName(item) }}</span></a
                             ><span v-else>-</span>
                         </div></el-col
                     >
-                    <el-col :span="4"
+                    <el-col class="u-col-role" :span="4"
                         ><div class="u-role">
                             <a :href="authorLink(item.uid)" target="_blank" v-if="item.uid"
                                 ><img :src="showUserAvatar(item)" />{{ item.role }}</a
@@ -125,18 +161,25 @@
                             <span v-else>{{ item.role }}</span>
                         </div></el-col
                     >
-                    <el-col :span="4" :class="i > 10 ? `u-dps-10` : `u-dps-${i}`"
+                    <el-col
+                        :span="4"
+                        :class="['u-col-dps', i > 10 ? 'u-dps-10' : `u-dps-${i}`]"
                         ><div
                             class="u-dps u-bar"
-                            :style="{ background: showMountColor(item.mount), width: getBarWidth(item._dhps) }"
+                            :style="{
+                                background: showMountColor(item.mount),
+                                width: getBarWidth(item._dhps),
+                                '--bar-width': getBarWidth(item._dhps),
+                                '--mount-color': showMountColor(item.mount),
+                            }"
                         >
                             {{ showDHPS(item) }}
                         </div></el-col
                     >
-                    <el-col :span="2">
+                    <el-col class="u-col-achievement" :span="2">
                         <div class="u-achievement">{{ item.achievement || "未记录" }}</div>
                     </el-col>
-                    <el-col :span="aid !== 'all' || item.battle_exist ? 4 : 6">
+                    <el-col class="u-col-total" :span="aid !== 'all' || item.battle_exist ? 4 : 6">
                         <div class="u-total">
                             <span class="u-damage"
                                 ><span>{{ isTherapy(item.mount) ? "总治疗" : "总伤害" }}</span>
@@ -149,7 +192,11 @@
                             </span>
                         </div>
                     </el-col>
-                    <el-col :span="2" class="u-misc" v-if="aid !== 'all' || item.battle_exist">
+                    <el-col
+                        :span="2"
+                        class="u-col-misc u-misc"
+                        v-if="aid !== 'all' || item.battle_exist"
+                    >
                         <!-- <el-popover with="1260" popper-class="u-dps-rank-pop">
                             <rank-item
                                 class="u-dps-rank-item"
@@ -230,12 +277,15 @@ import { cloneDeep, uniqBy } from "lodash";
 import { getMenu } from "@jx3box/jx3box-common/js/system";
 import rank_item from "@/components/rank/rank_item.vue";
 import rank_boss from "@/components/rank/rank_boss.vue";
+import AppSelectDrawer from "@/components/common/AppSelectDrawer.vue";
+import { isApp } from "@/utils/env";
 
 export default {
     name: "Dps",
     components: {
         "rank-item": rank_item,
         "rank-boss": rank_boss,
+        AppSelectDrawer,
     },
     data: function () {
         return {
@@ -313,6 +363,15 @@ export default {
             delete _xfmap["0"];
             return _xfmap;
         },
+        xfOptions() {
+            return Object.entries(this.xfmap).map(([value, label]) => ({ value, label }));
+        },
+        serverOptions() {
+            return ["全部服务器", ...this.server_std].map((value) => ({ value, label: value }));
+        },
+        isAppMode() {
+            return isApp();
+        },
         max_dps: function () {
             let dps_bucket = this.data.map((item, i) => {
                 return this.isTherapy(item.mount) ? item.hps : item.dps;
@@ -356,6 +415,9 @@ export default {
         changeMount: function (val) {
             this.mount = val;
             this.go({ mount: val });
+        },
+        changeServer(val) {
+            this.server = val;
         },
         go: function (query) {
             let _query = Object.assign({}, this.$route.query, query);

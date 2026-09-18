@@ -1,3 +1,5 @@
+@import "./app_select.less";
+
 .m-rank-content {
     .mt(40px);
 }
@@ -42,6 +44,20 @@
             background-color: #5a7c99;
             color: #ffedc6;
         }
+    }
+}
+
+.v-app .m-rank-dps-xf--app {
+    .u-mount-select {
+        .rank-app-select();
+    }
+
+    .u-icon {
+        .rank-app-select-icon();
+    }
+
+    .u-value {
+        .rank-app-select-name();
     }
 }
 

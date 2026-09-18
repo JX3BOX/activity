@@ -8,7 +8,9 @@
         element-loading-background="rgba(0, 0, 0, 0.3)"
     >
         <!-- Boss导航 -->
-        <rank-boss :data="bossList" :aid="current_boss" @update="changeBoss" />
+        <div class="m-rank-filter">
+            <rank-boss :data="bossList" :aid="current_boss" @update="changeBoss" />
+        </div>
         <img
             :src="null_img_url"
             class="m-rank-null"
@@ -593,7 +595,6 @@ export default {
             };
         },
     },
-    
 };
 </script>
 

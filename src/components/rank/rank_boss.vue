@@ -1,6 +1,26 @@
 <template>
-    <el-row class="m-rank-boss" :gutter="20" type="flex">
-        <el-col :span="span">
+    <div v-if="isAppMode" class="m-rank-boss m-rank-boss--app">
+        <AppSelectDrawer title="选择首领" :model-value="selectedAid" :options="bossOptions" @select="changeBoss">
+            <template #default="{ open }">
+                <div
+                    class="u-boss-select"
+                    role="button"
+                    tabindex="0"
+                    @keydown.enter="open"
+                    @keydown.space.prevent="open"
+                >
+                    <img
+                        class="u-boss-select-icon"
+                        :src="bossIcon(selectedAid === 'all' ? 0 : selectedAid)"
+                        :alt="selectedBossLabel"
+                    />
+                    <span class="u-boss-select-name">{{ selectedBossLabel }}</span>
+                </div>
+            </template>
+        </AppSelectDrawer>
+    </div>
+    <el-row v-else class="m-rank-boss" :gutter="20" type="flex">
+        <el-col v-if="showAll" :span="span">
             <div :class="['u-boss u-boss-is_all', { active: aid == 'all' || aid == '' }]" @click="changeBoss('all')">
                 <span class="u-boss-name">全部</span>
             </div>
@@ -20,7 +40,13 @@
 
 <script>
 import PICS from "@/assets/js/pics.js";
+import AppSelectDrawer from "@/components/common/AppSelectDrawer.vue";
+import { isApp } from "@/utils/env";
+
 export default {
+    components: {
+        AppSelectDrawer,
+    },
     props: {
         aid: {
             type: String,
@@ -30,11 +56,28 @@ export default {
             type: Object,
             default: () => ({}),
         },
+        showAll: {
+            type: Boolean,
+            default: true,
+        },
     },
     emits: ["update"],
     computed: {
         span: function () {
             return ~~(24 / Object.keys(this.data).length + 1);
+        },
+        isAppMode() {
+            return isApp();
+        },
+        selectedAid() {
+            return this.aid || "all";
+        },
+        selectedBossLabel() {
+            return this.selectedAid === "all" ? "全部" : this.data[this.selectedAid] || "全部";
+        },
+        bossOptions() {
+            const options = Object.entries(this.data).map(([value, label]) => ({ value, label }));
+            return this.showAll ? [{ value: "all", label: "全部" }, ...options] : options;
         },
     },
     methods: {
@@ -42,6 +85,13 @@ export default {
             return PICS.bossIcon(val);
         },
         changeBoss: function (val) {
+            // App 抽屉选择“全部”时清除所有页面共用的 aid 查询参数。
+            // 父组件仍会收到 all，用于保留各页面原有的全量数据处理逻辑。
+            if (this.isAppMode && val === "all" && this.$route.query.aid !== undefined) {
+                const query = { ...this.$route.query };
+                delete query.aid;
+                this.$router.replace({ path: this.$route.path, query });
+            }
             this.$emit("update", val);
         },
     },
@@ -49,6 +99,8 @@ export default {
 </script>
 
 <style lang="less">
+@import "~@/assets/css/rank/app_select.less";
+
 .m-rank-boss {
     .u-boss {
         .db;
@@ -95,5 +147,20 @@ export default {
 .el-image__error,
 .el-image__placeholder {
     background-color: #24292d;
+}
+
+.v-app .m-rank-boss--app {
+    .u-boss-select {
+        .rank-app-select();
+    }
+
+    .u-boss-select-icon {
+        .rank-app-select-icon();
+        border-radius: 50%;
+    }
+
+    .u-boss-select-name {
+        .rank-app-select-name();
+    }
 }
 </style>

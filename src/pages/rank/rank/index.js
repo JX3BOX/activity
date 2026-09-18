@@ -16,6 +16,7 @@ import jx3DarkTheme from "@/assets/data/rank/echartsTheme.json";
 import { createApp } from "vue";
 import App from "./Rank.vue";
 import { initAppEnv } from "@/utils/env";
+import AppSelectDrawer from "@/components/common/AppSelectDrawer.vue";
 
 import router from "./router";
 import store from "./store";
@@ -56,6 +57,7 @@ registerTheme("jx3box-dark", jx3DarkTheme);
 initAppEnv();
 
 const app = createApp(App);
+app.component("AppSelectDrawer", AppSelectDrawer);
 
 app.use(router);
 app.use(store);

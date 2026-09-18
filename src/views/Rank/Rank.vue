@@ -7,34 +7,72 @@
         element-loading-spinner="el-icon-loading"
         element-loading-background="rgba(0, 0, 0, 0.3)"
     >
-        <el-row class="m-rank-boss m-rank-filter is-rank-boss" :gutter="20" type="flex">
-            <el-col :span="span" v-for="(label, aid) of bossList" :key="aid">
-                <li class="u-boss" @click="changeBoss(aid)" :class="{ on: aid == achieve_id || label == bossName }">
-                    <img class="u-boss-icon" :src="bossIcon(aid)" :onerror="defaultBossIcon" />
-                    <span class="u-boss-name">{{ label }}</span>
-                    <span class="u-boss-per" :class="getProcessCls(getTotal(aid))">({{ getTotal(aid) }}/100)</span>
-                </li>
-            </el-col>
-        </el-row>
+        <div class="m-rank-filter">
+            <rank-boss
+                v-if="isAppMode"
+                :data="bossList"
+                :aid="selectedBossAid"
+                :show-all="false"
+                @update="changeBoss"
+            />
+            <el-row v-else class="m-rank-boss m-rank-filter is-rank-boss" :gutter="20" type="flex">
+                <el-col :span="span" v-for="(label, aid) of bossList" :key="aid">
+                    <li class="u-boss" @click="changeBoss(aid)" :class="{ on: aid == achieve_id || label == bossName }">
+                        <img class="u-boss-icon" :src="bossIcon(aid)" :onerror="defaultBossIcon" />
+                        <span class="u-boss-name">{{ label }}</span>
+                        <span class="u-boss-per" :class="getProcessCls(getTotal(aid))">({{ getTotal(aid) }}/100)</span>
+                    </li>
+                </el-col>
+            </el-row>
 
-        <div class="m-rank-server m-rank-filter">
-            <ul>
-                <el-checkbox
-                    border
-                    class="u-pre"
-                    size="mini"
-                    :value="isPre"
-                    @change="onPreChange"
+            <div v-if="isAppMode" class="m-rank-server m-rank-filter m-rank-server--app">
+                <button
                     v-if="preBossData && preBossData.length"
-                    >预赛</el-checkbox
+                    type="button"
+                    class="u-pre-toggle"
+                    :class="{ on: isPre }"
+                    @click="onPreChange"
                 >
-                <li :class="{ on: !server }" @click="changeServer('')">全区全服</li>
-                <li v-for="item in servers" :key="item" @click="changeServer(item)" :class="{ on: server == item }">
-                    {{ item }}
-                </li>
-            </ul>
+                    预赛
+                </button>
+                <AppSelectDrawer
+                    title="选择服务器"
+                    :model-value="server"
+                    :options="serverOptions"
+                    @select="changeServer"
+                >
+                    <template #default="{ open }">
+                        <div
+                            class="u-server-select"
+                            role="button"
+                            tabindex="0"
+                            @keydown.enter="open"
+                            @keydown.space.prevent="open"
+                        >
+                            <i class="u-icon" aria-hidden="true"></i>
+                            <span class="u-server-select-name">{{ serverLabel }}</span>
+                        </div>
+                    </template>
+                </AppSelectDrawer>
+            </div>
+            <div v-else class="m-rank-server m-rank-filter">
+                <ul>
+                    <el-checkbox
+                        border
+                        class="u-pre"
+                        size="mini"
+                        :value="isPre"
+                        @change="onPreChange"
+                        v-if="preBossData && preBossData.length"
+                        >预赛</el-checkbox
+                    >
+                    <li :class="{ on: !server }" @click="changeServer('')">全区全服</li>
+                    <li v-for="item in servers" :key="item" @click="changeServer(item)" :class="{ on: server == item }">
+                        {{ item }}
+                    </li>
+                </ul>
+            </div>
         </div>
-
         <div class="m-rank-top100">
             <!-- A.列表不为空 -->
             <div class="m-rank-top100-list" v-if="data && data.length" :class="{ 'not-last': !isLastBoss }">
@@ -63,10 +101,15 @@ import _ from "lodash";
 import { getTop100, getTopTotal, getEventNewbie, getBossAid } from "@/service/rank/race.js";
 import PICS from "@/assets/js/pics.js";
 import rank_item from "@/components/rank/rank_item.vue";
+import rank_boss from "@/components/rank/rank_boss.vue";
+import AppSelectDrawer from "@/components/common/AppSelectDrawer.vue";
+import { isApp } from "@/utils/env";
 
 export default {
     components: {
         "rank-item": rank_item,
+        "rank-boss": rank_boss,
+        AppSelectDrawer,
     },
     props: [],
     data: function () {
@@ -117,6 +160,9 @@ export default {
             }, {});
             return dict[this.achieve_id];
         },
+        selectedBossAid() {
+            return Object.keys(this.bossList).find((aid) => this.bossList[aid] === this.bossName) || this.achieve_id;
+        },
         aids: function () {
             const bossList = this.isPre
                 ? this.preBossData?.reduce((acc, cur) => {
@@ -128,6 +174,15 @@ export default {
         },
         span: function () {
             return ~~(24 / Object.keys(this.bossList).length);
+        },
+        isAppMode() {
+            return isApp();
+        },
+        serverOptions() {
+            return [{ value: "", label: "全区全服" }, ...this.servers.map((value) => ({ value, label: value }))];
+        },
+        serverLabel() {
+            return this.server || "全区全服";
         },
         data: function () {
             // let data = (this.server ? this.local_data : this.origin_data) || [];
@@ -168,6 +223,16 @@ export default {
     methods: {
         changeBoss: function (val) {
             this.server = "";
+
+            // App 首领抽屉的“全部”用于回到默认首领，不应生成 aid=all。
+            if (val === "all") {
+                // aid 已由 rank-boss 清除；这里仅恢复当前页面的默认首领状态。
+                this.achieve_id = this.isPre
+                    ? this.preBossData[0]?.achievement_id
+                    : this.achieves[0]?.achievement_id;
+                return;
+            }
+
             const bossName = this.bossList[val];
             const id = this.isPre ? this.preBossData.find((item) => item.name == bossName).achievement_id : val;
             this.achieve_id = id;
@@ -288,6 +353,11 @@ export default {
                 }
                 if (val.is_pre) {
                     this.isPre = !!~~val.is_pre;
+                }
+                if (!val.aid && this.achieves.length) {
+                    this.achieve_id = this.isPre
+                        ? this.preBossData[0]?.achievement_id
+                        : this.achieves[0]?.achievement_id;
                 }
                 if (val.server) {
                     this.server = val.server;

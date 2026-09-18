@@ -111,6 +111,215 @@
         }
     }
 
+    .m-rank-filter {
+        .flex;
+        width: 100%;
+        align-items: center;
+        box-sizing: border-box;
+        padding: 10px;
+        gap: 10px;
+        .m-rank-server--app,
+        .m-rank-boss--app,
+        .m-rank-dps-xf--app {
+            flex: 1;
+        }
+    }
+    .m-rank-rank,
+    .m-rank-stat {
+        margin: 0;
+    }
+
+    // 天梯榜 App 筛选项按设计稿排列：服务器、心法、首领。
+    .m-rank-dps > .m-rank-filter {
+        .m-rank-server--app,
+        .m-rank-dps-xf--app,
+        .m-rank-boss--app {
+            min-width: 0;
+        }
+
+        .m-rank-server--app {
+            order: 1;
+            padding: 0;
+        }
+
+        .m-rank-dps-xf--app {
+            order: 2;
+        }
+
+        .m-rank-boss--app {
+            order: 3;
+        }
+    }
+
+    .m-rank-dps .m-rank-dps-list {
+        margin-top: 10px;
+        padding: 0 10px;
+
+        .u-item {
+            display: grid;
+            grid-template-columns: 12% 24% 24% 18% 24%;
+            align-items: center;
+            width: 100%;
+            height: 46px;
+            min-width: 0;
+            margin: 0 0 2px !important;
+            padding: 0 8px 0 0;
+            border: 0;
+            border-left: 2px solid #ffedc6;
+            border-radius: 0;
+            box-sizing: border-box;
+            color: #fff;
+            background: linear-gradient(105deg, #2d4c63 0%, #2f7b90 100%);
+
+            > .el-col {
+                width: auto;
+                max-width: none;
+                min-width: 0;
+                padding: 0 4px !important;
+            }
+
+            .u-col-ranking {
+                order: 1;
+            }
+
+            .u-col-mount {
+                order: 2;
+            }
+
+            .u-col-dps {
+                order: 3;
+            }
+
+            .u-col-server {
+                order: 4;
+            }
+
+            .u-col-role {
+                order: 5;
+            }
+
+            .u-col-team,
+            .u-col-achievement,
+            .u-col-total,
+            .u-col-more,
+            .u-col-misc {
+                display: none;
+            }
+
+            .u-ranking {
+                color: #fff;
+                font-size: 14px;
+                line-height: 46px;
+                text-align: center;
+            }
+
+            .u-mount,
+            .u-server,
+            .u-role {
+                display: flex;
+                align-items: center;
+                min-width: 0;
+                overflow: hidden;
+                color: #fff !important;
+                font-size: 13px;
+                line-height: 20px;
+                text-align: left;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            .u-mount img {
+                flex: none;
+                width: 18px;
+                height: 18px;
+                margin-right: 3px;
+            }
+
+            .u-role {
+                display: block;
+
+                a,
+                span {
+                    display: block;
+                    overflow: hidden;
+                    color: #fff;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+
+                img {
+                    display: none;
+                }
+            }
+
+            // 表头为米色底，白字会隐形，恢复深色
+            &.u-head {
+                .u-ranking,
+                .u-mount,
+                .u-server,
+                .u-role,
+                .u-role a,
+                .u-role span {
+                    color: #1e374d !important;
+                }
+            }
+
+            .u-dps.u-bar {
+                position: relative;
+                width: 100% !important;
+                height: 40px;
+                overflow: hidden;
+                color: #ffedc6;
+                background: none !important;
+                border-radius: 0;
+                font-size: 14px;
+                font-weight: 700;
+                line-height: 32px;
+                text-align: left;
+                text-indent: 0;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+
+                &::after {
+                    content: "";
+                    position: absolute;
+                    bottom: 4px;
+                    left: 0;
+                    width: var(--bar-width);
+                    max-width: 100%;
+                    height: 5px;
+                    border-radius: 5px;
+                    background: var(--mount-color, #13cdb9);
+                }
+            }
+        }
+
+        .u-head {
+            height: 46px;
+            margin-bottom: 8px !important;
+            padding-right: 8px;
+            border-left: 0;
+            color: #1e374d;
+            background: #ffedc6;
+
+            * {
+                color: #1e374d !important;
+                font-size: 14px;
+                font-weight: 400;
+            }
+
+            .el-col > * {
+                justify-content: center;
+                line-height: 46px;
+                text-align: center;
+            }
+
+            .u-dps {
+                text-indent: 0;
+            }
+        }
+    }
+    // 内容区
     .m-rank-content {
         min-height: 0;
         margin: 0;
@@ -247,9 +456,10 @@
                 }
             }
         }
+
         // 开荒直播
         .m-rank-video {
-            margin: 10px 0;
+            margin: 0;
             .m-rank-video-title,
             .m-rank-video-live,
             .m-rank-video-pages {
@@ -265,8 +475,8 @@
                 .el-col-8 {
                     width: 50%;
                     flex: 0 0 50%;
-                    max-width: 50%;  
-                    padding:0 5px !important;
+                    max-width: 50%;
+                    padding: 0 5px !important;
                 }
             }
             .m-rank-video-item {
@@ -327,6 +537,256 @@
         margin-left: 16px;
         padding: 40px 16px 20px;
         box-sizing: border-box;
+    }
+
+    // 排行榜
+    .m-rank-rank {
+        .m-rank-top100 {
+            margin-top: 32px;
+            padding: 0 10px;
+        }
+
+        .m-rank-top100-list {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            column-gap: 8px;
+            align-items: end;
+
+            .m-rank-top100-item {
+                box-sizing: border-box;
+            }
+
+            .is-No1,
+            .is-No2,
+            .is-No3 {
+                position: relative;
+                top: auto;
+                right: auto;
+                left: auto;
+                width: auto;
+                min-width: 0;
+                margin: 0;
+                padding: 0 6px;
+                overflow: visible;
+                border: 1px solid #9bcfdd;
+                border-top: 3px solid #ffedc6;
+                border-radius: 0 0 22px 0;
+                background: linear-gradient(180deg, #2d4b62 0%, #2f7b90 100%);
+                box-shadow: none;
+
+                .u-ranking {
+                    position: absolute;
+                    z-index: 1;
+                    top: -29px;
+                    left: 50%;
+                    width: auto;
+                    height: 48px;
+                    transform: translateX(-50%);
+                    background: none;
+
+                    .u-pic {
+                        display: block;
+                        height: 48px;
+                    }
+                    img {
+                        display: block;
+                        width: auto;
+                        height: 48px;
+                    }
+                }
+
+                .u-logo {
+                    position: relative;
+                    top: auto;
+                    left: auto;
+                    display: block;
+                    padding: 0;
+                    margin: 30px auto 10px;
+
+                    .el-image,
+                    img {
+                        width: 58px;
+                        height: 58px;
+                        border-radius: 0;
+                        box-shadow: none;
+                        object-fit: cover;
+                    }
+                }
+
+                .u-title {
+                    display: block;
+                    margin: 0;
+                    text-align: center;
+                }
+
+                .u-teamname {
+                    display: block;
+                    margin: 0;
+                    overflow: hidden;
+                    color: #ffedc6;
+                    font-size: 14px;
+                    line-height: 20px;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+
+                .u-server {
+                    display: block;
+                    overflow: hidden;
+                    color: #fff;
+                    font-size: 12px;
+                    font-weight: normal;
+                    line-height: 18px;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+
+                .u-time {
+                    position: static;
+                    margin-top: 8px;
+                    padding: 0;
+                    text-align: center;
+
+                    .u-time-fight,
+                    .u-time-finish {
+                        display: block;
+                        color: #aac2ce;
+                        font-size: 10px;
+                        line-height: 17px;
+                        text-align: center;
+                        white-space: nowrap;
+                    }
+
+                    .u-time-fight {
+                        b {
+                            color: #ffedc6;
+                            font-size: 12px;
+                        }
+                    }
+                }
+
+                .u-leader,
+                .u-teammates,
+                > .u-youngster {
+                    display: none;
+                }
+            }
+
+            .is-No1 {
+                grid-column: 2;
+                grid-row: 1;
+                min-height: 210px;
+                .u-logo {
+                    margin: 40px auto 10px;
+                }
+            }
+
+            .is-No2 {
+                grid-column: 1;
+                grid-row: 1;
+                min-height: 200px;
+            }
+
+            .is-No3 {
+                grid-column: 3;
+                grid-row: 1;
+                min-height: 200px;
+            }
+
+            .is-No4 {
+                clear: none;
+            }
+
+            .m-rank-top100-item:not(.is-No1):not(.is-No2):not(.is-No3) {
+                grid-column: 1 / -1;
+                display: grid;
+                grid-template-columns: 42px 54px minmax(0, 1fr);
+                grid-template-rows: auto auto;
+                column-gap: 10px;
+                align-items: center;
+                min-height: 74px;
+                margin: 12px 0 0;
+                padding: 10px 12px 10px 0;
+                border-left: 3px solid #ffedc6;
+                border-radius: 0 0 22px 0;
+                background: linear-gradient(105deg, #2d4c63 0%, #2f7b90 100%);
+                box-shadow: none;
+
+                .u-ranking {
+                    position: static;
+                    grid-row: 1 / span 2;
+                    width: auto;
+                    color: #ffedc6;
+                    background: none;
+                    font-size: 25px;
+                    line-height: 1;
+                }
+
+                .u-logo {
+                    position: static;
+                    grid-row: 1 / span 2;
+
+                    .el-image,
+                    img {
+                        width: 44px;
+                        height: 44px;
+                        border-radius: 0;
+                        box-shadow: none;
+                    }
+                }
+
+                .u-title {
+                    display: flex;
+                    min-width: 0;
+                    margin: 0;
+                }
+
+                .u-teamname {
+                    flex: none;
+                    margin-right: 6px;
+                    color: #ffedc6;
+                    font-size: 14px;
+                    line-height: 18px;
+                }
+
+                .u-server {
+                    overflow: hidden;
+                    color: #fff;
+                    font-size: 12px;
+                    font-weight: normal;
+                    line-height: 18px;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+
+                .u-time {
+                    position: static;
+                    display: flex;
+                    gap: 7px;
+                    min-width: 0;
+                    margin: 0;
+
+                    .u-time-fight,
+                    .u-time-finish {
+                        color: #aac2ce;
+                        font-size: 11px;
+                        line-height: 18px;
+                        white-space: nowrap;
+                    }
+
+                    .u-time-fight b {
+                        color: #ffedc6;
+                        font-size: 14px;
+                    }
+                }
+
+                .u-leader,
+                .u-teammates,
+                .u-youngster {
+                    display: none;
+                }
+            }
+        }
     }
 
     .el-table,

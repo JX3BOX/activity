@@ -8,8 +8,9 @@
         element-loading-background="rgba(0, 0, 0, 0.3)"
     >
         <!-- Boss导航 -->
+        <div class="m-rank-filter">
         <rank-boss :data="bossList" :aid="current_boss" @update="changeBoss" />
-
+        </div>
         <div class="m-rank-video-content">
             <template v-if="data && data.length">
                 <el-row class="m-rank-video-list" :gutter="20">
