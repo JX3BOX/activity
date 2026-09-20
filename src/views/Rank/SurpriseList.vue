@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import { isApp } from "@/utils/env";
 import DefaultLayout from "@/layouts/rank/DefaultLayout.vue";
 import { getEvents } from "@/service/rank/surprise.js";
 import { showDate } from "@jx3box/jx3box-common/js/moment.js";
@@ -62,7 +63,8 @@ export default {
                 name: "surprise-single",
                 params: { id },
             });
-            window.open(routeUrl.href, "_blank");
+            if (isApp()) this.$router.push({ name: "surprise-single", params: { id } });
+            else window.open(routeUrl.href, "_blank");
             // this.$router.push({
             //     name: "single",
             //     params: { id },

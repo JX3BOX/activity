@@ -1,8 +1,11 @@
 /**
  * 环境判断工具
- * 供 src/pages/event 下各活动项目复用（判断是否为 App 内嵌环境）
+ * 供活动和百强页面复用，支持入口按需启用响应式 App 布局。
  */
 
+import { ref } from "vue";
+
+const responsiveAppMode = ref(false);
 const ENV_KEY = "__env";
 const APP_VALUE = "app";
 
@@ -24,10 +27,11 @@ function getUrlParams() {
  * 判断当前环境是否为 app
  * 1. url（含 hash 路由里的 query）包含 __env=app
  * 2. 或 localStorage 中 __env === "app"
+ * 3. 或当前入口启用的响应式断点命中
  * @returns {boolean}
  */
 export function isApp() {
-    return getUrlParams().get(ENV_KEY) === APP_VALUE || localStorage.getItem(ENV_KEY) === APP_VALUE;
+    return responsiveAppMode.value || getUrlParams().get(ENV_KEY) === APP_VALUE || localStorage.getItem(ENV_KEY) === APP_VALUE;
 }
 
 /**
@@ -55,6 +59,11 @@ export function syncAppEnv() {
 export function applyAppEnv() {
     if (!isApp()) return;
 
+    applyMobileViewport();
+    document.documentElement.classList.add("v-app");
+}
+
+function applyMobileViewport() {
     const viewport =
         document.querySelector('meta[name="viewport"]') || document.createElement("meta");
     viewport.name = "viewport";
@@ -63,15 +72,27 @@ export function applyAppEnv() {
     if (!viewport.parentNode) {
         document.head.appendChild(viewport);
     }
-
-    document.documentElement.classList.add("v-app");
 }
 
 /**
  * 初始化 App 内嵌环境。
  * 各页面入口应在 createApp 前调用，避免重复维护同步和注入顺序。
+ * appMaxWidth 可选：小于等于该宽度时使用 App 布局，随窗口尺寸更新。
  */
-export function initAppEnv() {
+export function initAppEnv({ appMaxWidth } = {}) {
     syncAppEnv();
+    // 仅由需要响应式 App 布局的入口启用，不把屏幕尺寸写入环境缓存。
+    if (appMaxWidth) {
+        // 先设置真实设备视口，避免移动浏览器的默认桌面视口干扰断点。
+        applyMobileViewport();
+        const media = window.matchMedia(`(max-width: ${appMaxWidth}px)`);
+        const update = () => {
+            responsiveAppMode.value = media.matches;
+            document.documentElement.classList.toggle("v-app", isApp());
+        };
+        update();
+        if (media.addEventListener) media.addEventListener("change", update);
+        else media.addListener(update);
+    }
     applyAppEnv();
 }

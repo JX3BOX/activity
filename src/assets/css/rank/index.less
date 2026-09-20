@@ -1,141 +1,358 @@
-.p-rank-index {
-    padding: 0 20px;
-    position: relative;
+// PC 保留三列赛事封面，App 单列布局单独限定作用域。
+html:not(.v-app) {
+    .m-rank-content > .p-rank-index {
+        padding: 0 20px 48px;
+        position: relative;
 
-    min-height: calc(100vh - 400px);
-}
-
-.m-rank-index__header {
-    min-height: 500px;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    overflow: hidden;
-}
-
-.m-rank-index__content {
-    max-width: 1080px;
-    margin: 0 auto;
-}
-
-.m-rank-index__list {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 24px;
-    padding: 0;
-    margin: 0;
-    list-style: none;
-}
-
-.m-rank-index__item {
-    min-width: 0;
-    display: flex;
-    justify-content: center;
-}
-
-.m-rank-index__link {
-    display: block;
-    width: 100%;
-    max-width: 300px;
-    position: relative;
-    overflow: hidden;
-    background-color: rgba(0, 0, 0, 0.5);
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
-    transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-    box-sizing: border-box;
-    border: 1px solid transparent;
-
-    &:hover {
-        border-color: #0cf;
-        box-shadow: 0 10px 30px rgba(0, 204, 255, 0.18);
-        transform: translateY(-2px);
-    }
-}
-
-.m-rank-index__cover {
-    display: block;
-    width: 100%;
-    aspect-ratio: 5 / 3;
-    object-fit: cover;
-}
-
-.m-rank-index__name {
-    display: none;
-}
-
-.m-rank-index__status {
-    position: absolute;
-    right: 10px;
-    bottom: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-
-.m-rank-index__tag {
-    padding: 0 5px;
-    font-size: 12px;
-    line-height: 20px;
-    background-color: #333;
-
-    &.std {
-        border: 1px solid #f0b400;
-        color: #f0b400;
-    }
-
-    &.origin {
-        border: 1px solid #0eb7ce;
-        color: #0eb7ce;
-    }
-}
-
-.m-rank-index__state {
-    font-style: normal;
-    font-size: 12px;
-    color: #999;
-
-    &.on {
-        color: #0cf;
-    }
-}
-
-@media screen and (max-width: 1024px) {
-    .p-rank-index {
-        padding-left: 16px;
-        padding-right: 16px;
+        min-height: calc(100vh - 400px);
     }
 
     .m-rank-index__header {
-        min-height: 340px;
+        min-height: 500px;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+    .m-rank-index__content {
+        max-width: 1080px;
+        margin: 0 auto;
     }
 
     .m-rank-index__list {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 16px;
-    }
-}
-
-@media screen and (max-width: 640px) {
-    .p-rank-index {
-        padding-left: 12px;
-        padding-right: 12px;
-        padding-bottom: 48px;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 24px;
+        padding: 0;
+        margin: 0;
+        list-style: none;
     }
 
-    .m-rank-index__header {
-        min-height: 220px;
+    .m-rank-index__item {
+        min-width: 0;
+        display: flex;
+        justify-content: center;
     }
 
-    .m-rank-index__list {
-        grid-template-columns: 1fr;
-        gap: 14px;
+    .m-rank-index__link {
+        display: block;
+        width: 100%;
+        max-width: 300px;
+        position: relative;
+        overflow: hidden;
+        background-color: rgba(0, 0, 0, 0.5);
+        border-radius: 8px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.24);
+        transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+        box-sizing: border-box;
+        border: 1px solid rgba(239, 220, 179, 0.2);
+
+        &:hover {
+            border-color: rgba(239, 220, 179, 0.65);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.36);
+            transform: translateY(-2px);
+        }
+
+        &:focus-visible {
+            outline: 2px solid #efdcb3;
+            outline-offset: 4px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            transition: none;
+            &:hover { transform: none; }
+        }
+    }
+
+    .m-rank-index__cover {
+        display: block;
+        width: 100%;
+        aspect-ratio: 5 / 3;
+        object-fit: cover;
+    }
+
+    .m-rank-index__name {
+        display: none;
     }
 
     .m-rank-index__status {
-        right: 8px;
-        bottom: 8px;
-        gap: 6px;
+        position: absolute;
+        right: 10px;
+        bottom: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 4px 8px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 6px;
+        background: rgba(14, 26, 36, 0.88);
+        line-height: 18px;
+    }
+
+    .m-rank-index__tag {
+        padding: 0 5px;
+        font-size: 12px;
+        line-height: 18px;
+        border-radius: 3px;
+        background-color: transparent;
+
+        &.std {
+            border: 1px solid rgba(220, 196, 142, 0.5);
+            color: #dcc48e;
+        }
+
+        &.origin {
+            border: 1px solid rgba(134, 208, 206, 0.5);
+            color: #86d0ce;
+        }
+    }
+
+    .m-rank-index__state {
+        font-style: normal;
+        font-size: 12px;
+        color: #c0ccd5;
+
+        &.on {
+            color: #90d9b2;
+        }
+    }
+
+    @media screen and (max-width: 1024px) {
+        .m-rank-content > .p-rank-index {
+            padding-left: 16px;
+            padding-right: 16px;
+        }
+
+        .m-rank-index__header {
+            min-height: 340px;
+        }
+
+        .m-rank-index__list {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+    }
+
+    @media screen and (max-width: 640px) {
+        .m-rank-content > .p-rank-index {
+            padding-left: 12px;
+            padding-right: 12px;
+            padding-bottom: 48px;
+        }
+
+        .m-rank-index__header {
+            min-height: 220px;
+        }
+
+        .m-rank-index__list {
+            grid-template-columns: 1fr;
+            gap: 14px;
+        }
+
+        .m-rank-index__status {
+            right: 8px;
+            bottom: 8px;
+            gap: 6px;
+        }
+    }
+
+    .m-rank-index__version,
+    .m-rank-index__arrow {
+        display: none;
+    }
+}
+
+.v-app {
+    // 引导页保留 PC 版品牌图，不沿用赛事内页的小型 App Logo。
+    .p-rank-default-layout.p-rank-index {
+        background: #172938 url("@{img}image/rank/common/bg_back.png?12") center top / auto 720px no-repeat;
+
+        .m-rank-header {
+            display: block;
+            padding: 36px 24px 28px;
+        }
+
+        .m-rank-logo {
+            width: 100%;
+            max-width: 440px;
+            height: auto;
+            margin: 0 auto;
+        }
+
+        .m-rank-content {
+            min-height: 0;
+            padding: 0;
+        }
+    }
+
+    .m-rank-content > .p-rank-index {
+        padding: 0 24px calc(56px + env(safe-area-inset-bottom));
+        min-height: calc(100vh - 400px);
+    }
+
+    .m-rank-index__content {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .m-rank-index__list {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 14px;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+
+    .m-rank-index__item {
+        min-width: 0;
+    }
+
+    .m-rank-index__link {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        padding: 12px;
+        overflow: hidden;
+        border: 1px solid rgba(239, 220, 179, 0.2);
+        border-radius: 12px;
+        background: linear-gradient(110deg, #253d4d, #1c303f);
+        color: #f4ead8;
+        text-decoration: none;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+        transition: border-color 0.2s, box-shadow 0.2s;
+
+        &:hover {
+            border-color: rgba(239, 220, 179, 0.65);
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.24);
+        }
+
+        &:focus-visible {
+            outline: 2px solid #efdcb3;
+            outline-offset: 4px;
+        }
+    }
+
+    .m-rank-index__cover {
+        display: block;
+        width: 44%;
+        max-width: 200px;
+        flex-shrink: 0;
+        border-radius: 6px;
+        aspect-ratio: 5 / 3;
+        object-fit: cover;
+    }
+
+    .m-rank-index__details {
+        display: flex;
+        flex: 1;
+        min-width: 0;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+
+    .m-rank-index__version {
+        color: #acbdc9;
+        font-size: var(--rank-index-meta-size, 12px);
+        line-height: 1.5;
+        letter-spacing: 1px;
+    }
+
+    .m-rank-index__arrow {
+        width: 18px;
+        height: 18px;
+        flex-shrink: 0;
+        color: #bca77f;
+    }
+
+    .m-rank-index__name {
+        min-width: 0;
+        font-size: var(--rank-index-name-size, 22px);
+        line-height: 1.5;
+        font-weight: 600;
+    }
+
+    .m-rank-index__status {
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+        gap: 10px;
+        margin-top: 8px;
+        font-size: var(--rank-index-meta-size, 12px);
+    }
+
+    .m-rank-index__tag {
+        padding: 1px 6px;
+        line-height: var(--rank-index-tag-line-height, 20px);
+        border: 1px solid currentColor;
+        border-radius: 4px;
+
+        &.std {
+            color: #dcc48e;
+        }
+
+        &.origin {
+            color: #86d0ce;
+        }
+    }
+
+    .m-rank-index__state {
+        font-style: normal;
+        color: #a9b5bf;
+
+        &.on {
+            color: #90d9b2;
+        }
+    }
+
+    @media screen and (max-width: 640px) {
+        .p-rank-default-layout.p-rank-index {
+            .m-rank-header {
+                padding: 28px 32px 24px;
+            }
+
+            .m-rank-logo {
+                max-width: 340px;
+            }
+        }
+
+        .m-rank-content > .p-rank-index {
+            padding-left: 16px;
+            padding-right: 16px;
+        }
+
+        .m-rank-index__list {
+            gap: 12px;
+        }
+
+        .m-rank-index__link {
+            gap: 12px;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .m-rank-index__name {
+            font-size: var(--rank-index-name-size, 18px);
+        }
+
+        .m-rank-index__status {
+            gap: 8px;
+            margin-top: 4px;
+        }
+
+        .m-rank-index__arrow {
+            display: none;
+        }
+    }
+
+    & {
+        // rem 控制字号上下限，vw 让 320–400px 小屏区间内的标题随视口缩放。
+        --rank-index-name-size: clamp(1rem, calc(0.5rem + 2.5vw), 1.125rem);
+        --rank-index-meta-size: 0.75rem;
+        --rank-index-tag-line-height: 1.25rem;
     }
 }

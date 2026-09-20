@@ -33,7 +33,7 @@
             <span>主办单位：</span>
             <ul>
                 <li>
-                    <a class="logo" href="https://www.jx3box.com" target="_blank">
+                    <a class="logo" href="https://www.jx3box.com" :target="linkTarget">
                         <img class="u-media-jx3box" :src="logos('jx3box')" />
                     </a>
                 </li>
@@ -41,7 +41,7 @@
                     <a
                         class="logo"
                         href="https://www.weibo.com/u/6754472163"
-                        target="_blank"
+                        :target="linkTarget"
                     >
                         <img class="u-media-tuilan" :src="logos('tuilan')" />
                     </a>
@@ -53,7 +53,7 @@
                     <a
                         class="logo"
                         href="https://www.douyu.com/"
-                        target="_blank"
+                        :target="linkTarget"
                     >
                         <img class="u-media-douyu" :src="logos('douyu')" />
                     </a>
@@ -66,7 +66,7 @@
             <span class="u-sponsors-label">活动赞助商：</span>
             <ul class="u-sponsors-list">
                 <li v-for="(sponsor, i) in sponsors" :key="i">
-                    <a class="logo" :href="sponsor.link" target="_blank">
+                    <a class="logo" :href="sponsor.link" :target="linkTarget">
                         <img :src="sponsor.logo" />
                     </a>
                 </li>
@@ -97,13 +97,18 @@ export default {
     props: ["data"],
     data: function () {
         return {
-            LOGO: PICS.LOGO,
             qrcode_img_url: __imgPath + "image/rank/common/boxqrcode.png",
             changeIcon: "https://cdn.jx3box.com/design/rank/common/change.svg",
             versions: [],
         };
     },
     computed: {
+        linkTarget() {
+            return isApp() ? "_self" : "_blank";
+        },
+        LOGO() {
+            return PICS.LOGO;
+        },
         id: function () {
             return this.$store.state.id;
         },
@@ -165,8 +170,13 @@ export default {
             });
         },
     },
-    mounted: function () {
-        if (this.isAppMode) this.loadVersions();
+    watch: {
+        isAppMode: {
+            immediate: true,
+            handler(value) {
+                if (value && !this.versions.length) this.loadVersions();
+            },
+        },
     },
     components: {
         "race-tab": tabs,

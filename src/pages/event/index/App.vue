@@ -112,7 +112,7 @@ export default {
                     .map((item) => ({
                         ...item,
                         month: String(dayjs(item.start_time).month() + 1),
-                        img: this.resolveCover(item.poster),
+                        img: this.resolveCover(item.poster || item.cover),
                     }))
                     .sort((a, b) => {
                         const sortDiff = this.getSortValue(a.sort) - this.getSortValue(b.sort);

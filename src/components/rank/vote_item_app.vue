@@ -1,23 +1,20 @@
 <template>
     <div class="m-rank-vote-app" v-if="list && list.length">
         <div class="m-rank-vote-app-head">
-            <span>排名</span>
-            <span>团队名称</span>
-            <span>服务器</span>
-            <span>人气</span>
-            <span>投票</span>
+            <span>排名 / 团队</span>
+            <span>人气 / 投票</span>
         </div>
         <div class="m-rank-vote-app-item" v-for="(item, i) in list" :key="item.team_id || i" v-show="isMatched(item)">
-            <i class="u-ranking">{{ i + 1 }}</i>
+            <i class="u-ranking" :class="{ 'is-top': i < 3 }">{{ i + 1 }}</i>
             <div class="u-info">
+                <img class="u-logo" :src="teamLogo(item.logo)" :alt="item.name" loading="lazy" />
                 <div class="u-main">
-                    <a class="u-name" :href="teamLink(item.team_id)" target="_blank">{{ item.name }}</a>
+                    <a class="u-name" :href="teamLink(item.team_id)" :target="linkTarget">{{ item.name }}</a>
                     <span class="u-server">{{ item.server }}</span>
-                    <span class="u-count">{{ item.count ?? item.guess ?? 0 }}</span>
                 </div>
-                <span class="u-slogan">{{ item.slogan }}</span>
             </div>
             <div class="u-vote-wapper">
+                <span class="u-count"><b>{{ item.count ?? item.guess ?? 0 }}</b><span>人气</span></span>
                 <button
                     v-if="!hasVoted(item)"
                     class="u-vote"
@@ -27,16 +24,19 @@
                 >
                     支持
                 </button>
-                <div v-else>已支持</div>
+                <div v-else class="u-voted">已支持</div>
             </div>
+            <p v-if="item.slogan" class="u-slogan">{{ item.slogan }}</p>
         </div>
         <bind-wx-mp v-model="showBindWxMp" @update="loadUser" />
     </div>
 </template>
 
 <script>
+import { isApp } from "@/utils/env";
 import { moment } from "@jx3box/jx3box-common/js/moment";
-import { getLink } from "@jx3box/jx3box-common/js/utils";
+import { getLink, getThumbnail } from "@jx3box/jx3box-common/js/utils";
+import { default_avatar } from "@/utils/config";
 import User from "@jx3box/jx3box-common/js/user.js";
 import { doVote } from "@/service/rank/vote.js";
 import { getUserInfo } from "@/service/rank/awards";
@@ -61,6 +61,9 @@ export default {
         };
     },
     computed: {
+        linkTarget() {
+            return isApp() ? "_self" : "_blank";
+        },
         id() {
             return Number(this.$store.state.id);
         },
@@ -84,6 +87,9 @@ export default {
         });
     },
     methods: {
+        teamLogo(logo) {
+            return getThumbnail(logo || default_avatar, 96, true);
+        },
         isMatched(item) {
             return (!this.teamName || item.name?.includes(this.teamName)) && (!this.server || item.server === this.server);
         },

@@ -54,7 +54,8 @@ use([
 ]);
 registerTheme("jx3box-dark", jx3DarkTheme);
 
-initAppEnv();
+// 与 @jx3box/jx3box-common/css/var.less 的 @ipad 断点保持一致。
+initAppEnv({ appMaxWidth: 1133 });
 
 const app = createApp(App);
 app.component("AppSelectDrawer", AppSelectDrawer);

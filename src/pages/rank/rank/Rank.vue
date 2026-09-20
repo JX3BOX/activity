@@ -5,9 +5,26 @@
 </template>
 
 <script>
+import { isApp } from "@/utils/env";
+
 export default {
     name: "Rank",
-    created() {},
+    mounted() {
+        document.addEventListener("click", this.openAppContentLink);
+    },
+    beforeUnmount() {
+        document.removeEventListener("click", this.openAppContentLink);
+    },
+    methods: {
+        // 活动介绍、奖励和时间线中的后台 HTML 也可能带 target="_blank"。
+        openAppContentLink(event) {
+            if (!isApp() || event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+            const link = event.target.closest?.("a[href]");
+            if (!link || !link.closest(".m-rank-container") || link.target !== "_blank" || link.hasAttribute("download")) return;
+            event.preventDefault();
+            window.location.assign(link.href);
+        },
+    },
 };
 </script>
 

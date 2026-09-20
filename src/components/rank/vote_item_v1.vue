@@ -9,7 +9,7 @@
                 <i class="u-ranking">{{ i + 1 }}</i>
             </td>
             <td>
-                <a :href="teamLink(item.team_id)" target="_blank">
+                <a :href="teamLink(item.team_id)" :target="linkTarget">
                     <img
                         loading="lazy"
                         class="u-logo"
@@ -22,7 +22,7 @@
                 <a
                     class="u-name"
                     :href="teamLink(item.team_id)"
-                    target="_blank"
+                    :target="linkTarget"
                 >
                     {{ item.name }}
                 </a>
@@ -46,6 +46,7 @@
 </template>
 
 <script>
+import { isApp } from "@/utils/env";
 // import getWechatIframe from "@/assets/js/wxpop.js";
 import {
     __imgPath,
@@ -66,6 +67,9 @@ export default {
         };
     },
     computed: {
+        linkTarget() {
+            return isApp() ? "_self" : "_blank";
+        },
         list: function() {
             return this.data;
         },

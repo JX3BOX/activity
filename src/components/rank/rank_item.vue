@@ -1,14 +1,14 @@
 <template>
-    <div class="m-rank-top100-item" :class="showIndex ? 'is-No' + (i + 1) : ''" @click="openDetail">
+    <div class="m-rank-top100-item" :class="showIndex && !isAppMode ? 'is-No' + (i + 1) : ''" @click="openDetail">
         <!-- 排名 -->
         <div v-if="showIndex" class="u-ranking" :class="'is-Top' + (i + 1)" @click="copy(item.team_name)">
-            <i class="u-pic">
+            <i v-if="!isAppMode" class="u-pic">
                 <img loading="lazy" :src="getRankImg(i + 1)" v-if="i < 3" />
             </i>
             <span>{{ i + 1 }}</span>
         </div>
         <!-- 队徽 -->
-        <a class="u-logo" :href="teamLink(item.team_id)" target="_blank">
+        <a class="u-logo" :href="teamLink(item.team_id)" :target="linkTarget">
             <el-image
                 v-if="item.team_logo"
                 :src="i < 3 ? teamLogo(item.team_logo, true) : teamLogo(item.team_logo, false)"
@@ -20,7 +20,7 @@
         </a>
         <!-- 名称 -->
         <div class="u-title">
-            <a class="u-teamname" :href="teamLink(item.team_id)" target="_blank" v-if="item.team_id">
+            <a class="u-teamname" :href="teamLink(item.team_id)" :target="linkTarget" v-if="item.team_id">
                 <!-- <i class="el-icon-link"></i> -->
                 {{ item.team_name && item.team_name.slice(0, 6) }}
             </a>
@@ -107,6 +107,12 @@ export default {
         };
     },
     computed: {
+        isAppMode() {
+            return isApp();
+        },
+        linkTarget() {
+            return isApp() ? "_self" : "_blank";
+        },
         isNewbie() {
             const keep_10 = this.newbie?.keep_10?.map(item => item.ID) || [];
             return keep_10?.includes(this.item.team_id);
@@ -158,7 +164,7 @@ export default {
             navigator.clipboard.writeText(text);
         },
         openDetail(event) {
-            // app 模式下点击整行任意位置都跳转到团队页，不再走默认链接/复制
+            // App 模式下整行交由父组件展示详情，不走默认链接或复制。
             if (isApp()) {
                 event.preventDefault();
                 event.stopPropagation();

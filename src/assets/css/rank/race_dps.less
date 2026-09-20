@@ -201,6 +201,10 @@
         .el-col > * {
             .flex(y);
         }
+
+        .u-col-more > .u-more {
+            justify-content: center;
+        }
     }
 
     .u-more {
@@ -220,6 +224,15 @@
     }
     .u-log {
         color: #999;
+    }
+}
+
+html:not(.v-app) .m-rank-dps .m-rank-dps-list {
+    .u-role img,
+    .u-team img {
+        flex-shrink: 0;
+        border-radius: 4px;
+        margin-right: 8px;
     }
 }
 

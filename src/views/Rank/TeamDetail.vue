@@ -7,9 +7,17 @@
                     <img class="u-logo" :src="teamLogo(team.team_logo)" :alt="team.team_name" />
                     <div class="u-summary-info">
                         <div class="u-name">{{ team.team_name }} <span>@{{ team.team_server }}</span></div>
-                        <time>{{ showTime(team.created) }}</time>
                         <p><b>首领</b>{{ bossName }}</p>
-                        <p><b>用时</b>{{ showTC(team.fight_time) }}</p>
+                    </div>
+                </div>
+                <div class="u-clear-stats">
+                    <div class="u-clear-stat">
+                        <span class="u-clear-label">通关时间</span>
+                        <time class="u-clear-value">{{ showTime(team.created) }}</time>
+                    </div>
+                    <div class="u-clear-stat">
+                        <span class="u-clear-label">通关用时</span>
+                        <strong class="u-clear-value u-clear-duration">{{ showTC(team.fight_time) }}</strong>
                     </div>
                 </div>
             </section>
@@ -40,12 +48,17 @@ import { getTop100 as getSuperstarTop100 } from "@/service/rank/superstar";
 
 export default {
     name: "TeamDetail",
+    props: {
+        record: { type: Object, default: null },
+        bossLabel: { type: String, default: "" },
+    },
     data: () => ({ loading: false, team: null, nullImage: `${__imgPath}image/rank/common/null.png` }),
     computed: {
         id() { return this.$store.state.id; },
         aid() { return this.$route.query.aid; },
         isSuperstar() { return this.$route.query.source === "superstar"; },
         bossName() {
+            if (this.bossLabel) return this.bossLabel;
             return this.$store.state.achieves?.find((item) => String(item.achievement_id) === String(this.aid))?.name || "天团挑战";
         },
         parsedMembers() {
@@ -57,10 +70,15 @@ export default {
         members() { return this.parsedMembers.members; },
     },
     watch: {
+        record: { immediate: true, handler(value) { if (value) this.team = value; } },
         "$route.fullPath": { immediate: true, handler() { this.loadTeam(); } },
     },
     methods: {
         async loadTeam() {
+            if (this.record) {
+                this.team = this.record;
+                return;
+            }
             if (!this.id || !this.aid) return;
             this.loading = true;
             try {
@@ -85,3 +103,40 @@ export default {
     },
 };
 </script>
+
+<style scoped lang="less">
+.u-clear-stats {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: 0.5rem;
+    margin-top: 0.875rem;
+}
+
+.u-clear-stat {
+    min-width: 0;
+    padding: 0.625rem 0.75rem;
+    border-radius: 8px;
+    background: rgba(21, 37, 56, 0.4);
+}
+
+.u-clear-label {
+    display: block;
+    margin-bottom: 0.375rem;
+    color: #aac2ce;
+    font-size: 0.6875rem;
+    line-height: 1.5;
+}
+
+.u-clear-value {
+    display: block;
+    color: #e6edf3;
+    font-size: 0.75rem;
+    line-height: 1.6;
+}
+
+.u-clear-duration {
+    color: #ffedc6;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+</style>

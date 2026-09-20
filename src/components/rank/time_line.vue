@@ -34,6 +34,7 @@
 
 <script>
 import { __imgPath } from "@/utils/config";
+import { isApp } from "@/utils/env";
 export default {
     name: "TimeLine",
     props: {
@@ -55,10 +56,14 @@ export default {
     },
     computed: {
         isApp() {
-            return localStorage.getItem("__env") == "app";
+            return isApp();
         },
     },
     watch: {
+        isApp() {
+            this.dragging = false;
+            this.$nextTick(() => this.setLiPosition(true));
+        },
         html: {
             immediate: true,
             handler(val) {

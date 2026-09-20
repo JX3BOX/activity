@@ -55,6 +55,7 @@ const pages = {
         entry: "src/pages/rank/rank/index.js",
         template: "public/pc.html",
         filename: "rank/index.html",
+        viewport: "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover",
     },
     lover: {
         title: "剑三情缘杯 - JX3BOX",

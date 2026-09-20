@@ -1,6 +1,7 @@
 <template>
     <div class="c-chart" :class="{ 'is-app-chart': appMode }" :style="{ '--height': chartHeight }">
-        <v-chart :option="pieOption" theme="jx3box-dark" ref="chart" />
+        <h3 v-if="appMode" class="u-chart-title">{{ title }}</h3>
+        <v-chart :option="pieOption" autoresize theme="jx3box-dark" ref="chart" />
         <slot></slot>
     </div>
 </template>
@@ -57,6 +58,7 @@ export default {
             pieOption: {
                 backgroundColor: "transparent",
                 title: {
+                    show: !this.appMode,
                     text: `${this.title}统计图`,
                     left: "center",
                     top: this.appMode ? 14 : "auto",
@@ -82,12 +84,12 @@ export default {
                         name: this.title,
                         type: "pie",
                         data: this.data,
-                        radius: this.appMode ? (this.isSmall ? "56%" : "62%") : this.isSmall ? "67%" : "75%",
-                        center: this.appMode ? ["50%", "50%"] : undefined,
+                        radius: this.appMode ? ["30%", "54%"] : this.isSmall ? "67%" : "75%",
+                        center: this.appMode ? ["50%", "44%"] : undefined,
                         label: this.appMode
                             ? {
-                                  // 保留扇区文字，以较小字号并由 ECharts 自动避让重叠。
-                                  show: true,
+                                  // 分类较多时通过图例和点击提示查看，避免小屏标签挤压。
+                                  show: (this.data?.length || 0) <= 8,
                                   fontSize: 9,
                                   formatter: "{b}\n{d}%",
                               }
@@ -99,7 +101,9 @@ export default {
                             : {},
                         labelLine: this.appMode
                             ? {
-                                  show: true,
+                                  show: (this.data?.length || 0) <= 8,
+                                  length: 8,
+                                  length2: 6,
                               }
                             : undefined,
                         labelLayout: this.appMode

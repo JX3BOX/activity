@@ -90,6 +90,18 @@
                 <img :src="`${imgPath}image/rank/common/null.png`" class="m-rank-null" />
             </div>
         </div>
+        <el-drawer
+            v-model="teamDetailVisible"
+            class="m-rank-team-drawer"
+            title="团队详情"
+            direction="btt"
+            size="85%"
+            append-to-body
+            destroy-on-close
+            @closed="selectedTeam = null"
+        >
+            <TeamDetail v-if="selectedTeam" :record="selectedTeam" :boss-label="bossName" />
+        </el-drawer>
     </div>
 </template>
 
@@ -103,9 +115,11 @@ import rank_item from "@/components/rank/rank_item.vue";
 import rank_boss from "@/components/rank/rank_boss.vue";
 import AppSelectDrawer from "@/components/common/AppSelectDrawer.vue";
 import { isApp } from "@/utils/env";
+import TeamDetail from "./TeamDetail.vue";
 
 export default {
     components: {
+        TeamDetail,
         "rank-item": rank_item,
         "rank-boss": rank_boss,
         AppSelectDrawer,
@@ -113,6 +127,8 @@ export default {
     props: [],
     data: function () {
         return {
+            teamDetailVisible: false,
+            selectedTeam: null,
             loading: false,
             servers: ["跨服", ...servers],
 
@@ -253,6 +269,11 @@ export default {
         },
         openTeamDetail(item) {
             if (!item?.team_id) return;
+            if (this.isAppMode) {
+                this.selectedTeam = item;
+                this.teamDetailVisible = true;
+                return;
+            }
             this.$router.push({
                 name: "team-detail",
                 params: { id: this.id, teamId: item.team_id },

@@ -1,14 +1,20 @@
 <template>
     <!-- 视频直播 -->
     <div
-        class="m-rank-video"
+        class="m-rank-video m-rank-live"
         v-loading="loading"
         element-loading-background="rgba(0, 0, 0, 0.3)"
     >
         <div class="m-rank-video-title">
             <img :src="video_title_img" class="u-title-img" />
             <div class="u-extend">
-                <el-select class="u-server" v-model="server" placeholder="请选择服务器" size="small">
+                <el-select
+                    class="u-server"
+                    v-model="server"
+                    placeholder="请选择服务器"
+                    size="small"
+                    popper-class="m-rank-live-server-pop"
+                >
                     <el-option key="all" label="全部" value=""></el-option>
                     <el-option v-for="item in servers" :key="item" :label="item" :value="item"></el-option>
                 </el-select>
@@ -41,7 +47,7 @@
                 <el-row class="m-rank-video-list" :gutter="20">
                     <el-col :span="8" v-for="(item, i) in data" :key="i">
                         <div class="m-rank-video-item">
-                            <a class="u-video" :href="getTVlink(item.team.tv_type, item.team.tv)" target="_blank">
+                            <a class="u-video" :href="getTVlink(item.team.tv_type, item.team.tv)" :target="linkTarget">
                                 <template v-if="item.team.tv_type == 'douyu'">
                                     <img
                                         v-if="hasLiveCover(item)"
@@ -76,7 +82,7 @@
                                 <div class="u-meta">
                                     <div class="u-team">
                                         <span class="u-label">团队 : </span>
-                                        <a class="u-team-name" :href="teamLink(item.team.ID)" target="_blank">{{
+                                        <a class="u-team-name" :href="teamLink(item.team.ID)" :target="linkTarget">{{
                                             item.team.name
                                         }}</a>
                                     </div>
@@ -84,7 +90,7 @@
                                         <a
                                             class="u-room-name"
                                             :href="getTVlink(item.team.tv_type, item.team.tv)"
-                                            target="_blank"
+                                            :target="linkTarget"
                                         >
                                             {{
                                                 (item.team.tv_type == "douyu" && item.douyu.room_name) ||
@@ -114,6 +120,7 @@
 </template>
 
 <script>
+import { isApp } from "@/utils/env";
 import { __imgPath } from "@/utils/config";
 import { getLives } from "@/service/rank/video.js";
 import { getThumbnail, getLink } from "@jx3box/jx3box-common/js/utils";
@@ -138,6 +145,9 @@ export default {
         };
     },
     computed: {
+        linkTarget() {
+            return isApp() ? "_self" : "_blank";
+        },
         id: function () {
             return this.$store.state.id;
         },
@@ -230,4 +240,51 @@ export default {
 
 <style lang="less">
 @import "~@/assets/css/rank/race_video.less";
+
+html:not(.v-app) {
+    .m-rank-live .m-rank-video-title {
+        .u-extend {
+            width: 240px;
+            top: 10px;
+        }
+
+        .u-server {
+            width: 100%;
+            --el-fill-color-blank: #3e576d;
+            --el-border-color: #708393;
+            --el-border-color-hover: #ffedc6;
+            --el-color-primary: #ffedc6;
+            --el-text-color-regular: #ffedc6;
+            --el-text-color-placeholder: #d6e0e8;
+
+            .el-select__wrapper {
+                min-height: 42px;
+                padding: 0 14px;
+                font-size: 14px;
+                border-radius: 4px;
+            }
+        }
+    }
+
+    .m-rank-live-server-pop.el-popper {
+        --el-bg-color-overlay: #2c4255;
+        --el-border-color-light: #708393;
+        --el-fill-color-light: #3e576d;
+        --el-text-color-regular: #e4eaf0;
+        --el-color-primary: #ffedc6;
+        border-radius: 4px;
+
+        .el-select-dropdown__item {
+            height: 38px;
+            line-height: 38px;
+            padding: 0 14px;
+            font-size: 14px;
+
+            &.is-selected {
+                color: #ffedc6;
+                background-color: #3e576d;
+            }
+        }
+    }
+}
 </style>

@@ -76,8 +76,8 @@ export default {
             return this.selectedAid === "all" ? "全部" : this.data[this.selectedAid] || "全部";
         },
         bossOptions() {
-            const options = Object.entries(this.data).map(([value, label]) => ({ value, label }));
-            return this.showAll ? [{ value: "all", label: "全部" }, ...options] : options;
+            const options = Object.entries(this.data).map(([value, label]) => ({ value, label, icon: this.bossIcon(value), roundIcon: true }));
+            return this.showAll ? [{ value: "all", label: "全部", icon: this.bossIcon(0), roundIcon: true }, ...options] : options;
         },
     },
     methods: {

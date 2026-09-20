@@ -3,15 +3,16 @@
     <div class="m-rank-info">
         <TimeLine :html="times" v-if="times" />
         <div class="m-rank-btns">
-            <a class="u-btn u-btn-join" href="/rank/#/join" target="_blank" rel="noopener"></a>
-            <!-- <a class="u-btn u-btn-lucky" href="/fb" target="_blank" rel="noopener">副本开荒攻略</a> -->
-            <a class="u-btn u-btn-weal" href="/rank/#/surprise" target="_blank" rel="noopener"></a>
+            <a class="u-btn u-btn-join" href="/rank/#/join" :target="linkTarget" rel="noopener"></a>
+            <!-- <a class="u-btn u-btn-lucky" href="/fb" :target="linkTarget" rel="noopener">副本开荒攻略</a> -->
+            <a class="u-btn u-btn-weal" href="/rank/#/surprise" :target="linkTarget" rel="noopener"></a>
         </div>
         <div class="m-rank-txt" v-html="desc"></div>
     </div>
 </template>
 
 <script>
+import { isApp } from "@/utils/env";
 import { __imgPath } from "@/utils/config";
 import TimeLine from "@/components/rank/time_line.vue";
 export default {
@@ -24,6 +25,9 @@ export default {
         };
     },
     computed: {
+        linkTarget() {
+            return isApp() ? "_self" : "_blank";
+        },
         id: function () {
             return this.$store.state.id;
         },

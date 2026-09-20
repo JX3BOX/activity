@@ -1,7 +1,7 @@
 <template>
     <!-- 通关视频 -->
     <div
-        class="m-rank-video"
+        class="m-rank-video m-rank-recordings"
         v-loading="loading"
         element-loading-background="rgba(0, 0, 0, 0.3)"
     >
@@ -19,25 +19,25 @@
                         v-show="!current_boss || item.aid == current_boss"
                     >
                         <div class="m-rank-video-item">
-                            <a class="u-video" :href="item.url" target="_blank">
+                            <a class="u-video" :href="item.url" :target="linkTarget">
                                 <img :src="videoCover(item.aid)" class="u-live-cover" loading="lazy" />
                                 <i class="u-player">
                                     <img svg-inline src="@/assets/img/rank/play.svg" />
                                 </i>
                             </a>
                             <div class="u-info">
-                                <a :href="teamLink(item.team_id)" target="_blank"
+                                <a :href="teamLink(item.team_id)" :target="linkTarget"
                                     ><img :src="liveAvatar(item.logo)" class="u-team-logo" loading="lazy"
                                 /></a>
                                 <div class="u-meta">
                                     <div class="u-team">
                                         <span class="u-label">团队 : </span>
-                                        <a class="u-team-name" :href="teamLink(item.team_id)" target="_blank">{{
+                                        <a class="u-team-name" :href="teamLink(item.team_id)" :target="linkTarget">{{
                                             item.name
                                         }}</a>
                                     </div>
                                     <div class="u-room">
-                                        <a class="u-room-name" :href="item.url" target="_blank">
+                                        <a class="u-room-name" :href="item.url" :target="linkTarget">
                                             {{ item.title }}
                                         </a>
                                     </div>
@@ -108,6 +108,7 @@
 </template>
 
 <script>
+import { isApp } from "@/utils/env";
 import { __imgPath, __cdn } from "@/utils/config";
 import { getVideos, deleteVideo, addVideo, updateVideo } from "@/service/rank/video.js";
 import { default_avatar } from "@/utils/config";
@@ -146,6 +147,9 @@ export default {
         };
     },
     computed: {
+        linkTarget() {
+            return isApp() ? "_self" : "_blank";
+        },
         id: function () {
             return this.$store.state.id;
         },
@@ -272,4 +276,62 @@ export default {
 
 <style lang="less">
 @import "~@/assets/css/rank/race_video.less";
+
+// 封面原图为 320 × 180，PC 四列排列并避免在宽屏上过度放大。
+html:not(.v-app) .m-rank-recordings {
+    .m-rank-video-content {
+        max-width: 1340px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .m-rank-video-list > .el-col {
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+
+    .m-rank-video-item {
+        .u-video {
+            height: auto;
+            aspect-ratio: 16 / 9;
+
+            .u-live-cover {
+                display: block;
+                object-fit: contain;
+            }
+
+            .u-player {
+                width: 56px;
+                height: 56px;
+                inset: 0;
+                margin: auto;
+                transform: none;
+            }
+        }
+
+        .u-team-logo {
+            width: 48px;
+            height: 48px;
+            border-radius: 6px;
+        }
+
+        .u-info {
+            min-height: 84px;
+            box-sizing: border-box;
+            gap: 10px;
+            padding: 12px;
+        }
+    }
+
+    @media screen and (max-width: 1000px) {
+        .m-rank-video-content {
+            max-width: 660px;
+        }
+
+        .m-rank-video-list > .el-col {
+            flex-basis: 50%;
+            max-width: 50%;
+        }
+    }
+}
 </style>

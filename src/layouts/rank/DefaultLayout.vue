@@ -3,7 +3,7 @@
         <CommonHeader></CommonHeader>
         <div class="m-rank-main">
             <a class="m-rank-header" href="/rank">
-                <img class="m-rank-logo" :src="LOGO" />
+                <img class="m-rank-logo" :src="LOGO" alt="秘境百强榜" />
             </a>
             <div class="m-rank-content">
                 <slot></slot>
@@ -18,12 +18,10 @@ import PICS from "@/assets/js/pics.js";
 export default {
     name: "RankDefaultLayout",
     props: [],
-    data: function () {
-        return {
-            LOGO: PICS.LOGO,
-        };
-    },
     computed: {
+        LOGO() {
+            return ["index", "join"].includes(this.$route.name) ? PICS.LOGO_PC : PICS.LOGO;
+        },
         routeClass: function () {
             return "p-rank-" + this.$route.name;
         },

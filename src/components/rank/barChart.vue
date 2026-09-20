@@ -1,6 +1,7 @@
 <template>
     <div class="c-chart" :class="{ 'is-app-chart': appMode }" :style="{ '--height': chartHeight }">
-        <v-chart :option="barOption" theme="jx3box-dark" />
+        <h3 v-if="appMode" class="u-chart-title">{{ title }}</h3>
+        <v-chart :option="barOption" autoresize theme="jx3box-dark" />
         <slot></slot>
     </div>
 </template>
@@ -79,7 +80,7 @@ export default {
             barOption: {
                 backgroundColor: "transparent",
                 title: {
-                    show: true,
+                    show: !this.appMode,
                     text: `${this.title}统计图`,
                     textStyle: { fontSize: this.appMode ? 14 : 18 },
                 },
@@ -92,9 +93,9 @@ export default {
                 grid: {
                     left: "3%",
                     // App 保持完整绘图区，不能为数值标签预留过大的右侧空白。
-                    right: this.appMode ? "0%" : "4%",
+                    right: this.appMode ? "5%" : "4%",
                     bottom: this.appMode ? "6%" : "3%",
-                    top: this.appMode ? "14%" : undefined,
+                    top: this.appMode ? 28 : undefined,
                     containLabel: true,
                 },
                 xAxis: {
@@ -104,9 +105,11 @@ export default {
                     minInterval: 1,
                     splitNumber: this.appMode ? 4 : undefined,
                     axisLabel: { fontSize: this.appMode ? 10 : 12 },
+                    ...(this.appMode ? { axisLine: { show: false }, axisTick: { show: false }, splitLine: { lineStyle: { color: "rgba(174, 191, 205, 0.12)" } } } : {}),
                 },
                 yAxis: {
                     type: "category",
+                    ...(this.appMode ? { axisLine: { show: false }, axisTick: { show: false } } : {}),
                     axisLabel: { fontSize: this.appMode ? 10 : 12 },
                 },
                 series: [
@@ -129,10 +132,11 @@ export default {
                               }
                             : undefined,
                         itemStyle: {
+                            borderRadius: this.appMode ? [0, 4, 4, 0] : 0,
                             color: this.isCustomColor
                                 ? (param) => {
                                       const name = Array.isArray(param.data) ? param.data[1] : param.name;
-                                      return colors_by_school_name[name] || colors_by_mount_name[name] || defaultBarColor;
+                                      return colors_by_school_name[name] || colors_by_mount_name[name] || (this.appMode ? "#69afc0" : defaultBarColor);
                                   }
                                 : defaultBarColor,
                         },
@@ -145,7 +149,7 @@ export default {
         chartHeight() {
             if (!this.appMode) return this.height;
             // 每条数据至少保留 20px 的纵向空间，保证柱体和内部数值清晰可读。
-            return `${Math.max(300, (this.data?.length || 0) * 20 + 90)}px`;
+            return `${Math.max(220, (this.data?.length || 0) * 24 + 55)}px`;
         },
         isName() {
             return false;

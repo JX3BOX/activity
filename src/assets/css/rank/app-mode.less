@@ -1,4 +1,23 @@
 .v-app {
+    // 抽屉 Teleport 到 body，通过根节点变量沿用百强的深蓝、米金配色。
+    --app-select-surface: #203345;
+    --app-select-title: #ffedc6;
+    --app-select-text: #e5e9ed;
+    --app-select-handle: #637587;
+    --app-select-option: #263e50;
+    --app-select-border: #42596b;
+    --app-select-selected-bg: #354653;
+    --app-select-selected-text: #ffedc6;
+    --app-select-accent: #e8cf9e;
+    --app-select-radio-border: #718391;
+    --app-select-disabled-text: #7d8d9b;
+    --app-select-disabled-bg: #243747;
+    --app-select-muted: #a4b2bf;
+    --app-select-title-size: 1rem;
+    --app-select-option-size: 0.875rem;
+    --app-select-option-weight: 400;
+    --app-select-empty-size: 0.8125rem;
+
     &,
     body,
     #app {
@@ -109,7 +128,7 @@
             .pr;
             .bold;
             padding: 0 10px;
-            font-size: 12px;
+            font-size: 0.75rem;
             height: 50px;
             line-height: 40px;
             box-shadow: none;
@@ -118,17 +137,9 @@
             margin: 0;
 
             &.active {
-                color: transparent;
-                -webkit-background-clip: text;
-                background-clip: text;
-                -webkit-text-fill-color: transparent;
+                color: #ffedc6;
+                background-image: none;
                 box-shadow: none;
-                color: transparent;
-                background-image: linear-gradient(180deg, #deb57c 0%, #ffe8bb 100%);
-                -webkit-background-clip: text;
-                background-clip: text;
-                -webkit-text-fill-color: transparent;
-                transition: all 0.3s ease-in-out;
                 &::after {
                     content: "";
                     .pa;
@@ -140,7 +151,7 @@
                     background: #ffedc6;
                 }
             }
-            // app 模式下取消 PC 悬停背景图（仅非 active 项，避免清掉 active 渐变导致文字隐形）
+            // App 模式下取消 PC 悬停背景图，选中项保持米金色。
             &:not(.active):hover {
                 background-image: none;
                 color: #fff;
@@ -179,344 +190,302 @@
 
     // 天梯榜
     .m-rank-dps > .m-rank-filter {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.625rem;
+        padding: 0.75rem 0.625rem;
+
         .m-rank-server--app,
         .m-rank-dps-xf--app,
         .m-rank-boss--app {
             min-width: 0;
-        }
-
-        .m-rank-server--app {
-            order: 1;
+            width: 100%;
+            margin: 0;
             padding: 0;
         }
 
-        .m-rank-dps-xf--app {
-            order: 2;
-        }
-
         .m-rank-boss--app {
-            order: 3;
+            grid-column: 1 / -1;
+            grid-row: 1;
         }
     }
 
-    .m-rank-dps .m-rank-dps-list {
-        margin-top: 10px;
-        padding: 0 10px;
+    // 排行榜与天梯榜共用筛选控件尺寸，分别保留各自的排列方式。
+    .m-rank-rank > .m-rank-filter,
+    .m-rank-dps > .m-rank-filter {
+        gap: 0.625rem;
+        padding: 0.75rem 0.625rem;
 
-        .u-item {
-            display: grid;
-            grid-template-columns: 12% 24% 24% 18% 24%;
-            align-items: center;
-            width: 100%;
-            height: 46px;
+        .m-rank-server--app,
+        .m-rank-boss--app {
             min-width: 0;
-            margin: 0 0 2px !important;
-            padding: 0 8px 0 0;
-            border: 0;
-            border-left: 2px solid #ffedc6;
-            border-radius: 0;
-            box-sizing: border-box;
-            color: #fff;
-            background: linear-gradient(105deg, #2d4c63 0%, #2f7b90 100%);
-
-            > .el-col {
-                width: auto;
-                max-width: none;
-                min-width: 0;
-                padding: 0 4px !important;
-            }
-
-            .u-col-ranking {
-                order: 1;
-            }
-
-            .u-col-mount {
-                order: 2;
-            }
-
-            .u-col-dps {
-                order: 3;
-            }
-
-            .u-col-server {
-                order: 4;
-            }
-
-            .u-col-role {
-                order: 5;
-            }
-
-            .u-col-team,
-            .u-col-achievement,
-            .u-col-total,
-            .u-col-more,
-            .u-col-misc {
-                display: none;
-            }
-
-            .u-ranking {
-                color: #fff;
-                font-size: 14px;
-                line-height: 46px;
-                text-align: center;
-            }
-
-            .u-mount,
-            .u-server,
-            .u-role {
-                display: flex;
-                align-items: center;
-                min-width: 0;
-                overflow: hidden;
-                color: #fff !important;
-                font-size: 13px;
-                line-height: 20px;
-                text-align: left;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-            }
-
-            .u-mount img {
-                flex: none;
-                width: 18px;
-                height: 18px;
-                margin-right: 3px;
-            }
-
-            .u-role {
-                display: block;
-
-                a,
-                span {
-                    display: block;
-                    overflow: hidden;
-                    color: #fff;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                }
-
-                img {
-                    display: none;
-                }
-            }
-
-            &.u-head {
-                .u-ranking,
-                .u-mount,
-                .u-server,
-                .u-role,
-                .u-role a,
-                .u-role span {
-                    color: #1e374d !important;
-                }
-            }
-
-            .u-dps.u-bar {
-                position: relative;
-                width: 100% !important;
-                height: 40px;
-                overflow: hidden;
-                color: #ffedc6;
-                background: none !important;
-                border-radius: 0;
-                font-size: 14px;
-                font-weight: 700;
-                line-height: 32px;
-                text-align: left;
-                text-indent: 0;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-
-                &::after {
-                    content: "";
-                    position: absolute;
-                    bottom: 4px;
-                    left: 0;
-                    width: var(--bar-width);
-                    max-width: 100%;
-                    height: 5px;
-                    border-radius: 5px;
-                    background: var(--mount-color, #13cdb9);
-                }
-            }
+            padding: 0;
         }
 
-        .u-head {
-            height: 46px;
-            margin-bottom: 8px !important;
-            padding-right: 8px;
-            border-left: 0;
-            color: #1e374d;
-            background: #ffedc6;
-
-            * {
-                color: #1e374d !important;
-                font-size: 14px;
-                font-weight: 400;
-            }
-
-            .el-col > * {
-                justify-content: center;
-                line-height: 46px;
-                text-align: center;
-            }
-
-            .u-dps {
-                text-indent: 0;
-            }
+        .u-server-select,
+        .u-mount-select,
+        .u-boss-select {
+            min-height: 2.375rem;
+            height: auto;
+            padding: 0 0.625rem;
+            gap: 0.375rem;
         }
+
+        .u-server-select-name,
+        .u-value,
+        .u-boss-select-name {
+            font-size: 0.75rem;
+            line-height: 2.375rem;
+        }
+
+        .u-icon,
+        .u-boss-select-icon {
+            width: 1.25rem;
+            height: 1.25rem;
+            flex: none;
+        }
+    }
+
+    .m-dps-app-list {
+        padding: 0 0.625rem 1rem;
+    }
+
+    .m-dps-app-heading {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.375rem 0.75rem 0.625rem;
+        color: #aebfcd;
+        font-size: 0.6875rem;
+        line-height: 1.5;
+    }
+
+    .m-dps-app-card {
+        display: grid;
+        grid-template-columns: 1.5rem minmax(0, 1fr) minmax(5rem, max-content);
+        align-items: center;
+        gap: 0.5rem 0.625rem;
+        margin-bottom: 0.5rem;
+        padding: 0.75rem;
+        border: 1px solid rgba(155, 207, 221, 0.16);
+        border-radius: 10px;
+        background: #263e50;
+    }
+
+    .m-dps-app-rank {
+        text-align: center;
+        font-size: 0.875rem;
+        font-variant-numeric: tabular-nums;
+        color: #aac2ce;
+        &.is-top { color: #ffedc6; font-weight: 700; }
+    }
+
+    .m-dps-app-player { min-width: 0; }
+
+    .m-dps-app-name {
+        display: block;
+        color: #edf2f6;
+        font-size: 0.8125rem;
+        font-weight: 600;
+        line-height: 1.6;
+        overflow-wrap: anywhere;
+    }
+
+    .m-dps-app-mount {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        margin-top: 0.25rem;
+        color: #becdd7;
+        font-size: 0.6875rem;
+        line-height: 1.5;
+        img { width: 1rem; height: 1rem; flex: none; }
+    }
+
+    .m-dps-app-server {
+        display: block;
+        margin-top: 0.125rem;
+        color: #91a9ba;
+        font-size: 0.6875rem;
+        line-height: 1.5;
+    }
+
+    .m-dps-app-score {
+        text-align: right;
+        span { display: block; color: #91a9ba; font-size: 0.625rem; line-height: 1.6; }
+        b {
+            display: block;
+            color: #ffedc6;
+            font-size: clamp(0.8125rem, 4vw, 0.9375rem);
+            line-height: 1.6;
+            font-variant-numeric: tabular-nums;
+            white-space: nowrap;
+        }
+    }
+
+    .m-dps-app-bar {
+        grid-column: 2 / -1;
+        height: 3px;
+        overflow: hidden;
+        border-radius: 3px;
+        background: rgba(155, 207, 221, 0.12);
+        i { display: block; height: 100%; max-width: 100%; border-radius: inherit; }
+    }
+
+    .m-dps-app-empty {
+        padding: 2rem 0;
+        text-align: center;
+        color: #aac2ce;
+        font-size: 0.8125rem;
     }
 
     // 投票竞猜
     .m-rank-vote {
         margin: 0;
-        padding: 14px 10px 24px;
+        padding: 0.875rem 0.625rem 1.5rem;
         box-sizing: border-box;
 
         .m-rank-vote-header {
-            margin: 0 0 10px;
-            padding: 10px 14px;
-            border-radius: 0;
-            color: #ffedc6;
-            background: #302d3d;
-            font-size: 13px;
-            line-height: 18px;
+            margin: 0 0 1rem;
+            padding: 0.75rem 0.875rem;
+            border: 1px solid rgba(232, 207, 158, 0.2);
+            border-radius: 10px;
+            color: #d8c8a9;
+            background: #263b4b;
+            font-size: 0.75rem;
+            font-weight: 400;
+            line-height: 1.85;
             text-align: left;
-
-            .u-icon {
-                display: none;
-            }
+            p { margin: 0; }
+            .u-icon { display: none; }
         }
 
-        .m-rank-vote-app {
-            .m-rank-vote-app-head,
-            .m-rank-vote-app-item {
-                display: grid;
-                grid-template-columns: 12% minmax(0, 67%) minmax(0, 21%);
-                align-items: center;
-                box-sizing: border-box;
+        .m-rank-vote-app-head {
+            display: flex;
+            justify-content: space-between;
+            padding: 0 0.75rem 0.625rem;
+            color: #aebfcd;
+            font-size: 0.6875rem;
+            line-height: 1.5;
+        }
+
+        .m-rank-vote-app-item {
+            display: grid;
+            grid-template-columns: 1.5rem minmax(0, 1fr) 4.25rem;
+            align-items: center;
+            gap: 0.625rem;
+            padding: 0.75rem;
+            margin-bottom: 0.625rem;
+            border: 1px solid rgba(155, 207, 221, 0.16);
+            border-radius: 10px;
+            background: #263e50;
+            color: #e6edf3;
+
+            .u-ranking {
+                color: #9fb4c3;
+                font-size: 0.875rem;
+                font-style: normal;
+                font-variant-numeric: tabular-nums;
+                text-align: center;
+                &.is-top { color: #ffedc6; font-weight: 700; }
             }
 
-            .m-rank-vote-app-head {
-                grid-template-columns: 12% 27% 25% 15% 21%;
-                height: 44px;
-                margin-bottom: 10px;
-                color: #1e374d;
-                background: #ffedc6;
-                font-size: 13px;
-                line-height: 44px;
+            .u-info, .u-main { min-width: 0; }
+
+            .u-info {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .u-logo {
+                flex: 0 0 2rem;
+                width: 2rem;
+                height: 2rem;
+                border-radius: 6px;
+                object-fit: cover;
+            }
+
+            .u-name {
+                display: block;
+                color: #ffedc6;
+                font-size: 0.875rem;
+                font-weight: 600;
+                line-height: 1.6;
+                overflow-wrap: anywhere;
+            }
+
+            .u-server {
+                display: block;
+                margin-top: 0.25rem;
+                color: #aac2ce;
+                font-size: 0.6875rem;
+                line-height: 1.5;
+            }
+
+            .u-vote-wapper {
+                display: flex;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.375rem;
+            }
+
+            .u-count {
+                display: flex;
+                justify-content: center;
+                align-items: baseline;
+                flex-wrap: wrap;
+                gap: 0.25rem;
+                line-height: 1.5;
+                b { color: #ffedc6; font-size: 0.875rem; font-variant-numeric: tabular-nums; }
+                span { color: #91a9ba; font-size: 0.625rem; }
+            }
+
+            .u-vote, .u-voted {
+                display: grid;
+                place-items: center;
+                min-height: 2.25rem;
+                padding: 0.25rem;
+                box-sizing: border-box;
+                border: 1px solid #e8cf9e;
+                border-radius: 8px;
+                font-size: 0.75rem;
+                line-height: 1.5;
                 text-align: center;
             }
 
-            .m-rank-vote-app-item {
-                min-height: 66px;
-                margin-bottom: 10px;
-                padding-right: 4px;
-                border-left: 2px solid #ffedc6;
-                border-radius: 0 0 18px 0;
-                color: #fff;
-                background: linear-gradient(105deg, #2d4c63 0%, #2f7b90 100%);
-
-                .u-ranking {
-                    display: block;
-                    width: 32px;
-                    height: 32px;
-                    margin: 0 auto;
-                    border-radius: 50%;
-                    color: #fff;
-                    background: linear-gradient(135deg, #ff6540 0%, #f7be78 100%);
-                    font-size: 14px;
-                    font-style: normal;
-                    font-weight: 500;
-                    line-height: 32px;
-                    text-align: center;
+            .u-vote {
+                color: #463620;
+                background: #e8cf9e;
+                font-weight: 600;
+                cursor: pointer;
+                &:focus-visible { outline: 2px solid #ffedc6; outline-offset: 3px; }
+                &.disabled {
+                    color: #91a9ba;
+                    border-color: #526878;
+                    background: #2c4354;
+                    cursor: not-allowed;
                 }
+            }
 
-                .u-info {
-                    min-width: 0;
-                }
+            .u-voted {
+                color: #d8c8a9;
+                border-color: rgba(232, 207, 158, 0.25);
+                background: rgba(232, 207, 158, 0.06);
+            }
 
-                .u-main {
-                    display: grid;
-                    grid-template-columns: 40% 37% 23%;
-                    min-width: 0;
-                    gap: 0;
-                }
-
-                .u-name,
-                .u-server,
-                .u-count {
-                    overflow: hidden;
-                    color: #fff;
-                    font-size: 13px;
-                    font-weight: 400;
-                    line-height: 20px;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                }
-
-                .u-name {
-                    color: #ffedc6;
-                    font-weight: 700;
-                    text-align: left;
-                }
-
-                .u-server,
-                .u-count {
-                    text-align: center;
-                }
-
-                .u-slogan {
-                    display: block;
-                    overflow: hidden;
-                    color: #aac2ce;
-                    font-size: 11px;
-                    line-height: 17px;
-                    text-align: left;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                }
-
-                .u-vote-wapper {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-
-                    .u-vote,
-                    > div {
-                        width: 66px;
-                        height: 30px;
-                        padding: 0;
-                        border-radius: 16px;
-                        box-shadow: none;
-                        font-size: 13px;
-                        line-height: 28px;
-                        text-align: center;
-                    }
-
-                    .u-vote {
-                        border: 0;
-                        color: #6f421d;
-                        background: #f6d89f;
-                        font-weight: 700;
-
-                        &.disabled {
-                            border: 1px solid #ffedc6;
-                            color: #ffedc6;
-                            background: transparent;
-                            font-weight: 400;
-                            line-height: 28px;
-                        }
-                    }
-
-                    > div {
-                        border: 1px solid #ffedc6;
-                        color: #ffedc6;
-                    }
-                }
+            .u-slogan {
+                grid-column: 2 / -1;
+                margin: 0;
+                padding-top: 0.625rem;
+                border-top: 1px solid rgba(155, 207, 221, 0.12);
+                color: #a4b8c7;
+                font-size: 0.6875rem;
+                line-height: 1.7;
+                overflow-wrap: anywhere;
             }
         }
     }
+
 
     .m-rank-lucky {
         margin: 0;
@@ -857,10 +826,11 @@
 
     .m-rank-stat {
         margin: 0;
+        padding: 0.75rem 0.625rem 1.25rem;
         box-sizing: border-box;
 
         > .m-rank-filter {
-            margin-bottom: 20px;
+            margin-bottom: 1rem;
 
             .m-rank-boss--app {
                 min-width: 0;
@@ -878,11 +848,23 @@
             display: block;
             float: none;
             width: 100%;
-            margin: 10px 0 0;
-            padding: 10px 0 20px 0;
+            margin: 0.75rem 0 0;
+            padding: 0.875rem 0.375rem 0.5rem;
+            border: 1px solid rgba(155, 207, 221, 0.16);
+            border-radius: 10px;
             overflow: hidden;
             box-sizing: border-box;
-            background: linear-gradient(135deg, #2d4c63 0%, #2b5f74 100%);
+            background: #263e50;
+
+            .u-chart-title {
+                margin: 0 0.5rem 0.625rem;
+                padding-left: 0.5rem;
+                border-left: 3px solid #ead09e;
+                color: #ffedc6;
+                font-size: 0.8125rem;
+                font-weight: 600;
+                line-height: 1.5;
+            }
 
             &.chart-left,
             &.chart-right {
@@ -946,6 +928,82 @@
                 margin-bottom: 6px;
             }
 
+            .m-rank-txt {
+                padding: 0 0.375rem;
+                font-size: 0.8125rem;
+                line-height: 1.9;
+                overflow-wrap: break-word;
+
+                div,
+                table {
+                    font-size: inherit;
+                    line-height: inherit;
+                }
+
+                p,
+                > div {
+                    margin: 0 0 0.75rem;
+                }
+
+                h2 {
+                    width: auto;
+                    margin: 2rem 0 1rem;
+                    font-size: 1rem;
+                    line-height: 1.5;
+
+                    &:first-child {
+                        margin-top: 0;
+                    }
+                }
+
+                h3,
+                h4,
+                h5,
+                h6 {
+                    margin: 1.5rem 0 0.75rem;
+                    padding-bottom: 0.5rem;
+                    font-size: 0.875rem;
+                    font-weight: 600;
+                    line-height: 1.6;
+                    border-color: rgba(255, 237, 198, 0.2);
+                }
+
+                ul,
+                ol {
+                    margin: 0 0 1.25rem;
+                    padding-left: 1.125rem;
+                }
+
+                ul {
+                    list-style: disc;
+                }
+
+                ol {
+                    list-style: decimal;
+                }
+
+                li {
+                    padding-left: 0.125rem;
+
+                    & + li {
+                        margin-top: 0.625rem;
+                    }
+
+                    &::marker {
+                        color: #9aafbf;
+                    }
+                }
+
+                td,
+                th {
+                    padding: 0.5rem;
+
+                    p {
+                        margin: 0;
+                    }
+                }
+            }
+
             .m-rank-btns {
                 justify-content: center;
                 align-items: center;
@@ -969,6 +1027,10 @@
                 }
                 .u-btn-weal {
                     width: 200px;
+                    max-width: 100%;
+                    // 福利按钮原图为 676 × 100，不能套用报名按钮的比例。
+                    aspect-ratio: 676 / 100;
+                    background-size: contain;
                 }
             }
         }
@@ -1151,13 +1213,13 @@
     // 排行榜
     .m-rank-rank {
         .m-rank-top100 {
-            margin-top: 32px;
+            margin-top: 0.75rem;
             padding: 0 10px;
         }
 
         .m-rank-top100-list {
             display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
+            grid-template-columns: minmax(0, 1fr);
             column-gap: 8px;
             align-items: end;
 
@@ -1165,148 +1227,7 @@
                 box-sizing: border-box;
             }
 
-            .is-No1,
-            .is-No2,
-            .is-No3 {
-                position: relative;
-                top: auto;
-                right: auto;
-                left: auto;
-                width: auto;
-                min-width: 0;
-                margin: 0;
-                padding: 0 6px;
-                overflow: visible;
-                border: 1px solid #9bcfdd;
-                border-top: 3px solid #ffedc6;
-                border-radius: 0 0 22px 0;
-                background: linear-gradient(180deg, #2d4b62 0%, #2f7b90 100%);
-                box-shadow: none;
-
-                .u-ranking {
-                    position: absolute;
-                    z-index: 1;
-                    top: -29px;
-                    left: 50%;
-                    width: auto;
-                    height: 48px;
-                    transform: translateX(-50%);
-                    background: none;
-
-                    .u-pic {
-                        display: block;
-                        height: 48px;
-                    }
-                    img {
-                        display: block;
-                        width: auto;
-                        height: 48px;
-                    }
-                }
-
-                .u-logo {
-                    position: relative;
-                    top: auto;
-                    left: auto;
-                    display: block;
-                    padding: 0;
-                    margin: 30px auto 10px;
-
-                    .el-image,
-                    img {
-                        width: 58px;
-                        height: 58px;
-                        border-radius: 0;
-                        box-shadow: none;
-                        object-fit: cover;
-                    }
-                }
-
-                .u-title {
-                    display: block;
-                    margin: 0;
-                    text-align: center;
-                }
-
-                .u-teamname {
-                    display: block;
-                    margin: 0;
-                    overflow: hidden;
-                    color: #ffedc6;
-                    font-size: 14px;
-                    line-height: 20px;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                }
-
-                .u-server {
-                    display: block;
-                    overflow: hidden;
-                    color: #fff;
-                    font-size: 12px;
-                    font-weight: normal;
-                    line-height: 18px;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                }
-
-                .u-time {
-                    position: static;
-                    margin-top: 8px;
-                    padding: 0;
-                    text-align: center;
-
-                    .u-time-fight,
-                    .u-time-finish {
-                        display: block;
-                        color: #aac2ce;
-                        font-size: 10px;
-                        line-height: 17px;
-                        text-align: center;
-                        white-space: nowrap;
-                    }
-
-                    .u-time-fight {
-                        b {
-                            color: #ffedc6;
-                            font-size: 12px;
-                        }
-                    }
-                }
-
-                .u-leader,
-                .u-teammates,
-                > .u-youngster {
-                    display: none;
-                }
-            }
-
-            .is-No1 {
-                grid-column: 2;
-                grid-row: 1;
-                min-height: 210px;
-                .u-logo {
-                    margin: 40px auto 10px;
-                }
-            }
-
-            .is-No2 {
-                grid-column: 1;
-                grid-row: 1;
-                min-height: 200px;
-            }
-
-            .is-No3 {
-                grid-column: 3;
-                grid-row: 1;
-                min-height: 200px;
-            }
-
-            .is-No4 {
-                clear: none;
-            }
-
-            .m-rank-top100-item:not(.is-No1):not(.is-No2):not(.is-No3) {
+            .m-rank-top100-item {
                 grid-column: 1 / -1;
                 display: grid;
                 grid-template-columns: 42px 54px minmax(0, 1fr);
@@ -1371,6 +1292,7 @@
                 .u-time {
                     position: static;
                     display: flex;
+                    flex-wrap: wrap;
                     gap: 7px;
                     min-width: 0;
                     margin: 0;
@@ -1386,6 +1308,19 @@
                     .u-time-fight b {
                         color: #ffedc6;
                         font-size: 14px;
+                    }
+
+                    @media screen and (max-width: 359px) {
+                        gap: 0 0.375rem;
+
+                        .u-time-fight,
+                        .u-time-finish {
+                            font-size: 0.625rem;
+                        }
+
+                        .u-time-fight b {
+                            font-size: 0.75rem;
+                        }
                     }
                 }
 
@@ -1760,5 +1695,80 @@
     .u-back-top {
         right: 16px;
         bottom: calc(16px + env(safe-area-inset-bottom));
+    }
+}
+
+.v-app .el-drawer.m-rank-team-drawer {
+    background: #203345;
+    color: #e6edf3;
+    border-radius: 20px 20px 0 0;
+    --el-text-color-primary: #ffedc6;
+
+    .el-drawer__header {
+        margin: 0;
+        padding: 0.25rem 0.75rem 0.25rem 1rem;
+        border-bottom: 1px solid rgba(232, 207, 158, 0.12);
+        color: #ffedc6;
+    }
+
+    .el-drawer__title {
+        font-size: 0.9375rem;
+        font-weight: 600;
+        line-height: 1.5;
+    }
+
+    .el-drawer__close-btn {
+        display: grid;
+        place-items: center;
+        min-width: 2.75rem;
+        min-height: 2.75rem;
+        padding: 0;
+        color: #b8c6d1;
+        font-size: 1.125rem;
+
+        .el-icon { font-size: inherit; }
+    }
+
+    .el-drawer__body {
+        padding: 0;
+        overscroll-behavior: contain;
+    }
+
+    .m-rank-team-detail {
+        padding: 0.75rem 0.75rem calc(1rem + env(safe-area-inset-bottom));
+
+        .m-team-section {
+            padding: 0.875rem;
+            margin-bottom: 0.75rem;
+            border: 1px solid rgba(155, 207, 221, 0.18);
+            border-radius: 12px;
+            background: #263e50;
+        }
+
+        h2 {
+            margin-bottom: 0.75rem;
+            font-size: 0.8125rem;
+            line-height: 1.5;
+            color: #c4d1db;
+            &::before { height: 0.75rem; width: 2px; }
+        }
+        h3 {
+            margin: 0.875rem 0 0.375rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            line-height: 1.5;
+            color: #c7b78f;
+        }
+        .u-summary-content { gap: 0.75rem; }
+        .u-logo { width: 3.5rem; height: 3.5rem; border-radius: 6px; }
+        .u-summary-info {
+            .u-name { font-size: 0.9375rem; white-space: normal; }
+            .u-name span, p { font-size: 0.8125rem; }
+            time { font-size: 0.6875rem; }
+        }
+        .u-member, .u-leader { font-size: 0.75rem; line-height: 1.75rem; }
+        @media screen and (max-width: 359px) {
+            .u-members { grid-template-columns: minmax(0, 1fr); }
+        }
     }
 }

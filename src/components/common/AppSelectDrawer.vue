@@ -44,6 +44,7 @@
                             @click="selectOption(option)"
                         >
                             <slot name="option" :option="option" :selected="isSelected(option)">
+                                <img v-if="option && option.icon" class="c-app-select-drawer__icon" :class="{ 'is-round': option.roundIcon }" :src="option.icon" alt="" loading="lazy" />
                                 <span class="c-app-select-drawer__label">{{ optionLabel(option) }}</span>
                                 <span class="c-app-select-drawer__radio" aria-hidden="true"></span>
                             </slot>
@@ -216,8 +217,8 @@ export default {
     max-height: 60dvh;
     padding: 10px 16px calc(12px + env(safe-area-inset-bottom));
     overflow: hidden;
-    color: #1f2329;
-    background: #fff;
+    color: var(--app-select-text, #1f2329);
+    background: var(--app-select-surface, #fff);
     border-radius: 24px 24px 0 0;
     box-sizing: border-box;
     box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.12);
@@ -228,7 +229,7 @@ export default {
     width: 40px;
     height: 4px;
     margin: 0 auto 14px;
-    background: #d8dde6;
+    background: var(--app-select-handle, #d8dde6);
     border-radius: 2px;
 }
 
@@ -239,10 +240,10 @@ export default {
 
 .c-app-select-drawer__title {
     margin: 0;
-    color: #17191c;
-    font-size: 20px;
+    color: var(--app-select-title, #17191c);
+    font-size: var(--app-select-title-size, 20px);
     font-weight: 600;
-    line-height: 28px;
+    line-height: 1.4;
 } 
 
 .c-app-select-drawer__list {
@@ -267,18 +268,23 @@ export default {
     min-height: 56px;
     margin: 0 0 10px;
     padding: 12px 18px;
-    color: #24272c;
+    color: var(--app-select-text, #24272c);
     font: inherit;
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 24px;
+    font-size: var(--app-select-option-size, 16px);
+    font-weight: var(--app-select-option-weight, 500);
+    line-height: 1.5;
     text-align: left;
-    background: #fff;
-    border: 1px solid #e4e7ec;
+    background: var(--app-select-option, #fff);
+    border: 1px solid var(--app-select-border, #e4e7ec);
     border-radius: 14px;
     box-sizing: border-box;
     appearance: none;
     cursor: pointer;
+
+    &:focus-visible {
+        outline: 2px solid var(--app-select-accent, #7c6ee6);
+        outline-offset: -3px;
+    }
 
     &:last-child {
         margin-bottom: 0;
@@ -286,22 +292,36 @@ export default {
 
     &:active,
     &.is-selected {
-        background: #f7f6ff;
-        border-color: #7c6ee6;
+        background: var(--app-select-selected-bg, #f7f6ff);
+        border-color: var(--app-select-accent, #7c6ee6);
+        color: var(--app-select-selected-text, #24272c);
     }
 
     &.is-disabled {
-        color: #b8bdc5;
-        background: #f6f7f8;
+        color: var(--app-select-disabled-text, #b8bdc5);
+        background: var(--app-select-disabled-bg, #f6f7f8);
         cursor: not-allowed;
     }
 }
 
 .c-app-select-drawer__label {
+    flex: 1;
     min-width: 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+.c-app-select-drawer__icon {
+    flex: none;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: 0.625rem;
+    object-fit: contain;
+    &.is-round {
+        border-radius: 50%;
+        object-fit: cover;
+    }
 }
 
 .c-app-select-drawer__radio {
@@ -309,20 +329,20 @@ export default {
     width: 20px;
     height: 20px;
     margin-left: 16px;
-    border: 2px solid #dfe3e8;
+    border: 2px solid var(--app-select-radio-border, #dfe3e8);
     border-radius: 50%;
     box-sizing: border-box;
 }
 
 .c-app-select-drawer__option.is-selected .c-app-select-drawer__radio {
-    border: 6px solid #6f5ddd;
+    border: 6px solid var(--app-select-accent, #6f5ddd);
 }
 
 .c-app-select-drawer__empty {
     padding: 32px 16px;
-    color: #9298a1;
-    font-size: 14px;
-    line-height: 20px;
+    color: var(--app-select-muted, #9298a1);
+    font-size: var(--app-select-empty-size, 14px);
+    line-height: 1.5;
     text-align: center;
 }
 

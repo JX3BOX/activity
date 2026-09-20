@@ -62,7 +62,33 @@
             </div>
         </div>
         <!-- 数据列表 -->
-        <div class="m-rank-dps-list" v-if="list.length">
+        <div class="m-dps-app-list" v-if="isAppMode && list.length">
+            <div class="m-dps-app-heading"><span>排名 / 角色</span><span>DPS / HPS</span></div>
+            <article v-for="{ item, rank } in appRankEntries" :key="rank" class="m-dps-app-card">
+                <span class="m-dps-app-rank" :class="{ 'is-top': rank <= 3 }">{{ rank }}</span>
+                <div class="m-dps-app-player">
+                    <a v-if="item.uid" class="m-dps-app-name" :href="authorLink(item.uid)">{{ item.role }}</a>
+                    <span v-else class="m-dps-app-name">{{ item.role }}</span>
+                    <div class="m-dps-app-mount"><img :src="showMountIcon(item.mount)" alt="" />{{ showMountLabel(item.mount) }}</div>
+                    <span class="m-dps-app-server">{{ item.server }}</span>
+                </div>
+                <div class="m-dps-app-score">
+                    <template v-if="Number(item.mount) === 10448">
+                        <span>DPS</span><b>{{ item.dps }}</b>
+                        <span>HPS</span><b>{{ item.hps }}</b>
+                    </template>
+                    <template v-else>
+                        <span>{{ isTherapy(item.mount) ? "HPS" : "DPS" }}</span>
+                        <b>{{ showDHPS(item) }}</b>
+                    </template>
+                </div>
+                <div class="m-dps-app-bar" aria-hidden="true">
+                    <i :style="{ width: getBarWidth(item._dhps), background: showMountColor(item.mount) }"></i>
+                </div>
+            </article>
+            <p v-if="!appRankEntries.length" class="m-dps-app-empty">暂无符合筛选条件的记录</p>
+        </div>
+        <div class="m-rank-dps-list" v-else-if="list.length">
             <el-row class="u-item u-head" :gutter="20">
                 <el-col class="u-col-ranking" :span="1"><div class="u-ranking">排名</div></el-col>
                 <el-col class="u-col-mount" :span="2">
@@ -146,14 +172,14 @@
                     >
                     <el-col class="u-col-team" :span="3">
                         <div class="u-team">
-                            <a :href="showTeamLink(item.team_id)" target="_blank" v-if="item.team_id"
+                            <a :href="showTeamLink(item.team_id)" :target="linkTarget" v-if="item.team_id"
                                 ><img :src="showTeamLogo(item)" /><span>{{ showTeamName(item) }}</span></a
                             ><span v-else>-</span>
                         </div></el-col
                     >
                     <el-col class="u-col-role" :span="4"
                         ><div class="u-role">
-                            <a :href="authorLink(item.uid)" target="_blank" v-if="item.uid"
+                            <a :href="authorLink(item.uid)" :target="linkTarget" v-if="item.uid"
                                 ><img :src="showUserAvatar(item)" />{{ item.role }}</a
                             >
                             <span v-else>{{ item.role }}</span>
@@ -222,15 +248,15 @@
                             <template #dropdown>
                                 <el-dropdown-menu class="u-more-dropdown-item">
                                     <el-dropdown-item v-if="item.battle_exist">
-                                        <a class="u-log" target="_blank" :href="getBattleLink(item.battleId)">日志</a>
+                                        <a class="u-log" :target="linkTarget" :href="getBattleLink(item.battleId)">日志</a>
                                     </el-dropdown-item>
                                     <el-dropdown-item v-if="item.jx3box_battle_id">
                                         <!-- 战斗数据 -->
-                                        <a :href="battleLink(item.jx3box_battle_id)" target="_blank">战斗数据</a>
+                                        <a :href="battleLink(item.jx3box_battle_id)" :target="linkTarget">战斗数据</a>
                                     </el-dropdown-item>
                                     <el-dropdown-item v-if="item.jx3box_jcl_id">
                                         <!-- JCL数据 -->
-                                        <a :href="jclLink(item.jx3box_jcl_id)" target="_blank">战斗分析</a>
+                                        <a :href="jclLink(item.jx3box_jcl_id)" :target="linkTarget">战斗分析</a>
                                     </el-dropdown-item>
                                 </el-dropdown-menu>
                             </template>
@@ -305,6 +331,15 @@ export default {
         };
     },
     computed: {
+        appRankEntries() {
+            return this.list.map((item, index) => ({ item, rank: index + 1 })).filter(({ item }) =>
+                (this.server === "全部服务器" || item.server === this.server) &&
+                (this.filterMount === "0" || item.mount == this.filterMount)
+            );
+        },
+        linkTarget() {
+            return isApp() ? "_self" : "_blank";
+        },
         id: function () {
             return this.$store.state.id;
         },
@@ -362,7 +397,7 @@ export default {
             return _xfmap;
         },
         xfOptions() {
-            return Object.entries(this.xfmap).map(([value, label]) => ({ value, label }));
+            return Object.entries(this.xfmap).map(([value, label]) => ({ value, label, icon: this.showMountIcon(value) }));
         },
         serverOptions() {
             return ["全部服务器", ...this.server_std].map((value) => ({ value, label: value }));

@@ -4,17 +4,23 @@
             <div class="m-rank-index__content">
                 <ul v-if="data && data.length" class="m-rank-index__list">
                     <li class="m-rank-index__item" v-for="(item, i) in data" :key="i">
-                        <a class="m-rank-index__link" :href="eventLink(item.slug)" target="_blank">
-                            <img class="m-rank-index__cover" :src="eventCover(item)" :alt="item.name" />
-                            <b class="m-rank-index__name">{{ item.name }}</b>
-                            <div class="m-rank-index__status">
-                                <span v-if="item.client" class="m-rank-index__tag" :class="item.client">{{
-                                    item.client == "std" ? "重制" : "缘起"
-                                }}</span>
-                                <i class="m-rank-index__state" :class="{ on: item.status }">{{
-                                    item.status ? "进行中" : "已结束"
-                                }}</i>
+                        <a class="m-rank-index__link" :href="eventLink(item.slug)" :target="isAppMode ? '_self' : '_blank'" :aria-label="item.name">
+                            <img class="m-rank-index__cover" :src="eventCover(item)" alt="" loading="lazy" />
+                            <div class="m-rank-index__details">
+                                <span v-if="eventVersion(item)" class="m-rank-index__version">{{ eventVersion(item) }}</span>
+                                <b class="m-rank-index__name">{{ eventTitle(item) }}</b>
+                                <div class="m-rank-index__status">
+                                    <span v-if="item.client" class="m-rank-index__tag" :class="item.client">{{
+                                        item.client == "std" ? "重制" : "缘起"
+                                    }}</span>
+                                    <i class="m-rank-index__state" :class="{ on: item.status }">{{
+                                        item.status ? "进行中" : "已结束"
+                                    }}</i>
+                                </div>
                             </div>
+                            <svg class="m-rank-index__arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="m9 6 6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
                         </a>
                     </li>
                 </ul>
@@ -27,6 +33,7 @@
 import DefaultLayout from "@/layouts/rank/DefaultLayout.vue";
 import PICS from "@/assets/js/pics.js";
 import { getEvents } from "@/service/rank/event.js";
+import { isApp } from "@/utils/env";
 export default {
     name: "RankIndex",
     components: {
@@ -41,6 +48,9 @@ export default {
         };
     },
     computed: {
+        isAppMode() {
+            return isApp();
+        },
         params: function () {
             return {
                 pageIndex: this.page,
@@ -49,6 +59,14 @@ export default {
         },
     },
     methods: {
+        eventVersion(item) {
+            const parts = (item.name || "").split("·");
+            return parts.length > 1 ? parts[0] : "";
+        },
+        eventTitle(item) {
+            const parts = (item.name || "").split("·");
+            return parts.length > 1 ? parts.slice(1).join("·") : item.name;
+        },
         loadData: function () {
             getEvents(this.params).then((res) => {
                 this.data = res.data.data.list;

@@ -39,7 +39,8 @@
     font-size: 14px;
     line-height: 2;
     margin: 10px 0;
-    white-space: pre-wrap;
+    // 公告使用 v-html 渲染，换行交给 HTML 段落处理，避免源码回车叠加为空行。
+    white-space: normal;
     color: @color;
 }
 .m-rank-join__null {
@@ -135,4 +136,317 @@
             margin-top: 0;
         }
     }
+}
+
+// App 报名页：延续百强深蓝与米金色，表单按单列阅读顺序排列。
+.v-app .p-rank-default-layout.p-rank-join {
+    background: #172938 url("@{img}image/rank/common/bg_back.png?12") center top / auto 720px no-repeat;
+
+    .m-rank-header {
+        display: block;
+        padding: 1.5rem 2rem 1rem;
+    }
+
+    .m-rank-logo {
+        width: 100%;
+        max-width: 340px;
+        height: auto;
+        margin: 0 auto;
+    }
+
+    .m-rank-join {
+        padding: 0 1rem calc(2rem + env(safe-area-inset-bottom));
+    }
+
+    .m-rank-join__content {
+        --el-color-primary: #e8cf9e;
+        --el-text-color-primary: #e6edf3;
+        --el-text-color-regular: #e6edf3;
+        --el-text-color-placeholder: #93a6b5;
+        --el-fill-color-blank: #192d3d;
+        --el-border-color: #506575;
+        --el-border-color-hover: #c3af8b;
+        --el-font-size-base: 0.875rem;
+        max-width: 600px;
+        padding: 1.25rem;
+        border: 1px solid rgba(232, 207, 158, 0.25);
+        border-radius: 16px;
+        background: #203545;
+        color: #e6edf3;
+        font-size: 0.875rem;
+        line-height: 1.8;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+
+        a {
+            color: #ffedc6;
+        }
+
+        .u-tip,
+        .u-footer {
+            font-size: 0.75rem;
+            line-height: 1.8;
+        }
+
+        .u-tip {
+            width: 100%;
+            margin-top: 0.5rem;
+            color: #aebdca;
+        }
+
+        .u-footer {
+            margin-top: 1.25rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(232, 207, 158, 0.16);
+        }
+
+        .el-button--primary {
+            min-height: 2.75rem;
+            height: auto;
+            color: #463620;
+            background: #e8cf9e;
+            border-color: #e8cf9e;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 600;
+
+            &.is-disabled {
+                color: #93a3af;
+                background: #354b5c;
+                border-color: #425b6d;
+            }
+        }
+    }
+
+    .m-join-title {
+        margin: 0 0 1rem;
+        color: #ffedc6;
+        font-size: clamp(1rem, calc(0.5rem + 2.5vw), 1.125rem);
+        font-weight: 600;
+        line-height: 1.5;
+        text-align: left;
+    }
+
+    .m-join-notice {
+        margin: 0 0 1.5rem;
+        padding: 0.75rem 1rem;
+        border: 1px solid #42596b;
+        border-radius: 8px;
+        background: #263e50;
+        color: #bdcbd5;
+        font-size: 0.8125rem;
+        line-height: 1.9;
+        overflow-wrap: anywhere;
+
+        &:empty {
+            display: none;
+        }
+
+        p {
+            margin: 0 0 0.5rem;
+            &:last-child { margin-bottom: 0; }
+        }
+    }
+
+    .m-join-form {
+        padding: 0;
+
+        .el-form-item {
+            margin-bottom: 1.25rem;
+        }
+
+        .el-form-item__label {
+            margin-bottom: 0.5rem;
+            padding: 0;
+            color: #e6edf3;
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+
+        .el-form-item__content,
+        .el-input__inner {
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+
+        .el-input__wrapper {
+            min-height: 2.75rem;
+            padding: 0 0.75rem;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        .el-input__count,
+        .el-input__count-inner {
+            color: #93a6b5;
+            background: transparent;
+            font-size: 0.6875rem;
+        }
+
+        .u-btns {
+            margin-top: 1.5rem;
+            .u-btn { width: 100%; }
+        }
+    }
+
+    .m-join-select {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        width: 100%;
+        min-height: 2.75rem;
+        padding: 0.625rem 0.75rem;
+        border: 1px solid #506575;
+        border-radius: 8px;
+        background: #192d3d;
+        color: #e6edf3;
+        font: inherit;
+        font-size: 0.875rem;
+        line-height: 1.5;
+        text-align: left;
+        cursor: pointer;
+
+        > span:first-child {
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .is-placeholder { color: #93a6b5; }
+        &__arrow { color: #e8cf9e; flex: none; }
+        &:focus-visible { outline: 2px solid #e8cf9e; outline-offset: 2px; }
+    }
+
+    .m-join-done {
+        padding: 1rem 0;
+        font-size: 0.875rem;
+        .u-title { font-size: 1.125rem; line-height: 1.6; }
+        strong { color: #ffedc6; }
+        p { margin: 0.75rem 0; }
+    }
+
+    .m-rank-join__null {
+        padding: 2rem 1.25rem;
+        p { margin: 0 0 1.25rem; font-size: 0.875rem; }
+        .el-button { width: 100%; max-width: 280px; }
+    }
+}
+
+// PC 报名页与百强入口保持一致，独立作用域保留 App 布局。
+.p-rank-default-layout.p-rank-join.is-pc-join {
+    background: #172938 url("@{img}image/rank/common/bg_back.png?12") center top / auto 900px no-repeat;
+    min-height: 100vh;
+
+    .m-rank-header { display: block; padding: 28px 24px 24px; }
+    .m-rank-logo { width: 100%; max-width: 360px; height: auto; margin: 0 auto; }
+    .m-rank-content { min-height: 0; padding: 0; }
+    .m-rank-join { padding: 0 32px 64px; }
+
+    .m-rank-join__content {
+        --el-color-primary: #e8cf9e;
+        --el-text-color-primary: #e6edf3;
+        --el-text-color-regular: #e6edf3;
+        --el-text-color-placeholder: #93a6b5;
+        --el-fill-color-blank: #192d3d;
+        --el-fill-color-light: #263e50;
+        --el-border-color: #506575;
+        --el-border-color-hover: #c3af8b;
+        --el-disabled-bg-color: #263e50;
+        --el-mask-color: rgba(32, 53, 69, 0.9);
+        max-width: 720px;
+        padding: 32px 40px;
+        border: 1px solid rgba(232, 207, 158, 0.25);
+        border-radius: 16px;
+        background: linear-gradient(135deg, #253d4d, #1c303f);
+        color: #e6edf3;
+        font-size: 14px;
+        line-height: 1.8;
+        box-shadow: 0 12px 36px rgba(0, 0, 0, 0.18);
+
+        a { color: #e8cf9e; text-decoration: none; }
+        a:hover { color: #ffedc6; text-decoration: underline; }
+        a:focus-visible { outline: 2px solid #e8cf9e; outline-offset: 4px; }
+        .u-footer { margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(232, 207, 158, 0.16); font-size: 13px; }
+        .u-tip { width: 100%; margin-top: 8px; color: #aebdca; font-size: 13px; }
+        .el-button--primary {
+            height: 44px;
+            border: 1px solid #e8cf9e;
+            border-radius: 8px;
+            background: #e8cf9e;
+            color: #463620;
+            font-size: 14px;
+            font-weight: 600;
+            &:hover:not(.is-disabled), &:focus-visible { background: #ffedc6; border-color: #ffedc6; }
+            &.is-disabled { color: #93a3af; background: #354b5c; border-color: #425b6d; }
+        }
+    }
+
+    .m-join-title { margin: 0; color: #ffedc6; font-size: 24px; font-weight: 600; line-height: 1.5; text-align: left; }
+    .m-join-subtitle { margin: 8px 0 24px; color: #aebdca; font-size: 14px; }
+    .m-join-notice {
+        margin: 0 0 24px;
+        padding: 14px 18px;
+        border: 1px solid #42596b;
+        border-radius: 8px;
+        background: #263e50;
+        color: #bdcbd5;
+        font-size: 13px;
+        line-height: 1.9;
+        overflow-wrap: anywhere;
+        &:empty { display: none; }
+        p { margin: 0 0 8px; &:last-child { margin-bottom: 0; } }
+    }
+    .m-join-form {
+        padding: 0;
+        .el-form-item { margin-bottom: 22px; }
+        .el-form-item__label { margin-bottom: 8px; padding: 0; color: #e6edf3; font-size: 14px; line-height: 1.5; }
+        .el-select { width: 100%; }
+        .el-input__wrapper, .el-select__wrapper { min-height: 44px; padding: 0 14px; border-radius: 8px; box-sizing: border-box; }
+        .el-input__count, .el-input__count-inner { color: #93a6b5; background: transparent; }
+        .u-btns { margin-top: 28px; .u-btn { width: 100%; } }
+    }
+    .m-join-done {
+        margin-top: 24px;
+        padding: 24px;
+        border: 1px solid #42596b;
+        border-radius: 10px;
+        background: #192d3d;
+        .u-title { margin: 0 0 16px; color: #90d9b2; font-size: 22px; &.u-orange { color: #e8cf9e; } }
+        p { margin: 8px 0; color: #aebdca; overflow-wrap: anywhere; }
+        strong { color: #e6edf3; font-weight: 500; }
+    }
+    .m-rank-join__null {
+        max-width: 600px;
+        padding: 36px 40px 24px;
+        .m-join-title { text-align: center; }
+        > p { margin: 12px 0 0; }
+        .m-join-subtitle { margin: 4px 0 24px; }
+        .el-button { width: 240px; }
+    }
+    .m-join-login-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 52px;
+        height: 52px;
+        margin: 0 auto 16px;
+        border: 1px solid rgba(232, 207, 158, 0.25);
+        border-radius: 50%;
+        background: rgba(232, 207, 158, 0.08);
+        color: #e8cf9e;
+        font-size: 24px;
+    }
+}
+
+// Element Plus 下拉层挂载到 body，使用专属类限定配色。
+.m-join-pc-popper.el-popper {
+    --el-bg-color-overlay: #203545;
+    --el-border-color-light: #506575;
+    --el-text-color-regular: #e6edf3;
+    --el-text-color-placeholder: #93a6b5;
+    --el-fill-color-light: #304b5e;
+    --el-color-primary: #e8cf9e;
+    .u-team-name { color: #e6edf3; }
+    .u-team-id, .u-team-server { color: #aebdca; }
 }

@@ -1,13 +1,20 @@
 <template>
-    <default-layout>
+    <default-layout :class="{ 'is-pc-join': !isAppMode }">
         <div class="m-rank-join">
             <div class="m-rank-join__content" v-if="isLogin" v-loading="loading">
                 <div class="m-join m-join-team">
                     <h1 class="m-join-title">报名入口</h1>
+                    <p class="m-join-subtitle" v-if="!isAppMode && !status">选择报名活动与团队，填写你们的参赛宣言。</p>
                     <div class="m-join-notice" v-html="notice"></div>
-                    <el-form class="m-join-form" ref="form" :model="form" label-width="80px" v-if="!loading && !status" size="large">
+                    <el-form class="m-join-form" ref="form" :model="form" label-position="top" label-width="auto" v-if="!loading && !status" size="large">
                         <el-form-item label="报名活动">
-                            <el-select v-model="form.event_id" placeholder="请选择活动" no-data-text="暂无活动">
+                            <AppSelectDrawer v-if="isAppMode" v-model="form.event_id" title="报名活动" :options="eventOptions" empty-text="暂无开放报名的活动" v-slot="{ selectedOption }">
+                                <button type="button" class="m-join-select">
+                                    <span :class="{ 'is-placeholder': !selectedOption }">{{ selectedOption?.label || "请选择活动" }}</span>
+                                    <span class="m-join-select__arrow" aria-hidden="true">⌄</span>
+                                </button>
+                            </AppSelectDrawer>
+                            <el-select v-else v-model="form.event_id" placeholder="请选择活动" no-data-text="暂无活动" popper-class="m-join-pc-popper">
                                 <el-option
                                     v-for="event in events"
                                     :key="event.ID"
@@ -18,7 +25,13 @@
                             </el-select>
                         </el-form-item>
                         <el-form-item label="选择团队">
-                            <el-select v-model="form.team_id" placeholder="请选择团队" @change="updateTeam">
+                            <AppSelectDrawer v-if="isAppMode" v-model="form.team_id" title="选择团队" :options="teamOptions" @change="updateTeam" v-slot="{ selectedOption }">
+                                <button type="button" class="m-join-select">
+                                    <span :class="{ 'is-placeholder': !selectedOption }">{{ selectedOption?.label || "请选择团队" }}</span>
+                                    <span class="m-join-select__arrow" aria-hidden="true">⌄</span>
+                                </button>
+                            </AppSelectDrawer>
+                            <el-select v-else v-model="form.team_id" placeholder="请选择团队" @change="updateTeam" popper-class="m-join-pc-popper">
                                 <el-option v-for="team in teams" :key="team.ID" :label="team.name" :value="team.ID"
                                     ><span class="m-join-team-item"
                                         ><b class="u-team-name">{{ team.name }}</b
@@ -28,7 +41,7 @@
                                 </el-option>
                             </el-select>
                             <div class="u-tip" v-if="!teams || !teams.length">
-                                还没有团队？<a href="/team" target="_blank">创建团队</a>
+                                还没有团队？<a href="/team" :target="linkTarget">创建团队</a>
                             </div>
                         </el-form-item>
                         <el-form-item label="参赛宣言">
@@ -60,12 +73,20 @@
                 </div>
 
                 <div class="u-footer">
-                    <a href="/notice/32280" target="_blank"><i class="el-icon-info"></i> <b>点击查看百强活动细则</b></a>
+                    <a href="/notice/32280" :target="linkTarget"><i class="el-icon-info"></i> <b>点击查看百强活动细则</b></a>
                 </div>
             </div>
             <div class="m-rank-join__content m-rank-join__null" v-else>
+                <template v-if="!isAppMode">
+                    <div class="m-join-login-icon" aria-hidden="true"><el-icon><User /></el-icon></div>
+                    <h1 class="m-join-title">报名入口</h1>
+                </template>
                 <p>你尚未登录</p>
-                <el-button type="primary" @click="goLogin" size="large">登录</el-button>
+                <p class="m-join-subtitle" v-if="!isAppMode">登录魔盒账号后，即可选择团队参与百强活动。</p>
+                <el-button type="primary" @click="goLogin" size="large">{{ isAppMode ? "登录" : "登录后报名" }}</el-button>
+                <div class="u-footer" v-if="!isAppMode">
+                    <a href="/notice/32280" :target="linkTarget">查看百强活动细则 <span aria-hidden="true">→</span></a>
+                </div>
             </div>
         </div>
         <bindWxMp v-model="showBindWxMp" @update="onBindWxMpUpdate"></bindWxMp>
@@ -73,7 +94,9 @@
 </template>
 
 <script>
+import { isApp } from "@/utils/env";
 import DefaultLayout from "@/layouts/rank/DefaultLayout.vue";
+import AppSelectDrawer from "@/components/common/AppSelectDrawer.vue";
 import { getEvents } from "@/service/rank/event.js";
 import { joinEvent, hasJoined } from "@/service/rank/join.js";
 import { getMyTeams } from "@/service/rank/team.js";
@@ -124,6 +147,18 @@ export default {
         };
     },
     computed: {
+        isAppMode() {
+            return isApp();
+        },
+        eventOptions() {
+            return this.events.map((event) => ({ value: event.ID, label: event.name }));
+        },
+        teamOptions() {
+            return this.teams.map((team) => ({ value: team.ID, label: `${team.name}（${team.server || ""} / ID:${team.ID}）` }));
+        },
+        linkTarget() {
+            return isApp() ? "_self" : "_blank";
+        },
         ready: function () {
             return this.form.event_id && this.form.team_id && this.form.slogan && !this.status && !this.processing;
         },
@@ -263,6 +298,7 @@ export default {
         this.isLogin && this.init();
     },
     components: {
+        AppSelectDrawer,
         DefaultLayout,
         BindWxMp,
     },

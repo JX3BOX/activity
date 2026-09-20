@@ -23,7 +23,7 @@
                             <span>{{ i + 1 }}</span>
                         </div>
                         <!-- 队徽 -->
-                        <a class="u-logo" :href="teamLink(item.team_id)" target="_blank">
+                        <a class="u-logo" :href="teamLink(item.team_id)" :target="linkTarget">
                             <el-image
                                 v-if="item.team_logo"
                                 :src="i < 3 ? teamLogo(item.team_logo, true) : teamLogo(item.team_logo, false)"
@@ -35,7 +35,7 @@
                         </a>
                         <!-- 名称 -->
                         <div class="u-title">
-                            <a class="u-teamname" :href="teamLink(item.team_id)" target="_blank">
+                            <a class="u-teamname" :href="teamLink(item.team_id)" :target="linkTarget">
                                 {{ item.team_name && item.team_name.slice(0, 6) }}
                             </a>
                             <span class="u-server">{{ item.team_server }}</span>
@@ -78,14 +78,14 @@
                             v-if="item.jx3box_battle_id || item.jx3box_jcl_id"
                         >
                             <!-- JCL数据 -->
-                            <a :href="jclLink(item.jx3box_jcl_id)" target="_blank" v-if="item.jx3box_jcl_id">
+                            <a :href="jclLink(item.jx3box_jcl_id)" :target="linkTarget" v-if="item.jx3box_jcl_id">
                                 <img :src="imgurl + 'rank/rank_jcl_1.png'" v-if="i < 3" />
                                 <img :src="imgurl + 'rank/rank_jcl.png'" v-else />
                             </a>
                             <!-- 战斗数据 -->
                             <a
                                 :href="battleLink(item.jx3box_battle_id)"
-                                target="_blank"
+                                :target="linkTarget"
                                 v-if="item.jx3box_battle_id"
                                 class="u-battle-btn"
                             >
@@ -125,6 +125,9 @@ export default {
         };
     },
     computed: {
+        linkTarget() {
+            return isApp() ? "_self" : "_blank";
+        },
         id: function () {
             return this.$store.state.id;
         },

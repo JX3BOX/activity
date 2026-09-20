@@ -1,9 +1,12 @@
 import jx3box from "@jx3box/jx3box-common/data/jx3box.json";
 const { __cdn } = jx3box;
-const isApp = localStorage.getItem('__env') == 'app';
+import { isApp } from "@/utils/env";
 
 const PICS = {
-    LOGO: __cdn + `design/rank/common/logo${isApp ? '_app' : ''}.png`,
+    LOGO_PC: __cdn + "design/rank/common/logo.png",
+    get LOGO() {
+        return __cdn + `design/rank/common/logo${isApp() ? '_app' : ''}.png`;
+    },
     cover: function (id) {
         return __cdn + `design/rank/cover/${id}.png`;
     },

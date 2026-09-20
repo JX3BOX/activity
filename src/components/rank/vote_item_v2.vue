@@ -5,12 +5,12 @@
                 <i class="u-ranking">{{ i + 1 }}</i>
             </td>
             <td>
-                <a :href="teamLink(item.team_id)" target="_blank">
+                <a :href="teamLink(item.team_id)" :target="linkTarget">
                     <img loading="lazy" class="u-logo" :src="teamLogo(item.logo)" :alt="item.name" />
                 </a>
             </td>
             <td>
-                <a class="u-name" :href="teamLink(item.team_id)" target="_blank">{{ item.name }}</a>
+                <a class="u-name" :href="teamLink(item.team_id)" :target="linkTarget">{{ item.name }}</a>
                 <!-- 宣言仅 app 模式在团队名下显示，PC 有独立的"团长&宣言"列 -->
                 <span class="u-slogan u-slogan--app" v-if="isAppMode">{{ item.slogan }}</span>
             </td>
@@ -37,7 +37,7 @@
                     @click="vote(item)"
                     :disabled="item.clicked || !event_status || !canVote"
                 ></button>
-                <div v-else>已支持</div>
+                <div v-else class="u-voted"><span aria-hidden="true">✓</span>已支持</div>
             </td>
         </tr>
         <bindWxMp v-model="showBindWxMp" @update="onBindWxMpUpdate"></bindWxMp>
@@ -71,6 +71,9 @@ export default {
         };
     },
     computed: {
+        linkTarget() {
+            return isApp() ? "_self" : "_blank";
+        },
         id: function () {
             return ~~this.$store.state.id;
         },
@@ -155,7 +158,7 @@ export default {
             // });
         },
         hasVoted: function (item) {
-            return this.voteTeam.includes(String(item.team_id));
+            return item.clicked || this.voteTeam.includes(String(item.team_id));
         },
         teamLogo: function (val) {
             return val ? getThumbnail(val, 96, true) : getThumbnail(default_avatar, 96, true);
