@@ -5,7 +5,6 @@
         <div class="m-rank-btns">
             <a class="u-btn u-btn-join" href="/rank/#/join" :target="linkTarget" rel="noopener"></a>
             <!-- <a class="u-btn u-btn-lucky" href="/fb" :target="linkTarget" rel="noopener">副本开荒攻略</a> -->
-            <a class="u-btn u-btn-weal" href="/rank/#/surprise" :target="linkTarget" rel="noopener"></a>
         </div>
         <div class="m-rank-txt" v-html="desc"></div>
     </div>

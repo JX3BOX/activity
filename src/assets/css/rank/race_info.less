@@ -88,6 +88,87 @@
     .u-all {
         .mt(10px);
     }
+    .m-rank-txt {
+        max-width: 1080px;
+        margin: 32px auto 0;
+        padding: 0 16px 32px;
+        font-size: 16px;
+        line-height: 1.9;
+        overflow-wrap: break-word;
+
+        div {
+            padding: 0;
+        }
+
+        p,
+        > div {
+            margin: 0 0 16px;
+        }
+
+        h2 {
+            margin: 48px 0 24px;
+
+            &:first-child {
+                margin-top: 0;
+            }
+        }
+
+        h3,
+        h4,
+        h5,
+        h6 {
+            margin: 36px 0 18px;
+            padding-bottom: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            line-height: 1.6;
+            color: #ffedc6;
+            border-bottom: 1px solid rgba(255, 237, 198, 0.2);
+        }
+
+        ul,
+        ol {
+            margin: 0 0 24px;
+            padding-left: 1.5em;
+        }
+
+        li {
+            margin-bottom: 12px;
+            padding-left: 4px;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+
+        a {
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            margin: 8px 0 16px;
+        }
+
+        @media (max-width: 768px) {
+            padding: 0 4px 20px;
+            font-size: 14px;
+
+            h2 {
+                margin: 36px 0 20px;
+            }
+
+            h3,
+            h4,
+            h5,
+            h6 {
+                font-size: 16px;
+            }
+        }
+    }
+
     iframe {
         .w(100%);
         .h(800px);
