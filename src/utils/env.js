@@ -31,7 +31,12 @@ function getUrlParams() {
  * @returns {boolean}
  */
 export function isApp() {
-    return responsiveAppMode.value || getUrlParams().get(ENV_KEY) === APP_VALUE || localStorage.getItem(ENV_KEY) === APP_VALUE;
+    return responsiveAppMode.value || isEmbeddedApp();
+}
+
+// 仅判断 App 入口，避免把手机浏览器的响应式布局当作原生 App。
+export function isEmbeddedApp() {
+    return getUrlParams().get(ENV_KEY) === APP_VALUE || localStorage.getItem(ENV_KEY) === APP_VALUE;
 }
 
 /**

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { isApp } from "@/utils/env";
+import { isApp, isEmbeddedApp } from "@/utils/env";
 
 export default {
     name: "Rank",
@@ -20,7 +20,16 @@ export default {
         openAppContentLink(event) {
             if (!isApp() || event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
             const link = event.target.closest?.("a[href]");
-            if (!link || !link.closest(".m-rank-container") || link.target !== "_blank" || link.hasAttribute("download")) return;
+            if (!link || !link.closest(".m-rank-container") || link.hasAttribute("download")) return;
+            // 普通链接和后台 HTML 中的百强站内链接也交给路由，避免整页跳转新增历史。
+            const url = new URL(link.href, window.location.href);
+            if (isEmbeddedApp() && url.origin === window.location.origin && /^\/rank\/?$/.test(url.pathname)) {
+                event.preventDefault();
+                const route = url.hash.slice(1) || "/";
+                this.$router.push(route.startsWith("/") ? route : "/" + route);
+                return;
+            }
+            if (link.target !== "_blank") return;
             event.preventDefault();
             window.location.assign(link.href);
         },
