@@ -8,10 +8,11 @@ function getTop100(params, event_id = 1) {
     });
 }
 
-function getTopTotal(achieve_arr) {
+function getTopTotal(achieve_arr, event_id) {
     return $team().get(`/api/team/race/achieve/finish/process`, {
         params: {
             ids: achieve_arr,
+            event_id,
             // _no_cache
         },
     });
