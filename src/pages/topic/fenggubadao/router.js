@@ -1,6 +1,9 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 
-const Index = () => import("./Index.vue");
+import { isEmbeddedApp, syncAppEnv } from "@/utils/env";
+
+syncAppEnv();
+const Index = isEmbeddedApp() ? () => import("./Index_App.vue") : () => import("./Index.vue");
 
 export default createRouter({
     history: createWebHashHistory(),

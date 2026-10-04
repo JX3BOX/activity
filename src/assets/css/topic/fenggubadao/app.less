@@ -1,0 +1,567 @@
+// App 专属排版，以 375px 画板等比缩放；不根据屏幕断点切换网页布局。
+.m-fenggu.is-app {
+    min-width: 0;
+    width: 100%;
+    .m-kv {
+        height: 173.33333vw;
+        align-items: flex-start;
+        background-size: auto 128vw;
+        background-position: 52% top;
+    }
+    .m-kv-content {
+        width: 77.33333vw;
+        margin-top: 94.66667vw;
+    }
+    .u-kv-title {
+        filter: none;
+    }
+    .u-kv-label {
+        width: 56vw;
+        margin-top: 2.66667vw;
+    }
+    .u-kv-label strong {
+        font-size: 6.66667vw;
+    }
+    .u-kv-logo {
+        width: 24vw;
+        top: 140vw;
+        left: 38vw;
+    }
+    .m-section {
+        min-height: 0;
+        padding: 10.66667vw 0 0;
+        background-size: 100% 100%;
+    }
+    .u-title {
+        width: 82.66667vw;
+        max-height: none;
+        height: 22.66667vw;
+        margin: 0 auto 5.33333vw;
+    }
+    .m-tabs {
+        width: 80vw;
+        height: 11.2vw;
+        margin: 0 auto 5.33333vw;
+        border-radius: 6.4vw;
+        box-sizing: border-box;
+        padding: 0.4vw;
+        border-width: 0.26667vw;
+        button {
+            padding: 0;
+            font-size: 4vw;
+            font-family: "Songti SC", "STSong", "SimSun", serif;
+            border-radius: 6vw;
+            color: #c9b689;
+            &.active {
+                font-weight: 700;
+                color: #fff;
+            }
+        }
+    }
+    .m-sect {
+        height: auto;
+        padding-top: 5.33333vw;
+    }
+    .m-sect-panel {
+        width: 100%;
+        height: 104vw;
+        min-height: 0;
+    }
+    .m-sect-background,
+    .m-sect-position {
+        width: 100%;
+        height: 104vw;
+    }
+    .m-sect-background > img,
+    .u-position-character {
+        width: 158vw;
+        height: 102vw;
+        max-height: none;
+        max-width: none;
+        bottom: 0;
+        left: -23vw;
+    }
+    .u-sect-copy {
+        width: 72vw;
+        right: 0;
+        bottom: 4vw;
+        font-size: 2.65vw;
+        font-family: "Songti SC", "STSong", "SimSun", serif;
+        line-height: 1.4;
+        p {
+            margin: 0 0 4.2vw;
+            padding: 2.2vw 3vw 2.2vw 10.5vw;
+            background: #31254e;
+            clip-path: polygon(3.5% 0, 100% 0, 100% 100%, 0 100%);
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+        p::before {
+            width: 5vw;
+            height: 5vw;
+            top: 50%;
+            left: 3.5vw;
+        }
+    }
+    .m-scene-stage {
+        position: relative;
+        display: flex;
+        align-items: center;
+        width: 90.66667vw;
+        margin-bottom: 17vw;
+        .u-scene {
+            width: 100%;
+            max-height: 74.66667vw;
+            margin: 0;
+        }
+        .u-arrow {
+            top: 50%;
+            transform: translateY(-50%);
+            &.is-left {
+                left: -15px;
+            }
+            &.is-right {
+                right: -15px;
+                transform: translateY(-50%) rotate(180deg);
+            }
+        }
+    }
+    .u-scene-copy {
+        bottom: 25vw;
+        font-size: 2.93333vw;
+    }
+    .m-sect-panel .u-dots {
+        bottom: 12vw;
+    }
+    .u-dots button {
+        width: 3.73333vw;
+        height: 1.06667vw;
+        margin: 0 1.6vw;
+    }
+    .u-position-info {
+        top: 14.66667vw;
+        right: 3.2vw;
+        width: 46.66667vw;
+        gap: 2.66667vw;
+        h3 {
+            font-size: 5.06667vw;
+            margin-bottom: 2.66667vw;
+        }
+        h3 img {
+            width: 9.06667vw;
+            margin-right: 1.6vw;
+        }
+        p {
+            font-size: 3.2vw;
+            gap: 2.13333vw;
+            margin-bottom: 3.2vw;
+        }
+        b {
+            font-size: 3.2vw;
+            padding: 1.33333vw 2.13333vw;
+        }
+        .u-skills {
+            margin: 5.33333vw 0;
+        }
+        .u-skills span {
+            min-width: 0;
+            font-size: 2.66667vw;
+        }
+        .u-skills img {
+            width: 10.13333vw;
+            height: 10.13333vw;
+            margin-bottom: 2.13333vw;
+        }
+        .u-position-text {
+            font-size: 3.2vw;
+            line-height: 1.7;
+        }
+    }
+    .u-arrow {
+        width: 9.06667vw;
+        height: 10.13333vw;
+        padding: 0;
+        font-size: 0;
+        background: url("@{asset}jt.png@{ver}") center / contain no-repeat;
+        &.is-left {
+            left: 5.86667vw;
+        }
+        &.is-right {
+            right: 5.86667vw;
+            transform: rotate(180deg);
+        }
+    }
+    .m-dungeon {
+        height: 168vw;
+        padding-top: 12vw;
+        background-image: url("@{asset}bg2.png@{ver}"), linear-gradient(#332651 85%, #12382c 85%);
+        background-size: auto 100%, 100% 100%;
+    }
+    .m-dungeon-panel {
+        width: 100%;
+        min-height: 0;
+        height: 104vw;
+        justify-content: flex-start;
+    }
+    .m-dungeon-stage {
+        width: 92vw;
+        height: 80vw;
+        aspect-ratio: auto;
+    }
+    .u-dungeon-cover-copy {
+        top: auto;
+        bottom: 4vw;
+        left: 4vw;
+        width: 54vw;
+        height: 25.5vw;
+        padding: 2.5vw;
+        box-sizing: border-box;
+        transform: none;
+        font: 2.65vw/1.5 "Songti SC", "STSong", "SimSun", serif;
+        letter-spacing: 0;
+        text-align: left;
+        color: #fff;
+        background: rgba(13, 10, 30, 0.65);
+        overflow-y: auto;
+        scrollbar-width: none;
+        &::-webkit-scrollbar {
+            display: none;
+        }
+        &.is-light {
+            text-shadow: none;
+        }
+    }
+    .m-dungeon-stage .u-boss-copy {
+        font-size: 2.66667vw;
+        line-height: 1.8;
+        letter-spacing: 0;
+    }
+    .m-dungeon-stage .m-boss-list {
+        top: auto;
+        bottom: -16vw;
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+        width: 62.66667vw;
+        height: 12.8vw;
+        flex-direction: row;
+        justify-content: center;
+        gap: 5vw;
+        button {
+            position: relative;
+            width: 11vw;
+            flex-shrink: 0;
+        }
+        button img {
+            width: 11vw;
+            height: 11vw;
+        }
+    }
+    .m-dungeon-stage .m-boss-list.has-five-bosses {
+        width: 63vw;
+        gap: 2vw;
+    }
+    .m-boss-list button.active,
+    .m-boss-list.is-cover button {
+        opacity: 1;
+        filter: none;
+    }
+    .m-boss-list button.active::after,
+    .m-boss-list button.is-cover-selected::after {
+        content: "";
+        position: absolute;
+        width: 8.6vw;
+        height: 8.6vw;
+        border: 0.65vw solid #ebd59d;
+        transform: rotate(45deg);
+        pointer-events: none;
+    }
+    .m-dungeon-panel > .u-arrow {
+        top: 88.8vw;
+    }
+    .u-boss-dots {
+        display: none;
+    }
+    .m-play {
+        height: 174vw;
+        padding-top: 16vw;
+        margin-top: 0;
+        background-image: url("@{asset}bg3.png@{ver}"), linear-gradient(#12382c, #adeede);
+    }
+    .m-play .m-tabs {
+        background: #185649;
+        border-color: #269779;
+        button.active {
+            background: #0e9876;
+        }
+    }
+    .m-play-panel,
+    .m-play-panel.is-trial {
+        width: 93.33333vw;
+        min-height: 0;
+        height: 82.66667vw;
+        margin-top: 12vw;
+    }
+    .m-play-panel:not(.is-trial) {
+        width: 100%;
+        height: 105vw;
+        margin-top: 5vw;
+        align-items: flex-start;
+    }
+    .m-play-panel > img {
+        position: absolute;
+        top: 0;
+        width: 140vw;
+        max-width: none;
+    }
+    .u-play-intro {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        margin: 0;
+        padding: 2vw 0;
+        border: 0;
+        &::before,
+        &::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(209, 204, 143, 0.5) 35%,
+                rgba(209, 204, 143, 0.5) 65%,
+                transparent
+            );
+        }
+        &::before {
+            top: 0;
+        }
+        &::after {
+            bottom: 0;
+        }
+        background: linear-gradient(90deg, transparent, #527d63, transparent);
+        color: #e7d3a2;
+        text-align: center;
+        font: 3.2vw/1.3 "Songti SC", "STSong", "SimSun", serif;
+        letter-spacing: 0.4vw;
+    }
+    .u-play-description {
+        position: absolute;
+        top: 81vw;
+        z-index: 1;
+        margin: 0;
+        width: 100%;
+        color: #123f34;
+        text-align: center;
+        font: 3.2vw/1.5 "Songti SC", "STSong", "SimSun", serif;
+        letter-spacing: 0.3vw;
+    }
+    .m-play-panel .m-play-actions a {
+        width: 31vw;
+        min-width: 0;
+        padding: 1.6vw 0;
+        border-radius: 8vw;
+        border: 0.3vw solid rgba(162, 255, 225, 0.55);
+        background: linear-gradient(
+            180deg,
+            rgba(205, 255, 238, 0.48),
+            rgba(26, 143, 115, 0.55) 45%,
+            rgba(112, 245, 211, 0.8)
+        );
+        box-shadow: inset 0 0 2vw #b0ffdd, 0 0 2vw #67e7bd;
+        font: 700 4.3vw/1.3 "Songti SC", "STSong", "SimSun", serif;
+        letter-spacing: 0.5vw;
+        animation: none;
+        strong {
+            animation: none;
+            font-weight: 700;
+            letter-spacing: 0.5vw;
+        }
+        small {
+            display: none;
+        }
+        &:nth-child(1) {
+            top: 17vw;
+            left: 3vw;
+        }
+        &:nth-child(2) {
+            top: 20vw;
+            right: 8vw;
+        }
+        &:nth-child(3) {
+            top: 47vw;
+            left: 10vw;
+            bottom: auto;
+        }
+        &:nth-child(4) {
+            top: 51vw;
+            right: 3vw;
+            bottom: auto;
+        }
+    }
+    .m-play-panel .m-trial-panel {
+        // 素材右侧包含透明装饰留白，扩展底图让实色卡片铺满滚动容器。
+        background-size: 106% 100%;
+        background-position: left center;
+        min-height: 0;
+        height: 80vw;
+        padding: 6.66667vw 0;
+        border-radius: 1.33333vw;
+        h3 {
+            min-width: 34.66667vw;
+            top: -4vw;
+            padding: 1.33333vw 4vw;
+            font-size: 4.53333vw;
+        }
+        ul {
+            margin-top: 6.93333vw;
+            gap: 1.86667vw;
+            font-size: 3.2vw;
+        }
+        li {
+            padding-left: 0;
+            &::before {
+                display: none;
+            }
+        }
+    }
+    .m-play-panel .m-trial-bosses {
+        padding-inline: 5.5vw;
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+        scrollbar-width: none;
+        &::-webkit-scrollbar {
+            display: none;
+        }
+        gap: 1.86667vw;
+        overflow-x: auto;
+        grid-template-columns: repeat(6, 17.6vw) 3.63333vw;
+        padding-right: 0;
+        &::after {
+            content: "";
+        }
+    }
+    .m-pvp {
+        height: 164vw;
+        padding-top: 12vw;
+        margin-top: 0;
+        background-image: url("@{asset}bg4.png@{ver}"), linear-gradient(#adeede 50%, #59647c 50%);
+    }
+    .m-pvp-panel {
+        width: 100%;
+        min-height: 0;
+        height: 113.33333vw;
+    }
+    .m-pvp-panel > img {
+        width: 96vw;
+        bottom: 2.66667vw;
+    }
+    .m-pvp-panel .m-pvp-flags {
+        top: 8vw;
+        gap: 9.33333vw;
+        a {
+            width: 21.33333vw;
+            height: 49.33333vw;
+            padding: 5.33333vw 2.66667vw;
+            animation: none;
+        }
+        a:nth-child(2) {
+            margin-top: -6.4vw;
+        }
+        a strong {
+            font-size: 7.73333vw;
+        }
+        a .u-flag-detail {
+            top: 5.33333vw;
+            bottom: 4vw;
+            left: 2.13333vw;
+            right: 2.13333vw;
+            font-size: 2.4vw;
+        }
+        a .u-flag-detail i {
+            height: 38.66667vw;
+            padding: 3.2vw 1.06667vw 0;
+        }
+        a .u-flag-detail i.has-mark::before {
+            width: 1.33333vw;
+            height: 1.33333vw;
+        }
+    }
+    .m-encounter {
+        min-height: 245.33333vw;
+        padding-top: 14.66667vw;
+        margin-top: 0;
+        background-color: #59647c;
+        padding-bottom: 12vw;
+    }
+    .m-encounter .m-tabs {
+        button {
+            color: #fff;
+        }
+        background: #647088;
+        border-color: #d7dfed;
+        button.active {
+            background: #505970;
+        }
+    }
+    .m-pets,
+    .m-encounter-card {
+        width: 92vw;
+        height: 136vw;
+        aspect-ratio: auto;
+        margin-top: 6.66667vw;
+    }
+    .m-encounter-card {
+        background: url("@{asset}p5-2.png@{ver}") center / 100% 100% no-repeat;
+        a {
+            display: block;
+            width: 100%;
+        }
+        img {
+            width: 100%;
+        }
+    }
+    .m-pets {
+        a:nth-child(1) {
+            top: 35%;
+            left: auto;
+            right: 4%;
+            width: 35%;
+        }
+        a:nth-child(2) {
+            top: 12%;
+            left: 22%;
+            width: 27%;
+        }
+        a:nth-child(3) {
+            top: 57%;
+            left: 15%;
+            right: auto;
+            width: 34%;
+        }
+        a span {
+            width: 8.53333vw;
+            height: 37.33333vw;
+            top: -10%;
+            left: -35%;
+        }
+        a span b {
+            padding: 9.06667vw 0;
+            font-size: 5.33333vw;
+        }
+        a span small {
+            font-size: 2.93333vw;
+            right: -40%;
+        }
+    }
+    .u-encounter-footer-logo {
+        width: 53.33333vw;
+        margin-top: 18.66667vw;
+    }
+}

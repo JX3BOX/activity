@@ -1,5 +1,5 @@
 <template>
-    <main class="m-fenggu">
+    <main class="m-fenggu" :class="{ 'is-app': appMode }">
         <section class="m-kv">
             <img class="u-kv-logo" :src="asset('logo1.png')" alt="剑网3 缘起 × JX3BOX 魔盒" />
             <div class="m-kv-content a-enter">
@@ -30,14 +30,11 @@
                     </div>
                 </div>
                 <template v-else-if="sectTab === 1">
-                    <button class="u-arrow is-left" aria-label="上一张" @click="changeSect(-1)">‹</button
-                    ><img class="u-scene" :src="asset(sectScenes[sceneIndex])" alt="霸刀山庄场景" /><button
-                        class="u-arrow is-right"
-                        aria-label="下一张"
-                        @click="changeSect(1)"
-                    >
-                        ›
-                    </button>
+                    <div class="m-scene-stage">
+                        <button class="u-arrow is-left" aria-label="上一张" @click="changeSect(-1)">‹</button>
+                        <img class="u-scene" :src="asset(sectScenes[sceneIndex])" alt="霸刀山庄场景" />
+                        <button class="u-arrow is-right" aria-label="下一张" @click="changeSect(1)">›</button>
+                    </div>
                     <p class="u-scene-copy"><i></i>{{ sceneDescriptions[sceneIndex] }}</p>
                     <div class="u-dots" aria-label="门派场景导航">
                         <button
@@ -90,7 +87,7 @@
                             class="u-dungeon-cover-copy"
                             :class="{
                                 'is-light': dungeonTab === 1,
-                                'is-scrolling': coverInView && !coverCopyPlayed[dungeonTab],
+                                'is-scrolling': !appMode && coverInView && !coverCopyPlayed[dungeonTab],
                                 'is-done': coverCopyPlayed[dungeonTab],
                             }"
                             :style="{ '--scroll-lines': scrollLines }"
@@ -115,11 +112,18 @@
                         />
                         <p class="u-boss-copy">{{ currentBoss.copy }}</p>
                     </template>
-                    <div class="m-boss-list" :class="{ 'is-cover': bossIndex < 0 }">
+                    <div
+                        class="m-boss-list"
+                        :class="{ 'is-cover': bossIndex < 0, 'has-five-bosses': activeDungeon.bosses.length > 3 }"
+                    >
                         <button
                             v-for="(boss, index) in activeDungeon.bosses"
                             :key="boss.image"
-                            :class="{ active: bossIndex === index }"
+                            :class="{
+                                active: bossIndex === index,
+                                'is-cover-selected':
+                                    appMode && bossIndex < 0 && index === activeDungeon.bosses.length - 1,
+                            }"
                             @click="bossIndex = index"
                         >
                             <img :src="asset(boss.avatar)" :alt="boss.name" /><span>{{ boss.name }}</span>
@@ -139,7 +143,7 @@
         </section>
 
         <section class="m-section m-play">
-            <img class="u-title a-enter" :src="asset('bt3.png')" alt="新玩法 浮休成锋" />
+            <img class="u-title a-enter" :src="asset('bt3.png')" alt="新玩法 淬体成锋" />
             <div class="m-tabs">
                 <button
                     v-for="(tab, index) in playTabs"
@@ -152,7 +156,11 @@
             </div>
             <div class="m-play-panel" :class="{ 'is-trial': playTab === 1 }">
                 <template v-if="playTab === 0">
-                    <img :src="asset('p3-1.png')" alt="浮休成锋玩法" />
+                    <p v-if="appMode" class="u-play-intro">淬体成锋孤入境，百战铸甲踏云巅</p>
+                    <img :src="asset('p3-1.png')" alt="淬体成锋玩法" />
+                    <p v-if="appMode" class="u-play-description">
+                        主城寻找NPC柳沉舟，选择层数开启挑战！<br />淬剑珠还可通过行侠令、九宫奇卦活<br />跃度奖励、剑踪幻域获得，其中剑踪幻域获<br />得的淬剑珠与新玩法共享周上限。
+                    </p>
                     <div class="m-play-actions">
                         <a
                             v-for="action in playActions"
@@ -231,19 +239,20 @@
 const ASSET_ROOT = "https://cdn.jx3box.com/design/topic/fenggubadao/";
 export default {
     name: "FengguBadaoIndex",
+    props: { appMode: { type: Boolean, default: false } },
     data() {
         return {
             sectTab: 0,
             sceneIndex: 0,
-            dungeonTab: 0,
+            dungeonTab: this.appMode ? 1 : 0,
             bossIndex: -1,
             coverCopyPlayed: [false, false],
             coverInView: false,
-            playTab: 0,
-            encounterTab: 0,
+            playTab: this.appMode ? 1 : 0,
+            encounterTab: this.appMode ? 1 : 0,
             sectTabs: ["门派背景", "门派场景", "门派定位"],
             dungeonTabs: ["风雷刀谷·锻刀厅", "风雷刀谷·千雷殿"],
-            playTabs: ["浮休成锋", "层层试炼"],
+            playTabs: ["淬体成锋", "层层试炼"],
             encounterTabs: ["江湖奇遇", "宠物奇遇"],
             sectScenes: ["p1-2-1.png", "p1-2-2.png", "p1-2-3.png", "p1-2-4.png", "p1-2-5.png"],
             sceneDescriptions: [
@@ -481,4 +490,5 @@ export default {
 
 <style lang="less" scoped>
 @import "~@/assets/css/topic/fenggubadao/index.less";
+@import "~@/assets/css/topic/fenggubadao/app.less";
 </style>

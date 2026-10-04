@@ -1,6 +1,7 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router.js";
+import { initAppEnv, isEmbeddedApp, syncAppEnv } from "@/utils/env";
 
 import { createHead } from "@vueuse/head";
 import { createJx3boxUiI18n, getJx3boxUiAvailableLocales, install as JX3BOX_UI } from "@jx3box/jx3box-ui";
@@ -18,6 +19,21 @@ import zhCn from "element-plus/es/locale/lang/zh-cn";
 import en from "element-plus/es/locale/lang/en";
 import zhTw from "element-plus/es/locale/lang/zh-tw";
 import vi from "element-plus/es/locale/lang/vi";
+
+initAppEnv();
+
+// Hash 参数变化不会重载文档。环境切换需重新初始化路由、viewport 和页面外壳。
+const initialAppMode = isEmbeddedApp();
+const handleEnvChange = () => {
+    syncAppEnv();
+    if (isEmbeddedApp() !== initialAppMode) {
+        window.location.reload();
+    }
+};
+window.addEventListener("hashchange", handleEnvChange);
+if (module.hot) {
+    module.hot.dispose(() => window.removeEventListener("hashchange", handleEnvChange));
+}
 
 const app = createApp(App);
 app.use(router);

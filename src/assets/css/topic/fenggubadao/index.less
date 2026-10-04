@@ -132,6 +132,9 @@
         bottom: 40px;
     }
 }
+.m-scene-stage {
+    display: contents;
+}
 .u-scene {
     display: block;
     width: min(920px, 82vw);
@@ -266,8 +269,7 @@
         &:hover,
         &.active {
             opacity: 1;
-            filter: drop-shadow(0 0 1px #f5e8c7) drop-shadow(0 0 1px #f5e8c7)
-                drop-shadow(0 0 6px #d4ae72);
+            filter: drop-shadow(0 0 1px #f5e8c7) drop-shadow(0 0 1px #f5e8c7) drop-shadow(0 0 6px #d4ae72);
         }
     }
 }
@@ -380,39 +382,7 @@
         }
     }
 }
-@media (max-width: 760px) {
-    .m-dungeon-panel {
-        min-height: 500px;
-    }
-    .u-boss-card {
-        width: min(78vw, 500px);
-        max-height: 400px;
-    }
-    .m-boss-list {
-        top: auto;
-        right: 0;
-        bottom: -78px;
-        left: 0;
-        display: flex;
-        width: 100%;
-        flex-direction: row;
-        justify-content: center;
-        gap: 4px;
-        transform: none;
-        button {
-            width: 48px;
-            img {
-                width: 46px;
-                height: 46px;
-            }
-        }
-    }
-    .u-dungeon-cover-copy {
-        top: 15%;
-        width: 65vw;
-        font-size: 13px;
-    }
-}
+
 .m-play-panel {
     display: flex;
     // 两个 tab 统一占位（取最大内容尺寸），避免切换跳动
@@ -800,11 +770,6 @@
         display: block;
         width: min(490px, 65vw);
     }
-    @media (max-width: 760px) {
-        width: 94vw;
-        aspect-ratio: 1.15;
-        margin-top: 34px;
-    }
 }
 .m-pets {
     position: relative;
@@ -920,190 +885,7 @@
         transform: translateY(-10px);
     }
 }
-@media (max-width: 760px) {
-    .m-kv {
-        min-height: 590px;
-        height: 82vh;
-        background-position: 55% top;
-    }
-    .u-kv-logo {
-        top: 30px;
-        left: 25px;
-        width: 90px;
-    }
-    .m-kv-content {
-        width: 88vw;
-        margin-top: 18vh;
-    }
-    .u-kv-label {
-        width: 54vw;
-    }
-    .u-kv-label strong {
-        font-size: 16px;
-    }
-    .m-section {
-        min-height: auto;
-        padding: 75px 12px 110px;
-    }
-    .u-title {
-        width: 94vw;
-        margin-bottom: 24px;
-    }
-    .m-tabs {
-        margin-bottom: 18px;
-        button {
-            font-size: 12px;
-        }
-    }
-    .m-sect-panel {
-        min-height: 310px;
-    }
-    .u-arrow {
-        width: 34px;
-        font-size: 42px;
-    }
-    .m-sect-profile {
-        flex-direction: column;
-        gap: 0;
-        img {
-            width: 100%;
-        }
-        .u-profile-copy {
-            width: 90%;
-            font-size: 13px;
-        }
-    }
-    .m-dungeon-panel {
-        min-height: 530px;
-    }
-    .u-boss-card {
-        width: 100%;
-    }
-    .m-boss-list {
-        position: static;
-        display: grid;
-        width: 95%;
-        margin-top: 20px;
-        grid-template-columns: repeat(5, 1fr);
-        gap: 4px;
-        button {
-            width: auto;
-            justify-content: center;
-            span {
-                display: none;
-            }
-            img {
-                width: 32px;
-                height: 32px;
-                margin: 0;
-            }
-        }
-    }
-    .m-play {
-        min-height: 780px;
-    }
-    .m-play-panel,
-    .m-play-panel.is-trial {
-        min-height: 445px;
-    }
-    .m-play-panel .m-trial-panel {
-        min-height: 410px;
-        padding: 44px 16px 24px;
-        h3 {
-            top: -15px;
-            min-width: 120px;
-            padding: 4px 16px;
-            font-size: 18px;
-        }
-        ul {
-            margin-top: 34px;
-            gap: 12px;
-            font-size: 13px;
-        }
-        li {
-            padding-left: 17px;
-        }
-    }
-    .m-play-panel .m-trial-bosses {
-        gap: 4px;
-    }
-    .m-play-panel .m-play-actions a {
-        padding: 5px 8px;
-        font-size: 12px;
-    }
-    .m-play-panel .m-play-copy {
-        width: 66%;
-        font-size: 12px;
-    }
-    .m-pvp-panel {
-        min-height: 440px;
-    }
-    .m-pvp-panel .m-pvp-flags {
-        top: 0;
-        bottom: auto;
-        gap: 10px;
-        a {
-            width: 72px;
-            height: 175px;
-            padding: 10px 8px;
-            strong {
-                font-size: 18px;
-            }
-            .u-flag-detail {
-                top: 28px;
-                right: 9px;
-                bottom: 18px;
-                left: 9px;
-                font-size: 8px;
-                line-height: 1.35;
-                letter-spacing: 0;
-                i {
-                    height: 120px;
-                    padding: 10px 4px 0;
-                    &.has-mark::before {
-                        width: 5px;
-                        height: 5px;
-                        border-width: 1px;
-                    }
-                }
-            }
-        }
-    }
-    .m-pets {
-        width: 94vw;
-        aspect-ratio: 1.15;
-        height: auto;
-        margin-top: 34px;
-        a {
-            &:nth-child(1) {
-                top: 45%;
-                left: 13%;
-                width: 25%;
-            }
-            &:nth-child(2) {
-                top: 30%;
-                left: 43%;
-                width: 15%;
-            }
-            &:nth-child(3) {
-                top: 48%;
-                right: 5%;
-                width: 22%;
-            }
-            span {
-                top: -33%;
-                left: -30%;
-                padding: 20% 6% 9%;
-                b {
-                    font-size: clamp(8px, 2.8vw, 12px);
-                }
-                small {
-                    font-size: clamp(6px, 1.9vw, 9px);
-                }
-            }
-        }
-    }
-}
+
 .m-sect-tabs {
     width: min(790px, 78vw);
     height: 42px;
@@ -1380,61 +1162,6 @@
         white-space: normal;
     }
 }
-@media (max-width: 760px) {
-    .u-scene-copy {
-        bottom: 30px;
-        font-size: 12px;
-    }
-    .m-sect-position {
-        height: 500px;
-    }
-    .u-position-character {
-        width: 115vw;
-        height: 520px;
-        left: -35vw;
-        bottom: -14px;
-    }
-    .u-position-info {
-        top: 50px;
-        right: 1vw;
-        width: 49vw;
-    }
-    .u-position-info h3 {
-        margin-bottom: 14px;
-        font-size: 17px;
-    }
-    .u-position-info h3 img {
-        width: 34px;
-        margin-right: 5px;
-    }
-    .u-position-info p {
-        margin-bottom: 12px;
-        gap: 6px;
-        font-size: 12px;
-    }
-    .u-position-info b {
-        padding: 4px 7px;
-        font-size: 12px;
-    }
-    .u-position-info .u-skills {
-        margin: 18px 0;
-    }
-    .u-position-info .u-skills span {
-        min-width: 0;
-        font-size: 10px;
-    }
-    .u-position-info .u-skills img {
-        width: 39px;
-        height: 39px;
-        margin-bottom: 5px;
-        border-width: 1px;
-    }
-    .u-position-info .u-position-text {
-        font-size: 12px;
-        line-height: 1.5;
-        letter-spacing: 0;
-    }
-}
 
 // 背景与定位复用同一人物合成图，统一显示尺寸、左偏移和底部裁切基准。
 .m-sect-background {
@@ -1451,17 +1178,7 @@
     max-height: none;
     transform: none;
 }
-@media (max-width: 760px) {
-    .m-sect-background {
-        height: 500px;
-    }
-    .m-sect-background > img {
-        bottom: -14px;
-        left: -35vw;
-        width: 115vw;
-        height: 520px;
-    }
-}
+
 // 新版首领区由底框、人物切图和名称切图三层组成；右侧头像中线固定压住底框右边。
 .m-dungeon-stage {
     position: relative;
@@ -1562,25 +1279,4 @@
     left: calc(100% - 14px);
     margin: 0;
     transform: translate(-50%, -50%);
-}
-@media (max-width: 760px) {
-    .m-dungeon-stage {
-        width: min(82vw, 500px);
-    }
-    .m-dungeon-stage .u-boss-copy {
-        top: 5%;
-        right: 6%;
-        bottom: 5%;
-        left: 47%;
-        font-size: clamp(9px, 2.3vw, 12px);
-        line-height: 1.75;
-        letter-spacing: 0.06em;
-    }
-    .m-dungeon-stage .m-boss-list {
-        right: auto;
-        bottom: -78px;
-        left: 0;
-        width: 100%;
-        transform: none;
-    }
 }
