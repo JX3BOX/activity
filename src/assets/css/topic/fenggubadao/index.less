@@ -1,18 +1,19 @@
 @asset: "https://cdn.jx3box.com/design/topic/fenggubadao/";
 @ver: "?v=20260930";
 
-// 从第三个区域（淬体成锋）起，背景素材的上下边缘都是「不规则撕裂透明带」，相邻区域必须互相叠压，
-// 否则撕裂缺口会露出页面底色。
-// 叠压量 = 素材撕裂带高度 / 素材宽度（素材按宽度铺满时，即 100vw 基准）；
-// 区域高度由内容撑开、素材改为按高度铺满时，撕裂带高度 = 撕裂带高度 / 素材高度 × 区域高度，用 px 兜底。
-// 区域 3 高约 1308px、区域 4 高约 1263px（= 内容高度 + 本区域叠压量）。
-@tear-dungeon: max(6.33vw, 87px); // bg3 顶部撕裂带 243 / 3840
-@tear-play: max(6.72vw, 116px); // bg4 顶部撕裂带 258 / 3840
-@tear-pvp: max(6.46vw, 111px); // bg4 底部撕裂带 248 / 3840
+// 使用相邻区域的真实背景承接透明撕纸边缘，叠压区预留在内容之外。
+@tear-dungeon: 220px;
+@tear-play: 140px;
+@tear-pvp: 140px;
 
 .m-fenggu {
     overflow: hidden;
-    min-width: 320px;
+    --fenggu-unit: clamp(12.8px, 1vw, 19.2px);
+    width: 100%;
+    min-width: 1280px;
+    max-width: 1920px;
+    margin-inline: auto;
+    isolation: isolate;
     color: #f8eed8;
     font-family: "Microsoft YaHei", sans-serif;
     background: #31254e;
@@ -28,15 +29,15 @@
 .u-kv-logo {
     position: absolute;
     z-index: 1;
-    top: clamp(35px, 5vw, 86px);
-    left: clamp(35px, 6vw, 105px);
-    width: min(142px, 13vw);
+    top: clamp(35px, calc(5 * var(--fenggu-unit)), 86px);
+    left: clamp(35px, calc(6 * var(--fenggu-unit)), 105px);
+    width: min(142px, calc(13 * var(--fenggu-unit)));
 }
 .m-kv-content {
     position: relative;
     z-index: 1;
     display: flex;
-    width: min(920px, 62vw);
+    width: min(920px, calc(62 * var(--fenggu-unit)));
     margin-top: 20vh;
     align-items: center;
     flex-direction: column;
@@ -48,7 +49,7 @@
 }
 .u-kv-label {
     position: relative;
-    width: min(520px, 35vw);
+    width: min(520px, calc(35 * var(--fenggu-unit)));
     margin-top: 10px;
 }
 .u-kv-label img {
@@ -62,7 +63,7 @@
     align-items: center;
     justify-content: center;
     color: #312642;
-    font-size: clamp(21px, 2vw, 38px);
+    font-size: clamp(21px, calc(2 * var(--fenggu-unit)), 38px);
     font-style: italic;
     letter-spacing: 0.08em;
 }
@@ -72,37 +73,45 @@
     padding: 105px 24px 150px;
     box-sizing: border-box;
     background-position: top center;
-    background-size: cover;
+    background-size: 100% 100%;
     background-repeat: no-repeat;
 }
 .m-sect {
     background-image: url("@{asset}bg1.png@{ver}");
 }
 .m-dungeon {
+    z-index: 3;
     background-image: url("@{asset}bg2.png@{ver}");
-    // 区域 3 的顶部撕裂边会叠上来，本区域同步增高，避免内容被压住
+    // 为下方绿色背景预留重叠空间，白色撕纸边缘由本区域绘制。
     padding-bottom: calc(150px + @tear-dungeon);
 }
 .m-play {
+    z-index: 1;
     min-height: 1100px;
+    padding-top: 240px;
+    background-color: transparent;
     background-image: url("@{asset}bg3.png@{ver}");
-    // 叠到区域 2 之上：顶部撕裂缺口透出区域 2 的背景
+    // 垫在区域 2 下方，承接其底部透明边缘。
     margin-top: calc(-1 * @tear-dungeon);
     // 增高，让区域 4 的顶部撕裂边叠上来时内容不被压住
     padding-bottom: calc(150px + @tear-play);
 }
 .m-pvp {
+    padding-top: 160px;
     background-image: url("@{asset}bg4.png@{ver}");
     // 叠到区域 3 之上：顶部撕裂缺口透出区域 3 的背景
     margin-top: calc(-1 * @tear-play);
     // 增高，让区域 5 叠上来时内容不被压住
     padding-bottom: calc(150px + @tear-pvp);
     // bg4 纵横比高度（2818 / 3840）：保证底部撕裂边完整落在容器内，否则会被 cover 裁掉
-    min-height: max(960px, 73.4vw);
+    min-height: max(960px, calc(73.4 * var(--fenggu-unit)));
     // bg4 底部撕裂边要压在区域 5 之上（区域 5 的 bg5 无透明边，只能由上方区域提供分割线）
-    z-index: 1;
+    z-index: 2;
 }
 .m-encounter {
+    z-index: 0;
+    padding-top: 180px;
+    background-color: #59647c;
     min-height: 1040px;
     background-image: url("@{asset}bg5.png@{ver}");
     // 叠到区域 4 的下方，让区域 4 的底部撕裂边压在本区域顶部
@@ -110,14 +119,14 @@
 }
 .u-title {
     display: block;
-    width: min(785px, 72vw);
+    width: min(785px, calc(72 * var(--fenggu-unit)));
     max-height: 225px;
     margin: 0 auto 40px;
     object-fit: contain;
 }
 .m-tabs {
     display: flex;
-    width: min(540px, 92vw);
+    width: min(540px, calc(92 * var(--fenggu-unit)));
     height: 34px;
     margin: 0 auto 32px;
     overflow: hidden;
@@ -146,7 +155,7 @@
 .m-encounter-card,
 .m-pets {
     position: relative;
-    width: min(1120px, 94vw);
+    width: min(1120px, calc(94 * var(--fenggu-unit)));
     margin: auto;
 }
 .m-sect-panel {
@@ -163,7 +172,7 @@
 }
 .u-scene {
     display: block;
-    width: min(920px, 82vw);
+    width: min(920px, calc(82 * var(--fenggu-unit)));
 }
 .u-arrow {
     position: absolute;
@@ -218,7 +227,7 @@
     justify-content: center;
     gap: 35px;
     img {
-        width: min(690px, 60vw);
+        width: min(690px, calc(60 * var(--fenggu-unit)));
     }
     .u-profile-copy {
         width: 280px;
@@ -244,7 +253,7 @@
 }
 .u-boss-card {
     display: block;
-    width: min(790px, 78vw);
+    width: min(790px, calc(78 * var(--fenggu-unit)));
     max-height: 620px;
     object-fit: contain;
 }
@@ -314,13 +323,13 @@
     z-index: 1;
     top: 10%;
     left: 50%;
-    width: min(620px, 54vw);
+    width: min(620px, calc(54 * var(--fenggu-unit)));
     margin: 0;
     transform: translateX(-50%);
     color: #30294e;
     text-align: center;
     font-family: "STKaiti", "KaiTi", serif;
-    font-size: clamp(19px, 1.55vw, 27px);
+    font-size: clamp(19px, calc(1.55 * var(--fenggu-unit)), 27px);
     line-height: 1.5;
     letter-spacing: 0.08em;
     // 固定 4 行窗口（始终裁剪为 4 行高度）
@@ -379,11 +388,11 @@
 }
 // 副本封面与首领卡共用画幅；头像仅作为右侧切换入口。
 .m-dungeon-panel {
-    width: min(1240px, 96vw);
+    width: min(1240px, calc(96 * var(--fenggu-unit)));
     min-height: 860px;
 }
 .u-boss-card {
-    width: min(920px, 80vw);
+    width: min(920px, calc(80 * var(--fenggu-unit)));
     max-height: 700px;
 }
 .u-boss-dots {
@@ -391,7 +400,7 @@
 }
 .m-boss-list {
     top: 50%;
-    right: calc(50% - min(460px, 40vw) - 43px);
+    right: calc(50% - min(460px, calc(40 * var(--fenggu-unit))) - 43px);
     gap: 12px;
     transform: translateY(-50%);
     button {
@@ -412,13 +421,13 @@
 .m-play-panel {
     display: flex;
     // 两个 tab 统一占位（取最大内容尺寸），避免切换跳动
-    width: min(920px, 90vw);
+    width: min(920px, calc(90 * var(--fenggu-unit)));
     min-height: 610px;
     align-items: center;
     justify-content: center;
     img {
         display: block;
-        width: min(590px, 70vw);
+        width: min(590px, calc(70 * var(--fenggu-unit)));
     }
     .m-play-actions {
         position: absolute;
@@ -530,9 +539,9 @@
         left: 2.192%;
         // 再按同一偏移量补偿左右内边距，让内容（首领列表）在可见卡片内居中，
         // 内容在页面上的位置保持不变。
-        padding: 70px clamp(28px, 5vw, 72px) 45px;
-        padding-left: calc(clamp(28px, 5vw, 72px) - 2.192%);
-        padding-right: calc(clamp(28px, 5vw, 72px) + 2.192%);
+        padding: 70px clamp(28px, calc(5 * var(--fenggu-unit)), 72px) 45px;
+        padding-left: calc(clamp(28px, calc(5 * var(--fenggu-unit)), 72px) - 2.192%);
+        padding-right: calc(clamp(28px, calc(5 * var(--fenggu-unit)), 72px) + 2.192%);
         box-sizing: border-box;
         border-radius: 18px;
         color: #eadab0;
@@ -678,7 +687,7 @@
         display: block;
         position: absolute;
         bottom: 0;
-        width: min(930px, 85vw);
+        width: min(930px, calc(85 * var(--fenggu-unit)));
     }
     .m-pvp-flags {
         display: flex;
@@ -686,7 +695,7 @@
         z-index: 1;
         top: 18px;
         left: 50%;
-        gap: clamp(54px, 7vw, 108px);
+        gap: clamp(54px, calc(7 * var(--fenggu-unit)), 108px);
         transform: translateX(-50%);
         a {
             display: flex;
@@ -791,7 +800,7 @@
     justify-content: center;
     align-items: center;
     // 与「宠物奇遇」tab 占位一致，避免切换跳动
-    width: min(920px, 88vw);
+    width: min(920px, calc(88 * var(--fenggu-unit)));
     aspect-ratio: 1.48;
     margin-top: 58px;
     a {
@@ -803,12 +812,12 @@
     }
     img {
         display: block;
-        width: min(490px, 65vw);
+        width: min(490px, calc(65 * var(--fenggu-unit)));
     }
 }
 .m-pets {
     position: relative;
-    width: min(920px, 88vw);
+    width: min(920px, calc(88 * var(--fenggu-unit)));
     aspect-ratio: 1.48;
     height: auto;
     margin-top: 58px;
@@ -884,7 +893,7 @@
 }
 .u-encounter-footer-logo {
     display: block;
-    width: min(560px, 70vw);
+    width: min(560px, calc(70 * var(--fenggu-unit)));
     height: auto;
     margin: 200px auto 0;
     object-fit: contain;
@@ -922,7 +931,7 @@
 }
 
 .m-sect-tabs {
-    width: min(790px, 78vw);
+    width: min(790px, calc(78 * var(--fenggu-unit)));
     height: 42px;
     margin-bottom: 45px;
     button {
@@ -932,14 +941,14 @@
 .m-sect-background {
     display: flex;
     position: relative;
-    width: min(1050px, 88vw);
+    width: min(1050px, calc(88 * var(--fenggu-unit)));
     height: 590px;
     margin: 0 auto;
     align-items: flex-end;
     justify-content: center;
 }
 .m-sect-background > img {
-    width: min(900px, 68vw);
+    width: min(900px, calc(68 * var(--fenggu-unit)));
     max-height: 590px;
     object-fit: contain;
     object-position: left bottom;
@@ -984,7 +993,7 @@
 .m-sect-position {
     display: flex;
     position: relative;
-    width: min(1120px, 92vw);
+    width: min(1120px, calc(92 * var(--fenggu-unit)));
     height: 620px;
     margin: 0 auto;
     align-items: flex-end;
@@ -993,7 +1002,7 @@
     position: absolute;
     bottom: -1px;
     left: 0;
-    width: min(680px, 55vw);
+    width: min(680px, calc(55 * var(--fenggu-unit)));
     height: 620px;
     object-fit: contain;
     object-position: left bottom;
@@ -1002,7 +1011,7 @@
     position: absolute;
     top: 30px;
     left: 35%;
-    width: min(740px, 56vw);
+    width: min(740px, calc(56 * var(--fenggu-unit)));
     opacity: 0.9;
 }
 .u-position-info {
@@ -1055,8 +1064,7 @@
         font-size: 16px;
     }
 }
-.m-sect,
-.m-dungeon {
+.m-sect {
     background-color: #332651;
 }
 .m-sect {
@@ -1108,7 +1116,7 @@
     overflow: hidden;
 }
 .u-position-character {
-    width: min(1050px, 80vw);
+    width: min(1050px, calc(80 * var(--fenggu-unit)));
     height: 720px;
     bottom: -20px;
     left: -1%;
@@ -1200,7 +1208,7 @@
 
 // 背景与定位复用同一人物合成图，统一显示尺寸、左偏移和底部裁切基准。
 .m-sect-background {
-    width: min(1120px, 92vw);
+    width: min(1120px, calc(92 * var(--fenggu-unit)));
     height: 700px;
     overflow: hidden;
 }
@@ -1208,7 +1216,7 @@
     position: absolute;
     bottom: -20px;
     left: -1%;
-    width: min(1050px, 80vw);
+    width: min(1050px, calc(80 * var(--fenggu-unit)));
     height: 720px;
     max-height: none;
     transform: none;
@@ -1217,7 +1225,7 @@
 // 新版首领区由底框、人物切图和名称切图三层组成；右侧头像中线固定压住底框右边。
 .m-dungeon-stage {
     position: relative;
-    width: min(960px, 78vw);
+    width: min(960px, calc(78 * var(--fenggu-unit)));
     aspect-ratio: 1809 / 1547;
     height: auto;
     flex: 0 0 auto;
