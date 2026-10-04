@@ -25,7 +25,7 @@
                     <img :src="asset('p1-1.png')" alt="霸刀山庄" />
                     <div class="u-sect-copy">
                         <p>河朔太行山，大唐武林四大家族之一</p>
-                        <p>九天武座看守者，表面治炼名刀，实则守护天下兵甲</p>
+                        <p>河朔太行山，大唐九天武库看守者，表面冶炼名刀，实则守护天下兵甲武林四大家族之一</p>
                         <p>霸王刀法气壮山河，扬刀大会名动江湖</p>
                     </div>
                 </div>
@@ -119,11 +119,7 @@
                         <button
                             v-for="(boss, index) in activeDungeon.bosses"
                             :key="boss.image"
-                            :class="{
-                                active: bossIndex === index,
-                                'is-cover-selected':
-                                    appMode && bossIndex < 0 && index === activeDungeon.bosses.length - 1,
-                            }"
+                            :class="{ active: bossIndex === index }"
                             @click="bossIndex = index"
                         >
                             <img :src="asset(boss.avatar)" :alt="boss.name" /><span>{{ boss.name }}</span>

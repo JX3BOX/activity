@@ -140,7 +140,7 @@
         margin: 0 1.6vw;
     }
     .u-position-info {
-        top: 14.66667vw;
+        top: 24vw;
         right: 3.2vw;
         width: 46.66667vw;
         gap: 2.66667vw;
@@ -193,7 +193,7 @@
         }
     }
     .m-dungeon {
-        height: 168vw;
+        height: 176vw;
         padding-top: 12vw;
         background-image: url("@{asset}bg2.png@{ver}"), linear-gradient(#332651 85%, #12382c 85%);
         background-size: auto 100%, 100% 100%;
@@ -239,7 +239,7 @@
     }
     .m-dungeon-stage .m-boss-list {
         top: auto;
-        bottom: -16vw;
+        bottom: -18vw;
         left: 50%;
         right: auto;
         transform: translateX(-50%);
@@ -267,8 +267,7 @@
         opacity: 1;
         filter: none;
     }
-    .m-boss-list button.active::after,
-    .m-boss-list button.is-cover-selected::after {
+    .m-boss-list button.active::after {
         content: "";
         position: absolute;
         width: 8.6vw;
@@ -277,8 +276,9 @@
         transform: rotate(45deg);
         pointer-events: none;
     }
+    // 与头像列表垂直中心对齐：stage 高 80vw + 列表 bottom 18vw - 列表半高 6.4vw - 箭头半高 5.06667vw
     .m-dungeon-panel > .u-arrow {
-        top: 88.8vw;
+        top: 86.53333vw;
     }
     .u-boss-dots {
         display: none;
@@ -404,13 +404,14 @@
         }
     }
     .m-play-panel .m-trial-panel {
-        // 素材右侧包含透明装饰留白，扩展底图让实色卡片铺满滚动容器。
-        background-size: 106% 100%;
-        background-position: left center;
+        // 素材左侧 0.67%、右侧 5% 为透明留白：放大 106.1% 并水平偏移 11.7%，
+        // 让实色卡片左右边缘与容器边框完全重合，滚动裁剪边界不再落到卡片外。
+        background-size: 106.1% 100%;
+        background-position: 11.7% center;
         min-height: 0;
         height: 80vw;
         padding: 6.66667vw 0;
-        border-radius: 1.33333vw;
+        border-radius: 1.33333vw; 
         h3 {
             min-width: 34.66667vw;
             top: -4vw;
@@ -430,6 +431,7 @@
         }
     }
     .m-play-panel .m-trial-bosses {
+        justify-content: start;
         padding-inline: 5.5vw;
         width: 100%;
         max-width: 100%;
@@ -443,15 +445,20 @@
         overflow-x: auto;
         grid-template-columns: repeat(6, 17.6vw) 3.63333vw;
         padding-right: 0;
+        scroll-snap-type: x proximity;
+        scroll-padding-inline: 5.5vw;
         &::after {
             content: "";
         }
+        img {
+            scroll-snap-align: start;
+        }
     }
     .m-pvp {
-        height: 164vw;
+        height: 174vw;
         padding-top: 12vw;
         margin-top: 0;
-        background-image: url("@{asset}bg4.png@{ver}"), linear-gradient(#adeede 50%, #59647c 50%);
+        background-image: url("@{asset}bg4.png@{ver}"), linear-gradient(#adeede 50%, #8e99b7 50%);
     }
     .m-pvp-panel {
         width: 100%;
@@ -499,6 +506,7 @@
         margin-top: 0;
         background-color: #59647c;
         padding-bottom: 12vw;
+        background-size: auto 100% ;
     }
     .m-encounter .m-tabs {
         button {
