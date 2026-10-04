@@ -1,5 +1,15 @@
 @asset: "https://cdn.jx3box.com/design/topic/fenggubadao/";
 @ver: "?v=20260930";
+
+// 从第三个区域（淬体成锋）起，背景素材的上下边缘都是「不规则撕裂透明带」，相邻区域必须互相叠压，
+// 否则撕裂缺口会露出页面底色。
+// 叠压量 = 素材撕裂带高度 / 素材宽度（素材按宽度铺满时，即 100vw 基准）；
+// 区域高度由内容撑开、素材改为按高度铺满时，撕裂带高度 = 撕裂带高度 / 素材高度 × 区域高度，用 px 兜底。
+// 区域 3 高约 1308px、区域 4 高约 1263px（= 内容高度 + 本区域叠压量）。
+@tear-dungeon: max(6.33vw, 87px); // bg3 顶部撕裂带 243 / 3840
+@tear-play: max(6.72vw, 116px); // bg4 顶部撕裂带 258 / 3840
+@tear-pvp: max(6.46vw, 111px); // bg4 底部撕裂带 248 / 3840
+
 .m-fenggu {
     overflow: hidden;
     min-width: 320px;
@@ -70,17 +80,33 @@
 }
 .m-dungeon {
     background-image: url("@{asset}bg2.png@{ver}");
+    // 区域 3 的顶部撕裂边会叠上来，本区域同步增高，避免内容被压住
+    padding-bottom: calc(150px + @tear-dungeon);
 }
 .m-play {
     min-height: 1100px;
     background-image: url("@{asset}bg3.png@{ver}");
+    // 叠到区域 2 之上：顶部撕裂缺口透出区域 2 的背景
+    margin-top: calc(-1 * @tear-dungeon);
+    // 增高，让区域 4 的顶部撕裂边叠上来时内容不被压住
+    padding-bottom: calc(150px + @tear-play);
 }
 .m-pvp {
     background-image: url("@{asset}bg4.png@{ver}");
+    // 叠到区域 3 之上：顶部撕裂缺口透出区域 3 的背景
+    margin-top: calc(-1 * @tear-play);
+    // 增高，让区域 5 叠上来时内容不被压住
+    padding-bottom: calc(150px + @tear-pvp);
+    // bg4 纵横比高度（2818 / 3840）：保证底部撕裂边完整落在容器内，否则会被 cover 裁掉
+    min-height: max(960px, 73.4vw);
+    // bg4 底部撕裂边要压在区域 5 之上（区域 5 的 bg5 无透明边，只能由上方区域提供分割线）
+    z-index: 1;
 }
 .m-encounter {
     min-height: 1040px;
     background-image: url("@{asset}bg5.png@{ver}");
+    // 叠到区域 4 的下方，让区域 4 的底部撕裂边压在本区域顶部
+    margin-top: calc(-1 * @tear-pvp);
 }
 .u-title {
     display: block;
@@ -497,8 +523,16 @@
     .m-trial-panel {
         position: relative;
         width: 100%;
-        min-height: 570px; 
+        min-height: 570px;
+        // 素材 p3-2.png 的实心卡片只占 94.28% 宽：左侧透明留白 0.67%、右侧 5.05%
+        // （右侧留白是伸出卡片的叶片），可见卡片相对容器整体右偏 2.192%。
+        // 容器右移该偏移量，让“可见卡片”在页面居中。
+        left: 2.192%;
+        // 再按同一偏移量补偿左右内边距，让内容（首领列表）在可见卡片内居中，
+        // 内容在页面上的位置保持不变。
         padding: 70px clamp(28px, 5vw, 72px) 45px;
+        padding-left: calc(clamp(28px, 5vw, 72px) - 2.192%);
+        padding-right: calc(clamp(28px, 5vw, 72px) + 2.192%);
         box-sizing: border-box;
         border-radius: 18px;
         color: #eadab0;
@@ -506,7 +540,8 @@
         h3 {
             position: absolute;
             top: -22px;
-            left: 50%;
+            // 与列表保持同一基准：相对可见卡片居中
+            left: calc(50% - 2.192%);
             min-width: 190px;
             margin: 0;
             padding: 5px 28px;

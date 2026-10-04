@@ -411,10 +411,13 @@
         min-height: 0;
         height: 80vw;
         padding: 6.66667vw 0;
-        border-radius: 1.33333vw; 
+        border-radius: 1.33333vw;
+        // 上方 background-size/position 已把透明留白补偿掉，可见卡片即容器，无需再偏移
+        left: 0;
         h3 {
             min-width: 34.66667vw;
             top: -4vw;
+            left: 50%;
             padding: 1.33333vw 4vw;
             font-size: 4.53333vw;
         }
