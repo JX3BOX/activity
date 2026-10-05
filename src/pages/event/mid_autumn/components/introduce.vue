@@ -8,7 +8,7 @@
  * Copyright (c) 2024 by zhusha, email: no email, All Rights Reserved.
 -->
 <template>
-    <div class="c-midAutumn-introduce">
+    <div class="c-midAutumn-introduce" :class="{ 'has-year-spacing': [2024, 2025].includes(Number(year)) }">
         <div class="u-content" v-html="articleHtml"></div>
         <!-- <div class="u-tips">介<br />绍</div> -->
         <!-- <img class="u-qrcode" src="@/assets/img/event/mid_autumn_qrcode.png" alt="" /> -->

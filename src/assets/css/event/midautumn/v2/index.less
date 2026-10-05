@@ -3,7 +3,7 @@
     background-color: #17243a;
 }
 .p-event-midAutumn {
-    height: 100%;
+    height: calc(100vh - @header-height);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -58,31 +58,36 @@
     }
 }
 .p-midautumn-detail {
-    height: 100%;
-    background-image: url("@{kv_midAutumn}1.jpg");
+    height: calc(100vh - @header-height);
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: center;
-    background-color: #17243a;
+    background-position: center top;
+    background-color: #34383b;
 
     .u-bg {
-        .flex;
-        .size(100%);
-        .clip;
-        min-height: calc(100vh - 64px);
+        display: flex;
+        height: 100%;
         box-sizing: border-box;
-        background-color: rgba(23, 36, 58, 0.95);
-        transition: all 1s ease;
-        padding: 36px 0 0 20px;
+        overflow: hidden;
+        background-color: transparent;
+    }
+    .u-main-box,
+    .c-midAutumn-nav {
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        &::-webkit-scrollbar {
+            display: none;
+            width: 0;
+            height: 0;
+        }
     }
     .u-main-box {
-        .scrollbar;
-        flex: 1;
-        height: 50%;
-        max-width: 100%;
+        flex: 0 0 52%;
+        min-width: 0;
+        height: 100%;
         overflow: auto;
         box-sizing: border-box;
-        padding: 124px 240px 40px 124px;
+        padding: 5.5vw 0 32px;
     }
 }
 @media screen and (max-width: 1440px) {
@@ -103,23 +108,12 @@
         }
     }
 }
-@media screen and(max-width:@ipad) {
-    .p-event-midAutumn {
-        .m-box {
-            .flex;
-            justify-content: center;
-        }
-    }
-    .p-midautumn-detail {
-        .u-main-box {
-            padding: 20px 40px 40px 20px;
-        }
+@media screen and (max-width: 1979px) {
+    .p-midautumn-detail .u-main-box {
+        flex: 1;
+        padding-right: 4.8vw;
     }
 }
-@media screen and (max-width: @phone) {
-    .p-midautumn-detail {
-        .u-main-box {
-            .pr(20px);
-        }
-    }
+@media screen and (max-width: 1100px) {
+    .p-midautumn-detail .u-main-box { padding-right: 20px; }
 }

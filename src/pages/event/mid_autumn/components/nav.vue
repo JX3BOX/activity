@@ -1,51 +1,27 @@
 <template>
-    <div class="c-midAutumn-nav">
-        <div class="m-midAutumn-nav" :class="`m-midAutumn-nav-${i}`" v-for="(nav, i) in navs" :key="i">
-            <div class="u-title">
-                <img :src="getCdnLink(`design/event/mid_autumn/title_2024.png`)" />
-            </div>
-
-            <div class="m-date" @click.stop="onDateShow">
-                <img class="u-change-button" :src="getCdnLink('design/event/mid_autumn/change_button_2.png')" alt="">
-                <span class="u-date">
-                    <span v-for="(text, index) in String(currentYear)" :key="index">{{ text }}</span>
-                </span>
-
-                <!-- <div class="m-date-picker" v-show="dateShow">
-                    <div
-                        v-for="item in years"
-                        :key="item.year"
-                        class="m-date-item"
-                        :class="{ active: currentYear === item.year }"
-                        @click.stop="onDateChange(item.year)"
-                    >
-                        {{ item.year }}
-                    </div>
-                </div>
-                <i class="el-icon-arrow-down"></i> -->
-            </div>
-
-            <div class="u-nav-box">
-                <div
-                    class="u-nav-item"
-                    :class="{ active: achieve_id == item.value }"
-                    v-for="item in navs"
-                    :key="item.value"
-                    @click="navChange(item.value)"
-                >
-                    {{ item.text }}
-                </div>
-                <div class="u-select-poem" v-show="poemName">《{{ poemName }}》</div>
-            </div>
+    <aside class="c-midAutumn-nav" :style="buttonThemeStyle">
+        <div class="m-midAutumn-nav">
+            <img class="u-title" :src="getCdnLink('design/event/mid_autumn/title_new.png')" alt="魔盒诗词大会" />
+            <button class="m-date" type="button" aria-label="切换活动年份" @click="onDateShow">· {{ currentYear }} ·</button>
+            <nav class="u-nav-box" aria-label="活动导航">
+                <button v-for="item in navs" :key="item.value" class="u-nav-item" type="button"
+                    :class="{ active: achieve_id === item.value }" :aria-current="achieve_id === item.value ? 'page' : undefined"
+                    @click="navChange(item.value)"><span>{{ item.text }}</span></button>
+                <div v-if="poemName" class="u-select-poem">《{{ poemName }}》</div>
+            </nav>
         </div>
-        <YearChange v-model="showDialog" :years="years" @year-selected="onYearSelected"></YearChange>
-    </div>
+        <YearChange v-model="showDialog" :years="years" @year-selected="onYearSelected" />
+    </aside>
 </template>
 
 <script>
 import {__cdn} from "@/utils/config";
+import buttonThemeMixin from "../mixins/buttonTheme";
 import YearChange from "./year_change.vue";
 export default {
+    mixins: [buttonThemeMixin],
+    emits: ["navChange"],
+    computed: { year() { return this.currentYear; } },
     props: {
         poemName: {
             type: String,
@@ -64,8 +40,8 @@ export default {
             achieve_id: "intro",
             navs: [
                 { text: "活动介绍", value: 'intro' },
-                { text: "诗词赏析", value: 'poem' },
-                // { text: "往届作品", value: 3 },
+                { text: "诗词赏鉴", value: 'poem' },
+                { text: "作品投票", value: "vote" },
             ],
 
             currentYear: 2024,
@@ -85,7 +61,7 @@ export default {
                 if (tab) {
                     this.achieve_id = tab;
                 } else {
-                    this.achieve_id = 'intro';
+                    this.achieve_id = 'poem';
                 }
             },
             immediate: true,
@@ -130,7 +106,7 @@ export default {
         onYearSelected(item) {
             this.$router.push({
                 name: "detail",
-                params: {year: item.year, tab: "intro"},
+                params: {year: item.year, tab: this.achieve_id},
             });
         }
     }

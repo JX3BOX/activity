@@ -1,7 +1,7 @@
 <template>
-    <div class="p-midautumn-detail">
+    <div class="p-midautumn-detail" :style="{ backgroundImage: `url(${getPic('design/event/mid_autumn/' + year + '/pc/bg.jpg')})` }">
         <div class="u-bg" :style="bgStyle">
-            <Nav :poemName="poemData?.title || ''" @navChange="back" :years="years"></Nav>
+            <Nav :years="years"></Nav>
             <div class="u-main-box">
                 <div class="c-midAutumn-appreciate is-poem-detail">
                     <transition name="fade" mode="out-in" v-if="poemData">
@@ -48,9 +48,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="u-title-tips">
-                                {{ tips }}
-                            </div>
                         </div>
                     </transition>
                 </div>
@@ -77,7 +74,6 @@ export default {
         return {
             poemData: null,
 
-            tips: "注：图片仅为展示效果，非最终获奖作品",
             bgStyle: null,
             judges: {}
         }
