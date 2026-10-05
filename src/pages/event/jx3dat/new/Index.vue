@@ -1,5 +1,6 @@
 <script setup>
-import { computed } from "vue";
+import { isApp } from "@/utils/env";
+import { computed, inject, ref } from "vue";
 import { useRoute } from "vue-router";
 import { assetRoot } from "./config";
 import Process from "./Process.vue";
@@ -7,22 +8,25 @@ import Rewards from "./Rewards.vue";
 import Winners from "./Winners.vue";
 import Safety from "./Safety.vue";
 const route = useRoute();
+const appMode = inject("jx3datAppMode", ref(isApp()));
 const tabs = [
     { key: "process", label: "活动流程", component: Process },
     { key: "rewards", label: "活动奖励", component: Rewards },
     { key: "winners", label: "获奖名单", component: Winners },
     { key: "safety", label: "安全与风险控制", component: Safety },
 ];
+const visibleTabs = computed(() => appMode.value ? tabs.filter(tab => tab.key !== "safety") : tabs);
 const current = computed(() => tabs.find((tab) => tab.key === route.query.tab) || tabs[0]);
 </script>
 
 <template>
-    <div class="p-jx3dat-new">
+    <div class="p-jx3dat-new" :class="{ 'is-app': appMode }">
         <div class="dat-decor" aria-hidden="true">
             <div class="dat-decor-stream dat-decor-left"></div>
             <div class="dat-decor-stream dat-decor-right"></div>
         </div>
         <header class="dat-hero">
+            <router-link v-if="appMode" class="dat-safety-link" :to="{ name: 'index', query: { ...route.query, tab: 'safety' } }" aria-label="安全与风险控制" :aria-current="current.key === 'safety' ? 'page' : undefined"><img :src="assetRoot + 'spec.svg'" alt="" /></router-link>
             <img class="dat-logo" :src="assetRoot + 'logo.png'" alt="剑网3魔盒 · 剑网3" />
             <h1><img class="dat-title" :src="assetRoot + 'title.png'" alt="剑网3数据大师赛" /></h1>
             <div class="dat-year">
@@ -32,7 +36,7 @@ const current = computed(() => tabs.find((tab) => tab.key === route.query.tab) |
             </div>
             <nav class="dat-tabs" aria-label="活动导航">
                 <router-link
-                    v-for="tab in tabs"
+                    v-for="tab in visibleTabs"
                     :key="tab.key"
                     :to="{ name: 'index', query: { ...route.query, tab: tab.key } }"
                     :class="{ 'is-active': current.key === tab.key }"

@@ -1,6 +1,7 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router.js";
+import { initAppEnv } from "@/utils/env";
 
 import { createHead } from "@vueuse/head";
 import { createJx3boxUiI18n, getJx3boxUiAvailableLocales, install as JX3BOX_UI } from "@jx3box/jx3box-ui";
@@ -25,6 +26,7 @@ import * as filters from "@/utils/filters.js";
 
 
 
+initAppEnv();
 const app = createApp(App);
 app.use(router);
 

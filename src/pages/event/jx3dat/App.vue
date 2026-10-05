@@ -1,19 +1,31 @@
 <template>
     <!-- 专题页 -->
     <div class="p-event" :class="'v-' + page_name">
-        <CommonHeader :overlayEnable="true"></CommonHeader>
+        <CommonHeader v-if="!appMode" :overlayEnable="true"></CommonHeader>
         <router-view></router-view>
-        <Footer darkMode></Footer>
+        <Footer v-if="!appMode" darkMode></Footer>
     </div>
 </template>
 
 <script>
+import { isApp, syncAppEnv, applyAppEnv } from "@/utils/env";
+import { ref, watch, provide } from "vue";
+import { useRoute } from "vue-router";
 import { postStat } from "@jx3box/jx3box-common/js/stat";
 import { __imgPath } from "@/utils/config";
 export default {
     name: "App",
-    data: function () {
-        return {};
+    setup() {
+        const route = useRoute();
+        const appMode = ref(isApp());
+        watch(() => route.fullPath, () => {
+            syncAppEnv();
+            appMode.value = isApp();
+            applyAppEnv();
+            document.documentElement.classList.toggle("v-app", appMode.value);
+        }, { immediate: true });
+        provide("jx3datAppMode", appMode);
+        return { appMode };
     },
     provide: {
         __imgRoot: __imgPath + "topic/jx3dat/",

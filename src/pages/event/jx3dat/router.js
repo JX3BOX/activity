@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 
-const Index = () => import("./new/Index.vue");
+const Index = () => import("./Index.vue");
+// const Index = () => import("./new/Index.vue");
 
 const routes = [
     { name: "index", path: "/", alias: "/new", component: Index },

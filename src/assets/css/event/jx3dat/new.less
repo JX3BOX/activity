@@ -658,3 +658,71 @@
     .p-jx3dat-new .dat-star .dat-star-ring { animation: none; }
     .p-jx3dat-new a.dat-frame { transition: none; }
 }
+
+.p-jx3dat-new .dat-safety-icon { display: none; }
+
+// 与中秋活动共用 __env=app 环境识别，APP 样式独立于普通窄屏网页。
+.p-jx3dat-new.is-app {
+    --dat-hero-height: 60vw;
+    min-height: 100vh;
+    font-size: 11px;
+    line-height: 2;
+    .dat-decor, .dat-logo { display: none; }
+    .dat-hero { height: var(--dat-hero-height); padding-top: 5vw; }
+    .dat-title { width: 68%; margin: 0 auto; }
+    .dat-year { margin-top: -1vw; gap: 3vw; font-size: 3.2vw; letter-spacing: 1vw;
+        &::before, &::after { width: 15vw; }
+    }
+    .dat-star { width: 14px; height: 14px; min-width: 14px; min-height: 14px; }
+    .dat-tabs { top: 50vw; left: 4%; width: 92%;
+        a { width: 33.333%; min-height: 0; height: 7.6vw; font-size: 12px; }
+    }
+    .dat-safety-link { position: absolute; top: 16px; right: 16px; display: flex; align-items: center; justify-content: center; width: 24px; height: 24px;
+        img { width: 20px; height: 20px; }
+    }
+    .dat-content { width: 90%; max-width: none; margin: 14px auto 0; }
+    .dat-documents { flex-direction: column; gap: 10px; margin-bottom: 42px;
+        a { width: 100%; min-height: 76px; padding: 12px; font-size: 14px; flex-wrap: nowrap; white-space: normal; }
+        img { width: 20px; margin-right: 14px; }
+    }
+    a.dat-frame { border-width: 1px; border-top-width: 2px; border-left-width: 2px; }
+    .dat-step { margin-bottom: 42px;
+        h2 { font-size: 12px; margin-bottom: 18px; letter-spacing: 0; }
+        .dat-date { font-size: 14px; margin-bottom: 10px; }
+    }
+    .dat-entry { min-height: 76px; margin-top: 8px; padding: 16px; gap: 14px; font-size: 16px; img { width: 22px; } }
+    .dat-scoring-intro { margin-top: 10px; }
+    .dat-scoring { grid-template-columns: 1fr; gap: 12px; margin-top: 10px;
+        article { padding: 24px; min-height: 256px; box-shadow: -1px -1px #fff; }
+        h3 { font-size: 14px; margin-bottom: 8px; }
+        p + p { margin-top: 22px; }
+        ul { padding-left: 12px; }
+        .dat-note { padding-top: 10px; margin-top: auto; }
+    }
+    .dat-note { margin-top: 18px; }
+    .dat-section-title { margin-bottom: 26px; h2 { font-size: 16px; } }
+    .dat-divider { gap: 12px; margin: 8px 0 0; > img { width: 62px; height: 1px; } }
+    .dat-award-section { margin-bottom: 44px; }
+    .dat-table-wrap { padding: 4px; overflow: visible; }
+    table { min-width: 0; width: 100%; font-size: 9px; table-layout: auto;
+        th, td { padding: 7px 3px; overflow-wrap: anywhere; }
+        th, td:first-child { white-space: nowrap; }
+    }
+    .dat-showcase p { font-size: 9px; margin: -12px 0 10px; }
+    .dat-physical, .dat-image-placeholder { width: 82%; border-radius: 4px; }
+    .dat-image-placeholder { font-size: 30px; span { font-size: 12px; } }
+    .dat-community, .dat-community-placeholder { width: 88%; }
+    .dat-community-placeholder { margin: 24px auto; strong { font-size: 14px; } }
+    .dat-winner-section { margin-bottom: 40px; }
+    .dat-winner-grid { padding-top: 0; row-gap: 24px; }
+    .dat-person, .is-general .dat-person { width: 33.333%;
+        img, .dat-avatar-placeholder { width: 64px; height: 64px; margin: 0 auto 8px; font-size: 24px; }
+        h3 { font-size: 13px; }
+    }
+    .dat-person-award { font-size: 11px; }
+    .dat-safety { border: 1px solid #a0b1b7; border-radius: 16px; padding: 28px 24px 24px; background: #000; font-size: 11px; line-height: 2; }
+    .dat-safety-icon { display: block; width: 40px; height: 40px; margin: 0 auto 20px; filter: sepia(1) saturate(3); }
+    .dat-warning { display: block; margin: 12px 0; padding: 16px 12px; border-width: 2px; border-radius: 5px; background: rgba(110, 40, 35, .3); font-size: 10px; text-align: center; img { display: none; } }
+    .dat-disclaimer { font-size: 10px; color: #888; }
+    .dat-footer { position: relative; text-align: center; padding: 80px 0 64px; img { display: inline-block; width: 50%; max-width: 230px; } }
+}
