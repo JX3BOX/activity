@@ -137,7 +137,7 @@
                         :class="item.color"
                         v-if="users[item.author]"
                     >
-                        <Avatar class="u-avatar" :url="users[item.author].avatar" size="60"> </Avatar>
+                        <img class="u-avatar" :src="users[item.author].avatar" />
                         <div class="m-info">
                             <span class="u-name">{{ users[item.author].name }}</span>
                             <span>{{ item.title }}</span>

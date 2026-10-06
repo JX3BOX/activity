@@ -271,6 +271,7 @@ h2.title {
     justify-content: flex-start;
     flex-wrap: wrap;
     gap: 25px;
+    .mt(50px);
     .m-clip {
         width: calc(33% - 18px);
         margin-left: initial;
@@ -284,10 +285,14 @@ h2.title {
         padding: 10px 20px;
         background: linear-gradient(to right, #ffffff33, transparent);
         border: 1px solid #ffffff33;
+        .u-avatar {
+            .size(60px);
+        }
         .m-info {
             .flex;
             .fz(20px);
             flex-direction: column;
+
             .u-name {
                 .bold;
                 .nobreak;
@@ -310,9 +315,6 @@ h2.title {
             }
         }
     }
-}
-.m-rank + .m-rank {
-    .mt(50px);
 }
 // 手机适配
 @media screen and(max-width:@ipad) {
