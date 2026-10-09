@@ -1,5 +1,5 @@
 <script setup>
-import { assetRoot } from "./config";
+import { assetRoot } from "../topic";
 import { computed } from "vue";
 const props = defineProps({ title: { type: String, required: true }, tone: { type: String, default: "cyan" } });
 const color = computed(() => ({ gold: "w", orange: "o", cyan: "q", purple: "q" }[props.tone] || "q"));

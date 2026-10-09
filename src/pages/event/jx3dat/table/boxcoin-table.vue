@@ -213,9 +213,9 @@
         </tbody>
     </table>
 </template>
-<style lang="less">
+<style scoped lang="less">
 table {
-    overflow-x: auto;
+    min-width: 640px;
     max-width: 100%;
     border: 1px solid #fff;
     line-height: 2.2;
@@ -224,5 +224,6 @@ table {
 }
 td {
     .x;
+    padding: 8px 12px;
 }
 </style>

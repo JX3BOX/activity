@@ -9,6 +9,11 @@
                 <img class="title p-animation" v-animate="'bounceIn'" :src="`${__imgRoot}video-title.svg`" />
             </div>
         </div>
+        <div class="dat-legacy-edition">
+            <span class="dat-legacy-star" aria-hidden="true"></span>
+            <EditionSelect />
+            <span class="dat-legacy-star" aria-hidden="true"></span>
+        </div>
         <!-- 视频轮播 -->
 
         <div class="m-video">
@@ -153,13 +158,15 @@
 const KEY = "jx3dat";
 import BoxcoinTable from "./table/boxcoin-table.vue";
 import BaseTable from "./table/base-table.vue";
+import EditionSelect from "./components/EditionSelect.vue";
+import { normalizeHtml, getSharedTopic } from "./topic";
 import { getTopic, getUsers } from "@/service/event/topic";
 import { uniq } from "lodash";
 import { authorLink } from "@jx3box/jx3box-common/js/utils";
 export default {
     name: "Index",
     inject: ["__imgRoot"],
-    components: { BoxcoinTable, BaseTable },
+    components: { BoxcoinTable, BaseTable, EditionSelect },
     data: function () {
         return {
             raw: [],
@@ -230,16 +237,16 @@ export default {
     methods: {
         authorLink,
         init() {
+            getSharedTopic().then((res) => {
+                this.safe = res.data.data.filter((item) => item.subtype === "document" && item.link === "safety")
+                    .map((item) => normalizeHtml(item.desc)).join("\n");
+            }).catch(() => { this.safe = "安全与风险说明加载失败，请刷新重试。"; });
             getTopic(KEY).then((res) => {
                 this.raw = res.data.data;
-                const { prize, safe, step, video, title, document, rank } = this.data;
+                const { prize, step, video, title, document, rank } = this.data;
                 this.prize = prize;
-                this.safe = safe[0].desc;
                 this.step = step;
-                this.video = video.map((item) => {
-                    const { id, link, img, title } = item;
-                    return { id, link, img, title };
-                });
+                this.video = video;
 
                 this.title = title.map((item) => item.img);
                 this.document = document;
@@ -295,4 +302,28 @@ export default {
 
 <style lang="less">
 @import "~@/assets/css/event/jx3dat/index.less";
+.p-jx3dat .dat-legacy-edition {
+    position: relative;
+    display: flex; align-items: center; justify-content: center; gap: 2vw;
+    max-width: 1400px; margin: 0 auto; padding: 140px 24px 80px;
+    color: #d7e1e3; font-size: clamp(20px, 2.4vw, 48px);
+    font-weight: 700; letter-spacing: .48vw; text-align: center;
+    &::before, &::after {
+        content: ""; flex: 1; height: 1px;
+        background: linear-gradient(90deg, transparent, #55ffff);
+    }
+    &::after { transform: rotate(180deg); }
+    .dat-legacy-star {
+        position: relative; flex: 0 0 auto; width: clamp(18px, 2.4vw, 44px);
+        height: clamp(18px, 2.4vw, 44px); border: 2px solid #55ffff; transform: rotate(45deg);
+        &::before {
+            content: ""; position: absolute; inset: 22%; background: #fff;
+            border: 4px solid #55ffff;
+        }
+    }
+}
+.p-jx3dat .m-video { padding-top: 100px; }
+@media screen and (max-width: 768px) {
+    .p-jx3dat .dat-legacy-edition { padding: 70px 16px 40px; gap: 16px; letter-spacing: 2px; }
+}
 </style>

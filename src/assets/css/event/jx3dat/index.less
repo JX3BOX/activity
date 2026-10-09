@@ -217,7 +217,14 @@ h2.title {
             }
         }
         &.table {
-            padding: 100px;
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            overflow-x: auto;
+            padding: 60px;
+            @media screen and(max-width:@ipad) {
+                padding: 24px 16px;
+            }
         }
     }
 }

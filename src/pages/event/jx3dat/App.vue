@@ -1,6 +1,5 @@
 <template>
-    <!-- 专题页 -->
-    <div class="p-event" :class="'v-' + page_name">
+    <div class="p-event" :class="'v-' + $route.name">
         <CommonHeader v-if="!appMode" :overlayEnable="true"></CommonHeader>
         <router-view></router-view>
         <Footer v-if="!appMode" darkMode></Footer>
@@ -29,11 +28,6 @@ export default {
     },
     provide: {
         __imgRoot: __imgPath + "topic/jx3dat/",
-    },
-    computed: {
-        page_name: function () {
-            return this.$route.name;
-        },
     },
     created: function () {
         postStat("event", "jx3dat");

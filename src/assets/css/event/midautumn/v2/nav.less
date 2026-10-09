@@ -27,9 +27,13 @@
             left: 0; right: 0; height: 1px;
             background: linear-gradient(90deg, transparent, #fff1c7, transparent);
             filter: drop-shadow(0 0 3px #efc365);
+            transition: filter .2s ease;
         }
         &::before { top: 0; }
         &::after { bottom: 0; }
+        &:hover::before, &:hover::after {
+            filter: drop-shadow(0 0 4px #fff1c7) drop-shadow(0 0 8px #efc365);
+        }
     }
     .u-nav-box { display: flex; flex-direction: column; align-items: center; gap: 16px; }
     .u-nav-item {
@@ -46,7 +50,6 @@
         &.active {
             color: #fff8e6;
             &::before { background-image: var(--tab-inactive-background); filter: var(--tab-inactive-filter); }
-            span::before, span::after { content: "✿"; font-size: 15px; margin: 0 5px; color: #e8dfbd; }
         }
         &:hover { filter: brightness(1.08); }
     }
