@@ -19,7 +19,7 @@ export default {
         const appMode = ref(isApp());
         watch(() => route.fullPath, () => {
             syncAppEnv();
-            appMode.value = isApp();
+            appMode.value = route.query.__env === undefined ? isApp() : route.query.__env === "app";
             applyAppEnv();
             document.documentElement.classList.toggle("v-app", appMode.value);
         }, { immediate: true });
