@@ -8,8 +8,9 @@
  * Copyright (c) 2024 by zhusha, email: no email, All Rights Reserved.
 -->
 <template>
-    <div class="p-event-midAutumn" :style="{ backgroundImage: `url(${background})` }" @click="goToDetail">
+    <div class="p-event-midAutumn" @click="goToDetail">
         <!-- 首页展示 -->
+        <video class="u-kv" :src="kvVideo" :poster="kvPoster" autoplay loop muted playsinline></video>
         <div class="m-box">
 
 
@@ -53,8 +54,11 @@ export default {
         year() {
             return this.years[this.years.length - 1]?.year || new Date().getFullYear();
         },
-        background() {
-            return `${__cdn}design/event/mid_autumn/${this.year}/pc/bg.jpg`;
+        kvVideo() {
+            return `${__cdn}design/event/mid_autumn/${this.year}/pc/kv.mp4`;
+        },
+        kvPoster() {
+            return `${__cdn}design/event/mid_autumn/${this.year}/pc/kv.jpg`;
         },
         yearInChinese() {
             return this.getYearInChinese();
