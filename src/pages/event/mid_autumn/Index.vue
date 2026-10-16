@@ -55,10 +55,10 @@ export default {
             return this.years[this.years.length - 1]?.year || new Date().getFullYear();
         },
         kvVideo() {
-            return `${__cdn}design/event/mid_autumn/${this.year}/pc/kv.mp4`;
+            return `${__cdn}design/event/mid_autumn/2026/pc/kv.mp4`;
         },
         kvPoster() {
-            return `${__cdn}design/event/mid_autumn/${this.year}/pc/kv.jpg`;
+            return `${__cdn}design/event/mid_autumn/2026/pc/kv.jpg`;
         },
         yearInChinese() {
             return this.getYearInChinese();

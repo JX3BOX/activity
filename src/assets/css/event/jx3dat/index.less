@@ -186,7 +186,7 @@ h2.title {
 .m-section {
     .mt(450px);
     .pt(10px);
-    background: linear-gradient(to bottom, #394d4dff 0%, #394d4d00 10%);
+    background: linear-gradient(to bottom, rgba(57, 77, 77, 0.5) 0%, transparent 160px);
 }
 .m-content {
     .wp;
@@ -324,38 +324,225 @@ h2.title {
     }
 }
 // 手机适配
-@media screen and(max-width:@ipad) {
+@media screen and(max-width:768px) {
+    .p-jx3dat {
+        .pb(80px);
+        background-size: 100% auto;
+    }
+
+    // 首屏
     .m-top {
-        .h(auto);
-        min-height: 780px;
-        .logo {
-            .lt(50%,50px);
-            .w(328px);
-            .ml(-200px);
+        .h(70vh);
+        min-height: 70vh;
+        overflow: hidden;
+        .mp4 {
+            .size(100%);
+            min-height: 70vh;
+            object-fit: cover;
+            object-position: center top;
         }
-        .title {
-            .size(50%,100%);
+        .logo {
+            .lt(50%, 20px);
+            .ml(0);
+            transform: translateX(-50%);
+            .w(auto);
+            max-width: 72%;
         }
         .m-title {
-            min-height: 780px;
+            .size(100%);
+            min-height: 50vh;
+            .flex-x;
+            .pt(100px);
+            .pb(40px);
+        }
+        .title {
+            .size(90%, auto);
+            max-width: 520px;
         }
     }
+
+    // 视频
     .m-video {
         .w(100%);
+        .pt(60px);
+        gap: 24px;
         .m-play {
-            .h(496px);
-            background-size: 100% 496px;
+            .h(auto);
+            padding: 0;
+            background-size: 100% 100%;
+            .u-play {
+                .size(100%, auto);
+                aspect-ratio: 16 / 9;
+            }
+            iframe {
+                .size(100%, auto);
+                aspect-ratio: 16 / 9;
+            }
+            .u-img {
+                .w(180px);
+                .lt(50%, -52px);
+                .ml(-90px);
+            }
+        }
+        .m-video-list {
+            max-width: 100%;
+            padding: 0 16px;
+            gap: 12px;
+            .u-img {
+                .size(160px, 100px);
+                flex: none;
+            }
         }
     }
-    .m-box {
-        zoom: 0.7;
+
+    // 公共标题
+    h2.title {
+        .h(80px);
+        margin: 80px 0 30px 0;
     }
-    .m-steps,
-    .m-safe {
-        .ml(20px);
-        .mr(20px);
+
+    // 卡片容器
+    .m-box {
+        padding: 24px 16px;
+        .r(12px);
+        p {
+            margin: 0 0 20px 0;
+        }
+    }
+    .m-clip {
+        max-width: none;
+        width: calc(100% - 32px);
+    }
+    .m-content .m-clip {
+        width: 100%;
+        .ml(0);
+        .mr(0);
+    }
+
+    // 流程
+    .m-steps {
+        .m-links {
+            flex-direction: column;
+            gap: 16px;
+            .u-link {
+                .h(auto);
+                .fz(18px);
+                padding: 24px 16px;
+                .x;
+                line-height: 1.6;
+            }
+        }
+        .m-step {
+            .u-title {
+                .fz(20px);
+                margin: 40px 0 0 0;
+            }
+            .u-time {
+                .fz(14px);
+                .mt(8px);
+            }
+            .u-desc {
+                .fz(14px);
+                line-height: 1.8;
+                p {
+                    .mt(20px);
+                }
+            }
+        }
+    }
+
+    // 内容区
+    .m-section {
+        .mt(80px);
+        .pt(10px);
+        background: none;
     }
     .m-content {
-        padding: 0 10px;
+        padding: 0 16px;
+        h3.u-title {
+            .h(48px);
+            .pl(16px);
+            .fz(20px, 48px);
+            .mt(60px);
+            background-size: auto 100%;
+            &:first-child {
+                .mt(30px);
+            }
+        }
+        .m-box {
+            .fz(14px);
+            padding: 20px 16px;
+            &.center {
+                .fz(16px);
+            }
+            &.table {
+                padding: 16px;
+            }
+        }
+    }
+
+    // 奖品
+    .m-prize {
+        flex-direction: column;
+        gap: 20px;
+        .mb(30px);
+        .m-clip {
+            .w(100%);
+        }
+        .u-prize {
+            .fz(18px);
+            padding: 24px 16px;
+            .u-img {
+                .mb(12px);
+                .w(auto);
+                max-width: 100%;
+                .h(auto);
+            }
+            span {
+                white-space: normal;
+            }
+        }
+    }
+
+    // 安全与风险
+    .m-safe {
+        .fz(14px);
+        padding: 0 16px;
+    }
+
+    // 获奖名单
+    .m-rank {
+        gap: 12px;
+        .mt(24px);
+        .m-clip {
+            width: 100%;
+            .r(16px);
+            overflow: hidden;
+        }
+        .m-box {
+            .h(auto);
+            gap: 12px;
+            padding: 12px 16px;
+            .r(16px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
+            &.gold {
+                background: rgba(255, 238, 131, 0.12);
+                border-color: rgba(255, 238, 131, 0.25);
+            }
+            &.popularity {
+                background: rgba(250, 173, 255, 0.12);
+                border-color: rgba(250, 173, 255, 0.25);
+            }
+            .u-avatar {
+                .size(44px);
+            }
+            .m-info {
+                .fz(14px);
+                .u-name {
+                    .fz(16px);
+                }
+            }
+        }
     }
 }

@@ -662,7 +662,7 @@
 
 .p-jx3dat-new .dat-safety-icon { display: none; }
 
-// 与中秋活动共用 __env=app 环境识别，APP 样式独立于普通窄屏网页。
+// 与中秋活动共用 __env=app 环境识别；env=app 或小屏（≤768px，见 initAppEnv appMaxWidth）均触发 APP 适配样式。
 .p-jx3dat-new.is-app {
     --dat-hero-height: 60vw;
     min-height: 100vh;

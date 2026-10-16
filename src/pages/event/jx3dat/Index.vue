@@ -322,7 +322,9 @@ export default {
         }
     }
 }
-.p-jx3dat .m-video { padding-top: 100px; }
+@media screen and (min-width: 769px) {
+    .p-jx3dat .m-video { padding-top: 100px; }
+}
 @media screen and (max-width: 768px) {
     .p-jx3dat .dat-legacy-edition { padding: 70px 16px 40px; gap: 16px; letter-spacing: 2px; }
 }

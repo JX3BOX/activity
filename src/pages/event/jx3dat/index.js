@@ -19,7 +19,8 @@ import zhCn from "element-plus/es/locale/lang/zh-cn";
 import en from "element-plus/es/locale/lang/en";
 import zhTw from "element-plus/es/locale/lang/zh-tw";
 import vi from "element-plus/es/locale/lang/vi";
-initAppEnv();
+// 小屏（≤768px）也触发 App 适配样式，与 new.less 的 @media (max-width:768px) 对齐。
+initAppEnv({ appMaxWidth: 768 });
 const app = createApp(App);
 app.use(router);
 

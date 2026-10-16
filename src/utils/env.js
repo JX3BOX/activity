@@ -5,7 +5,7 @@
 
 import { ref } from "vue";
 
-const responsiveAppMode = ref(false);
+export const responsiveAppMode = ref(false);
 const ENV_KEY = "__env";
 const APP_VALUE = "app";
 
