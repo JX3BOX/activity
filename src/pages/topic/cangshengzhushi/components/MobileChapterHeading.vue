@@ -10,7 +10,11 @@ defineProps({ index: { type: Number, required: true } });
 <style scoped>
 .u-mobile-chapter-heading { display: none; }
 @media (max-width: 767px) {
-    .u-mobile-chapter-heading { display: block; width: 76vw; height: 16vw; margin: 0 auto 10vw; }
+    .u-mobile-chapter-heading { display: block; width: calc(76 * var(--u)); height: calc(16 * var(--u)); margin: 0 auto calc(10 * var(--u)); }
     .u-mobile-chapter-heading img { display: block; width: 100%; height: 100%; object-fit: contain; }
 }
+
+/* App 内嵌模式（__env=app）：与移动端同款排版，不依赖屏幕断点 */
+html.v-app .u-mobile-chapter-heading { display: block; width: calc(76 * var(--u)); height: calc(16 * var(--u)); margin: 0 auto calc(10 * var(--u)); }
+html.v-app .u-mobile-chapter-heading img { display: block; width: 100%; height: 100%; object-fit: contain; }
 </style>

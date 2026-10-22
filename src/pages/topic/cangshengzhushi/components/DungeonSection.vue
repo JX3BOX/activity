@@ -7,8 +7,8 @@ const dungeonIndex = shallowRef(0);
 const bossIndex = shallowRef(0);
 const dungeons = ["洛阳之战", "昊渊极", "东山马场", "玄元观", "大明津"];
 const bosses = ["突利和顺", "田承嗣", "伊曼·寂夜 伊曼·逐焰", "阿史那承庆", "史朝义"];
-const guideLinks = [Array(5).fill(""), "", "", "", ""];
-const guideLink = computed(() => dungeonIndex.value === 0 ? guideLinks[0][bossIndex.value] : guideLinks[dungeonIndex.value]);
+const guideLinks = ["洛阳之战", "昊渊极", "南山马场", "玄元观", "大阳津"].map(name => `https://www.jx3box.com/fb/?fb_name=${encodeURIComponent(name)}`);
+const guideLink = computed(() => guideLinks[dungeonIndex.value]);
 const background = computed(() => ({ backgroundImage: `url(${asset(`bg/bg4-${dungeonIndex.value + 1}.jpg`)})` }));
 function selectDungeon(index) { dungeonIndex.value = index; bossIndex.value = 0; }
 function tabImage(index) {
@@ -23,9 +23,8 @@ function tabImage(index) {
             <MobileChapterHeading :index="2" />
             <p class="u-mobile-dungeon-hint">&gt; 点击卡片可查看秘境攻略 &lt;</p>
             <div class="u-mobile-dungeon-list">
-                <a v-for="(name, index) in dungeons" :key="name" :href="(index === 0 ? guideLinks[0][0] : guideLinks[index]) || undefined"
-                    :aria-disabled="!(index === 0 ? guideLinks[0][0] : guideLinks[index])" target="_blank" rel="noopener noreferrer"
-                    @click="selectDungeon(index); !(index === 0 ? guideLinks[0][0] : guideLinks[index]) && $event.preventDefault()">
+                <a v-for="(name, index) in dungeons" :key="name" :href="guideLinks[index]" target="_blank" rel="noopener noreferrer"
+                    @click="selectDungeon(index)">
                     <img :src="tabImage(index)" :alt="name" loading="lazy" />
                 </a>
             </div>
@@ -49,7 +48,7 @@ function tabImage(index) {
                     </div>
                 </template>
                 <img v-else class="u-dungeon-scene" :src="asset(`pve0${dungeonIndex + 2}.jpg`)" :alt="`${dungeons[dungeonIndex]}秘境场景`" loading="lazy" />
-                <a class="u-guide" :href="guideLink || undefined" :aria-disabled="!guideLink" @click="!guideLink && $event.preventDefault()" target="_blank" rel="noopener noreferrer"><img :src="asset('anniu.png')" alt="查看攻略" /></a>
+                <a class="u-guide" :href="guideLink" target="_blank" rel="noopener noreferrer"><img :src="asset('anniu.png')" alt="查看攻略" /></a>
             </div>
         </div>
     </section>
@@ -57,7 +56,7 @@ function tabImage(index) {
 
 <style scoped>
 .u-mobile-dungeons { display: none; }
-.m-dungeons { display: flex; justify-content: center; align-items: flex-start; padding-top: 5vw; padding-bottom: 5vw; }
+.m-dungeons { display: flex; justify-content: center; align-items: flex-start; padding-top: calc(5 * var(--u)); padding-bottom: calc(5 * var(--u)); }
 .u-dungeon-content { width: 60.26%; }
 .u-dungeon-tabs { display: grid; grid-template-columns: 2.07fr 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 8px; margin-bottom: 0; }
 .u-dungeon-tabs button { background: none; border: 1px solid transparent; padding: 0; cursor: pointer; min-width: 0; }
@@ -75,12 +74,21 @@ function tabImage(index) {
 .u-guide img { width: 100%; display: block; }
 .u-guide:hover img { content: url('https://cdn.jx3box.com/design/topic/cangshengzhushi/anniu01.png'); }
 @media (max-width: 767px) {
-    .m-dungeons { display: block; padding: 7vw 0 10vw; background-image: url('https://cdn.jx3box.com/design/topic/cangshengzhushi/bg/bg4-1.jpg') !important; }
+    .m-dungeons { display: block; padding: calc(7 * var(--u)) 0 calc(10 * var(--u)); background-image: url('https://cdn.jx3box.com/design/topic/cangshengzhushi/bg/bg4-1.jpg') !important; }
     .u-dungeon-content { display: none; }
     .u-mobile-dungeons { display: block; }
-    .u-mobile-dungeon-hint { margin: -4vw 0 6vw; text-align: center; color: #aaa; font-size: 3.2vw; }
-    .u-mobile-dungeon-list { display: flex; flex-direction: column; gap: 4vw; width: 91%; margin: 0 auto; }
+    .u-mobile-dungeon-hint { margin: calc(-1 * 4 * var(--u)) 0 calc(6 * var(--u)); text-align: center; color: #aaa; font-size: calc(3.2 * var(--u)); }
+    .u-mobile-dungeon-list { display: flex; flex-direction: column; gap: calc(4 * var(--u)); width: 91%; margin: 0 auto; }
     .u-mobile-dungeon-list a { display: block; border: 2px solid #f6e4b4; cursor: pointer; }
-    .u-mobile-dungeon-list img { display: block; width: 100%; height: 33vw; object-fit: fill; }
+    .u-mobile-dungeon-list img { display: block; width: 100%; height: calc(33 * var(--u)); object-fit: fill; }
 }
+
+/* App 内嵌模式（__env=app）：与移动端同款排版，不依赖屏幕断点 */
+html.v-app .m-dungeons { display: block; padding: calc(7 * var(--u)) 0 calc(10 * var(--u)); background-image: url('https://cdn.jx3box.com/design/topic/cangshengzhushi/bg/bg4-1.jpg') !important; }
+html.v-app .u-dungeon-content { display: none; }
+html.v-app .u-mobile-dungeons { display: block; }
+html.v-app .u-mobile-dungeon-hint { margin: calc(-1 * 4 * var(--u)) 0 calc(6 * var(--u)); text-align: center; color: #aaa; font-size: calc(3.2 * var(--u)); }
+html.v-app .u-mobile-dungeon-list { display: flex; flex-direction: column; gap: calc(4 * var(--u)); width: 91%; margin: 0 auto; }
+html.v-app .u-mobile-dungeon-list a { display: block; border: 2px solid #f6e4b4; cursor: pointer; }
+html.v-app .u-mobile-dungeon-list img { display: block; width: 100%; height: calc(33 * var(--u)); object-fit: fill; }
 </style>

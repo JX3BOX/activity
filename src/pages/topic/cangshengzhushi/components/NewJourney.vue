@@ -47,20 +47,20 @@ import { asset } from "../assets";
 }
 .u-journey-copy p {
     margin: 0;
-    font-size: clamp(16px, 1.875vw, 36px);
+    font-size: clamp(16px, calc(1.875 * var(--u)), 36px);
     font-weight: 700;
     letter-spacing: 4px;
     line-height: 2.7439;
 }
 .u-journey-copy strong { font-size: 2em; font-weight: 700; line-height: 1; }
-.u-journey-copy small { display: block; font-size: clamp(12px, 1.25vw, 24px); font-weight: 400; line-height: 1.5; letter-spacing: 4px; }
+.u-journey-copy small { display: block; font-size: clamp(12px, calc(1.25 * var(--u)), 24px); font-weight: 400; line-height: 1.5; letter-spacing: 4px; }
 .u-leaf { width: 5%; position: absolute; top: 10%; right: 15%; pointer-events: none; opacity: 0; }
 .is-falling { animation: cs-leaf-fall 8s 1s ease-in-out both; }
-@keyframes cs-leaf-fall { 0% { opacity: 0; transform: translate(0, 0) rotate(0); } 10% { opacity: 1; } 50% { transform: translate(-4vw, 15vw) rotate(110deg); } 100% { opacity: 0; transform: translate(-1vw, 34vw) rotate(240deg); } }
+@keyframes cs-leaf-fall { 0% { opacity: 0; transform: translate(0, 0) rotate(0); } 10% { opacity: 1; } 50% { transform: translate(calc(-1 * 4 * var(--u)), calc(15 * var(--u))) rotate(110deg); } 100% { opacity: 0; transform: translate(calc(-1 * 1 * var(--u)), calc(34 * var(--u))) rotate(240deg); } }
 @media (max-width: 767px) {
-    .m-journey { min-height: 165vw; padding: 10vw 0 0; justify-content: flex-start; isolation: isolate; overflow: hidden; background: #39281e; }
-    .m-journey::before { content: ''; position: absolute; z-index: -1; width: 200vw; height: 100vw; left: 50%; top: 50%; transform: translate(-50%, -50%) rotate(90deg); background: url('https://cdn.jx3box.com/design/topic/cangshengzhushi/bg/bg2-1.jpg') center / cover; }
-    .u-journey-art { width: 100%; height: 100vw; padding: 0; }
+    .m-journey { min-height: calc(165 * var(--u)); padding: calc(10 * var(--u)) 0 0; justify-content: flex-start; isolation: isolate; overflow: hidden; background: #39281e; }
+    .m-journey::before { content: ''; position: absolute; z-index: -1; width: calc(200 * var(--u)); height: calc(100 * var(--u)); left: 50%; top: 50%; transform: translate(-50%, -50%) rotate(90deg); background: url('https://cdn.jx3box.com/design/topic/cangshengzhushi/bg/bg2-1.jpg') center / cover; }
+    .u-journey-art { width: 100%; height: calc(100 * var(--u)); padding: 0; }
     .u-journey-photo { position: absolute; width: 190%; left: -32%; top: 0; transform: rotate(5deg); }
     .u-journey-picture { width: 100%; max-width: none; }
     .u-journey-title { width: 44%; top: -2%; bottom: auto; left: auto; right: 3%; }
@@ -68,11 +68,31 @@ import { asset } from "../assets";
     .leaf-left { width: 22%; left: 1%; bottom: -7%; }
     .leaf-top, .u-leaf { display: none; }
     .u-journey-copy { width: 100%; margin-top: 0; padding: 0; background: none; }
-    .u-journey-copy p { border-top: 1px solid #c5a36b; border-bottom: 1px solid #c5a36b; padding: 4vw 0; font-size: 4.5vw; line-height: 1.55; letter-spacing: 4px; }
+    .u-journey-copy p { border-top: 1px solid #c5a36b; border-bottom: 1px solid #c5a36b; padding: calc(4 * var(--u)) 0; font-size: calc(4.5 * var(--u)); line-height: 1.55; letter-spacing: 4px; }
     .u-copy-start, .u-copy-end { display: block; }
     .u-copy-end { font-weight: 400; }
     .u-copy-comma { display: none; }
     .u-journey-copy strong { font-size: inherit; font-weight: inherit; }
-    .u-journey-copy small { padding: 3vw 0 5vw; font-size: 3.1vw; letter-spacing: 3px; color: #aaa; background: linear-gradient(transparent, #202c37b3); }
+    .u-journey-copy small { padding: calc(3 * var(--u)) 0 calc(5 * var(--u)); font-size: calc(3.1 * var(--u)); letter-spacing: 3px; color: #aaa; background: linear-gradient(transparent, #202c37b3); }
 }
+
+/* App 内嵌模式（__env=app）：与移动端同款排版，不依赖屏幕断点 */
+html.v-app .m-journey { min-height: calc(165 * var(--u)); padding: calc(10 * var(--u)) 0 0; justify-content: flex-start; isolation: isolate; overflow: hidden; background: #39281e; }
+html.v-app .m-journey::before { content: ''; position: absolute; z-index: -1; width: calc(200 * var(--u)); height: calc(100 * var(--u)); left: 50%; top: 50%; transform: translate(-50%, -50%) rotate(90deg); background: url('https://cdn.jx3box.com/design/topic/cangshengzhushi/bg/bg2-1.jpg') center / cover; }
+html.v-app .u-journey-art { width: 100%; height: calc(100 * var(--u)); padding: 0; }
+html.v-app .u-journey-photo { position: absolute; width: 190%; left: -32%; top: 0; transform: rotate(5deg); }
+html.v-app .u-journey-picture { width: 100%; max-width: none; }
+html.v-app .u-journey-title { width: 44%; top: -2%; bottom: auto; left: auto; right: 3%; }
+/* <picture> 的 source 依赖 max-width: 767px 断点，App 模式下桌面视口不命中，强制改用 app 版标题图 */
+html.v-app .u-journey-title img { content: url('https://cdn.jx3box.com/design/topic/cangshengzhushi/xdj03-app.png'); }
+html.v-app .u-leaves { width: 34%; top: 0; z-index: 2; }
+html.v-app .leaf-left { width: 22%; left: 1%; bottom: -7%; }
+html.v-app .leaf-top, html.v-app .u-leaf { display: none; }
+html.v-app .u-journey-copy { width: 100%; margin-top: 0; padding: 0; background: none; }
+html.v-app .u-journey-copy p { border-top: 1px solid #c5a36b; border-bottom: 1px solid #c5a36b; padding: calc(4 * var(--u)) 0; font-size: calc(4.5 * var(--u)); line-height: 1.55; letter-spacing: 4px; }
+html.v-app .u-copy-start, html.v-app .u-copy-end { display: block; }
+html.v-app .u-copy-end { font-weight: 400; }
+html.v-app .u-copy-comma { display: none; }
+html.v-app .u-journey-copy strong { font-size: inherit; font-weight: inherit; }
+html.v-app .u-journey-copy small { padding: calc(3 * var(--u)) 0 calc(5 * var(--u)); font-size: calc(3.1 * var(--u)); letter-spacing: 3px; color: #aaa; background: linear-gradient(transparent, #202c37b3); }
 </style>

@@ -4,6 +4,7 @@ import { useMediaQuery } from "@vueuse/core";
 import MobileChapterHeading from "./MobileChapterHeading.vue";
 import MobilePager from "./MobilePager.vue";
 import { asset } from "../assets";
+import { isEmbeddedApp } from "@/utils/env";
 import { useSectionMotion } from "../composables/useSectionMotion";
 const { section, visible } = useSectionMotion();
 const maps = ["过云岭", "云州", "渝州", "陕州"];
@@ -35,7 +36,9 @@ const introductions = [
         "高元的唱腔将《秦王破阵乐》的铿锵雄烈，娓妮铺展，余韵回荡城间。",
     ],
 ];
-const isMobile = useMediaQuery("(max-width: 767px)");
+// App 内嵌模式与移动端同款排版（不依赖屏幕断点），需与 CSS 的 html.v-app 规则保持一致
+const narrowScreen = useMediaQuery("(max-width: 767px)");
+const isMobile = computed(() => narrowScreen.value || isEmbeddedApp());
 const mobileMap = shallowRef(0);
 const selected = shallowRef(-1);
 const activeMap = computed(() => isMobile.value ? mobileMap.value : selected.value);
@@ -135,14 +138,25 @@ function release() {
 .u-map-description.is-active { visibility: visible; }
 .u-map-description p { margin: 0; }
 @media (max-width: 767px) {
-    .m-maps { padding: 6vw 0 14vw; justify-content: flex-start; }
-    .u-mobile-map-view { display: grid; grid-template-columns: 12vw 57vw; gap: 5vw; width: 80vw; margin: 0 auto; }
-    .u-mobile-map-tabs { display: flex; flex-direction: column; gap: 1vw; }
-    .u-mobile-map-tabs button { display: block; width: 12vw; height: 29.25vw; padding: 1vw; border: 0; border-radius: 2px; background: #080808; cursor: pointer; }
+    .m-maps { padding: calc(6 * var(--u)) 0 calc(14 * var(--u)); justify-content: flex-start; }
+    .u-mobile-map-view { display: grid; grid-template-columns: calc(12 * var(--u)) calc(57 * var(--u)); gap: calc(5 * var(--u)); width: calc(80 * var(--u)); margin: 0 auto; }
+    .u-mobile-map-tabs { display: flex; flex-direction: column; gap: calc(1 * var(--u)); }
+    .u-mobile-map-tabs button { display: block; width: calc(12 * var(--u)); height: calc(29.25 * var(--u)); padding: calc(1 * var(--u)); border: 0; border-radius: 2px; background: #080808; cursor: pointer; }
     .u-mobile-map-tabs button[aria-pressed='true'] { background: #fff2b9; }
     .u-mobile-map-tabs img { display: block; width: 100%; height: 100%; object-fit: fill; }
-    .u-mobile-map-photo { position: relative; height: 120vw; }
+    .u-mobile-map-photo { position: relative; height: calc(120 * var(--u)); }
     .u-mobile-map-photo .u-map-frame { height: 100%; }
-    .u-map-intro { width: 96%; margin-top: 5vw; padding: 4vw; font-size: 2.65vw; line-height: 1.6; }
+    .u-map-intro { width: 96%; margin-top: calc(5 * var(--u)); padding: calc(4 * var(--u)); font-size: calc(2.65 * var(--u)); line-height: 1.6; }
 }
+
+/* App 内嵌模式（__env=app）：与移动端同款排版，不依赖屏幕断点 */
+html.v-app .m-maps { padding: calc(6 * var(--u)) 0 calc(14 * var(--u)); justify-content: flex-start; }
+html.v-app .u-mobile-map-view { display: grid; grid-template-columns: calc(12 * var(--u)) calc(57 * var(--u)); gap: calc(5 * var(--u)); width: calc(80 * var(--u)); margin: 0 auto; }
+html.v-app .u-mobile-map-tabs { display: flex; flex-direction: column; gap: calc(1 * var(--u)); }
+html.v-app .u-mobile-map-tabs button { display: block; width: calc(12 * var(--u)); height: calc(29.25 * var(--u)); padding: calc(1 * var(--u)); border: 0; border-radius: 2px; background: #080808; cursor: pointer; }
+html.v-app .u-mobile-map-tabs button[aria-pressed='true'] { background: #fff2b9; }
+html.v-app .u-mobile-map-tabs img { display: block; width: 100%; height: 100%; object-fit: fill; }
+html.v-app .u-mobile-map-photo { position: relative; height: calc(120 * var(--u)); }
+html.v-app .u-mobile-map-photo .u-map-frame { height: 100%; }
+html.v-app .u-map-intro { width: 96%; margin-top: calc(5 * var(--u)); padding: calc(4 * var(--u)); font-size: calc(2.65 * var(--u)); line-height: 1.6; }
 </style>

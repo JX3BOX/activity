@@ -22,7 +22,6 @@ export default {
         return {
             links: [
                 { name: "资料片专题", path: "/topic" },
-                { name: "苍生铸世", path: "/topic/cangshengzhushi#/" },
                 { name: "活动专题", path: "/event" },
                 { name: "体服激活码兑换", path: "/event/redeem/" },
                 { name: "百强榜", path: "/rank" },
