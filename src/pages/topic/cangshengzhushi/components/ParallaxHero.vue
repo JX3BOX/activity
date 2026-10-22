@@ -1,5 +1,7 @@
 <script setup>
 import { shallowRef, onBeforeUnmount } from "vue";
+import { useSectionMotion } from "../composables/useSectionMotion";
+const { section, visible } = useSectionMotion();
 import { asset, scrollToChapter } from "../assets";
 
 const position = shallowRef(0);
@@ -26,17 +28,17 @@ onBeforeUnmount(() => cancelAnimationFrame(frame));
 </script>
 
 <template>
-    <header id="top" class="m-hero" @pointermove="move" @pointerleave="reset">
+    <header ref="section" :class="{ 'is-visible': visible }" id="top" class="m-hero" @pointermove="move" @pointerleave="reset">
         <div class="u-hero-layers" aria-hidden="true">
             <img v-for="layer in layers" :key="layer.image" :src="asset(`kv/${layer.image}`)" alt=""
                 :style="{ transform: `translate3d(${position * layer.depth}px, 0, 0) scale(1.055)` }" />
         </div>
         <a class="u-brand" href="https://www.jx3box.com/" aria-label="返回剑网3魔盒"><img :src="asset('logo.png')" alt="剑网3 × JX3BOX 魔盒" /></a>
         <div class="u-hero-copy">
-            <h1><img :src="asset('bt01.png')" alt="苍生铸世" /></h1>
-            <img class="u-hero-caption" :src="asset('bt02.png')" alt="魔盒专题页" />
+            <h1 class="cs-motion"><img :src="asset('bt01.png')" alt="苍生铸世" /></h1>
+            <img class="u-hero-caption cs-motion" style="--motion: cs-fadeInDown; --delay: .2s" :src="asset('bt02.png')" alt="魔盒专题页" />
         </div>
-        <a class="u-scroll" href="#journey" @click.prevent="scrollToChapter('journey')">下滑探索更多精彩<span>⌄</span></a>
+        <a class="u-scroll" href="#journey" @click.prevent="scrollToChapter('journey')">滑动查看更多精彩<span class="u-scroll-arrows" aria-hidden="true"><i></i><i></i><i></i></span></a>
     </header>
 </template>
 
@@ -50,14 +52,23 @@ onBeforeUnmount(() => cancelAnimationFrame(frame));
 .u-hero-copy h1 { margin: 0; }
 .u-hero-copy h1 img { width: 100%; }
 .u-hero-caption { width: 82%; margin-top: -4%; }
-.u-scroll { position: absolute; bottom: 7%; left: 50%; transform: translateX(-50%); color: #f4e6c8; font-size: 13px; letter-spacing: 2px; text-decoration: none; text-shadow: 0 1px 4px #24170d; }
-.u-scroll span { display: block; text-align: center; font-size: 32px; line-height: 1.2; }
+.u-scroll { position: absolute; bottom: 7%; left: 50%; transform: translateX(-50%); color: #fff; font-size: 16px; font-weight: 400; text-align: center; white-space: nowrap; letter-spacing: 2px; text-decoration: none; text-shadow: 0 1px 4px #24170d; }
+.u-scroll-arrows { display: block; position: relative; width: 30px; height: 40px; margin: 24px auto 0; }
+.u-scroll-arrows i { position: absolute; left: 4px; top: 0; width: 22px; height: 22px; border: 0; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg); opacity: .25; }
+.u-scroll-arrows i:nth-child(2) { top: 10px; opacity: .55; }
+.u-scroll-arrows i:nth-child(3) { top: 20px; opacity: 1; }
 @media (max-width: 767px) {
-    .m-hero { height: 145vw; min-height: 0; max-height: none; }
-    .u-hero-layers img { object-position: 61% center; }
-    .u-brand { width: 15%; min-width: 0; }
-    .u-hero-copy { width: 84%; left: 4%; top: 25%; }
-    .u-scroll { font-size: 10px; white-space: nowrap; bottom: 8%; }
+    .m-hero { height: 170.67vw; min-height: 0; max-height: none; }
+    .u-hero-layers img { object-position: 18% center; transform: none !important; }
+    .u-brand { width: 22%; min-width: 0; top: auto; bottom: 14.5%; left: 39%; }
+    .u-hero-copy { width: 100%; left: 0; top: 31%; }
+    .u-hero-copy h1 { width: 94%; margin: 0 auto; }
+    .u-hero-caption { width: 100%; margin-top: 4vw; }
+    .u-scroll { font-size: 2.8vw; bottom: 2.5%; letter-spacing: 1px; }
+    .u-scroll-arrows { margin-top: 3.5vw; width: 6vw; height: 7vw; }
+    .u-scroll-arrows i { width: 4vw; height: 4vw; left: 1vw; border: 0; border-right: 1px solid currentColor; border-bottom: 1px solid currentColor; }
+    .u-scroll-arrows i:nth-child(2) { top: 1.8vw; }
+    .u-scroll-arrows i:nth-child(3) { top: 3.6vw; }
 }
 @media (prefers-reduced-motion: reduce) { .u-hero-layers img { transform: none !important; transition: none; } }
 </style>
