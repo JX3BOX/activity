@@ -8,7 +8,7 @@ postStat("topic", "cangshengzhushi");
 
 <template>
     <div class="p-cangsheng">
-        <CommonHeader :overlayEnable="true"></CommonHeader>
+        <CommonHeader v-if="!appMode" :overlayEnable="true"></CommonHeader>
         <router-view />
         <CommonFooter v-if="!appMode" />
     </div>

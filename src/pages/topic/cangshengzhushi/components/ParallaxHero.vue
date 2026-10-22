@@ -74,7 +74,7 @@ onBeforeUnmount(() => cancelAnimationFrame(frame));
 }
 
 /* App 内嵌模式（__env=app）：与移动端同款排版，不依赖屏幕断点 */
-html.v-app .m-hero { height: calc(170.67 * var(--u)); min-height: 0; max-height: none; }
+html.v-app .m-hero { margin-top: 0; height: calc(170.67 * var(--u)); min-height: 0; max-height: none; }
 html.v-app .u-hero-layers img { object-position: 18% center; transform: none !important; }
 html.v-app .u-brand { width: 22%; min-width: 0; top: auto; bottom: 14.5%; left: 39%; }
 html.v-app .u-hero-copy { width: 100%; left: 0; top: 31%; }
