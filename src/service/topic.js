@@ -10,27 +10,7 @@ function getTopic(topic) {
 }
 
 function getPvxTopics() {
-    return $cms({ mute: true }).get("/api/cms/pvx/topic").then((res) => {
-        const data = res?.data?.data;
-        if (!data) return res;
-        const topics = data.std || [];
-        const current = topics.find((item) => item.key === "cangshengzhushi");
-        // Keep the new page discoverable before the CMS catalogue is updated.
-        // Preserve CMS metadata when the entry is available there.
-        data.std = [
-            {
-                name: "苍生铸世",
-                key: "cangshengzhushi",
-                ...current,
-                year: "2026",
-                date: "10-29",
-                time: "2026.10.29",
-                link: "/topic/cangshengzhushi#/",
-            },
-            ...topics.filter((item) => item.key !== "cangshengzhushi"),
-        ];
-        return res;
-    });
+    return $cms({ mute: true }).get("/api/cms/pvx/topic");
 }
 
 function getFbRank(id, server = "") {

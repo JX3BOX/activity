@@ -11,9 +11,9 @@ const guideLinks = ["洛阳之战", "昊渊极", "南山马场", "玄元观", "�
 const guideLink = computed(() => guideLinks[dungeonIndex.value]);
 const background = computed(() => ({ backgroundImage: `url(${asset(`bg/bg4-${dungeonIndex.value + 1}.jpg`)})` }));
 function selectDungeon(index) { dungeonIndex.value = index; bossIndex.value = 0; }
-function tabImage(index) {
+function tabImage(index, active = dungeonIndex.value === index) {
     const start = index === 0 ? 1 : index * 2 + 1;
-    return asset(`pve01-${start + (dungeonIndex.value === index ? 1 : 0)}.png`);
+    return asset(`pve01-${start + (active ? 1 : 0)}.png`);
 }
 </script>
 
@@ -23,9 +23,8 @@ function tabImage(index) {
             <MobileChapterHeading :index="2" />
             <p class="u-mobile-dungeon-hint">&gt; 点击卡片可查看秘境攻略 &lt;</p>
             <div class="u-mobile-dungeon-list">
-                <a v-for="(name, index) in dungeons" :key="name" :href="guideLinks[index]" target="_blank" rel="noopener noreferrer"
-                    @click="selectDungeon(index)">
-                    <img :src="tabImage(index)" :alt="name" loading="lazy" />
+                <a v-for="(name, index) in dungeons" :key="name" :href="guideLinks[index]" target="_blank" rel="noopener noreferrer">
+                    <img :src="tabImage(index, true)" :alt="name" loading="lazy" />
                 </a>
             </div>
         </div>

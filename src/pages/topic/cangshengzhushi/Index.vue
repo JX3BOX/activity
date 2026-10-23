@@ -24,7 +24,6 @@ function observeChapters() {
 onMounted(() => {
     observeChapters();
     window.addEventListener("resize", observeChapters);
-    footerObserver?.disconnect();
     const footer = document.querySelector(".c-footer--v4");
     if (footer) {
         footerObserver = new IntersectionObserver(([entry]) => {
@@ -77,8 +76,8 @@ onBeforeUnmount(() => {
     flex-direction: column;
     gap: calc(var(--navigation-width) * .094);
     z-index: 20;
+    transition: opacity .3s ease;
 }
-.m-navigation { transition: opacity .3s ease; }
 .m-navigation.is-hidden { opacity: 0; pointer-events: none; }
 .m-navigation::before { content: ''; position: absolute; left: calc(-1 * 1.5 * var(--u)); top: 50%; transform: translateY(-50%); width: calc(22 * var(--u)); height: 100vh; background: linear-gradient(to right, rgba(0, 0, 0, .5), transparent); pointer-events: none; z-index: -1; }
 /* Both navigation states use 717 × 175 artwork; the lotus center is x=108. */

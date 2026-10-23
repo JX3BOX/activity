@@ -130,6 +130,8 @@ function release() {
 .u-map-card.active { transform: translateY(-10px); }
 .u-map-select { display: block; width: 100%; position: relative; padding: 0; border: 0; background: none; cursor: pointer; }
 .u-map-frame { display: block; width: 100%; }
+/* Keep the parchment frame, but reveal black while the scene fades in. */
+.u-map-select::before, .u-mobile-map-photo::before { content: ""; position: absolute; inset: 2%; background: #000; }
 .u-map-scene { animation: cs-fade .25s ease-out; position: absolute; inset: 0; width: 100%; height: 100%; }
 .u-map-name { position: absolute; width: 16.5%; right: 8%; top: 8%; }
 .u-map-intro { display: grid; width: 61%; padding: 24px; margin: 24px 0 0; text-align: center; color: #dacbb7; font-size: 16px; font-weight: 400; line-height: 2.2; text-shadow: 0 2px 4px #000; }

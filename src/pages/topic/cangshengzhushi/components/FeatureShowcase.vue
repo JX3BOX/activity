@@ -1,12 +1,12 @@
 <script setup>
 import { computed, shallowRef, watch, onBeforeUnmount } from "vue";
 import { useSectionMotion } from "../composables/useSectionMotion";
-const { section, visible } = useSectionMotion();
 import MobileChapterHeading from "./MobileChapterHeading.vue";
 import MobilePager from "./MobilePager.vue";
 import BrandLockup from "./BrandLockup.vue";
 import { asset } from "../assets";
 
+const { section, visible } = useSectionMotion();
 const props = defineProps({ kind: { type: String, required: true } });
 const selected = shallowRef(0);
 const pvp = [
@@ -129,7 +129,7 @@ onBeforeUnmount(() => { clearTimeout(timer); clearTimeout(leaveTimer); });
     .u-mobile-pvp-panel.is-active { visibility: visible; }
     .u-mobile-pvp-panel article { min-height: calc(18 * var(--u)); padding: calc(2.5 * var(--u)) calc(2 * var(--u)); border-top: 1px solid #f9e9b2; background: linear-gradient(110deg, #4f1d1cb3, #1b2147b3); color: #f9eab4; }
     .u-mobile-pvp-panel h3 { margin: 0 0 calc(1.5 * var(--u)); font-family: 'Songti SC', serif; font-size: calc(4.8 * var(--u)); font-weight: 600; line-height: 1.4; }
-    .u-mobile-pvp-panel p { margin: 0; font-size: calc(3.1 * var(--u)); line-height: 1.7; }
+    .u-mobile-pvp-panel p { color: #FFF0CE; margin: 0; font-size: calc(3.1 * var(--u)); line-height: 1.7; }
     .m-pvx { min-height: calc(195 * var(--u)); padding-bottom: calc(62 * var(--u)); }
     .u-bottom-logo { width: 54%; bottom: calc(17 * var(--u)); }
     .u-bottom-leaves { display: block; pointer-events: none; }
@@ -153,7 +153,7 @@ html.v-app .u-mobile-pvp-panel { display: flex; flex-direction: column; gap: cal
 html.v-app .u-mobile-pvp-panel.is-active { visibility: visible; }
 html.v-app .u-mobile-pvp-panel article { min-height: calc(18 * var(--u)); padding: calc(2.5 * var(--u)) calc(2 * var(--u)); border-top: 1px solid #f9e9b2; background: linear-gradient(110deg, #4f1d1cb3, #1b2147b3); color: #f9eab4; }
 html.v-app .u-mobile-pvp-panel h3 { margin: 0 0 calc(1.5 * var(--u)); font-family: 'Songti SC', serif; font-size: calc(4.8 * var(--u)); font-weight: 600; line-height: 1.4; }
-html.v-app .u-mobile-pvp-panel p { margin: 0; font-size: calc(3.1 * var(--u)); line-height: 1.7; }
+html.v-app .u-mobile-pvp-panel p { color: #FFF0CE; margin: 0; font-size: calc(3.1 * var(--u)); line-height: 1.7; }
 html.v-app .m-pvx { min-height: calc(195 * var(--u)); padding-bottom: calc(62 * var(--u)); }
 html.v-app .u-bottom-logo { width: 54%; bottom: calc(17 * var(--u)); }
 html.v-app .u-bottom-leaves { display: block; pointer-events: none; }

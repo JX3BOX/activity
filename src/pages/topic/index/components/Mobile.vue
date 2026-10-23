@@ -23,7 +23,7 @@
                         >
                             <div class="u-list">
                                 <a :href="item.link" target="_blank" class="u-link" @click="onLinkClick">
-                                    <img class="u-img" :src="showImg(item.key)" :alt="item.name" :class="[item.link ? 'u-hover' : '', { 'u-cangsheng-cover': item.key === 'cangshengzhushi' }]" />
+                                    <img class="u-img" :src="showImg(item.key)" :alt="item.name" :class="item.link ? 'u-hover' : ''" />
                                 </a>
                                 <img src="@/assets/img/topic/home/circle.png" style="margin-top: 30px" />
                                 <span class="u-title">{{ item.name || "未知" }}</span>
@@ -110,7 +110,6 @@ export default {
                 });
         },
         showImg(key) {
-            if (key === "cangshengzhushi") return __cdn + "design/topic/cangshengzhushi/bt01.png";
             if (!key) key = "normal";
             return __cdn + "design/topic/index/" + key + ".png";
         },
@@ -269,11 +268,4 @@ export default {
     }
 }
 
-</style>
-
-<style scoped>
-.u-img.u-cangsheng-cover {
-    object-fit: contain;
-    background: url('https://cdn.jx3box.com/design/topic/cangshengzhushi/kv/bg1-1.jpg') 60% center / cover;
-}
 </style>
