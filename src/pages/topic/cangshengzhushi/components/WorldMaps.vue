@@ -43,6 +43,7 @@ const mobileMap = shallowRef(0);
 const selected = shallowRef(-1);
 const activeMap = computed(() => isMobile.value ? mobileMap.value : selected.value);
 const scenes = shallowRef([1, 1, 1, 1]);
+function sceneSrc(index) { return asset(`tp0${index + 1}-${scenes.value[index]}.png`); }
 const background = computed(() => ({ backgroundImage: `url(${asset(`bg/bg3-${activeMap.value + 2}.jpg`)})` }));
 let timer;
 let slot = 0;
@@ -97,14 +98,14 @@ function release() {
                     <img :src="asset(`tp0${index + 1}-4.png`)" :alt="name" loading="lazy" />
                 </button>
             </div>
-            <div class="u-mobile-map-photo">
+            <div class="u-mobile-map-photo" :style="{ '--scene-mask': `url(${sceneSrc(mobileMap)})` }">
                 <img class="u-map-frame" :src="asset('tp.png')" alt="" />
                 <img class="u-map-scene" :key="`${mobileMap}-${scenes[mobileMap]}`" :src="asset(`tp0${mobileMap + 1}-${scenes[mobileMap]}.png`)" :alt="`${maps[mobileMap]}风光`" loading="lazy" />
             </div>
         </div>
         <div v-else class="u-map-cards">
             <div v-for="(name, index) in maps" :key="name" class="u-map-card" :class="{ active: selected === index }" @mouseenter="select(index)" @mouseleave="release" @focusin="select(index)" @focusout="release">
-                <button class="u-map-select" :aria-label="`探索${name}`" :aria-pressed="selected === index" @click="select(index)">
+                <button class="u-map-select" :style="{ '--scene-mask': `url(${sceneSrc(index)})` }" :aria-label="`探索${name}`" :aria-pressed="selected === index" @click="select(index)">
                     <img class="u-map-frame" :src="asset('tp.png')" alt="" />
                     <img :key="`${index}-${scenes[index]}`" class="u-map-scene" :src="asset(`tp0${index + 1}-${scenes[index]}.png`)" :alt="`${name}风光`" loading="lazy" />
                     <img class="u-map-name" :src="asset(`tp0${index + 1}-4.png`)" :alt="name" loading="lazy" />
@@ -130,8 +131,9 @@ function release() {
 .u-map-card.active { transform: translateY(-10px); }
 .u-map-select { display: block; width: 100%; position: relative; padding: 0; border: 0; background: none; cursor: pointer; }
 .u-map-frame { display: block; width: 100%; }
-/* Keep the parchment frame, but reveal black while the scene fades in. */
-.u-map-select::before, .u-mobile-map-photo::before { content: ""; position: absolute; inset: 2%; background: #000; }
+/* Keep the parchment frame, but reveal black while the scene fades in.
+   黑色衬底用场景图自身的透明轮廓做蒙版，只出现在照片范围内，不再超出撕边照片边缘。 */
+.u-map-select::before, .u-mobile-map-photo::before { content: ""; position: absolute; inset: 0; background: #000; -webkit-mask-image: var(--scene-mask); mask-image: var(--scene-mask); -webkit-mask-size: 100% 100%; mask-size: 100% 100%; }
 .u-map-scene { animation: cs-fade .25s ease-out; position: absolute; inset: 0; width: 100%; height: 100%; }
 .u-map-name { position: absolute; width: 16.5%; right: 8%; top: 8%; }
 .u-map-intro { display: grid; width: 61%; padding: 24px; margin: 24px 0 0; text-align: center; color: #dacbb7; font-size: 16px; font-weight: 400; line-height: 2.2; text-shadow: 0 2px 4px #000; }
