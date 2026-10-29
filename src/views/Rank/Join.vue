@@ -89,7 +89,6 @@
                 </div>
             </div>
         </div>
-        <bindWxMp v-model="showBindWxMp" @update="onBindWxMpUpdate"></bindWxMp>
     </default-layout>
 </template>
 
@@ -103,8 +102,7 @@ import { getMyTeams } from "@/service/rank/team.js";
 import User from "@jx3box/jx3box-common/js/user.js";
 import { getBreadcrumb } from "@jx3box/jx3box-common/js/system";
 import { getUserInfo } from "@/service/rank/awards";
-
-import BindWxMp from "@/components/rank/misc/bind_wx_mp.vue";
+import { toBindWechatMp } from "@/utils/bindWechatMp";
 
 export default {
     name: "App",
@@ -143,7 +141,6 @@ export default {
 
             // 用户信息
             profile: null,
-            showBindWxMp: false,
         };
     },
     computed: {
@@ -188,7 +185,7 @@ export default {
                     confirmButtonText: "去绑定",
                     callback: (action) => {
                         if (action == "confirm") {
-                            this.showBindWxMp = true;
+                            toBindWechatMp();
                         }
                     },
                 });
@@ -285,8 +282,9 @@ export default {
                 this.profile = res.data.data;
             });
         },
-        onBindWxMpUpdate() {
-            this.loadUser();
+        // 从绑定页返回时刷新绑定状态（兼容 bfcache 恢复）
+        onPageShow(e) {
+            if (e.persisted) this.loadUser();
         },
     },
     watch: {
@@ -297,10 +295,15 @@ export default {
     created: function () {
         this.isLogin && this.init();
     },
+    mounted() {
+        window.addEventListener("pageshow", this.onPageShow);
+    },
+    beforeUnmount() {
+        window.removeEventListener("pageshow", this.onPageShow);
+    },
     components: {
         AppSelectDrawer,
         DefaultLayout,
-        BindWxMp,
     },
 };
 </script>

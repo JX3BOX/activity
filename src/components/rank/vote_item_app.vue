@@ -28,7 +28,6 @@
             </div>
             <p v-if="item.slogan" class="u-slogan">{{ item.slogan }}</p>
         </div>
-        <bind-wx-mp v-model="showBindWxMp" @update="loadUser" />
     </div>
 </template>
 
@@ -41,11 +40,10 @@ import User from "@jx3box/jx3box-common/js/user.js";
 import { doVote } from "@/service/rank/vote.js";
 import { getUserInfo } from "@/service/rank/awards";
 import { getConfig } from "@jx3box/jx3box-common/js/system";
-import BindWxMp from "@/components/rank/misc/bind_wx_mp.vue";
+import { toBindWechatMp } from "@/utils/bindWechatMp";
 
 export default {
     name: "VoteItemApp",
-    components: { BindWxMp },
     props: {
         data: { type: Array, default: () => [] },
         teamName: { type: String, default: "" },
@@ -56,7 +54,6 @@ export default {
         return {
             isLogin: User.isLogin(),
             profile: null,
-            showBindWxMp: false,
             voteLimit: 0,
         };
     },
@@ -85,8 +82,16 @@ export default {
         getConfig({ key: "rank_vote_limit" }).then((res) => {
             this.voteLimit = Number(res.data?.data?.val) || 5;
         });
+        window.addEventListener("pageshow", this.onPageShow);
+    },
+    beforeUnmount() {
+        window.removeEventListener("pageshow", this.onPageShow);
     },
     methods: {
+        // 从绑定页返回时刷新绑定状态（兼容 bfcache 恢复）
+        onPageShow(e) {
+            if (e.persisted) this.loadUser();
+        },
         teamLogo(logo) {
             return getThumbnail(logo || default_avatar, 96, true);
         },
@@ -111,7 +116,7 @@ export default {
                 this.$alert("请先绑定微信公众号，再进行投票", "消息", {
                     confirmButtonText: "去绑定",
                     callback: (action) => {
-                        if (action === "confirm") this.showBindWxMp = true;
+                        if (action === "confirm") toBindWechatMp();
                     },
                 });
                 return;

@@ -675,13 +675,9 @@
                         <img class="u-get__title" :src="imgSrc(`7/get_4.svg`)" alt="" />
                         <div class="m-text">
                             <div class="u-qrcode">
-                                <div class="u-qrcode-dynamic" v-if="isLogin">
-                                    <BindWxMp  @bind-success="getMyInfo" />
-                                </div>
-                                <div class="u-qrcode-static" v-else @click="toLogin">
-                                    <img :src="imgSrc(`wxmp.jpg`)" alt="微信公众号：剑三魔盒" />
-                                    <i class="u-qrcode-mask"> 请先登录 </i>
-                                </div>
+                                <button class="u-qrcode-link" type="button" @click="goBindWxMp">
+                                    {{ !isLogin ? "请先登录" : hasBindMp ? "公众号已绑定" : "去绑定公众号" }}
+                                </button>
                             </div>
                             <div class="u-text__title">
                                 <span class="u-title">关注魔盒公众号：<b>剑三魔盒</b></span>
@@ -824,12 +820,9 @@ import {
 } from "@/service/event/birthday";
 import User from "@jx3box/jx3box-common/js/user";
 import addressList from "@/assets/data/event/address.json";
-import BindWxMp from "./components/BindWxMp.vue";
+import { toBindWechatMp } from "@/utils/bindWechatMp";
 
 export default {
-    components: {
-        BindWxMp,
-    },
     inject: ["__imgRoot", "__Links", "__imgPath"],
     data() {
         const checkPhone = (rule, value, callback) => {
@@ -1003,10 +996,13 @@ export default {
         }, 500);
 
         this.Init();
+
+        window.addEventListener("pageshow", this.onPageShow);
     },
     beforeUnmount() {
         const element = document.querySelector(".birthday");
         element.removeEventListener("scroll", this.handleScroll);
+        window.removeEventListener("pageshow", this.onPageShow);
     },
     methods: {
         Init() {
@@ -1131,6 +1127,18 @@ export default {
         toLogin() {
             User.toLogin();
         },
+        // 微信公众号绑定统一到魔盒个人中心
+        goBindWxMp() {
+            if (!this.isLogin) {
+                this.toLogin();
+                return;
+            }
+            toBindWechatMp();
+        },
+        // 从绑定页返回时刷新绑定状态（兼容 bfcache 恢复）
+        onPageShow(e) {
+            if (e.persisted && this.isLogin) this.loadUserInfo();
+        },
         // 获取用户地址列表
         getUserAddress() {
             this.checkLogin(true).then(() => {
@@ -1156,11 +1164,6 @@ export default {
                     this.getVipInfo.isEarlier = apiDateTime < compareDateTime;
                     this.getVipInfo.level = User.getLevel(userInfo?.experience || 0);
                 });
-            });
-        },
-        getMyInfo() {
-            getMyInfo().then((res) => {
-                this.userInfo = res.data.data;
             });
         },
         // 使用积分兑换会员
@@ -1208,10 +1211,12 @@ export default {
                         this.userDecorationList.push("vip");
                     });
                 } else {
-                    // 提醒未关注并且跳转关注
-                    this.$message({
-                        message: "您尚未绑定微信公众号，不能够领取哦",
-                        type: "warning",
+                    // 未绑定公众号，跳转到魔盒个人中心绑定
+                    this.$alert("您尚未绑定微信公众号，请先绑定后再领取", "消息", {
+                        confirmButtonText: "去绑定",
+                        callback: (action) => {
+                            if (action === "confirm") this.goBindWxMp();
+                        },
                     });
                 }
             });
