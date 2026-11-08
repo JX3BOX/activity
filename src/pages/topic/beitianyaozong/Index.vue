@@ -21,7 +21,7 @@
                 <div class="m-topic-info">
                     <img v-animate="'p-animation fadeInDown'" class="u-textImg" :src="btyz + `txt.png`" />
                     <div class="u-btnbox">
-                        <a v-for="(item, i) in yaozong" :href="item.link" :key="i" v-animate="'p-animations fadeInUp'" class="u-btn" :class="`u-btn` + i" target="_blank"></a>
+                        <a v-for="(item, i) in yaozong" :href="item.link" :aria-label="item.name" :key="i" v-animate="'p-animations fadeInUp'" class="u-btn" :class="`u-btn` + i" target="_blank"></a>
                     </div>
                 </div>
                 <!-- pve -->
@@ -30,7 +30,7 @@
                     <div class="u-cont" v-animate="'p-animation fadeInLeft'">
                         <!-- 切换tab -->
                         <div class="u-tab">
-                            <span v-for="(item, i) in tab" :key="i" :class="[item, i == tabIndex ? 'active' : '']" role="button" tabindex="0" :aria-disabled="!pvebanner[i]" :aria-label="`查看第 ${i + 1} 个秘境`" :aria-pressed="i === tabIndex" @keydown.enter="changeTab(i)" @keydown.space.prevent="changeTab(i)" @click="changeTab(i)"></span>
+                            <span v-for="(item, i) in tab" :key="i" :class="[item.key, i == tabIndex ? 'active' : '']" role="button" tabindex="0" :aria-disabled="!pvebanner[i]" :aria-label="item.name" :aria-pressed="i === tabIndex" @keydown.enter="changeTab(i)" @keydown.space.prevent="changeTab(i)" @click="changeTab(i)"></span>
                         </div>
                         <div class="u-tab-block">
                             <!-- BOSS图片 -->
@@ -47,7 +47,7 @@
                             </div>
                             <!-- 按钮 -->
                             <div class="u-btnbox">
-                                <a v-for="(item, i) in fb" :key="i" :href="item.link" class="u-btn" :class="`u-btn` + i" target="_blank"></a>
+                                <a v-for="(item, i) in fb" :key="i" :href="item.link" :aria-label="item.name" class="u-btn" :class="`u-btn` + i" target="_blank"></a>
                             </div>
                         </div>
                         <a class="u-sword" v-animate="'p-animation fadeInRightBig'" href="/fb" target="_blank"></a>
@@ -96,7 +96,10 @@ export default {
     data: function() {
         return {
             btyz: "https://img.jx3box.com/topic/beitianyaozong/new/",
-            tab: ["leiyu", "wushi"],
+            tab: [
+                { key: "leiyu", name: "雷雨大泽" },
+                { key: "wushi", name: "武氏别院" },
+            ],
             tabIndex: 0,
             raw: [],
             tabImg: "",

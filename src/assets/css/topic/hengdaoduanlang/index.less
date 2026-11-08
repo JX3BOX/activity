@@ -747,3 +747,357 @@
         }
     }
 }
+
+@media (max-width: 767px) {
+    html:has(.m-hengdaoduanlang) {
+        overflow-x: hidden;
+        overscroll-behavior-x: none;
+    }
+
+    body:has(.m-hengdaoduanlang),
+    #app:has(.m-hengdaoduanlang),
+    .p-topic:has(.m-hengdaoduanlang) {
+        box-sizing: border-box;
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+        overflow-x: clip;
+    }
+
+    #app .m-hengdaoduanlang {
+        display: block;
+        width: 100%;
+        height: auto;
+        touch-action: pan-y pinch-zoom;
+        color: #fff;
+        background: #112b41;
+
+        .m-nav, .m-topic-leaf {
+            display: none;
+        }
+
+        .p-animation {
+            opacity: 1;
+            animation: none;
+        }
+
+        img {
+            display: block;
+            min-width: 0;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .m-top {
+            margin-top: @header-height;
+            height: auto;
+            aspect-ratio: 1920 / 1556;
+            background-size: 100% auto;
+
+            .u-logo {
+                inset: 8px auto auto 12px;
+                width: 30%;
+                height: auto;
+                aspect-ratio: 588 / 193;
+                background-size: contain;
+            }
+        }
+
+        .m-jump:not(.m-top) {
+            box-sizing: border-box;
+            width: 100%;
+            height: auto;
+            padding: 16px;
+
+            > .u-title {
+                box-sizing: border-box;
+                width: auto;
+                min-width: 0;
+                max-width: 100%;
+                height: auto;
+                aspect-ratio: 999 / var(--title-height, 226);
+                margin: 0 0 16px;
+                background-size: contain;
+            }
+        }
+
+        .m-division {
+            box-sizing: border-box;
+            width: min(60%, 240px);
+            height: auto;
+            margin: auto;
+            padding: 12px;
+        }
+
+        .m-one {
+            .m-fb-mobile {
+                height: 440px;
+                container-type: inline-size;
+
+                .slider-btn {
+                    top: calc(100cqw * 650 / 3200);
+                    height: 44px;
+                    transform: translateY(-50%);
+                }
+
+                .u-img {
+                    left: 0;
+                    background-size: 0, contain;
+                    background-position: center top;
+                }
+
+                .m-text-mobile {
+                    box-sizing: border-box;
+                    height: auto;
+                    max-height: 70%;
+                    padding: 12px;
+                    overflow: auto;
+                    background: rgba(8, 25, 40, 0.9);
+
+                    .u-fb-title, .u-text {
+                        inset: auto;
+                        width: auto;
+                        margin: 0 0 8px;
+                        font-size: 16px;
+                        line-height: 1.6;
+                    }
+                }
+            }
+
+            .m-skill {
+                height: auto;
+                aspect-ratio: 2 / 1;
+                display: grid;
+                align-items: end;
+                background-size: contain;
+                background-position: left center, right center;
+
+                .u-btn {
+                    inset: auto;
+                    width: 50%;
+                    margin: 0 auto;
+                }
+            }
+        }
+
+        .m-two {
+            --title-height: 222;
+
+            .u-people {
+                position: static;
+                width: 100%;
+                height: 260px;
+                background-size: contain;
+            }
+
+            .u-box {
+                position: static;
+                display: block;
+                box-sizing: border-box;
+                width: 100%;
+                min-width: 0;
+                height: auto;
+                padding: 16px;
+                background: #1d4059;
+
+                .u-text, .u-btn-box {
+                    position: static;
+                    display: block;
+                    box-sizing: border-box;
+                    width: 100%;
+                    min-width: 0;
+                    height: auto;
+                }
+
+                .u-text span {
+                    width: 100%;
+                    font-size: 16px;
+                    line-height: 1.7;
+                    white-space: normal;
+                    overflow-wrap: anywhere;
+                }
+
+                .u-btn-box {
+                    display: grid;
+                    justify-items: center;
+                    gap: 16px;
+                    margin-top: 20px;
+
+                    a {
+                        width: min(100%, 230px);
+                    }
+
+                    img {
+                        width: 100%;
+                        margin: 0;
+                    }
+                }
+            }
+        }
+
+        .m-three {
+            --title-height: 216;
+
+            .u-tab {
+                display: none;
+            }
+
+            .u-box {
+                inset: auto;
+                width: 100%;
+                height: auto;
+                padding: 0;
+                background-size: contain;
+            }
+
+            .u-five-btn {
+                position: static;
+                display: block;
+                width: min(100%, 320px);
+                height: auto;
+                margin: 12px auto 0;
+            }
+        }
+
+        .m-three .u-box .u-btn, .m-four .u-btn {
+            position: static;
+            width: min(100%, 260px);
+            height: auto;
+            aspect-ratio: 461 / 76;
+            min-height: 44px;
+            margin: 12px auto;
+            background-size: contain;
+        }
+
+        .m-four {
+            --title-height: 219;
+
+            .u-img, .u-text {
+                position: static;
+                box-sizing: border-box;
+                width: 100%;
+                height: auto;
+                padding: 0;
+            }
+
+            .u-text {
+                font-size: 16px;
+                line-height: 1.7;
+            }
+        }
+
+        .m-five, .m-six {
+            --title-height: 205;
+        }
+
+        .m-five .u-box {
+            position: static;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr);
+            gap: 8px;
+            width: 100%;
+            height: auto;
+
+            img {
+                width: 100%;
+                min-width: 0;
+                margin: 0;
+            }
+        }
+
+        .m-six {
+            --entry-button-width: 176px;
+            .u-content-box {
+                display: none;
+            }
+
+            .u-top, .u-mobile {
+                box-sizing: border-box;
+                position: static;
+                display: grid;
+                justify-items: center;
+                gap: 16px;
+                width: 100%;
+                height: auto;
+                padding: 24px 16px;
+                background: #1d4059;
+                border-radius: 12px;
+                text-align: center;
+
+                .u-img, .u-text, .u-btn {
+                    position: static;
+                    height: auto;
+                    margin: 0;
+                }
+
+                .u-img {
+                    width: min(100%, 176px);
+                }
+            }
+
+            .u-top {
+                margin-bottom: 12px;
+
+                .u-btn {
+                    display: grid;
+                    gap: 12px;
+                    width: min(100%, var(--entry-button-width));
+
+                    a {
+                        display: grid;
+                        place-items: center;
+                        min-height: 44px;
+                    }
+
+                    img {
+                        width: 100%;
+                        margin: 0;
+                    }
+                }
+            }
+
+            .u-mobile {
+                .u-img {
+                    width: min(100%, 84px);
+                }
+
+                .u-text {
+                    width: min(100%, 32em);
+                    padding: 0;
+                    font-size: 16px;
+                    line-height: 1.7;
+                }
+
+                > a {
+                    display: grid;
+                    place-items: center;
+                    width: min(100%, var(--entry-button-width));
+                    min-height: 44px;
+                }
+
+                .u-btn {
+                    width: 100%;
+                }
+
+                > a + .u-img {
+                    margin-top: 16px;
+                }
+            }
+        }
+
+        .m-other {
+            .u-qrcode {
+                visibility: hidden;
+            }
+
+            .u-img {
+                padding: 16px 0;
+            }
+
+            .u-other img {
+                position: static;
+                margin: 0 auto 16px;
+            }
+        }
+    }
+}

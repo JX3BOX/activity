@@ -1,5 +1,5 @@
 <template>
-    <div data-topic="qunxiawanbian" class="topic-mobile-layout m-index">
+    <div class="m-index m-qunxiawanbian">
         <!--KV头部背景-->
         <div class="m-top m-jump">
             <div class="u-logo"></div>
@@ -60,7 +60,15 @@
         <!-- p6新侠客 -->
         <div class="m-six m-jump">
             <div class="u-logo p-animation" v-animate="'fadeInDown'"></div>
-            <div class="m-panel p-animation" v-animate="'fadeInDown'"></div>
+            <div class="m-panel p-animation" v-animate="'fadeInDown'">
+                <img
+                    v-for="index in 3"
+                    :key="index"
+                    class="u-feature-image"
+                    :src="'https://cdn.jx3box.com/design/topic/qunxiawanbian/p6/p6-bg' + index + '.png'"
+                    alt=""
+                />
+            </div>
         </div>
         <!-- p7帮会宣战 -->
         <div class="m-seven m-jump">
@@ -322,8 +330,4 @@ export default {
 
 <style lang="less">
 @import "~@/assets/css/topic/qunxiawanbian/index.less";
-</style>
-
-<style lang="less">
-@import "~@/assets/css/topic/mobile/reflow.less";
 </style>

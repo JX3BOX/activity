@@ -61,7 +61,7 @@
         <div class="m-four m-module">
             <div class="u-title p-animation" v-animate="'fadeInDown'"></div>
             <div class="u-box p-animation" v-animate="'fadeInDown'">
-                <div class="u-more" v-if="more.length < 1"></div>
+                <div class="u-more" v-if="more.length < 1">暂无更多内容</div>
                 <div class="u-swiper" v-else>
                     <el-carousel height="440px">
                         <el-carousel-item v-for="(item, i) in more" :key="i">
