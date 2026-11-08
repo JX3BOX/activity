@@ -1,5 +1,5 @@
 <template>
-    <div class="m-index" :style="{ zoom: pageZoom }">
+    <div data-topic="bashufengyun" class="topic-mobile-layout m-index" :style="{ zoom: pageZoom }">
         <div class="m-bashufengyun">
             <section v-for="(item, index) in moduleConfigs" :key="item.id" class="m-bashufengyun__section">
                 <component :is="item.component" :moduleData="getModuleData(item, index)" />
@@ -67,4 +67,8 @@ export default {
 
 <style lang="less">
 @import "~@/assets/css/topic/bashufengyun/index.less";
+</style>
+
+<style lang="less">
+@import "~@/assets/css/topic/mobile/reflow.less";
 </style>

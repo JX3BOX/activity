@@ -1,5 +1,5 @@
 <template>
-    <div class="m-index">
+    <div data-topic="wuhaixunlong" class="topic-mobile-layout m-index">
         <!-- 首屏 -->
         <div class="m-top">
             <video class="u-video" autoplay muted loop>
@@ -78,7 +78,7 @@
             </div>
         </div>
 
-        <el-dialog v-model:visible="kvVideoVisible" custom-class="m-diaLog-kv">
+        <el-dialog v-model="kvVideoVisible" class="m-diaLog-kv">
             <iframe
                 v-if="kvVideoVisible"
                 src="//player.bilibili.com/player.html?aid=1603696569&bvid=BV14m421s7m5&cid=1519689219&p=1"
@@ -91,7 +91,7 @@
             >
             </iframe>
         </el-dialog>
-        <el-dialog v-model:visible="secretVisible" :show-close="false" custom-class="m-secret-mask">
+        <el-dialog v-model="secretVisible" :title="instancingArr[instancingCurrent].title" class="m-secret-mask">
             <div class="m-secret-mask__left">
                 <img class="u-bg" :src="`${imgPath}/p2/mask/${instancingCurrent}.jpg`" />
                 <div class="m-secret-main">
@@ -256,4 +256,8 @@ export default {
 
 <style lang="less">
 @import "~@/assets/css/topic/wuhaixunlong/index.less";
+</style>
+
+<style lang="less">
+@import "~@/assets/css/topic/mobile/reflow.less";
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div class="m-index">
+    <div data-topic="wujie" class="topic-mobile-layout m-index">
         <div class="m-top"><img class="u-kv p-animations fadeInDown" :src="`${imgPath}/kv.jpg`" /></div>
         <div class="m-excessive">
             <img class="u-img" :src="`${imgPath}/excessive1-l.png`" />
@@ -156,4 +156,8 @@ export default {
 
 <style lang="less">
 @import "~@/assets/css/topic/wujie/index.less";
+</style>
+
+<style lang="less">
+@import "~@/assets/css/topic/mobile/reflow.less";
 </style>

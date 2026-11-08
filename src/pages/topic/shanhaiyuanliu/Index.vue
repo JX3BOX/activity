@@ -1,5 +1,5 @@
 <template>
-    <div class="m-index" @touchstart="handleTouchstart" @touchend="handleTouchend">
+    <div data-topic="shanhaiyuanliu" class="topic-mobile-layout m-index" @touchstart="handleTouchstart" @touchend="handleTouchend">
         <transition name="fade">
             <div class="m-block m-first">
                 <video :src="imgurl + 'KV/WXL_KW_MP4.mp4'" autoplay loop muted playsinline v-if="!isMobile" />
@@ -592,4 +592,8 @@ export default {
 <!--</style>-->
 <style lang="less">
 @import "~@/assets/css/topic/shanhaiyuanliu/index.less";
+</style>
+
+<style lang="less">
+@import "~@/assets/css/topic/mobile/reflow.less";
 </style>

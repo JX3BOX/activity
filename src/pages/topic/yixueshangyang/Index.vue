@@ -1,5 +1,5 @@
 <template>
-    <div class="m-index" :class="`m-${key}`">
+    <div data-topic="yixueshangyang" class="topic-mobile-layout m-index" :class="`m-${key}`">
         <!-- kv -->
         <div class="m-section m-section-1">
             <img :src="`${imgPath}logo.png`" class="u-logo" />
@@ -341,4 +341,8 @@ export default {
 </style>
 <style lang="less">
 @import "~@/assets/css/topic/yixueshangyang/index.less";
+</style>
+
+<style lang="less">
+@import "~@/assets/css/topic/mobile/reflow.less";
 </style>

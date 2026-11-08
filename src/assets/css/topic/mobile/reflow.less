@@ -1,0 +1,725 @@
+// Opt-in mobile document layout for legacy desktop-only topics.
+// Artwork keeps its own proportions; text and content containers reflow.
+@media (max-width: 767px) {
+    body,
+    #app,
+    .p-topic {
+        min-width: 0 !important;
+        width: 100% !important;
+        zoom: 1 !important;
+        transform: none !important;
+    }
+    #app .topic-mobile-layout {
+        --page-width: 100vw;
+        --content-width: 100%;
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+        height: auto;
+        margin: 0;
+        padding: 0;
+        zoom: 1 !important;
+        transform: none;
+        display: block;
+        background-size: 100% auto;
+        overflow: clip;
+        font-size: 16px;
+        line-height: 1.7;
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+        :where(div, section, article, ul, li):where(:not([class*="el-"])) {
+            position: relative;
+            inset: auto;
+            float: none;
+            width: auto;
+            min-width: 0;
+            max-width: 100%;
+            height: auto;
+            min-height: 0;
+            max-height: none;
+            margin: 0;
+            padding: 12px;
+            transform: none;
+            zoom: 1;
+            font-size: 16px;
+            line-height: 1.7;
+            flex-wrap: wrap;
+            flex-direction: column;
+            gap: 16px;
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        > :is(div, section) {
+            padding: 32px 16px;
+        }
+        :is(p, span, a, h2, h3, h4, strong, em),
+        :is(.text, .text-content, .u-text, .m-text, .u-desc, .u-description) {
+            position: relative;
+            inset: auto;
+            height: auto;
+            min-width: 0;
+            max-width: 100%;
+            white-space: normal;
+            text-overflow: clip;
+            overflow-wrap: anywhere;
+            font-size: 16px;
+            line-height: 1.7;
+            letter-spacing: normal;
+            transform: none;
+        }
+        p {
+            margin: 12px 0;
+        }
+        :is(img, video, iframe) {
+            position: relative;
+            inset: auto;
+            display: block;
+            width: auto;
+            max-width: 100%;
+            height: auto;
+            max-height: none;
+            margin: 12px auto;
+            transform: none;
+            object-fit: contain;
+        }
+        iframe,
+        video {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+        }
+        :is(button, a, [role="button"]) {
+            min-height: 44px;
+            touch-action: manipulation;
+        }
+        :is(.u-title, .u-logo, .u-subtitle):empty {
+            width: 100%;
+            height: 110px;
+            padding: 0;
+            background-size: contain;
+        }
+        :is(.m-top, .m-kv, .banner, .m-topic-header, .m-p0) {
+            min-height: 420px;
+            padding: 64px 16px 32px;
+            background-size: cover;
+            background-position: center top;
+        }
+        :is(.m-nav, .m-topic-leaf, .m-mark, .u-sleeve, .u-sword, .bg-head, .bg-foot) {
+            display: none;
+        }
+        .p-animation,
+        .p-animations {
+            opacity: 1 !important;
+            animation: none !important;
+        }
+        :is(.m-links, .m-btnGroup, .u-btnbox, .u-tab, .boss-names) {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        :is(.u-btn, .u-button):empty {
+            display: block;
+            width: 140px;
+            height: 52px;
+            background-size: contain;
+        }
+        .u-tab > span {
+            display: block;
+            width: 120px;
+            min-height: 48px;
+            background-size: contain;
+        }
+        :is(.u-news, .m-news) a {
+            display: block;
+            width: 100%;
+            padding: 10px 0;
+        }
+        .u-author {
+            display: block;
+            font-size: 14px;
+        }
+        .el-carousel {
+            width: 100%;
+            padding: 0;
+        }
+        .el-carousel__container {
+            height: 240px !important;
+        }
+        .el-carousel__item {
+            padding: 0;
+        }
+        .el-carousel__item img {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            object-fit: contain;
+        }
+        .el-carousel__indicators {
+            padding: 0;
+        }
+        .el-carousel__button {
+            min-height: 4px;
+        }
+    }
+}
+@media (max-width: 767px) {
+    #app .topic-mobile-layout {
+        // Avoid nested desktop gutters consuming the phone's reading width.
+        :where(div, section, article, ul, li):where(:not([class*="el-"])) {
+            padding: 0;
+        }
+        > :is(div, section) {
+            padding: 28px 16px;
+        }
+        :is(.content, .u-content, .m-content, .u-cont, .text, .u-text, .u-news) {
+            padding: 12px 0;
+        }
+        :is(.u-title, .u-logo, .u-subtitle):empty {
+            height: 110px;
+        }
+        :is(.m-top, .m-kv, .banner, .m-topic-header, .m-p0) {
+            min-height: 420px;
+            padding: 64px 16px 32px;
+        }
+        img {
+            opacity: 1;
+        }
+        :is(.text-title, h2, h3) {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        &[data-topic="taijimilu"] {
+            .bg {
+                display: none;
+            }
+            .optimization_reform {
+                background: #f5f1e7;
+                color: #272727;
+            }
+            .imgs {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+            .imgs img {
+                width: 100%;
+            }
+            .secret_land {
+                background: #252b2b;
+                color: #fff;
+            }
+            .introduce {
+                display: block;
+            }
+            .text {
+                width: 100%;
+            }
+            .bg-content {
+                min-height: 230px;
+                background-size: cover;
+            }
+            .bg-boss {
+                min-height: 360px;
+            }
+            .boss-names {
+                position: relative;
+                width: 100%;
+            }
+            .boss-name {
+                padding: 8px 12px;
+                min-height: 44px;
+            }
+        }
+        &[data-topic="bashufengyun"] {
+            .m-bashufengyun {
+                transform: none;
+                width: 100%;
+                height: auto;
+            }
+            .m-bashufengyun__section > div {
+                padding: 32px 16px;
+                background-size: cover;
+            }
+        }
+        &[data-topic="anyingqianji"] {
+            .m-indicator {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+            }
+            .m-arrow,
+            .m-select {
+                width: 44px;
+                height: 44px;
+            }
+            .u-select-border {
+                display: none;
+            }
+            .u-arrow {
+                width: 44px;
+                height: 44px;
+            }
+            .m-conference {
+                min-height: 320px;
+                background-size: cover;
+            }
+        }
+        &[data-topic="shanhaiyuanliu"] {
+            .m-first video {
+                display: none;
+            }
+            .m-two .u-content {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+            .u-detail {
+                grid-column: 1 / -1;
+            }
+            .u-detail-box {
+                min-height: 460px;
+            }
+            .u-close {
+                width: 44px;
+                min-height: 44px;
+            }
+        }
+    }
+}
+@media (max-width: 767px) {
+    #app .topic-mobile-layout {
+        :is(.u-text, .u-mohe, .u-slogan, .u-more):empty {
+            display: block;
+            width: 100%;
+            height: 140px;
+            background-size: contain;
+        }
+        .u-more:empty {
+            height: 48px;
+        }
+        .u-mohe:empty {
+            height: 48px;
+        }
+        .u-txtr {
+            display: none;
+        }
+        .u-btn:has(> a) {
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: center;
+            gap: 12px;
+        }
+        .u-btn > a:empty {
+            display: block;
+            width: 48px;
+            height: 190px;
+            margin: 0;
+            background-size: 100% 100%;
+        }
+        .u-news {
+            background: #f8f3e8;
+            color: #282828;
+            padding: 16px;
+        }
+        .u-news a {
+            color: #282828;
+        }
+        .u-news .u-line {
+            display: block;
+            background: none;
+            height: auto;
+        }
+        .u-news .u-name {
+            display: block;
+        }
+        .m-top-png {
+            min-height: 320px;
+            background-size: cover;
+        }
+        &[data-topic="beitianyaozong"] {
+            .m-topic-header .u-textImg {
+                width: 150px;
+            }
+            .m-topic-video .u-textImg {
+                display: none;
+            }
+            .m-topic-info .u-textImg {
+                width: 100%;
+            }
+            .m-topic-info .u-btnbox .u-btn {
+                width: 50px;
+                height: 250px;
+                background-size: auto;
+            }
+        }
+        &[data-topic="qunxiawanbian"] {
+            .m-one {
+                min-height: 280px;
+            }
+            .m-group {
+                display: grid;
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+            .u-boss:empty {
+                height: 140px;
+            }
+            .u-profile:empty {
+                grid-column: 1 / -1;
+                height: 300px;
+            }
+        }
+    }
+}
+@media (max-width: 767px) {
+    #app .topic-mobile-layout {
+        :is(.u-txt, .u-bg, .u-man, .u-woman, .u-profile):empty {
+            width: 100%;
+            height: 240px;
+            background-size: contain;
+        }
+        &[data-topic="wuduxianshi"] {
+            .u-btn > a:empty {
+                width: 100%;
+                height: 80px;
+                background-size: contain;
+            }
+            .m-four a:empty {
+                display: block;
+                width: 100%;
+                height: 100px;
+                background-size: contain;
+            }
+            .u-txt:empty {
+                height: 200px;
+            }
+        }
+        &[data-topic="qunxiawanbian"] .m-link {
+            display: block;
+            width: 100%;
+            height: 140px;
+            background-size: contain;
+        }
+        &[data-topic="bashufengyun"] .m-one {
+            min-height: 420px;
+        }
+    }
+}
+@media (max-width: 767px) {
+    #app .topic-mobile-layout {
+        .p-animations {
+            opacity: 1 !important;
+            animation: none !important;
+        }
+        &[data-topic="wujie"] {
+            .m-top {
+                min-height: 0;
+                padding: 0;
+            }
+            .u-kv {
+                width: 100%;
+                margin: 0;
+                animation: none;
+                opacity: 1;
+            }
+            .m-excessive,
+            .m-excessive2,
+            .m-excessive3 {
+                display: none;
+            }
+            .u-switch {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+            }
+            .u-round {
+                width: 44px;
+                height: 44px;
+                border: 2px solid #c8b47f;
+                border-radius: 50%;
+            }
+            .u-five-box {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+            .u-item-box img {
+                width: 100%;
+            }
+        }
+        &[data-topic="wuhaixunlong"] {
+            .m-top {
+                padding: 0;
+                min-height: 0;
+                background: #eee4bd;
+            }
+            .m-top__ent {
+                padding: 16px;
+            }
+            .u-person,
+            .u-cloud,
+            .m-top__ent .u-bg {
+                display: none;
+            }
+            .u-video__play {
+                width: 52px;
+                height: 52px;
+            }
+            .m-main {
+                background: #fff1c6;
+                padding: 24px 16px;
+            }
+            .m-main > div {
+                padding: 24px 0;
+            }
+            .m-video > img {
+                display: none;
+            }
+            .m-level {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+            .u-level {
+                width: 100%;
+            }
+            .m-tool {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+            .u-icon {
+                width: 64px;
+            }
+        }
+    }
+}
+@media (max-width: 767px) {
+    #app .topic-mobile-layout {
+        img {
+            animation: none !important;
+            opacity: 1 !important;
+            zoom: 1;
+        }
+        &[data-topic="shanhaiyuanliu"] .m-first {
+            min-height: 440px;
+            background: url("@{kv_shanhayuanliu}KV/kv.jpg") center / cover;
+        }
+        &[data-topic="fenghuoliaoyuan"],
+        &[data-topic="cangxuelongcheng"] {
+            .m-logo {
+                width: 110px;
+                padding: 24px 12px;
+            }
+            .m-top-banner {
+                padding: 24px 16px 64px;
+            }
+            .u-title {
+                margin-top: 24px !important;
+            }
+            .u-title .icon img {
+                width: 64px;
+            }
+            .u-title .content .bg {
+                display: none;
+            }
+            .u-title .content img {
+                width: 100%;
+            }
+        }
+        &[data-topic="jiandanqinxin"] {
+            .m-cg .u-bg {
+                display: none;
+            }
+            .m-cg .u-figure {
+                max-height: 400px;
+            }
+            .u-counter-content {
+                display: block;
+            }
+            .m-cg-content .u-mw,
+            .m-cg-content .u-xz {
+                display: none;
+            }
+        }
+        &[data-topic="yixueshangyang"] {
+            .u-logo {
+                width: 160px;
+            }
+            .el-carousel__container {
+                height: 360px !important;
+            }
+            .el-carousel__arrow {
+                width: 44px !important;
+                height: 44px !important;
+                top: auto !important;
+                bottom: 0;
+            }
+            .el-carousel__item img {
+                height: calc(100% - 48px);
+            }
+        }
+    }
+}
+@media (max-width: 767px) {
+    #app .topic-mobile-layout {
+        .u-mark {
+            display: none;
+        }
+        .m-logo img {
+            max-height: 110px;
+        }
+        &[data-topic="xuezhantiance"] .u-text {
+            width: auto;
+            margin: 0;
+        }
+    }
+}
+@media (max-width: 767px) {
+    #app .topic-mobile-layout {
+        video {
+            min-height: 0;
+        }
+        &[data-topic="anshizhiluan"] {
+            .m-top {
+                padding: 0;
+                min-height: 0;
+            }
+            .logo {
+                width: 90%;
+                margin: 20px auto;
+            }
+            .m-content {
+                gap: 40px;
+            }
+            .m-content > div {
+                padding: 24px 0;
+            }
+            .u-item {
+                display: block;
+                width: 100%;
+                margin: 12px auto;
+            }
+            .m-four .u-item:empty {
+                min-height: 220px;
+                background-size: contain;
+            }
+        }
+    }
+}
+@media (max-width: 767px) {
+    #app .topic-mobile-layout[data-topic="anyingqianji"] {
+        .m-indicator {
+            gap: 6px;
+            flex-wrap: nowrap;
+        }
+        .m-arrow,
+        .m-select {
+            flex: 0 0 44px;
+        }
+        .m-arrow-right {
+            transform: rotate(180deg);
+        }
+        .m-instance > .u-title {
+            height: 72px;
+            width: 100%;
+            object-fit: cover;
+        }
+        .m-instance > .u-bg {
+            display: none;
+        }
+    }
+}
+
+// Reading and interaction refinements, including 320px phones.
+@media (max-width: 767px) {
+    #app .topic-mobile-layout {
+        :is(a, button, [role="button"]):focus-visible {
+            outline: 3px solid #e6be73;
+            outline-offset: 3px;
+        }
+        &[data-topic="taijimilu"] {
+            .imgs { grid-template-columns: minmax(0, 1fr); }
+            .imgs img { max-width: 440px; margin: 0 auto; }
+            .optimization_reform .title, .secret_land .title { max-height: 100px; }
+            .text-content { line-height: 1.85; }
+            .boss-names { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+            .boss-name { text-align: center; border: 1px solid #b69b67; border-radius: 6px; cursor: pointer; }
+            .boss-name.isActive { background: #b69b67; color: #171c1c; }
+        }
+        &[data-topic="anyingqianji"] {
+            .m-indicator { gap: 2px; justify-content: space-between; }
+            .m-select { display: flex; align-items: center; justify-content: center; border: 2px solid transparent; border-radius: 50%; }
+            .m-select.active { border-color: #e6be73; }
+            .m-select .u-select { width: 16px; height: 16px; margin: 0; }
+            .m-arrow .u-img { width: 18px; height: 24px; margin: 10px auto; }
+        }
+        &[data-topic="wuhaixunlong"] {
+            .el-dialog { width: calc(100vw - 32px); max-width: 560px; margin: 32px auto; padding: 16px; }
+            .m-secret-mask { background: #fff5db; }
+            .m-secret-mask .el-dialog__body { display: block; max-height: calc(100vh - 96px); overflow-y: auto; }
+            .m-secret-mask .u-bg { display: none; }
+            .m-secret-main { color: #663f27; }
+            .m-secret-mask .u-close { width: 44px; height: 44px; margin: 16px auto 0; }
+            .m-diaLog-kv .u-diaLog__video { height: auto; aspect-ratio: 16 / 9; }
+        }
+    }
+}
+@media (max-width: 767px) {
+    #app .topic-mobile-layout[data-topic="wuhaixunlong"] {
+        .m-secret-mask .el-dialog__header { display: block; padding: 0 44px 12px 0; }
+        .m-secret-mask .el-dialog__headerbtn { width: 44px; height: 44px; top: 0; right: 0; }
+        .m-secret-mask .el-dialog__body { max-height: calc(100vh - 160px); }
+        .m-secret-mask .u-close { display: none; }
+    }
+}
+
+@media (max-width: 767px) {
+    #app .topic-mobile-layout[data-topic="silufengyu"] {
+        .boss-show__list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+        .boss-show__item { width: 100%; margin: 0; border: 2px solid transparent; cursor: pointer; }
+        .boss-show__item.selected { border-color: #8d2c21; }
+        .boss-show__item .boss-show__image { width: 100%; margin: 0; }
+        .boss-show__item.selected .boss-show__image:not(.is-active) { display: none; }
+        .boss-show__item.selected .boss-show__image.is-active { display: block; opacity: 1; }
+        .boss-show__description { width: 100%; height: auto; padding: 20px 16px; background: #f7ebd4; }
+        .boss-show__title { font-size: 20px; }
+        .boss-show__text { line-height: 1.75; }
+        .m-title { display: flex; flex-direction: row; align-items: center; gap: 12px; }
+        .m-title .u-no { width: 48px; margin: 0; }
+        .m-title .u-text { width: min(75%, 280px); margin: 0; }
+    }
+}
+
+@media (max-width: 767px) {
+    #app .topic-mobile-layout {
+        &[data-topic="beitianyaozong"], &[data-topic="cangjianshanzhuang"], &[data-topic="shengdianyunqi"] {
+            .u-tab { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; padding: 16px; }
+            .u-tab > span { width: 100%; min-height: 52px; background-position: center; background-repeat: no-repeat; background-size: contain; cursor: pointer; }
+            .u-tab > span.active { outline: 2px solid #c9a86a; outline-offset: 2px; }
+            .u-tab-block { width: 100%; }
+            .u-news { padding: 16px; }
+        }
+        &[data-topic="jiandanqinxin"] {
+            .m-cg { display: flex; flex-direction: column; align-items: center; }
+            .m-cg .u-figure { width: min(100%, 340px); max-height: 380px; object-fit: contain; margin: 0 auto; }
+            .m-cg .u-title { width: min(90%, 300px); margin: 12px auto; }
+            .m-cg-content { width: 100%; }
+            .m-cg-content img { width: 100%; margin: 12px auto; }
+            .m-cg-content .u-counter-content { position: relative; opacity: 1; }
+        }
+    }
+}
+@media (max-width: 767px) {
+    #app .topic-mobile-layout {
+        &[data-topic="beitianyaozong"], &[data-topic="cangjianshanzhuang"], &[data-topic="shengdianyunqi"] {
+            .u-tab > span { display: flex; align-items: center; justify-content: center; background: #283d43; color: #fff5df; border: 1px solid #a68e68; border-radius: 6px; }
+            .u-tab > span::after { content: attr(aria-label); }
+            .u-tab > span.active { background: #8d7044; color: #fff; }
+        }
+    }
+}
+@media (max-width: 767px) {
+    #app .topic-mobile-layout .u-tab > [aria-disabled="true"] { opacity: 0.5; cursor: not-allowed; }
+}
+@media (max-width: 767px) {
+    #app .topic-mobile-layout .u-tab > [role="button"] { margin: 0; min-width: 0; }
+}

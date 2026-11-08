@@ -1,5 +1,5 @@
 <template>
-    <div class="m-index">
+    <div data-topic="jiandanqinxin" class="topic-mobile-layout m-index">
         <!-- 头部KV -->
         <div class="m-kv">
             <img class="u-img p-animation" v-animate="'fadeInUp'" :src="imgurl + 'dabiaoti.png'" />
@@ -114,6 +114,7 @@
                             isHover: jzhyMoveClass === `u-jzhy-bt-item${index}`,
                         }"
                         @mouseenter="jzhyMoveClass = `u-jzhy-bt-item${index}`"
+                        @click="jzhyMoveClass = `u-jzhy-bt-item${index}`"
                         @mouseleave="jzhyMoveClass = ''"
                         loading="lazy"
                         :src="imgurl + `jzhy-bt${index}.png`"
@@ -304,4 +305,8 @@ export default {
 
 <style lang="less" scoped>
 @import "~@/assets/css/topic/jiandanqinxin/index.less";
+</style>
+
+<style lang="less">
+@import "~@/assets/css/topic/mobile/reflow.less";
 </style>

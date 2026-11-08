@@ -1,6 +1,6 @@
 <template>
     <!-- 专题页 -->
-    <div class="p-topic-container">
+    <div data-topic="beitianyaozong" class="topic-mobile-layout p-topic-container">
         <div class="wp shadow">
             <!-- 叶子 -->
             <div class="m-topic-leaf p-animation" ref="mark"></div>
@@ -30,7 +30,7 @@
                     <div class="u-cont" v-animate="'p-animation fadeInLeft'">
                         <!-- 切换tab -->
                         <div class="u-tab">
-                            <span v-for="(item, i) in tab" :key="i" :class="[item, i == tabIndex ? 'active' : '']" @click="changeTab(i)"></span>
+                            <span v-for="(item, i) in tab" :key="i" :class="[item, i == tabIndex ? 'active' : '']" role="button" tabindex="0" :aria-disabled="!pvebanner[i]" :aria-label="`查看第 ${i + 1} 个秘境`" :aria-pressed="i === tabIndex" @keydown.enter="changeTab(i)" @keydown.space.prevent="changeTab(i)" @click="changeTab(i)"></span>
                         </div>
                         <div class="u-tab-block">
                             <!-- BOSS图片 -->
@@ -123,6 +123,7 @@ export default {
             ],
             pvp: [],
             pve: [],
+            pvebanner: [],
             pvx: [],
             video: "",
             offAnimation: false,
@@ -182,6 +183,7 @@ export default {
             });
         },
         changeTab(i) {
+            if (!this.pvebanner[i]) return;
             this.tabIndex = i;
             this.tabImg = this.pvebanner[i].img;
             this.tabImgLink = this.pvebanner[i].link;
@@ -204,3 +206,7 @@ export default {
     },
 };
 </script>
+
+<style lang="less">
+@import "~@/assets/css/topic/mobile/reflow.less";
+</style>

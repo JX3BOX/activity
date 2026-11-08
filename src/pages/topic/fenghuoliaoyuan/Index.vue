@@ -1,5 +1,5 @@
 <template>
-    <div class="m-index">
+    <div data-topic="fenghuoliaoyuan" class="topic-mobile-layout m-index">
         <!-- logo -->
         <div class="m-logo p-animation" v-animate="'fadeInLeft'">
             <img loading="lazy" :src="imgurl + '0/logo1.png'" width="100%" />
@@ -270,4 +270,8 @@ export default {
 body {
     min-width: 1600px !important;
 }
+</style>
+
+<style lang="less">
+@import "~@/assets/css/topic/mobile/reflow.less";
 </style>

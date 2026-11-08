@@ -1,5 +1,5 @@
 <template>
-    <div class="m-index">
+    <div data-topic="shengdianyunqi" class="topic-mobile-layout m-index">
         <div class="m-top-png"></div>
         <!-- 第一屏 -->
         <div class="m-top">
@@ -25,7 +25,7 @@
             <div class="u-box p-animation" v-animate="'bounceIn'">
                 <!-- 切换tab -->
                 <div class="u-tab">
-                    <span v-for="item in 2" :key="item" :class="[`u-tab` + item, item == tabIndex ? 'active' : '']" @click="changeTab(item)"></span>
+                    <span v-for="item in 2" :key="item" :class="[`u-tab` + item, item == tabIndex ? 'active' : '']" role="button" tabindex="0" :aria-disabled="!pvebanner[item - 1]" :aria-label="`查看第 ${item} 个秘境`" :aria-pressed="item === tabIndex" @keydown.enter="changeTab(item)" @keydown.space.prevent="changeTab(item)" @click="changeTab(item)"></span>
                 </div>
                 <div class="u-tab-block">
                     <!-- BOSS图片 -->
@@ -168,6 +168,7 @@ export default {
             });
         },
         changeTab(i) {
+            if (!this.pvebanner[i - 1]) return;
             this.tabIndex = i;
             i = i - 1;
             this.tabImg = this.pvebanner[i].img;
@@ -193,4 +194,8 @@ export default {
 
 <style lang="less">
     @import "~@/assets/css/topic/shengdianyunqi/index.less";
+</style>
+
+<style lang="less">
+@import "~@/assets/css/topic/mobile/reflow.less";
 </style>

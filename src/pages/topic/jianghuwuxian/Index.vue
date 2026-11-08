@@ -1,5 +1,5 @@
 <template>
-    <div class="m-index">
+    <div data-topic="jianghuwuxian" class="topic-mobile-layout m-index">
         <!-- 第一屏 -->
         <div class="m-top">
             <div class="u-title p-animation" v-animate="'fadeInDown'"></div>
@@ -191,4 +191,8 @@ export default {
 
 <style lang="less">
     @import "~@/assets/css/topic/jianghuwuxian/index.less";
+</style>
+
+<style lang="less">
+@import "~@/assets/css/topic/mobile/reflow.less";
 </style>

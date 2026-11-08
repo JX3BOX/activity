@@ -1,5 +1,5 @@
 <template>
-    <div class="m-index">
+    <div data-topic="anshizhiluan" class="topic-mobile-layout m-index">
         <div class="m-top">
             <video class="m-mp4" playsinline="" autoplay="" muted="" loop="" :poster="pic.top">
                 <source src="./top.mp4" type="video/mp4" />
@@ -178,4 +178,8 @@ export default {
 
 <style lang="less">
 @import "~@/assets/css/topic/anshizhiluan/index.less";
+</style>
+
+<style lang="less">
+@import "~@/assets/css/topic/mobile/reflow.less";
 </style>

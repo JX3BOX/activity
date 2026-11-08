@@ -28,7 +28,7 @@ export default {
         const width = document.documentElement.clientWidth;
         const height = document.documentElement.clientHeight;
         var screen_width = width; //屏幕宽度
-        if (width < height) {
+        if (width > 767 && width < height) {
             screen_width = height; //如果 是竖屏，灵感的宽度就等于屏高
 
             const contentDOM = document.getElementById("box");

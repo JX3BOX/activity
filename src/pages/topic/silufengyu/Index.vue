@@ -1,5 +1,5 @@
 <template>
-    <div class="m-container">
+    <div data-topic="silufengyu" class="topic-mobile-layout m-container">
         <!-- 主横幅 -->
         <section class="banner">
             <img class="banner__logo" :src="buildImgUrl('bg/banner__title.png')" alt="丝路风语" />
@@ -436,4 +436,8 @@ export default {
 
 <style lang="less">
 @import "~@/assets/css/topic/silufengyu/index.less";
+</style>
+
+<style lang="less">
+@import "~@/assets/css/topic/mobile/reflow.less";
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div class="m-index">
+    <div data-topic="taijimilu" class="topic-mobile-layout m-index">
         <div>
             <img class="first-screen" :src="imgurl + 'KV/KV4@2x.jpg'" alt="" />
         </div>
@@ -64,7 +64,13 @@
                     v-for="item in 6"
                     :key="item"
                     :class="`boss-name ${active === item ? 'isActive' : ''}`"
+                    role="button"
+                    tabindex="0"
+                    :aria-pressed="active === item"
+                    @keydown.enter="changeBoss(item)"
+                    @keydown.space.prevent="changeBoss(item)"
                     @mouseenter="changeBoss(item)"
+                    @click="changeBoss(item)"
                     @mouseleave="resetTimer"
                 >
                     {{ names[item - 1] }}
@@ -194,4 +200,8 @@ export default {
 
 <style lang="less" scoped>
 @import "~@/assets/css/topic/taijimilu/index.less";
+</style>
+
+<style lang="less">
+@import "~@/assets/css/topic/mobile/reflow.less";
 </style>

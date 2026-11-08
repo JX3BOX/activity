@@ -1,5 +1,5 @@
 <template>
-    <div class="m-index">
+    <div data-topic="qunxiawanbian" class="topic-mobile-layout m-index">
         <!--KV头部背景-->
         <div class="m-top m-jump">
             <div class="u-logo"></div>
@@ -322,4 +322,8 @@ export default {
 
 <style lang="less">
 @import "~@/assets/css/topic/qunxiawanbian/index.less";
+</style>
+
+<style lang="less">
+@import "~@/assets/css/topic/mobile/reflow.less";
 </style>

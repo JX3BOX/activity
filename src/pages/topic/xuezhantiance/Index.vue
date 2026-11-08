@@ -1,5 +1,5 @@
 <template>
-    <div class="m-index">
+    <div data-topic="xuezhantiance" class="topic-mobile-layout m-index">
         <div class="m-mark" ref="mark"></div>
         <!-- 头部 -->
         <div class="m-top">
@@ -334,4 +334,8 @@ export default {
 
 <style lang="less">
 @import "~@/assets/css/topic/xuezhantiance/index.less";
+</style>
+
+<style lang="less">
+@import "~@/assets/css/topic/mobile/reflow.less";
 </style>

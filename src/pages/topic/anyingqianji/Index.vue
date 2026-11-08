@@ -1,5 +1,5 @@
 <template>
-    <div class="m-container" :style="{ zoom: pageZoom }">
+    <div data-topic="anyingqianji" class="topic-mobile-layout m-container" :style="{ zoom: pageZoom }">
         <img class="banner_kv p-animation fadeIn" :src="buildImgUrl('KV/kv.jpg')" alt="暗影千机" />
         <!-- P1 -->
         <section class="m-instance">
@@ -17,7 +17,7 @@
                 </el-carousel-item>
             </el-carousel>
             <div class="m-indicator p-animation" v-animate="'fadeInUp'">
-                <div class="m-arrow" @click="prevSlide">
+                <div class="m-arrow" role="button" tabindex="0" aria-label="上一张秘境图片" @keydown.enter="prevSlide" @keydown.space.prevent="prevSlide" @click="prevSlide">
                     <img class="u-img" :src="buildImgUrl('1/arrow.svg')" alt="" />
                 </div>
                 <div
@@ -25,12 +25,18 @@
                     v-for="item in 4"
                     :key="item"
                     :class="{ active: currentSlide === item - 1 }"
+                    role="button"
+                    tabindex="0"
+                    :aria-label="`第 ${item} 张秘境图片`"
+                    :aria-pressed="currentSlide === item - 1"
+                    @keydown.enter="goToSlide(item - 1)"
+                    @keydown.space.prevent="goToSlide(item - 1)"
                     @click="goToSlide(item - 1)"
                 >
                     <img class="u-select" :src="buildImgUrl('1/select.svg')" alt="" />
                     <img class="u-select-border" :src="buildImgUrl('1/select-border.svg')" alt="" />
                 </div>
-                <div class="m-arrow m-arrow-right" @click="nextSlide">
+                <div class="m-arrow m-arrow-right" role="button" tabindex="0" aria-label="下一张秘境图片" @keydown.enter="nextSlide" @keydown.space.prevent="nextSlide" @click="nextSlide">
                     <img class="u-img" :src="buildImgUrl('1/arrow.svg')" alt="" />
                 </div>
             </div>
@@ -167,4 +173,102 @@ export default {
 
 <style lang="less">
 @import "~@/assets/css/topic/anyingqianji/index.less";
+</style>
+
+<style lang="less">
+@import "~@/assets/css/topic/mobile/reflow.less";
+</style>
+
+<style lang="less">
+@media (max-width: 767px) {
+    #app .topic-mobile-layout[data-topic="anyingqianji"] {
+        padding-top: 0;
+        background: #0c2026;
+
+        .banner_kv {
+            width: 100%;
+            margin: 0;
+        }
+
+        .m-instance {
+            padding: 0;
+            background: #091b21;
+            overflow: hidden;
+
+            > .u-title {
+                position: relative;
+                width: 100%;
+                height: auto;
+                max-height: none;
+                margin: 0;
+                object-fit: contain;
+            }
+
+            .el-carousel__container {
+                height: clamp(210px, 61vw, 360px) !important;
+            }
+
+            .el-carousel__item img {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                object-fit: cover;
+                object-position: center;
+            }
+
+            .m-indicator {
+                position: relative;
+                bottom: auto;
+                left: auto;
+                right: auto;
+                width: 100%;
+                max-width: 380px;
+                margin: 0 auto;
+                padding: 12px 16px 18px;
+                gap: 4px;
+            }
+        }
+
+        .m-daily {
+            padding: 28px 16px 32px;
+            background-size: cover;
+
+            > .u-title {
+                width: min(100%, 320px);
+                margin: 0 auto 20px;
+            }
+
+            .m-carousel-container {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: nowrap;
+                align-items: center;
+                gap: 8px;
+                margin: 0;
+            }
+
+            .u-carousel { flex: 1; min-width: 0; }
+            .el-carousel__container { height: 150px !important; }
+            .u-arrow { flex: 0 0 32px; height: 44px; }
+        }
+
+        .m-conference {
+            min-height: 340px;
+            padding: 180px 16px 40px;
+            background-size: cover;
+            background-position: center top;
+
+            .u-top, .u-bottom { display: none; }
+            .u-title { width: min(100%, 420px); margin: 0 auto; }
+        }
+
+        .m-update {
+            padding: 32px 16px;
+            gap: 20px;
+            background-size: cover;
+            .u-title, .u-content { width: min(100%, 420px); margin: 0 auto; }
+            .u-over { display: none; }
+        }
+    }
+}
 </style>

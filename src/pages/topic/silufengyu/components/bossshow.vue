@@ -2,7 +2,7 @@
     <div class="boss-show">
         <!-- BOSS 图片区域 -->
         <ul class="boss-show__list">
-            <li v-for="(boss, index) in bosses" :key="index" class="boss-show__item" @mouseenter="showText(index)">
+            <li v-for="(boss, index) in bosses" :key="index" class="boss-show__item" :class="{ selected: activeBoss === index }" role="button" tabindex="0" :aria-label="boss.title" :aria-pressed="activeBoss === index" @click="showText(index)" @keydown.enter="showText(index)" @keydown.space.prevent="showText(index)" @mouseenter="showText(index)">
                 <!-- 动态拼接图片路径 -->
                 <img :src="buildImgUrl(boss.unlitImage)" :alt="boss.name" class="boss-show__image" />
                 <img :src="buildImgUrl(boss.litImage)" :alt="boss.name" class="boss-show__image is-active" />

@@ -1,5 +1,5 @@
 <template>
-	<div class="m-index">
+	<div data-topic="jianhushengong" class="topic-mobile-layout m-index">
 <!--        p0-->
         <div class="m-p0">
             <div class="u-logo p-animation" v-animate="'fadeIn'"></div>
@@ -242,4 +242,8 @@ export default {
 
 <style lang="less">
  @import "~@/assets/css/topic/jianhushengong/index.less";
+</style>
+
+<style lang="less">
+@import "~@/assets/css/topic/mobile/reflow.less";
 </style>

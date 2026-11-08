@@ -12,6 +12,10 @@ const topicPages = {
 topics.forEach((topic) => {
     topicPages[topic.key] = {
         title: topic.title + " » 魔盒（JX3BOX） - 一站式剑网3资源工具站",
+        // Existing dedicated mobile projects keep their original entry configuration.
+        viewport: ["cangshengzhushi", "fenggubadao", "hengdaoduanlang", "riyuemingzun", "wanlingdangge"].includes(topic.key)
+            ? undefined
+            : "width=device-width, initial-scale=1.0, viewport-fit=cover",
         entry: `src/pages/topic/${topic.key}/index.js`,
         template: "public/pc.html",
         filename: `topic/${topic.key}/index.html`,

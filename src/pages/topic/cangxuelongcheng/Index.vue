@@ -1,5 +1,5 @@
 <template>
-    <div class="m-index">
+    <div data-topic="cangxuelongcheng" class="topic-mobile-layout m-index">
         <!-- logo -->
         <div class="m-logo p-animation" v-animate="'fadeInLeft'">
             <img :src="imgurl + '0top/logo.png'" width="100%" />
@@ -32,6 +32,7 @@
                     class="u-tg p-animations"
                     v-animate="'fadeInLeft'"
                     @mouseenter="changeDesc(1)"
+                        @click="changeDesc(1)"
                     @mouseleave="levelChangeDesc"
                 />
                 <img
@@ -39,6 +40,7 @@
                     class="u-fs p-animations"
                     v-animate="'fadeInRight'"
                     @mouseenter="changeDesc(2)"
+                        @click="changeDesc(2)"
                     @mouseleave="levelChangeDesc"
                 />
             </div>
@@ -297,4 +299,8 @@ export default {
 
 <style lang="less">
 @import "~@/assets/css/topic/yuanqicangyun/index.less";
+</style>
+
+<style lang="less">
+@import "~@/assets/css/topic/mobile/reflow.less";
 </style>
