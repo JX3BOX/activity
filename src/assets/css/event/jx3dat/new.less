@@ -251,16 +251,40 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 1.2vw;
+        gap: clamp(16px, 1.6vw, 30px);
         margin-top: 1vw;
-        img {
-            width: 9vw;
+        color: var(--dat-accent);
+
+        &::before,
+        &::after {
+            content: "";
+            width: clamp(62px, 9.6vw, 185px);
             height: 1px;
+            background: linear-gradient(90deg, transparent, currentColor);
         }
 
-        > img:first-child {
+        &::after {
             transform: rotate(180deg);
         }
+    }
+    .dat-divider-diamond {
+        display: grid;
+        place-items: center;
+        flex: none;
+        width: clamp(10px, 1vw, 19px);
+        aspect-ratio: 1;
+        border: 1px solid currentColor;
+        transform: rotate(45deg);
+
+        &::before {
+            content: "";
+            width: 55%;
+            aspect-ratio: 1;
+            background: currentColor;
+        }
+    }
+    .vote-divider {
+        margin: clamp(16px, 1.25vw, 24px) 0;
     }
     .tone-purple .dat-divider {
         filter: hue-rotate(80deg);
@@ -515,16 +539,6 @@
         .dat-section-title h2 {
             font-size: 18px;
         }
-        .dat-divider {
-            margin: 12px 0 20px;
-            img {
-                width: 18vw;
-            }
-            img:nth-child(2) {
-                width: 18px;
-                height: 18px;
-            }
-        }
         .dat-award-section,
         .dat-winner-section {
             margin-bottom: 48px;
@@ -702,7 +716,8 @@
     }
     .dat-note { margin-top: 18px; }
     .dat-section-title { margin-bottom: 26px; h2 { font-size: 16px; } }
-    .dat-divider { gap: 12px; margin: 8px 0 0; > img { width: 62px; height: 1px; } }
+    .dat-section-title .dat-divider { gap: 16px; margin-top: 8px; }
+    .vote-divider { margin: 16px 0 22px; }
     .dat-award-section { margin-bottom: 44px; }
     .dat-table-wrap { padding: 4px; overflow: visible; }
     table { min-width: 0; width: 100%; font-size: 9px; table-layout: auto;
@@ -726,4 +741,24 @@
     .dat-warning { display: block; margin: 12px 0; padding: 16px 12px; border-width: 2px; border-radius: 5px; background: rgba(110, 40, 35, .3); font-size: 10px; text-align: center; img { display: none; } }
     .dat-disclaimer { font-size: 10px; color: #888; }
     .dat-footer { position: relative; text-align: center; padding: 80px 0 64px; img { display: inline-block; width: 50%; max-width: 230px; } }
+}
+
+.p-jx3dat-new:not(.is-app) .dat-tabs.has-vote {
+    left: 9%;
+    width: 82%;
+    a { width: 20%; }
+}
+
+.p-jx3dat-new.is-app .dat-tabs.has-vote a {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+.p-jx3dat-new.is-vote-tab .dat-footer {
+    padding: 3vw 0;
+}
+
+.p-jx3dat-new.is-app.is-vote-tab {
+    .dat-content { width: 94%; }
+    .dat-footer { padding: 24px 0 60px; }
 }
