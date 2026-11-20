@@ -1,8 +1,54 @@
 import { shallowRef, watch } from "vue";
+import { getProgramDetail } from "@/service/event/vote";
 import { getTopic, getUsers } from "@/service/event/topic";
 
 export const assetRoot = "https://cdn.jx3box.com/design/event/jx3dat/remake/";
 
+
+export const voteYear = "2026";
+export const voteProgramId = 32;
+
+function parseVoteTime(value) {
+    if (typeof value !== "string") return NaN;
+    const date = value.replace(" ", "T");
+    return Date.parse(/T\d{2}:\d{2}:\d{2}(?:\.\d+)?$/.test(date) ? date + "+08:00" : date);
+}
+
+export function useVotePhase(enabled) {
+    const phase = shallowRef("");
+    watch(enabled, async (active, _, onCleanup) => {
+        phase.value = "";
+        if (!active) return;
+
+        let cancelled = false;
+        let timer;
+        onCleanup(() => {
+            cancelled = true;
+            clearTimeout(timer);
+        });
+
+        try {
+            const { data } = await getProgramDetail(voteProgramId);
+            if (cancelled) return;
+            const start = parseVoteTime(data?.data?.start_at);
+            const end = parseVoteTime(data?.data?.end_at);
+            if (!Number.isFinite(start) || !Number.isFinite(end) || end < start) return;
+
+            const updatePhase = () => {
+                const now = Date.now();
+                phase.value = now < start ? "upcoming" : now <= end ? "active" : "ended";
+                if (phase.value !== "ended") {
+                    const boundary = now < start ? start : end + 1;
+                    timer = setTimeout(updatePhase, Math.min(boundary - now, 60_000));
+                }
+            };
+            updatePhase();
+        } catch {
+            // 活动时间不可用时暂不显示阶段入口。
+        }
+    }, { immediate: true });
+    return phase;
+}
 
 let sharedRequest;
 

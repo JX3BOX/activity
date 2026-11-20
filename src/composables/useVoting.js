@@ -42,9 +42,10 @@ export function useVoting(programId) {
             return;
         }
         const current = generation;
+        const id = programId.value;
         voting.value = item.id;
         try {
-            await vote(programId.value, { vote_id_list: [item.id] }, { mute: true });
+            await vote(id, { vote_id_list: [item.id] }, { mute: true });
             if (current !== generation) return;
             votedIds.value.push(String(item.id));
             item.amount = Number(item.amount || 0) + 1;

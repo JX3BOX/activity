@@ -2,7 +2,7 @@
 import { computed } from "vue";
 import { useRoute } from "vue-router";
 import VoteCard from "./VoteCard.vue";
-import { useVoting } from "../composables/useVoting";
+import { useVoting } from "@/composables/useVoting";
 
 const props = defineProps({ years: { type: Array, default: () => [] } });
 const route = useRoute();
