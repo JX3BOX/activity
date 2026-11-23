@@ -34,10 +34,11 @@
 
 ## 手机专题专项排版复查
 
-以下专题按 iOS 15+ / Android Chrome 100+ 验收。桌面在 1440px 对照，以下真机项包含 iOS Safari、Android Chrome 和微信内置浏览器。历史风险快照保留，当前状态以专项记录为准。
+以下专题的兼容底线为 iOS 15+ / Android Chrome 100+。桌面按专题在 1440px 或 1600px 对照，真机项包含 iOS Safari、Android Chrome 和微信内置浏览器。历史风险快照保留，当前状态以专项记录为准。
 
 | 专题 | 改动文件 | 改动类型 | 人工核对 URL、宽度与预期 | 需真机 | 遗留问题 |
 | --- | --- | --- | --- | --- | --- |
+| 烽火燎原 fenghuoliaoyuan | `src/pages/topic/fenghuoliaoyuan/Index.vue`、`src/assets/css/topic/fenghuoliaoyuan/mobile.less`、本台账 | 重组首屏、章节标题、地图、秘境首领和侠客图文，统一原素材比例和正文间距 | `/topic/fenghuoliaoyuan/`，375/390/414/430px。核对标题清楚，地图箭头在两侧，切换地图、首领与侠客并核对画面，点秘境传说和体型详情。320px 另看侠客头像 3+3。 | 是 | 秘境和侠客沿用原头像 hover 事件，Safari 与微信点按映射及两处链接跳转待实机检查。 |
 | 剑胆琴心 jiandanqinxin | `src/pages/topic/jiandanqinxin/Index.vue`、`src/assets/css/topic/jiandanqinxin/mobile.less`、本台账 | 首屏及各章节采用独立手机样式，重排心法、场景、首领与阵营控件，联名图独立收尾 | `/topic/jiandanqinxin/`，375/390/414/430px。核对首领六分页与左右箭头对齐，五张场景完整，切换剑踪幻域与阵营玩法，页尾联名图与卡片不重叠。320px 另核两行控件。 | 是 | 按原有箭头和分页切换；触摸、微信内表现及素材内嵌文字需真机核对。 |
 | 丝路风语 silufengyu | `src/pages/topic/silufengyu/Index.vue`、`src/assets/css/topic/silufengyu/mobile.less`、本台账 | 剧情和段氏图文分区，资料卡 3+2，段氏选项与首领 3+3，统一标题、正文和间距，颜值拼图分开展示 | `/topic/silufengyu/`，375/390/414/430px。核对剧情、段氏无压字，切换标签、展示图和首领，点报名及两行工具入口，检查地图和引擎自动切换。 | 是 | 部分素材内嵌字号仍受源图限制，触摸及微信内跳转待验证。 |
 | 奕血上阳 yixueshangyang | `src/pages/topic/yixueshangyang/Index.vue`、本台账 | 双曜亭和观风殿统一人物、14px 正文与箭头的卡片布局，展示三张不同的奇遇正面，收紧页尾联名图 | `/topic/yixueshangyang/`，375/390/414/430px。两组首领各点左右箭头与全部分页，文字完整，箭头在正文下方，三张奇遇图完整同排。 | 是 | 轮播触摸、自动播放时的视觉变化和微信首屏待真机检查。 |

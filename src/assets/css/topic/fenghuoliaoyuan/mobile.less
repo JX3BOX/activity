@@ -1,0 +1,482 @@
+@media (max-width: 767px) {
+    #app .topic-mobile-layout[data-topic="fenghuoliaoyuan"] {
+        --topic-gutter: clamp(16px, 4vw, 24px);
+        --topic-title-bottom: 0px;
+        --topic-mobile-copy-display: block;
+        color: #ffe5bd;
+        background: #371a12;
+
+        > .m-logo {
+            position: absolute;
+            z-index: 1;
+            inset: 12px auto auto var(--topic-gutter);
+            width: clamp(58px, 17vw, 86px);
+            padding: 0;
+
+            img {
+                margin: 0;
+                width: 100%;
+            }
+        }
+
+        > .m-top-banner {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-end;
+            justify-content: center;
+            width: 100%;
+            min-height: clamp(330px, 106vw, 490px);
+            padding: 24px var(--topic-gutter);
+            background-image: linear-gradient(transparent 52%, #38170e), url("@{kv_fenghuoliaoyuan}0/BG.jpg");
+            background-position: center top;
+            background-size: 100% 100%, clamp(640px, 169vw, 1020px) auto;
+
+            img {
+                width: min(84%, 400px);
+                margin: 0;
+            }
+        }
+
+        > .m-map,
+        > .m-new-boss,
+        > .m-new-secret,
+        > .m-new-function,
+        > .m-new-systeam,
+        > .m-more {
+            display: grid;
+            justify-items: center;
+            gap: 16px;
+            padding: 0 var(--topic-gutter) 32px;
+            background: linear-gradient(160deg, #38170e, #291811);
+        }
+
+        > .m-new-boss,
+        > .m-new-function,
+        > .m-more {
+            background: linear-gradient(170deg, #2d170e, #4a2319);
+        }
+
+        .u-title {
+            display: grid;
+            justify-items: center;
+            gap: 0;
+            width: 100%;
+            padding: 0;
+
+            > .icon {
+                z-index: 1;
+                width: clamp(40px, 13vw, 62px);
+                margin: 0 0 -8px;
+                padding: 0;
+                animation: none;
+
+                img {
+                    width: 100%;
+                    margin: 0;
+                }
+            }
+
+            > .content {
+                display: grid;
+                grid-template-columns: minmax(0, 1fr);
+                align-items: center;
+                justify-items: center;
+                min-height: 38px;
+                width: 100%;
+                padding: 3px 4px;
+
+                > .bg,
+                > .text {
+                    grid-area: 1 / 1;
+                    display: block;
+                    width: 100%;
+                    margin: 0;
+                }
+
+                > .text {
+                    width: min(88%, 320px);
+                    height: clamp(23px, 6.8vw, 36px);
+                    padding: 0;
+                }
+            }
+        }
+
+        .m-map {
+            .m-two,
+            .m-box {
+                width: 100%;
+                padding: 0;
+            }
+
+            .m-box {
+                display: grid;
+                grid-template-columns: 44px minmax(0, 1fr) 44px;
+                grid-template-rows: auto 44px;
+                gap: 0;
+            }
+
+            .u-carousel {
+                grid-area: 1 / 1 / 3 / -1;
+                min-width: 0;
+                z-index: 0;
+
+                .el-carousel__container {
+                    margin: 0;
+                    height: 0 !important;
+                    // Carousel art is 1762 × 954. This reserves the exact art frame before the image loads.
+                    padding-top: 54.14%;
+                    background: #1d120e;
+                }
+
+                .u-item {
+                    visibility: hidden;
+                    width: 100%;
+
+                    &.is-active {
+                        visibility: visible;
+                        // Element Plus sets an inline card transform and the desktop style overrides it.
+                        transform: none !important;
+                    }
+                }
+
+                .el-carousel__indicators {
+                    position: static;
+                    display: flex;
+                    justify-content: center;
+                    transform: none;
+                    margin: 0;
+                }
+
+                .el-carousel__indicator {
+                    padding: 0;
+                }
+
+                .el-carousel__button {
+                    display: grid;
+                    justify-items: center;
+                    align-items: center;
+                    width: 44px;
+                    height: 44px;
+                    background: transparent;
+                    opacity: 1;
+
+                    &::after {
+                        content: "";
+                        width: 8px;
+                        height: 8px;
+                        border: 1px solid #ffdfb4;
+                        border-radius: 50%;
+                    }
+                }
+
+                .el-carousel__indicator.is-active .el-carousel__button::after {
+                    background: #ffdfb4;
+                }
+            }
+
+            .m-box .u-img {
+                grid-row: 1;
+                align-self: center;
+                width: 44px;
+                height: 44px;
+                margin: 0;
+                padding: 0;
+                z-index: 2;
+                background-size: 16px auto;
+                background-position: center;
+                background-color: rgba(32, 15, 11, 0.44);
+                border-radius: 50%;
+
+                &.u-left {
+                    grid-column: 1;
+                }
+
+                &.u-right {
+                    grid-column: 3;
+                }
+            }
+        }
+
+        .u-mobile-copy {
+            font-size: 15px;
+            line-height: 1.75;
+            overflow-wrap: anywhere;
+        }
+
+        .link-image {
+            width: min(100%, 200px);
+            min-height: 44px;
+            margin: 0 auto;
+            cursor: pointer;
+
+            &:hover {
+                transform: none;
+                scale: none;
+            }
+        }
+
+        .m-new-boss .card {
+            display: grid;
+            grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+            gap: 8px 16px;
+            align-items: center;
+            width: 100%;
+            margin: 0;
+            padding: 16px 20px 16px 30px;
+            background-size: 100% 100%;
+            color: #591e13;
+
+            img {
+                margin: 0 auto;
+            }
+
+            .man {
+                grid-area: 1 / 1 / 3;
+                max-height: clamp(140px, 44vw, 218px);
+            }
+
+            .boss-name {
+                grid-area: 1 / 2;
+                align-self: end;
+                width: min(100%, 160px);
+            }
+
+            .content {
+                grid-area: 2 / 2;
+                align-self: start;
+                padding: 0;
+                font-size: 12px;
+                letter-spacing: 0.12em;
+                line-height: 1.5;
+                text-align: center;
+                overflow-wrap: anywhere;
+            }
+
+            .content-image {
+                display: none;
+            }
+
+            .u-mobile-copy,
+            .link-image {
+                grid-column: 1 / -1;
+                margin: 0 auto;
+            }
+        }
+
+        .m-new-secret {
+            > .yeshougucheng {
+                width: min(72%, 360px);
+                margin: 0;
+            }
+
+            > .wenzi {
+                width: 100%;
+                margin: 0;
+                padding: 0;
+
+                > div:first-child {
+                    display: none;
+                }
+
+                .u-mobile-copy {
+                    padding: 12px 16px;
+                    animation: none;
+                    background: rgba(29, 14, 10, 0.45);
+                    border-block: 1px solid #80513d;
+
+                    p {
+                        margin: 0;
+                        font-size: inherit;
+                        line-height: inherit;
+                    }
+
+                    p + p {
+                        margin-top: 10px;
+                    }
+                }
+            }
+
+            > .jiantou {
+                width: 26px;
+                margin: 0;
+            }
+
+            > img:last-child {
+                width: 100%;
+                margin: 0;
+            }
+
+            .boss {
+                width: 100%;
+                padding: 0;
+
+                > .boss-image {
+                    width: min(47%, 172px);
+                    margin: 0 auto 8px;
+                }
+
+                .detail-contianer {
+                    grid-template-columns: repeat(5, minmax(0, 1fr));
+                    background-size: cover;
+                    background-position: center;
+                }
+
+                .detail {
+                    padding: 0;
+
+                    .boss-image {
+                        width: 100%;
+                        margin: 0;
+                    }
+
+                    .boss-name {
+                        position: absolute;
+                        z-index: 1;
+                        inset: 9% 3% auto auto;
+                        width: 25%;
+                        margin: 0;
+                    }
+                }
+            }
+        }
+
+        .m-new-function {
+            .content-divide {
+                display: grid;
+                justify-items: center;
+                gap: 8px;
+                width: 100%;
+                padding: 0;
+
+                img {
+                    margin: 0;
+                }
+
+                .family {
+                    width: min(83%, 400px);
+                }
+
+                .divide {
+                    width: 100%;
+                }
+            }
+
+            .body-image {
+                width: 100%;
+                margin: 0;
+            }
+        }
+
+        .m-new-systeam {
+            .assisdent,
+            .assisdent > .p-animation {
+                width: 100%;
+                padding: 0;
+            }
+
+            .hongchenxiaying {
+                width: min(58%, 240px);
+                margin: 0 auto;
+            }
+
+            .wenzi1 {
+                display: none;
+            }
+
+            .u-mobile-copy {
+                margin: 0 0 12px;
+                text-align: center;
+            }
+
+            .detail-contianer {
+                grid-template-columns: repeat(6, minmax(0, 1fr));
+                background: radial-gradient(ellipse at center, rgba(197, 126, 83, 0.28), transparent 72%);
+
+                @media (max-width: 340px) {
+                    grid-template-columns: repeat(3, minmax(0, 1fr));
+                }
+            }
+
+            .assistant-image {
+                width: min(100%, 380px);
+                margin: 0 auto;
+            }
+        }
+
+        .detail-contianer {
+            display: grid;
+            justify-items: center;
+            gap: 6px;
+            width: 100%;
+            padding: 0 4px 8px;
+
+            > div:first-child {
+                grid-column: 1 / -1;
+                width: 100%;
+                padding: 0;
+            }
+
+            .detail {
+                width: 100%;
+                padding: 0;
+                animation: none;
+                opacity: 1;
+            }
+
+            .boss-avatar,
+            .assistant-avatar {
+                display: grid;
+                place-items: center;
+                gap: 0;
+                width: min(100%, 54px);
+                min-height: 44px;
+                padding: 0;
+                cursor: pointer;
+                animation: none;
+                opacity: 1;
+                border-radius: 50%;
+
+                img {
+                    grid-area: 1 / 1;
+                    width: 100%;
+                    margin: 0;
+                }
+
+                .boss-avatar-image,
+                .assistant-avatar-image {
+                    width: 88%;
+                }
+
+                &[aria-current="true"] {
+                    outline: 1px solid #edbf82;
+                }
+            }
+        }
+
+        .m-more .u-footer {
+            display: grid;
+            justify-items: center;
+            gap: 16px;
+            width: 100%;
+            padding: 0 0 16px;
+
+            .waitu {
+                display: grid;
+                place-items: center;
+                width: 132px;
+                height: 136px;
+                padding: 0;
+                font-size: 18px;
+                letter-spacing: 0.12em;
+                line-height: 1.5;
+                animation: none;
+                opacity: 1;
+            }
+
+            .logo {
+                width: min(58%, 236px);
+                margin: 0;
+            }
+        }
+    }
+}
