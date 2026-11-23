@@ -572,3 +572,4 @@
 | 血战天策 | `src/assets/css/topic/xuezhantiance/index.less`、本台账 | 恢复首屏背景与四张标识图的叠放，清除额外首屏内边距。 | `/topic/xuezhantiance/`，375/390/414/430px。首图紧贴顶部，品牌、标题、副标与底部提示各在其位。 | 是 |
 | 五毒现世 | `src/assets/css/topic/wuduxianshi/index.less`、本台账 | 首屏背景按原图比例贴顶，品牌、题字及竖标按原构图叠放。 | `/topic/wuduxianshi/`，375/390/414/430px。首屏保留三张原素材，标识大小协调。 | 是 |
 | 剑湖神宫 | `src/assets/css/topic/jianhushengong/index.less`、本台账 | 恢复首屏原画幅，重定位联名标识和资料片标题。 | `/topic/jianhushengong/`，375/390/414/430px。背景自带的主标题完整，联名标识与下方标题分别贴合原画。 | 是 |
+| 藏剑山庄 | `src/pages/topic/cangjianshanzhuang/Index.vue`、本台账 | 按 1920×1200 原画幅贴顶显示背景，标题和魔盒字图分别按素材比例叠放。 | `/topic/cangjianshanzhuang/`，375/390/414/430px。标题和魔盒字图留在同一画面内，不产生独立高占位。 | 是 |

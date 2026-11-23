@@ -205,6 +205,36 @@ export default {
 @import "~@/assets/css/topic/mobile/reflow.less";
 
 @media (max-width: 767px) {
+    #app .topic-mobile-layout[data-topic="cangjianshanzhuang"] > .m-top {
+        position: relative;
+        min-height: 0;
+        height: 62.5vw;
+        padding: 0;
+        background-position: center top;
+        background-size: 100% 100%;
+
+        > .u-title,
+        > .u-mohe {
+            position: absolute;
+            inset: auto 0;
+            margin: 0 auto;
+            background-position: center;
+            background-size: contain;
+        }
+
+        > .u-title {
+            top: 56.67%;
+            width: 71.56%;
+            height: 23.5%;
+        }
+
+        > .u-mohe {
+            top: 80.17%;
+            width: 22.6%;
+            height: 8.67%;
+        }
+    }
+
     #app .topic-mobile-layout[data-topic="cangjianshanzhuang"] .u-tab-block .u-img .u-more {
         background-repeat: no-repeat;
     }
