@@ -26,6 +26,8 @@ import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 
 
 
+document.documentElement.classList.add("topic-cangjianshanzhuang");
+
 const app = createApp(App);
 app.use(router);
 
