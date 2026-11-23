@@ -64,6 +64,7 @@
 
 | 专题 | 改动文件 | 改动类型 | 待人工核对宽度 | 需真机 | 遗留问题 |
 | --- | --- | --- | --- | --- | --- |
+| 雾海寻龙 wuhaixunlong | `src/pages/topic/wuhaixunlong/Index.vue`、`docs/topic-mobile-audit.md` | 首屏视频补充内联播放属性 | 375/390/414/430 | 是 | 弹窗滚动、键盘遮挡、媒体尺寸与 iOS / 微信播放需验证 |
 <!-- topic-audit:wuhaixunlong -->
 
 

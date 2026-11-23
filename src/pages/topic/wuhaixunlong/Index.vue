@@ -2,7 +2,7 @@
     <div data-topic="wuhaixunlong" class="topic-mobile-layout m-index">
         <!-- 首屏 -->
         <div class="m-top">
-            <video class="u-video" autoplay muted loop>
+            <video class="u-video" autoplay muted loop playsinline webkit-playsinline>
                 <source :src="`${imgPath}/top/top-kv.mp4`" type="video/mp4" />
             </video>
             <div class="m-top__ent p-animation fadeInDown">
