@@ -1024,3 +1024,440 @@ body {
         transform: translateY(-10px);
     }
 }
+
+// 手机端仅重排非轮播内容；保留剧情切换和画质对比图的原有尺寸及裁切。
+@media (max-width: 767px) {
+    html.topic-wanlingdangge .m-index.is-mobile {
+        top: 0;
+        width: 100%;
+
+        .m-top {
+            width: 100%;
+            height: 150vw;
+            max-height: 640px;
+            overflow: hidden;
+
+            .u-video-background {
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                max-width: 100%;
+                object-fit: cover;
+            }
+            .u-title {
+                top: 28%;
+                width: 100%;
+                height: auto;
+                transform: none;
+            }
+            .u-title-bottom {
+                top: 63%;
+                width: 80%;
+                height: auto;
+                transform: none;
+            }
+            .u-button {
+                top: 48%;
+                width: 56px;
+                height: 56px;
+                z-index: 2;
+            }
+            .u-box-logo {
+                top: 12px;
+                left: 12px;
+                right: auto;
+                width: 120px;
+                max-width: 35%;
+                transform: none;
+            }
+            .u-transition {
+                top: auto;
+                bottom: 0;
+                width: 100%;
+                height: 32%;
+                background-size: cover;
+                .m-down {
+                    top: auto;
+                    bottom: 12px;
+                    width: 100%;
+                    height: auto;
+                    text-align: center;
+                    .u-down-icon {
+                        width: 24px;
+                        height: 24px;
+                        vertical-align: middle;
+                    }
+                    .u-down-text {
+                        width: auto;
+                        height: auto;
+                        font-size: 14px;
+                        line-height: 24px;
+                    }
+                }
+            }
+        }
+
+        .m-one, .m-two, .m-three, .m-four, .m-five, .m-more {
+            width: 100%;
+            margin-top: 32px;
+            > .u-title {
+                position: relative;
+                top: auto;
+                width: 80%;
+                max-width: 300px;
+                height: 112px;
+                background-size: contain;
+                background-position: center;
+            }
+            > .u-line {
+                top: 108px;
+                width: 90%;
+                height: 2px;
+            }
+        }
+
+        .m-one, .m-two, .m-four, .m-five, .m-more {
+            height: auto;
+            min-height: 0;
+        }
+        .m-one, .m-two, .m-four, .m-five {
+            > .m-content {
+                position: relative;
+                top: auto;
+                left: auto;
+                right: auto;
+                width: 100%;
+                height: auto;
+                margin: 16px 0 0;
+            }
+        }
+
+        .m-one {
+            .m-content:not(.m-content-mobile) {
+                padding: 20px 16px;
+                box-sizing: border-box;
+                background-position: center;
+                .m-content-box {
+                    position: relative;
+                    top: auto;
+                    left: auto;
+                    right: auto;
+                    width: 100%;
+                    height: auto;
+                    .u-sect-logo {
+                        position: relative;
+                        width: 180px;
+                        max-width: 100%;
+                        height: 56px;
+                    }
+                    .u-sect-desc {
+                        position: relative;
+                        top: auto;
+                        left: auto;
+                        width: 100%;
+                        height: auto;
+                        padding: 0;
+                        font-size: 16px;
+                        line-height: 1.6;
+                        overflow-wrap: anywhere;
+                        p:first-letter { font-size: inherit; }
+                    }
+                }
+                // 同一视频和两个链接在移动展示区已有一套。
+                > .u-video-button, > .u-button { display: none; }
+            }
+            .m-content.m-content-mobile {
+                height: 75vw;
+                max-height: 320px;
+                background-position: center;
+                .u-video-button {
+                    top: 20%;
+                    left: 0;
+                    right: 0;
+                    width: 56px;
+                    height: 56px;
+                }
+                .u-button {
+                    top: auto;
+                    bottom: 16px;
+                    width: 42%;
+                    height: 48px;
+                    font-size: 18px;
+                    line-height: 48px;
+                    &.u-introduction { left: 5%; }
+                    &.u-macro { left: 53%; }
+                }
+            }
+        }
+
+        .m-two .m-content {
+            .m-content-box {
+                position: relative;
+                top: auto;
+                left: auto;
+                right: auto;
+                width: 100%;
+                height: auto;
+                padding: 12px 16px 20px;
+                box-sizing: border-box;
+                background-color: #263a42;
+                &:nth-child(2) { top: auto; }
+                .u-bg-img {
+                    position: relative;
+                    top: auto;
+                    left: auto;
+                    display: block;
+                    width: 100%;
+                    height: auto;
+                }
+                .u-title-fb {
+                    position: relative;
+                    top: auto;
+                    left: auto;
+                    right: auto;
+                    height: auto;
+                    margin: 12px 0 0;
+                    font-size: 22px;
+                    line-height: 1.4;
+                }
+                .u-desc {
+                    position: relative;
+                    top: auto;
+                    left: auto;
+                    width: 100%;
+                    margin: 12px 0;
+                    font-size: 16px;
+                    line-height: 1.6;
+                    overflow-wrap: anywhere;
+                }
+                .u-button-introduction {
+                    position: relative;
+                    top: auto;
+                    left: auto;
+                    right: auto;
+                    display: block;
+                    width: 220px;
+                    max-width: 100%;
+                    height: auto;
+                    min-height: 44px;
+                    margin: 0 auto;
+                }
+            }
+        }
+
+        // 剧情图片和切换容器保留原尺寸，仅为文字预留可滚动空间。
+        .m-three {
+            min-height: calc(765px + 80vw);
+            .m-content .m-text-box {
+                padding: 16px 16px 145px;
+                overflow: hidden;
+                .u-logo {
+                    width: 180px;
+                    max-width: 100%;
+                    height: auto;
+                }
+                .u-desc {
+                    width: 100%;
+                    max-height: calc(80vw - 220px);
+                    overflow-y: auto;
+                    overflow-wrap: anywhere;
+                    -webkit-overflow-scrolling: touch;
+                    font-size: 14px;
+                    line-height: 1.5;
+                }
+            }
+        }
+
+        .m-four .m-content {
+            .m-content-box {
+                position: relative;
+                top: auto;
+                left: auto;
+                right: auto;
+                width: 100%;
+                height: auto;
+                padding-top: calc(125vw + 24px);
+                box-sizing: border-box;
+                .u-refresh-button {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    min-height: 44px;
+                }
+                .u-desc {
+                    position: relative;
+                    top: auto;
+                    width: auto;
+                    margin: 0 16px 20px;
+                    font-size: 16px;
+                    line-height: 1.6;
+                    overflow-wrap: anywhere;
+                }
+                .m-content-bottom {
+                    position: relative;
+                    top: auto;
+                    bottom: auto;
+                    width: auto;
+                    height: auto;
+                    margin: 0 16px;
+                    .u-button {
+                        position: relative;
+                        display: block;
+                        width: 100%;
+                        max-width: 360px;
+                        height: auto;
+                    }
+                    .u-text {
+                        position: relative;
+                        bottom: auto;
+                        margin-top: 8px;
+                        font-size: 14px;
+                        line-height: 1.5;
+                        overflow-wrap: anywhere;
+                    }
+                }
+            }
+        }
+
+        .m-five .m-content {
+            .m-content-box {
+                position: relative;
+                top: auto;
+                left: auto;
+                right: auto;
+                width: 100%;
+                height: auto;
+                padding: 0 16px;
+                box-sizing: border-box;
+                .m-box-left {
+                    position: relative;
+                    width: 100%;
+                    height: auto;
+                    padding: 20px;
+                    zoom: 1;
+                    .m-scroll {
+                        width: 100%;
+                        height: auto;
+                        overflow: visible;
+                        .m-scroll-box {
+                            .u-top { width: 100%; height: auto; padding-bottom: 20px; }
+                            .m-scroll-down {
+                                height: auto;
+                                padding-bottom: 0;
+                                .u-down-icon { padding: 8px 0; }
+                                .u-down-text {
+                                    padding-bottom: 16px;
+                                    font-size: 16px;
+                                    line-height: 1.6;
+                                    overflow-wrap: anywhere;
+                                }
+                                .m-down-content {
+                                    div, img { padding-bottom: 16px; }
+                                    img { width: 100%; height: auto; }
+                                }
+                            }
+                        }
+                    }
+                }
+                .m-box-right {
+                    position: relative;
+                    right: auto;
+                    display: grid;
+                    grid-template-columns: repeat(3, minmax(0, 1fr));
+                    gap: 12px;
+                    width: 100%;
+                    height: auto;
+                    margin-top: 24px;
+                    zoom: 1;
+                    .m-face-box:nth-child(n) {
+                        position: relative;
+                        top: auto;
+                        left: auto;
+                        width: 70%;
+                        height: 0;
+                        padding: 35%;
+                        margin: 15% auto;
+                        transform: rotate(-45deg);
+                        .m-face-rotate-box {
+                            position: absolute;
+                            top: 10%;
+                            left: 10%;
+                            width: 80%;
+                            height: 80%;
+                            .u-face {
+                                position: absolute;
+                                top: -20.7%;
+                                left: -20.7%;
+                                width: 141.4%;
+                                height: 141.4%;
+                                transform: rotate(45deg);
+                                img { display: block; width: 100%; height: 100%; object-fit: cover; }
+                            }
+                        }
+                    }
+                    > a { grid-column: 1 / -1; }
+                    .u-button {
+                        position: relative;
+                        bottom: auto;
+                        display: block;
+                        width: 100%;
+                        max-width: 360px;
+                        height: auto;
+                    }
+                }
+            }
+        }
+
+        .m-more .m-content {
+            position: relative;
+            top: auto;
+            width: 100%;
+            margin: 16px 0 0;
+            .m-content-box {
+                position: relative;
+                top: auto;
+                width: 100%;
+                height: auto;
+                padding: 0 16px;
+                box-sizing: border-box;
+                .m-item {
+                    display: block;
+                    width: 100%;
+                    margin-bottom: 20px;
+                    > a { display: block; }
+                    img {
+                        display: block;
+                        width: 100%;
+                        height: auto;
+                        margin: 0;
+                    }
+                    .m-mask {
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        margin: 0;
+                        border-width: 8px;
+                        box-sizing: border-box;
+                        pointer-events: none;
+                    }
+                    .u-text {
+                        position: relative;
+                        left: auto;
+                        bottom: auto;
+                        width: auto;
+                        height: auto;
+                        padding: 10px 12px;
+                        background: #263a42;
+                        font-size: 16px;
+                        line-height: 1.5;
+                        white-space: normal;
+                        overflow: visible;
+                        overflow-wrap: anywhere;
+                    }
+                }
+            }
+        }
+    }
+}

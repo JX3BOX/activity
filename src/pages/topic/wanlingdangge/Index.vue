@@ -155,7 +155,7 @@
                                 <img class="u-top" :src="downTitle" />
                                     <div class="m-scroll-down">
                                         <img class="u-down-icon" :src="downIcon" />
-                                        <div class="u-down-text">鼠标移动到此处，往下滑动查看内容</div>
+                                        <div class="u-down-text">{{ isMobile ? '向下滑动查看内容' : '鼠标移动到此处，往下滑动查看内容' }}</div>
                                         <div class="m-down-content">
                                             <template v-for="(item, index) in downContent">
                                                 <img v-if="item.img" :src="item.img" alt="" :key="`downImg${index}`"/>
