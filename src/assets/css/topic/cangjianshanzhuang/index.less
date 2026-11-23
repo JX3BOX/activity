@@ -309,3 +309,14 @@
         background-image: url("@{kv_cangjianshanzhuang}logo.png");
     }
 }
+
+@media screen and (min-width: 768px) {
+    // Keep the original spacing outside the fixed-size artwork and buttons.
+    .m-index[data-topic="cangjianshanzhuang"] {
+        .m-video .u-btn,
+        .m-pve .u-title,
+        .m-other .u-title {
+            box-sizing: content-box;
+        }
+    }
+}
