@@ -1,6 +1,6 @@
 <template>
     <div data-topic="taijimilu" class="topic-mobile-layout m-index">
-        <div>
+        <div class="m-hero">
             <img class="first-screen" :src="imgurl + 'KV/KV4@2x.jpg'" alt="" />
         </div>
         <div class="optimization_reform">
@@ -204,6 +204,18 @@ export default {
 
 <style lang="less">
 @import "~@/assets/css/topic/mobile/reflow.less";
+
+@media (max-width: 767px) {
+    #app .topic-mobile-layout[data-topic="taijimilu"] > .m-hero {
+        padding: 0;
+
+        > .first-screen {
+            width: 100%;
+            height: auto;
+            margin: 0;
+        }
+    }
+}
 
 @media (min-width: 768px) {
     .m-index[data-topic="taijimilu"] .secret_land .content .introduce {

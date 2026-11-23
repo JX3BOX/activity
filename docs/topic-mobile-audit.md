@@ -568,3 +568,4 @@
 | --- | --- | --- | --- | --- |
 | 丝路风语 | `src/assets/css/topic/silufengyu/index.less`、本台账 | 移除桌面 560px 的标题占位，按原图画幅显示首屏，把标题叠在人物下方。 | `/topic/silufengyu/`，375/390/414/430px。首图高度随宽度变化，人物头部与标题都可见。 | 是 |
 | 剑胆琴心 | `src/assets/css/topic/jiandanqinxin/index.less`、本台账 | 首屏按背景图比例收短，主标安排到人物下方。 | `/topic/jiandanqinxin/`，375/390/414/430px。左上品牌标识仍可见，背景和主标完整，第一章节紧随首屏。 | 是 |
+| 太极秘录 | `src/pages/topic/taijimilu/Index.vue`、本台账 | 清除首图区域的通用内边距和图片外边距。 | `/topic/taijimilu/`，375/390/414/430px。首图等比贴齐页面两侧，图片四周没有额外深色边框。 | 是 |
