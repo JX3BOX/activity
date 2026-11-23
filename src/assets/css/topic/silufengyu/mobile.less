@@ -1,0 +1,517 @@
+@media (max-width: 767px) {
+    #app .topic-mobile-layout[data-topic="silufengyu"] {
+        --silu-ink: #591d14;
+        --silu-paper: #fcf3df;
+        --silu-line: #cba977;
+        --silu-gutter: clamp(12px, 4vw, 24px);
+        background: #f5e5c9;
+
+        > section:not(.banner) {
+            padding: 20px var(--silu-gutter);
+        }
+
+        .m-section {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        .m-title {
+            flex-wrap: nowrap;
+            gap: 8px;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto 16px;
+            padding: 0;
+
+            .u-no {
+                width: clamp(28px, 8vw, 42px);
+                margin: 0;
+            }
+
+            .u-text {
+                width: min(64%, 264px);
+                margin: 0;
+                padding: 0;
+            }
+        }
+
+        .story-progress,
+        .rsc-overview,
+        .new-map,
+        .new-sec,
+        .duanshi,
+        .new-instance,
+        .visual-enhancement,
+        .engine-update {
+            background: #f5e5c9;
+        }
+
+        .new-map,
+        .duanshi,
+        .engine-update {
+            background-color: #efddbe;
+        }
+
+        .story-progress__content,
+        .new-sec_content {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0;
+            background: var(--silu-paper);
+            border: 1px solid var(--silu-line);
+            border-radius: 6px;
+            overflow: hidden;
+
+            &::before {
+                content: "";
+                display: block;
+                background-repeat: no-repeat;
+            }
+        }
+
+        .story-progress__content::before {
+            aspect-ratio: 5 / 2;
+            background-image: url("@{kv_silufengyu}bg/story-progress__img.png");
+            background-size: cover;
+            background-position: right center;
+        }
+
+        .new-sec_content::before {
+            aspect-ratio: 3 / 2;
+            background-image: url("@{kv_silufengyu}003/new-sec__mainpic.png");
+            background-size: cover;
+            background-position: left center;
+            background-color: #efddbe;
+        }
+
+        .story-progress__text,
+        .new-sec__text {
+            width: 100%;
+            padding: 12px 14px 16px;
+            color: var(--silu-ink);
+
+            .u-title {
+                margin: 0 0 6px;
+                font-size: 20px;
+                line-height: 1.4;
+            }
+
+            .u-desc {
+                margin: 0;
+                font-size: 15px;
+                line-height: 1.7;
+            }
+        }
+
+        .new-sec__text {
+            .u-desc {
+                color: #784532;
+
+                span {
+                    font: inherit;
+                }
+            }
+
+            .new-sec__textP {
+                width: 100%;
+                padding: 0;
+
+                p {
+                    margin: 10px 0 0;
+                    font-size: 15px;
+                    line-height: 1.7;
+                }
+            }
+        }
+
+        .expansion-overview__list {
+            justify-content: center;
+            flex-flow: row wrap;
+            gap: 8px;
+            padding: 0;
+        }
+
+        .expansion-overview__item {
+            flex: 0 1 calc((100% - 16px) / 3);
+            max-width: 142px;
+            padding: 0;
+        }
+
+        .expansion-overview__image {
+            width: 100%;
+            margin: 0;
+        }
+
+        .m-mapshow,
+        .m-mapdisplay {
+            width: 100%;
+            padding: 0;
+            margin: 0;
+        }
+
+        .u-mapbox,
+        .u-mapdisplay {
+            width: 100%;
+            min-width: 0;
+            padding: 4px;
+            background: #bd9c66;
+            border-radius: 6px;
+
+            > .u-pic {
+                width: 100%;
+                margin: 0;
+                border-radius: 3px 3px 0 0;
+            }
+        }
+
+        .m-mapshow .u-textbox,
+        .m-mapdisplay .u-textbox {
+            width: 100%;
+            min-height: 104px;
+            padding: 10px 12px;
+            border: 0;
+            border-radius: 0 0 3px 3px;
+            background: var(--silu-paper);
+            color: var(--silu-ink);
+            box-shadow: none;
+
+            .u-title {
+                padding: 0;
+                margin: 0 0 4px;
+                font-size: 17px;
+                line-height: 1.4;
+            }
+
+            .u-desc {
+                width: 100%;
+                font-size: 14px;
+                line-height: 1.55;
+            }
+        }
+
+        .duanshi__content {
+            background: var(--silu-paper);
+            border: 1px solid var(--silu-line);
+            border-radius: 6px;
+            overflow: visible;
+        }
+
+        .duanshi__nav {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 6px;
+            padding: 8px;
+
+            &::before,
+            &::after {
+                display: none;
+            }
+
+            .u-tab {
+                display: grid;
+                place-items: center;
+                min-width: 44px;
+                min-height: 44px;
+                padding: 0;
+            }
+
+            .u-img {
+                width: 100%;
+                max-width: 132px;
+                height: auto;
+            }
+        }
+
+        .duanshi__primary,
+        .duanshi__primary .u-content,
+        .duanshi__primary .u-list {
+            width: 100%;
+            padding: 0;
+        }
+
+        .duanshi__primary .u-content {
+            padding: 0 8px 8px;
+
+            .u-img {
+                display: none;
+                width: 100%;
+                margin: 0;
+            }
+
+            .u-img.show {
+                display: block;
+            }
+
+            .u-toggle.show {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: fit-content;
+                min-width: 72px;
+                min-height: 44px;
+                margin: 4px auto 0;
+                padding: 4px 12px;
+                color: var(--silu-ink);
+                background: #f3e1bf;
+                border: 1px solid var(--silu-line);
+                border-radius: 4px;
+            }
+        }
+
+        // 武学图的原稿为 1024 × 600，裁掉画面四周的透明留白。
+        .duanshi__primary .u-content:first-child .u-list {
+            aspect-ratio: 768 / 516;
+            overflow: hidden;
+
+            .u-img {
+                position: absolute;
+                top: -6.59%;
+                left: -14.58%;
+                width: 133.33%;
+                max-width: none;
+            }
+        }
+
+        .new-instance__text {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto 16px;
+            padding: 12px 14px;
+            color: var(--silu-ink);
+            background: var(--silu-paper);
+            border: 1px solid var(--silu-line);
+            border-radius: 6px;
+            text-align: left;
+
+            .u-desc {
+                margin: 0 0 6px;
+                font-size: 15px;
+                line-height: 1.7;
+            }
+
+            .u-desc:last-child {
+                margin-bottom: 0;
+            }
+
+            > br {
+                display: none;
+            }
+
+            > br + p {
+                margin-top: 12px;
+            }
+        }
+
+        .new-instance__content {
+            display: block;
+            background: none;
+        }
+
+        .boss-show {
+            padding: 0;
+        }
+
+        .boss-show__list {
+            padding: 0;
+            gap: 6px;
+        }
+
+        .boss-show__item {
+            position: relative;
+            aspect-ratio: 3 / 4;
+            min-height: 44px;
+            padding: 0;
+            overflow: hidden;
+            border-radius: 4px;
+
+            .boss-show__image {
+                position: absolute;
+                inset: 0;
+                height: 100%;
+                object-fit: cover;
+                object-position: center top;
+            }
+        }
+
+        .boss-show__description {
+            margin-top: 8px;
+            padding: 12px 14px;
+            color: var(--silu-ink);
+            background: var(--silu-paper);
+            border: 1px solid var(--silu-line);
+            border-radius: 6px;
+        }
+
+        .boss-show__number {
+            color: #784532;
+            margin: 0 0 2px;
+            font-size: 14px;
+        }
+
+        .boss-show__title {
+            margin: 0 0 4px;
+            font-size: 18px;
+            line-height: 1.4;
+        }
+
+        .boss-show__text {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .ranking-list {
+            background-color: #32645c;
+            background-size: cover;
+        }
+
+        .ranking-list__content {
+            display: grid;
+            justify-items: center;
+            gap: 8px;
+        }
+
+        .ranking-list__title-number,
+        .ranking-list__title-banner {
+            padding: 0;
+        }
+
+        .ranking-list__number-image {
+            width: clamp(28px, 8vw, 42px);
+            margin: 0;
+        }
+
+        .ranking-list__title-image {
+            width: min(64vw, 300px);
+            margin: 0;
+        }
+
+        .ranking-list__btn {
+            display: inline-flex;
+            float: none;
+            align-items: center;
+            justify-content: center;
+            min-width: 96px;
+            margin: 0;
+            padding: 4px 12px;
+            background: #f4e3c0;
+            border: 1px solid var(--silu-line);
+            border-radius: 4px;
+        }
+
+        .ranking-list__signup-image {
+            width: 96px;
+            margin: 0;
+        }
+
+        .new-season {
+            background-color: #28584f;
+            background-size: cover;
+        }
+
+        .new-season__list {
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 8px 4px;
+            padding: 0;
+        }
+
+        .new-season__item {
+            width: 100%;
+            padding: 0;
+
+            a {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 3px;
+                padding: 3px 0;
+                text-decoration: none;
+            }
+
+            .u-icon {
+                display: grid;
+                place-items: center;
+                width: min(100%, 46px);
+                aspect-ratio: 1;
+                padding: 0;
+
+                img {
+                    width: 62%;
+                    margin: 0;
+                }
+            }
+
+            .u-label {
+                width: 100%;
+                min-height: 18px;
+                padding: 0;
+                margin: 0;
+                background: none;
+                color: #fff4ce;
+            }
+
+            .new-season__label {
+                font-size: 12px;
+                line-height: 1.35;
+                white-space: nowrap;
+            }
+        }
+
+        .visual-enhancement__content > .u-pic {
+            // Keep the source image's alternative text available to assistive technology.
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            margin: 0;
+            clip-path: inset(50%);
+        }
+
+        .visual-enhancement__details {
+            display: grid;
+            gap: 6px;
+            width: 100%;
+            max-width: 440px;
+            margin: 0 auto;
+            padding: 6px;
+            background: var(--silu-paper);
+            border: 1px solid var(--silu-line);
+            border-radius: 6px;
+
+            .u-detail {
+                padding: 0;
+                background-color: #461c18;
+                background-image: url("@{kv_silufengyu}008/maincontent.png");
+                border-radius: 4px;
+            }
+
+            // 保留 1024 × 500 拼图中的原有画面和文字，按素材坐标分开展示。
+            .silufengyu-detail(@x, @y, @width, @height) {
+                aspect-ratio: @width / @height;
+                background-size: percentage((1024 / @width)) percentage((500 / @height));
+                background-position: percentage((@x / (1024 - @width))) percentage((@y / (500 - @height)));
+
+                @supports not (aspect-ratio: 1 / 1) {
+                    padding-top: percentage((@height / @width));
+                }
+            }
+
+            .u-detail--characters { .silufengyu-detail(29, 25, 290, 189); }
+            .u-detail--styles { .silufengyu-detail(337, 25, 359, 189); }
+            .u-detail--riding { .silufengyu-detail(29, 228, 667, 253); }
+            .u-detail--back { .silufengyu-detail(713, 25, 285, 149); }
+            .u-detail--torso { .silufengyu-detail(713, 175, 285, 157); }
+            .u-detail--hand { .silufengyu-detail(713, 333, 285, 148); }
+        }
+
+        @supports not (aspect-ratio: 1 / 1) {
+            .story-progress__content::before { padding-top: 40%; }
+            .new-sec_content::before { padding-top: 66.67%; }
+            .duanshi__primary .u-content:first-child .u-list { padding-top: 67.19%; }
+            .boss-show__item { padding-top: 133.33%; }
+            .new-season__item .u-icon { height: 46px; }
+        }
+    }
+}
