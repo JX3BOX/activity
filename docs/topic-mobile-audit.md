@@ -103,6 +103,7 @@
 
 | 专题 | 改动文件 | 改动类型 | 待人工核对宽度 | 需真机 | 遗留问题 |
 | --- | --- | --- | --- | --- | --- |
+| 丝路风语 silufengyu | `src/pages/topic/silufengyu/Index.vue`、`docs/topic-mobile-audit.md` | 段氏选项使用已有 label 字段补充名称 | 375/390/414/430 | 是 | 列表项角色、键盘与点击尺寸需核查；轮播及工具图标专用逻辑未改 |
 <!-- topic-audit:silufengyu -->
 
 

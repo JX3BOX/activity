@@ -90,6 +90,7 @@
                         :key="item.key"
                         class="u-tab"
                         :class="{ active: activeTab === item.key }"
+                        :aria-label="item.label"
                         @click="activeTab = item.key"
                     >
                         <img :src="buildTabImgUrl(item.key)" class="u-img" />
