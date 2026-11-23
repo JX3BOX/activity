@@ -104,6 +104,7 @@
                 <div class="m-content-box">
                     <a href=""
                        class="u-refresh-button"
+                       aria-label="更换画质对比图"
                        @click.prevent="currentContrast >= 4 ? currentContrast = 0 : currentContrast++">
                         <i class="el-icon-refresh"></i>
                         <img class="u-img" :src="refreshText" alt="">

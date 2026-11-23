@@ -1184,10 +1184,15 @@ body {
                 .u-button {
                     top: auto;
                     bottom: 16px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
                     width: 42%;
                     height: 48px;
-                    font-size: 18px;
-                    line-height: 48px;
+                    background-size: contain;
+                    background-position: center;
+                    font-size: 16px;
+                    line-height: 1.2;
                     &.u-introduction { left: 5%; }
                     &.u-macro { left: 53%; }
                 }
@@ -1334,7 +1339,13 @@ body {
                     position: relative;
                     top: auto;
                     left: auto;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 6px;
                     min-height: 44px;
+                    i { font-size: 24px; }
+                    .u-img { width: 76px; height: auto; }
                 }
                 .m-contrast {
                     position: relative;
@@ -1422,16 +1433,31 @@ body {
                         height: auto;
                         overflow: visible;
                         .m-scroll-box {
-                            .u-top { width: 100%; height: auto; padding-bottom: 20px; }
+                            .u-top {
+                                width: 100%;
+                                max-width: 220px;
+                                height: auto;
+                                margin: 0 auto;
+                                padding-bottom: 16px;
+                            }
                             .m-scroll-down {
                                 height: auto;
                                 padding-bottom: 0;
-                                .u-down-icon { padding: 8px 0; }
+                                .u-down-icon {
+                                    width: 28px;
+                                    height: auto;
+                                    margin: 0 auto 8px;
+                                    padding: 0;
+                                }
                                 .u-down-text {
                                     padding-bottom: 16px;
                                     font-size: 16px;
                                     line-height: 1.6;
                                     overflow-wrap: anywhere;
+                                }
+                                > .u-down-text {
+                                    font-size: 14px;
+                                    text-align: center;
                                 }
                                 .m-down-content {
                                     div, img { padding-bottom: 16px; }
@@ -1444,40 +1470,18 @@ body {
                 .m-box-right {
                     position: relative;
                     right: auto;
-                    display: grid;
-                    grid-template-columns: repeat(2, minmax(0, 1fr));
-                    gap: 12px;
+                    display: block;
                     width: 100%;
                     height: auto;
                     margin-top: 24px;
                     zoom: 1;
-                    .m-face-box:nth-child(n) {
-                        position: relative;
-                        top: auto;
-                        left: auto;
-                        width: 70%;
-                        height: 0;
-                        padding: 35%;
-                        margin: 15% auto;
-                        transform: rotate(-45deg);
-                        .m-face-rotate-box {
-                            position: absolute;
-                            top: 10%;
-                            left: 10%;
-                            width: 80%;
-                            height: 80%;
-                            .u-face {
-                                position: absolute;
-                                top: -20.7%;
-                                left: -20.7%;
-                                width: 141.4%;
-                                height: 141.4%;
-                                transform: rotate(45deg);
-                                img { display: block; width: 100%; height: 100%; object-fit: cover; }
-                            }
-                        }
+                    .m-face-box { display: none; }
+                    > a {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        min-height: 44px;
                     }
-                    > a { grid-column: 1 / -1; }
                     .u-button {
                         position: relative;
                         bottom: auto;
