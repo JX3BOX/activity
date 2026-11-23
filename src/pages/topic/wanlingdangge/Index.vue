@@ -10,7 +10,7 @@
         </div>
         <!--首屏-->
         <div class="m-top m-jump">
-            <video class="u-video-background" autoplay muted loop>
+            <video class="u-video-background" autoplay muted loop playsinline webkit-playsinline>
                 <source :src="top.video" type="video/mp4">
             </video>
             <img class="u-title" :src="top.title"/>
@@ -213,6 +213,8 @@
                 class="u-cg"
                 controls
                 autoplay
+                playsinline
+                webkit-playsinline
                 width="40%"
             ><source type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'></video>
             <a href="" class="u-close-button" @click.prevent="closeDialog">
