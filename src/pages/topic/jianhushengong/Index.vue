@@ -31,8 +31,20 @@
 <!--        p2 boss区域-->
         <div class="m-p2">
             <div class="m-boss-box p-animation" v-animate="'fadeIn'">
-                <div class="u-boss" :class="getBossClass(i)" @click="bossActive=i" v-for="(item,i) in boss" :key="'boss'+i">
-                    <img :src="imgurl+'bossactive.png'" class="u-img" />
+                <div
+                    v-for="(item, i) in boss"
+                    :key="'boss' + i"
+                    class="u-boss"
+                    :class="getBossClass(i)"
+                    role="button"
+                    tabindex="0"
+                    :aria-label="item.site + ' ' + item.name"
+                    :aria-pressed="bossActive === i"
+                    @click="bossActive = i"
+                    @keydown.enter="bossActive = i"
+                    @keydown.space.prevent="bossActive = i"
+                >
+                    <img :src="imgurl+'bossactive.png'" class="u-img" alt="" />
                     <span class="u-boss-name">{{ item.site }}<br /> {{item.name}}</span>
                 </div>
             </div>
@@ -246,11 +258,4 @@ export default {
 
 <style lang="less">
 @import "~@/assets/css/topic/mobile/reflow.less";
-
-@media (max-width: 767px) {
-    #app .topic-mobile-layout[data-topic="jianhushengong"] .m-boss-box .u-boss {
-        min-width: 44px;
-        min-height: 44px;
-    }
-}
 </style>

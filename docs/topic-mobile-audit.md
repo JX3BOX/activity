@@ -42,6 +42,7 @@
 | 苍雪龙城 cangxuelongcheng | `src/pages/topic/cangxuelongcheng/Index.vue`、`src/assets/css/topic/yuanqicangyun/mobile.less`、本台账 | 恢复首屏、门派、秘境首领、奇遇、玩法和页尾的专题排版 | `/topic/cangxuelongcheng/`，375/390/414/430px。切换两套心法和五位首领，箭头同排，三张宠物卡及页尾完整。 | 是 | 首领介绍中的图内小字仍受原图限制，触感待真机。 |
 | 安史之乱 anshizhiluan | `src/pages/topic/anshizhiluan/Index.vue`、`src/assets/css/topic/anshizhiluan/mobile.less`、本台账 | 合并首屏与题字，恢复章节背景，重组场景轮播、副本和资讯卡 | `/topic/anshizhiluan/`，375/390/414/430px。逐张切换五张场景图，两侧按钮与分页对齐，核对三张副本卡、双玩法入口和两列资讯。 | 是 | 微信内联视频、链接及触摸需实机核对。 |
 | 日月明尊 riyuemingzun | `src/pages/topic/riyuemingzun/index.js`、`src/assets/css/topic/riyuemingzun/index.less`、本台账 | 补普通网页 viewport，重排章节导航、抓马标签、首领和活动卡 | `/topic/riyuemingzun/`，375/390/414/430px。刷新后页面无左右拖动，点章导航、三组抓马标签及首领头像，检查正文与题字可读性。 | 是 | 微信内嵌页面和外链仍需实机核对。 |
+| 剑湖神宫 jianhushengong | `src/pages/topic/jianhushengong/Index.vue`、`src/assets/css/topic/jianhushengong/index.less`、本台账 | 统一题字画幅，资料正文底板随内容延展，五位首领头像与详情成组 | `/topic/jianhushengong/`，375/390/414/430px。点五位首领确认选中态、图和正文同步；读剑湖宫与觅宝奇缘完整段落，检查原首屏。 | 是 | 真机点击和外链待核。 |
 
 ## 手机专题专项排版复查
 
