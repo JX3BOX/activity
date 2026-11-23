@@ -571,3 +571,4 @@
 | 太极秘录 | `src/pages/topic/taijimilu/Index.vue`、本台账 | 清除首图区域的通用内边距和图片外边距。 | `/topic/taijimilu/`，375/390/414/430px。首图等比贴齐页面两侧，图片四周没有额外深色边框。 | 是 |
 | 血战天策 | `src/assets/css/topic/xuezhantiance/index.less`、本台账 | 恢复首屏背景与四张标识图的叠放，清除额外首屏内边距。 | `/topic/xuezhantiance/`，375/390/414/430px。首图紧贴顶部，品牌、标题、副标与底部提示各在其位。 | 是 |
 | 五毒现世 | `src/assets/css/topic/wuduxianshi/index.less`、本台账 | 首屏背景按原图比例贴顶，品牌、题字及竖标按原构图叠放。 | `/topic/wuduxianshi/`，375/390/414/430px。首屏保留三张原素材，标识大小协调。 | 是 |
+| 剑湖神宫 | `src/assets/css/topic/jianhushengong/index.less`、本台账 | 恢复首屏原画幅，重定位联名标识和资料片标题。 | `/topic/jianhushengong/`，375/390/414/430px。背景自带的主标题完整，联名标识与下方标题分别贴合原画。 | 是 |

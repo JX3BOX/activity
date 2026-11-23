@@ -382,6 +382,60 @@
     }
 }
 
+@media (max-width: 767px) {
+    #app .topic-mobile-layout[data-topic="jianhushengong"] > .m-p0 {
+        position: relative;
+        width: 100%;
+        height: auto;
+        min-height: 0;
+        padding: 0;
+        // 留出与原画一致的高度，避免通用的首屏高度把画面和标题隔开。
+        &::before {
+            content: "";
+            display: block;
+            padding-top: percentage((1321 / 1920));
+        }
+        background-size: 100% auto;
+        background-position: center top;
+
+        .u-logo,
+        .u-p1 {
+            position: absolute;
+            height: auto;
+            margin: 0;
+            padding: 0;
+            background-size: contain;
+
+            &::before {
+                content: "";
+                display: block;
+            }
+        }
+
+        .u-logo {
+            top: 3%;
+            left: 3%;
+            width: min(36%, 216px);
+
+            &::before {
+                padding-top: percentage((213 / 592));
+            }
+        }
+
+        .u-p1 {
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: min(52%, 300px);
+            margin-inline: auto;
+
+            &::before {
+                padding-top: percentage((141 / 518));
+            }
+        }
+    }
+}
+
 @media screen and (orientation: portrait) {
     .m-index {
         zoom: 0.8;
