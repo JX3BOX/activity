@@ -386,6 +386,7 @@
 | 万灵当歌 wanlingdangge | `src/assets/css/topic/wanlingdangge/index.less`、`docs/topic-mobile-audit.md` | 剧情图片限宽、文字自然展开、切换按钮并列；画质对比图按边框比例排列并修正图层盒模型 | 375/390/414/430 | 是 | 剧情过渡、两侧按钮可点击区域与实际画面需人工核对；对比图五组切换后的透明边框对齐需截图验证；保留原上下裁切方向。首屏、头像数据和弹窗真机问题仍按上条记录 |
 | 万灵当歌 wanlingdangge | `src/assets/css/topic/wanlingdangge/index.less`、`src/pages/topic/wanlingdangge/Index.vue`、`docs/topic-mobile-audit.md` | 首屏按钮避开标题；门派说明增加底色；副本和视频入口名称；捏脸两列与手机空数据兜底 | 375/390/414/430 | 是 | 首屏画面和门派文字对比度需截图；捏脸无数据时不显示头像入口，接口失败仍无提示；副本、头像与更多动态链接的实际落地需核验 |
 | 万灵当歌 wanlingdangge | `src/assets/css/topic/wanlingdangge/index.less`、`src/pages/topic/wanlingdangge/Index.vue`、`docs/topic-mobile-audit.md` | 手机端保留门派按钮素材比例，缩小画质切换和捏脸提示素材；按用户截图隐藏捏脸头像列表，保留捏脸入口；补充画质切换名称 | 375/390/414/430 | 是 | 门派按钮、画质切换点击和捏脸入口实际显示需截图及真机确认；头像入口仅手机隐藏，桌面不变 |
+| 万灵当歌 wanlingdangge | `src/assets/css/topic/wanlingdangge/index.less`、`docs/topic-mobile-audit.md` | 手机端调整门派攻略和宏库文字，使其对齐按钮素材的金色横幅中心 | 375/390/414/430 | 是 | 素材画布底部含透明区域及装饰；真实字体的视觉居中、按钮点击与安全区域需截图及真机确认 |
 
 以上各行是按批次记录的历史状态；最新结论以最后一行为准。
 
