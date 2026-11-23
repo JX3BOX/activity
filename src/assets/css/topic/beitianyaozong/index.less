@@ -350,6 +350,24 @@
     background-color: rgba(255, 255, 255, 1);
 }
 
+@media screen and (min-width: 768px) {
+    // These desktop dimensions were authored as content-box dimensions.
+    .p-topic.v-index .p-topic-container[data-topic="beitianyaozong"] {
+        .m-topic-video,
+        .m-topic-info .u-textImg,
+        .m-topic-pve,
+        .m-topic-pve .u-tab,
+        .m-topic-pve .u-tab-block,
+        .m-topic-pvp .u-title {
+            box-sizing: content-box;
+        }
+
+        .m-topic-block .u-title {
+            height: auto;
+        }
+    }
+}
+
 @media screen and (max-width: 1680px) {
     .m-topic-header {
         .u-textImg {
