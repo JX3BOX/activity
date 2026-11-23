@@ -14,7 +14,7 @@
             <div class="u-text p-animation" v-animate="'fadeInDown'"></div>
             <!-- 链接 -->
             <div class="u-btn p-animation" v-animate="'fadeInDown'">
-                <a :href="item.link" :target="item.target" v-for="(item, i) in wuxian" :key="i" :class="`u-btn` + (i + 1)"></a>
+                <a :href="item.link" :target="item.target" v-for="(item, i) in wuxian" :key="i" :class="`u-btn` + (i + 1)" :aria-label="item.name"></a>
             </div>
         </div>
         <!-- 标题1 pve-->
@@ -27,7 +27,7 @@
                     <!-- BOSS图片 -->
                     <div class="u-img">
                         <img :src="tabImg" />
-                        <a :href="tabImgLink" class="u-more" target="_blank"></a>
+                        <a :href="tabImgLink" class="u-more" target="_blank" aria-label="查看秘境专栏"></a>
                     </div>
                     <!-- 新闻 -->
                     <div class="u-news">
@@ -38,7 +38,7 @@
                     </div>
                     <!-- 按钮 -->
                     <div class="u-btnbox">
-                        <a v-for="(item, i) in btn" :key="i" :href="item.link" class="u-btn" :class="`u-btn` + (i + 1)" target="_blank"></a>
+                        <a v-for="(item, i) in btn" :key="i" :href="item.link" class="u-btn" :class="`u-btn` + (i + 1)" :aria-label="item.name" target="_blank"></a>
                     </div>
                 </div>
             </div>
@@ -195,4 +195,67 @@ export default {
 
 <style lang="less">
 @import "~@/assets/css/topic/mobile/reflow.less";
+
+@media (max-width: 767px) {
+    #app .topic-mobile-layout[data-topic="jianghuwuxian"] .m-video > .u-btn {
+        display: grid;
+        grid-template-columns: repeat(3, 48px);
+        justify-content: center;
+        gap: 12px;
+    }
+
+    #app .topic-mobile-layout[data-topic="jianghuwuxian"] .m-video > .u-btn > a {
+        height: 226px;
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    @supports (aspect-ratio: 53 / 250) {
+        #app .topic-mobile-layout[data-topic="jianghuwuxian"] .m-video > .u-btn > a {
+            height: auto;
+            aspect-ratio: 53 / 250;
+        }
+    }
+
+    #app .topic-mobile-layout[data-topic="jianghuwuxian"] .m-three .u-box {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 16px;
+    }
+
+    #app .topic-mobile-layout[data-topic="jianghuwuxian"] .m-one .u-img .u-more {
+        width: 175px;
+        max-width: 100%;
+        min-height: 44px;
+        height: 48px;
+        margin: 12px auto;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+    }
+
+    #app .topic-mobile-layout[data-topic="jianghuwuxian"] .u-news .u-line {
+        align-items: flex-start;
+        min-height: 44px;
+    }
+
+    #app .topic-mobile-layout[data-topic="jianghuwuxian"] .u-news .u-name,
+    #app .topic-mobile-layout[data-topic="jianghuwuxian"] .u-news .u-author {
+        min-width: 0;
+        overflow: visible;
+        white-space: normal;
+        overflow-wrap: break-word;
+        overflow-wrap: anywhere;
+    }
+
+    #app .topic-mobile-layout[data-topic="jianghuwuxian"] .u-news .u-name {
+        flex: 1 1 0;
+    }
+}
+
+@media (min-width: 400px) and (max-width: 767px) {
+    #app .topic-mobile-layout[data-topic="jianghuwuxian"] .m-video > .u-btn {
+        grid-template-columns: repeat(6, 48px);
+    }
+}
 </style>
