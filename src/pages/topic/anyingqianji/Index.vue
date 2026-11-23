@@ -80,6 +80,11 @@
         <section class="m-conference">
             <img class="u-top p-animation" v-animate="'fadeInDown'" :src="buildImgUrl('3/bg2.png')" alt="" />
             <img class="u-title p-animation" v-animate="'fadeInUp'" :src="buildImgUrl('3/tittle.png')" alt="" />
+            <div v-if="pageZoom <= 767 / 1920" class="u-conference-copy">
+                <span>趣味卦象助你一臂之力，用轻松的方式学习与熟悉竞技招式，便于PVP入门</span>
+                <span>同时，武林争霸赛将会常驻，打破一年仅一次的次数限制</span>
+                <span>划分多段赛程和多种对局，让帮会拥有更多的挑战机会与竞技空间</span>
+            </div>
             <img class="u-bottom p-animation" v-animate="'fadeInUp'" :src="buildImgUrl('3/bg3.png')" alt="" />
         </section>
         <!-- P4 -->
@@ -197,11 +202,17 @@ export default {
 
             > .u-title {
                 position: relative;
-                width: 100%;
-                height: auto;
+                width: min(100%, 352px);
+                height: 100px;
+                height: min(28.57vw, 100px);
                 max-height: none;
-                margin: 0;
-                object-fit: contain;
+                // 横幅原图很宽，标题仅占中心；保留文字并裁去下方背景。
+                --title-trim: min(14vw, 48px);
+                margin: 0 auto -48px;
+                margin-bottom: calc(0px - var(--title-trim));
+                clip-path: inset(0 0 var(--title-trim) 0);
+                object-fit: cover;
+                object-position: center top;
             }
 
             .el-carousel__container {
@@ -253,20 +264,42 @@ export default {
         }
 
         .m-conference {
-            min-height: 340px;
-            padding: 180px 16px 40px;
+            min-height: 0;
+            padding: clamp(56px, 32vw, 132px) 16px 28px;
             background-size: cover;
             background-position: center top;
 
             .u-top, .u-bottom { display: none; }
-            .u-title { width: min(100%, 420px); margin: 0 auto; }
+            .u-title {
+                width: min(100%, 320px);
+                height: 110px;
+                height: min(calc(34.375vw - 11px), 110px);
+                --copy-trim: min(calc(18.90625vw - 6.05px), 60.5px);
+                margin: 0 auto -60.5px;
+                margin-bottom: calc(0px - var(--copy-trim));
+                clip-path: inset(0 0 var(--copy-trim) 0);
+                object-fit: cover;
+                object-position: center top;
+            }
+            .u-conference-copy {
+                max-width: 420px;
+                margin: 12px auto 0;
+                color: #fff;
+                text-align: center;
+                span {
+                    display: block;
+                    font-size: 16px;
+                    line-height: 1.7;
+                }
+            }
         }
 
         .m-update {
             padding: 32px 16px;
             gap: 20px;
             background-size: cover;
-            .u-title, .u-content { width: min(100%, 420px); margin: 0 auto; }
+            .u-title { width: min(100%, 320px); margin: 0 auto; }
+            .u-content { width: min(100%, 420px); margin: 0 auto; }
             .u-over { display: none; }
         }
     }
