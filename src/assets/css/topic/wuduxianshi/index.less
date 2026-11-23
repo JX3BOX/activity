@@ -48,6 +48,49 @@ body {
     }
 }
 
+@media (max-width: 767px) {
+    #app .topic-mobile-layout[data-topic="wuduxianshi"] > .m-top {
+        position: relative;
+        min-height: 0;
+        height: 54.6875vw;
+        padding: 0;
+        background-size: 100% 100%;
+        background-position: center top;
+
+        > .u-logo,
+        > .u-mohe,
+        > .u-slogan {
+            position: absolute;
+            inset: auto;
+            margin: 0;
+            background-position: center;
+            background-size: contain;
+        }
+
+        > .u-logo {
+            top: 40%;
+            left: 52%;
+            width: 14.5%;
+            height: 7.0123vw;
+        }
+
+        > .u-mohe {
+            right: 15.5%;
+            bottom: 10%;
+            width: 2.5%;
+            height: 12.9605vw;
+            z-index: 2;
+        }
+
+        > .u-slogan {
+            bottom: 0;
+            left: 33%;
+            width: 56%;
+            height: 51.1782vw;
+        }
+    }
+}
+
 // 第一部分
 .m-one {
     .pr;

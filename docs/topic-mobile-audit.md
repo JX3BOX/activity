@@ -570,3 +570,4 @@
 | 剑胆琴心 | `src/assets/css/topic/jiandanqinxin/index.less`、本台账 | 首屏按背景图比例收短，主标安排到人物下方。 | `/topic/jiandanqinxin/`，375/390/414/430px。左上品牌标识仍可见，背景和主标完整，第一章节紧随首屏。 | 是 |
 | 太极秘录 | `src/pages/topic/taijimilu/Index.vue`、本台账 | 清除首图区域的通用内边距和图片外边距。 | `/topic/taijimilu/`，375/390/414/430px。首图等比贴齐页面两侧，图片四周没有额外深色边框。 | 是 |
 | 血战天策 | `src/assets/css/topic/xuezhantiance/index.less`、本台账 | 恢复首屏背景与四张标识图的叠放，清除额外首屏内边距。 | `/topic/xuezhantiance/`，375/390/414/430px。首图紧贴顶部，品牌、标题、副标与底部提示各在其位。 | 是 |
+| 五毒现世 | `src/assets/css/topic/wuduxianshi/index.less`、本台账 | 首屏背景按原图比例贴顶，品牌、题字及竖标按原构图叠放。 | `/topic/wuduxianshi/`，375/390/414/430px。首屏保留三张原素材，标识大小协调。 | 是 |
