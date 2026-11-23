@@ -48,6 +48,8 @@
 | 藏剑山庄 cangjianshanzhuang | `src/pages/topic/cangjianshanzhuang/Index.vue`、`src/pages/topic/cangjianshanzhuang/cangjian/index.vue`、本台账 | 整理首页视频、秘境图、按钮与资料轮播，按 CMS 匹配手机签图，适配详情五项内容 | `/topic/cangjianshanzhuang/` 和 `/topic/cangjianshanzhuang/#/cangjian`，375/390/414/430px。点剑冢与荻花宫后山，核对签图、图片和首领入口，再核对详情菜单与背景、武器翻页。 | 是 | 桌面固定签图顺序与当前 CMS 反序，列为桌面遗留问题。B 站内嵌播放和真机跳转待核。 |
 | 圣殿云起 shengdianyunqi | `src/pages/topic/shengdianyunqi/Index.vue`、`src/assets/css/topic/shengdianyunqi/info.less`、本台账 | 整理首页导览、秘境标签、归墟奖励图和阵营图，修复详情直达视口及首领按钮 | `/topic/shengdianyunqi/` 和 `/topic/shengdianyunqi/#/shengdian`，375/390/414/430px。点两个秘境标签，核对图和单个资料入口。直达详情及 `?tab=2`、`?tab=3`，核对背景、首领翻页、掉落图和页面宽度。 | 是 | 内嵌视频已核容器，实际播放、真机触控及早期 Safari 的详情直达待确认。 |
 
+| 五毒现世首屏回归 wuduxianshi | `src/pages/topic/wuduxianshi/Index.vue`、`src/assets/css/topic/wuduxianshi/index.less`、本台账 | 移动首屏按容器宽度合成原背景和三层标识，正文和章节标题按视口显示 | `/topic/wuduxianshi/`，375/390/414/430px。从顶部刷新，首屏能看见人物、剑网3缘起标识、主标题和魔盒竖标；向下核对五毒教、荻花圣殿及 IF 线正文和「更多精彩」标题。 | 是 | iOS Safari、Android Chrome、微信内首次进入的素材载入与显示待真机确认。 |
+
 ## 手机专题专项排版复查
 
 以下专题的兼容底线为 iOS 15+ / Android Chrome 100+。桌面按专题在 1440px 或 1600px 对照，真机项包含 iOS Safari、Android Chrome 和微信内置浏览器。历史风险快照保留，当前状态以专项记录为准。
