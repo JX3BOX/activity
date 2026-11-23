@@ -246,4 +246,11 @@ export default {
 
 <style lang="less">
 @import "~@/assets/css/topic/mobile/reflow.less";
+
+@media (max-width: 767px) {
+    #app .topic-mobile-layout[data-topic="jianhushengong"] .m-boss-box .u-boss {
+        min-width: 44px;
+        min-height: 44px;
+    }
+}
 </style>

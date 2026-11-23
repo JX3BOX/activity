@@ -90,6 +90,7 @@
 
 | 专题 | 改动文件 | 改动类型 | 待人工核对宽度 | 需真机 | 遗留问题 |
 | --- | --- | --- | --- | --- | --- |
+| 剑湖神宫 jianhushengong | `src/pages/topic/jianhushengong/Index.vue`、`docs/topic-mobile-audit.md` | 首领选择项增加 44px 最小触控区域 | 375/390/414/430 | 是 | 五个首领需逐项核对可见状态、命中区域和切换；动态富文本及键盘操作待验证 |
 <!-- topic-audit:jianhushengong -->
 
 
