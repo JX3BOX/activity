@@ -527,3 +527,4 @@
 | 圣殿云起详情 shengdianyunqi | `src/assets/css/topic/shengdianyunqi/info.less`、`docs/topic-mobile-audit.md` | 详情容器 padding-top 清零 | `/topic/shengdianyunqi/#/shengdian`；375/390/414/430px，手机 UA 刷新，首屏或详情内容顶部不保留公共头空白 | 是 | 需截图检查首屏裁切、安全区及原有内容布局 |
 | 横刀断浪 hengdaoduanlang | `src/assets/css/topic/hengdaoduanlang/index.less`、`docs/topic-mobile-audit.md` | 首屏 margin-top 清零 | `/topic/hengdaoduanlang/`；375/390/414/430px，手机 UA 刷新，首屏或详情内容顶部不保留公共头空白 | 是 | 需截图检查首屏裁切、安全区及原有内容布局 |
 | 群侠万变 qunxiawanbian | `src/assets/css/topic/qunxiawanbian/index.less`、`docs/topic-mobile-audit.md` | 首屏 margin-top 清零 | `/topic/qunxiawanbian/`；375/390/414/430px，手机 UA 刷新，首屏或详情内容顶部不保留公共头空白 | 是 | 需截图检查首屏裁切、安全区及原有内容布局 |
+| 日月明尊 riyuemingzun | `src/assets/css/topic/riyuemingzun/index.less`、`docs/topic-mobile-audit.md` | 首屏 margin-top 清零，含设备宽度兜底 | `/topic/riyuemingzun/`；375/390/414/430px，手机 UA 刷新，首屏或详情内容顶部不保留公共头空白 | 是 | 需截图检查首屏裁切、安全区及原有内容布局 |
