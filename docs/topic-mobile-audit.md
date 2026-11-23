@@ -281,7 +281,7 @@
 
 | 清理状态 | 补丁文件 | 校验 | 恢复方式 |
 | --- | --- | --- | --- |
-| 原有六文件差异已保存并从工作区还原 | `/Users/xuan/Desktop/jx3box/activity-mobile-pre-clean-20261123.patch` | 清理后 `git apply --check` 通过 | 在当前仓库且确认无冲突时执行 `git apply <补丁路径>`；后续提交可能产生冲突 |
+| 原有六文件差异已保存并从工作区还原 | `/Users/xuan/Desktop/jx3box/activity-mobile-pre-clean-20261123-rebased.patch` | 当前版本 `git apply --check` 通过；增删行与原补丁逐行一致 | 原始 `.patch` 文件仍保留；重新应用前先执行 `git apply --check` |
 
 ## 清理前既有改动逐项归类
 
