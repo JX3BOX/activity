@@ -1,5 +1,5 @@
 <template>
-    <main class="m-fenggu" :class="{ 'is-app': appMode }">
+    <main class="m-fenggu" :class="{ 'is-app': useAppLayout }">
         <section class="m-kv">
             <img class="u-kv-logo" :src="asset('logo1.png')" alt="剑网3 缘起 × JX3BOX 魔盒" />
             <div class="m-kv-content a-enter">
@@ -87,7 +87,7 @@
                             class="u-dungeon-cover-copy"
                             :class="{
                                 'is-light': dungeonTab === 1,
-                                'is-scrolling': !appMode && coverInView && !coverCopyPlayed[dungeonTab],
+                                'is-scrolling': !useAppLayout && coverInView && !coverCopyPlayed[dungeonTab],
                                 'is-done': coverCopyPlayed[dungeonTab],
                             }"
                             :style="{ '--scroll-lines': scrollLines }"
@@ -152,9 +152,9 @@
             </div>
             <div class="m-play-panel" :class="{ 'is-trial': playTab === 1 }">
                 <template v-if="playTab === 0">
-                    <p v-if="appMode" class="u-play-intro">淬体成锋孤入境，百战铸甲踏云巅</p>
+                    <p v-if="useAppLayout" class="u-play-intro">淬体成锋孤入境，百战铸甲踏云巅</p>
                     <img :src="asset('p3-1.png')" alt="淬体成锋玩法" />
-                    <p v-if="appMode" class="u-play-description">
+                    <p v-if="useAppLayout" class="u-play-description">
                         主城寻找NPC柳沉舟，选择层数开启挑战！<br />淬剑珠还可通过行侠令、九宫奇卦活<br />跃度奖励、剑踪幻域获得，其中剑踪幻域获<br />得的淬剑珠与新玩法共享周上限。
                     </p>
                     <div class="m-play-actions">
@@ -232,20 +232,23 @@
 </template>
 
 <script>
+import { responsiveAppMode } from "@/utils/env";
+
 const ASSET_ROOT = "https://cdn.jx3box.com/design/topic/fenggubadao/";
 export default {
     name: "FengguBadaoIndex",
     props: { appMode: { type: Boolean, default: false } },
     data() {
+        const defaultTab = this.appMode || responsiveAppMode.value ? 1 : 0;
         return {
             sectTab: 0,
             sceneIndex: 0,
-            dungeonTab: this.appMode ? 1 : 0,
+            dungeonTab: defaultTab,
             bossIndex: -1,
             coverCopyPlayed: [false, false],
             coverInView: false,
-            playTab: this.appMode ? 1 : 0,
-            encounterTab: this.appMode ? 1 : 0,
+            playTab: defaultTab,
+            encounterTab: defaultTab,
             sectTabs: ["门派背景", "门派场景", "门派定位"],
             dungeonTabs: ["风雷刀谷·锻刀厅", "风雷刀谷·千雷殿"],
             playTabs: ["淬体成锋", "层层试炼"],
@@ -414,6 +417,9 @@ export default {
         };
     },
     computed: {
+        useAppLayout() {
+            return this.appMode || responsiveAppMode.value;
+        },
         activeDungeon() {
             return this.dungeons[this.dungeonTab];
         },

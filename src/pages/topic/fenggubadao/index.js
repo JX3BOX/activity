@@ -20,7 +20,7 @@ import en from "element-plus/es/locale/lang/en";
 import zhTw from "element-plus/es/locale/lang/zh-tw";
 import vi from "element-plus/es/locale/lang/vi";
 
-initAppEnv();
+initAppEnv({ appMaxWidth: 767 });
 
 // Hash 参数变化不会重载文档。环境切换需重新初始化路由、viewport 和页面外壳。
 const initialAppMode = isEmbeddedApp();
