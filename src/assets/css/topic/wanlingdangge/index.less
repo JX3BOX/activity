@@ -1025,7 +1025,7 @@ body {
     }
 }
 
-// 手机端仅重排非轮播内容；保留剧情切换和画质对比图的原有尺寸及裁切。
+// 万灵当歌手机布局：保留剧情切换与画质对比交互。
 @media (max-width: 767px) {
     html.topic-wanlingdangge .m-index.is-mobile {
         top: 0;
@@ -1246,25 +1246,73 @@ body {
             }
         }
 
-        // 剧情图片和切换容器保留原尺寸，仅为文字预留可滚动空间。
         .m-three {
-            min-height: calc(765px + 80vw);
-            .m-content .m-text-box {
-                padding: 16px 16px 145px;
-                overflow: hidden;
-                .u-logo {
-                    width: 180px;
-                    max-width: 100%;
-                    height: auto;
-                }
-                .u-desc {
+            height: auto;
+            min-height: 0;
+            .m-content {
+                position: relative;
+                top: auto;
+                left: auto;
+                right: auto;
+                display: grid;
+                width: 100%;
+                height: auto;
+                margin: 16px 0 0;
+                .m-content-box {
+                    position: relative;
+                    left: auto;
+                    right: auto;
+                    grid-area: 1 / 1;
                     width: 100%;
-                    max-height: calc(80vw - 220px);
-                    overflow-y: auto;
-                    overflow-wrap: anywhere;
-                    -webkit-overflow-scrolling: touch;
-                    font-size: 14px;
-                    line-height: 1.5;
+                    height: auto;
+                    &.fade-jq-leave-active { pointer-events: none; }
+                    &.fade-jq-enter-active { z-index: 1; }
+                    .u-bg-img {
+                        position: relative;
+                        display: block;
+                        width: 100%;
+                        height: auto;
+                    }
+                    .m-text-box {
+                        position: relative;
+                        top: auto;
+                        left: auto;
+                        display: grid;
+                        grid-template-columns: repeat(2, minmax(0, 1fr));
+                        gap: 12px;
+                        width: 100%;
+                        height: auto;
+                        padding: 16px;
+                        overflow: visible;
+                        .u-logo {
+                            grid-column: 1 / -1;
+                            width: 180px;
+                            max-width: 100%;
+                            height: auto;
+                        }
+                        .u-desc {
+                            grid-column: 1 / -1;
+                            width: 100%;
+                            max-height: none;
+                            overflow: visible;
+                            overflow-wrap: anywhere;
+                            font-size: 16px;
+                            line-height: 1.5;
+                        }
+                        .u-change {
+                            position: static;
+                            display: inline-flex;
+                            align-items: center;
+                            justify-content: center;
+                            width: 100%;
+                            height: 44px;
+                            img {
+                                width: 100%;
+                                height: 100%;
+                                object-fit: contain;
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -1277,13 +1325,43 @@ body {
                 right: auto;
                 width: 100%;
                 height: auto;
-                padding-top: calc(125vw + 24px);
+                padding-top: 0;
                 box-sizing: border-box;
                 .u-refresh-button {
-                    position: absolute;
-                    top: 0;
-                    left: 0;
+                    position: relative;
+                    top: auto;
+                    left: auto;
                     min-height: 44px;
+                }
+                .m-contrast {
+                    position: relative;
+                    width: 100%;
+                    height: 0;
+                    padding-bottom: 55.4254%;
+                    margin: 12px 0;
+                    &.m-left, &.m-right {
+                        top: auto;
+                        left: auto;
+                        right: auto;
+                    }
+                    .u-img {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        padding: 1.07% 0.83%;
+                        box-sizing: border-box;
+                    }
+                    .u-border {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        padding: 0;
+                        pointer-events: none;
+                    }
                 }
                 .u-desc {
                     position: relative;
