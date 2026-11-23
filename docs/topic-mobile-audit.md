@@ -38,6 +38,7 @@
 
 | 专题 | 改动文件 | 改动类型 | 人工核对 URL、宽度与预期 | 需真机 | 遗留问题 |
 | --- | --- | --- | --- | --- | --- |
+| 剑胆琴心 jiandanqinxin | `src/pages/topic/jiandanqinxin/Index.vue`、`src/assets/css/topic/jiandanqinxin/mobile.less`、本台账 | 首屏及各章节采用独立手机样式，重排心法、场景、首领与阵营控件，联名图独立收尾 | `/topic/jiandanqinxin/`，375/390/414/430px。核对首领六分页与左右箭头对齐，五张场景完整，切换剑踪幻域与阵营玩法，页尾联名图与卡片不重叠。320px 另核两行控件。 | 是 | 按原有箭头和分页切换；触摸、微信内表现及素材内嵌文字需真机核对。 |
 | 丝路风语 silufengyu | `src/pages/topic/silufengyu/Index.vue`、`src/assets/css/topic/silufengyu/mobile.less`、本台账 | 剧情和段氏图文分区，资料卡 3+2，段氏选项与首领 3+3，统一标题、正文和间距，颜值拼图分开展示 | `/topic/silufengyu/`，375/390/414/430px。核对剧情、段氏无压字，切换标签、展示图和首领，点报名及两行工具入口，检查地图和引擎自动切换。 | 是 | 部分素材内嵌字号仍受源图限制，触摸及微信内跳转待验证。 |
 
 ## 本轮逐专题执行记录
