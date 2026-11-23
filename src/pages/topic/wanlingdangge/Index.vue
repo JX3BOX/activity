@@ -217,7 +217,7 @@
                 webkit-playsinline
                 width="40%"
             ><source type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'></video>
-            <a href="" class="u-close-button" @click.prevent="closeDialog">
+            <a href="" class="u-close-button" aria-label="关闭视频" @click.prevent="closeDialog">
                 <i class="el-icon-close"></i>
             </a>
         </div>
@@ -381,6 +381,8 @@ export default {
             // cg用
             dialogPlay: false,
             videoUrl: "",
+            mobileDialogMedia: null,
+            mobileDialogScrollLock: null,
         };
     },
     directives: {
@@ -440,8 +442,59 @@ export default {
             },
         },
     },
-    watch: {},
+    watch: {
+        dialogPlay() {
+            this.syncDialogScrollLock();
+        },
+    },
     methods: {
+        syncDialogScrollLock() {
+            if (this.dialogPlay && this.mobileDialogMedia && this.mobileDialogMedia.matches) {
+                this.lockDialogScroll();
+            } else {
+                this.unlockDialogScroll();
+            }
+        },
+        lockDialogScroll() {
+            if (this.mobileDialogScrollLock) return;
+            const body = document.body;
+            const html = document.documentElement;
+            const properties = ["position", "top", "left", "right", "width", "overflow"];
+            const bodyStyles = properties.map((property) => ({
+                property,
+                value: body.style.getPropertyValue(property),
+                priority: body.style.getPropertyPriority(property),
+            }));
+            const scrollY = window.scrollY;
+            this.mobileDialogScrollLock = {
+                bodyStyles,
+                htmlOverflow: html.style.getPropertyValue("overflow"),
+                htmlOverflowPriority: html.style.getPropertyPriority("overflow"),
+                scrollY,
+            };
+            body.style.position = "fixed";
+            body.style.top = `-${scrollY}px`;
+            body.style.left = "0";
+            body.style.right = "0";
+            body.style.width = "100%";
+            body.style.overflow = "hidden";
+            html.style.overflow = "hidden";
+        },
+        unlockDialogScroll() {
+            const lock = this.mobileDialogScrollLock;
+            if (!lock) return;
+            lock.bodyStyles.forEach(({ property, value, priority }) => {
+                if (value) document.body.style.setProperty(property, value, priority);
+                else document.body.style.removeProperty(property);
+            });
+            if (lock.htmlOverflow) {
+                document.documentElement.style.setProperty("overflow", lock.htmlOverflow, lock.htmlOverflowPriority);
+            } else {
+                document.documentElement.style.removeProperty("overflow");
+            }
+            this.mobileDialogScrollLock = null;
+            window.scrollTo(0, lock.scrollY);
+        },
         init: function () {
             getTopic(KEY).then((res) => {
                 this.more = res.data.data.filter(i => i.subtype === 'more').map(i => {return {img: i.img, link: i.link,title: i.title}});
@@ -570,17 +623,62 @@ export default {
         this.init();
     },
     mounted: function () {
+        this.mobileDialogMedia = window.matchMedia("(max-width: 767px)");
+        this.mobileDialogMedia.addEventListener("change", this.syncDialogScrollLock);
         if(!this.isMobile) {
             window.addEventListener('scroll', this.setNav);
             this.resize();
             window.addEventListener('resize', this.resize);
         }
     },
+    beforeUnmount: function () {
+        this.mobileDialogMedia.removeEventListener("change", this.syncDialogScrollLock);
+        this.unlockDialogScroll();
+    },
 };
 </script>
 
 <style lang="less">
 @import "~@/assets/css/topic/wanlingdangge/index.less";
+@media (max-width: 767px) {
+    html.topic-wanlingdangge body {
+        min-width: 0;
+    }
+    html.topic-wanlingdangge .p-topic .m-cg-box {
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        height: 100dvh;
+        padding: calc(56px + env(safe-area-inset-top, 0px)) 16px calc(16px + env(safe-area-inset-bottom, 0px));
+        box-sizing: border-box;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+    }
+    html.topic-wanlingdangge .p-topic .m-cg-box .u-cg {
+        position: relative;
+        display: block;
+        top: auto;
+        left: auto;
+        right: auto;
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        max-height: calc(90vh - 56px);
+        max-height: calc(90dvh - 56px);
+    }
+    html.topic-wanlingdangge .p-topic .m-cg-box .u-close-button {
+        top: env(safe-area-inset-top, 0px);
+        right: env(safe-area-inset-right, 0px);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+    }
+}
 .p-topic-footer {
     position: relative;
     z-index: 9999 !important;
