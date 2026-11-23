@@ -43,4 +43,13 @@ export default {
 </script>
 <style lang="less">
 @import "~@/assets/css/topic/common/animation.less";
+
+@media screen and (max-width: 767px), screen and (max-device-width: 767px) {
+    .p-topic > header,
+    .p-topic > .c-header,
+    .p-topic > .c-footer,
+    .p-topic > .c-footer--v4 {
+        display: none;
+    }
+}
 </style>

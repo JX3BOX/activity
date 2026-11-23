@@ -23,4 +23,11 @@ body { margin: 0; min-width: 0; background: #433327; }
 html.v-app body { min-width: 0; margin: 0; }
 html.v-app .m-page { --u: min(1vw, 7.5px); max-width: 750px; margin: 0 auto; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+@media screen and (max-width: 767px), screen and (max-device-width: 767px) {
+    .p-cangsheng > .c-header,
+    .p-cangsheng > .c-footer,
+    .p-cangsheng > .c-footer--v4 {
+        display: none;
+    }
+}
 </style>
