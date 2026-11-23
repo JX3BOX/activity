@@ -209,6 +209,7 @@
 | 专题 | 改动文件 | 改动类型 | 待人工核对宽度 | 需真机 | 遗留问题 |
 | --- | --- | --- | --- | --- | --- |
 
+| 苍雪龙城 cangxuelongcheng | `docs/topic-mobile-audit.md` | 静态核查；未修改专题代码 | 375/390/414/430 | 是 | reflow 合并分支的 u-title、icon 未找到当前模板匹配；Index.vue 第70行有裸文本 / >，不在本轮允许修改范围 |
 <!-- topic-audit:cangxuelongcheng -->
 
 
