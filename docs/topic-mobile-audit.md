@@ -40,6 +40,7 @@
 | --- | --- | --- | --- | --- | --- |
 | 血战天策 xuezhantiance | `src/pages/topic/xuezhantiance/Index.vue`、`src/assets/css/topic/xuezhantiance/mobile.less`、本台账 | 理顺章节标题、首领卡、镇派整板、装备图文、成长和赠礼层级 | `/topic/xuezhantiance/`，375/390/414/430px。核对首屏衔接、五张首领卡，切换新旧镇派，逐件看装备文字，检查成长卡内边距和赠礼拼图。 | 是 | Safari、Chrome 和微信实机的点按及图像表现待核。 |
 | 苍雪龙城 cangxuelongcheng | `src/pages/topic/cangxuelongcheng/Index.vue`、`src/assets/css/topic/yuanqicangyun/mobile.less`、本台账 | 恢复首屏、门派、秘境首领、奇遇、玩法和页尾的专题排版 | `/topic/cangxuelongcheng/`，375/390/414/430px。切换两套心法和五位首领，箭头同排，三张宠物卡及页尾完整。 | 是 | 首领介绍中的图内小字仍受原图限制，触感待真机。 |
+| 安史之乱 anshizhiluan | `src/pages/topic/anshizhiluan/Index.vue`、`src/assets/css/topic/anshizhiluan/mobile.less`、本台账 | 合并首屏与题字，恢复章节背景，重组场景轮播、副本和资讯卡 | `/topic/anshizhiluan/`，375/390/414/430px。逐张切换五张场景图，两侧按钮与分页对齐，核对三张副本卡、双玩法入口和两列资讯。 | 是 | 微信内联视频、链接及触摸需实机核对。 |
 
 ## 手机专题专项排版复查
 

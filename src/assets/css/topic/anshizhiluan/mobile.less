@@ -1,0 +1,328 @@
+@media (max-width: 767px) {
+    #app [data-topic="anshizhiluan"] {
+        --anshi-gutter: clamp(16px, 4vw, 28px);
+        --anshi-width: 620px;
+        --anshi-border: rgba(253, 220, 157, 0.46);
+        color: #ffedc8;
+        padding-bottom: 0;
+        background: #611e07;
+
+        .p-animation,
+        .p-animations {
+            opacity: 1;
+            animation: none;
+        }
+
+        > .m-top {
+            padding-bottom: 42px;
+            background: linear-gradient(180deg, #291009, #611e07);
+
+            .m-mp4 {
+                display: block;
+                width: 100%;
+                height: auto;
+                min-height: 0;
+                max-height: none;
+                aspect-ratio: 16 / 9;
+                object-fit: contain;
+            }
+
+            .m-mark {
+                inset: 0;
+                background: linear-gradient(180deg, transparent 62%, #611e07 88%);
+                pointer-events: none;
+            }
+
+            .logo {
+                display: block;
+                inset: auto 0 8px;
+                width: min(70%, 340px);
+                height: auto;
+                margin: 0 auto;
+            }
+        }
+
+        > .m-content {
+            display: grid;
+            justify-items: center;
+            gap: 24px;
+            padding: 12px var(--anshi-gutter) 32px;
+            background: #611e07 url("@{kv_anshizhiluan}bg.png") center top / 100% 100% no-repeat;
+
+            > div {
+                width: min(100%, var(--anshi-width));
+                height: auto;
+                min-width: 0;
+            }
+
+            h2 > img {
+                display: block;
+                width: min(100%, 390px);
+                margin: 0 auto 12px;
+            }
+
+            .m-box {
+                width: 100%;
+                height: auto;
+                padding: 0;
+            }
+
+            .u-mobile-copy {
+                display: block;
+                font-size: 14px;
+                line-height: 1.7;
+
+                p {
+                    margin: 0;
+                }
+
+                p + p {
+                    margin-top: 6px;
+                }
+            }
+        }
+
+        .m-introduction,
+        .m-txt {
+            padding: 12px;
+            border-block: 1px solid var(--anshi-border);
+            background: rgba(54, 13, 4, 0.48);
+
+            > img {
+                display: none;
+            }
+        }
+
+        .m-one {
+            .m-box {
+                display: grid;
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 8px;
+                align-items: stretch;
+                padding: 8px;
+                background-size: cover;
+                background-position: center;
+            }
+
+            .u-mark {
+                inset: 0;
+                width: auto;
+                height: auto;
+                margin: 0;
+                background-size: cover;
+                opacity: 0.35;
+            }
+
+            .u-item {
+                z-index: 2;
+                display: grid;
+                width: 100%;
+                height: auto;
+                border: 1px solid var(--anshi-border);
+                background: #371307;
+
+                > img {
+                    grid-area: 1 / 1;
+                    display: block;
+                    width: 100%;
+                }
+
+                .u-img1 {
+                    position: relative;
+                    z-index: 1;
+                }
+
+                &:hover .u-img1 {
+                    opacity: 1;
+                }
+
+                &:focus-visible .u-img1 {
+                    opacity: 0;
+                }
+            }
+
+            .m-txt {
+                margin-top: 12px;
+            }
+        }
+
+        .m-two .m-box {
+            > .u-img {
+                display: none;
+            }
+
+            .u-carousel {
+                --anshi-carousel-height: 0px;
+                --anshi-page-controls: 44px;
+            }
+
+            .el-carousel__container {
+                padding-top: 58.4%; // Five source images share a 839 × 490 canvas.
+                background: #371307;
+            }
+
+            .u-item {
+                filter: none;
+
+                img {
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+                    object-fit: contain;
+                }
+            }
+
+            .el-carousel__arrow {
+                display: grid;
+                place-items: center;
+                width: 44px;
+                height: 44px;
+                top: calc((100% - var(--anshi-page-controls)) / 2);
+                background-color: rgba(49, 15, 5, 0.85);
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: 34px;
+                touch-action: manipulation;
+            }
+
+            .u-carousel--custom-arrows .el-carousel__arrow .el-icon {
+                opacity: 0;
+            }
+
+            .el-carousel__arrow--left {
+                left: 8px;
+                background-image: var(--anshi-arrow-left);
+            }
+
+            .el-carousel__arrow--right {
+                right: 8px;
+                background-image: var(--anshi-arrow-right);
+            }
+
+            .el-carousel__indicators--outside {
+                display: flex;
+                justify-content: center;
+                height: var(--anshi-page-controls);
+            }
+
+            .el-carousel__indicator--horizontal {
+                padding: 0;
+
+                button {
+                    display: grid;
+                    place-items: center;
+                    width: 44px;
+                    height: 44px;
+                    border-radius: 0;
+                    background: transparent;
+                    opacity: 1;
+                    touch-action: manipulation;
+
+                    &::after {
+                        content: "";
+                        width: 8px;
+                        height: 8px;
+                        border: 1px solid #ffdda0;
+                        border-radius: 50%;
+                    }
+                }
+
+                &.is-active button::after {
+                    background: #ffdda0;
+                }
+            }
+        }
+
+        .m-three .m-box {
+            padding-top: 52%;
+            background-size: 100% auto;
+
+            .m-sect {
+                position: static;
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                place-items: center;
+                gap: 12px;
+                width: 100%;
+                height: auto;
+                margin: 0;
+            }
+
+            .u-item {
+                display: block;
+                width: min(100%, 230px);
+                height: auto;
+                min-height: 44px;
+
+                img {
+                    display: block;
+                    width: 100%;
+                }
+            }
+        }
+
+        .m-four .m-box,
+        .m-five .m-box {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 8px;
+
+            .u-item {
+                display: block;
+                width: 100%;
+                height: auto;
+                min-height: 44px;
+                transition: none;
+
+                &:hover {
+                    transform: none;
+                }
+            }
+        }
+
+        .m-four .u-item {
+            background-position: left center;
+            background-repeat: no-repeat;
+            background-size: 200% 100%;
+
+            &::before {
+                content: "";
+                display: block;
+                padding-top: 106.84%; // Each 468 × 500 poster occupies half the source image.
+            }
+
+            &-1 {
+                background-position: right center;
+            }
+        }
+
+        .m-five .m-box {
+            max-width: 468px;
+
+            .u-item {
+                img {
+                    display: block;
+                    width: 100%;
+                }
+
+                &:last-child:nth-child(odd) {
+                    grid-column: 1 / -1;
+                    justify-self: center;
+                    width: calc((100% - 8px) / 2);
+                }
+            }
+        }
+
+        a:focus-visible,
+        .el-carousel button:focus-visible {
+            outline: 2px solid #ffdda0;
+            outline-offset: 2px;
+        }
+    }
+
+    @media (hover: hover) {
+        #app [data-topic="anshizhiluan"] .m-one .m-box .u-item:hover .u-img1 {
+            opacity: 0;
+        }
+    }
+}
