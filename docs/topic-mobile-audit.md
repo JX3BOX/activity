@@ -164,6 +164,7 @@
 | 专题 | 改动文件 | 改动类型 | 待人工核对宽度 | 需真机 | 遗留问题 |
 | --- | --- | --- | --- | --- | --- |
 
+| 烽火燎原 fenghuoliaoyuan | `docs/topic-mobile-audit.md` | 静态核查；未修改专题代码 | 375/390/414/430 | 是 | 人物选择仅依赖 mouseover；按要求未改交互，轮播及图片内文字需真机核查 |
 <!-- topic-audit:fenghuoliaoyuan -->
 
 
