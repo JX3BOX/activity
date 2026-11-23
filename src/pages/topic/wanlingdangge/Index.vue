@@ -20,7 +20,7 @@
                     <span class="u-down-text">向下滑动查看内容</span>
                 </div>
             </div>
-            <a href="" class="u-button" @click.prevent="playVideo('top')"></a>
+            <a href="" class="u-button" aria-label="播放视频" @click.prevent="playVideo('top')"></a>
             <img class="u-title-bottom" :src="top.titleBottom"/>
             <a href="https://www.jx3box.com/index/">
                 <img class="u-box-logo" :src="top.logo"/>
@@ -35,12 +35,12 @@
                     <div class="u-sect-logo"></div>
                     <div class="u-sect-desc" v-html="sectDesc"></div>
                 </div>
-                <a href="" class="u-video-button" @click.prevent="playVideo('top')"></a>
+                <a href="" class="u-video-button" aria-label="播放视频" @click.prevent="playVideo('top')"></a>
                 <a :href="sectUrl.bps" target="_blank" class="u-button u-introduction">门派攻略</a>
                 <a :href="sectUrl.marco" target="_blank" class="u-button u-macro">门派宏库</a>
             </div>
             <div class="m-content m-content-mobile p-animation" v-animate="'fadeInUpBig'" v-if="isMobile">
-                <a href="" class="u-video-button" @click.prevent="playVideo('top')"></a>
+                <a href="" class="u-video-button" aria-label="播放视频" @click.prevent="playVideo('top')"></a>
                 <a :href="sectUrl.bps" target="_blank" class="u-button u-introduction">门派攻略</a>
                 <a :href="sectUrl.marco" target="_blank" class="u-button u-macro">门派宏库</a>
             </div>
@@ -57,7 +57,7 @@
                             <img class="u-bg-img" :src="fb[item].bg" alt="">
                             <div v-show="currentFb === item" class="u-title-fb p-animation">{{fb[item].title}}</div>
                             <div class="u-desc">{{fb[item].desc}}</div>
-                            <a :href="fb[item].introductionUrl"  target="_blank">
+                            <a :href="fb[item].introductionUrl" :aria-label="fb[item].name" target="_blank">
                                 <img
                                    class="u-button-introduction "
                                    :src="fb[item].button"
@@ -173,7 +173,7 @@
                             <div class="m-face-rotate-box">
                             <div class="u-face">
                                 <a :href="item.link">
-                                    <img :src="item.img" alt="">
+                                    <img :src="isMobile && typeof item === 'string' ? item : item.img" alt="">
                                 </a>
                             </div>
                             </div>
@@ -499,6 +499,10 @@ export default {
             getTopic(KEY).then((res) => {
                 this.more = res.data.data.filter(i => i.subtype === 'more').map(i => {return {img: i.img, link: i.link,title: i.title}});
                 const face = res.data.data.filter(i => i.subtype === 'face').map(i =>  {return {img: i.img, link: i.link}});
+                if (this.isMobile && !face.length) {
+                    this.faceContent.face = [];
+                    return;
+                }
                 this.faceContent.face = Array.from(Array(10), (item, index) => {
                     const i =  index % face.length;
                     return face[i];
