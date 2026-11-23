@@ -477,6 +477,7 @@
 | 横刀断浪 hengdaoduanlang | `src/assets/css/topic/hengdaoduanlang/index.less` | 限桌面恢复 498px 分隔图和两侧 711px 留白所构成的 1920px 画布 | `/topic/hengdaoduanlang/`，1280/1440/1920px；查看各章节分隔图是否居中及章节衔接 | 未进行浏览器视觉验证；手机样式仍采用原有盒模型 |
 | 江湖无限 jianghuwuxian | `src/pages/topic/jianghuwuxian/Index.vue` | 限桌面恢复视频下方入口的 50px 顶部留白与 250px 内容高度 | `/topic/jianghuwuxian/`，1280/1440/1920px；查看六个竖向入口与下方副本标题间距 | 未进行浏览器视觉验证；第二板块的背景对齐仍需截图确认 |
 | 圣殿云起 shengdianyunqi | `src/pages/topic/shengdianyunqi/Index.vue` | 限桌面恢复视频下方入口的 50px 顶部留白与 250px 内容高度 | `/topic/shengdianyunqi/`，1280/1440/1920px；查看视频下方竖向入口与副本板块间距 | 未进行浏览器视觉验证；第二板块的背景对齐仍需截图确认 |
+| 五毒现世 wuduxianshi | `src/pages/topic/wuduxianshi/Index.vue` | 限桌面恢复五毒介绍、第四部分和底部图的内容盒高度 | `/topic/wuduxianshi/`，1280/1440/1920px；查看首段、第四部分和底部标志图 | 未进行浏览器视觉验证；第二部分与下一节的衔接需截图确认 |
 
 ### PC 待人工核对的静态候选
 

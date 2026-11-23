@@ -137,4 +137,15 @@ export default {
 
 <style lang="less">
 @import "~@/assets/css/topic/mobile/reflow.less";
+
+@media (min-width: 768px) {
+    .m-index[data-topic="wuduxianshi"] {
+        > .m-one,
+        > .m-four,
+        > .m-bottom {
+            // Their fixed artwork heights exclude the surrounding padding.
+            box-sizing: content-box;
+        }
+    }
+}
 </style>
