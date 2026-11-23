@@ -38,6 +38,7 @@
 
 | 专题 | 改动文件 | 改动类型 | 待人工核对宽度 | 需真机 | 遗留问题 |
 | --- | --- | --- | --- | --- | --- |
+| 藏剑山庄 cangjianshanzhuang | `src/pages/topic/cangjianshanzhuang/Index.vue`、`docs/topic-mobile-audit.md` | 秘境按钮背景防平铺；数据名称用于图片链接 | 375/390/414/430 | 是 | CMS 详情链接、轮播及图片可读性需人工验证；页面内 aria-label 不覆盖组件库内部控件 |
 <!-- topic-audit:cangjianshanzhuang -->
 
 

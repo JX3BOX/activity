@@ -14,7 +14,7 @@
 			<div class="u-text p-animation" v-animate="'fadeInDown'"></div>
 			<!-- 链接 -->
 			<div class="u-btn p-animation" v-animate="'fadeInDown'">
-				<a :href="item.link" :target="item.target" v-for="(item, i) in cangjian" :key="i" :class="`u-btn` + (i + 1)"></a>
+				<a :href="item.link" :target="item.target" v-for="(item, i) in cangjian" :key="i" :class="`u-btn` + (i + 1)" :aria-label="item.name"></a>
 			</div>
 		</div>
 		<!-- PVE -->
@@ -40,7 +40,7 @@
 					</div>
 					<!-- 按钮 -->
 					<div class="u-btnbox">
-						<a v-for="(item, i) in btn" :key="i" :href="item.link" class="u-btn" :class="`u-btn` + (i + 1)" target="_blank"></a>
+						<a v-for="(item, i) in btn" :key="i" :href="item.link" class="u-btn" :class="`u-btn` + (i + 1)" :aria-label="item.name" target="_blank"></a>
 					</div>
 				</div>
 			</div>
@@ -203,4 +203,10 @@ export default {
 
 <style lang="less">
 @import "~@/assets/css/topic/mobile/reflow.less";
+
+@media (max-width: 767px) {
+    #app .topic-mobile-layout[data-topic="cangjianshanzhuang"] .u-tab-block .u-img .u-more {
+        background-repeat: no-repeat;
+    }
+}
 </style>
