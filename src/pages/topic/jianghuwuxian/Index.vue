@@ -197,6 +197,11 @@ export default {
 @import "~@/assets/css/topic/mobile/reflow.less";
 
 @media (min-width: 768px) {
+    .m-index[data-topic="jianghuwuxian"] .m-top .u-mohe {
+        // The decorative image is 515px wide, not 4515px.
+        width: 515px;
+    }
+
     .m-index[data-topic="jianghuwuxian"] .m-video > .u-btn {
         // The 50px top inset is in addition to the 250px button artwork.
         box-sizing: content-box;
