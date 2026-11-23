@@ -77,6 +77,7 @@
 
 | 专题 | 改动文件 | 改动类型 | 待人工核对宽度 | 需真机 | 遗留问题 |
 | --- | --- | --- | --- | --- | --- |
+| 安史之乱 anshizhiluan | `src/pages/topic/anshizhiluan/Index.vue`、`docs/topic-mobile-audit.md` | 首屏视频补充 webkit 内联播放属性 | 375/390/414/430 | 是 | 轮播卡片、CMS 内容及 iOS / 微信播放需验证 |
 <!-- topic-audit:anshizhiluan -->
 
 
