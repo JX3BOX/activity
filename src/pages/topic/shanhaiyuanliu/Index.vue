@@ -79,13 +79,16 @@
                 <!--            右侧区域-->
                 <div
                     id="three-box"
+                    :class="{ 'u-mobile-reader': useMobileLayout }"
                     :style="{ backgroundImage: `url(${imgurl}2/bg_2_2.jpg)` }"
                     class="u-right"
                     @scroll="uRightScroll"
                 >
                     <div class="u-content">
                         <img :src="imgurl + '2/1.png'" />
+                        <a v-if="useMobileLayout" class="u-map-original" :href="imgurl + '2/1.png'" target="_blank" rel="noopener">查看第一张原图</a>
                         <img :src="imgurl + '2/2.png'" />
+                        <a v-if="useMobileLayout" class="u-map-original" :href="imgurl + '2/2.png'" target="_blank" rel="noopener">查看第二张原图</a>
                     </div>
 
                     <!--                首次提醒-->
@@ -97,14 +100,27 @@
         </transition>
         <!--区域四内容-->
         <transition name="fade">
-            <div class="m-block m-four" :style="{ backgroundImage: `url(${imgurl}3/${fourActive}.jpg)` }">
+            <div class="m-block m-four" :style="useMobileLayout ? null : { backgroundImage: `url(${bossArtwork})` }">
                 <div class="u-content">
                     <!--                    底部区域图标及切换区域-->
                     <!--                        百强图片链接-->
-                    <img :src="`${imgurl}3/jdt.jpg`" class="u-jdt-img" @click="jdtClick" v-if="fourActive !== 6" />
+                    <img :src="`${imgurl}3/jdt.jpg`" class="u-jdt-img" @click="jdtClick" v-if="fourActive !== 6 && !useMobileLayout" />
                     <div class="u-bottom">
-                        <img :src="`${imgurl}3/icon_2.png`" class="u-img" v-if="fourActive !== 6" />
-                        <div class="u-bottom-page">
+                        <img :src="`${imgurl}3/icon_2.png`" class="u-img" alt="会战弓月城" v-if="fourActive !== 6 || useMobileLayout" />
+                        <div v-if="useMobileLayout" class="u-bottom-page" aria-label="选择秘境">
+                            <button
+                                v-for="item in 6"
+                                :key="item"
+                                type="button"
+                                class="u-boss-tab"
+                                :aria-label="item === 6 ? '獭山岛' : `会战弓月城 ${item} 号首领`"
+                                :aria-pressed="fourActive === item"
+                                @click="handleTabClick(item)"
+                            >
+                                <img :src="`${imgurl}3/tab/${item}.png`" alt="" />
+                            </button>
+                        </div>
+                        <div v-else class="u-bottom-page">
                             <img
                                 v-for="item in 6"
                                 :key="item"
@@ -118,6 +134,17 @@
                             />
                         </div>
                     </div>
+                    <div v-if="useMobileLayout" class="u-boss-panel">
+                        <transition name="mobile-boss">
+                            <a :key="fourActive" class="u-boss-preview u-mobile-reader" :href="bossArtwork" target="_blank" rel="noopener">
+                                <img :src="bossArtwork" alt="当前秘境介绍" width="3840" height="1701" />
+                                <span>查看原图，阅读完整介绍</span>
+                            </a>
+                        </transition>
+                    </div>
+                    <button v-if="useMobileLayout && fourActive !== 6" type="button" class="u-boss-rank" @click="jdtClick">
+                        <img :src="`${imgurl}3/jdt.jpg`" alt="秘境百强榜" />
+                    </button>
                 </div>
             </div>
         </transition>
@@ -131,7 +158,13 @@
                             :src="imgurl + '4/tab/1.png'"
                             :style="{ opacity: getTabOpacity5(1) }"
                             class="u-img"
+                            alt="武学改革"
+                            :role="useMobileLayout ? 'button' : null"
+                            :tabindex="useMobileLayout ? 0 : null"
+                            :aria-pressed="useMobileLayout ? selectedTab === 1 : null"
                             @click="selectTab(1)"
+                            @keydown.enter="selectTab(1)"
+                            @keydown.space.prevent="selectTab(1)"
                             @mouseenter="hoverTab5 = 1"
                             @mouseleave="hoverTab5 = null"
                         />
@@ -139,18 +172,32 @@
                             :src="imgurl + '4/tab/2.png'"
                             :style="{ opacity: getTabOpacity5(2) }"
                             class="u-img"
+                            alt="表现升级"
+                            :role="useMobileLayout ? 'button' : null"
+                            :tabindex="useMobileLayout ? 0 : null"
+                            :aria-pressed="useMobileLayout ? selectedTab === 2 : null"
                             @click="selectTab(2)"
+                            @keydown.enter="selectTab(2)"
+                            @keydown.space.prevent="selectTab(2)"
                             @mouseenter="hoverTab5 = 2"
                             @mouseleave="hoverTab5 = null"
                         />
                     </div>
                     <div class="u-line"></div>
                     <div class="u-right">
-                        <div ref="pageContainer" class="u-right-box">
+                        <p v-if="useMobileLayout" class="u-reader-hint">左右滑动查看完整图片</p>
+                        <div
+                            ref="pageContainer"
+                            class="u-right-box"
+                            :class="{ 'u-mobile-reader': useMobileLayout }"
+                            :tabindex="useMobileLayout ? 0 : null"
+                            :aria-label="useMobileLayout ? '更新详情图' : null"
+                        >
                             <img
                                 :key="`${selectedTab}_${currentPage}`"
                                 :src="`${imgurl}4/${selectedTab}_${currentPage}.png`"
                                 class="u-right-img"
+                                @load="setReadingImageWidth"
                             />
                         </div>
                         <div class="pagination">
@@ -158,6 +205,11 @@
                                 v-for="page in totalPages[selectedTab - 1]"
                                 :key="page"
                                 :class="['page-item', { active: currentPage === page }]"
+                                :role="useMobileLayout ? 'button' : null"
+                                :tabindex="useMobileLayout ? 0 : null"
+                                :aria-current="useMobileLayout && currentPage === page ? 'page' : null"
+                                @keydown.enter="handlePageClick(page)"
+                                @keydown.space.prevent="handlePageClick(page)"
                                 @click="handlePageClick(page)"
                             >
                                 {{ page }}
@@ -220,12 +272,20 @@ export default {
             //竖屏下
             startTime: null,
             isMobile: false,
+            useMobileLayout: false,
         };
     },
 
-    computed: {},
+    computed: {
+        bossArtwork() {
+            return `${this.imgurl}3/${this.fourActive}.jpg`;
+        },
+    },
     watch: {},
     mounted() {
+        this.mobileLayoutQuery = window.matchMedia("(max-width: 767px)");
+        this.syncMobileLayout(this.mobileLayoutQuery);
+        this.mobileLayoutQuery.addEventListener("change", this.syncMobileLayout);
         // 获取 m-index 元素并添加鼠标滚轮事件监听
         this.mIndexElement = document.querySelector(".m-index");
         if (this.mIndexElement) {
@@ -240,12 +300,19 @@ export default {
     },
 
     beforeUnmount() {
+        this.mobileLayoutQuery?.removeEventListener("change", this.syncMobileLayout);
         // 移除 m-index 元素上的鼠标滚轮事件监听
         if (this.mIndexElement) {
             this.mIndexElement.removeEventListener("wheel", this.handleWheel);
         }
     },
     methods: {
+        syncMobileLayout(event) {
+            this.useMobileLayout = event.matches;
+        },
+        setReadingImageWidth({ currentTarget: image }) {
+            image.style.setProperty("--reading-width", `${Math.round(image.naturalWidth * 0.45)}px`);
+        },
         //屏幕滑动
         //手指按下屏幕
         handleTouchstart(event) {
@@ -255,6 +322,7 @@ export default {
         },
         //手指离开屏幕
         handleTouchend(event) {
+            if (this.useMobileLayout && event.target.closest(".u-mobile-reader")) return;
             const endTime = Date.now();
             const endX = event.changedTouches[0].clientX;
             const endY = event.changedTouches[0].clientY;
@@ -443,6 +511,10 @@ export default {
         // handleTabClick 方法
         handleTabClick(tabIndex) {
             if (this.fourActive === tabIndex) return;
+            if (this.useMobileLayout) {
+                this.fourActive = tabIndex;
+                return;
+            }
 
             // 获取当前背景容器元素
             const fourContainer = document.querySelector(".m-four");
@@ -528,6 +600,11 @@ export default {
         },
         handlePageClick(page, isReload = false) {
             if (this.currentPage === page && !isReload) return;
+            if (this.useMobileLayout) {
+                this.currentPage = page;
+                if (this.$refs.pageContainer) this.$refs.pageContainer.scrollLeft = 0;
+                return;
+            }
 
             // 获取当前图片元素
             const currentImg = this.$refs.pageContainer.querySelector(".u-right-img");
