@@ -199,6 +199,13 @@ export default {
 <style lang="less">
 @import "~@/assets/css/topic/mobile/reflow.less";
 
+@media (min-width: 768px) {
+    .m-index[data-topic="shengdianyunqi"] .m-video > .u-btn {
+        // The 50px top inset is in addition to the 250px button artwork.
+        box-sizing: content-box;
+    }
+}
+
 @media (max-width: 767px) {
     #app .topic-mobile-layout[data-topic="shengdianyunqi"] .u-tab-block .u-img .u-more {
         background-repeat: no-repeat;
