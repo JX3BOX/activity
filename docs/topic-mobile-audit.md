@@ -524,3 +524,4 @@
 | 专题 | 改动文件 | 改动类型 | 人工核对 URL / 宽度与预期 | 需真机 | 遗留问题 |
 | --- | --- | --- | --- | --- | --- |
 | 北天药宗详情 beitianyaozong | `src/assets/css/topic/beitianyaozong/yaozong.less`、`docs/topic-mobile-audit.md` | 详情根容器 margin-top 清零 | `/topic/beitianyaozong/#/yaozong`；375/390/414/430px，手机 UA 刷新，首屏或详情内容顶部不保留公共头空白 | 是 | 需截图检查首屏裁切、安全区及原有内容布局 |
+| 圣殿云起详情 shengdianyunqi | `src/assets/css/topic/shengdianyunqi/info.less`、`docs/topic-mobile-audit.md` | 详情容器 padding-top 清零 | `/topic/shengdianyunqi/#/shengdian`；375/390/414/430px，手机 UA 刷新，首屏或详情内容顶部不保留公共头空白 | 是 | 需截图检查首屏裁切、安全区及原有内容布局 |
