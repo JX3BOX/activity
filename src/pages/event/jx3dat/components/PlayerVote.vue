@@ -1,5 +1,6 @@
 <script setup>
 import { shallowRef, watch } from "vue";
+import User from "@jx3box/jx3box-common/js/user";
 import { showAvatar } from "@jx3box/jx3box-common/js/utils";
 import { __Root } from "@/utils/config";
 import { useVoting } from "@/composables/useVoting";
@@ -17,6 +18,11 @@ watch(items, (loadedItems) => {
 }, { immediate: true });
 
 const defaultAvatar = showAvatar("");
+
+function handleVote(item) {
+    if (!User.isLogin()) return User.toLogin();
+    return submit(item);
+}
 
 function getWorkUrl({ tag, sub_title: workId }) {
     if (tag === "dbm/pkg" && /^[1-9]\d*$/.test(workId)) {
@@ -72,7 +78,7 @@ function onAvatarError(event) {
                         :class="{ 'is-voted': votedIds.includes(String(item.id)) }"
                         :disabled="voting !== null || votedIds.includes(String(item.id))"
                         :aria-label="`${votedIds.includes(String(item.id)) ? '已投票' : '投票'}：${item.title}`"
-                        @click="submit(item)"
+                        @click="handleVote(item)"
                     >
                         {{ votedIds.includes(String(item.id)) ? "已投票" : "投票" }}
                     </button>
