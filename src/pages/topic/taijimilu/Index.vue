@@ -204,4 +204,11 @@ export default {
 
 <style lang="less">
 @import "~@/assets/css/topic/mobile/reflow.less";
+
+@media (min-width: 768px) {
+    .m-index[data-topic="taijimilu"] .secret_land .content .introduce {
+        // The inner 12:7 image height excludes the vertical padding.
+        box-sizing: content-box;
+    }
+}
 </style>
