@@ -46,6 +46,7 @@
 | 巴蜀风云 bashufengyun | `src/pages/topic/bashufengyun/Index.vue`、`src/assets/css/topic/bashufengyun/mobile.less`、本台账 | 恢复心法图文叠层，两组轮播全宽等比，减小可见箭头 | `/topic/bashufengyun/`，375/390/414/430px。两组轮播逐张切到边界再回退，两箭头同排且靠近画面，核对心法和龙渊泽成组。 | 是 | 沿用箭头切换，原轮播没有滑动与自动播放；外嵌视频及触摸待真机。 |
 | 五毒现世 wuduxianshi | `src/pages/topic/wuduxianshi/Index.vue`、`src/assets/css/topic/wuduxianshi/index.less`、本台账 | 约束徽记和荻花主图，六工具两列，恢复剧情叠层及更多入口，原图正文改为可换行文字 | `/topic/wuduxianshi/`，375/390/414/430px。点职业攻略、荻花主图及六个工具，确认标题方向、入口大小和 IF 线图文完整。 | 是 | 微信和 Safari 的外链跳转待真机。 |
 | 藏剑山庄 cangjianshanzhuang | `src/pages/topic/cangjianshanzhuang/Index.vue`、`src/pages/topic/cangjianshanzhuang/cangjian/index.vue`、本台账 | 整理首页视频、秘境图、按钮与资料轮播，按 CMS 匹配手机签图，适配详情五项内容 | `/topic/cangjianshanzhuang/` 和 `/topic/cangjianshanzhuang/#/cangjian`，375/390/414/430px。点剑冢与荻花宫后山，核对签图、图片和首领入口，再核对详情菜单与背景、武器翻页。 | 是 | 桌面固定签图顺序与当前 CMS 反序，列为桌面遗留问题。B 站内嵌播放和真机跳转待核。 |
+| 圣殿云起 shengdianyunqi | `src/pages/topic/shengdianyunqi/Index.vue`、`src/assets/css/topic/shengdianyunqi/info.less`、本台账 | 整理首页导览、秘境标签、归墟奖励图和阵营图，修复详情直达视口及首领按钮 | `/topic/shengdianyunqi/` 和 `/topic/shengdianyunqi/#/shengdian`，375/390/414/430px。点两个秘境标签，核对图和单个资料入口。直达详情及 `?tab=2`、`?tab=3`，核对背景、首领翻页、掉落图和页面宽度。 | 是 | 内嵌视频已核容器，实际播放、真机触控及早期 Safari 的详情直达待确认。 |
 
 ## 手机专题专项排版复查
 
