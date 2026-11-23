@@ -43,6 +43,7 @@
 | 安史之乱 anshizhiluan | `src/pages/topic/anshizhiluan/Index.vue`、`src/assets/css/topic/anshizhiluan/mobile.less`、本台账 | 合并首屏与题字，恢复章节背景，重组场景轮播、副本和资讯卡 | `/topic/anshizhiluan/`，375/390/414/430px。逐张切换五张场景图，两侧按钮与分页对齐，核对三张副本卡、双玩法入口和两列资讯。 | 是 | 微信内联视频、链接及触摸需实机核对。 |
 | 日月明尊 riyuemingzun | `src/pages/topic/riyuemingzun/index.js`、`src/assets/css/topic/riyuemingzun/index.less`、本台账 | 补普通网页 viewport，重排章节导航、抓马标签、首领和活动卡 | `/topic/riyuemingzun/`，375/390/414/430px。刷新后页面无左右拖动，点章导航、三组抓马标签及首领头像，检查正文与题字可读性。 | 是 | 微信内嵌页面和外链仍需实机核对。 |
 | 剑湖神宫 jianhushengong | `src/pages/topic/jianhushengong/Index.vue`、`src/assets/css/topic/jianhushengong/index.less`、本台账 | 统一题字画幅，资料正文底板随内容延展，五位首领头像与详情成组 | `/topic/jianhushengong/`，375/390/414/430px。点五位首领确认选中态、图和正文同步；读剑湖宫与觅宝奇缘完整段落，检查原首屏。 | 是 | 真机点击和外链待核。 |
+| 巴蜀风云 bashufengyun | `src/pages/topic/bashufengyun/Index.vue`、`src/assets/css/topic/bashufengyun/mobile.less`、本台账 | 恢复心法图文叠层，两组轮播全宽等比，减小可见箭头 | `/topic/bashufengyun/`，375/390/414/430px。两组轮播逐张切到边界再回退，两箭头同排且靠近画面，核对心法和龙渊泽成组。 | 是 | 沿用箭头切换，原轮播没有滑动与自动播放；外嵌视频及触摸待真机。 |
 
 ## 手机专题专项排版复查
 
