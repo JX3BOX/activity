@@ -530,3 +530,10 @@
 | 日月明尊 riyuemingzun | `src/assets/css/topic/riyuemingzun/index.less`、`docs/topic-mobile-audit.md` | 首屏 margin-top 清零，含设备宽度兜底 | `/topic/riyuemingzun/`；375/390/414/430px，手机 UA 刷新，首屏或详情内容顶部不保留公共头空白 | 是 | 需截图检查首屏裁切、安全区及原有内容布局 |
 | 血战天策 xuezhantiance | `src/assets/css/topic/xuezhantiance/index.less`、`docs/topic-mobile-audit.md` | 专题外壳 margin-top 清零 | `/topic/xuezhantiance/`；375/390/414/430px，手机 UA 刷新，首屏或详情内容顶部不保留公共头空白 | 是 | 需截图检查首屏裁切、安全区及原有内容布局 |
 | 藏剑山庄 cangjianshanzhuang | `src/pages/topic/cangjianshanzhuang/index.js`、`src/assets/css/topic/cangjianshanzhuang/common.less`、`docs/topic-mobile-audit.md` | 专题根类隔离下 body padding-top 清零 | `/topic/cangjianshanzhuang/ 和 #/cangjian`；375/390/414/430px，手机 UA 刷新，首屏或详情内容顶部不保留公共头空白 | 是 | 需截图检查首屏裁切、安全区及原有内容布局 |
+
+| 恢复补丁 | 当前状态 |
+| --- | --- |
+| `/Users/xuan/Desktop/jx3box/activity-mobile-pre-clean-20261123.patch` 和 `activity-mobile-pre-clean-20261123-rebased.patch` | 原文件保留；本轮提交与其中部分改动重叠，旧版不能直接应用到当前 HEAD。 |
+| `/Users/xuan/Desktop/jx3box/activity-mobile-pre-clean-20261123-header-rebased.patch` | 已针对本轮提交重算并通过 `git apply --check`。仅为历史改动的恢复副本，未经重新审查不得当成当前适配方案；其中圣殿云起详情的历史 `padding-top:16px` 会覆盖本轮的 0。 |
+
+专题总入口此前暂缓，未修改其 `body` 的 1280px 和顶部占位；普通手机页面可能仍有页头预留空间。苍生铸世手机分支已通过现有 `v-app` 样式清除首屏占位，未重复修改。
