@@ -1,0 +1,5 @@
+"use strict";(Array.isArray(self["webpackChunkactivity"])?self["webpackChunkactivity"]:self["webpackChunkactivity"]=[]).push([[3174],{13174(t,e,r){r.r(e);var n=r(26551),i=r(63900),a=r(32053);r(72223),r(51537);
+/*!
+ * (C) Ionic http://ionicframework.com - MIT License
+ */
+const c=(t,e,r,c,s)=>{const o=t.ownerDocument.defaultView;let u=(0,i.i)(t);const l=t=>{const e=50,{startX:r}=t;return u?r>=o.innerWidth-e:r<=e},h=t=>u?-t.deltaX:t.deltaX,d=t=>u?-t.velocityX:t.velocityX,k=r=>(u=(0,i.i)(t),l(r)&&e()),y=t=>{const e=h(t),r=e/o.innerWidth;c(r)},v=t=>{const e=h(t),r=o.innerWidth,i=e/r,a=d(t),c=r/2,u=a>=0&&(a>.2||e>c),l=u?1-i:i,k=l*r;let y=0;if(k>5){const t=k/Math.abs(a);y=Math.min(t,540)}s(u,i<=0?.01:(0,n.e)(0,i,.9999),y)};return(0,a.createGesture)({el:t,gestureName:"goback-swipe",gesturePriority:101,threshold:10,canStart:k,onStart:r,onMove:y,onEnd:v})};r.d(e,["createSwipeBackGesture",0,c])}}]);
