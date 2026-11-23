@@ -573,3 +573,4 @@
 | 五毒现世 | `src/assets/css/topic/wuduxianshi/index.less`、本台账 | 首屏背景按原图比例贴顶，品牌、题字及竖标按原构图叠放。 | `/topic/wuduxianshi/`，375/390/414/430px。首屏保留三张原素材，标识大小协调。 | 是 |
 | 剑湖神宫 | `src/assets/css/topic/jianhushengong/index.less`、本台账 | 恢复首屏原画幅，重定位联名标识和资料片标题。 | `/topic/jianhushengong/`，375/390/414/430px。背景自带的主标题完整，联名标识与下方标题分别贴合原画。 | 是 |
 | 藏剑山庄 | `src/pages/topic/cangjianshanzhuang/Index.vue`、本台账 | 按 1920×1200 原画幅贴顶显示背景，标题和魔盒字图分别按素材比例叠放。 | `/topic/cangjianshanzhuang/`，375/390/414/430px。标题和魔盒字图留在同一画面内，不产生独立高占位。 | 是 |
+| 圣殿云起 | `src/pages/topic/shengdianyunqi/Index.vue`、本台账 | 将背景层及三张字图合在同一首屏画幅，去掉背景层单独占高。 | `/topic/shengdianyunqi/`，375/390/414/430px。首屏只用一个背景画幅，品牌、标题和魔盒字图完整显示。 | 是 |

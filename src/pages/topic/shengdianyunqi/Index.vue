@@ -207,6 +207,58 @@ export default {
 }
 
 @media (max-width: 767px) {
+    #app .topic-mobile-layout[data-topic="shengdianyunqi"] {
+        > .m-top-png {
+            // 背景与标题共用首屏画幅，避免背景层另占一屏。
+            display: none;
+        }
+
+        > .m-top {
+            position: relative;
+            display: block;
+            min-height: 0;
+            height: 82.4479vw;
+            padding: 0;
+            background: url("@{kv_shengdianyunqi}top.jpg") center top / 100% 100% no-repeat;
+
+            > .u-logo,
+            > .u-title,
+            > .u-mohe {
+                position: absolute;
+                inset: auto;
+                margin: 0;
+                background-position: center;
+                background-size: contain;
+            }
+
+            > .u-logo {
+                top: 7.6%;
+                left: 19.3%;
+                width: 14%;
+                height: 12.6%;
+            }
+
+            > .u-title,
+            > .u-mohe {
+                right: 0;
+                left: 0;
+                margin: 0 auto;
+            }
+
+            > .u-title {
+                top: 43.6%;
+                width: 69.4%;
+                height: 17.3%;
+            }
+
+            > .u-mohe {
+                top: 60.9%;
+                width: 22.6%;
+                height: 6.57%;
+            }
+        }
+    }
+
     #app .topic-mobile-layout[data-topic="shengdianyunqi"] .u-tab-block .u-img .u-more {
         background-repeat: no-repeat;
     }
