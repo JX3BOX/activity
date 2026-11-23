@@ -474,3 +474,4 @@
 | --- | --- | --- | --- | --- |
 | 北天药宗 beitianyaozong | `src/assets/css/topic/beitianyaozong/index.less` | 限桌面恢复指定内容盒、原始标题比例和章节间距 | `/topic/beitianyaozong/`，1280/1440/1920px；对照介绍图、视频下方间距、雷雨大泽选项及更多玩法标题 | 未进行浏览器视觉验证；原素材及固定背景对齐需人工确认 |
 | 藏剑山庄 cangjianshanzhuang | `src/assets/css/topic/cangjianshanzhuang/index.less` | 限桌面恢复标题和入口区域的内容盒间距 | `/topic/cangjianshanzhuang/`，1280/1440/1920px；查看两个章节标题与内容、视频下方入口的间距 | 未进行浏览器视觉验证；保留已明确设为 `border-box` 的卷轴和轮播容器 |
+| 横刀断浪 hengdaoduanlang | `src/assets/css/topic/hengdaoduanlang/index.less` | 限桌面恢复 498px 分隔图和两侧 711px 留白所构成的 1920px 画布 | `/topic/hengdaoduanlang/`，1280/1440/1920px；查看各章节分隔图是否居中及章节衔接 | 未进行浏览器视觉验证；手机样式仍采用原有盒模型 |
