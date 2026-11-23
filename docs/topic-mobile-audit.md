@@ -51,6 +51,7 @@
 
 | 专题 | 改动文件 | 改动类型 | 待人工核对宽度 | 需真机 | 遗留问题 |
 | --- | --- | --- | --- | --- | --- |
+| 圣殿云起 shengdianyunqi | `src/pages/topic/shengdianyunqi/Index.vue`、`docs/topic-mobile-audit.md` | 秘境按钮背景防平铺；数据名称用于图片链接 | 375/390/414/430 | 是 | 详情子路由、CMS 链接与轮播表现需人工验证 |
 <!-- topic-audit:shengdianyunqi -->
 
 
