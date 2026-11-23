@@ -47,10 +47,16 @@
             <div class="m-factions-box p-animation" v-animate="'pulse'">
                 <span
                     :key="old ? old + 'o' : old + 'n'"
+                    ref="factionsToggle"
                     :class="`u-img u-button p-animation flipInY`"
+                    role="button"
+                    tabindex="0"
+                    :aria-label="old ? '查看新镇派' : '查看旧镇派'"
                     @click="old = !old"
+                    @keydown.enter.prevent="switchFactionsFromKeyboard"
+                    @keydown.space.prevent="switchFactionsFromKeyboard"
                 >
-                    <img :src="`${imgPath}/p2/c-${old ? 'n' : 'o'}-factions.svg`" />
+                    <img :src="`${imgPath}/p2/c-${old ? 'n' : 'o'}-factions.svg`" alt="" />
                 </span>
                 <span class="u-img p-animation pulse" :key="old ? 'o' : 'n'">
                     <img :src="`${imgPath}/p2/${old ? 'old' : 'new'}-factions.png`" />
@@ -308,6 +314,10 @@ export default {
         },
     },
     methods: {
+        switchFactionsFromKeyboard() {
+            this.old = !this.old;
+            this.$nextTick(() => this.$refs.factionsToggle?.focus());
+        },
         init: function () {
             getTopic(KEY).then((res) => {
                 this.raw = res.data.data;
@@ -338,4 +348,5 @@ export default {
 
 <style lang="less">
 @import "~@/assets/css/topic/mobile/reflow.less";
+@import "~@/assets/css/topic/xuezhantiance/mobile.less";
 </style>

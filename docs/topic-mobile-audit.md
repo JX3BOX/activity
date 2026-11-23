@@ -32,6 +32,14 @@
 | 排除 | 日月明尊 riyuemingzun | — | 独立 App 适配 | — | — | 按现有范围不改 |
 | 排除 | 专题总入口 index | — | P0 暂缓 | — | — | 已按用户要求暂缓入口调整 |
 
+## 第二轮手机专题排版复查
+
+兼容底线为 iOS 15+ / Android Chrome 100+，微信内置浏览器需真机核对。
+
+| 专题 | 改动文件 | 改动类型 | 人工核对 URL、宽度与预期 | 需真机 | 遗留问题 |
+| --- | --- | --- | --- | --- | --- |
+| 血战天策 xuezhantiance | `src/pages/topic/xuezhantiance/Index.vue`、`src/assets/css/topic/xuezhantiance/mobile.less`、本台账 | 理顺章节标题、首领卡、镇派整板、装备图文、成长和赠礼层级 | `/topic/xuezhantiance/`，375/390/414/430px。核对首屏衔接、五张首领卡，切换新旧镇派，逐件看装备文字，检查成长卡内边距和赠礼拼图。 | 是 | Safari、Chrome 和微信实机的点按及图像表现待核。 |
+
 ## 手机专题专项排版复查
 
 以下专题的兼容底线为 iOS 15+ / Android Chrome 100+。桌面按专题在 1440px 或 1600px 对照，真机项包含 iOS Safari、Android Chrome 和微信内置浏览器。历史风险快照保留，当前状态以专项记录为准。
