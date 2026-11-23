@@ -210,21 +210,20 @@ export default {
         startArrowShake() {
             let count = 0;
             this.shakeTimer = setInterval(() => {
-                const leftArrows = document.querySelectorAll(".el-carousel__arrow--left");
-                const rightArrows = document.querySelectorAll(".el-carousel__arrow--right");
+                const leftArrows = this.$el.querySelectorAll(".el-carousel__arrow--left");
+                const rightArrows = this.$el.querySelectorAll(".el-carousel__arrow--right");
 
+                const isMobile = window.matchMedia("(max-width: 767px)").matches;
                 const pos = count % 2 === 0 ? "8px" : "0px";
 
                 leftArrows.forEach((left) => {
-                    left.style.cssText = `
-        transform: translateY(-50%) rotate(180deg) translateX(-${pos}) !important;
-      `;
+                    if (isMobile) return left.style.removeProperty("transform");
+                    left.style.setProperty("transform", `translateY(-50%) rotate(180deg) translateX(-${pos})`, "important");
                 });
 
                 rightArrows.forEach((right) => {
-                    right.style.cssText = `
-        transform: translateY(-50%) translateX(-${pos}) !important;
-      `;
+                    if (isMobile) return right.style.removeProperty("transform");
+                    right.style.setProperty("transform", `translateY(-50%) translateX(-${pos})`, "important");
                 });
 
                 count++;
@@ -240,11 +239,12 @@ export default {
     },
     mounted() {
         this.init();
-        setTimeout(() => {
+        this.arrowShakeDelay = setTimeout(() => {
             this.startArrowShake();
         }, 500);
     },
     beforeUnmount() {
+        clearTimeout(this.arrowShakeDelay);
         clearInterval(this.shakeTimer);
     },
 };
@@ -257,84 +257,88 @@ export default {
     border: none !important;
     outline: none !important;
     border-radius: 0 !important;
+    background-image: url("@{kv_yixueshangyang}arrow.png") !important;
     background-repeat: no-repeat !important;
     background-position: center !important;
-    background-size: contain !important;
+    background-size: var(--yixueshangyang-arrow-size, contain) !important;
     opacity: 1 !important;
     z-index: 9 !important;
-    top: 50% !important;
-}
-:deep(.el-carousel__arrow--left) {
-    transform: translateY(-50%) rotate(180deg) !important;
-    background-image: url("@{kv_yixueshangyang}arrow.png") !important;
 }
 
-:deep(.el-carousel__arrow--right) {
-    transform: translateY(-50%) !important;
-    background-image: url("@{kv_yixueshangyang}arrow.png") !important;
-}
-
-.m-section {
+@media (min-width: 768px) {
     :deep(.el-carousel__arrow) {
-        width: 79px !important;
-        height: 58px !important;
+        top: 50% !important;
     }
     :deep(.el-carousel__arrow--left) {
-        left: 20px !important;
+        transform: translateY(-50%) rotate(180deg) !important;
     }
 
     :deep(.el-carousel__arrow--right) {
-        right: 20px !important;
+        transform: translateY(-50%) !important;
     }
-    &-3 {
+
+    .m-section {
         :deep(.el-carousel__arrow) {
-            width: 40px !important;
-            height: 29px !important;
+            width: 79px !important;
+            height: 58px !important;
         }
         :deep(.el-carousel__arrow--left) {
-            left: 50% !important;
-            top: 90px !important;
-            margin: 0 0 0 -200px !important;
+            left: 20px !important;
         }
 
         :deep(.el-carousel__arrow--right) {
-            right: 50% !important;
-            top: 90px !important;
-            margin: 0 -200px 0 0 !important;
+            right: 20px !important;
         }
-    }
-    &-4,
-    &-5 {
-        :deep(.el-carousel__arrow) {
-            width: 40px !important;
-            height: 29px !important;
-        }
-        :deep(.el-carousel__arrow--left) {
-            left: 50% !important;
-            margin: 0 0 0 -650px !important;
-            top: -185px !important;
-        }
+        &-3 {
+            :deep(.el-carousel__arrow) {
+                width: 40px !important;
+                height: 29px !important;
+            }
+            :deep(.el-carousel__arrow--left) {
+                left: 50% !important;
+                top: 90px !important;
+                margin: 0 0 0 -200px !important;
+            }
 
-        :deep(.el-carousel__arrow--right) {
-            right: 50% !important;
-            margin: 0 -650px 0 0 !important;
-            top: -185px !important;
+            :deep(.el-carousel__arrow--right) {
+                right: 50% !important;
+                top: 90px !important;
+                margin: 0 -200px 0 0 !important;
+            }
         }
-        :deep(.el-carousel__item) {
-            animation: none !important;
-            transition: none !important;
-        }
-        :deep(.el-carousel__container) {
-            transition: none !important;
-            transform: none !important;
-        }
-        :deep(.el-carousel__item.is-active) {
-            animation: none !important;
-            transition: none !important;
-        }
-        :deep(.el-carousel__track) {
-            transition: none !important;
-            transform: none !important;
+        &-4,
+        &-5 {
+            :deep(.el-carousel__arrow) {
+                width: 40px !important;
+                height: 29px !important;
+            }
+            :deep(.el-carousel__arrow--left) {
+                left: 50% !important;
+                margin: 0 0 0 -650px !important;
+                top: -185px !important;
+            }
+
+            :deep(.el-carousel__arrow--right) {
+                right: 50% !important;
+                margin: 0 -650px 0 0 !important;
+                top: -185px !important;
+            }
+            :deep(.el-carousel__item) {
+                animation: none !important;
+                transition: none !important;
+            }
+            :deep(.el-carousel__container) {
+                transition: none !important;
+                transform: none !important;
+            }
+            :deep(.el-carousel__item.is-active) {
+                animation: none !important;
+                transition: none !important;
+            }
+            :deep(.el-carousel__track) {
+                transition: none !important;
+                transform: none !important;
+            }
         }
     }
 }
@@ -345,4 +349,212 @@ export default {
 
 <style lang="less">
 @import "~@/assets/css/topic/mobile/reflow.less";
+
+@media (max-width: 767px) {
+    #app .topic-mobile-layout[data-topic="yixueshangyang"] {
+        > .m-section-1 {
+            min-height: 0;
+            height: auto;
+            aspect-ratio: 3840 / 2181;
+            padding: 0;
+            background-size: 100% 100%;
+            background-position: center top;
+
+            > .u-logo {
+                position: absolute;
+                inset: 6% auto auto 4%;
+                width: min(25%, 135px);
+                height: auto;
+                margin: 0;
+            }
+
+            > .u-yxsy {
+                position: absolute;
+                inset: auto 0 7%;
+                width: min(62%, 370px);
+                height: auto;
+                margin: 0 auto;
+            }
+        }
+
+        > .m-section:not(.m-section-1) {
+            padding: 24px 16px;
+            background-size: cover;
+            background-position: center top;
+
+            > .u-title {
+                width: min(76%, 270px);
+                height: auto;
+                margin: 0 auto 16px;
+            }
+        }
+
+        .m-section {
+            .el-carousel {
+                padding-bottom: 52px;
+            }
+
+            // 只用当前画面撑开轮播容器，每张素材保留自身宽高比。
+            .el-carousel__item.is-active {
+                position: relative;
+                height: auto;
+            }
+
+            .el-carousel__item:not(.is-active) {
+                visibility: hidden;
+            }
+
+            .el-carousel__arrow--left {
+                left: calc(50% - 60px);
+                transform: rotate(180deg);
+            }
+
+            .el-carousel__arrow--right {
+                right: calc(50% - 60px);
+                transform: none;
+            }
+
+            .el-carousel__arrow {
+                margin: 0;
+                --yixueshangyang-arrow-size: 32px auto;
+            }
+
+            .u-item-content {
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                flex-wrap: nowrap;
+                gap: 8px;
+                width: 100%;
+                margin: 0;
+
+                h2 {
+                    inset: auto;
+                    width: auto;
+                    margin: 0;
+                    font-size: 18px;
+                    line-height: 1.5;
+                    letter-spacing: 0;
+                    text-align: center;
+                }
+
+                > .u-img,
+                > .u-img2 {
+                    position: static;
+                    inset: auto;
+                    width: 100%;
+                    height: auto;
+                    margin: 0 auto;
+                }
+            }
+
+            .m-carousel-indicators {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-flow: row nowrap;
+                gap: 8px;
+                margin: 0 auto 12px;
+
+                &::before,
+                &::after {
+                    flex: 1 1 0;
+                    min-width: 0;
+                    max-width: 64px;
+                    height: 44px;
+                    margin: 0;
+                }
+
+                .u-item {
+                    display: grid;
+                    place-items: center;
+                    flex: 0 0 44px;
+                    width: 44px;
+                    height: 44px;
+                    margin: 0;
+                    cursor: pointer;
+
+                    &::after {
+                        display: none;
+                    }
+
+                    > img {
+                        position: static;
+                        width: 24px;
+                        height: auto;
+                        margin: 0;
+                    }
+
+                    > .u-active,
+                    &.active > img {
+                        display: none;
+                    }
+
+                    &.active > .u-active {
+                        display: block;
+                        width: 28px;
+                    }
+                }
+            }
+        }
+
+        .m-section-3 .u-item-content {
+            > .u-img {
+                max-width: 420px;
+            }
+
+            > .u-img2 {
+                width: min(65%, 260px);
+            }
+        }
+
+        .m-section-4,
+        .m-section-5 {
+            .m-container {
+                background-position: center bottom;
+                background-size: 100% auto;
+            }
+
+            .u-item-content > .u-img {
+                width: min(74%, 340px);
+            }
+
+            .u-item-content > .u-img2 {
+                // 两组说明图末尾都有透明留白，收回部分占位，保留完整文字。
+                margin-bottom: -16%;
+            }
+        }
+
+        .m-section-6 .m-box {
+            display: grid;
+            justify-content: center;
+            gap: 12px;
+
+            .u-card {
+                display: grid;
+                width: min(100%, 260px);
+                margin: 0 auto;
+
+                > img {
+                    position: static;
+                    grid-area: 1 / 1;
+                    width: 100%;
+                    height: auto;
+                    margin: 0;
+                }
+
+                > .u-img-hover:not(.active),
+                > .u-img.active {
+                    visibility: hidden;
+                }
+            }
+        }
+
+        .m-section-7 > .u-logo {
+            width: min(42%, 180px);
+            height: auto;
+            margin: 0 auto;
+        }
+    }
+}
 </style>
