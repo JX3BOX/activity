@@ -24,6 +24,26 @@
     padding-top: 560px;
 }
 
+@media (max-width: 767px) {
+    #app .topic-mobile-layout[data-topic="silufengyu"] > .banner {
+        position: relative;
+        min-height: 0;
+        height: 62.5vw;
+        padding: 0;
+        background-size: 100% 100%;
+        background-position: center top;
+
+        > .banner__logo {
+            position: absolute;
+            inset: auto 0 7%;
+            width: min(68%, 450px);
+            height: auto;
+            margin: 0 auto;
+            padding: 0;
+        }
+    }
+}
+
 /* 剧情推进模块 */
 // --------------------
 .story-progress {

@@ -561,3 +561,9 @@
 | `/Users/xuan/Desktop/jx3box/activity-mobile-pre-clean-20261123-header-rebased.patch` | 已针对本轮提交重算并通过 `git apply --check`。仅为历史改动的恢复副本，未经重新审查不得当成当前适配方案；其中圣殿云起详情的历史 `padding-top:16px` 会覆盖本轮的 0。 |
 
 专题总入口此前暂缓，未修改其 `body` 的 1280px 和顶部占位；普通手机页面可能仍有页头预留空间。苍生铸世手机分支已通过现有 `v-app` 样式清除首屏占位，未重复修改。
+
+## 手机首屏专项检查
+
+| 专题 | 改动文件 | 改动类型 | URL、宽度与预期 | 需真机 |
+| --- | --- | --- | --- | --- |
+| 丝路风语 | `src/assets/css/topic/silufengyu/index.less`、本台账 | 移除桌面 560px 的标题占位，按原图画幅显示首屏，把标题叠在人物下方。 | `/topic/silufengyu/`，375/390/414/430px。首图高度随宽度变化，人物头部与标题都可见。 | 是 |
