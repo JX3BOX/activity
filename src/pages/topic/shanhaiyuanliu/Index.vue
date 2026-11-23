@@ -149,7 +149,6 @@
                                         <img :src="bossArtwork" alt="" />
                                     </div>
                                 </div>
-                                <a class="u-boss-original u-mobile-reader" :href="bossArtwork" target="_blank" rel="noopener">查看原图</a>
                             </div>
                         </transition>
                     </div>
