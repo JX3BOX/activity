@@ -1,6 +1,6 @@
 <template>
     <!-- 专题页 -->
-    <div class="p-topic-container">
+    <div data-topic="beitianyaozong" class="topic-mobile-layout p-topic-container">
         <div class="wp shadow">
             <!-- 叶子 -->
             <div class="m-topic-leaf p-animation" ref="mark"></div>
@@ -21,7 +21,7 @@
                 <div class="m-topic-info">
                     <img v-animate="'p-animation fadeInDown'" class="u-textImg" :src="btyz + `txt.png`" />
                     <div class="u-btnbox">
-                        <a v-for="(item, i) in yaozong" :href="item.link" :key="i" v-animate="'p-animations fadeInUp'" class="u-btn" :class="`u-btn` + i" target="_blank"></a>
+                        <a v-for="(item, i) in yaozong" :href="item.link" :aria-label="item.name" :key="i" v-animate="'p-animations fadeInUp'" class="u-btn" :class="`u-btn` + i" target="_blank"></a>
                     </div>
                 </div>
                 <!-- pve -->
@@ -30,13 +30,13 @@
                     <div class="u-cont" v-animate="'p-animation fadeInLeft'">
                         <!-- 切换tab -->
                         <div class="u-tab">
-                            <span v-for="(item, i) in tab" :key="i" :class="[item, i == tabIndex ? 'active' : '']" @click="changeTab(i)"></span>
+                            <span v-for="(item, i) in tab" :key="i" :class="[item.key, i == tabIndex ? 'active' : '']" role="button" tabindex="0" :aria-disabled="!pvebanner[i]" :aria-label="item.name" :aria-pressed="i === tabIndex" @keydown.enter="changeTab(i)" @keydown.space.prevent="changeTab(i)" @click="changeTab(i)"></span>
                         </div>
                         <div class="u-tab-block">
                             <!-- BOSS图片 -->
                             <div class="u-img">
                                 <img :src="tabImg" />
-                                <a :href="tabImgLink" class="u-more"></a>
+                                <a :href="tabImgLink" class="u-more" aria-label="查看全首领数据"></a>
                             </div>
                             <!-- 新闻 -->
                             <div class="u-news">
@@ -47,10 +47,10 @@
                             </div>
                             <!-- 按钮 -->
                             <div class="u-btnbox">
-                                <a v-for="(item, i) in fb" :key="i" :href="item.link" class="u-btn" :class="`u-btn` + i" target="_blank"></a>
+                                <a v-for="(item, i) in fb" :key="i" :href="item.link" :aria-label="item.name" class="u-btn" :class="`u-btn` + i" target="_blank"></a>
                             </div>
                         </div>
-                        <a class="u-sword" v-animate="'p-animation fadeInRightBig'" href="/fb" target="_blank"></a>
+                        <a class="u-sword" v-animate="'p-animation fadeInRightBig'" href="/fb" target="_blank" aria-label="查看副本攻略"></a>
                     </div>
                 </div>
                 <!-- pvp -->
@@ -96,7 +96,10 @@ export default {
     data: function() {
         return {
             btyz: "https://img.jx3box.com/topic/beitianyaozong/new/",
-            tab: ["leiyu", "wushi"],
+            tab: [
+                { key: "leiyu", name: "雷雨大泽" },
+                { key: "wushi", name: "武氏别院" },
+            ],
             tabIndex: 0,
             raw: [],
             tabImg: "",
@@ -123,6 +126,7 @@ export default {
             ],
             pvp: [],
             pve: [],
+            pvebanner: [],
             pvx: [],
             video: "",
             offAnimation: false,
@@ -182,6 +186,7 @@ export default {
             });
         },
         changeTab(i) {
+            if (!this.pvebanner[i]) return;
             this.tabIndex = i;
             this.tabImg = this.pvebanner[i].img;
             this.tabImgLink = this.pvebanner[i].link;
@@ -204,3 +209,42 @@ export default {
     },
 };
 </script>
+
+<style lang="less">
+@import "~@/assets/css/topic/mobile/reflow.less";
+
+@media (max-width: 767px) {
+    #app .topic-mobile-layout[data-topic="beitianyaozong"] .m-topic-pve .u-img .u-more {
+        display: block;
+        width: 175px;
+        max-width: 100%;
+        min-height: 44px;
+        height: 48px;
+        margin: 12px auto;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+    }
+
+    #app .topic-mobile-layout[data-topic="beitianyaozong"] .m-topic-pve .u-sword {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        float: none;
+        width: 200px;
+        max-width: 100%;
+        min-height: 44px;
+        height: auto;
+        margin: 16px auto;
+        border: 1px solid #e6c28b;
+        border-radius: 4px;
+        background: #6b4828;
+        color: #fff;
+        text-decoration: none;
+
+        &::after {
+            content: "查看副本攻略";
+        }
+    }
+}
+</style>

@@ -1,5 +1,5 @@
 <template>
-    <div class="m-index">
+    <div data-topic="jiandanqinxin" class="topic-mobile-baseline m-index">
         <!-- 头部KV -->
         <div class="m-kv">
             <img class="u-img p-animation" v-animate="'fadeInUp'" :src="imgurl + 'dabiaoti.png'" />
@@ -39,7 +39,13 @@
                 <div class="m-xl-content">
                     <img
                         class="u-xl-arrow"
+                        alt=""
+                        role="button"
+                        tabindex="0"
+                        aria-label="上一张副本介绍"
                         @click="$refs.xlCarouselRef.prev()"
+                        @keydown.enter.prevent="$refs.xlCarouselRef.prev()"
+                        @keydown.space.prevent="$refs.xlCarouselRef.prev()"
                         loading="lazy"
                         :src="imgurl + `jt1.png`"
                     />
@@ -76,7 +82,13 @@
                     </el-carousel>
                     <img
                         class="u-xl-arrow"
+                        alt=""
+                        role="button"
+                        tabindex="0"
+                        aria-label="下一张副本介绍"
                         @click="$refs.xlCarouselRef.next()"
+                        @keydown.enter.prevent="$refs.xlCarouselRef.next()"
+                        @keydown.space.prevent="$refs.xlCarouselRef.next()"
                         loading="lazy"
                         :src="imgurl + `jt2.png`"
                     />
@@ -114,6 +126,7 @@
                             isHover: jzhyMoveClass === `u-jzhy-bt-item${index}`,
                         }"
                         @mouseenter="jzhyMoveClass = `u-jzhy-bt-item${index}`"
+                        @click="jzhyMoveClass = `u-jzhy-bt-item${index}`"
                         @mouseleave="jzhyMoveClass = ''"
                         loading="lazy"
                         :src="imgurl + `jzhy-bt${index}.png`"
@@ -138,13 +151,12 @@
         <div class="m-zy-box">
             <PageTitle titleIndex="5" />
             <div class="m-zy">
-                <!-- <img class="" loading="lazy" :src="imgurl + 'bt5-2.png'" /> -->
                 <el-carousel ref="zyCarouselRef" indicator-position="outside" arrow="never" @change="zyCarouselChange">
                     <el-carousel-item v-for="index in 3" :key="index">
                         <img loading="lazy" :src="imgurl + `zy-${index}.png`" />
                     </el-carousel-item>
                 </el-carousel>
-                <img class="u-arrow" loading="lazy" :src="imgurl + 'jt3.png'" />
+                <img class="u-arrow u-arrow-decoration" alt="" loading="lazy" :src="imgurl + 'jt3.png'" />
                 <div class="u-zy-wz-container">
                     <template v-for="item in 3">
                         <img
@@ -163,7 +175,18 @@
                     loading="lazy"
                     :src="imgurl + `zy${zyCarouselIndex + 1}-1.png`"
                 />
-                <img class="u-arrow" @click="$refs.zyCarouselRef.next()" loading="lazy" :src="imgurl + 'jt3.png'" />
+                <img
+                    class="u-arrow u-arrow-next"
+                    alt=""
+                    role="button"
+                    tabindex="0"
+                    aria-label="下一项阵营玩法"
+                    @click="$refs.zyCarouselRef.next()"
+                    @keydown.enter.prevent="$refs.zyCarouselRef.next()"
+                    @keydown.space.prevent="$refs.zyCarouselRef.next()"
+                    loading="lazy"
+                    :src="imgurl + 'jt3.png'"
+                />
                 <img class="u-zy-bg" loading="lazy" :src="imgurl + 'zy-bg.png'" />
             </div>
         </div>
@@ -304,4 +327,9 @@ export default {
 
 <style lang="less" scoped>
 @import "~@/assets/css/topic/jiandanqinxin/index.less";
+</style>
+
+<style lang="less">
+@import "~@/assets/css/topic/mobile/reflow.less";
+@import "~@/assets/css/topic/jiandanqinxin/mobile.less";
 </style>

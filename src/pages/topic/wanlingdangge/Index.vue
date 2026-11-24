@@ -10,7 +10,7 @@
         </div>
         <!--首屏-->
         <div class="m-top m-jump">
-            <video class="u-video-background" autoplay muted loop>
+            <video class="u-video-background" autoplay muted loop playsinline webkit-playsinline>
                 <source :src="top.video" type="video/mp4">
             </video>
             <img class="u-title" :src="top.title"/>
@@ -20,7 +20,7 @@
                     <span class="u-down-text">向下滑动查看内容</span>
                 </div>
             </div>
-            <a href="" class="u-button" @click.prevent="playVideo('top')"></a>
+            <a href="" class="u-button" aria-label="播放视频" @click.prevent="playVideo('top')"></a>
             <img class="u-title-bottom" :src="top.titleBottom"/>
             <a href="https://www.jx3box.com/index/">
                 <img class="u-box-logo" :src="top.logo"/>
@@ -35,12 +35,12 @@
                     <div class="u-sect-logo"></div>
                     <div class="u-sect-desc" v-html="sectDesc"></div>
                 </div>
-                <a href="" class="u-video-button" @click.prevent="playVideo('top')"></a>
+                <a href="" class="u-video-button" aria-label="播放视频" @click.prevent="playVideo('top')"></a>
                 <a :href="sectUrl.bps" target="_blank" class="u-button u-introduction">门派攻略</a>
                 <a :href="sectUrl.marco" target="_blank" class="u-button u-macro">门派宏库</a>
             </div>
             <div class="m-content m-content-mobile p-animation" v-animate="'fadeInUpBig'" v-if="isMobile">
-                <a href="" class="u-video-button" @click.prevent="playVideo('top')"></a>
+                <a href="" class="u-video-button" aria-label="播放视频" @click.prevent="playVideo('top')"></a>
                 <a :href="sectUrl.bps" target="_blank" class="u-button u-introduction">门派攻略</a>
                 <a :href="sectUrl.marco" target="_blank" class="u-button u-macro">门派宏库</a>
             </div>
@@ -57,7 +57,7 @@
                             <img class="u-bg-img" :src="fb[item].bg" alt="">
                             <div v-show="currentFb === item" class="u-title-fb p-animation">{{fb[item].title}}</div>
                             <div class="u-desc">{{fb[item].desc}}</div>
-                            <a :href="fb[item].introductionUrl"  target="_blank">
+                            <a :href="fb[item].introductionUrl" :aria-label="fb[item].name" target="_blank">
                                 <img
                                    class="u-button-introduction "
                                    :src="fb[item].button"
@@ -104,6 +104,7 @@
                 <div class="m-content-box">
                     <a href=""
                        class="u-refresh-button"
+                       aria-label="更换画质对比图"
                        @click.prevent="currentContrast >= 4 ? currentContrast = 0 : currentContrast++">
                         <i class="el-icon-refresh"></i>
                         <img class="u-img" :src="refreshText" alt="">
@@ -155,7 +156,7 @@
                                 <img class="u-top" :src="downTitle" />
                                     <div class="m-scroll-down">
                                         <img class="u-down-icon" :src="downIcon" />
-                                        <div class="u-down-text">鼠标移动到此处，往下滑动查看内容</div>
+                                        <div class="u-down-text">{{ isMobile ? '向下滑动查看内容' : '鼠标移动到此处，往下滑动查看内容' }}</div>
                                         <div class="m-down-content">
                                             <template v-for="(item, index) in downContent">
                                                 <img v-if="item.img" :src="item.img" alt="" :key="`downImg${index}`"/>
@@ -173,7 +174,7 @@
                             <div class="m-face-rotate-box">
                             <div class="u-face">
                                 <a :href="item.link">
-                                    <img :src="item.img" alt="">
+                                    <img :src="isMobile && typeof item === 'string' ? item : item.img" alt="">
                                 </a>
                             </div>
                             </div>
@@ -213,9 +214,11 @@
                 class="u-cg"
                 controls
                 autoplay
+                playsinline
+                webkit-playsinline
                 width="40%"
             ><source type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'></video>
-            <a href="" class="u-close-button" @click.prevent="closeDialog">
+            <a href="" class="u-close-button" aria-label="关闭视频" @click.prevent="closeDialog">
                 <i class="el-icon-close"></i>
             </a>
         </div>
@@ -379,6 +382,8 @@ export default {
             // cg用
             dialogPlay: false,
             videoUrl: "",
+            mobileDialogMedia: null,
+            mobileDialogScrollLock: null,
         };
     },
     directives: {
@@ -438,12 +443,67 @@ export default {
             },
         },
     },
-    watch: {},
+    watch: {
+        dialogPlay() {
+            this.syncDialogScrollLock();
+        },
+    },
     methods: {
+        syncDialogScrollLock() {
+            if (this.dialogPlay && this.mobileDialogMedia && this.mobileDialogMedia.matches) {
+                this.lockDialogScroll();
+            } else {
+                this.unlockDialogScroll();
+            }
+        },
+        lockDialogScroll() {
+            if (this.mobileDialogScrollLock) return;
+            const body = document.body;
+            const html = document.documentElement;
+            const properties = ["position", "top", "left", "right", "width", "overflow"];
+            const bodyStyles = properties.map((property) => ({
+                property,
+                value: body.style.getPropertyValue(property),
+                priority: body.style.getPropertyPriority(property),
+            }));
+            const scrollY = window.scrollY;
+            this.mobileDialogScrollLock = {
+                bodyStyles,
+                htmlOverflow: html.style.getPropertyValue("overflow"),
+                htmlOverflowPriority: html.style.getPropertyPriority("overflow"),
+                scrollY,
+            };
+            body.style.position = "fixed";
+            body.style.top = `-${scrollY}px`;
+            body.style.left = "0";
+            body.style.right = "0";
+            body.style.width = "100%";
+            body.style.overflow = "hidden";
+            html.style.overflow = "hidden";
+        },
+        unlockDialogScroll() {
+            const lock = this.mobileDialogScrollLock;
+            if (!lock) return;
+            lock.bodyStyles.forEach(({ property, value, priority }) => {
+                if (value) document.body.style.setProperty(property, value, priority);
+                else document.body.style.removeProperty(property);
+            });
+            if (lock.htmlOverflow) {
+                document.documentElement.style.setProperty("overflow", lock.htmlOverflow, lock.htmlOverflowPriority);
+            } else {
+                document.documentElement.style.removeProperty("overflow");
+            }
+            this.mobileDialogScrollLock = null;
+            window.scrollTo(0, lock.scrollY);
+        },
         init: function () {
             getTopic(KEY).then((res) => {
                 this.more = res.data.data.filter(i => i.subtype === 'more').map(i => {return {img: i.img, link: i.link,title: i.title}});
                 const face = res.data.data.filter(i => i.subtype === 'face').map(i =>  {return {img: i.img, link: i.link}});
+                if (this.isMobile && !face.length) {
+                    this.faceContent.face = [];
+                    return;
+                }
                 this.faceContent.face = Array.from(Array(10), (item, index) => {
                     const i =  index % face.length;
                     return face[i];
@@ -568,17 +628,62 @@ export default {
         this.init();
     },
     mounted: function () {
+        this.mobileDialogMedia = window.matchMedia("(max-width: 767px)");
+        this.mobileDialogMedia.addEventListener("change", this.syncDialogScrollLock);
         if(!this.isMobile) {
             window.addEventListener('scroll', this.setNav);
             this.resize();
             window.addEventListener('resize', this.resize);
         }
     },
+    beforeUnmount: function () {
+        this.mobileDialogMedia.removeEventListener("change", this.syncDialogScrollLock);
+        this.unlockDialogScroll();
+    },
 };
 </script>
 
 <style lang="less">
 @import "~@/assets/css/topic/wanlingdangge/index.less";
+@media (max-width: 767px) {
+    html.topic-wanlingdangge body {
+        min-width: 0;
+    }
+    html.topic-wanlingdangge .p-topic .m-cg-box {
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        height: 100dvh;
+        padding: calc(56px + env(safe-area-inset-top, 0px)) 16px calc(16px + env(safe-area-inset-bottom, 0px));
+        box-sizing: border-box;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+    }
+    html.topic-wanlingdangge .p-topic .m-cg-box .u-cg {
+        position: relative;
+        display: block;
+        top: auto;
+        left: auto;
+        right: auto;
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        max-height: calc(90vh - 56px);
+        max-height: calc(90dvh - 56px);
+    }
+    html.topic-wanlingdangge .p-topic .m-cg-box .u-close-button {
+        top: env(safe-area-inset-top, 0px);
+        right: env(safe-area-inset-right, 0px);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+    }
+}
 .p-topic-footer {
     position: relative;
     z-index: 9999 !important;

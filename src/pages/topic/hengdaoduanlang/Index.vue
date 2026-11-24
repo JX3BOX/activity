@@ -1,5 +1,5 @@
 <template>
-    <div class="m-index">
+    <div class="m-index m-hengdaoduanlang">
         <!-- 叶子 -->
         <div class="m-topic-leaf p-animation" ref="mark"></div>
         <!--        导航-->
@@ -31,6 +31,7 @@
             <!--            副本-->
             <div class="m-fb-mobile" v-if="isMobile">
                 <EasySlider
+                    height="100%"
                     :autoplay="false"
                     animation="fade"
                     :indicators="false"
@@ -263,6 +264,7 @@
 </template>
 
 <script>
+import { useMediaQuery } from "@vueuse/core";
 import EasySlider from "@/components/topic/common/EasySlider.vue";
 import EasySliderItem from "@/components/topic/common/EasySliderItem.vue";
 const KEY = "hengdaoduanlang";
@@ -275,14 +277,14 @@ export default {
         EasySlider,
         EasySliderItem,
     },
+    setup() {
+        return { isMobile: useMediaQuery("(max-width: 767px)") };
+    },
     data: function () {
         return {
             navStyle: { display: "none" },
             navActive: 1,
             mouseoverActive: null, //导航鼠标经过事件
-            isMobile: navigator.userAgent.match(
-                /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i
-            ),
             imgurl: __cdn + "design/topic/" + KEY + "/",
             pve: [
                 {

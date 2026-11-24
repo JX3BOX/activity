@@ -1,5 +1,5 @@
 <template>
-    <div class="m-index">
+    <div data-topic="cangxuelongcheng" class="topic-mobile-baseline m-index">
         <!-- logo -->
         <div class="m-logo p-animation" v-animate="'fadeInLeft'">
             <img :src="imgurl + '0top/logo.png'" width="100%" />
@@ -23,6 +23,7 @@
             </div>
             <img :src="imgurl + '1menpai/cylh.png'" class="u-cylh p-animations" v-animate="'fadeInDown'" />
             <div class="u-content">
+                <h3 class="u-sect-name" hidden>玄甲苍云</h3>
                 <img :src="imgurl + '1menpai/mpts.png'" class="u-mpts" />
                 <div class="u-text">
                     {{ sectDesc }}
@@ -30,17 +31,33 @@
                 <img
                     :src="imgurl + '1menpai/xf-1.png'"
                     class="u-tg p-animations"
+                    alt=""
+                    role="button"
+                    tabindex="0"
+                    aria-label="铁骨衣心法"
                     v-animate="'fadeInLeft'"
-                    @mouseenter="changeDesc(1)"
+                    @mouseenter="previewDesc(1)"
+                    @click="changeDesc(1)"
+                    @keydown.enter.prevent="changeDesc(1)"
+                    @keydown.space.prevent="changeDesc(1)"
                     @mouseleave="levelChangeDesc"
                 />
                 <img
                     :src="imgurl + '1menpai/xf-4.png'"
                     class="u-fs p-animations"
+                    alt=""
+                    role="button"
+                    tabindex="0"
+                    aria-label="分山劲心法"
                     v-animate="'fadeInRight'"
-                    @mouseenter="changeDesc(2)"
+                    @mouseenter="previewDesc(2)"
+                    @click="changeDesc(2)"
+                    @keydown.enter.prevent="changeDesc(2)"
+                    @keydown.space.prevent="changeDesc(2)"
                     @mouseleave="levelChangeDesc"
                 />
+                <span class="u-technique-label" hidden>铁骨衣</span>
+                <span class="u-technique-label" hidden>分山劲</span>
             </div>
         </div>
         <!-- 全新秘境 -->
@@ -65,11 +82,31 @@
                             <!-- <img :src="before_boss" /> -->
                         </div>
                     </div>
-                    <img :src="imgurl + '2mijing/slzs.png'" class="u-boss-kv p-animations" v-animate="'fadeIn'" />/>
+                    <img :src="imgurl + '2mijing/slzs.png'" class="u-boss-kv p-animations" alt="首领展示" v-animate="'fadeIn'" />
                     <div class="u-boss p-animations" v-animate="'fadeIn'">
-                        <img :src="imgurl + '2mijing/' + boss[active_boss].img" class="u-boss-img" />
-                        <img :src="imgurl + '2mijing/jt.png'" class="u-left" @click="changeBoss(1)" />
-                        <img :src="imgurl + '2mijing/jt.png'" class="u-right" @click="changeBoss(2)" />
+                        <img :src="imgurl + '2mijing/' + boss[active_boss].img" class="u-boss-img" :alt="boss[active_boss].name" />
+                        <img
+                            :src="imgurl + '2mijing/jt.png'"
+                            class="u-left"
+                            alt=""
+                            role="button"
+                            tabindex="0"
+                            aria-label="上一位首领"
+                            @click="changeBoss(1)"
+                            @keydown.enter.prevent="changeBoss(1)"
+                            @keydown.space.prevent="changeBoss(1)"
+                        />
+                        <img
+                            :src="imgurl + '2mijing/jt.png'"
+                            class="u-right"
+                            alt=""
+                            role="button"
+                            tabindex="0"
+                            aria-label="下一位首领"
+                            @click="changeBoss(2)"
+                            @keydown.enter.prevent="changeBoss(2)"
+                            @keydown.space.prevent="changeBoss(2)"
+                        />
                     </div>
                 </div>
             </div>
@@ -110,22 +147,14 @@
             <img :src="imgurl + '3qiyu/cwqy.png'" class="u-cwqy p-animations" v-animate="'fadeInUp'" />
             <!-- 宠物奇遇 -->
             <div class="u-pet-list p-animations" v-animate="'fadeInLeft'">
-                <div class="u-pet-item">
-                    <img :src="imgurl + '3qiyu/dd.png'" />
+                <div v-for="pet in pets" :key="pet.key" class="u-pet-item">
+                    <img :src="`${imgurl}3qiyu/${pet.key}.png`" alt="" />
                     <div class="u-tips-img">
-                        <img :src="imgurl + '3qiyu/dd-kv.png'" />
+                        <img :src="`${imgurl}3qiyu/${pet.key}-kv.png`" :alt="`${pet.name} · 奇遇 ${pet.encounter}`" />
                     </div>
-                </div>
-                <div class="u-pet-item">
-                    <img :src="imgurl + '3qiyu/yqxg.png'" />
-                    <div class="u-tips-img">
-                        <img :src="imgurl + '3qiyu/yqxg-kv.png'" />
-                    </div>
-                </div>
-                <div class="u-pet-item">
-                    <img :src="imgurl + '3qiyu/mjk.png'" />
-                    <div class="u-tips-img">
-                        <img :src="imgurl + '3qiyu/mjk-kv.png'" />
+                    <div class="u-pet-caption" hidden>
+                        <strong>{{ pet.name }}</strong>
+                        <span>奇遇·{{ pet.encounter }}</span>
                     </div>
                 </div>
             </div>
@@ -188,11 +217,16 @@ export default {
             before_boss: "",
             showBoss: true,
             boss: [
-                { img: "mxc.png", bgUrl: "mxc-bg.png" },
-                { img: "dzyh.png", bgUrl: "dzyh-bg.png" },
-                { img: "szy.png", bgUrl: "szy-bg.png" },
-                { img: "hy.png", bgUrl: "hy-bg.png" },
-                { img: "wm.png", bgUrl: "wm-bg.png" },
+                { img: "mxc.png", bgUrl: "mxc-bg.png", name: "莫寻常" },
+                { img: "dzyh.png", bgUrl: "dzyh-bg.png", name: "地字一号" },
+                { img: "szy.png", bgUrl: "szy-bg.png", name: "史朝义" },
+                { img: "hy.png", bgUrl: "hy-bg.png", name: "黑鹰" },
+                { img: "wm.png", bgUrl: "wm-bg.png", name: "无名" },
+            ],
+            pets: [
+                { key: "dd", name: "刀豆", encounter: "沙海谣" },
+                { key: "yqxg", name: "弈棋小龟", encounter: "竹马情" },
+                { key: "mjk", name: "苗疆客", encounter: "滇南行" },
             ],
             sectDesc:
                 "新门派「苍云」具有擎刀、擎盾多体态的输出形式、攻防兼备，有较强输出压制能力的同时，兼具控制与防守能力。使用全新镇派系统，苍云侠士需取舍关键层镇派来构建缘起专属武学体系，灵活搭配以探索克敌之道。",
@@ -239,7 +273,14 @@ export default {
                 this.sectDesc = "此功运之有如惊雷开山之势，霸道强横，非勇猛无匹者不能习。";
             }
         },
+        previewDesc(type) {
+            if (!window.matchMedia("(max-width: 767px) and (hover: none)").matches) {
+                this.changeDesc(type);
+            }
+        },
         levelChangeDesc() {
+            if (window.matchMedia("(max-width: 767px)").matches) return;
+
             this.sectDesc =
                 "新门派「苍云」具有擎刀、擎盾多体态的输出形式、攻防兼备，有较强输出压制能力的同时，兼具控制与防守能力。使用全新镇派系统，苍云侠士需取舍关键层镇派来构建缘起专属武学体系，灵活搭配以探索克敌之道。";
         },
@@ -297,4 +338,9 @@ export default {
 
 <style lang="less">
 @import "~@/assets/css/topic/yuanqicangyun/index.less";
+</style>
+
+<style lang="less">
+@import "~@/assets/css/topic/mobile/reflow.less";
+@import "~@/assets/css/topic/yuanqicangyun/mobile.less";
 </style>

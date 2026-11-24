@@ -1,11 +1,11 @@
 <template>
-    <div class="m-index">
+    <div data-topic="fenghuoliaoyuan" class="topic-mobile-layout m-index">
         <!-- logo -->
         <div class="m-logo p-animation" v-animate="'fadeInLeft'">
-            <img loading="lazy" :src="imgurl + '0/logo1.png'" width="100%" />
+            <img :src="imgurl + '0/logo1.png'" width="100%" />
         </div>
         <div class="m-top-banner p-animation" v-animate="'fadeInDown'">
-            <img loading="lazy" :src="imgurl + '0/FHLY.png'" width="100%" />
+            <img :src="imgurl + '0/FHLY.png'" width="100%" />
         </div>
         <!-- 新地图 -->
         <div class="m-map">
@@ -20,8 +20,24 @@
             </div>
             <div class="m-two">
                 <div class="m-box p-animation">
-                    <div class="u-img u-left" @click="handleclick(true)"></div>
-                    <div class="u-img u-right" @click="handleclick(false)"></div>
+                    <div
+                        class="u-img u-left"
+                        role="button"
+                        tabindex="0"
+                        aria-label="上一张地图"
+                        @click="handleclick(true)"
+                        @keydown.enter.prevent="handleclick(true)"
+                        @keydown.space.prevent="handleclick(true)"
+                    ></div>
+                    <div
+                        class="u-img u-right"
+                        role="button"
+                        tabindex="0"
+                        aria-label="下一张地图"
+                        @click="handleclick(false)"
+                        @keydown.enter.prevent="handleclick(false)"
+                        @keydown.space.prevent="handleclick(false)"
+                    ></div>
                     <el-carousel
                         class="u-carousel"
                         type="card"
@@ -51,15 +67,27 @@
             </div>
             <div class="card">
                 <img loading="lazy" class="man" :src="imgurl + '2/jm-2.png'" alt="" />
-                <img loading="lazy" class="boss-name" :src="imgurl + '2/jm-3.png'" alt="" />
+                <img loading="lazy" class="boss-name" :src="imgurl + '2/jm-3.png'" alt="迦牟" />
                 <div class="content">GUIXUZHILI</div>
                 <img loading="lazy" class="content-image" :src="imgurl + '2/jm-4.png'" alt="" />
-                <img loading="lazy" class="link-image" :src="imgurl + '2/anniu2.png'" alt="" @click="goto('https://origin.jx3box.com/fb/')"/>
+                <p class="u-mobile-copy" style="display: var(--topic-mobile-copy-display, none)">
+                    为人爽直骄傲，尚武，尤为介意胜负。侠士可在归墟秘境与他进行切磋。
+                </p>
+                <img
+                    loading="lazy"
+                    class="link-image"
+                    :src="imgurl + '2/anniu2.png'"
+                    alt="秘境传说"
+                    role="link"
+                    tabindex="0"
+                    @click="goto('https://origin.jx3box.com/fb/')"
+                    @keydown.enter.prevent="goto('https://origin.jx3box.com/fb/')"
+                />
             </div>
         </div>
         <!-- 全新秘境 -->
         <div class="m-new-secret">
-            <div class="u-title" style="margin-top: 360px; margin-bottom: 38px">
+            <div class="u-title" style="margin-top: 360px; margin-bottom: var(--topic-title-bottom, 38px)">
                 <div class="icon" v-animate="'flow'">
                     <img loading="lazy" :src="imgurl + '3/no3.png'" />
                 </div>
@@ -78,6 +106,10 @@
                 <div>
                     <img loading="lazy" :src="imgurl + '3/wenzi.png'" alt="" />
                 </div>
+                <div class="u-mobile-copy" style="display: var(--topic-mobile-copy-display, none)">
+                    <p>至德二载（757年）正月，史思明自博陵、蔡希德自上党（今山西长治）、高秀岩自大同（今山西朔州东北马邑）、牛廷玠自范阳（今北京城西南）率兵共10万，会攻太原，企图夺取河东，进而长驱直取朔方、河西、陇右等地。</p>
+                    <p>太原会战以太原城周边为中心，历经数十日，两军攻守焦灼。一月下旬，黑水靺鞨与龟兹人奉安禄山之命前来支援，史思明得此两路奇兵，开始计划新一轮更为猛烈的攻城……</p>
+                </div>
             </div>
             <img loading="lazy" class="jiantou" :src="imgurl + '3/jiantou.png?1'" alt="" />
             <div class="boss">
@@ -93,13 +125,21 @@
                             }`"
                         >
                             <img loading="lazy" class="boss-name" :src="imgurl + `3/bs${index}-1.png`" alt="" />
-                            <img loading="lazy" class="boss-image" :src="imgurl + `3/bs${index}.png`" alt="" />
+                            <img
+                                loading="lazy"
+                                class="boss-image"
+                                :src="imgurl + `3/bs${index}.png`"
+                                width="2348"
+                                height="1627"
+                                alt=""
+                            />
                         </div>
                     </div>
                     <div
                         :class="`boss-avatar item-${index}`"
                         v-for="index in 5"
                         :key="index + 'boss'"
+                        :aria-current="active_boss === index || (active_boss === null && index === 1)"
                         @mouseover="bossclick(index)"
                     >
                         <img loading="lazy" class="boss-avatar-circle" :src="imgurl + `3/boss0.png`" alt="" />
@@ -111,7 +151,7 @@
         </div>
         <!-- 全新功能 -->
         <div class="m-new-function">
-            <div class="u-title" style="margin-top: 260px; margin-bottom: 180px">
+            <div class="u-title" style="margin-top: 260px; margin-bottom: var(--topic-title-bottom, 180px)">
                 <div class="icon" v-animate="'flow'">
                     <img loading="lazy" :src="imgurl + '4/no4.png'" />
                 </div>
@@ -125,7 +165,16 @@
                 <img loading="lazy" class="divide" :src="imgurl + '4/fenge2.svg'" />
             </div>
             <img loading="lazy" class="body-image" :src="imgurl + '4/tixing1.png'" alt="" v-animate="'body-image-active'" />
-            <img loading="lazy" class="link-image" :src="imgurl + '4/anniu3.png'" alt="" @click="goto('https://weibo.com/7572025559/5145877669218702')"/>
+            <img
+                loading="lazy"
+                class="link-image"
+                :src="imgurl + '4/anniu3.png'"
+                alt="点击查看"
+                role="link"
+                tabindex="0"
+                @click="goto('https://weibo.com/7572025559/5145877669218702')"
+                @keydown.enter.prevent="goto('https://weibo.com/7572025559/5145877669218702')"
+            />
         </div>
         <!-- 全新系统 -->
         <div class="m-new-systeam">
@@ -142,6 +191,9 @@
                 <div class="p-animation" v-animate="'fadeInLeft'">
                     <img loading="lazy" class="hongchenxiaying p-animation" :src="imgurl + '5/hongchenxiaying.png'" alt="" />
                     <img loading="lazy" class="wenzi1" :src="imgurl + '5/wenzi1.png?1'" alt="" />
+                    <p class="u-mobile-copy" style="display: var(--topic-mobile-copy-display, none)">
+                        侠士可通过参与签到活动、领取行侠令奖励、每日茶馆品茗与侠客结缘。
+                    </p>
                 </div>
                 <div class="detail-contianer">
                     <div class="p-animation" v-animate="'fadeInRight'">
@@ -155,7 +207,14 @@
                             :key="index + 'assisdent'"
                             :style="`display:${active_assistant === index ? 'block' : 'none'}`"
                         >
-                            <img loading="lazy" class="assistant-image" :src="imgurl + `5/xk${index}.png`" alt="" />
+                            <img
+                                loading="lazy"
+                                class="assistant-image"
+                                :src="imgurl + `5/xk${index}.png`"
+                                width="1339"
+                                height="1309"
+                                alt=""
+                            />
                         </div>
                     </div>
 
@@ -163,6 +222,7 @@
                         :class="`assistant-avatar item-${index}`"
                         v-for="index in 6"
                         :key="index"
+                        :aria-current="active_assistant === index"
                         @mouseover="assistantClick(index)"
                         v-animate="'active'"
                     >
@@ -174,7 +234,7 @@
         </div>
         <!-- 更多精彩 -->
         <div class="m-more">
-            <div class="u-title" style="margin-top: 360px; margin-bottom: 60px">
+            <div class="u-title" style="margin-top: 360px; margin-bottom: var(--topic-title-bottom, 60px)">
                 <div class="icon" v-animate="'flow'">
                     <img loading="lazy" :src="imgurl + '6/no6.png'" />
                 </div>
@@ -270,4 +330,9 @@ export default {
 body {
     min-width: 1600px !important;
 }
+</style>
+
+<style lang="less">
+@import "~@/assets/css/topic/mobile/reflow.less";
+@import "~@/assets/css/topic/fenghuoliaoyuan/mobile.less";
 </style>

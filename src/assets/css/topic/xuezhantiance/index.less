@@ -2,6 +2,12 @@
     margin-top:@header-height;
 }
 
+@media (max-width: 767px) {
+    .p-topic.v-index {
+        margin-top: 0;
+    }
+}
+
 .m-index {
     .pr;
     .w(100%);
@@ -50,6 +56,54 @@
         animation: blink 1s infinite;
     }
 }
+
+@media (max-width: 767px) {
+    #app .topic-mobile-layout[data-topic="xuezhantiance"] > .m-top {
+        position: relative;
+        min-height: 0;
+        height: 55.5208vw;
+        padding: 0;
+        background-size: 100% 100%;
+        background-position: center top;
+
+        > .u-img {
+            position: absolute;
+            inset: auto;
+            height: auto;
+            margin: 0;
+        }
+
+        > .u-top-author {
+            top: 5%;
+            left: 4%;
+            width: min(27%, 160px);
+        }
+
+        > .u-top-title,
+        > .u-top-title-tip,
+        > .u-top-jump__icon {
+            right: 0;
+            left: 0;
+            margin: 0 auto;
+        }
+
+        > .u-top-title {
+            bottom: 22%;
+            width: min(62%, 395px);
+        }
+
+        > .u-top-title-tip {
+            bottom: 10.5%;
+            width: min(38%, 240px);
+        }
+
+        > .u-top-jump__icon {
+            bottom: 2.5%;
+            width: min(4%, 24px);
+        }
+    }
+}
+
 .m-section {
     .pt(280px);
     .u-title {

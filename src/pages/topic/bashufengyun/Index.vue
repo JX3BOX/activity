@@ -1,5 +1,5 @@
 <template>
-    <div class="m-index" :style="{ zoom: pageZoom }">
+    <div data-topic="bashufengyun" class="topic-mobile-baseline m-index" :style="{ zoom: pageZoom }">
         <div class="m-bashufengyun">
             <section v-for="(item, index) in moduleConfigs" :key="item.id" class="m-bashufengyun__section">
                 <component :is="item.component" :moduleData="getModuleData(item, index)" />
@@ -21,7 +21,7 @@ export default {
     data() {
         return {
             moduleConfigs: [
-                { id: "one", component: "oneView", height: "100vh" },
+                { id: "one", component: "oneView", height: "var(--bashu-hero-height, 100vh)" },
                 { id: "two", component: "twoView", height: "100vh" },
                 { id: "three", component: "threeView", height: "100vh" },
                 { id: "four", component: "fourView", height: "100vh" },
@@ -49,6 +49,10 @@ export default {
     methods: {
         calcZoom() {
             const width = window.innerWidth;
+            if (window.matchMedia("(max-width: 767px)").matches) {
+                this.pageZoom = 1;
+                return;
+            }
             const height = window.innerHeight;
             const scaleX = width / 1920;
             const scaleY = height / 1080;
@@ -67,4 +71,9 @@ export default {
 
 <style lang="less">
 @import "~@/assets/css/topic/bashufengyun/index.less";
+</style>
+
+<style lang="less">
+@import "~@/assets/css/topic/mobile/reflow.less";
+@import "~@/assets/css/topic/bashufengyun/mobile.less";
 </style>

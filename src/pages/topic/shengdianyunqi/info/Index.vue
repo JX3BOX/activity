@@ -75,5 +75,5 @@ export default {
 </script>
 
 <style lang="less">
-@import ".~@/assets/css/topic/shengdianyunqi/info.less";
+@import "~@/assets/css/topic/shengdianyunqi/info.less";
 </style>

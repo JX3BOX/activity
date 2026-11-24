@@ -1,5 +1,5 @@
 <template>
-	<div class="m-index">
+	<div data-topic="jianhushengong" class="topic-mobile-layout m-index">
 <!--        p0-->
         <div class="m-p0">
             <div class="u-logo p-animation" v-animate="'fadeIn'"></div>
@@ -31,8 +31,20 @@
 <!--        p2 boss区域-->
         <div class="m-p2">
             <div class="m-boss-box p-animation" v-animate="'fadeIn'">
-                <div class="u-boss" :class="getBossClass(i)" @click="bossActive=i" v-for="(item,i) in boss" :key="'boss'+i">
-                    <img :src="imgurl+'bossactive.png'" class="u-img" />
+                <div
+                    v-for="(item, i) in boss"
+                    :key="'boss' + i"
+                    class="u-boss"
+                    :class="getBossClass(i)"
+                    role="button"
+                    tabindex="0"
+                    :aria-label="item.site + ' ' + item.name"
+                    :aria-pressed="bossActive === i"
+                    @click="bossActive = i"
+                    @keydown.enter="bossActive = i"
+                    @keydown.space.prevent="bossActive = i"
+                >
+                    <img :src="imgurl+'bossactive.png'" class="u-img" alt="" />
                     <span class="u-boss-name">{{ item.site }}<br /> {{item.name}}</span>
                 </div>
             </div>
@@ -242,4 +254,8 @@ export default {
 
 <style lang="less">
  @import "~@/assets/css/topic/jianhushengong/index.less";
+</style>
+
+<style lang="less">
+@import "~@/assets/css/topic/mobile/reflow.less";
 </style>

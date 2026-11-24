@@ -1,20 +1,26 @@
 <template>
-    <div class="m-index">
+    <div data-topic="anshizhiluan" class="topic-mobile-baseline m-index">
         <div class="m-top">
-            <video class="m-mp4" playsinline="" autoplay="" muted="" loop="" :poster="pic.top">
+            <video class="m-mp4" playsinline="" webkit-playsinline autoplay="" muted="" loop="" :poster="pic.top">
                 <source src="./top.mp4" type="video/mp4" />
             </video>
-            <img class="logo p-animation" v-animate="'bounceIn'" :src="pic.logo" />
+            <img class="logo p-animation" v-animate="'bounceIn'" :src="pic.logo" alt="安史之乱魔盒专题页" />
             <span class="m-mark"></span>
         </div>
 
         <div class="m-content">
             <div class="m-introduction p-animations" v-animate="'slideInDown'">
-                <img class="img" :src="pic.introduction" />
+                <img class="img" :src="pic.introduction" alt="安史之乱剧情背景" />
+                <div class="u-mobile-copy" hidden>
+                    <p>开元，天宝年间</p>
+                    <p>大唐正值盛世之年，九天阊阖开宫殿，万国衣冠拜冕旒然，日中则昃，盛极必衰</p>
+                    <p>天宝十四年，安禄山起兵反唐，狼牙大军势如破竹，铁骑所至，哀鸿遍野</p>
+                    <p>天策沦陷，东都洛阳破，潼关失守，西京长安乱……</p>
+                </div>
             </div>
             <!-- 全新副本 -->
             <div class="m-one">
-                <h2 class="p-animation" v-animate="'fadeInDown'"><img :src="title[1]" /></h2>
+                <h2 class="p-animation" v-animate="'fadeInDown'"><img :src="title[1]" alt="全新副本" /></h2>
                 <div class="m-box p-animations" v-animate="'fadeInUp'">
                     <a
                         :class="['u-item', `u-item-${item.id}`]"
@@ -29,16 +35,30 @@
                     <span class="u-mark"></span>
                 </div>
                 <div class="m-txt p-animation" v-animate="'bounceIn'">
-                    <img :src="pic.txt" />
+                    <img :src="pic.txt" alt="安史之乱副本背景" />
+                    <div class="u-mobile-copy" hidden>
+                        <p>天子驾仓皇西南，马嵬坡前六军不发，九州大地遍燃战火</p>
+                        <p>然逢此国破危亡之际，亦是群雄并起之时</p>
+                    </div>
                 </div>
             </div>
             <!-- 五大场景 -->
             <div class="m-two">
-                <h2 class="p-animation" v-animate="'fadeInDown'"><img :src="title[2]" /></h2>
+                <h2 class="p-animation" v-animate="'fadeInDown'"><img :src="title[2]" alt="五大场景" /></h2>
                 <div class="m-box p-animation" v-animate="'fadeInUp'">
-                    <img :src="pic.left" class="u-img u-left" />
-                    <img :src="pic.right" class="u-img u-right" />
-                    <el-carousel class="u-carousel" type="card" trigger="click" height="400px" :autoplay="false">
+                    <img :src="pic.left" class="u-img u-left" alt="" />
+                    <img :src="pic.right" class="u-img u-right" alt="" />
+                    <el-carousel
+                        class="u-carousel"
+                        :class="{ 'u-carousel--custom-arrows': pic.left && pic.right }"
+                        :type="isMobile ? undefined : 'card'"
+                        :arrow="isMobile ? 'always' : 'hover'"
+                        :indicator-position="isMobile ? 'outside' : undefined"
+                        :style="sceneArrowStyle"
+                        trigger="click"
+                        height="var(--anshi-carousel-height, 400px)"
+                        :autoplay="false"
+                    >
                         <el-carousel-item v-for="item in slider" :key="item.id" class="u-item">
                             <img :src="item.img" />
                         </el-carousel-item>
@@ -47,7 +67,7 @@
             </div>
             <!-- 全新门派 -->
             <div class="m-three">
-                <h2 class="p-animation" v-animate="'fadeInDown'"><img :src="title[3]" /></h2>
+                <h2 class="p-animation" v-animate="'fadeInDown'"><img :src="title[3]" alt="全新门派" /></h2>
                 <div class="m-box p-animation" v-animate="'fadeInUp'">
                     <div class="m-sect">
                         <a
@@ -64,12 +84,13 @@
             </div>
             <!-- 两大玩法 -->
             <div class="m-four">
-                <h2 class="p-animation" v-animate="'fadeInDown'"><img :src="title[4]" /></h2>
+                <h2 class="p-animation" v-animate="'fadeInDown'"><img :src="title[4]" alt="两大玩法" /></h2>
                 <div class="m-box p-animation" v-animate="'fadeInUp'">
                     <a
                         :href="item.link"
                         target="_blank"
                         :class="['u-item', `u-item-${index}`]"
+                        :aria-label="playLabels[index]"
                         v-for="(item, index) in play"
                         :key="item.id"
                     ></a>
@@ -77,7 +98,7 @@
             </div>
             <!-- 更多资讯 -->
             <div class="m-five">
-                <h2 class="p-animation" v-animate="'fadeInDown'"><img :src="title[5]" /></h2>
+                <h2 class="p-animation" v-animate="'fadeInDown'"><img :src="title[5]" alt="更多资讯" /></h2>
                 <div class="m-box p-animation" v-animate="'fadeInUp'">
                     <a
                         :class="['u-item', `u-item-${index}`]"
@@ -110,6 +131,9 @@ export default {
             fb: [],
             slider: [],
             info: [],
+            isMobile: false,
+            mobileQuery: null,
+            playLabels: ["圆梦江湖", "三人小队勇闯绝境战场"],
         };
     },
     directives: {
@@ -139,7 +163,7 @@ export default {
         },
     },
     computed: {
-        data: function (val) {
+        data: function () {
             let _data = {};
             this.raw.forEach((item) => {
                 if (!_data[item.subtype]) {
@@ -149,6 +173,12 @@ export default {
             });
             return _data;
         },
+        sceneArrowStyle() {
+            return {
+                "--anshi-arrow-left": this.pic.left ? `url("${this.pic.left}")` : undefined,
+                "--anshi-arrow-right": this.pic.right ? `url("${this.pic.right}")` : undefined,
+            };
+        },
     },
     methods: {
         init() {
@@ -156,7 +186,7 @@ export default {
                 this.raw = res.data.data;
                 this.pic = this.changePic(this.data.pic, "desc");
                 this.title = this.changePic(this.data.title, "desc");
-                this.play =sortBy(this.data.play, (o) => o.id);
+                this.play = sortBy(this.data.play, (o) => o.id);
                 this.slider = this.data.slider;
                 this.fb = sortBy(this.data.fb, (o) => o.id);
                 this.info = sortBy(this.data.info, (o) => o.id);
@@ -169,13 +199,27 @@ export default {
             }
             return obj;
         },
+        updateMobileLayout(event) {
+            this.isMobile = event.matches;
+        },
     },
     mounted: function () {
+        this.mobileQuery = window.matchMedia("(max-width: 767px)");
+        this.updateMobileLayout(this.mobileQuery);
+        this.mobileQuery.addEventListener("change", this.updateMobileLayout);
         this.init();
+    },
+    beforeUnmount() {
+        this.mobileQuery?.removeEventListener("change", this.updateMobileLayout);
     },
 };
 </script>
 
 <style lang="less">
 @import "~@/assets/css/topic/anshizhiluan/index.less";
+</style>
+
+<style lang="less">
+@import "~@/assets/css/topic/mobile/reflow.less";
+@import "~@/assets/css/topic/anshizhiluan/mobile.less";
 </style>

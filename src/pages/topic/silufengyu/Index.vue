@@ -1,5 +1,5 @@
 <template>
-    <div class="m-container">
+    <div data-topic="silufengyu" class="topic-mobile-layout m-container">
         <!-- 主横幅 -->
         <section class="banner">
             <img class="banner__logo" :src="buildImgUrl('bg/banner__title.png')" alt="丝路风语" />
@@ -90,9 +90,15 @@
                         :key="item.key"
                         class="u-tab"
                         :class="{ active: activeTab === item.key }"
+                        :aria-label="item.label"
+                        :aria-pressed="activeTab === item.key"
+                        role="button"
+                        tabindex="0"
                         @click="activeTab = item.key"
+                        @keydown.enter="activeTab = item.key"
+                        @keydown.space.prevent="activeTab = item.key"
                     >
-                        <img :src="buildTabImgUrl(item.key)" class="u-img" />
+                        <img :src="buildTabImgUrl(item.key)" alt="" class="u-img" />
                     </li>
                 </ul>
 
@@ -285,9 +291,17 @@
             <div class="visual-enhancement__content m-section">
                 <img
                     :src="buildImgUrl('008/maincontent.png')"
-                    alt="Top 100 Ranking"
+                    alt="角色外观、骑乘动作和体型细节的优化示意"
                     class="u-pic"
                 />
+                <div class="visual-enhancement__details" aria-hidden="true" hidden>
+                    <div class="u-detail u-detail--characters"></div>
+                    <div class="u-detail u-detail--styles"></div>
+                    <div class="u-detail u-detail--riding"></div>
+                    <div class="u-detail u-detail--back"></div>
+                    <div class="u-detail u-detail--torso"></div>
+                    <div class="u-detail u-detail--hand"></div>
+                </div>
             </div>
         </section>
 
@@ -436,4 +450,9 @@ export default {
 
 <style lang="less">
 @import "~@/assets/css/topic/silufengyu/index.less";
+</style>
+
+<style lang="less">
+@import "~@/assets/css/topic/mobile/reflow.less";
+@import "~@/assets/css/topic/silufengyu/mobile.less";
 </style>

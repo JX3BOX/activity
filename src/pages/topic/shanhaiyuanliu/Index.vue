@@ -1,5 +1,5 @@
 <template>
-    <div class="m-index" @touchstart="handleTouchstart" @touchend="handleTouchend">
+    <div data-topic="shanhaiyuanliu" class="topic-mobile-layout m-index" @touchstart="handleTouchstart" @touchend="handleTouchend">
         <transition name="fade">
             <div class="m-block m-first">
                 <video :src="imgurl + 'KV/WXL_KW_MP4.mp4'" autoplay loop muted playsinline v-if="!isMobile" />
@@ -80,12 +80,14 @@
                 <div
                     id="three-box"
                     :style="{ backgroundImage: `url(${imgurl}2/bg_2_2.jpg)` }"
-                    class="u-right"
+                    class="u-right u-mobile-reader"
                     @scroll="uRightScroll"
                 >
                     <div class="u-content">
                         <img :src="imgurl + '2/1.png'" />
+                        <a class="u-map-original u-mobile-only" :href="imgurl + '2/1.png'" target="_blank" rel="noopener">查看第一张原图</a>
                         <img :src="imgurl + '2/2.png'" />
+                        <a class="u-map-original u-mobile-only" :href="imgurl + '2/2.png'" target="_blank" rel="noopener">查看第二张原图</a>
                     </div>
 
                     <!--                首次提醒-->
@@ -97,13 +99,13 @@
         </transition>
         <!--区域四内容-->
         <transition name="fade">
-            <div class="m-block m-four" :style="{ backgroundImage: `url(${imgurl}3/${fourActive}.jpg)` }">
-                <div class="u-content">
+            <div class="m-block m-four" :style="{ '--boss-artwork': `url(${bossArtwork})` }">
+                <div class="u-content u-boss-desktop">
                     <!--                    底部区域图标及切换区域-->
                     <!--                        百强图片链接-->
                     <img :src="`${imgurl}3/jdt.jpg`" class="u-jdt-img" @click="jdtClick" v-if="fourActive !== 6" />
                     <div class="u-bottom">
-                        <img :src="`${imgurl}3/icon_2.png`" class="u-img" v-if="fourActive !== 6" />
+                        <img :src="`${imgurl}3/icon_2.png`" class="u-img" alt="会战弓月城" v-if="fourActive !== 6" />
                         <div class="u-bottom-page">
                             <img
                                 v-for="item in 6"
@@ -119,6 +121,41 @@
                         </div>
                     </div>
                 </div>
+                <div class="u-boss-mobile u-mobile-only">
+                    <img class="u-boss-heading" :src="`${imgurl}3/icon_2.png`" alt="会战弓月城" />
+                    <div class="u-bottom-page" role="group" aria-label="选择秘境">
+                        <button
+                            v-for="item in 6"
+                            :key="item"
+                            type="button"
+                            class="u-boss-tab"
+                            :aria-label="item === 6 ? '獭山岛' : `会战弓月城 ${item} 号首领`"
+                            :aria-pressed="fourActive === item"
+                            @click="handleTabClick(item)"
+                        >
+                            <img :src="`${imgurl}3/tab/${item}.png`" alt="" />
+                        </button>
+                    </div>
+                    <div class="u-boss-panel">
+                        <transition name="mobile-boss">
+                            <div :key="fourActive" class="u-boss-preview">
+                                <div class="u-boss-story">
+                                    <div class="u-boss-copy">
+                                        <p class="u-boss-caption">{{ bossInfo.caption }}</p>
+                                        <p class="u-boss-name">{{ bossInfo.name }}</p>
+                                        <p v-for="paragraph in bossInfo.copy" :key="paragraph">{{ paragraph }}</p>
+                                    </div>
+                                    <div class="u-boss-portrait">
+                                        <img :src="bossArtwork" alt="" />
+                                    </div>
+                                </div>
+                            </div>
+                        </transition>
+                    </div>
+                    <button v-if="fourActive !== 6" type="button" class="u-boss-rank" @click="jdtClick">
+                        <img :src="`${imgurl}3/jdt.jpg`" alt="秘境百强榜" />
+                    </button>
+                </div>
             </div>
         </transition>
         <!--区域五内容-->
@@ -131,7 +168,13 @@
                             :src="imgurl + '4/tab/1.png'"
                             :style="{ opacity: getTabOpacity5(1) }"
                             class="u-img"
+                            alt="武学改革"
+                            role="button"
+                            tabindex="0"
+                            :aria-pressed="selectedTab === 1"
                             @click="selectTab(1)"
+                            @keydown.enter="selectTab(1)"
+                            @keydown.space.prevent="selectTab(1)"
                             @mouseenter="hoverTab5 = 1"
                             @mouseleave="hoverTab5 = null"
                         />
@@ -139,25 +182,41 @@
                             :src="imgurl + '4/tab/2.png'"
                             :style="{ opacity: getTabOpacity5(2) }"
                             class="u-img"
+                            alt="表现升级"
+                            role="button"
+                            tabindex="0"
+                            :aria-pressed="selectedTab === 2"
                             @click="selectTab(2)"
+                            @keydown.enter="selectTab(2)"
+                            @keydown.space.prevent="selectTab(2)"
                             @mouseenter="hoverTab5 = 2"
                             @mouseleave="hoverTab5 = null"
                         />
                     </div>
                     <div class="u-line"></div>
                     <div class="u-right">
-                        <div ref="pageContainer" class="u-right-box">
-                            <img
-                                :key="`${selectedTab}_${currentPage}`"
-                                :src="`${imgurl}4/${selectedTab}_${currentPage}.png`"
-                                class="u-right-img"
-                            />
+                        <div
+                            ref="pageContainer"
+                            class="u-right-box u-mobile-reader"
+                        >
+                            <transition name="page-art">
+                                <img
+                                    :key="`${selectedTab}_${currentPage}`"
+                                    :src="`${imgurl}4/${selectedTab}_${currentPage}.png`"
+                                    class="u-right-img"
+                                />
+                            </transition>
                         </div>
                         <div class="pagination">
                             <div
                                 v-for="page in totalPages[selectedTab - 1]"
                                 :key="page"
                                 :class="['page-item', { active: currentPage === page }]"
+                                role="button"
+                                tabindex="0"
+                                :aria-current="currentPage === page ? 'page' : null"
+                                @keydown.enter="handlePageClick(page)"
+                                @keydown.space.prevent="handlePageClick(page)"
                                 @click="handlePageClick(page)"
                             >
                                 {{ page }}
@@ -171,6 +230,42 @@
 </template>
 
 <script>
+const BOSS_INTROS = [
+    {
+        caption: "一号首领 · 先觉七子",
+        name: "巴图仁钦",
+        copy: ["吐蕃中观莲花会会首座下弟子，乃是吐蕃最早剃度出家的七名贵族子弟之一，并称“先觉七子”。"],
+    },
+    {
+        caption: "二号首领 · 踏实力汗",
+        name: "竭勒",
+        copy: ["葛逻禄踏实力部首领，为实现一统草原的野心，在吐蕃的支持下率领大军进犯弓月城。"],
+    },
+    {
+        caption: "三号首领 · 星宿宗大弟子",
+        name: "图南子",
+        copy: ["吐蕃星宿宗掌门大弟子，在星宿老仙千秋子逃往南诏之后入门，独自发现了宗门秘籍《逍遥游》的修炼法门，武功高强，作为吐蕃赞普指派的高手前来保护竭勒。"],
+    },
+    {
+        caption: "四号首领 · 娄宿",
+        name: "叶葵",
+        copy: ["原披风会佣兵，鬼山会在河西行动时曾雇佣他作为向导，后因身手卓绝被谢采看中，吸纳入鬼山会，位列二十八宿之一。"],
+    },
+    {
+        caption: "五号首领 · 无面鬼",
+        name: "尹雪尘",
+        copy: ["鬼山会左使，谢采心腹，擅于模仿他人的面容及武学，号“无面鬼”。"],
+    },
+    {
+        caption: "全新五人秘境",
+        name: "獭山岛",
+        copy: [
+            "永宁湾外的一处环岛，四周波涛环绕，鲜有问津者。因林木葱郁、乱石嶙峋，成为众多水獭栖息之地，故得“獭山”之名。每至雾起，群岛若隐若现，远望如悬浮于海上，亦有“浮山岛”的别称。",
+            "岛屿周围暗礁环绕，航路艰难，往来商船无不绕行避让，因而一直以来有“浮山天险，舟船莫近”的警示。",
+        ],
+    },
+];
+
 export default {
     name: "Index",
     props: [],
@@ -223,7 +318,14 @@ export default {
         };
     },
 
-    computed: {},
+    computed: {
+        bossInfo() {
+            return BOSS_INTROS[this.fourActive - 1];
+        },
+        bossArtwork() {
+            return `${this.imgurl}3/${this.fourActive}.jpg`;
+        },
+    },
     watch: {},
     mounted() {
         // 获取 m-index 元素并添加鼠标滚轮事件监听
@@ -240,12 +342,16 @@ export default {
     },
 
     beforeUnmount() {
+        this.pendingPage = null;
         // 移除 m-index 元素上的鼠标滚轮事件监听
         if (this.mIndexElement) {
             this.mIndexElement.removeEventListener("wheel", this.handleWheel);
         }
     },
     methods: {
+        isCompactViewport() {
+            return window.matchMedia("(max-width: 767px)").matches;
+        },
         //屏幕滑动
         //手指按下屏幕
         handleTouchstart(event) {
@@ -255,6 +361,7 @@ export default {
         },
         //手指离开屏幕
         handleTouchend(event) {
+            if (this.isCompactViewport() && event.target.closest(".u-mobile-reader")) return;
             const endTime = Date.now();
             const endX = event.changedTouches[0].clientX;
             const endY = event.changedTouches[0].clientY;
@@ -443,6 +550,10 @@ export default {
         // handleTabClick 方法
         handleTabClick(tabIndex) {
             if (this.fourActive === tabIndex) return;
+            if (this.isCompactViewport()) {
+                this.fourActive = tabIndex;
+                return;
+            }
 
             // 获取当前背景容器元素
             const fourContainer = document.querySelector(".m-four");
@@ -519,64 +630,39 @@ export default {
             return 0.3;
         },
 
-        // 选择tab的方法
         selectTab(tabIndex) {
-            this.$nextTick(() => {
-                this.selectedTab = tabIndex;
-                this.handlePageClick(1, true);
-            });
+            this.pendingPage = null;
+            this.selectedTab = tabIndex;
+            this.showPage(1);
         },
-        handlePageClick(page, isReload = false) {
-            if (this.currentPage === page && !isReload) return;
-
-            // 获取当前图片元素
-            const currentImg = this.$refs.pageContainer.querySelector(".u-right-img");
-
-            if (currentImg) {
-                // 预加载新图片
-                const img = new Image();
-                const newSrc = `${this.imgurl}4/${this.selectedTab}_${page}.png`;
-                img.src = newSrc;
-
-                img.onload = () => {
-                    // 创建新图片元素
-                    const newImg = document.createElement("img");
-                    newImg.src = img.src;
-                    newImg.className = "u-right-img";
-                    newImg.style.cssText = `
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    height:88.8%;
-                    object-fit: contain;
-                    object-position: center top;
-                    opacity: 0;
-                    transition: opacity 300ms ease-in-out;
-                  `;
-
-                    // 插入到当前图片后面
-                    currentImg.parentNode.insertBefore(newImg, currentImg.nextSibling);
-
-                    // 触发重排
-                    newImg.offsetHeight;
-
-                    // 执行淡入淡出动画：旧图片淡出，新图片淡入
-                    currentImg.style.opacity = "0";
-                    currentImg.style.transition = "opacity 300ms ease-in-out";
-                    newImg.style.opacity = "1";
-
-                    // 动画完成后更新状态并清理
-                    setTimeout(() => {
-                        this.currentPage = page;
-                        // 移除旧图片元素
-                        if (currentImg.parentNode) {
-                            currentImg.parentNode.removeChild(currentImg);
-                        }
-                    }, 300);
-                };
-            } else {
-                this.currentPage = page;
+        showPage(page) {
+            this.currentPage = page;
+            const container = this.$refs.pageContainer;
+            if (this.isCompactViewport() && container) {
+                container.scrollLeft = 0;
             }
+        },
+        handlePageClick(page) {
+            this.pendingPage = null;
+            if (this.currentPage === page) return;
+
+            if (this.isCompactViewport() || !this.$refs.pageContainer) {
+                this.showPage(page);
+                return;
+            }
+
+            // 桌面图加载后交给 Vue 换图，避免操作已经被替换的节点。
+            const image = new Image();
+            this.pendingPage = image;
+            image.onload = () => {
+                if (this.pendingPage !== image) return;
+                this.pendingPage = null;
+                this.showPage(page);
+            };
+            image.onerror = () => {
+                if (this.pendingPage === image) this.pendingPage = null;
+            };
+            image.src = `${this.imgurl}4/${this.selectedTab}_${page}.png`;
         },
         open(url) {
             window.open(url, "_blank");
@@ -592,4 +678,8 @@ export default {
 <!--</style>-->
 <style lang="less">
 @import "~@/assets/css/topic/shanhaiyuanliu/index.less";
+</style>
+
+<style lang="less">
+@import "~@/assets/css/topic/mobile/reflow.less";
 </style>

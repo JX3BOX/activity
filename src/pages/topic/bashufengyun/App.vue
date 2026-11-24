@@ -28,7 +28,7 @@ export default {
         const width = document.documentElement.clientWidth;
         const height = document.documentElement.clientHeight;
         var screen_width = width; //屏幕宽度
-        if (width < height) {
+        if (width > 767 && width < height) {
             screen_width = height; //如果 是竖屏，灵感的宽度就等于屏高
 
             const contentDOM = document.getElementById("box");
@@ -43,4 +43,13 @@ export default {
 </script>
 <style lang="less">
 @import "~@/assets/css/topic/common/animation.less";
+
+@media screen and (max-width: 767px), screen and (max-device-width: 767px) {
+    .p-topic > header,
+    .p-topic > .c-header,
+    .p-topic > .c-footer,
+    .p-topic > .c-footer--v4 {
+        display: none;
+    }
+}
 </style>

@@ -24,7 +24,13 @@ import zhTw from "element-plus/es/locale/lang/zh-tw";
 import vi from "element-plus/es/locale/lang/vi";
 import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 
-
+document.documentElement.classList.add("topic-riyuemingzun");
+if (!document.querySelector('meta[name="viewport"]')) {
+    const viewport = document.createElement("meta");
+    viewport.name = "viewport";
+    viewport.content = "width=device-width, initial-scale=1, viewport-fit=cover";
+    document.head.appendChild(viewport);
+}
 
 const app = createApp(App);
 app.use(router);

@@ -48,6 +48,50 @@ body {
     }
 }
 
+@media (max-width: 767px) {
+    #app .topic-mobile-baseline[data-topic="wuduxianshi"] > .m-top {
+        position: relative;
+        width: 100%;
+        min-height: 0;
+        height: 54.6875vw;
+        padding: 0;
+        background-size: 100% 100%;
+        background-position: center top;
+
+        > .u-logo,
+        > .u-mohe,
+        > .u-slogan {
+            position: absolute;
+            inset: auto;
+            margin: 0;
+            background-position: center;
+            background-size: contain;
+        }
+
+        > .u-logo {
+            top: 40%;
+            left: 52%;
+            width: 14.5%;
+            height: 7.0123vw;
+        }
+
+        > .u-mohe {
+            right: 15.5%;
+            bottom: 10%;
+            width: 2.5%;
+            height: 12.9605vw;
+            z-index: 2;
+        }
+
+        > .u-slogan {
+            bottom: 0;
+            left: 33%;
+            width: 56%;
+            height: 51.1782vw;
+        }
+    }
+}
+
 // 第一部分
 .m-one {
     .pr;
@@ -273,5 +317,285 @@ body {
         .size(100%);
         .animations(1.5s);
         background: url("@{kv_wuduxianshi}bottom.png") top center no-repeat;
+    }
+}
+
+@media (max-width: 767px) {
+    #app .topic-mobile-baseline[data-topic="wuduxianshi"] {
+        --wudu-gutter: clamp(14px, 4vw, 24px);
+        --wudu-line: rgba(201, 177, 147, 0.35);
+        --wudu-content: 500px;
+        --wudu-ink: #f4e9db;
+        display: block;
+        width: 100%;
+        margin: 0;
+        color: var(--wudu-ink);
+        background: #0e0a0d;
+
+        .u-bg,
+        .u-logo,
+        .u-txt,
+        .u-mohe,
+        .u-slogan,
+        .u-man,
+        .u-woman,
+        .u-mark,
+        .u-more,
+        a {
+            animation: none;
+        }
+
+        > .m-one,
+        > .m-two,
+        > .m-three,
+        > .m-four {
+            position: relative;
+            width: 100%;
+            height: auto;
+            margin: 0;
+            padding: 24px var(--wudu-gutter) 28px;
+            box-sizing: border-box;
+        }
+
+        .u-mobile-copy {
+            position: relative;
+            display: block;
+            width: min(100%, var(--wudu-content));
+            margin: 0 auto;
+            padding: 14px;
+            box-sizing: border-box;
+            border: 1px solid var(--wudu-line);
+            border-radius: 6px;
+            background: rgba(32, 23, 33, 0.85);
+            font-size: 15px;
+            line-height: 1.7;
+
+            > h2 {
+                margin: 0 0 8px;
+                color: #ebcfad;
+                font-size: 20px;
+                line-height: 1.3;
+            }
+
+            > p {
+                margin: 0;
+            }
+
+            > p + p {
+                margin-top: 8px;
+            }
+        }
+
+        .m-one .u-txt,
+        .m-two .u-txt,
+        .m-three .u-txt {
+            display: none;
+        }
+
+        > .m-one {
+            padding-top: 10px;
+
+            > .u-bg {
+                position: absolute;
+                inset: 0 0 auto;
+                float: none;
+                width: min(72%, 285px);
+                height: 100%;
+                opacity: 0.55;
+                background-position: center;
+                background-size: contain;
+            }
+
+            > .u-logo {
+                position: relative;
+                width: min(62%, 160px);
+                height: 48px;
+                margin: 12px auto 0;
+                background-position: center;
+                background-size: contain;
+            }
+        }
+
+        > .m-two {
+            isolation: isolate;
+            background: linear-gradient(135deg, #1e1521, #100b10 78%);
+
+            > .u-bg {
+                inset: 0;
+                z-index: -1;
+                width: min(100%, 440px);
+                height: 100%;
+                margin: 0 auto;
+                opacity: 0.58;
+                background-position: center 24px;
+                background-size: contain;
+            }
+
+            > .u-box {
+                position: static;
+                width: min(100%, var(--wudu-content));
+                height: auto;
+                margin: 0 auto;
+                padding: 0;
+            }
+
+            .u-btn {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                justify-items: center;
+                gap: 8px;
+                height: auto;
+                margin: 0 auto 16px;
+
+                > a {
+                    position: static;
+                    width: 100%;
+                    height: 48px;
+                    margin: 0;
+                    box-sizing: border-box;
+                    border: 1px solid var(--wudu-line);
+                    border-radius: 6px;
+                    background-color: rgba(32, 23, 33, 0.88);
+                    background-position: center;
+                    background-size: min(84%, 128px) auto;
+
+                    &::after {
+                        display: none;
+                    }
+                }
+
+                > .u-dihua {
+                    grid-column: 1 / -1;
+                    grid-row: 1;
+                    width: min(64%, 236px);
+                    height: auto;
+                    padding-top: min(64%, 236px);
+                    margin: 0 0 4px;
+                    border: 0;
+                    background-color: transparent;
+                    background-size: contain;
+                    transform: none;
+                }
+            }
+        }
+
+        > .m-three {
+            > .u-box {
+                isolation: isolate;
+                width: min(100%, var(--wudu-content));
+                height: auto;
+                min-height: min(88vw, var(--wudu-content));
+                overflow: hidden;
+            }
+
+            .u-bg,
+            .u-man,
+            .u-woman,
+            .u-mark {
+                inset: 0;
+                width: 100%;
+                height: 100%;
+                background-position: center bottom;
+                background-size: contain;
+            }
+
+            .u-man {
+                width: 68%;
+                height: 86%;
+                background-position: left center;
+            }
+
+            .u-woman {
+                inset: auto 0 0 auto;
+                width: 98%;
+                height: 91%;
+                background-position: right bottom;
+            }
+
+            .u-mark {
+                opacity: 0.56;
+            }
+
+            > .u-mobile-copy {
+                text-align: center;
+            }
+        }
+
+        > .m-four {
+            isolation: isolate;
+            background: linear-gradient(125deg, #281926, #100b10 78%);
+
+            > .u-bg {
+                inset: 0;
+                width: min(100%, var(--wudu-content));
+                height: 100%;
+                margin: 0 auto;
+                opacity: 0.5;
+                background-position: center;
+                background-size: contain;
+            }
+
+            > .u-box {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                justify-items: center;
+                gap: 8px;
+                width: min(100%, 340px);
+                height: auto;
+                margin: 0 auto;
+            }
+
+            .u-more {
+                display: none;
+            }
+
+            .u-mobile-title {
+                position: static;
+                display: block;
+                grid-column: 1 / -1;
+                width: auto;
+                height: auto;
+                margin: 0 0 4px;
+                color: #ebcfad;
+                font-size: 20px;
+                line-height: 1.3;
+            }
+
+            .u-box > a {
+                position: static;
+                width: min(100%, 116px);
+                height: auto;
+                min-height: 44px;
+                padding-top: min(100%, 116px);
+                margin: 0;
+                background-position: center;
+                background-size: contain;
+                transform: none;
+            }
+
+            .u-box > .u-xianzonglin {
+                grid-column: 1 / -1;
+                width: min(64%, 210px);
+                padding-top: min(64%, 210px);
+            }
+        }
+
+        > .m-bottom {
+            width: 100%;
+            height: auto;
+            padding: 12px var(--wudu-gutter) 20px;
+            box-sizing: border-box;
+
+            > .u-logo {
+                height: clamp(70px, 24vw, 123px);
+                background-position: center;
+                background-size: contain;
+            }
+        }
+
+        a:focus-visible {
+            outline: 2px solid #ebcfad;
+            outline-offset: 3px;
+        }
     }
 }
