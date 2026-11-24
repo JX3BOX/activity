@@ -40,7 +40,6 @@
                 <div v-else class="u-voted"><span aria-hidden="true">✓</span>已支持</div>
             </td>
         </tr>
-        <bindWxMp v-model="showBindWxMp" @update="onBindWxMpUpdate"></bindWxMp>
     </tbody>
 </template>
 
@@ -51,21 +50,17 @@ import { getThumbnail, getLink, authorLink } from "@jx3box/jx3box-common/js/util
 import User from "@jx3box/jx3box-common/js/user.js";
 import { doVote } from "@/service/rank/vote.js";
 import { getUserInfo } from "@/service/rank/awards";
-import BindWxMp from "@/components/rank/misc/bind_wx_mp.vue";
 import { getConfig } from "@jx3box/jx3box-common/js/system";
 import { isApp } from "@/utils/env";
+import { toBindWechatMp } from "@/utils/bindWechatMp";
 export default {
     name: "voteItemV2",
     props: ["data", "team_name", "server", "voteTeam"],
-    components: {
-        BindWxMp,
-    },
     data: function () {
         return {
             isLogin: User.isLogin(),
 
             profile: null,
-            showBindWxMp: false,
 
             voteLimit: 0,
         };
@@ -108,8 +103,16 @@ export default {
     mounted() {
         this.getVoteLimit();
         this.loadUser();
+        window.addEventListener("pageshow", this.onPageShow);
+    },
+    beforeUnmount() {
+        window.removeEventListener("pageshow", this.onPageShow);
     },
     methods: {
+        // 从绑定页返回时刷新绑定状态（兼容 bfcache 恢复）
+        onPageShow(e) {
+            if (e.persisted) this.loadUser();
+        },
         isMatched: function (item) {
             if (this.search_team && this.search_server) {
                 return item.name.includes(this.search_team) && item.server == this.search_server;
@@ -131,7 +134,7 @@ export default {
                     confirmButtonText: "去绑定",
                     callback: (action) => {
                         if (action == "confirm") {
-                            this.showBindWxMp = true;
+                            toBindWechatMp();
                         }
                     },
                 });
@@ -174,9 +177,6 @@ export default {
             getUserInfo().then((res) => {
                 this.profile = res.data.data;
             });
-        },
-        onBindWxMpUpdate() {
-            this.loadUser();
         },
         // 获取投票上限
         getVoteLimit() {

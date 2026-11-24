@@ -95,7 +95,8 @@ export default {
                     // App 保持完整绘图区，不能为数值标签预留过大的右侧空白。
                     right: this.appMode ? "5%" : "4%",
                     bottom: this.appMode ? "6%" : "3%",
-                    top: this.appMode ? 28 : undefined,
+                    // 桌面标题位于画布内，顶部数值轴需要与标题留出间距。
+                    top: this.appMode ? 28 : 60,
                     containLabel: true,
                 },
                 xAxis: {

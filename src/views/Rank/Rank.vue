@@ -108,7 +108,6 @@
 <script>
 import { __imgPath } from "@/utils/config";
 import servers from "@jx3box/jx3box-data/data/server/server_cn.json";
-import _ from "lodash";
 import { getTop100, getTopTotal, getEventNewbie, getBossAid } from "@/service/rank/race.js";
 import PICS from "@/assets/js/pics.js";
 import rank_item from "@/components/rank/rank_item.vue";
@@ -130,6 +129,7 @@ export default {
             teamDetailVisible: false,
             selectedTeam: null,
             loading: false,
+            rankRequestId: 0,
             servers: ["跨服", ...servers],
 
             achieve_id: "", //boss成就ID
@@ -187,6 +187,11 @@ export default {
                 : this.bossList;
             return Object.keys(bossList).join(",");
         },
+        defaultBossAid() {
+            if (this.isPre) return this.preBossData[0]?.achievement_id;
+            const boss = this.race && !this.race.status ? this.achieves[this.achieves.length - 1] : this.achieves[0];
+            return boss?.achievement_id;
+        },
         span: function () {
             return ~~(24 / Object.keys(this.bossList).length);
         },
@@ -242,9 +247,7 @@ export default {
             // App 首领抽屉的“全部”用于回到默认首领，不应生成 aid=all。
             if (val === "all") {
                 // aid 已由 rank-boss 清除；这里仅恢复当前页面的默认首领状态。
-                this.achieve_id = this.isPre
-                    ? this.preBossData[0]?.achievement_id
-                    : this.achieves[0]?.achievement_id;
+                this.achieve_id = this.defaultBossAid;
                 return;
             }
 
@@ -281,18 +284,23 @@ export default {
             });
         },
         loadData: async function () {
-            if (!this.achieve_id) {
+            const requestId = ++this.rankRequestId;
+            if (!this.achieve_id || !this.id) {
+                this.loading = false;
                 return;
             }
+            const params = { ...this.params };
+            const eventId = this.id;
             this.loading = true;
-            await this.loadNewbie();
-            await getTop100(this.params, this.id)
+            this.loadNewbie();
+            await getTop100(params, eventId)
                 .then(async (res) => {
+                    if (requestId !== this.rankRequestId) return;
                     this.origin_data = res.data.data || [];
                     this.origin_data = Object.freeze(this.origin_data);
                 })
                 .finally(() => {
-                    this.loading = false;
+                    if (requestId === this.rankRequestId) this.loading = false;
                 });
         },
         loadNewbie: function () {
@@ -348,10 +356,11 @@ export default {
             immediate: true,
             handler: function (val) {
                 const id = this.$route.query.aid;
-                if (val && !val?.status && !id) {
-                    const aid = this.achieves[this.achieves.length - 1].achievement_id;
+                if (val && !val?.status && !id && !this.isPre && this.defaultBossAid) {
+                    const aid = this.defaultBossAid;
                     this.$router.push({
                         query: {
+                            ...this.$route.query,
                             aid,
                         },
                     });
@@ -383,9 +392,7 @@ export default {
                     this.isPre = !!~~val.is_pre;
                 }
                 if (!val.aid && this.achieves.length) {
-                    this.achieve_id = this.isPre
-                        ? this.preBossData[0]?.achievement_id
-                        : this.achieves[0]?.achievement_id;
+                    this.achieve_id = this.defaultBossAid;
                 }
                 if (val.server) {
                     this.server = val.server;
@@ -399,9 +406,7 @@ export default {
                 if (!!~~this.$route.query.aid) {
                     this.achieve_id = this.$route.query.aid;
                 } else {
-                    this.achieve_id = this.isPre
-                        ? this.preBossData[0]?.achievement_id
-                        : _.first(Object.keys(this.bossList));
+                    this.achieve_id = this.defaultBossAid;
                 }
             },
         },
@@ -409,7 +414,7 @@ export default {
             immediate: true,
             handler: function (val) {
                 val &&
-                    getTopTotal(val).then((res) => {
+                    getTopTotal(val, this.id).then((res) => {
                         this.total = res.data.data;
                     });
             },

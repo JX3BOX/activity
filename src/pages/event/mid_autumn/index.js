@@ -1,4 +1,4 @@
-import { createApp } from "vue";
+import { createApp, h } from "vue";
 import App from "./App.vue";
 import AppIndex from "./AppIndex.vue";
 import router from "./router.js";
@@ -31,7 +31,17 @@ import * as filters from "@/utils/filters.js";
 syncAppEnv();
 applyAppEnv();
 
-const app = createApp(isApp() ? AppIndex : App);
+const app = createApp({
+    name: "MidAutumnRoot",
+    computed: {
+        appMode() {
+            return isApp();
+        },
+    },
+    render() {
+        return h(this.appMode ? AppIndex : App);
+    },
+});
 app.use(router);
 
 const head = createHead();

@@ -290,7 +290,7 @@
 <script>
 import xfmap from "@jx3box/jx3box-data/data/xf/xfid.json";
 import colorData from "@jx3box/jx3box-data/data/xf/colors.json";
-const { colors_by_mount_name } = colorData;
+const { colors_by_mount_name, colors_by_school_name } = colorData;
 import { __imgPath, __Root } from "@/utils/config";
 import { authorLink, getLink, getThumbnail, showAvatar } from "@jx3box/jx3box-common/js/utils";
 import mountData from "@jx3box/jx3box-data/data/xf/mount_group.json";
@@ -481,8 +481,8 @@ export default {
             return item.damage;
         },
         showMountColor: function (val) {
-            let xfname = xfmap[val] || "通用";
-            return colors_by_mount_name[xfname] || "#fff";
+            const xfname = xfmap[val] || "通用";
+            return colors_by_mount_name[xfname] || colors_by_school_name[xfname] || "#fff";
         },
         isTherapy: function (mount) {
             return mount_group.治疗.includes(~~mount);

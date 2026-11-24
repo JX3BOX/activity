@@ -10,16 +10,9 @@
 <template>
     <div class="p-event-midAutumn" @click="goToDetail">
         <!-- 首页展示 -->
+        <video class="u-kv" :src="kvVideo" :poster="kvPoster" autoplay loop muted playsinline></video>
         <div class="m-box">
-            <video
-                class="u-video"
-                src="https://cdn.jx3box.com/design/miniprogram/midautumn/zhongqiu2024.mp4"
-                :poster="`${__imgRoot}tittle.png`"
-                autoplay
-                loop
-                muted="false"
-                object-fit="cover"
-            ></video>
+
 
             <div class="m-title-box">
                 <img class="u-title" :src="title" alt=""/>
@@ -52,7 +45,7 @@ export default {
     },
     data: function () {
         return {
-            title: `${__cdn}design/event/mid_autumn/title.png`,
+            title: `${__cdn}design/event/mid_autumn/title_new.png`,
 
             showDialog: false,
         };
@@ -60,6 +53,12 @@ export default {
     computed: {
         year() {
             return this.years[this.years.length - 1]?.year || new Date().getFullYear();
+        },
+        kvVideo() {
+            return `${__cdn}design/event/mid_autumn/2026/pc/kv.mp4`;
+        },
+        kvPoster() {
+            return `${__cdn}design/event/mid_autumn/2026/pc/kv.jpg`;
         },
         yearInChinese() {
             return this.getYearInChinese();

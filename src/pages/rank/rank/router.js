@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory } from "vue-router";
+import { isEmbeddedApp } from "@/utils/env";
 
 const Info = () => import("@/views/Rank/Info.vue");
 const Rank = () => import("@/views/Rank/Rank.vue");
@@ -44,9 +45,25 @@ const routes = [
     },
 ];
 
+const history = createWebHashHistory();
 const router = createRouter({
-    history: createWebHashHistory(),
+    history,
     routes,
 });
+
+// 在最终写入历史时统一处理，覆盖页签、筛选、赛季和详情重定向。
+// 列表进入赛事、进入报名页各保留一层返回记录，其余切换替换当前记录。
+const pushHistory = history.push.bind(history);
+history.push = (to, data) => {
+    const target = router.resolve(to);
+    const current = router.resolve(history.location);
+    const enteringEvent = current.name === "index" && target.matched.some((record) => record.name === "detail");
+    const enteringJoin = target.name === "join" && current.name !== "join";
+    if (isEmbeddedApp() && !enteringEvent && !enteringJoin) {
+        history.replace(to, data);
+    } else {
+        pushHistory(to, data);
+    }
+};
 
 export default router;

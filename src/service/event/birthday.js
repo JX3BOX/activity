@@ -31,10 +31,6 @@ function receiveVip(params) {
     });
 }
 
-function getWechatQrcode() {
-    return $cms().get(`/api/cms/wechat/mp/bind`);
-}
-
 // 获取签约作者列表
 function superAuthor(params) {
     return $cms().get("/api/cms/user/list/super_author", {
@@ -131,5 +127,4 @@ export {
     getEventGiftRecord,
     pointsExchangeVipChance,
     receiveVip,
-    getWechatQrcode,
 };

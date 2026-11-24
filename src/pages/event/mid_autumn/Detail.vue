@@ -1,10 +1,11 @@
 <template>
-    <div class="p-midautumn-detail">
+    <div class="p-midautumn-detail" :class="{ 'is-intro': achieve_id === 'intro' }" :style="yearBackground">
         <div class="u-bg" :style="bgStyle">
             <Nav :poemName="poemData?.title || ''" @navChange="back" :years="years"></Nav>
             <div class="u-main-box">
                 <transition name="content-fade" mode="out-in">
                     <Introduce v-if="achieve_id === 'intro'" :years="years"></Introduce>
+                    <Vote v-else-if="achieve_id === 'vote'" :key="$route.params.year" :years="years" />
                     <Poem v-else-if="achieve_id === 'poem'" :years="years" @poem="poem" @back="back"></Poem>
                 </transition>
             </div>
@@ -13,17 +14,24 @@
 </template>
 
 <script>
+import Vote from "./components/Vote.vue";
+import { __cdn } from "@/utils/config";
 import Nav from "./components/nav.vue";
 import Introduce from "./components/introduce.vue";
 import Poem from "./components/poem.vue";
 import color from "@/assets/data/event/color.json";
 
 export default {
-    components: { Nav, Introduce, Poem },
+    components: { Nav, Introduce, Poem, Vote },
     props: {
         years: {
             type: Array,
             default: () => [],
+        },
+    },
+    computed: {
+        yearBackground() {
+            return { backgroundImage: `url(${__cdn}design/event/mid_autumn/${this.$route.params.year}/pc/bg.jpg)` };
         },
     },
     data() {
@@ -40,7 +48,7 @@ export default {
             handler: function (val) {
                 this.achieve_id = val.tab;
                 this.$nextTick(() => {
-                    let dom = document.querySelector(".u-bg"); //获取组件
+                    let dom = this.$el.querySelector(".u-main-box"); //获取组件
                     dom && (dom.scrollTop = 0);
                 });
             },
@@ -55,7 +63,7 @@ export default {
                 : "";
             this.bgStyle = bgStyle;
             this.$nextTick(() => {
-                let dom = document.querySelector(".u-bg"); //获取组件
+                let dom = this.$el.querySelector(".u-main-box"); //获取组件
                 dom && (dom.scrollTop = 0);
             });
         },

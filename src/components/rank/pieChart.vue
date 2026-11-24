@@ -85,7 +85,7 @@ export default {
                         type: "pie",
                         data: this.data,
                         radius: this.appMode ? ["30%", "54%"] : this.isSmall ? "67%" : "75%",
-                        center: this.appMode ? ["50%", "44%"] : undefined,
+                        center: this.appMode ? ["50%", "44%"] : ["50%", "50%"],
                         label: this.appMode
                             ? {
                                   // 分类较多时通过图例和点击提示查看，避免小屏标签挤压。

@@ -117,7 +117,7 @@
         </tbody>
     </table>
 </template>
-<style lang="less">
+<style scoped lang="less">
 table {
     overflow-x: auto;
     max-width: 100%;
