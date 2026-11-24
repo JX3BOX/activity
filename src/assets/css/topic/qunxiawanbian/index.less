@@ -519,6 +519,9 @@ body {
     }
 
     .m-qunxiawanbian {
+        // Use the wide chapter titles as the scaling reference for the narrower artwork.
+        @chapter-title-width: 865;
+
         .mobile-art(@width, @height) {
             width: 100%;
             height: auto;
@@ -583,6 +586,7 @@ body {
         .m-two {
             .u-title {
                 .mobile-art(655, 181);
+                width: (655 / @chapter-title-width * 100%);
                 margin: 0 auto 12px;
             }
 
@@ -729,7 +733,10 @@ body {
         }
 
         .m-eight {
-            .u-logo { .mobile-art(509, 181); }
+            .u-logo {
+                .mobile-art(509, 181);
+                width: (509 / @chapter-title-width * 100%);
+            }
             .m-panel { .mobile-art(874, 1304); }
         }
 

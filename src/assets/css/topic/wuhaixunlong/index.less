@@ -1,12 +1,21 @@
 .p-topic{
-    min-width: 1908px;
+    min-width: 0;
+}
+
+// 窗口小于 1908px（且大于 767px）时按视口等比 zoom 缩小，
+// 页面不再出现横向滚动条；手机端由 mobile/reflow.less 强制 zoom:1 接管
+@media screen and (max-width: 1908px) and (min-width: 768px) {
+    html,
+    body,
+    .p-topic {
+        overflow-x: hidden;
+    }
 }
 
 .m-index {
     .pr;
-    .w(100%);
     .auto(x);
-    width: 1908px;
+    .magic-build(1908px);
 
     img {
         .db();
@@ -286,3 +295,23 @@
 //         }
 //     }
 // }
+
+// 移动端必须抵消上面的桌面负边距：left/right: -15.75px 会让首屏层超出视口，
+// 造成左右可以横向滚动，并让诗文切图两端被裁切。
+@media screen and (max-width: 767px) {
+    .p-topic {
+        min-width: 0;
+    }
+    .m-index {
+        min-width: 0;
+        width: 100%;
+    }
+    .m-top__ent {
+        left: 0;
+        right: 0;
+        padding: 0;
+    }
+    .m-top__ent .u-text {
+        width: 46%;
+    }
+}

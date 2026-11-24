@@ -85,9 +85,7 @@
                 >
                     <div class="u-content">
                         <img :src="imgurl + '2/1.png'" />
-                        <a class="u-map-original u-mobile-only" :href="imgurl + '2/1.png'" target="_blank" rel="noopener">查看第一张原图</a>
                         <img :src="imgurl + '2/2.png'" />
-                        <a class="u-map-original u-mobile-only" :href="imgurl + '2/2.png'" target="_blank" rel="noopener">查看第二张原图</a>
                     </div>
 
                     <!--                首次提醒-->

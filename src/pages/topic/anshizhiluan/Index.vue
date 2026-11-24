@@ -10,8 +10,8 @@
 
         <div class="m-content">
             <div class="m-introduction p-animations" v-animate="'slideInDown'">
-                <img class="img" :src="pic.introduction" alt="安史之乱剧情背景" />
-                <div class="u-mobile-copy" hidden>
+                <img class="img" :src="pic.introduction" alt="安史之乱剧情背景" @error="introBroken = true" />
+                <div class="u-mobile-copy" :class="{ 'is-visible': introBroken }">
                     <p>开元，天宝年间</p>
                     <p>大唐正值盛世之年，九天阊阖开宫殿，万国衣冠拜冕旒然，日中则昃，盛极必衰</p>
                     <p>天宝十四年，安禄山起兵反唐，狼牙大军势如破竹，铁骑所至，哀鸿遍野</p>
@@ -35,8 +35,8 @@
                     <span class="u-mark"></span>
                 </div>
                 <div class="m-txt p-animation" v-animate="'bounceIn'">
-                    <img :src="pic.txt" alt="安史之乱副本背景" />
-                    <div class="u-mobile-copy" hidden>
+                    <img :src="pic.txt" alt="安史之乱副本背景" @error="txtBroken = true" />
+                    <div class="u-mobile-copy" :class="{ 'is-visible': txtBroken }">
                         <p>天子驾仓皇西南，马嵬坡前六军不发，九州大地遍燃战火</p>
                         <p>然逢此国破危亡之际，亦是群雄并起之时</p>
                     </div>
@@ -133,6 +133,8 @@ export default {
             info: [],
             isMobile: false,
             mobileQuery: null,
+            introBroken: false,
+            txtBroken: false,
             playLabels: ["圆梦江湖", "三人小队勇闯绝境战场"],
         };
     },

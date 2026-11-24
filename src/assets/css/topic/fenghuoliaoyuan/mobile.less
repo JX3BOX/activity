@@ -453,20 +453,25 @@
             }
         }
 
+        .m-more {
+            gap: 28px;
+        }
+
         .m-more .u-footer {
             display: grid;
             justify-items: center;
-            gap: 16px;
+            gap: 32px;
             width: 100%;
             padding: 0 0 16px;
 
             .waitu {
                 display: grid;
                 place-items: center;
-                width: 132px;
-                height: 136px;
+                width: min(74vw, 280px);
+                height: auto;
+                aspect-ratio: 1704 / 1760;
                 padding: 0;
-                font-size: 18px;
+                font-size: clamp(20px, 6.8vw, 26px);
                 letter-spacing: 0.12em;
                 line-height: 1.5;
                 animation: none;

@@ -228,15 +228,47 @@ export default {
             }
 
             .m-indicator {
-                position: relative;
-                bottom: auto;
-                left: auto;
-                right: auto;
-                width: 100%;
-                max-width: 380px;
+                position: absolute;
+                inset: auto 0 clamp(12px, 7vw, 40px);
+                z-index: 3;
+                flex-flow: row nowrap;
+                width: max-content;
                 margin: 0 auto;
-                padding: 12px 16px 18px;
+                padding: 0;
                 gap: 4px;
+
+                .m-arrow,
+                .m-select {
+                    flex: 0 0 44px;
+                    width: 44px;
+                    height: 44px;
+                }
+
+                .m-arrow .u-img {
+                    width: 9px;
+                    margin: 0;
+                }
+
+                .m-arrow-right {
+                    transform: rotate(180deg);
+                }
+
+                .u-select {
+                    width: 12px;
+                    margin: 0;
+                }
+
+                .u-select-border {
+                    position: absolute;
+                    inset: 0;
+                    width: 24px;
+                    margin: auto;
+                    visibility: hidden;
+                }
+
+                .m-select.active .u-select-border {
+                    visibility: visible;
+                }
             }
         }
 

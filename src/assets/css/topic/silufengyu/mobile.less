@@ -202,9 +202,10 @@
         .duanshi__nav {
             width: 100%;
             display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 6px;
-            padding: 8px;
+            grid-template-columns: repeat(6, minmax(0, 1fr));
+            gap: 0;
+            padding: 0;
+            background: #d9cba9;
 
             &::before,
             &::after {
@@ -214,15 +215,15 @@
             .u-tab {
                 display: grid;
                 place-items: center;
-                min-width: 44px;
+                min-width: 0;
                 min-height: 44px;
                 padding: 0;
             }
 
             .u-img {
                 width: 100%;
-                max-width: 132px;
                 height: auto;
+                margin: 0;
             }
         }
 

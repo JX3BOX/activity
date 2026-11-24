@@ -39,6 +39,27 @@
     .h(196px);
 }
 
+.u-mobile-copy {
+    display: none;
+
+    &.is-visible {
+        display: block;
+        max-width: 720px;
+        margin: 0 auto;
+        color: #ffedc8;
+        font-size: 18px;
+        line-height: 1.9;
+
+        p {
+            margin: 0;
+        }
+
+        p + p {
+            margin-top: 8px;
+        }
+    }
+}
+
 .m-content {
     .flex;
     flex-direction: column;

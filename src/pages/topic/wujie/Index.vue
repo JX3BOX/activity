@@ -14,7 +14,13 @@
                     v-for="item in 4"
                     :key="item"
                     :class="{ solid: active === item - 1 }"
+                    role="button"
+                    tabindex="0"
+                    :aria-label="`切换到第 ${item} 张`"
+                    :aria-pressed="active === item - 1"
                     @click="setActiveImg(item - 1)"
+                    @keydown.enter="setActiveImg(item - 1)"
+                    @keydown.space.prevent="setActiveImg(item - 1)"
                 ></div>
             </div>
 

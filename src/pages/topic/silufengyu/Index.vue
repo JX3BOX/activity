@@ -294,7 +294,7 @@
                     alt="角色外观、骑乘动作和体型细节的优化示意"
                     class="u-pic"
                 />
-                <div class="visual-enhancement__details" aria-hidden="true" hidden>
+                <div class="visual-enhancement__details" aria-hidden="true">
                     <div class="u-detail u-detail--characters"></div>
                     <div class="u-detail u-detail--styles"></div>
                     <div class="u-detail u-detail--riding"></div>
