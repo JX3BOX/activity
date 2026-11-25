@@ -226,6 +226,7 @@
 </template>
 
 <script>
+const MOBILE_QUERY = "(max-width: 767px)";
 const KEY = "wanlingdangge";
 const IMG_PATH = 'https://img.jx3box.com/topic/wanlingdangge/'
 import { getTopic } from "@/service/topic";
@@ -236,7 +237,7 @@ export default {
     },
     data: function () {
         return {
-            isMobile: navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i),
+            isMobile: window.matchMedia(MOBILE_QUERY).matches,
             imgPath: 'https://img.jx3box.com/topic/wanlingdangge/',
             // nav
             navs: [{
@@ -382,7 +383,7 @@ export default {
             // cg用
             dialogPlay: false,
             videoUrl: "",
-            mobileDialogMedia: null,
+            layoutMedia: null,
             mobileDialogScrollLock: null,
         };
     },
@@ -450,7 +451,7 @@ export default {
     },
     methods: {
         syncDialogScrollLock() {
-            if (this.dialogPlay && this.mobileDialogMedia && this.mobileDialogMedia.matches) {
+            if (this.dialogPlay && this.layoutMedia && this.layoutMedia.matches) {
                 this.lockDialogScroll();
             } else {
                 this.unlockDialogScroll();
@@ -500,7 +501,7 @@ export default {
             getTopic(KEY).then((res) => {
                 this.more = res.data.data.filter(i => i.subtype === 'more').map(i => {return {img: i.img, link: i.link,title: i.title}});
                 const face = res.data.data.filter(i => i.subtype === 'face').map(i =>  {return {img: i.img, link: i.link}});
-                if (this.isMobile && !face.length) {
+                if (!face.length) {
                     this.faceContent.face = [];
                     return;
                 }
@@ -610,6 +611,20 @@ export default {
                 this.navActive = 1
             }
         },
+        syncLayout() {
+            this.isMobile = this.layoutMedia.matches;
+            if (this.isMobile) {
+                window.removeEventListener("scroll", this.setNav);
+                window.removeEventListener("resize", this.resize);
+                this.$el.style.removeProperty("zoom");
+            } else {
+                this.resize();
+                window.addEventListener("scroll", this.setNav);
+                window.addEventListener("resize", this.resize);
+                this.$nextTick(this.setNav);
+            }
+            this.syncDialogScrollLock();
+        },
         resize() {
             let w = document.body.clientWidth || document.documentElement.clientWidth
             const el = document.getElementsByClassName('m-index');
@@ -628,16 +643,14 @@ export default {
         this.init();
     },
     mounted: function () {
-        this.mobileDialogMedia = window.matchMedia("(max-width: 767px)");
-        this.mobileDialogMedia.addEventListener("change", this.syncDialogScrollLock);
-        if(!this.isMobile) {
-            window.addEventListener('scroll', this.setNav);
-            this.resize();
-            window.addEventListener('resize', this.resize);
-        }
+        this.layoutMedia = window.matchMedia(MOBILE_QUERY);
+        this.layoutMedia.addEventListener("change", this.syncLayout);
+        this.syncLayout();
     },
     beforeUnmount: function () {
-        this.mobileDialogMedia.removeEventListener("change", this.syncDialogScrollLock);
+        this.layoutMedia.removeEventListener("change", this.syncLayout);
+        window.removeEventListener("scroll", this.setNav);
+        window.removeEventListener("resize", this.resize);
         this.unlockDialogScroll();
     },
 };
